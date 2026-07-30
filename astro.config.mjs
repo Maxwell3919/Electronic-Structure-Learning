@@ -1,9 +1,14 @@
-import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import starlight from '@astrojs/starlight';
+import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
+
+const markdownProcessor = unified({
+  remarkPlugins: [remarkMath],
+  rehypePlugins: [[rehypeKatex, { strict: false, throwOnError: false }]],
+});
 
 export default defineConfig({
   integrations: [
@@ -28,12 +33,15 @@ export default defineConfig({
             },
           ],
         },
+        {
+          label: '交互实验',
+          items: [{ autogenerate: { directory: 'labs' } }],
+        },
       ],
     }),
-    mdx(),
+    mdx({ processor: markdownProcessor }),
   ],
   markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [[rehypeKatex, { strict: false, throwOnError: false }]],
+    processor: markdownProcessor,
   },
 });
