@@ -22,14 +22,17 @@ export default defineConfig({
         { label: '开始', items: ['start-here', 'reading-system'] },
         {
           label: 'Part I · 概览与背景主题',
-          autogenerate: { directory: 'part-01-overview-and-background' },
+          items: [
+            {
+              autogenerate: { directory: 'part-01-overview-and-background' },
+            },
+          ],
         },
       ],
     }),
     mdx(),
   ],
   markdown: {
-    processor: unified(),
     remarkPlugins: [remarkMath],
     rehypePlugins: [[rehypeKatex, { strict: false, throwOnError: false }]],
   },
