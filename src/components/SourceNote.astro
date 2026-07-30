@@ -1,0 +1,18 @@
+---
+interface Props {
+  source: string;
+  locator: string;
+  status?: 'outline' | 'draft' | 'review' | 'validated';
+}
+
+const { source, locator, status = 'outline' } = Astro.props;
+---
+
+<aside class="source-note" aria-label="来源定位">
+  <div class="source-note__header">
+    <strong>来源定位</strong>
+    <span class="source-note__status">{status}</span>
+  </div>
+  <div>{source}</div>
+  <div>{locator}</div>
+</aside>

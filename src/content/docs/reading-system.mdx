@@ -1,0 +1,36 @@
+---
+title: "阅读系统"
+description: "每个学习单元如何连接来源、推导、可视化、计算与验证边界。"
+sidebar:
+  order: 2
+---
+
+import DerivationBlock from '../../components/DerivationBlock.astro';
+import SourceNote from '../../components/SourceNote.astro';
+
+<SourceNote
+  source="课程结构来源：Martin 第 2 版；实践补充来源：Sholl–Steckel。"
+  locator="本页只说明网站方法，不复述教材正文。"
+  status="outline"
+/>
+
+每个学习单元按以下顺序组织：
+
+```text
+问题与学习目标
+  -> 概念和物理对象
+  -> 公式与前提
+  -> 可调的简化模型
+  -> 真实 DFT 数据示例
+  -> 收敛性与适用边界
+  -> 练习与复盘
+```
+
+<DerivationBlock
+  title="示例：从多电子哈密顿量到可计算模型"
+  assumptions={['先明确体系、边界条件和核自由度处理方式', '区分严格方程、近似映射和数值离散']}
+>
+
+网站中的公式推导必须标明哪一步是定义、哪一步是近似、哪一步依赖额外物理假设。数学上可写出的表达式，不自动意味着数值上可稳定求解或物理上适用。
+
+</DerivationBlock>

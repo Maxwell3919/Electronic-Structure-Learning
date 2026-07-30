@@ -1,0 +1,46 @@
+@import 'katex/dist/katex.min.css';
+
+:root {
+  --sl-content-width: 52rem;
+}
+
+.source-note,
+.derivation-block,
+.visualization-placeholder {
+  margin-block: 1.25rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.6rem;
+  padding: 1rem;
+  background: var(--sl-color-gray-7);
+}
+
+.source-note__header,
+.derivation-block__header,
+.visualization-placeholder__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.source-note__status {
+  font-size: 0.8rem;
+  color: var(--sl-color-text-accent);
+}
+
+.visualization-placeholder dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 0.8rem;
+  margin: 0;
+}
+
+.visualization-placeholder dt {
+  font-weight: 600;
+}
+
+.visualization-placeholder dd {
+  margin: 0;
+}
