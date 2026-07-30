@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  model: string;
+  controls?: string[];
+  observables?: string[];
+  validation?: string[];
+  boundary: string;
+}
+
+const {
+  title,
+  model,
+  controls = [],
+  observables = [],
+  validation = [],
+  boundary,
+} = Astro.props;
+---
+
+<section class="visualization-placeholder" aria-label={`可视化规格：${title}`}>
+  <div class="visualization-placeholder__header">
+    <strong>{title}</strong>
+    <span>规格占位</span>
+  </div>
+  <dl>
+    <dt>模型/数据</dt>
+    <dd>{model}</dd>
+    <dt>可调参数</dt>
+    <dd>{controls.length ? controls.join('、') : '待定义'}</dd>
+    <dt>观察量</dt>
+    <dd>{observables.length ? observables.join('、') : '待定义'}</dd>
+    <dt>验证</dt>
+    <dd>{validation.length ? validation.join('；') : '待定义'}</dd>
+    <dt>边界</dt>
+    <dd>{boundary}</dd>
+  </dl>
+</section>
