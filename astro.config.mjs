@@ -5,10 +5,11 @@ import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
-const markdownProcessor = unified({
-  remarkPlugins: [remarkMath],
-  rehypePlugins: [[rehypeKatex, { strict: false, throwOnError: false }]],
-});
+const createMarkdownProcessor = () =>
+  unified({
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [[rehypeKatex, { strict: false, throwOnError: false }]],
+  });
 
 export default defineConfig({
   integrations: [
@@ -39,9 +40,9 @@ export default defineConfig({
         },
       ],
     }),
-    mdx({ processor: markdownProcessor }),
+    mdx({ processor: createMarkdownProcessor() }),
   ],
   markdown: {
-    processor: markdownProcessor,
+    processor: createMarkdownProcessor(),
   },
 });
