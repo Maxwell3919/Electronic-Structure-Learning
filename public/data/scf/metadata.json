@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "topic": "scf",
+  "kind": "teaching-model",
+  "source": "original",
+  "generator": "src/components/visualizations/ScfFixedPointDemo.astro",
+  "units": {
+    "state": "dimensionless",
+    "iteration": "count"
+  },
+  "parameters": {
+    "map": "x_out = cos(x_in)",
+    "mixing": "x_next = (1-alpha)x_in + alpha*x_out"
+  },
+  "boundaries": [
+    "This is a scalar fixed-point teaching model, not a Kohn-Sham solver.",
+    "Its convergence does not establish convergence for any real DFT calculation."
+  ]
+}

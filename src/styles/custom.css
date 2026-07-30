@@ -1,0 +1,76 @@
+@import 'katex/dist/katex.min.css';
+
+:root {
+  --sl-content-width: 52rem;
+  --sl-text-5xl: 2.6rem;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4 {
+  text-align: left;
+}
+
+.chapter-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin-block: 1rem 1.5rem;
+}
+
+.chapter-meta > div {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.65rem;
+  padding: 0.75rem;
+}
+
+.chapter-meta dt {
+  color: var(--sl-color-gray-2);
+  font-size: 0.85rem;
+}
+
+.chapter-meta dd {
+  margin: 0.2rem 0 0;
+  font-weight: 600;
+}
+
+.esl-demo {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.8rem;
+  padding: 1rem;
+}
+
+.esl-demo__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+  margin-block: 1rem;
+}
+
+.esl-demo label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.esl-demo svg {
+  width: 100%;
+  height: auto;
+  border-block: 1px solid var(--sl-color-gray-5);
+  background: var(--sl-color-black);
+}
+
+.esl-demo__axis {
+  stroke: var(--sl-color-gray-4);
+  stroke-width: 1;
+}
+
+.esl-demo__curve {
+  fill: none;
+  stroke: var(--sl-color-accent-high);
+  stroke-width: 3;
+}
+
+.esl-demo__point {
+  fill: var(--sl-color-accent-high);
+}

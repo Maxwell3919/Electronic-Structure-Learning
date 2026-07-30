@@ -1,0 +1,35 @@
+---
+title: Electronic Structure Learning
+description: 以 Martin 第二版为主线的电子结构与 DFT 结构化、可视化学习网站。
+template: splash
+hero:
+  tagline: 从理论结构、公式假设到可交互教学模型与真实计算边界。
+  actions:
+    - text: 开始阅读
+      link: /guide/reading-method/
+      icon: right-arrow
+      variant: primary
+    - text: 查看 Part I
+      link: /part-01-overview-and-background/
+      icon: open-book
+---
+
+## 当前框架
+
+网站沿用教材的 6 个正文 Part、28 个正文 Chapter 和 18 个 Appendix，但不复制教材正文。每一章最终应把概念、公式、假设、可视化、计算工作流和验证边界连接起来。
+
+## 第一阶段交付
+
+- 建立完整章节导航与来源页码索引；
+- 统一 MDX 章节模板和科学数据契约；
+- 验证 KaTeX 公式渲染；
+- 用一个轻量 SCF 固定点模型验证浏览器交互组件；
+- 保持静态构建，不引入账户、数据库和在线真实 DFT 作业。
+
+$$
+\hat H_{\mathrm{KS}}[n]\,\psi_i = \varepsilon_i\psi_i,
+\qquad
+n(\mathbf r)=\sum_i f_i\left|\psi_i(\mathbf r)\right|^2.
+$$
+
+这组公式只用于验证数学排版；具体含义、假设和适用边界应在相应章节中展开。

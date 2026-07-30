@@ -1,0 +1,24 @@
+---
+title: 内容编写规范
+description: 新章节、公式、可视化和数据进入网站时的最小合同。
+sidebar:
+  order: 2
+---
+
+## 章节文件
+
+每个章节文件位于对应 Part 目录，frontmatter 至少包含 `title`、`description` 和 `sidebar.order`。正文逐步补齐：阅读定位、核心问题、公式与符号、推导假设、教学模型、真实计算连接、边界与练习。
+
+## 可视化组件
+
+组件默认放入 `src/components/visualizations/`。组件必须明确：
+
+- 可调变量及单位；
+- 模型方程或数据来源；
+- 初始值；
+- 结果能支持什么；
+- 结果不能支持什么。
+
+## 数据文件
+
+小型派生数据进入 `public/data/<topic>/`，并配套 `metadata.json`。大型 raw output、WFC、DWF、restart、教材 PDF 和受许可证限制内容不进入本仓库。

@@ -1,0 +1,90 @@
+<section class="esl-demo" data-scf-demo>
+  <p>
+    这个组件使用固定点方程 <code>x = cos(x)</code> 演示线性混合。它只模拟“输入 → 输出 → 混合 →
+    下一次输入”的迭代结构，不是 Kohn–Sham 方程求解器，也不支持对真实材料收敛性的判断。
+  </p>
+
+  <div class="esl-demo__controls">
+    <label>
+      混合参数 α：<output data-alpha-output>0.50</output>
+      <input data-alpha type="range" min="0.05" max="1" step="0.05" value="0.5" />
+    </label>
+    <label>
+      初始值 x₀：<output data-x0-output>1.50</output>
+      <input data-x0 type="range" min="-2" max="2" step="0.1" value="1.5" />
+    </label>
+  </div>
+
+  <svg viewBox="0 0 720 300" role="img" aria-labelledby="scf-demo-title scf-demo-desc">
+    <title id="scf-demo-title">固定点混合迭代轨迹</title>
+    <desc id="scf-demo-desc">横轴为迭代次数，纵轴为教学模型中的标量状态。</desc>
+    <line class="esl-demo__axis" x1="48" y1="250" x2="700" y2="250"></line>
+    <line class="esl-demo__axis" x1="48" y1="24" x2="48" y2="250"></line>
+    <polyline class="esl-demo__curve" data-curve points=""></polyline>
+    <g data-points></g>
+  </svg>
+
+  <p aria-live="polite" data-summary></p>
+</section>
+
+<script>
+  const demos = document.querySelectorAll('[data-scf-demo]');
+
+  for (const demo of demos) {
+    const alphaInput = demo.querySelector('[data-alpha]');
+    const x0Input = demo.querySelector('[data-x0]');
+    const alphaOutput = demo.querySelector('[data-alpha-output]');
+    const x0Output = demo.querySelector('[data-x0-output]');
+    const curve = demo.querySelector('[data-curve]');
+    const pointsGroup = demo.querySelector('[data-points]');
+    const summary = demo.querySelector('[data-summary]');
+
+    if (!(alphaInput instanceof HTMLInputElement) || !(x0Input instanceof HTMLInputElement)) continue;
+    if (!(alphaOutput instanceof HTMLOutputElement) || !(x0Output instanceof HTMLOutputElement)) continue;
+    if (!(curve instanceof SVGPolylineElement) || !(pointsGroup instanceof SVGGElement)) continue;
+    if (!(summary instanceof HTMLElement)) continue;
+
+    const render = () => {
+      const alpha = Number(alphaInput.value);
+      let x = Number(x0Input.value);
+      const values = [x];
+
+      for (let iteration = 0; iteration < 20; iteration += 1) {
+        const output = Math.cos(x);
+        x = (1 - alpha) * x + alpha * output;
+        values.push(x);
+      }
+
+      const width = 652;
+      const height = 210;
+      const minY = -2;
+      const maxY = 2;
+      const coords = values.map((value, index) => {
+        const px = 48 + (index / (values.length - 1)) * width;
+        const py = 24 + ((maxY - value) / (maxY - minY)) * height;
+        return [px, py];
+      });
+
+      curve.setAttribute('points', coords.map(([px, py]) => `${px},${py}`).join(' '));
+      pointsGroup.replaceChildren(
+        ...coords.map(([px, py]) => {
+          const point = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          point.setAttribute('class', 'esl-demo__point');
+          point.setAttribute('cx', String(px));
+          point.setAttribute('cy', String(py));
+          point.setAttribute('r', '3.2');
+          return point;
+        }),
+      );
+
+      alphaOutput.value = alpha.toFixed(2);
+      x0Output.value = Number(x0Input.value).toFixed(2);
+      const residual = Math.abs(Math.cos(x) - x);
+      summary.textContent = `20 次迭代后 x = ${x.toFixed(6)}，固定点残差 |cos(x)-x| = ${residual.toExponential(2)}。`;
+    };
+
+    alphaInput.addEventListener('input', render);
+    x0Input.addEventListener('input', render);
+    render();
+  }
+</script>
