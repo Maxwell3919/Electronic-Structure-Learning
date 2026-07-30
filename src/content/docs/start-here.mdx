@@ -1,0 +1,27 @@
+---
+title: "开始阅读"
+description: "网站的阅读入口、两条学习线与当前完成状态。"
+sidebar:
+  order: 1
+---
+
+import VisualizationPlaceholder from '../../components/VisualizationPlaceholder.astro';
+
+## 当前结构
+
+第一阶段只落地 Martin 理论线的 Part I 和 Chapter 1，以验证内容组织、公式渲染和交互组件接口。完整 7 Part / 46 单元映射将在后续独立 PR 中加入。
+
+## 推荐起点
+
+1. 阅读 [阅读系统](/reading-system/)；
+2. 进入 [Part I · 概览与背景](/part-01-overview-and-background/)；
+3. 阅读 [Chapter 1 · Introduction](/part-01-overview-and-background/chapter-01-introduction/)。
+
+<VisualizationPlaceholder
+  title="第一阶段原型：SCF 自洽循环"
+  model="一维固定点模型与预计算收敛轨迹"
+  controls={['mixing 参数', '初始密度偏差', '收敛阈值']}
+  observables={['残差', '总能变化', '迭代次数']}
+  validation={['固定点残差趋零', '阈值判定与显示状态一致']}
+  boundary="该模型说明迭代行为，不等同于任何特定材料或真实 Kohn–Sham 求解器的收敛性。"
+/>
