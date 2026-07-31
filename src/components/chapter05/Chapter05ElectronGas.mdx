@@ -1,0 +1,175 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-5-1">5.1 均匀电子气 | The Electron Gas</h2>
+
+<BilingualSection titleZh="jellium：带中性背景的 homogeneous electron gas" titleEn="Jellium: a homogeneous electron gas with a neutralizing background" eyebrow="【Martin 原书 | Martin source】 §5.1 · pp. 109–111">
+  <div class="bilingual-section__zh">
+
+均匀电子气把离散 nuclei 替换为 charge density $+n$ 的 uniform positive background。电子 density 在 thermodynamic limit 中也为常数 $n=N/\Omega$。background 的作用不只是“提供吸引”：它与 electron–electron Hartree divergence 共同组成中性的、有限的 Coulomb energy。
+
+在 atomic units 中，可把 Hamiltonian schematic 地写为
+
+$$
+\hat H
+= -\frac12\sum_i\nabla_i^2
++\frac12\sum_{i\ne j}\frac1{|\mathbf r_i-\mathbf r_j|}
+-\sum_i\int_\Omega d^3r\,\frac{n}{|\mathbf r_i-\mathbf r|}
++\frac12\int_\Omega d^3r\,d^3r'\,
+\frac{n^2}{|\mathbf r-\mathbf r'|}.
+$$
+
+四项分别是 electron kinetic、electron–electron、electron–background 与 background–background energy。后两项与 $G=0$ neutrality prescription 等价地消除宏观 charge divergence。只保留 electron–electron term 会得到一个随 cell size 发散的非中性模型。
+
+homogeneous gas 由 $r_s$ 与 spin polarization $\zeta$ 指定。对典型 solid-valence densities，$r_s$ 常为 order unity 到数个 Bohr radii；但 local density in a real crystal 可显著变化，因此单个 average $r_s$ 不能描述 bonding topology。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The uniform electron gas replaces discrete nuclei by a uniform positive charge density $+n$. The electronic density is also uniform in the thermodynamic limit. The background is not merely an attractive term: electron–electron, electron–background, and background–background contributions must be combined to obtain a neutral finite Coulomb energy.
+
+In atomic units the Hamiltonian contains electronic kinetic energy, pair repulsion, electron–background attraction, and background self-energy. Omitting the compensating terms creates a nonneutral Coulomb problem whose energy diverges with system size.
+
+The homogeneous gas is specified by $r_s$ and spin polarization $\zeta$. A single average $r_s$ sets useful scales but does not represent the spatially varying density and bonding topology of a real crystal.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="从 density 到 r_s | From density to the Wigner–Seitz radius"
+  assumptions={[
+    'three-dimensional homogeneous density;',
+    'one electron occupies an average volume 1/n;',
+    'r_s is expressed in Bohr radii in atomic units.']}
+>
+
+以一个 electron 的 average volume 定义 sphere：
+
+$$
+\frac{4\pi}{3}r_s^3=\frac{\Omega}{N}=\frac1n.
+$$
+
+因此
+
+$$
+\boxed{n=\frac{3}{4\pi r_s^3}},
+\qquad
+\boxed{r_s=\left(\frac{3}{4\pi n}\right)^{1/3}}.
+$$
+
+若 isotropic compression 使 volume per electron 缩小为原来的 $\gamma$ 倍，则
+
+$$
+r_s\to\gamma^{1/3}r_s.
+$$
+
+所以 energy terms 对 volume 的 scaling 可转化为对 $r_s$ 的 derivatives。对任意 per-electron energy $\varepsilon(r_s)$，volume per electron 为
+
+$$
+v=\frac{4\pi}{3}r_s^3,
+$$
+
+pressure contribution 为
+
+$$
+P=-\frac{d\varepsilon}{dv}
+=-\frac{1}{4\pi r_s^2}\frac{d\varepsilon}{dr_s}.
+$$
+
+<p lang="en">The density radius is the radius of a sphere containing one electron on average. Because the volume per electron scales as $r_s^3$, volume derivatives can be converted directly into density-radius derivatives.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="spin polarization 与两个 Fermi spheres" titleEn="Spin polarization and two Fermi spheres">
+  <div class="bilingual-section__zh">
+
+collinear spin gas 由
+
+$$
+n_\uparrow=\frac n2(1+\zeta),
+\qquad
+n_\downarrow=\frac n2(1-\zeta)
+$$
+
+分成两个 Fermi spheres。$\zeta=0$ 是 unpolarized gas，$|\zeta|=1$ 是 fully polarized gas。改变 $\zeta$ 会同时改变 kinetic 与 exchange energy：polarization 使同样 particle number 填充更大的 occupied k volume，增加 kinetic energy；exchange 则因同-spin density 更集中而变得更负。
+
+是否发生 spontaneous polarization 取决于这些 terms 与 correlation 的竞争。本章的 analytic expressions 只给 uniform phases 的 energy comparison；它们不能替代 real material 的 crystal-field、bandwidth、SOC、noncollinear order 与 finite-temperature magnetic calculation。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A collinear spin gas consists of two Fermi spheres with densities $n(1\pm\zeta)/2$. Polarization increases the kinetic energy because each occupied spin sphere expands, while exchange becomes more negative because same-spin density is concentrated. Spontaneous polarization requires comparison of kinetic, exchange, and correlation energies and does not directly predict magnetism in a crystal.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="scaled Hamiltonian 与 density-coupling equivalence | Scaled Hamiltonian and density–coupling equivalence"
+  assumptions={[
+    'atomic units;',
+    'coordinates are scaled as r_i=r_s x_i;',
+    'the neutral background is scaled consistently.']}
+>
+
+令
+
+$$
+\mathbf r_i=r_s\mathbf x_i,
+\qquad
+\nabla_{\mathbf r_i}=r_s^{-1}\nabla_{\mathbf x_i}.
+$$
+
+则 kinetic term 变为
+
+$$
+-\frac12\sum_i\nabla_{\mathbf r_i}^2
+=\frac1{r_s^2}\left(-\frac12\sum_i\nabla_{\mathbf x_i}^2\right).
+$$
+
+Coulomb distance 带一个 $r_s$：
+
+$$
+\frac1{|\mathbf r_i-\mathbf r_j|}
+=\frac1{r_s}\frac1{|\mathbf x_i-\mathbf x_j|}.
+$$
+
+抽出共同 energy scale $r_s^{-2}$：
+
+$$
+\boxed{
+\hat H(r_s)
+=\frac1{r_s^2}
+\left[\hat T_x+r_s\hat V_x^{\mathrm{neutral}}\right].
+}
+$$
+
+因此改变 density parameter $r_s$ 等价于在 fixed scaled density 下改变 effective interaction strength，并同时改变 energy unit。high density $r_s\to0$ 是 weak-coupling limit；low density 增强相互作用，但不意味着所有 observables 都可作 regular power series，因为 long-range Coulomb terms 会产生 nonanalytic logarithms。
+
+<p lang="en">After coordinates are measured in units of $r_s$, kinetic energy scales as $r_s^{-2}$ and neutral Coulomb energy as $r_s^{-1}$. Factoring out the kinetic scale leaves an effective interaction proportional to $r_s$.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="neutrality、thermodynamic limit 与 finite cells" titleEn="Neutrality, the thermodynamic limit, and finite cells">
+  <div class="bilingual-section__zh">
+
+analytic electron-gas formulas 假设 $N,\Omega\to\infty$ 且 $n$ fixed。finite simulation cell 会引入 discrete k shell、Ewald/Madelung、exchange–correlation hole truncation 和 twist/boundary-condition errors。QMC electron-gas data 因此需要 finite-size extrapolation，不能把一个 cell 的 raw energy 当作 thermodynamic-limit parameterization。
+
+periodic DFT 中 uniform compensating background 也常用于 charged cells，但那不是物理 jellium material。charged defect 的 background、potential alignment、image-charge correction 和 charge-state thermodynamics 必须另行处理。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Analytic formulas refer to the thermodynamic limit at fixed density. Finite simulation cells have shell, Ewald, hole-truncation, and boundary-condition errors and require extrapolation. A compensating background used for a charged periodic defect is a numerical convention, not a claim that the material is jellium.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="5.1 的结论边界" titleEn="Section 5.1 claim boundary" kind="boundary">
+  <div class="bilingual-section__zh">
+    <p>$r_s$ 与 $\zeta$ 完全指定 homogeneous equilibrium reference state，但不指定 real crystal lattice、atomic species、band topology 或 excitation lifetime。density scaling 建立的是量纲与 asymptotic control，不是对材料的自动预测。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>$r_s$ and $\zeta$ specify the homogeneous reference state, not a crystal lattice, chemical identity, band topology, or excitation lifetime. Density scaling provides dimensions and asymptotic control rather than a material prediction.</p>
+  </div>
+</BilingualCallout>

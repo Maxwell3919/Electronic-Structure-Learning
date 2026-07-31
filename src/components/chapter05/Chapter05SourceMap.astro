@@ -1,0 +1,36 @@
+---
+const rows = [
+  ['5.1', 'The Electron Gas', '109–111', 'density, r_s, polarization, neutral background, scaled Hamiltonian'],
+  ['5.2', 'Noninteracting and Hartree–Fock Approximations', '111–117', 'Fermi sphere, characteristic energies, density matrix, HF dispersion, exchange energy and hole'],
+  ['5.3', 'Correlation Hole and Energy', '117–121', 'screening, correlation limits, parameterizations, pair correlation, coupling-constant average'],
+  ['5.4', 'Binding in sp-Bonded Metals', '121–122', 'jellium energy balance, ionic pseudopotential correction, equilibrium density and bulk-modulus scale'],
+  ['5.5', 'Excitations and the Lindhard Dielectric Function', '122–125', 'quasiparticles, RPA/Lindhard response, particle-hole continuum, screening, plasmons and 2k_F anomalies'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-05-source-map-title">
+  <h2 id="chapter-05-source-map-title">原书结构与来源定位 | Source Map</h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>节 | Section</th>
+          <th>原书标题 | Source title</th>
+          <th>印刷页 | Printed pages</th>
+          <th>本页对应范围 | Website scope</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(([section, title, pages, scope]) => (
+          <tr>
+            <td>{section}</td>
+            <td lang="en">{title}</td>
+            <td>{pages}</td>
+            <td>{scope}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>Exercises 起始于印刷页 126；本页不复制原题或答案。所有正文、推导重组、模型、图示与练习均为原创。</p>
+</section>
