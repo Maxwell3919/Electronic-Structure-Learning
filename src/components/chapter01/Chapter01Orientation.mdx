@@ -1,0 +1,186 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import QuantumOriginsTimeline from '../QuantumOriginsTimeline.astro';
+import catalog from '../../data/martin/index.mjs';
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章要建立的主线" titleEn="The line of reasoning established here" eyebrow="Orientation">
+  <div class="bilingual-section__zh">
+
+本章回答一个范围明确的问题：现代电子结构理论为什么会同时依赖多电子量子力学与独立粒子方程？历史顺序不是装饰。电子、原子核、量子化、交换反对称性、能带、自洽场、电子关联和密度泛函理论依次解决了不同层次的困难。读完后，应能说明这些概念之间的逻辑关系，并判断一个计算结果属于严格多体描述、有效独立粒子模型、密度泛函辅助体系，还是数值实现产生的近似结果。
+
+前置知识只要求基础量子力学：定态 Schrödinger 方程、概率解释、基本统计力学和晶体周期性的初步概念。Chapter 2 将把这些概念展开为材料性质的全景；Chapter 3 才正式写出电子与原子核的多体 Hamiltonian，并讨论独立电子近似、交换与关联。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+This chapter addresses a specific question: why does modern electronic-structure theory rely simultaneously on many-electron quantum mechanics and independent-particle equations? The historical sequence carries physical content. The electron, the nucleus, quantization, exchange antisymmetry, bands, self-consistency, correlation, and density functional theory each resolved a different layer of the problem. By the end, the reader should be able to distinguish an exact many-body description, an effective independent-particle model, a density-functional auxiliary system, and an approximation introduced by numerical implementation.
+
+The prerequisites are limited to elementary quantum mechanics: the stationary Schrödinger equation, the probabilistic interpretation, basic statistical mechanics, and an initial notion of crystal periodicity. Chapter 2 surveys the material properties built from these ideas. Chapter 3 then writes the full electron–nucleus Hamiltonian and treats independent-electron approximations, exchange, and correlation explicitly.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本章后应能判断" titleEn="Judgments expected after this chapter" kind="practice">
+  <div class="bilingual-section__zh">
+
+- 为什么电子结构首先是一个相互作用多体问题；
+- 为什么独立电子图像仍能正确组织大量实验事实；
+- Fermi–Dirac 占据、能带填充和能隙分别说明什么；
+- Hartree、Hartree–Fock、Kohn–Sham DFT 在逻辑上有何差别；
+- 为什么计算规模扩大不自动提高物理可信度；
+- 为什么拓扑相改变通常要求体能隙闭合，及该说法的适用前提。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+- why electronic structure is fundamentally an interacting many-body problem;
+- why an independent-electron picture nevertheless organizes a large body of observations;
+- what Fermi–Dirac occupation, band filling, and a band gap each establish;
+- how Hartree, Hartree–Fock, and Kohn–Sham DFT differ logically;
+- why larger calculations are not automatically more trustworthy;
+- why changing a topological phase generally requires a bulk-gap closing, together with the assumptions behind that statement.
+
+  </div>
+</BilingualCallout>
+
+## 原书结构与来源定位 | Source Map
+
+<div class="chapter-source-map">
+<table>
+  <thead>
+    <tr>
+      <th>节 | Section</th>
+      <th>原书标题 | Martin title</th>
+      <th>印刷页 | Print page</th>
+      <th>本站内容 | Website treatment</th>
+      <th>状态 | Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {catalog.parts[0].units[0].sections.map((section) => (
+      <tr>
+        <td><code>{section.id}</code></td>
+        <td>{section.title}</td>
+        <td>{section.page}</td>
+        <td>
+          {section.id === '1.1' && '量子理论起源、电子与原子核、交换反对称性'}
+          {section.id === '1.2' && '有效单粒子方程、Fermi–Dirac 分布、能带填充与连续性'}
+          {section.id === '1.3' && '自洽场、早期能带方法与数值表示'}
+          {section.id === '1.4' && '交换、关联、局域化和金属—绝缘体竞争'}
+          {section.id === '1.5' && 'Hohenberg–Kohn 与 Kohn–Sham 逻辑边界'}
+          {section.id === '1.6' && '电子结构计算在研究中的证据角色'}
+          {section.id === '1.7' && '材料设计、稳定性与可制造性门槛'}
+          {section.id === '1.8' && '拓扑不变量、能隙闭合与适用条件'}
+        </td>
+        <td>review</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+</div>
+
+本页采用原创表述，不转录原书正文、图 1.1–1.3、脚注、习题或参考书目说明。历史节点与章节组织以 Martin Chapter 1 为主要来源；补充推导明确标为本站推导。
+
+## 物理对象、术语与记号 | Physical Objects, Terms, and Notation
+
+<dl class="chapter-terms">
+  <div>
+    <dt>多电子波函数 | Many-electron wavefunction</dt>
+    <dd>$\Psi(\mathbf{x}_1,\ldots,\mathbf{x}_N)$，其中 $\mathbf{x}=(\mathbf{r},\sigma)$ 同时包含空间与自旋坐标。它编码联合概率振幅，并对相同电子交换满足反对称性。</dd>
+  </div>
+  <div>
+    <dt>轨道 | Orbital</dt>
+    <dd>$\psi_i(\mathbf{r})$ 或自旋轨道 $\chi_i(\mathbf{x})$ 是单粒子函数。轨道不等同于完整多体态，也不自动对应可直接测量的粒子路径。</dd>
+  </div>
+  <div>
+    <dt>态与能级 | State and level</dt>
+    <dd>“态”指 Hilbert 空间中的量子态；“能级”指 Hamiltonian 的本征值。简并时，一个能级可对应多个线性独立态。</dd>
+  </div>
+  <div>
+    <dt>能带 | Band</dt>
+    <dd>周期体系中随晶体动量 $\mathbf{k}$ 连续变化的一族单粒子本征值 $\varepsilon_{n\mathbf{k}}$。能带不是离散原子能级的简单复制。</dd>
+  </div>
+  <div>
+    <dt>密度 | Density</dt>
+    <dd>$n(\mathbf{r})$ 是单位体积内的期望电子数，满足 $\int n(\mathbf{r})\,d\mathbf{r}=N$。它比多体波函数少得多的信息。</dd>
+  </div>
+  <div>
+    <dt>态密度 | Density of states</dt>
+    <dd>$g(E)$ 统计单位能量区间内可用态的数量。它与实空间电子密度 $n(\mathbf{r})$ 是不同对象。</dd>
+  </div>
+  <div>
+    <dt>总能 | Total energy</dt>
+    <dd>给定 Hamiltonian 与量子态的能量期望或本征值。单粒子本征值之和通常不能直接当作相互作用体系的总能。</dd>
+  </div>
+  <div>
+    <dt>参考与单位 | Reference and units</dt>
+    <dd>本章公式默认 SI 记号并显式保留 $\hbar$ 与电子质量 $m_e$；交互图以 eV 表示能量。绝对单粒子能量零点可平移，能量差才进入多数判断。</dd>
+  </div>
+</dl>
+
+<BilingualCallout titleZh="证据边界" titleEn="Evidence boundary" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本章出现的单粒子方程用于建立概念结构。它不证明真实材料中的电子彼此独立。能带、态密度或 Kohn–Sham 本征值图也不能单独证明电子—声子耦合强度、超导转变温度、动力学稳定性或可合成性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The one-particle equations introduced here organize concepts; they do not prove that electrons in a real material are independent. A band plot, density of states, or set of Kohn–Sham eigenvalues alone cannot establish electron–phonon coupling, a superconducting transition temperature, dynamical stability, or synthesizability.
+
+  </div>
+</BilingualCallout>
+
+## 1.1 量子理论与电子结构的起源 | Quantum Theory and the Origins of Electronic Structure
+
+<BilingualSection titleZh="从带电粒子到稳定原子" titleEn="From charged particles to stable atoms" eyebrow="Martin 1.1 · pp. 2–3">
+  <div class="bilingual-section__zh">
+
+电子结构问题在电子被确认为物质的组成粒子之后才具有现代含义。谱线在磁场中的分裂和气体放电实验给出了电子的电荷符号与很大的荷质比；Rutherford 散射又表明正电荷集中在小而重的原子核内。经典电动力学随即遇到稳定性困难：带负电粒子在核的吸引下若按经典轨道运动，会辐射并失去能量，不能解释稳定原子和离散光谱。
+
+Bohr 的离散轨道模型保留了量子化这一正确方向，却没有给出后来的波函数动力学。1920 年代形成的量子力学把问题改写为 Hamiltonian 在 Hilbert 空间中的本征值问题。电子不再由确定轨道描述，而由概率振幅描述；离散能谱来自算符、边界条件和可归一化要求。自旋与 Pauli 不相容原理进一步决定了多电子态的允许结构。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electronic structure acquired its modern meaning only after the electron was established as a constituent of matter. Magnetic splitting of spectral lines and gas-discharge experiments determined the sign of its charge and its large charge-to-mass ratio; Rutherford scattering then located positive charge in a small, massive nucleus. Classical electrodynamics immediately faced a stability problem: a negative charge moving in an attractive nuclear orbit would radiate and lose energy, contradicting stable atoms and discrete spectra.
+
+Bohr’s discrete-orbit model retained the crucial idea of quantization but not the later dynamics of wavefunctions. Quantum mechanics in the 1920s reformulated the problem as an eigenvalue problem for a Hamiltonian acting in Hilbert space. Electrons were represented by probability amplitudes rather than definite trajectories; discrete spectra followed from the operator, boundary conditions, and normalizability. Spin and the Pauli exclusion principle then constrained the allowed structure of many-electron states.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="相同电子与交换反对称性" titleEn="Identical electrons and exchange antisymmetry">
+  <div class="bilingual-section__zh">
+
+对相同电子交换完整坐标 $\mathbf{x}_i$ 与 $\mathbf{x}_j$ 时，物理概率不能依赖人为编号，但电子的多体波函数必须变号：
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Exchanging the complete coordinates $\mathbf{x}_i$ and $\mathbf{x}_j$ of identical electrons cannot change physical probabilities, while the electronic many-body wavefunction changes sign:
+
+  </div>
+</BilingualSection>
+
+$$
+\Psi(\ldots,\mathbf{x}_i,\ldots,\mathbf{x}_j,\ldots)
+=-\Psi(\ldots,\mathbf{x}_j,\ldots,\mathbf{x}_i,\ldots).
+$$
+
+<BilingualSection compact={true}>
+  <div class="bilingual-section__zh">
+
+令两套坐标相同，交换前后函数值又必须相等，因此有 $\Psi=-\Psi$，只能得到 $\Psi=0$。这就是同一自旋轨道不能被两个电子同时占据的波函数表达。它是费米子交换对称性的结果，不是电子间 Coulomb 排斥的近似说法。即使把电子—电子相互作用设为零，反对称性仍然存在。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If the two complete coordinates are identical, the exchanged value must also equal the original value. Antisymmetry therefore gives $\Psi=-\Psi$, so $\Psi=0$. This is the wavefunction statement that two electrons cannot occupy the same spin orbital. It follows from fermionic exchange symmetry, not from an approximate picture of Coulomb repulsion. Antisymmetry remains even when the electron–electron interaction is set to zero.
+
+  </div>
+</BilingualSection>
+
+<QuantumOriginsTimeline />
