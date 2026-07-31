@@ -118,6 +118,7 @@ jobs:
           .venv-pages-smoke/bin/python scripts/smoke-part06-ch25.py
           .venv-pages-smoke/bin/python scripts/smoke-part06-ch26.py
           .venv-pages-smoke/bin/python scripts/smoke-part06-ch27.py
+          .venv-pages-smoke/bin/python scripts/smoke-part06-ch28.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-a.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-b.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-c.py
