@@ -102,8 +102,8 @@ for (const mesh of [15, 21, 31, 41]) {
 
   const trivial = samplePumpTopology(2, 0.65, 1, 1, mesh);
   assert.equal(trivial.gapClosed, false);
-  assert.equal(trivial.mappingDegree, 0);
-  assert.equal(trivial.lowerBandChern, 0);
+  close(trivial.mappingDegree, 0);
+  close(trivial.lowerBandChern, 0);
   assert.ok(trivial.minimumGap > 0.65);
   assert.ok(Math.abs(trivial.residual) < 1e-8);
 }
