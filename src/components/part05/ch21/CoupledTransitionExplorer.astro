@@ -1,0 +1,279 @@
+---
+import {
+  coupledTransitionModes,
+  sampleCouplingScan,
+} from '../../../data/part05/ch21LinearResponseModels.mjs';
+
+const componentId = 'ch21-coupled-transitions';
+const width = 780;
+const height = 360;
+const pad = { left: 64, right: 30, top: 28, bottom: 58 };
+const defaults = {
+  energy1: 3,
+  energy2: 5,
+  coupling: 0.6,
+  dipole1: 1,
+  dipole2: 1,
+  minCoupling: -1.5,
+  maxCoupling: 1.5,
+};
+const scan = sampleCouplingScan({
+  energy1: defaults.energy1,
+  energy2: defaults.energy2,
+  dipole1: defaults.dipole1,
+  dipole2: defaults.dipole2,
+  minCoupling: defaults.minCoupling,
+  maxCoupling: defaults.maxCoupling,
+  points: 181,
+});
+const current = coupledTransitionModes(defaults);
+const energyMin = Math.min(...scan.map((point) => point.lower.energy)) - 0.25;
+const energyMax = Math.max(...scan.map((point) => point.upper.energy)) + 0.25;
+const xScale = (coupling) => pad.left
+  + (coupling - defaults.minCoupling) / (defaults.maxCoupling - defaults.minCoupling)
+    * (width - pad.left - pad.right);
+const yScale = (energy) => pad.top
+  + (energyMax - energy) / (energyMax - energyMin) * (height - pad.top - pad.bottom);
+const lowerPoints = scan
+  .map((point) => `${xScale(point.coupling).toFixed(2)},${yScale(point.lower.energy).toFixed(2)}`)
+  .join(' ');
+const upperPoints = scan
+  .map((point) => `${xScale(point.coupling).toFixed(2)},${yScale(point.upper.energy).toFixed(2)}`)
+  .join(' ');
+const markerRadius = (strength) => 4 + 6 * Math.sqrt(strength / Math.max(current.outputStrength, 1e-12));
+---
+
+<figure class="chapter-visual coupled-transition" id={componentId}>
+  <figcaption>
+    <strong>跃迁耦合与振子强度重分配 | Transition coupling and oscillator-strength redistribution</strong>
+    <span>原创 Tamm–Dancoff 型二跃迁模型：kernel 耦合改变集体本征模并在 bright/dark 组合之间重新分配谱权。</span>
+    <span lang="en">Original two-transition Tamm–Dancoff-like model: kernel coupling changes the collective eigenmodes and redistributes spectral weight between bright and dark combinations.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      第二跃迁能量 Δ₂
+      <input data-energy2 type="range" min="3.2" max="7" step="0.1" value={defaults.energy2} />
+    </label>
+    <label>
+      kernel 耦合 K₁₂
+      <input data-coupling type="range" min={defaults.minCoupling} max={defaults.maxCoupling} step="0.05" value={defaults.coupling} />
+    </label>
+    <label>
+      第二跃迁偶极 d₂
+      <input data-dipole2 type="range" min="-1.5" max="1.5" step="0.05" value={defaults.dipole2} />
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>二跃迁响应矩阵的本征能量和谱权</title>
+    <desc id={`${componentId}-desc`}>横轴为跃迁间 kernel 耦合。两条曲线是低能和高能集体模式，当前耦合处圆点大小表示各模式的偶极强度。</desc>
+    <line class="axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <polyline class="mode-curve mode-curve--lower" data-lower points={lowerPoints} />
+    <polyline class="mode-curve mode-curve--upper" data-upper points={upperPoints} />
+    <line class="selection-line" data-selection x1={xScale(defaults.coupling)} x2={xScale(defaults.coupling)} y1={pad.top} y2={height - pad.bottom} />
+    <circle class="mode-marker mode-marker--lower" data-lower-marker cx={xScale(defaults.coupling)} cy={yScale(current.lower.energy)} r={markerRadius(current.lower.strength)} />
+    <circle class="mode-marker mode-marker--upper" data-upper-marker cx={xScale(defaults.coupling)} cy={yScale(current.upper.energy)} r={markerRadius(current.upper.strength)} />
+    <text x={pad.left} y={height - 25} text-anchor="middle">−1.5</text>
+    <text x={width - pad.right} y={height - 25} text-anchor="middle">1.5</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 7} text-anchor="middle">kernel coupling K₁₂</text>
+    <text transform={`translate(18 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">mode energy</text>
+    <text class="curve-label" x={width - 170} y={pad.top + 24}>upper mode</text>
+    <text class="curve-label" x={width - 170} y={height - pad.bottom - 18}>lower mode</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>Δ₁ = {defaults.energy1.toFixed(1)}</span>
+    <span>Δ₂ = <output data-energy2-output>{defaults.energy2.toFixed(1)}</output></span>
+    <span>K₁₂ = <output data-coupling-output>{defaults.coupling.toFixed(2)}</output></span>
+    <span>Ω₋ = <output data-lower-energy>{current.lower.energy.toFixed(3)}</output></span>
+    <span>Ω₊ = <output data-upper-energy>{current.upper.energy.toFixed(3)}</output></span>
+    <span>F₋ = <output data-lower-strength>{current.lower.strength.toFixed(3)}</output></span>
+    <span>F₊ = <output data-upper-strength>{current.upper.strength.toFixed(3)}</output></span>
+    <span>F total = <output data-total-strength>{current.outputStrength.toFixed(3)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>$H_{\mathrm{tr}}=\begin{pmatrix}\Delta_1&K_{12}\\K_{12}&\Delta_2\end{pmatrix}$；正交本征向量旋转输入偶极向量 $(d_1,d_2)$。这是有限 Tamm–Dancoff 型模型，不是完整 Casida/BSE 求解器。</p>
+    <p><strong>验收：</strong>本征值等于解析二阶矩阵结果；非零耦合产生 level repulsion；正交旋转严格保持 $F_-+F_+=d_1^2+d_2^2$；当 $\Delta_1=\Delta_2$ 且 $d_1=d_2$ 时，一个组合变暗、另一个增强。</p>
+    <p><strong>边界：</strong>模型没有反共振块、频率依赖 kernel、连续谱、非 Hermitian lifetime、真实轨道积分或 $k$ 点。谱权重重分配不能被解释为任何具体材料的预测。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 Δ₁=3、Δ₂=5、K₁₂=0.6、d₁=d₂=1 的两条模式曲线、当前能量和谱权仍可见；控件不更新。</p>
+  </noscript>
+</figure>
+
+<script>
+  import {
+    coupledTransitionModes,
+    sampleCouplingScan,
+  } from '../../../data/part05/ch21LinearResponseModels.mjs';
+
+  const root = document.getElementById('ch21-coupled-transitions');
+  if (root) {
+    const energy2Input = root.querySelector('[data-energy2]');
+    const couplingInput = root.querySelector('[data-coupling]');
+    const dipole2Input = root.querySelector('[data-dipole2]');
+    const lowerCurve = root.querySelector('[data-lower]');
+    const upperCurve = root.querySelector('[data-upper]');
+    const selectionLine = root.querySelector('[data-selection]');
+    const lowerMarker = root.querySelector('[data-lower-marker]');
+    const upperMarker = root.querySelector('[data-upper-marker]');
+    const energy2Output = root.querySelector('[data-energy2-output]');
+    const couplingOutput = root.querySelector('[data-coupling-output]');
+    const lowerEnergyOutput = root.querySelector('[data-lower-energy]');
+    const upperEnergyOutput = root.querySelector('[data-upper-energy]');
+    const lowerStrengthOutput = root.querySelector('[data-lower-strength]');
+    const upperStrengthOutput = root.querySelector('[data-upper-strength]');
+    const totalStrengthOutput = root.querySelector('[data-total-strength]');
+
+    if (
+      energy2Input instanceof HTMLInputElement
+      && couplingInput instanceof HTMLInputElement
+      && dipole2Input instanceof HTMLInputElement
+      && lowerCurve instanceof SVGPolylineElement
+      && upperCurve instanceof SVGPolylineElement
+      && selectionLine instanceof SVGLineElement
+      && lowerMarker instanceof SVGCircleElement
+      && upperMarker instanceof SVGCircleElement
+      && energy2Output instanceof HTMLOutputElement
+      && couplingOutput instanceof HTMLOutputElement
+      && lowerEnergyOutput instanceof HTMLOutputElement
+      && upperEnergyOutput instanceof HTMLOutputElement
+      && lowerStrengthOutput instanceof HTMLOutputElement
+      && upperStrengthOutput instanceof HTMLOutputElement
+      && totalStrengthOutput instanceof HTMLOutputElement
+    ) {
+      const width = 780;
+      const height = 360;
+      const pad = { left: 64, right: 30, top: 28, bottom: 58 };
+      const energy1 = 3;
+      const dipole1 = 1;
+      const minCoupling = -1.5;
+      const maxCoupling = 1.5;
+      const xScale = (coupling) => pad.left
+        + (coupling - minCoupling) / (maxCoupling - minCoupling)
+          * (width - pad.left - pad.right);
+
+      const update = () => {
+        const energy2 = Number(energy2Input.value);
+        const coupling = Number(couplingInput.value);
+        const dipole2 = Number(dipole2Input.value);
+        const scan = sampleCouplingScan({
+          energy1,
+          energy2,
+          dipole1,
+          dipole2,
+          minCoupling,
+          maxCoupling,
+          points: 181,
+        });
+        const current = coupledTransitionModes({
+          energy1,
+          energy2,
+          coupling,
+          dipole1,
+          dipole2,
+        });
+        const energyMin = Math.min(...scan.map((point) => point.lower.energy)) - 0.25;
+        const energyMax = Math.max(...scan.map((point) => point.upper.energy)) + 0.25;
+        const yScale = (energy) => pad.top
+          + (energyMax - energy) / (energyMax - energyMin) * (height - pad.top - pad.bottom);
+        const x = xScale(coupling);
+        const radius = (strength) => 4
+          + 6 * Math.sqrt(strength / Math.max(current.outputStrength, 1e-12));
+
+        lowerCurve.setAttribute('points', scan
+          .map((point) => `${xScale(point.coupling).toFixed(2)},${yScale(point.lower.energy).toFixed(2)}`)
+          .join(' '));
+        upperCurve.setAttribute('points', scan
+          .map((point) => `${xScale(point.coupling).toFixed(2)},${yScale(point.upper.energy).toFixed(2)}`)
+          .join(' '));
+        selectionLine.setAttribute('x1', String(x));
+        selectionLine.setAttribute('x2', String(x));
+        lowerMarker.setAttribute('cx', String(x));
+        lowerMarker.setAttribute('cy', String(yScale(current.lower.energy)));
+        lowerMarker.setAttribute('r', String(radius(current.lower.strength)));
+        upperMarker.setAttribute('cx', String(x));
+        upperMarker.setAttribute('cy', String(yScale(current.upper.energy)));
+        upperMarker.setAttribute('r', String(radius(current.upper.strength)));
+        energy2Output.value = energy2.toFixed(1);
+        couplingOutput.value = coupling.toFixed(2);
+        lowerEnergyOutput.value = current.lower.energy.toFixed(3);
+        upperEnergyOutput.value = current.upper.energy.toFixed(3);
+        lowerStrengthOutput.value = current.lower.strength.toFixed(3);
+        upperStrengthOutput.value = current.upper.strength.toFixed(3);
+        totalStrengthOutput.value = current.outputStrength.toFixed(3);
+      };
+
+      energy2Input.addEventListener('input', update);
+      couplingInput.addEventListener('input', update);
+      dipole2Input.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .coupled-transition {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    overflow-x: auto;
+  }
+
+  .coupled-transition svg {
+    display: block;
+    width: 100%;
+    min-width: 36rem;
+    height: auto;
+  }
+
+  .axis {
+    stroke: currentColor;
+    stroke-width: 1.4;
+  }
+
+  .mode-curve {
+    fill: none;
+    stroke-width: 2.5;
+  }
+
+  .mode-curve--lower {
+    stroke: currentColor;
+  }
+
+  .mode-curve--upper {
+    stroke: var(--sl-color-accent-high);
+  }
+
+  .selection-line {
+    stroke: currentColor;
+    stroke-dasharray: 6 4;
+  }
+
+  .mode-marker {
+    stroke: var(--sl-color-gray-7);
+    stroke-width: 2;
+  }
+
+  .mode-marker--lower {
+    fill: currentColor;
+  }
+
+  .mode-marker--upper {
+    fill: var(--sl-color-accent-high);
+  }
+
+  text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .curve-label {
+    font-weight: 600;
+  }
+</style>
