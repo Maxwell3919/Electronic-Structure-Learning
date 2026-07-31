@@ -1,0 +1,125 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reading-orientation" class="chapter-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章处理的对象" titleEn="The object of this chapter" eyebrow="Orientation">
+  <div class="bilingual-section__zh">
+
+本章把一般三维独立粒子方程限制到原子中心势。球对称性把角变量交给球谐函数，把原本的三维偏微分方程化为每个角动量通道的一维径向本征值问题。这个约化同时暴露了核附近边界条件、离心势、径向节点、芯态与价态的空间尺度，以及原子自洽计算的数值结构。
+
+Martin 在此不追求完整的原子光谱学。原子被用作凝聚态电子结构的准备问题：Chapter 11 的赝势从全电子原子参考态出发；Chapter 16 的增广方法需要原子式部分波；原子球近似则把径向方程连接到能带宽度与体积依赖的定性判断。
+
+前置知识包括定态 Schrödinger 方程、角动量本征值、Kohn–Sham 方程、Hartree 势、交换关联势和自洽迭代。正文采用 Hartree 原子单位，除非另有说明：$\hbar=m_e=e=4\pi\varepsilon_0=1$，能量单位为 Hartree，长度单位为 Bohr。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+This chapter restricts a general three-dimensional independent-particle equation to a central atomic potential. Spherical symmetry assigns the angular variables to spherical harmonics and converts the original partial differential equation into a one-dimensional radial eigenproblem for each angular-momentum channel. The reduction exposes the nuclear boundary condition, centrifugal potential, radial nodes, the different length scales of core and valence states, and the numerical structure of a self-consistent atomic calculation.
+
+Martin does not attempt a complete treatment of atomic spectroscopy. The atom is used as preparation for condensed-matter electronic structure: Chapter 11 constructs pseudopotentials from all-electron atomic reference states; the augmentation methods of Chapter 16 require atom-like partial waves; and the atomic-sphere approximation connects radial equations to qualitative estimates of band width and volume dependence.
+
+The prerequisites are the stationary Schrödinger equation, angular-momentum eigenvalues, the Kohn–Sham equation, Hartree and exchange-correlation potentials, and self-consistent iteration. Unless stated otherwise, the exposition uses Hartree atomic units, $\hbar=m_e=e=4\pi\varepsilon_0=1$, with energy in Hartree and length in Bohr.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本章后应能判断" titleEn="Judgments expected after this chapter" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>三维轨道、径向函数、约化径向函数和径向概率分布分别是什么；</li>
+      <li>离心项来自何处，以及它为什么不是额外的相互作用势；</li>
+      <li>原点与无穷远边界条件如何限制可接受解；</li>
+      <li>球平均开壳层计算保留和丢失了哪些信息；</li>
+      <li>非相对论、标量相对论和显式自旋—轨道计算的物理内容；</li>
+      <li>总能差、轨道本征值和实验加电子或去电子能量之间的边界；</li>
+      <li>原子计算、原子球模型与真实晶体计算之间还缺少哪些验证。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>what distinguishes a three-dimensional orbital, a radial function, a reduced radial function, and a radial probability distribution;</li>
+      <li>where the centrifugal term comes from and why it is not an additional interaction potential;</li>
+      <li>how the origin and asymptotic boundary conditions restrict admissible solutions;</li>
+      <li>which information is retained or discarded by a spherically averaged open-shell calculation;</li>
+      <li>the physical content of nonrelativistic, scalar-relativistic, and explicit spin–orbit calculations;</li>
+      <li>the boundary between total-energy differences, orbital eigenvalues, and experimental addition or removal energies;</li>
+      <li>which validation steps remain between an atomic calculation, an atomic-sphere model, and a real crystal calculation.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<span id="source-map" class="chapter-anchor" aria-hidden="true"></span>
+
+## 来源地图 | Source Map
+
+【Martin 原书 | Martin source】Chapter 10 的印刷页范围为 215–227，习题从 228 页开始。下表只记录目录级定位与网站处理边界，不转录教材正文。
+
+| Martin 分节 | 印刷页 | 网站中的处理范围 | 当前状态 |
+|---|---:|---|---|
+| 10.1 One-Electron Radial Schrödinger Equation | 215 | 变量分离、径向方程、边界条件、归一化、氢样极限、对数网格 | complete |
+| 10.2 Independent-Particle Equations: Spherical Potentials | 217 | 球对称 Kohn–Sham/Hartree–Fock、自洽势、Hartree 势、占据与收敛 | complete |
+| 10.3 Spin–Orbit Interaction | 219 | 相对论来源、$\mathbf L\!\cdot\!\mathbf S$、标量相对论与显式 SOC | complete |
+| 10.4 Open-Shell Atoms: Nonspherical Potentials | 219 | 多重态、球平均、spin-unrestricted、非球对称多极展开 | complete |
+| 10.5 Example of Atomic States: Transition Elements | 221 | 局域化尺度、semicore、3d–4s 竞争、总能差和固体外推边界 | complete |
+| 10.6 Delta-SCF | 224 | 电离能、电子亲和能、激发与相互作用能、transition-state 近似 | complete |
+| 10.7 Atomic Sphere Approximation in Solids | 225 | 原子球边界条件、Wronskian 关系、带宽估计及其模型边界 | complete |
+
+【补充推导 | Supplemental derivation】球坐标 Laplacian 的角动量形式、原点 Frobenius 分析、球对称 Hartree 势、$\mathbf L\cdot\mathbf S$ 本征值和 Wronskian 恒等式均展开到可检查步骤。它们用于连接 Martin 的公式，不改变原书的章节边界。
+
+【外部权威来源 | External primary source】本章不依赖版本敏感的软件参数。数值实现只说明一般径向离散和验证层级；具体原子程序、赝势生成器和库版本留到 Chapter 11 并以官方资料核验。
+
+<span id="objects-and-notation" class="chapter-anchor" aria-hidden="true"></span>
+
+## 物理对象与符号 | Physical Objects and Notation
+
+<BilingualSection titleZh="同一轨道的三种径向表达" titleEn="Three radial representations of one orbital">
+  <div class="bilingual-section__zh">
+
+对中心势中的空间轨道，本文采用
+
+$$
+\psi_{nlm}(\mathbf r)=R_{nl}(r)Y_{lm}(\Omega)
+=\frac{u_{nl}(r)}{r}Y_{lm}(\Omega),\qquad \Omega=(\theta,\phi).
+$$
+
+$\psi_{nlm}$ 是三维轨道；$R_{nl}$ 是径向函数；$u_{nl}=rR_{nl}$ 是约化径向函数。Martin 的记号把 $R_{nl}$ 写成 $\psi_{nl}(r)$，把 $u_{nl}$ 写成 $\phi_{nl}(r)$。网站使用 $R$ 与 $u$，并在引用原书公式时注明映射。
+
+$|R_{nl}(r)|^2$ 本身不是半径落在 $[r,r+dr]$ 的概率。完成角积分后，径向概率为
+
+$$
+P_{nl}(r)\,dr=r^2|R_{nl}(r)|^2dr=|u_{nl}(r)|^2dr.
+$$
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a spatial orbital in a central potential, this chapter uses
+
+$$
+\psi_{nlm}(\mathbf r)=R_{nl}(r)Y_{lm}(\Omega)
+=\frac{u_{nl}(r)}{r}Y_{lm}(\Omega),\qquad \Omega=(\theta,\phi).
+$$
+
+Here $\psi_{nlm}$ is the three-dimensional orbital, $R_{nl}$ is the radial function, and $u_{nl}=rR_{nl}$ is the reduced radial function. Martin denotes $R_{nl}$ by $\psi_{nl}(r)$ and $u_{nl}$ by $\phi_{nl}(r)$. The website uses $R$ and $u$ and states the mapping when it refers to Martin’s equations.
+
+The quantity $|R_{nl}(r)|^2$ alone is not the probability for the radius to lie in $[r,r+dr]$. After integrating over the angles, the radial probability is
+
+$$
+P_{nl}(r)\,dr=r^2|R_{nl}(r)|^2dr=|u_{nl}(r)|^2dr.
+$$
+
+  </div>
+</BilingualSection>
+
+| 对象 | 定义或约定 | 不能混同的对象 |
+|---|---|---|
+| $Y_{lm}(\Omega)$ | 归一化复球谐函数，$\int |Y_{lm}|^2d\Omega=1$ | 实球谐函数只是另一组线性组合，图形相位约定不同 |
+| $n(\mathbf r)$ | 三维电子数密度，$\int n(\mathbf r)d^3r=N$ | 单轨道径向概率 $|u|^2$ |
+| $\bar n(r)$ | 对角变量作球平均后的密度 | 非球对称开壳层密度的完整信息 |
+| $V_{\mathrm{eff}}$ | 给定近似下的独立粒子有效势 | 总能、交换关联能或真实电子—电子相互作用本身 |
+| $\varepsilon_{nl}$ | 独立粒子方程的本征值 | 一般不等于总能差；严格例外需单独说明 |
+| $E(N)$ | 对固定粒子数和指定状态进行自洽极小化所得总能 | 单个轨道能量之和 |
+| core / semicore / valence | 按能量、空间范围和计算目标划分的状态 | 仅凭主量子数或文件标签不能普适确定 |
