@@ -1,0 +1,81 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[7];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-h-contents-title">
+  <h2 id="appendix-h-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、gauge 与约定 | Objects, gauges, and conventions</a></li>
+    <li><a href="#section-h-1">H.1 能量密度 | Energy density</a></li>
+    <li><a href="#section-h-2">H.2 应力密度 | Stress density</a></li>
+    <li><a href="#section-h-3">H.3 积分量 | Integrated quantities</a></li>
+    <li><a href="#section-h-4">H.4 电子局域函数 | Electron localization function</a></li>
+    <li><a href="#review">交叉引用、误判、练习与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-h-source-title">
+  <h2 id="appendix-h-source-title">来源地图 | Source map</h2>
+  <p>
+    下表记录 Martin Appendix H 的原节标题和印刷页定位。网站正文、推导、图形、数值模型与练习均为原创，不转录教材正文、原图、进一步阅读段落或练习。
+  </p>
+  <p lang="en">
+    The table records the section titles and printed-page locators of Martin Appendix H. Website exposition, derivations, diagrams, numerical models, and exercises are original and do not reproduce the textbook body, source figures, further-reading prose, or exercises.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>
+            {section.id === 'H.1'
+              ? '局域能量分解、Coulomb/kinetic gauges、密度 Laplacian、fermionic excess kinetic energy 与 per-particle form'
+              : section.id === 'H.2'
+                ? 'force density、stress divergence、metric derivative、stress-density gauge 与 dimension dependence'
+                : section.id === 'H.3'
+                  ? 'total/surface/region integrals、boundary flux、gauge-invariant differences 与局域分区边界'
+                  : 'spin-resolved ELF、Weizsäcker reference、Thomas–Fermi normalization、单电子与均匀气体极限、解释边界'}
+          </td>
+          <td>substantive; validation pending</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Further reading and exercises, printed pp. 635–636</td>
+        <td>Source prose, figures, and exercises not reproduced</td>
+        <td>原创 gauge、积分、stress flux、ELF 极限与诊断练习 | Original gauge, integration, stress-flux, ELF-limit, and diagnostic exercises</td>
+        <td>original replacement</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 { margin-top: 0; }
+  .appendix-contents ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
+  .appendix-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol { columns: 1; }
+  }
+</style>
