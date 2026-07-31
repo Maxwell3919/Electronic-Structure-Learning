@@ -39,6 +39,7 @@ https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.
 - Part I · [Chapter 2 · Overview](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-02-overview/)
 - Part I · [Chapter 3 · Theoretical Background](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-03-theoretical-background/)
 - Part I · [Chapter 4 · Periodic Solids and Electron Bands](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-04-periodic-solids-and-electron-bands/)
+- Part I · [Chapter 5 · Uniform Electron Gas and sp-Bonded Metals](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-05-uniform-electron-gas-and-sp-bonded-metals/)
 - Part II · [Chapter 6 · Density Functional Theory: Foundations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-06-density-functional-theory-foundations/)
 - Part II · [Chapter 7 · The Kohn–Sham Auxiliary System](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-07-the-kohn-sham-auxiliary-system/)
 - Part II · [Chapter 8 · Functionals for Exchange and Correlation I](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-08-functionals-for-exchange-and-correlation-i/)
@@ -47,15 +48,20 @@ https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.
 - Part III · [Chapter 11 · Pseudopotentials](https://maxwell3919.github.io/Electronic-Structure-Learning/part-03-important-preliminaries-on-atoms/chapter-11-pseudopotentials/)
 - Part IV · [Chapter 12 · Plane Waves and Grids: Basics](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-12-plane-waves-and-grids-basics/)
 - Part IV · [Chapter 13 · Plane Waves and Real-Space Methods: Full Calculations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-13-plane-waves-and-real-space-methods-full-calculations/)
+- Part IV · [Chapter 14 · Localized Orbitals: Tight-Binding](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-14-localized-orbitals-tight-binding/)
 - Part V · [Chapter 19 · Quantum Molecular Dynamics (QMD)](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-19-quantum-molecular-dynamics-qmd/)
 - Part V · [Chapter 20 · Response Functions: Phonons and Magnons](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-20-response-functions-phonons-and-magnons/)
 - Part VI · [Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-25-topology-of-the-electronic-structure-of-a-crystal-introduction/)
 - Part VI · [Chapter 26 · Two-Band Models: Berry Phase, Winding, and Topology](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-26-two-band-models-berry-phase-winding-and-topology/)
+- Part VI · [Chapter 27 · Topological Insulators I: Two Dimensions](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-27-topological-insulators-i-two-dimensions/)
 - Part VII · [Appendix A · Functional Equations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-a-functional-equations/)
 - Part VII · [Appendix B · LSDA and GGA Functionals](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-b-lsda-and-gga-functionals/)
 - Part VII · [Appendix C · Adiabatic Approximation](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-c-adiabatic-approximation/)
+- Part VII · [Appendix D · Perturbation Theory, Response Functions, and Green’s Functions](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-d-perturbation-theory-response-functions-and-green-s-functions/)
+- Part VII · [Appendix E · Dielectric Functions and Optical Properties](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-e-dielectric-functions-and-optical-properties/)
+- Part VII · [Appendix F · Coulomb Interactions in Extended Systems](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-f-coulomb-interactions-in-extended-systems/)
 
-其他页面仍处于 `outline` 或独立 PR 编写状态。每个 substantive 单元包含其适用范围内的双语正文、推导、来源定位、原创练习或教学可视化，并通过相应的静态构建与 chapter-local validation 门槛。
+Part I Chapters 1–5 和 Part II Chapters 6–9 已形成完整 Part 级综合入口。其他页面仍处于 `outline` 或独立 PR 编写状态。每个 substantive 单元包含其适用范围内的双语正文、推导、来源定位、原创练习或教学可视化，并通过相应的静态构建与 chapter-local validation 门槛。
 
 任何单元的 `complete` 状态只说明网站内容、来源定位、声明的教学模型和部署门槛已经完成，不自动验证其中涉及的真实材料、计算方法或科学结论。
 
@@ -100,7 +106,7 @@ npm run check
 3. 所有已注册 substantive 单元的 chapter-local deterministic validators；
 4. Astro/MDX/KaTeX 静态构建。
 
-部署 workflow 还会在实际 GitHub Pages URL 上运行 exact-SHA Chrome smoke，覆盖已注册页面的桌面、窄屏、键盘交互和无 JavaScript fallback。任何验证通过都只支持其声明的内容与网站行为，不证明真实材料计算或科学主张正确。
+部署 workflow 还会在实际 GitHub Pages URL 上运行 exact-SHA Chrome smoke，覆盖已注册章节、附录和 Part 级综合入口的桌面、窄屏、键盘交互和无 JavaScript fallback。任何验证通过都只支持其声明的内容与网站行为，不证明真实材料计算或科学主张正确。
 
 ## 维护入口
 
