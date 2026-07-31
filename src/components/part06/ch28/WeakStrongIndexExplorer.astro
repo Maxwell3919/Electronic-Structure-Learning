@@ -24,7 +24,7 @@ const nodes = [
     <legend>切换每个 TRIM 的 occupied-pair parity product δ | toggle each occupied-pair parity product</legend>
     {nodes.map((node, index) => (
       <label>
-        <input type="checkbox" checked={initialParities[index] === -1} data-ws-parity={index} />
+        <input type="checkbox" checked={initialParities[index] === -1} data-ws-parity={index} data-ws-label={node.label} />
         <span>{node.label}: δ={initialParities[index] === -1 ? '−1' : '+1'}</span>
       </label>
     ))}
@@ -89,8 +89,9 @@ const nodes = [
       inputs.forEach((input, index) => {
         if (!(input instanceof HTMLInputElement)) return;
         const value = parities[index];
+        const coordinate = input.dataset.wsLabel ?? String(index).padStart(3, '0');
         const label = input.closest('label')?.querySelector('span');
-        if (label) label.textContent = `${String(index).padStart(3, '0')}: δ=${value < 0 ? '−1' : '+1'}`;
+        if (label) label.textContent = `${coordinate}: δ=${value < 0 ? '−1' : '+1'}`;
         const node = root.querySelector(`[data-ws-node="${index}"]`);
         node?.classList.toggle('ws-node--negative', value < 0);
         setText(`[data-ws-node-text="${index}"]`, value < 0 ? 'δ=−1' : 'δ=+1');
