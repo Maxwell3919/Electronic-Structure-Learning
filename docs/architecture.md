@@ -7,16 +7,20 @@
         │
         ├── Astro / Starlight 导航与静态页面
         ├── KaTeX 公式渲染
-        └── Astro / TypeScript 交互组件
+        ├── Astro 交互组件
+        └── 共享确定性数学内核
                     │
-                    ▼
-              静态构建产物
-                    │
-                    ▼
-         Pages/CDN 公网托管（后续）
+                    ├── Node 验证脚本
+                    └── 浏览器交互
+                              │
+                              ▼
+                        静态构建产物
+                              │
+                              ▼
+                   Pages/CDN 公网托管（后续）
 ```
 
-网站采用静态优先架构。教材式正文在 MDX 中维护，只有确实需要交互的局部组件加载客户端代码。
+网站采用静态优先架构。教材式正文在 MDX 中维护，只有确实需要交互的局部组件加载客户端代码。可重复的数学逻辑应尽量从 UI 中拆出，使 Node 验证脚本和浏览器组件使用同一实现。
 
 ## 2. 权威边界
 
@@ -32,37 +36,57 @@
 
 ## 3. 内容层
 
-当前内容入口位于：
-
 ```text
 src/content/docs/
 ├── index.mdx
 ├── start-here.mdx
 ├── reading-system.mdx
+├── labs/
+│   └── scf-fixed-point-and-mixing.mdx
 └── part-01-overview-and-background/
     ├── index.mdx
     └── chapter-01-introduction.mdx
 ```
 
-第一阶段只验证 Part I 与 Chapter 1。完整 Martin 7 Part / 46 单元映射，以及 Sholl–Steckel 实践交叉索引，应在后续独立 PR 中加入。
+`templates/chapter-template.mdx` 提供正式章节的最低信息骨架，但不要求正文机械复制一组固定小标题。完整 Martin 课程映射与 Sholl–Steckel 实践交叉索引仍属于后续独立工作。
 
-## 4. 组件层
+## 4. 组件与数学内核
 
-初始公共组件：
+公共组件：
 
 - `SourceNote.astro`：来源和定位；
 - `DerivationBlock.astro`：推导前提和正文容器；
-- `VisualizationPlaceholder.astro`：在实现前固定模型、控制量、观察量、验证和边界。
+- `VisualizationPlaceholder.astro`：实现前固定模型、控制量、观察量、验证和边界；
+- `SCFIterationVisualizer.astro`：首个可运行交互实验。
+
+SCF 组件不在 UI 中复制数学公式。共享内核位于：
+
+```text
+src/lib/scfToyModel.mjs
+```
+
+验证脚本直接导入同一内核：
+
+```text
+scripts/validate-scf-model.mjs
+```
 
 后续组件优先级：
 
-1. SCF 固定点与 mixing 可视化；
-2. 平面波截断能和目标 observable 收敛；
-3. k 点采样、能带路径与 DOS；
-4. 晶体结构、实空间/倒空间和布里渊区；
-5. 声子、振动模和电子—声子耦合数据展示。
+1. 平面波截断能和目标 observable 收敛；
+2. k 点采样、能带路径与 DOS；
+3. 晶体结构、实空间/倒空间和布里渊区；
+4. 声子、振动模和电子—声子耦合数据展示。
 
-## 5. 科学数据流
+## 5. 可视化与数据契约
+
+- `schemas/visualization-spec.schema.json` 约束教学模型、派生数据图和静态示意图的最低元数据；
+- `schemas/derived-dft-data.schema.json` 约束进入网站的轻量 DFT 派生数据；
+- 解释规则见 `docs/visualization-and-data-contract.md`。
+
+Schema 文件存在只说明契约已定义；在验证器真正执行前，不能声称所有数据文件已经通过 Schema 校验。
+
+## 6. 科学数据流
 
 ```text
 外部 QE/VASP/其他代码计算
@@ -71,7 +95,7 @@ src/content/docs/
 解析器读取原始输出
           │
           ▼
-校验单位、参考、网格、维度和 provenance
+校验身份、单位、参考、网格、维度和 provenance
           │
           ▼
 生成小型 JSON / CSV / CIF / XYZ
@@ -82,7 +106,7 @@ src/content/docs/
 
 网页不直接运行生产级 QE、VASP、DFPT 或 EPW 任务。浏览器中的数值模拟仅用于教学模型，必须标明与真实计算之间的差异。
 
-## 6. 暂不引入
+## 7. 暂不引入
 
 在出现明确需求前，不引入：
 

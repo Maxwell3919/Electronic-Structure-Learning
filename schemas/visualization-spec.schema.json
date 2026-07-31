@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://electronic-structure-learning.invalid/schemas/visualization-spec.schema.json",
+  "title": "Electronic Structure Learning Visualization Specification",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "kind",
+    "model",
+    "controls",
+    "observables",
+    "validation",
+    "boundary",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["interactive-model", "derived-data", "static-diagram"]
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "controls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type", "default"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["range", "number", "select", "toggle", "button"]
+          },
+          "default": {},
+          "minimum": { "type": "number" },
+          "maximum": { "type": "number" },
+          "step": { "type": "number", "exclusiveMinimum": 0 },
+          "unit": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "observables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "unit", "reference"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "unit": { "type": ["string", "null"] },
+          "reference": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "validation": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["sourceClass", "source"],
+      "properties": {
+        "sourceClass": {
+          "type": "string",
+          "enum": ["original-model", "derived-computation", "external-open-data"]
+        },
+        "source": { "type": "string", "minLength": 1 },
+        "license": { "type": ["string", "null"] },
+        "generatedAt": { "type": ["string", "null"], "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
