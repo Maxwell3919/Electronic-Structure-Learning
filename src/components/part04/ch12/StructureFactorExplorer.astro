@@ -17,7 +17,7 @@ const bars = orders.map((order) => ({
 
   <label class="structure-factor__control">
     <span>第二个原子的分数坐标 τ/a | Fractional offset τ/a</span>
-    <input aria-label="Second site fractional offset" type="range" min="0" max="1" step="0.01" value={defaultOffset} data-sf-offset />
+    <input aria-label="Second site fractional offset" type="range" min="0" max="0.99" step="0.01" value={defaultOffset} data-sf-offset />
     <output data-sf-offset-output>{defaultOffset.toFixed(2)}</output>
   </label>
 
