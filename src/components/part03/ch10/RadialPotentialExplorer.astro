@@ -1,0 +1,137 @@
+---
+const width = 760;
+const height = 330;
+const margin = { left: 58, right: 24, top: 24, bottom: 48 };
+const defaultZ = 1;
+const defaultL = 1;
+
+const sample = (z, l) => {
+  const points = [];
+  for (let index = 0; index <= 240; index += 1) {
+    const r = 0.18 + (11.82 * index) / 240;
+    const coulomb = -z / r;
+    const centrifugal = (l * (l + 1)) / (2 * r * r);
+    points.push({ r, coulomb, centrifugal, total: coulomb + centrifugal });
+  }
+  return points;
+};
+
+const x = (r) => margin.left + ((r - 0.18) / 11.82) * (width - margin.left - margin.right);
+const y = (value) => {
+  const clipped = Math.max(-8, Math.min(8, value));
+  return margin.top + ((8 - clipped) / 16) * (height - margin.top - margin.bottom);
+};
+const pathFor = (points, key) => points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.r).toFixed(2)} ${y(point[key]).toFixed(2)}`).join(' ');
+const defaults = sample(defaultZ, defaultL);
+---
+
+<figure class="chapter-visual radial-potential" data-radial-potential>
+  <figcaption>
+    <strong>原创教学模型：径向有效势 | Original teaching model: radial effective potential</strong>
+    <span>调节核电荷 $Z$ 与角动量 $l$，比较 $-Z/r$、$l(l+1)/(2r^2)$ 和二者之和。纵轴在显示时截断为 $[-8,8]$ Ha。</span>
+    <span lang="en">Vary nuclear charge $Z$ and angular momentum $l$ to compare $-Z/r$, $l(l+1)/(2r^2)$, and their sum. The displayed vertical range is clipped to $[-8,8]$ Ha.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>核电荷 | Nuclear charge $Z$: <output data-z-output>{defaultZ}</output></span>
+      <input data-z type="range" min="1" max="6" step="1" value={defaultZ} aria-label="Nuclear charge Z" />
+    </label>
+    <label>
+      <span>角动量 | Angular momentum $l$: <output data-l-output>{defaultL}</output></span>
+      <input data-l type="range" min="0" max="4" step="1" value={defaultL} aria-label="Angular momentum l" />
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="radial-potential-title radial-potential-desc">
+    <title id="radial-potential-title">Coulomb, centrifugal, and total radial effective potential</title>
+    <desc id="radial-potential-desc">Interactive analytic curves in Hartree atomic units from 0.18 to 12 Bohr.</desc>
+    <line class="plot-axis" x1={margin.left} y1={height - margin.bottom} x2={width - margin.right} y2={height - margin.bottom} />
+    <line class="plot-axis" x1={margin.left} y1={margin.top} x2={margin.left} y2={height - margin.bottom} />
+    <line class="plot-guide" x1={margin.left} y1={y(0)} x2={width - margin.right} y2={y(0)} />
+    <path data-coulomb d={pathFor(defaults, 'coulomb')} class="radial-potential__coulomb" />
+    <path data-centrifugal d={pathFor(defaults, 'centrifugal')} class="radial-potential__centrifugal" />
+    <path data-total d={pathFor(defaults, 'total')} class="radial-potential__total" />
+    <text x={width / 2} y={height - 10} text-anchor="middle">$r$ (Bohr)</text>
+    <text x="16" y={height / 2} transform={`rotate(-90 16 ${height / 2})`} text-anchor="middle">energy (Ha)</text>
+    <text x={margin.left + 8} y={margin.top + 15}>display: −8…8 Ha</text>
+  </svg>
+
+  <div class="radial-potential__legend" aria-label="Curve legend">
+    <span><i class="legend-coulomb"></i> Coulomb $-Z/r$</span>
+    <span><i class="legend-centrifugal"></i> centrifugal $l(l+1)/(2r^2)$</span>
+    <span><i class="legend-total"></i> total</span>
+  </div>
+
+  <p class="chapter-visual__readout" aria-live="polite">
+    <span>在 $r=1\,a_0$：$V_C=$ <strong data-vc>-1.000</strong> Ha；$V_l=$ <strong data-vl>1.000</strong> Ha；V_eff = <strong data-vt>0.000</strong> Ha。</span>
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>验收：</strong>$l=0$ 时离心曲线必须恒为零；固定 $r$ 时，从 $l$ 改为 $l+1$，离心能增加 $(l+1)/r^2$ Ha。</p>
+    <p lang="en"><strong>Acceptance:</strong> the centrifugal curve must vanish identically for $l=0$; at fixed $r$, changing $l$ to $l+1$ raises it by $(l+1)/r^2$ Ha.</p>
+    <p><strong>边界：</strong>这是纯 Coulomb 中心势的解析图，不含屏蔽、交换关联、有限核尺寸或相对论修正，不能代表真实多电子原子。</p>
+    <p lang="en"><strong>Boundary:</strong> this analytic Coulomb model omits screening, exchange-correlation, finite-nucleus, and relativistic effects and does not represent a real many-electron atom.</p>
+  </div>
+
+  <noscript><p>无 JavaScript 时显示默认 $Z=1,l=1$ 的静态曲线；公式和验收关系仍可用于手工检查。</p></noscript>
+</figure>
+
+<script>
+  const radialPotentialPath = (z, l, key) => {
+    const width = 760;
+    const height = 330;
+    const margin = { left: 58, right: 24, top: 24, bottom: 48 };
+    const x = (r) => margin.left + ((r - 0.18) / 11.82) * (width - margin.left - margin.right);
+    const y = (value) => {
+      const clipped = Math.max(-8, Math.min(8, value));
+      return margin.top + ((8 - clipped) / 16) * (height - margin.top - margin.bottom);
+    };
+    const values = [];
+    for (let index = 0; index <= 240; index += 1) {
+      const r = 0.18 + (11.82 * index) / 240;
+      const coulomb = -z / r;
+      const centrifugal = (l * (l + 1)) / (2 * r * r);
+      const point = { coulomb, centrifugal, total: coulomb + centrifugal };
+      values.push(`${index === 0 ? 'M' : 'L'} ${x(r).toFixed(2)} ${y(point[key]).toFixed(2)}`);
+    }
+    return values.join(' ');
+  };
+
+  document.querySelectorAll('[data-radial-potential]').forEach((root) => {
+    const zInput = root.querySelector('[data-z]');
+    const lInput = root.querySelector('[data-l]');
+    const update = () => {
+      const z = Number(zInput.value);
+      const l = Number(lInput.value);
+      root.querySelector('[data-z-output]').textContent = String(z);
+      root.querySelector('[data-l-output]').textContent = String(l);
+      root.querySelector('[data-coulomb]').setAttribute('d', radialPotentialPath(z, l, 'coulomb'));
+      root.querySelector('[data-centrifugal]').setAttribute('d', radialPotentialPath(z, l, 'centrifugal'));
+      root.querySelector('[data-total]').setAttribute('d', radialPotentialPath(z, l, 'total'));
+      const vc = -z;
+      const vl = (l * (l + 1)) / 2;
+      root.querySelector('[data-vc]').textContent = vc.toFixed(3);
+      root.querySelector('[data-vl]').textContent = vl.toFixed(3);
+      root.querySelector('[data-vt]').textContent = (vc + vl).toFixed(3);
+    };
+    zInput.addEventListener('input', update);
+    lInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .radial-potential svg { width: 100%; min-height: 17rem; margin-top: 1rem; }
+  .radial-potential svg text { fill: currentColor; font-size: 13px; }
+  .radial-potential path { fill: none; stroke-width: 2.5; }
+  .radial-potential__coulomb { stroke: #3273dc; }
+  .radial-potential__centrifugal { stroke: #d97706; }
+  .radial-potential__total { stroke: #8b5cf6; stroke-width: 3.2; }
+  .radial-potential__legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.5rem; }
+  .radial-potential__legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .radial-potential__legend i { display: inline-block; width: 1.4rem; height: 0.18rem; }
+  .legend-coulomb { background: #3273dc; }
+  .legend-centrifugal { background: #d97706; }
+  .legend-total { background: #8b5cf6; }
+</style>
