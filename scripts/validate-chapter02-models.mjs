@@ -73,7 +73,10 @@ for (const equation of ['2.2', '2.3', 'D.11']) {
 }
 assert.ok(stonerAudit.includes('h=-V_m'), 'Stoner audit must define the sign map h = -V_m');
 assert.ok(stonerAudit.includes('I_h=-I_{V_m}'), 'Stoner audit must transform the kernel together with the field');
-assert.ok(stonerAudit.includes('m=-\\delta E/\\delta V_m'), 'Stoner audit must retain Martin’s conjugate-potential definition');
+assert.ok(
+  stonerAudit.includes('m(\\mathbf r)=-\\frac{\\delta E}{\\delta V_m(\\mathbf r)}'),
+  'Stoner audit must retain Martin’s full conjugate-potential definition',
+);
 assert.match(stonerAudit, /source-convention ambiguity|来源约定审计/);
 assert.match(stonerAudit, /confirmed erratum|已确认勘误/);
 assert.match(stonerAudit, /per-spin or two-spin DOS|单自旋或双自旋 DOS/);
