@@ -1,0 +1,201 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="method-comparison" class="chapter-anchor" aria-hidden="true"></span>
+
+## 方法比较与实际计算连接 | Method Comparison and Connection to Computation
+
+<BilingualSection titleZh="固定比较维度" titleEn="Fixed comparison dimensions">
+  <div class="bilingual-section__zh">
+
+| 计算路线 | 主要全局表示 | 核附近处理 | 主要矩阵/算符特征 | 独立控制参数 | 主要风险 |
+|---|---|---|---|---|---|
+| norm-conserving plane waves | 正交平面波 + FFT 网格 | 平滑赝势与非局域 projectors | 动能对角；局域势 FFT；projector 低秩 | wavefunction cutoff、density grid、k mesh | hard potential、cutoff 成本、赝势 transferability |
+| ultrasoft / PAW plane waves | 平滑轨道 + augmentation 数据 | generalized overlap / all-electron reconstruction | 广义本征或 overlap；one-center terms | cutoff、augmentation grid、dataset、sphere/partial waves | augmentation/overlap 一致性、dataset 依赖、force/stress 项 |
+| real-space grid / FE / multiresolution | 点值或局域单元/尺度函数 | 赝势、PAW 或局域核处理 | 局部稀疏或层级算符 | spacing、order、refinement、domain | boundary conditions、grid anisotropy、long-range Coulomb |
+| plane-wave hybrid/HF | 平面波轨道与 pair densities | 同所用 pseudo/PAW | occupied-pair 非局域 exchange；Coulomb kernel | k mesh、exchange cutoff/grid、singularity treatment | 成本、q=0 处理、SCF 稳定性 |
+| supercell finite/low-D system | 以上任一路线 + 人工周期 cell | 随底层方法 | 镜像通过电子/Coulomb/弹性通道耦合 | cell size/shape、vacuum、alignment/correction | finite-size limit、charged/dipolar images、folding 误读 |
+
+“更软”“更快”“更准确”都需要给出元素、价电子集合、functional、target observable、并行规模和接受误差。PAW 可在较低 cutoff 恢复核附近信息，但不自动消除 dataset 或 frozen-core 误差；real-space 稀疏矩阵也不自动保证更短 wall time。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+| Route | Main global representation | Core-region treatment | Matrix/operator character | Independent controls | Main risks |
+|---|---|---|---|---|---|
+| norm-conserving plane waves | orthogonal plane waves + FFT grid | smooth pseudopotential and nonlocal projectors | diagonal kinetic term; FFT local potential; low-rank projectors | wavefunction cutoff, density grid, k mesh | hard potentials, cutoff cost, transferability |
+| ultrasoft / PAW plane waves | smooth orbitals + augmentation data | generalized overlap / all-electron reconstruction | generalized eigenproblem or overlap; one-centre terms | cutoff, augmentation grid, dataset, sphere/partial waves | augmentation/overlap consistency, dataset dependence, force/stress terms |
+| real-space grid / FE / multiresolution | point values or local element/scale functions | pseudopotential, PAW, or local core treatment | local sparse or hierarchical operators | spacing, order, refinement, domain | boundaries, grid anisotropy, long-range Coulomb |
+| plane-wave hybrid/HF | plane-wave orbitals and pair densities | chosen pseudo/PAW treatment | occupied-pair nonlocal exchange and Coulomb kernel | k mesh, exchange cutoff/grid, singularity treatment | cost, q=0 treatment, SCF stability |
+| supercell finite/low-D system | any route above plus an artificial periodic cell | inherited from the base method | images couple electronically, electrostatically, or elastically | cell size/shape, vacuum, alignment/correction | finite-size limit, charged/dipolar images, folding misinterpretation |
+
+“Soft”, “fast”, and “accurate” require chemical elements, valence set, functional, target observable, parallel scale, and acceptance error. PAW may recover core-region information at a lower cutoff but does not automatically remove dataset or frozen-core error. A sparse real-space matrix does not automatically imply a shorter wall time.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="从理论到科学解释的验证链" titleEn="Validation chain from theory to scientific interpretation" kind="practice">
+  <div class="bilingual-section__zh">
+
+```text
+Hamiltonian / functional / pseudo-or-PAW dataset
+→ structure, charge, spin, occupations and boundary conditions
+→ cutoff / grid / k mesh / supercell representation
+→ fixed-potential eigensolver residual
+→ density-or-potential SCF residual
+→ total energy, force and stress consistency
+→ target observable convergence
+→ method applicability and scientific interpretation
+```
+
+每个箭头都需要输入记录和接受标准。后一个门槛不能自动回填前一个门槛；例如目标带隙对 cutoff 稳定不能证明 functional 给出实验准粒子带隙，两个代码接近也不能证明两者没有共享近似。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+```text
+Hamiltonian / functional / pseudo-or-PAW dataset
+→ structure, charge, spin, occupations, and boundary conditions
+→ cutoff / grid / k mesh / supercell representation
+→ fixed-potential eigensolver residual
+→ density-or-potential SCF residual
+→ total-energy, force, and stress consistency
+→ target-observable convergence
+→ method applicability and scientific interpretation
+```
+
+Every arrow needs an input record and an acceptance criterion. A later gate does not retroactively establish an earlier one. A cutoff-stable band gap does not show that a functional yields an experimental quasiparticle gap, and agreement between two codes does not exclude a shared approximation.
+
+  </div>
+</BilingualCallout>
+
+### 收敛设计 | Convergence design
+
+<BilingualSection titleZh="不要把所有参数同时改变" titleEn="Do not change every parameter at once">
+  <div class="bilingual-section__zh">
+
+最低充分策略先固定结构、functional、pseudo/PAW dataset、charge/spin 和 occupations，再分阶段检查：
+
+1. wavefunction cutoff 与 density/augmentation grid；
+2. k mesh 与 metallic smearing/occupation treatment；
+3. eigensolver 和 SCF residual thresholds；
+4. cell size、vacuum、slab thickness、defect concentration 或 cluster box；
+5. 对最终目标量重复最严格相邻设置，并检查力/应力是否使用同一精度。
+
+若参数强耦合，例如 cutoff 改变 stress 后导致重新弛豫，需先做固定几何的数值检查，再在收敛设置下重做结构优化。只展示一组“推荐参数”无法证明收敛。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A minimally sufficient strategy fixes structure, functional, pseudo/PAW dataset, charge/spin, and occupations before checking in stages:
+
+1. wavefunction cutoff and density/augmentation grid;
+2. k mesh and metallic smearing/occupation treatment;
+3. eigensolver and SCF residual thresholds;
+4. cell size, vacuum, slab thickness, defect concentration, or cluster box;
+5. the final target quantity at adjacent strict settings, with forces/stress evaluated at the same precision.
+
+When parameters are strongly coupled—for example, a cutoff changes stress and therefore the relaxed structure—first perform numerical checks at fixed geometry, then repeat structural optimization at converged settings. One set of “recommended parameters” is not evidence of convergence.
+
+  </div>
+</BilingualSection>
+
+### 常见误判 | Common misjudgments
+
+<BilingualSection titleZh="需要排除的推断跳跃" titleEn="Inference jumps that must be rejected">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li><strong>“SCF reached convergence，所以计算正确。”</strong> 只表明当前有限固定点阈值被满足；不覆盖 cutoff、k 点、cell、赝势和 functional。</li>
+      <li><strong>“平面波没有原子中心，所以没有 basis error。”</strong> 有系统 cutoff error；只有在增加 cutoff 的极限中逼近完备。</li>
+      <li><strong>“PAW 是 all-electron，所以不需要 convergence。”</strong> 重构仍依赖 finite partial waves、frozen core、augmentation 和 global cutoff。</li>
+      <li><strong>“总能变化小，所以力也收敛。”</strong> mixing 步长可压低能量变化；force 对 residual、projectors 和 grid 更敏感。</li>
+      <li><strong>“vacuum density 为零，所以 slab 已孤立。”</strong> electrostatic dipole、charged image 和 elastic/metallic response 仍可能长程。</li>
+      <li><strong>“Γ-only 大超胞等同于 dense primitive k mesh。”</strong> 只在保持 primitive periodicity 的 folding 情形成立；缺陷/重构会耦合 folded states。</li>
+      <li><strong>“hybrid 改善 band gap，所以所有性质更可靠。”</strong> functional change 与 numerical singularity/k-mesh/SCF errors 需要分开。</li>
+      <li><strong>“两套软件给出相同总能。”</strong> 绝对能零点和 pseudo constants 可能不同；应比较定义一致的能量差或 observable。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>“SCF reached convergence, so the calculation is correct.”</strong> Only the declared finite fixed-point tolerance is established; cutoff, k points, cell, pseudopotential, and functional remain separate.</li>
+      <li><strong>“Plane waves are not atom centred, so there is no basis error.”</strong> They have a systematic cutoff error and approach completeness only as the cutoff is increased.</li>
+      <li><strong>“PAW is all electron, so no convergence study is needed.”</strong> Reconstruction still depends on finite partial waves, frozen cores, augmentation, and the global cutoff.</li>
+      <li><strong>“The total-energy change is small, so forces are converged.”</strong> A small mixing step can suppress energy changes; forces can be more sensitive to residuals, projectors, and grids.</li>
+      <li><strong>“The vacuum density is zero, so a slab is isolated.”</strong> Electrostatic dipoles, charged images, and elastic or metallic response can remain long ranged.</li>
+      <li><strong>“A Γ-only large cell equals a dense primitive k mesh.”</strong> This holds only for simple folding when primitive periodicity is retained; defects and reconstructions couple folded states.</li>
+      <li><strong>“A hybrid improves the gap, so every property is more reliable.”</strong> Functional changes remain separate from singularity, k-mesh, and SCF errors.</li>
+      <li><strong>“Two codes give the same total energy.”</strong> Absolute zeros and pseudopotential constants can differ; compare consistently defined differences or observables.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+<span id="exercises" class="chapter-anchor" aria-hidden="true"></span>
+
+## 原创练习 | Original Exercises
+
+<BilingualSection titleZh="推导、数值与证据审查" titleEn="Derivation, numerics, and evidence audit">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>中性 Coulomb 组合。</strong> 从周期 Poisson 方程推导 $G\ne0$ Hartree 能，说明单独 $G=0$ 项为何发散，并列出形成有限总能所需的离子/背景项。</li>
+      <li><strong>double counting。</strong> 从 Kohn–Sham 本征值和推导 $-E_H+E_{xc}-\int nV_{xc}$ 修正，并说明该式不能赋予单个本征值总能贡献。</li>
+      <li><strong>局域势力。</strong> 对 $v_I(G)e^{-iG\cdot R_I}$ 求原子位置导数，检查力的实数性，并指出非局域 projector 还缺少什么。</li>
+      <li><strong>SCF 谱。</strong> 对两个 Jacobian 模 $s_1=-3,s_2=0.6$ 找出可使二者同时收敛的 α 区间，并比较最快控制模。</li>
+      <li><strong>preconditioner。</strong> 计算 $P(G)=G^2/(G^2+G_0^2)$ 在 $G/G_0=0.1,1,10$ 的值，解释它为何选择性抑制长波 residual。</li>
+      <li><strong>PAW 重构。</strong> 从 $|\psi\rangle=|\tilde\psi\rangle+\sum_i(|\phi_i\rangle-|\tilde\phi_i\rangle)c_i$ 推导局域算符的 smooth + one-center difference 结构。</li>
+      <li><strong>exact exchange。</strong> 标出 reciprocal Coulomb denominator 的奇异点，设计一个“减去平滑辅助函数再解析加回”的积分步骤。</li>
+      <li><strong>band folding。</strong> 对长度 $3a$ 的一维超胞列出折叠到 supercell Γ 的 primitive k 点，并判断加入一个缺陷后哪些简并可以耦合。</li>
+      <li><strong>slab 验证。</strong> 为一个非对称金属 slab 设计 cutoff、in-plane k mesh、slab thickness、vacuum 和 dipole correction 的分阶段检查，给出目标 observable 和接受标准。</li>
+      <li><strong>证据上限。</strong> 给定正常退出、小 SCF residual、总能在两个 vacuum 下相差 1 meV、两代码 band gap 接近，分别写出可支持和不能支持的结论。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Neutral Coulomb grouping.</strong> Derive the $G\ne0$ Hartree energy from periodic Poisson theory, explain the isolated $G=0$ divergence, and list ion/background terms needed for a finite total energy.</li>
+      <li><strong>Double counting.</strong> Derive the $-E_H+E_{xc}-\int nV_{xc}$ correction from the Kohn–Sham eigenvalue sum and explain why it does not assign a total-energy contribution to each eigenvalue.</li>
+      <li><strong>Local-potential force.</strong> Differentiate $v_I(G)e^{-iG\cdot R_I}$ with respect to the atomic position, check that the final force is real, and identify the missing nonlocal-projector contribution.</li>
+      <li><strong>SCF spectrum.</strong> For Jacobian modes $s_1=-3$ and $s_2=0.6$, find the interval of α that converges both and compare the controlling mode.</li>
+      <li><strong>Preconditioner.</strong> Evaluate $P(G)=G^2/(G^2+G_0^2)$ at $G/G_0=0.1,1,10$ and explain its selective suppression of long-wavelength residuals.</li>
+      <li><strong>PAW reconstruction.</strong> Starting from $|\psi\rangle=|\tilde\psi\rangle+\sum_i(|\phi_i\rangle-|\tilde\phi_i\rangle)c_i$, derive the smooth plus one-centre-difference form for a local operator.</li>
+      <li><strong>Exact exchange.</strong> Locate the singular reciprocal Coulomb denominator and design a subtract-smooth-auxiliary-function/add-analytic-integral procedure.</li>
+      <li><strong>Band folding.</strong> For a one-dimensional supercell of length $3a$, list primitive k points folded to supercell Γ and determine which degeneracies can couple after adding a defect.</li>
+      <li><strong>Slab validation.</strong> Design staged cutoff, in-plane k-mesh, slab-thickness, vacuum, and dipole-correction checks for an asymmetric metallic slab, naming the target observable and acceptance criterion.</li>
+      <li><strong>Evidence ceiling.</strong> Given normal termination, a small SCF residual, a 1 meV energy difference between two vacuum sizes, and similar gaps from two codes, state separately what is and is not supported.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+## 来源与边界 | Sources and Boundaries
+
+<BilingualSection titleZh="本章来源记录" titleEn="Source record for this chapter">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>【Martin 原书 | Martin source】Chapter 13 summary 与 §§13.1–13.7，印刷页 283–292；练习始于 293，未复制。</li>
+      <li>【Martin 原书 | Martin source】Chapter 7 的 Kohn–Sham 总能/自洽；Chapter 11 的 pseudo/USPP/PAW；Chapter 12 的 plane-wave/grid；Appendix F、G、M 的 Coulomb、stress 和 iterative methods。</li>
+      <li>【外部实践来源 | External practice source】Sholl–Steckel Chapter 2，35–47；Chapter 4，83–109；Chapter 10，209–225。只用于 periodic cell、slab/vacuum、k sampling 与 accuracy 的实践边界。</li>
+      <li>【原创教学模型 | Original teaching models】plane-wave SCF data flow、单模 mixing、紧支撑 PAW correction、指数型短程 image error。解析条件由 Chapter 13 validator 检查。</li>
+      <li>未使用教材图、扫描页、习题原文或答案；所有公开正文、推导、SVG 和练习均为网站原创表达。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>【Martin source】Chapter 13 summary and §§13.1–13.7, printed pp. 283–292; exercises begin p. 293 and are not reproduced.</li>
+      <li>【Martin source】Chapter 7 for Kohn–Sham energy/self-consistency, Chapter 11 for pseudo/USPP/PAW, Chapter 12 for plane-wave/grid representations, and Appendices F, G, M for Coulomb, stress, and iterative methods.</li>
+      <li>【External practice source】Sholl–Steckel Chapter 2, pp. 35–47; Chapter 4, pp. 83–109; Chapter 10, pp. 209–225. These are used only for practical boundaries on periodic cells, slab/vacuum models, k sampling, and accuracy.</li>
+      <li>【Original teaching models】plane-wave SCF data flow, one-mode mixing, a compact-support PAW correction, and an exponential short-range image-error model. Analytic conditions are checked by the Chapter 13 validator.</li>
+      <li>No textbook figure, scan, exercise text, or answer is used. All public prose, derivations, SVGs, and exercises are original website expressions.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="当前不能由本章推出的结论" titleEn="Conclusions not licensed by this chapter" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本章没有验证任何具体材料、软件版本、赝势/PAW dataset、mixing 参数、cutoff、k mesh 或 supercell；没有证明某一 hybrid、PAW 或 real-space 方法在所有问题上更准确；没有从 ground-state bands 推出激发谱、EPC 或超导。它提供的是完整计算的数学组织和验证边界。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+This chapter validates no specific material, software version, pseudopotential/PAW dataset, mixing parameter, cutoff, k mesh, or supercell. It does not show that a hybrid, PAW, or real-space method is universally more accurate, and it derives no excitation spectrum, electron–phonon coupling, or superconductivity from ground-state bands. It supplies the mathematical organization and validation boundaries of a full calculation.
+
+  </div>
+</BilingualCallout>

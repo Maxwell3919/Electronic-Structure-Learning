@@ -1,0 +1,245 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import DielectricMixingExplorer from './DielectricMixingExplorer.astro';
+
+<span id="section-13-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 13.2 走向自洽与介电屏蔽 | Approach to Self-Consistency and Dielectric Screening
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 286–287 讨论线性 mixing、介电矩阵、large-cell charge sloshing、近似介电 preconditioner、Broyden 与 RMM-DIIS。下面的固定点谱推导和可视化是原创补充；不把抽象 Jacobian 斜率直接等同于 Martin 特定势变量下的介电本征值。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 286–287 discuss linear mixing, the dielectric matrix, large-cell charge sloshing, approximate-dielectric preconditioners, Broyden methods, and RMM-DIIS. The fixed-point spectral derivation and visualization below are supplemental; an abstract Jacobian slope is not identified directly with a dielectric eigenvalue in Martin's particular potential convention.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="自洽是固定点，不是单次本征问题" titleEn="Self-consistency is a fixed point, not one eigenproblem">
+  <div class="bilingual-section__zh">
+
+给定输入密度 $n_i^{\mathrm{in}}$，一次 Kohn–Sham 求解定义映射
+
+$$
+n_i^{\mathrm{out}}=\mathcal F[n_i^{\mathrm{in}}].
+$$
+
+自洽解满足
+
+$$
+n^\star=\mathcal F[n^\star].
+$$
+
+同样可以选择势、密度矩阵或预条件 residual 作为迭代变量；不同程序的变量和规范不必相同。最简单的线性 mixing 为
+
+$$
+n_{i+1}^{\mathrm{in}}
+=(1-\alpha)n_i^{\mathrm{in}}+\alpha n_i^{\mathrm{out}}
+=n_i^{\mathrm{in}}+\alpha R_i,
+$$
+
+其中 $R_i=n_i^{\mathrm{out}}-n_i^{\mathrm{in}}$。$\alpha$ 是算法参数，不是物理介电常数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Given an input density $n_i^{\mathrm{in}}$, one Kohn–Sham solution defines a map
+
+$$
+n_i^{\mathrm{out}}=\mathcal F[n_i^{\mathrm{in}}].
+$$
+
+A self-consistent solution satisfies
+
+$$
+n^\star=\mathcal F[n^\star].
+$$
+
+The iteration variable may instead be a potential, density matrix, or preconditioned residual; implementations need not use identical variables or gauges. The simplest linear mixing is
+
+$$
+n_{i+1}^{\mathrm{in}}
+=(1-\alpha)n_i^{\mathrm{in}}+\alpha n_i^{\mathrm{out}}
+=n_i^{\mathrm{in}}+\alpha R_i,
+$$
+
+with $R_i=n_i^{\mathrm{out}}-n_i^{\mathrm{in}}$. The coefficient $\alpha$ is an algorithmic parameter, not a physical dielectric constant.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="线性 mixing 的局部谱条件 | Local spectral condition for linear mixing"
+  assumptions={[
+    '存在一个待求固定点 x*；',
+    '映射 F 在固定点附近可线性化；',
+    '当前讨论有限离散空间中的 Jacobian，不证明连续问题存在唯一解。',
+  ]}
+>
+
+写误差 $e_i=x_i-x^\star$。固定点附近
+
+$$
+F(x_i)-F(x^\star)=Je_i+O(\|e_i\|^2),
+$$
+
+其中 $J=\partial F/\partial x|_{x^\star}$。线性 mixing
+
+$$
+x_{i+1}=x_i+\alpha[F(x_i)-x_i]
+$$
+
+给出
+
+$$
+e_{i+1}=\left[I+\alpha(J-I)\right]e_i+O(\|e_i\|^2).
+$$
+
+若 $J$ 可在当前度量下分解为本征模 $Jv_j=s_jv_j$，则该模的误差因子为
+
+$$
+\boxed{q_j=1+\alpha(s_j-1)}.
+$$
+
+局部线性收敛需要所有被表示模式满足 $|q_j|<1$。$q_j>0$ 给出同号衰减，$-1<q_j<0$ 给出振荡衰减，$|q_j|>1$ 发散。一个全局 $\alpha$ 必须同时稳定最困难的模式，因此常会让其他模式收敛得不必要地慢。
+
+这个推导使用抽象映射斜率 $s_j$。若迭代变量改为势，或者 residual 定义取相反号，介电矩阵与 $J$ 的符号、尺度和度量关系会改变；不能脱离定义把一个介电常数直接代入上式。
+
+</DerivationBlock>
+
+<DielectricMixingExplorer />
+
+### 介电响应与 charge sloshing | Dielectric response and charge sloshing
+
+<BilingualSection titleZh="为什么大超胞更容易出现长波不稳定" titleEn="Why large supercells expose long-wavelength instabilities">
+  <div class="bilingual-section__zh">
+
+Martin 用势误差的线性响应写出
+
+$$
+\delta V^{\mathrm{out}}(\mathbf G)
+=\sum_{\mathbf G'}\epsilon(\mathbf G,\mathbf G')
+\delta V^{\mathrm{in}}(\mathbf G').
+$$
+
+在其内部场约定下，介电响应在大 $G$ 处接近单位，而小波矢处可以很大；金属长波响应更强。小原胞没有非常小的非零倒格矢，因此最危险的长波模式可能根本不在离散集合中。增大超胞后，$G_{\min}\sim2\pi/L$ 下降，新的低成本电荷重排模式进入计算。金属 slab 中电荷可在两个表面或 slab 与 vacuum 之间来回移动，形成 charge sloshing。
+
+这说明困难来自“物理响应 × 边界条件 × 离散波矢”的组合，不是因为更大的超胞使 Kohn–Sham 方程本身改变。减小 mixing 可能稳定迭代，但会减慢所有模式；更合理的策略是对不同波矢采用不同更新尺度。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin writes the linear response of a potential error as
+
+$$
+\delta V^{\mathrm{out}}(\mathbf G)
+=\sum_{\mathbf G'}\epsilon(\mathbf G,\mathbf G')
+\delta V^{\mathrm{in}}(\mathbf G').
+$$
+
+In his internal-field convention the dielectric response approaches unity at large G but can be large at small wave vector; metallic long-wavelength response is stronger. A small primitive cell contains no extremely small nonzero reciprocal vector, so the most difficult long-wavelength mode may be absent from the discrete set. Enlarging a supercell lowers $G_{\min}\sim2\pi/L$ and admits low-cost charge-transfer modes. In a metallic slab, charge can move between surfaces or between slab and vacuum, producing charge sloshing.
+
+The difficulty therefore comes from the combination of physical response, boundary conditions, and discrete wave vectors, not from a change in the Kohn–Sham equation itself. Reducing the mixing fraction can stabilize an iteration but slows every mode; a more selective strategy assigns different update scales to different wave vectors.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="对角长波 preconditioner 的作用 | Action of a diagonal long-wavelength preconditioner"
+  assumptions={[
+    '只构造教学用对角 reciprocal-space 模型；',
+    '不声称代表某一程序的 Kerker/Thomas–Fermi 实现；',
+    'G=0 电荷模式由电中性或单独约束处理。',
+  ]}
+>
+
+一个常见尺度模型为
+
+$$
+P(G)=\frac{G^2}{G^2+G_0^2},
+$$
+
+并用
+
+$$
+n_{i+1}^{\mathrm{in}}(\mathbf G)
+=n_i^{\mathrm{in}}(\mathbf G)
++\alpha P(G)R_i(\mathbf G).
+$$
+
+当 $G\ll G_0$ 时，$P(G)\approx G^2/G_0^2$，长波 residual 被抑制；当 $G\gg G_0$ 时，$P(G)\to1$，短波模式接近普通 mixing。$G_0$ 控制的是算法的波矢选择性，不是自动可转移到所有材料的物理参数。
+
+若 preconditioner 只是对 residual 的可逆/一致线性变换，固定点条件仍为 $R=0$；它改变迭代谱而不改变目标解。若算法还截断模式、改变电荷约束或使用不一致的 response，则目标问题可能被改变，必须另行说明。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="预条件不等于改变 dielectric physics" titleEn="Preconditioning is not a change of dielectric physics" kind="boundary">
+  <div class="bilingual-section__zh">
+
+模型介电函数、Kerker 型因子或经验 mixing 只用于构造更好的数值步长。它们不替换 Kohn–Sham Hamiltonian 中的 Hartree/XC 响应，也不能作为材料介电常数的计算结果。SCF 更快只说明求解器路径改善，不说明泛函、赝势或最终 observable 更准确。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A model dielectric function, Kerker-type factor, or empirical mixing rule constructs a better numerical step. It does not replace Hartree/XC response in the Kohn–Sham Hamiltonian and is not a calculated material dielectric constant. Faster SCF convergence indicates an improved solver path, not a more accurate functional, pseudopotential, or final observable.
+
+  </div>
+</BilingualCallout>
+
+### History-based updates | 基于历史的更新
+
+<BilingualSection titleZh="Broyden、DIIS 与可用信息" titleEn="Broyden, DIIS, and the information being reused">
+  <div class="bilingual-section__zh">
+
+完整 Jacobian 或 dielectric matrix 的构造通常比原问题更昂贵。Broyden 类方法从连续迭代中的 $\Delta x$ 与 $\Delta R$ 建立低秩近似；DIIS/RMM-DIIS 在历史 residual 张成的子空间中选择组合，使预测 residual 变小。二者都在复用迭代历史，但优化对象、度量和稳定化细节可以不同。
+
+历史方法仍需要：有限历史长度、线性依赖处理、初始 preconditioner、最大步长和失败回退。对一个体系有效的默认参数不构成对另一个体系的保证。尤其在结构变化、磁态变化、占据重排或金属费米面变化时，旧历史可能不再描述当前 Jacobian。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Constructing the full Jacobian or dielectric matrix is normally more expensive than the original problem. Broyden families build low-rank approximations from successive $\Delta x$ and $\Delta R$ pairs. DIIS/RMM-DIIS chooses combinations in a subspace spanned by historical residuals so that a predicted residual is reduced. Both reuse iteration history, but their optimized objects, metrics, and stabilization details can differ.
+
+History-based methods still need a finite history length, treatment of linear dependence, an initial preconditioner, step limits, and a failure fallback. Defaults that work for one system do not guarantee another. During structural, magnetic, occupation, or metallic Fermi-surface changes, old history may cease to represent the current Jacobian.
+
+  </div>
+</BilingualSection>
+
+### 停止条件和证据上限 | Stopping criteria and evidence ceilings
+
+<BilingualSection titleZh="至少四个独立门槛" titleEn="At least four independent gates">
+  <div class="bilingual-section__zh">
+
+一个生产计算通常同时观察：
+
+1. 固定势本征问题的轨道 residual；
+2. 输入/输出密度或势 residual 的范数；
+3. 总能或自由能在相邻迭代间的变化；
+4. 当前任务所需的力、应力、磁矩、带隙或其他 observable。
+
+对金属还要核对占据、smearing 与 k 点是否使残差和能量定义一致。小能量变化可能来自 mixing 步长过小；小密度 residual 也不证明 cutoff 或 k mesh 足够。合理验收应记录 residual 定义、归一化、阈值、连续满足次数和目标 observable 的独立标准。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A production calculation commonly monitors, at minimum:
+
+1. orbital residuals for the fixed-potential eigenproblem;
+2. a norm of the input/output density or potential residual;
+3. the change in total or free energy between iterations;
+4. forces, stress, moments, gaps, or another observable required by the task.
+
+For metals, occupations, smearing, and k points must be consistent with residual and energy definitions. A small energy change can result from an excessively small mixing step, and a small density residual does not establish cutoff or k-mesh convergence. A useful acceptance record states the residual definition, normalization, threshold, number of consecutive passes, and an independent criterion for the target observable.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="SCF 收敛能支持什么" titleEn="What SCF convergence supports" kind="practice">
+  <div class="bilingual-section__zh">
+
+SCF 收敛支持“在当前有限表示、边界、占据、赝势和泛函下找到了满足所声明固定点阈值的数值解”。它不单独支持：连续基极限、正确基态磁构型、全布里渊区金属性、力/应力收敛、相对能量精度或实验一致性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+SCF convergence supports the statement that, under the current finite representation, boundary conditions, occupations, pseudopotential, and functional, a numerical solution met the declared fixed-point threshold. It does not by itself establish the complete-basis limit, the correct magnetic ground state, full-Brillouin-zone metallicity, converged forces or stress, relative-energy accuracy, or agreement with experiment.
+
+  </div>
+</BilingualCallout>

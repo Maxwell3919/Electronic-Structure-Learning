@@ -1,0 +1,82 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reading-orientation" class="chapter-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章解决的问题" titleEn="The problem addressed in this chapter" eyebrow="Chapter 13">
+  <div class="bilingual-section__zh">
+
+Chapter 12 回答了“如何表示一个周期独立粒子问题”；Chapter 13 回答“如何把该有限表示变成完整的 Kohn–Sham 计算”。新的困难不再只是基组截断，而是多个数值层相互耦合：轨道决定密度，密度决定有效势，有效势又决定下一组轨道。只有这个固定点问题达到声明的停止标准，才可以讨论总能、力、应力或派生物性。
+
+本章以平面波为主，因为动能、局域势和 Fourier 变换之间的分工清楚；实空间网格始终参与局域乘法和密度构造。由此可看见一般原则：表示空间、算符应用、本征求解、自洽更新和科学判断是五个不同对象。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Chapter 12 answered how a periodic independent-particle problem is represented. Chapter 13 asks how that finite representation becomes a complete Kohn–Sham calculation. The new difficulty is no longer basis truncation alone: orbitals determine a density, the density determines an effective potential, and the potential determines the next orbitals. Only after this fixed-point problem satisfies a declared stopping criterion can total energies, forces, stresses, or derived properties be assessed.
+
+Plane waves are the main language because the division of labour among kinetic energy, local potentials, and Fourier transforms is transparent. Real-space grids remain intrinsic to local multiplication and density construction. The chapter therefore exposes a general principle: representation, operator application, eigensolution, self-consistent updating, and scientific interpretation are five distinct objects.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="前置知识" titleEn="Prerequisites" kind="source">
+  <div class="bilingual-section__zh">
+
+需要 Chapter 7 的 Kohn–Sham 能量与固定点结构、Chapter 11 的局域/非局域赝势和 PAW、Chapter 12 的平面波矩阵与 FFT 网格。Appendix F、G、M 分别补充周期 Coulomb、应力和迭代求解。本章引用这些结果，但不把它们重新写成独立章节。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Required background is the Kohn–Sham energy and fixed-point structure from Chapter 7, local/nonlocal pseudopotentials and PAW from Chapter 11, and the plane-wave matrix and FFT grid from Chapter 12. Appendices F, G, and M supply periodic Coulomb, stress, and iterative-solver details. These results are used rather than reproduced as separate chapters.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="本章之后应能判断什么" titleEn="Judgments enabled by the chapter">
+  <div class="bilingual-section__zh">
+
+<p>完成本章后，应能够：</p>
+<ul>
+  <li>从总能泛函识别电子动能、局域/非局域外势、Hartree、xc、Ewald 和 double-counting 项；</li>
+  <li>解释为什么 <span class="math-inline">$G=0$</span> Coulomb 分量必须以中性组合处理；</li>
+  <li>区分本征 residual、密度 residual、总能变化和目标 observable 收敛；</li>
+  <li>用线性化 Jacobian/介电响应解释 charge sloshing、mixing 与 preconditioning；</li>
+  <li>说明 PAW 的 smooth、one-center all-electron 和 one-center auxiliary 三部分；</li>
+  <li>解释平面波 exact exchange 的非局域性、<span class="math-inline">$q=0$</span> 奇异处理和成本来源；</li>
+  <li>为 slab、interface、defect、molecule 或 cluster 设计超胞尺寸与周期镜像检查；</li>
+  <li>拒绝从“程序退出”“SCF 收敛”或“两个程序接近”直接推出科学正确性。</li>
+</ul>
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<p>After this chapter, a reader should be able to:</p>
+<ul>
+  <li>identify electronic kinetic, local/nonlocal external, Hartree, exchange–correlation, Ewald, and double-counting terms in a total-energy expression;</li>
+  <li>explain why the <span class="math-inline">$G=0$</span> Coulomb component must be handled in neutral groupings;</li>
+  <li>distinguish eigen-residual, density residual, total-energy change, and target-observable convergence;</li>
+  <li>use a linearized Jacobian/dielectric response to explain charge sloshing, mixing, and preconditioning;</li>
+  <li>describe the smooth, one-centre all-electron, and one-centre auxiliary parts of PAW;</li>
+  <li>explain nonlocal plane-wave exact exchange, treatment of the <span class="math-inline">$q=0$</span> singularity, and its cost drivers;</li>
+  <li>design supercell-size and periodic-image checks for slabs, interfaces, defects, molecules, or clusters;</li>
+  <li>reject an inference from normal termination, SCF convergence, or inter-code agreement directly to scientific correctness.</li>
+</ul>
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="五类误差不能合并为一个阈值" titleEn="Five error classes cannot be collapsed into one tolerance" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本章持续分开：平面波/网格表示误差、k 点积分误差、有限本征求解误差、SCF 固定点误差和超胞边界误差。它们可以相互耦合，但一个阈值通过不能替代另一类检查。泛函和赝势的物理近似还位于这些数值误差之外。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The chapter keeps separate plane-wave/grid representation error, k-point integration error, finite eigensolver error, SCF fixed-point error, and supercell boundary error. They can interact, but passing one tolerance does not replace another check. Functional and pseudopotential approximations lie outside these numerical errors.
+
+  </div>
+</BilingualCallout>
