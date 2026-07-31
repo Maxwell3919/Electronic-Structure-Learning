@@ -1,0 +1,61 @@
+---
+import Contents from './Chapter05Contents.astro';
+import Orientation from './Chapter05Orientation.mdx';
+import SourceMap from './Chapter05SourceMap.astro';
+import Notation from './Chapter05Notation.mdx';
+import ElectronGas from './Chapter05ElectronGas.mdx';
+import NoninteractingHF from './Chapter05NoninteractingHF.mdx';
+import Correlation from './Chapter05Correlation.mdx';
+import SPBinding from './Chapter05SPBinding.mdx';
+import Lindhard from './Chapter05Lindhard.mdx';
+import Visualizations from './Chapter05Visualizations.mdx';
+import Review from './Chapter05Review.mdx';
+---
+
+<div class="chapter05-root">
+  <Contents />
+  <Orientation />
+  <SourceMap />
+  <Notation />
+  <ElectronGas />
+  <NoninteractingHF />
+  <Correlation />
+  <SPBinding />
+  <Lindhard />
+  <Visualizations />
+  <Review />
+</div>
+
+<style is:global>
+  .chapter05-root,
+  .chapter05-root > *,
+  .chapter05-root .bilingual-section,
+  .chapter05-root .bilingual-section__grid,
+  .chapter05-root .bilingual-section__zh,
+  .chapter05-root .bilingual-section__en,
+  .chapter05-root .derivation-block,
+  .chapter05-root .bilingual-callout,
+  .chapter05-root .chapter-visual {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter05-root .chapter-source-map,
+  .chapter05-root .table-scroll,
+  .chapter05-root .katex-display,
+  .chapter05-root pre,
+  .chapter05-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter05-root p,
+  .chapter05-root li,
+  .chapter05-root th,
+  .chapter05-root td,
+  .chapter05-root code {
+    overflow-wrap: anywhere;
+  }
+</style>
