@@ -87,7 +87,7 @@ const joined = Object.values(content).join('\n');
 for (let section = 1; section <= 12; section += 1) {
   assert.match(joined, new RegExp(`section-14-${section}`), `missing section 14.${section}`);
 }
-for (const id of ['ch14-nonorthogonal-chain', 'ch14-slater-koster', 'ch14-two-band', 'ch14-graphene-dirac', 'ch14-nanotube-zone-folding']) {
+for (const id of ['ch14-nonorthogonal-chain', 'ch14-slater-koster', 'ch14-two-band', 'ch14-graphene-dirac', 'ch14-nanotube-folding']) {
   assert.match(joined, new RegExp(id), `missing visualization ${id}`);
 }
 for (const key of ['nonorthogonalVisual', 'slaterKosterVisual', 'twoBandVisual', 'grapheneVisual', 'nanotubeVisual']) {
