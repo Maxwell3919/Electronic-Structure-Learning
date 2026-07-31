@@ -22,7 +22,7 @@ for (const k of [-Math.PI, -0.7, 0, 1.1, Math.PI]) {
   approx(result.metric, 1, 1e-12, 'orthogonal metric');
 }
 assert.equal(nonorthogonalChain({ k: 0, hopping: -1, overlap: 0.49 }).globallyPositiveNearestNeighbourMetric, true);
-assert.equal(nonorthogonalChain({ k: Math.PI, hopping: -1, overlap: -0.5 }).positiveMetricAtK, false);
+assert.equal(nonorthogonalChain({ k: 0, hopping: -1, overlap: -0.5 }).positiveMetricAtK, false);
 assert.equal(nonorthogonalChain({ k: 0, hopping: -1, overlap: 0.5 }).globallyPositiveNearestNeighbourMetric, false);
 
 // 2. Two-band trace, gap, and mixing limits.
