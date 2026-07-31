@@ -1,0 +1,315 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import RadialPotentialExplorer from './RadialPotentialExplorer.astro';
+import HydrogenicRadialExplorer from './HydrogenicRadialExplorer.astro';
+
+<span id="section-10-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 10.1 单电子径向 Schrödinger 方程 | One-Electron Radial Schrödinger Equation
+
+<BilingualSection titleZh="起点：中心势中的三维本征值问题" titleEn="Starting point: the three-dimensional central-potential eigenproblem" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+在无显式自旋—轨道耦合的非相对论问题中，自旋部分可与空间部分分离。对只依赖 $r=|\mathbf r|$ 的中心势，空间轨道满足
+
+$$
+\left[-\frac12\nabla^2+V(r)\right]\psi(\mathbf r)=\varepsilon\psi(\mathbf r).
+$$
+
+这是一个严格的坐标表达式；后续变量分离依赖球对称性。若势还依赖 $\theta$、$\phi$，或 Hamiltonian 含有把轨道与自旋耦合的项，同一分离形式不再自动成立。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Without explicit spin–orbit coupling, the spin and spatial factors can be separated in the nonrelativistic problem. For a central potential that depends only on $r=|\mathbf r|$, the spatial orbital obeys
+
+$$
+\left[-\frac12\nabla^2+V(r)\right]\psi(\mathbf r)=\varepsilon\psi(\mathbf r).
+$$
+
+This is an exact coordinate-space equation. The subsequent separation of variables relies on spherical symmetry. If the potential depends on $\theta$ or $\phi$, or if the Hamiltonian contains terms coupling orbital and spin degrees of freedom, the same product form is not guaranteed.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: 从球坐标 Laplacian 到径向方程"
+  assumptions={[
+    'Hartree 原子单位；单电子、定态、非相对论方程 | Hartree atomic units; one-electron, stationary, nonrelativistic equation.',
+    '势严格为中心势 V(r) | The potential is strictly central, V(r).',
+    '球谐函数采用 L²Y_lm=l(l+1)Y_lm 且角向归一化为 1 | Spherical harmonics satisfy L²Y_lm=l(l+1)Y_lm and are normalized over solid angle.',
+  ]}
+>
+
+球坐标 Laplacian 可写为
+
+$$
+\nabla^2=
+\frac{1}{r^2}\frac{\partial}{\partial r}
+\left(r^2\frac{\partial}{\partial r}\right)
+-\frac{\hat L^2}{r^2},
+$$
+
+其中无量纲角动量算符 $\hat L^2$ 的本征方程是
+
+$$
+\hat L^2Y_{lm}(\Omega)=l(l+1)Y_{lm}(\Omega).
+$$
+
+令 $\psi_{nlm}(\mathbf r)=R_{nl}(r)Y_{lm}(\Omega)$。径向导数不作用于 $Y_{lm}$，角动量算符不作用于 $R_{nl}$，因此
+
+$$
+\nabla^2\psi_{nlm}=
+Y_{lm}\left[
+\frac{1}{r^2}\frac{d}{dr}
+\left(r^2\frac{dR_{nl}}{dr}\right)
+-\frac{l(l+1)}{r^2}R_{nl}
+\right].
+$$
+
+代入三维方程并除去非零的角向因子，得到带径向测度的方程
+
+$$
+-\frac{1}{2r^2}\frac{d}{dr}
+\left(r^2\frac{dR_{nl}}{dr}\right)
++\left[\frac{l(l+1)}{2r^2}+V(r)\right]R_{nl}
+=\varepsilon_{nl}R_{nl}.
+$$
+
+第一导数来自球坐标体积元，不便于直接与一维 Schrödinger 方程比较。定义约化径向函数 $u_{nl}(r)=rR_{nl}(r)$。由于
+
+$$
+R=\frac{u}{r},\qquad
+\frac{dR}{dr}=\frac{u'}{r}-\frac{u}{r^2},
+$$
+
+有
+
+$$
+r^2\frac{dR}{dr}=ru'-u,
+\qquad
+\frac{d}{dr}\left(r^2\frac{dR}{dr}\right)=ru''.
+$$
+
+将其代回并乘以 $r$，得到无一阶导数的标准形式
+
+$$
+\boxed{
+\left[-\frac12\frac{d^2}{dr^2}
++\frac{l(l+1)}{2r^2}+V(r)\right]u_{nl}(r)
+=\varepsilon_{nl}u_{nl}(r)
+}.
+$$
+
+离心项 $l(l+1)/(2r^2)$ 来自动能算符的角向部分。它是坐标分离后的有效项，不表示体系增加了一种新的粒子间相互作用。每一项的维度都是能量；在原子单位中，$1/r^2$ 与二阶导数均具有 Hartree 的量纲。
+
+<p lang="en">The spherical-coordinate Laplacian is</p>
+
+$$
+\nabla^2=
+\frac{1}{r^2}\frac{\partial}{\partial r}
+\left(r^2\frac{\partial}{\partial r}\right)
+-\frac{\hat L^2}{r^2},
+$$
+
+<p lang="en">with $\hat L^2Y_{lm}=l(l+1)Y_{lm}$. Substituting $\psi_{nlm}=R_{nl}Y_{lm}$ separates the angular factor and gives</p>
+
+$$
+-\frac{1}{2r^2}\frac{d}{dr}
+\left(r^2\frac{dR_{nl}}{dr}\right)
++\left[\frac{l(l+1)}{2r^2}+V(r)\right]R_{nl}
+=\varepsilon_{nl}R_{nl}.
+$$
+
+<p lang="en">Defining $u_{nl}=rR_{nl}$ yields $d[r^2R']/dr=ru''$ and therefore</p>
+
+$$
+\boxed{
+\left[-\frac12\frac{d^2}{dr^2}
++\frac{l(l+1)}{2r^2}+V(r)\right]u_{nl}(r)
+=\varepsilon_{nl}u_{nl}(r)
+}.
+$$
+
+<p lang="en">The centrifugal term is the angular part of the kinetic-energy operator after coordinate separation. It is not a new interparticle interaction. In atomic units, every term has dimensions of energy.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="边界条件：原点、无穷远与可接受解" titleEn="Boundary conditions at the origin and infinity">
+  <div class="bilingual-section__zh">
+
+径向方程是二阶常微分方程，需要两个边界条件。对比 $1/r^2$ 更弱奇异的中心势，可在原点令 $u\sim r^p$。最低阶项给出
+
+$$
+p(p-1)=l(l+1),
+$$
+
+因此 $p=l+1$ 或 $p=-l$。第二个解导致 $R=u/r\sim r^{-l-1}$；除特殊的奇异势讨论外，它不满足原点的正则性与有限范数要求。物理解采用
+
+$$
+u_{nl}(r)\propto r^{l+1},\qquad R_{nl}(r)\propto r^l,
+\qquad r\to0.
+$$
+
+对束缚态，若远处势趋于常数并把该常数选为零，则 $\varepsilon<0$。远处方程近似为 $u''\simeq -2\varepsilon u$，可接受分支按 $e^{-\kappa r}$ 衰减，其中 $\kappa=\sqrt{-2\varepsilon}$；增长分支必须排除。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The radial equation is second order and requires two boundary conditions. For a central potential less singular than $1/r^2$, set $u\sim r^p$ at the origin. The leading terms give
+
+$$
+p(p-1)=l(l+1),
+$$
+
+so that $p=l+1$ or $p=-l$. The second solution implies $R=u/r\sim r^{-l-1}$ and, outside special discussions of singular potentials, violates regularity and finite-norm requirements. The physical branch is
+
+$$
+u_{nl}(r)\propto r^{l+1},\qquad R_{nl}(r)\propto r^l,
+\qquad r\to0.
+$$
+
+For a bound state, if the potential tends to a constant that is chosen as zero, then $\varepsilon<0$. The asymptotic equation is $u''\simeq -2\varepsilon u$, and the admissible branch decays as $e^{-\kappa r}$ with $\kappa=\sqrt{-2\varepsilon}$; the growing branch must be excluded.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="严格关系 | Exact relation: 三维归一化如何化为一维径向归一化"
+  assumptions={[
+    '球谐函数角向归一化为 1 | The spherical harmonic is normalized to unity over solid angle.',
+    '轨道在三维空间平方可积 | The orbital is square integrable in three dimensions.',
+  ]}
+>
+
+三维体积元为 $d^3r=r^2dr\,d\Omega$。于是
+
+$$
+\begin{aligned}
+1
+&=\int |\psi_{nlm}(\mathbf r)|^2d^3r\\
+&=\int_0^\infty r^2|R_{nl}(r)|^2dr
+\int |Y_{lm}(\Omega)|^2d\Omega\\
+&=\int_0^\infty r^2|R_{nl}(r)|^2dr\\
+&=\int_0^\infty |u_{nl}(r)|^2dr.
+\end{aligned}
+$$
+
+因此径向概率分布是 $|u|^2$，积分测度是 $dr$。把 $|R|^2$ 直接画成“径向概率”会漏掉球壳面积因子 $r^2$。
+
+<p lang="en">Using $d^3r=r^2dr\,d\Omega$ and $\int|Y_{lm}|^2d\Omega=1$ gives</p>
+
+$$
+1=\int_0^\infty r^2|R_{nl}(r)|^2dr
+=\int_0^\infty |u_{nl}(r)|^2dr.
+$$
+
+<p lang="en">The radial probability density is therefore $|u|^2$ with measure $dr$. Calling $|R|^2$ itself a radial probability omits the spherical-shell factor $r^2$.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="氢样特殊极限" titleEn="Hydrogenic special limit" kind="derivation">
+  <div class="bilingual-section__zh">
+
+对 $V(r)=-Z/r$，解析本征值为
+
+$$
+\varepsilon_n=-\frac{Z^2}{2n^2},\qquad n=1,2,\ldots
+$$
+
+且在非相对论纯 Coulomb 势中与 $l$ 无关。这一简并来自 Coulomb 问题的额外对称性，不应推广到一般自洽原子势。多电子原子的屏蔽、交换关联和相对论效应都会打破该简并。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For $V(r)=-Z/r$, the analytic eigenvalues are
+
+$$
+\varepsilon_n=-\frac{Z^2}{2n^2},\qquad n=1,2,\ldots
+$$
+
+and are independent of $l$ in the nonrelativistic pure Coulomb problem. This degeneracy follows from an additional symmetry of the Coulomb Hamiltonian and must not be generalized to an arbitrary self-consistent atomic potential. Screening, exchange-correlation effects, and relativistic corrections lift it in many-electron atoms.
+
+  </div>
+</BilingualCallout>
+
+<RadialPotentialExplorer />
+<HydrogenicRadialExplorer />
+
+<span id="radial-numerics" class="chapter-anchor" aria-hidden="true"></span>
+
+## 径向离散与数值边界 | Radial Discretization and Numerical Boundaries
+
+<BilingualSection titleZh="为什么原子径向网格通常不是均匀网格" titleEn="Why atomic radial grids are usually nonuniform" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+芯态在核附近快速变化，弱束缚价态延伸到很大的 $r$。在相同点数下，均匀网格很难同时解析这两个尺度。Martin 介绍对数变量 $\rho=\ln r$：均匀的 $\rho$ 步长对应几何级数形式的 $r$ 网格，核附近点密、远处点疏。
+
+这个变量替换把半无限区间 $0<r<\infty$ 映射为 $-\infty<\rho<\infty$，并没有自动解决原点。实际算法通常在很小的内区使用满足正则边界条件的级数展开，在外区使用有限的对数网格。网格端点、步长、匹配方式和本征值搜索仍需收敛测试。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Core states vary rapidly near the nucleus, whereas weakly bound valence states extend to large radii. A uniform grid cannot resolve both scales efficiently at fixed point count. Martin introduces the logarithmic variable $\rho=\ln r$: a uniform step in $\rho$ produces a geometric radial grid, dense near the nucleus and sparse far away.
+
+The transformation maps the half-line $0<r<\infty$ to $-\infty<\rho<\infty$ and does not by itself resolve the origin. Practical algorithms commonly use a regular series satisfying the origin boundary condition in a small inner region and a finite logarithmic grid outside. The endpoints, spacing, matching procedure, and eigenvalue search still require convergence tests.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: 对数坐标中的导数"
+  assumptions={[
+    'r=e^ρ，因而 dr/dρ=r | r=e^ρ, so dr/dρ=r.',
+    '函数在所考虑区间可微 | The function is differentiable on the interval.',
+  ]}
+>
+
+链式法则给出
+
+$$
+\frac{d}{dr}=\frac{1}{r}\frac{d}{d\rho},
+$$
+
+以及
+
+$$
+\frac{d^2u}{dr^2}
+=\frac{1}{r^2}\left(\frac{d^2u}{d\rho^2}-\frac{du}{d\rho}\right).
+$$
+
+直接代入径向方程会出现一阶导数。再选择适当的幅度缩放，例如把径向函数乘以 $r^{1/2}$，可以把方程改写为无一阶导数的形式。不同原子程序可能采用不同的未知函数与网格参数；比较离散方程时必须先统一这些定义。
+
+<p lang="en">The chain rule yields</p>
+
+$$
+\frac{d}{dr}=\frac{1}{r}\frac{d}{d\rho},\qquad
+\frac{d^2u}{dr^2}
+=\frac{1}{r^2}\left(\frac{d^2u}{d\rho^2}-\frac{du}{d\rho}\right).
+$$
+
+<p lang="en">A direct substitution introduces a first derivative. An additional amplitude scaling, such as multiplying the radial function by $r^{1/2}$, can restore a second-order form without that term. Atomic programs may use different unknown functions and grid parameters, so their discrete equations must be compared only after the definitions have been aligned.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="数值验收层级" titleEn="Numerical acceptance hierarchy" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ol class="part03-boundary-list">
+      <li>离散方程在已知氢样解上重现能量、节点数和归一化；</li>
+      <li>减小径向步长、扩大外边界后，本征值与目标径向矩阵元达到预设容差；</li>
+      <li>原点级数与外区积分在匹配点处的函数值和导数一致；</li>
+      <li>自洽原子还需独立检查密度残差、总能和目标 observable；</li>
+      <li>上述检查不能证明交换关联近似、开壳层处理或相对论近似对目标问题充分。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol class="part03-boundary-list">
+      <li>the discretized equation reproduces known hydrogenic energies, node counts, and normalization;</li>
+      <li>reducing the radial step and extending the outer boundary converges eigenvalues and target radial matrix elements to declared tolerances;</li>
+      <li>the inner series and outer integration agree in value and derivative at the matching point;</li>
+      <li>a self-consistent atom separately converges the density residual, total energy, and target observable;</li>
+      <li>these checks do not establish that the exchange-correlation, open-shell, or relativistic approximation is adequate for the intended application.</li>
+    </ol>
+  </div>
+</BilingualCallout>
