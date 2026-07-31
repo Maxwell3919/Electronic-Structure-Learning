@@ -1,0 +1,93 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reading-orientation" className="chapter19-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="从静态电子结构进入原子轨迹" titleEn="From static electronic structure to atomic trajectories" eyebrow="Orientation">
+  <div className="bilingual-section__zh">
+
+Chapter 19 处理的对象是随时间变化的离子坐标 $\{\mathbf R_I(t)\}$。电子自由度仍通过给定核坐标下的电子结构问题提供总能和力；离子则在经典近似下按这些力运动。这个组合通常称为第一性原理分子动力学或量子分子动力学。这里的“量子”主要指力来自量子电子结构，而不是说原子核轨迹本身已经包含核量子效应。
+
+本章从 Part IV 的基态求解方法出发，建立三层关系：电子基态定义 Born–Oppenheimer 势能面；势能面对核坐标的导数给出力；离散时间积分把力转化为轨迹。Chapter 20 将转而研究平衡位置附近的二阶响应、声子和磁振子，因此本章只在解释轨迹与小振动的联系时触及曲率，不提前展开完整晶格动力学。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Chapter 19 studies time-dependent ionic coordinates $\{\mathbf R_I(t)\}$. The electronic degrees of freedom still provide an energy and forces through an electronic-structure problem at fixed nuclei, while the ions move classically under those forces. This combination is commonly called first-principles or quantum molecular dynamics. Here “quantum” refers primarily to the electronic origin of the forces; it does not mean that the nuclear trajectories automatically contain nuclear quantum effects.
+
+Starting from the ground-state methods of Part IV, the chapter establishes three links: the electronic ground state defines a Born–Oppenheimer potential-energy surface; derivatives of that surface give ionic forces; and a discrete time integrator converts those forces into a trajectory. Chapter 20 treats second-order response, phonons, and magnons near equilibrium, so the present chapter mentions curvature only where it clarifies trajectories and small oscillations.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本章后应能判断" titleEn="Judgments expected after this chapter" kind="practice">
+  <div className="bilingual-section__zh">
+    <ul>
+      <li>给定一条 QMD 轨迹时，电子结构、离子动力学、积分器和系综分别承担什么角色；</li>
+      <li>Hellmann–Feynman 力成立需要哪些定态、归一化和基组条件；</li>
+      <li>Pulay 力、非局域赝势力和未充分自洽造成的力误差为何不能混为一项；</li>
+      <li>时间步、SCF 阈值、基组和有限尺寸如何影响能量漂移及目标统计量；</li>
+      <li>Car–Parrinello 的虚拟电子动力学何时能近似跟随 Born–Oppenheimer 面，何时会失效；</li>
+      <li>一条有限长度轨迹能够支持哪些结构或动力学结论，以及不能支持哪些更强结论。</li>
+    </ul>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ul>
+      <li>what roles electronic structure, ionic dynamics, the integrator, and the ensemble play in a reported QMD trajectory;</li>
+      <li>which stationarity, normalization, and basis conditions are required for a Hellmann–Feynman force;</li>
+      <li>why Pulay, nonlocal-pseudopotential, and incomplete-self-consistency force terms must be distinguished;</li>
+      <li>how timestep, SCF tolerance, basis size, and finite size affect energy drift and target statistics;</li>
+      <li>when fictitious Car–Parrinello electronic dynamics can follow the Born–Oppenheimer surface and when that separation fails;</li>
+      <li>which structural or dynamical conclusions a finite trajectory supports, and which stronger claims remain unsupported.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<span id="objects-and-notation" className="chapter19-anchor" aria-hidden="true"></span>
+
+## 物理对象、数学对象与符号 | Physical Objects, Mathematical Objects, and Notation
+
+<BilingualSection titleZh="必须分开的四类量" titleEn="Four classes of quantities that must remain separate" eyebrow="Objects">
+  <div className="bilingual-section__zh">
+
+**基态量**包括固定核坐标下的电子密度 $n_{\mathbf R}(\mathbf r)$、Kohn–Sham 轨道、总能 $E_{\mathrm{BO}}(\mathbf R)$ 和由其导出的静态力。**动力学量**包括 $\mathbf R_I(t)$、速度 $\dot{\mathbf R}_I(t)$、加速度和离散时间步。**统计量**包括温度估计、径向分布函数、扩散系数、时间相关函数和系综平均。**数值诊断量**包括 SCF 残差、力误差估计、守恒量漂移和积分器回归误差。
+
+这些类别之间存在计算关系，但不具有自动等价性。SCF 残差小不保证力已达到轨迹所需精度；总能在单步内变化小不保证长期无系统漂移；轨迹中未观察到结构转变不证明该转变不存在；短轨迹得到的平均值也不自动代表热力学极限。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+**Ground-state quantities** include the electronic density $n_{\mathbf R}(\mathbf r)$, Kohn–Sham orbitals, the total energy $E_{\mathrm{BO}}(\mathbf R)$, and static forces at fixed nuclei. **Dynamical quantities** include $\mathbf R_I(t)$, velocities, accelerations, and discrete timesteps. **Statistical quantities** include temperature estimators, radial distribution functions, diffusion coefficients, time-correlation functions, and ensemble averages. **Numerical diagnostics** include SCF residuals, force-error estimates, conserved-quantity drift, and integrator regression errors.
+
+These classes are connected computationally but are not interchangeable. A small SCF residual does not guarantee force accuracy sufficient for a trajectory; a small one-step energy change does not guarantee absence of long-time systematic drift; failure to observe a transformation does not prove that it cannot occur; and a short-trajectory average does not automatically represent the thermodynamic limit.
+
+  </div>
+</BilingualSection>
+
+<div className="chapter19-symbol-table">
+
+| 符号 | 定义 | 单位与约定 |
+|---|---|---|
+| $I,J$ | 离子或原子核指标 | 无量纲索引 |
+| $\mathbf R_I,\mathbf V_I$ | 离子位置与速度 | 长度；长度/时间 |
+| $M_I$ | 第 $I$ 个离子的质量 | 质量 |
+| $E_{\mathrm{BO}}(\{\mathbf R\})$ | 在固定核坐标下最小化电子自由度所得的 Born–Oppenheimer 能量面 | 能量 |
+| $\mathbf F_I$ | $-\nabla_{\mathbf R_I}E_{\mathrm{BO}}$，在说明近似前不省略其来源 | 能量/长度 |
+| $\Delta t$ | 离子时间步 | 时间；必须与最高相关振动频率比较 |
+| $\psi_n$ | 占据电子轨道；CPMD 中成为扩展 Lagrangian 的动态变量 | 归一化按所用边界条件声明 |
+| $\mu$ | Car–Parrinello 虚拟电子质量 | 不是电子真实质量；数值参数 |
+| $\Lambda_{mn}$ | 维持轨道正交归一的 Lagrange 乘子矩阵 | 能量量纲取决于单位制 |
+| $\mathcal H_{\mathrm{ext}}$ | 具体算法的扩展或阴影守恒量 | 需与真实 Born–Oppenheimer 能量区分 |
+
+</div>
+
+<BilingualCallout titleZh="本章采用的约定" titleEn="Conventions used in this chapter" kind="boundary">
+  <div className="bilingual-section__zh">
+    <p>除非另行说明，离子服从经典 Newton 方程，电子处于绝热基态，体系使用周期边界条件，公式采用普通能量单位而不隐含固定软件单位。教学模型使用一维无量纲变量时会单独标明。</p>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <p>Unless stated otherwise, ions obey classical Newton equations, electrons occupy the adiabatic ground state, periodic boundary conditions are assumed, and equations use ordinary dimensional energies rather than an implicit code-specific unit system. One-dimensional dimensionless teaching models are labelled explicitly.</p>
+  </div>
+</BilingualCallout>
