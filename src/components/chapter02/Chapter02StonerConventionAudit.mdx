@@ -1,0 +1,74 @@
+import BilingualCallout from '../BilingualCallout.astro';
+
+<div id="section-2-7-stoner-convention-audit" data-ch2-stoner-convention-audit>
+
+<BilingualCallout
+  titleZh="来源约定审计：式 (2.2)–(2.3) 的磁场符号与 DOS 归一化"
+  titleEn="Source-convention audit: field sign and DOS normalization in Eqs. (2.2)–(2.3)"
+  kind="boundary"
+>
+  <div class="bilingual-section__zh">
+
+Martin 在式 (2.2) 前把自旋相关势写进 Hamiltonian 的项记为 $m(\mathbf r)V_m(\mathbf r)$，因此定义
+
+$$
+m(\mathbf r)=-\frac{\delta E}{\delta V_m(\mathbf r)},
+\qquad
+\chi(\mathbf r,\mathbf r')
+=-\frac{\delta m(\mathbf r)}{\delta V_m(\mathbf r')}.
+$$
+
+在这个符号下，促进正磁化的共轭外场应定义为 $h\equiv -V_m$。若在线性、局域的 Stoner 教学模型中写
+
+$$
+m=\chi_0 h_{\mathrm{eff}},
+\qquad
+h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m,
+$$
+
+则
+
+$$
+\chi\equiv\frac{m}{h_{\mathrm{ext}}}
+=\frac{\chi_0}{1-I\chi_0}.
+$$
+
+采用 Martin 在式 (2.3) 附近的简化归一化 $\chi_0=N(0)$，便得到 $\chi=N(0)/[1-I N(0)]$。这里的 $N(0)$、$I$ 与 $\chi$ 已吸收所选自旋计数、磁矩和单位因子。其他资料可能使用单自旋或双自旋 DOS，并显式保留 $\mu_B^2$；此时 $I$ 也必须相应重定义。只有在同一约定内，$I N(0)=1$ 的不稳定判据才可直接比较。
+
+不能一边沿用式 (2.2) 的 $m=-\delta E/\delta V_m$，一边未经说明写成 $m=\chi_0V_m$。后者实际上把 $V_m$ 重新当成了促进正磁化的场 $h$。这一审计不改变 Stoner 平均场结论，只明确中间变量的符号和归一化。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Immediately before Eq. (2.2), Martin writes the spin-dependent contribution to the Hamiltonian as $m(\mathbf r)V_m(\mathbf r)$ and therefore defines
+
+$$
+m(\mathbf r)=-\frac{\delta E}{\delta V_m(\mathbf r)},
+\qquad
+\chi(\mathbf r,\mathbf r')
+=-\frac{\delta m(\mathbf r)}{\delta V_m(\mathbf r')}.
+$$
+
+With this sign convention, the conjugate field that favours positive magnetization is $h\equiv -V_m$. A local linear Stoner teaching model can then be written consistently as
+
+$$
+m=\chi_0 h_{\mathrm{eff}},
+\qquad
+h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m,
+$$
+
+which gives
+
+$$
+\chi\equiv\frac{m}{h_{\mathrm{ext}}}
+=\frac{\chi_0}{1-I\chi_0}.
+$$
+
+Using Martin's simplified normalization near Eq. (2.3), $\chi_0=N(0)$, yields $\chi=N(0)/[1-I N(0)]$. Here $N(0)$, $I$, and $\chi$ absorb the chosen spin counting, magnetic-moment factors, and units. Other conventions use a per-spin or two-spin DOS and may retain factors such as $\mu_B^2$ explicitly; $I$ must then be transformed consistently. The instability criterion $I N(0)=1$ is directly comparable only within one matched convention.
+
+It is inconsistent to retain Eq. (2.2), $m=-\delta E/\delta V_m$, while silently writing $m=\chi_0V_m$. The latter has implicitly renamed the positive-magnetization field $h$ as $V_m$. This audit leaves the Stoner mean-field conclusion unchanged and makes the intermediate sign and normalization explicit.
+
+  </div>
+</BilingualCallout>
+
+</div>
