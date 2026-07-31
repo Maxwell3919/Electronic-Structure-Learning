@@ -1,20 +1,20 @@
 ---
-title: "Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction"
-description: "Martin Chapter 25 的目录级阅读骨架；正文待填充。"
+title: "Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction | 晶体电子结构的拓扑：导论"
+description: "从 Bloch 态的规范自由度出发，建立 Berry 相位、Chern 数、体边对应、时间反演约束、Wannier 障碍和拓扑主张的证据边界。"
 sidebar:
   order: 1
-  label: "Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction"
+  label: "Chapter 25 · Topology: Introduction"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter25Contents from '../../../components/part06/ch25/Chapter25Contents.astro';
+import Chapter25Content from '../../../components/part06/ch25/Chapter25Content.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[5].units[0].label}
-  sourcePage={catalog.parts[5].units[0].page}
-  sections={catalog.parts[5].units[0].sections}
-  exercisesPage={catalog.parts[5].units[0].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 25, printed pages 517–529; sections 25.1–25.10. Exercises begin on printed page 530 and are not reproduced. Chapters 23–24 and Appendices O–Q are prerequisite cross-references."
+  status="draft"
 />
+
+<Chapter25Contents />
+<Chapter25Content />
