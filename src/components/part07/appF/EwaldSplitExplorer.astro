@@ -1,0 +1,187 @@
+---
+import {
+  ewaldEnergy,
+  ewaldModelDefaults,
+} from '../../../data/part07/ewaldCoulombModel.mjs';
+
+const width = 680;
+const height = 330;
+const left = 62;
+const right = 640;
+const top = 38;
+const bottom = 270;
+const alphaMin = 2.4;
+const alphaMax = 5.6;
+const yMin = -4.2;
+const yMax = 4.2;
+const xMap = (alpha) => left + (right - left) * (alpha - alphaMin) / (alphaMax - alphaMin);
+const yMap = (value) => bottom - (value - yMin) * (bottom - top) / (yMax - yMin);
+const sampleCurve = (cutoff, key) => Array.from({ length: 81 }, (_, index) => {
+  const alpha = alphaMin + (alphaMax - alphaMin) * index / 80;
+  return { alpha, ...ewaldEnergy({ alpha, realCutoff: cutoff, reciprocalCutoff: cutoff }) };
+}).map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.alpha).toFixed(2)} ${yMap(point[key]).toFixed(2)}`).join(' ');
+
+const defaults = ewaldEnergy();
+const defaultRealPath = sampleCurve(ewaldModelDefaults.realCutoff, 'realSpace');
+const defaultReciprocalPath = sampleCurve(ewaldModelDefaults.realCutoff, 'reciprocalSpace');
+const defaultTotalPath = sampleCurve(ewaldModelDefaults.realCutoff, 'total');
+const reference = ewaldEnergy({ alpha: 4, realCutoff: 8, reciprocalCutoff: 8 }).total;
+const fallbackRows = [2.6, 4.0, 5.4].map((alpha) => ({
+  ...ewaldEnergy({ alpha, realCutoff: 7, reciprocalCutoff: 7 }),
+  alpha,
+}));
+---
+
+<figure class="chapter-visual ewald-explorer" data-ewald-explorer>
+  <figcaption>
+    <strong>原创交互模型：Ewald 实空间、倒空间与自能分解</strong>
+    <span lang="en">Original interactive model: Ewald real-space, reciprocal-space, and self-energy decomposition</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls ewald-explorer__controls">
+    <label>
+      <span>splitting parameter α | 筛分参数</span>
+      <input type="range" min={alphaMin} max={alphaMax} step="0.1" value={ewaldModelDefaults.alpha} data-ewald-alpha />
+      <output data-ewald-alpha-output>{ewaldModelDefaults.alpha.toFixed(1)}</output>
+    </label>
+    <label>
+      <span>lattice cutoff N | 实/倒空间整数截断</span>
+      <input type="range" min="2" max="8" step="1" value={ewaldModelDefaults.realCutoff} data-ewald-cutoff />
+      <output data-ewald-cutoff-output>{ewaldModelDefaults.realCutoff}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="ewald-title ewald-desc">
+    <title id="ewald-title">Ewald energy components as the Gaussian splitting parameter changes</title>
+    <desc id="ewald-desc">
+      A neutral cubic cell containing charges plus one and minus one is summed under three-dimensional periodic tin-foil boundary conditions. Real-space, reciprocal-space, and total energy curves change with alpha. At sufficient cutoff the total remains nearly invariant although the components move strongly.
+    </desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={yMap(0)} x2={right} y2={yMap(0)} class="plot-guide" />
+    <path d={defaultRealPath} class="ewald-explorer__real" data-ewald-real-path />
+    <path d={defaultReciprocalPath} class="ewald-explorer__reciprocal" data-ewald-reciprocal-path />
+    <path d={defaultTotalPath} class="ewald-explorer__total" data-ewald-total-path />
+    <line x1={xMap(ewaldModelDefaults.alpha)} y1={top} x2={xMap(ewaldModelDefaults.alpha)} y2={bottom} class="ewald-explorer__probe" data-ewald-probe />
+    <text x={right} y="302" text-anchor="end">αL</text>
+    <text x="20" y="48">energy</text>
+    <text x={right - 122} y="50" class="ewald-explorer__legend-real">real</text>
+    <text x={right - 122} y="72" class="ewald-explorer__legend-reciprocal">reciprocal</text>
+    <text x={right - 122} y="94" class="ewald-explorer__legend-total">total</text>
+  </svg>
+
+  <div class="chapter-visual__readout ewald-explorer__readout" aria-live="polite">
+    <span>real-space</span><strong data-ewald-real>{defaults.realSpace.toFixed(6)}</strong>
+    <span>reciprocal-space</span><strong data-ewald-reciprocal>{defaults.reciprocalSpace.toFixed(6)}</strong>
+    <span>self term</span><strong data-ewald-self>{defaults.selfEnergy.toFixed(6)}</strong>
+    <span>total</span><strong data-ewald-total>{defaults.total.toFixed(8)}</strong>
+    <span>reference error</span><strong data-ewald-error>{Math.abs(defaults.total - reference).toExponential(2)}</strong>
+  </div>
+
+  <div class="ewald-explorer__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>α</th><th>real</th><th>reciprocal</th><th>self</th><th>total</th></tr></thead>
+      <tbody>
+        {fallbackRows.map((entry) => (
+          <tr>
+            <td>{entry.alpha.toFixed(1)}</td>
+            <td>{entry.realSpace.toFixed(5)}</td>
+            <td>{entry.reciprocalSpace.toFixed(5)}</td>
+            <td>{entry.selfEnergy.toFixed(5)}</td>
+            <td>{entry.total.toFixed(7)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>边长 <code>L=1</code> 的 simple-cubic cell，charges <code>+1</code> 与 <code>−1</code> 位于 <code>(0,0,0)</code> 与 <code>(1/2,1/2,1/2)</code>；三维周期、tin-foil boundary，净电荷为零。</p>
+    <p lang="en"><strong>Model:</strong> a simple-cubic cell of length <code>L=1</code> contains charges <code>+1</code> and <code>−1</code> at <code>(0,0,0)</code> and <code>(1/2,1/2,1/2)</code>; it is three-dimensionally periodic with tin-foil boundary and zero net charge.</p>
+    <p><strong>输入：</strong><code>αL∈[2.4,5.6]</code>；real/reciprocal integer cutoffs 共用 <code>N∈[2,8]</code>。默认 <code>αL=4</code>、<code>N=4/5</code> 的 source defaults 在 readout 中明确记录。</p>
+    <p lang="en"><strong>Inputs:</strong> <code>αL∈[2.4,5.6]</code>; real- and reciprocal-space integer cutoffs share <code>N∈[2,8]</code>. The default source values are recorded in the readout.</p>
+    <p><strong>验收：</strong>改变 α 时 real、reciprocal 与 self terms 显著变化；提高 cutoffs 后 total 对 α 近似不变。遗漏 self term 或改变 boundary 会破坏该不变性。</p>
+    <p lang="en"><strong>Acceptance:</strong> changing α moves the real, reciprocal, and self terms strongly, while increasing the cutoffs makes the total nearly α-independent. Omitting the self term or changing the boundary breaks this invariance.</p>
+    <p><strong>边界：</strong>模型不是生产 Ewald 优化器，不包含 finite-dielectric surface term、2D cutoff、charged-defect correction 或 pseudopotential-specific ionic terms。</p>
+    <p lang="en"><strong>Boundary:</strong> the model is not a production Ewald optimizer and omits finite-dielectric surface terms, two-dimensional cutoffs, charged-defect corrections, and pseudopotential-specific ionic terms.</p>
+  </div>
+</figure>
+
+<script>
+  import { ewaldEnergy } from '../../../data/part07/ewaldCoulombModel.mjs';
+
+  document.querySelectorAll('[data-ewald-explorer]').forEach((root) => {
+    const alphaInput = root.querySelector('[data-ewald-alpha]');
+    const cutoffInput = root.querySelector('[data-ewald-cutoff]');
+    const alphaOutput = root.querySelector('[data-ewald-alpha-output]');
+    const cutoffOutput = root.querySelector('[data-ewald-cutoff-output]');
+    const realOutput = root.querySelector('[data-ewald-real]');
+    const reciprocalOutput = root.querySelector('[data-ewald-reciprocal]');
+    const selfOutput = root.querySelector('[data-ewald-self]');
+    const totalOutput = root.querySelector('[data-ewald-total]');
+    const errorOutput = root.querySelector('[data-ewald-error]');
+    const realPath = root.querySelector('[data-ewald-real-path]');
+    const reciprocalPath = root.querySelector('[data-ewald-reciprocal-path]');
+    const totalPath = root.querySelector('[data-ewald-total-path]');
+    const probe = root.querySelector('[data-ewald-probe]');
+    if (!(alphaInput instanceof HTMLInputElement) || !(cutoffInput instanceof HTMLInputElement)) return;
+
+    const left = 62;
+    const right = 640;
+    const top = 38;
+    const bottom = 270;
+    const alphaMin = 2.4;
+    const alphaMax = 5.6;
+    const yMin = -4.2;
+    const yMax = 4.2;
+    const xMap = (alpha) => left + (right - left) * (alpha - alphaMin) / (alphaMax - alphaMin);
+    const yMap = (value) => bottom - (value - yMin) * (bottom - top) / (yMax - yMin);
+    const reference = ewaldEnergy({ alpha: 4, realCutoff: 8, reciprocalCutoff: 8 }).total;
+
+    const update = () => {
+      const alpha = Number(alphaInput.value);
+      const cutoff = Number(cutoffInput.value);
+      const value = ewaldEnergy({ alpha, realCutoff: cutoff, reciprocalCutoff: cutoff });
+      const samples = Array.from({ length: 81 }, (_, index) => {
+        const sampleAlpha = alphaMin + (alphaMax - alphaMin) * index / 80;
+        return { alpha: sampleAlpha, ...ewaldEnergy({ alpha: sampleAlpha, realCutoff: cutoff, reciprocalCutoff: cutoff }) };
+      });
+      const makePath = (key) => samples.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.alpha).toFixed(2)} ${yMap(point[key]).toFixed(2)}`).join(' ');
+      if (realPath instanceof SVGPathElement) realPath.setAttribute('d', makePath('realSpace'));
+      if (reciprocalPath instanceof SVGPathElement) reciprocalPath.setAttribute('d', makePath('reciprocalSpace'));
+      if (totalPath instanceof SVGPathElement) totalPath.setAttribute('d', makePath('total'));
+      if (probe instanceof SVGLineElement) {
+        probe.setAttribute('x1', xMap(alpha).toFixed(2));
+        probe.setAttribute('x2', xMap(alpha).toFixed(2));
+      }
+      if (alphaOutput instanceof HTMLOutputElement) alphaOutput.value = alpha.toFixed(1);
+      if (cutoffOutput instanceof HTMLOutputElement) cutoffOutput.value = cutoff.toFixed(0);
+      if (realOutput instanceof HTMLElement) realOutput.textContent = value.realSpace.toFixed(6);
+      if (reciprocalOutput instanceof HTMLElement) reciprocalOutput.textContent = value.reciprocalSpace.toFixed(6);
+      if (selfOutput instanceof HTMLElement) selfOutput.textContent = value.selfEnergy.toFixed(6);
+      if (totalOutput instanceof HTMLElement) totalOutput.textContent = value.total.toFixed(8);
+      if (errorOutput instanceof HTMLElement) errorOutput.textContent = Math.abs(value.total - reference).toExponential(2);
+    };
+    alphaInput.addEventListener('input', update);
+    cutoffInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .ewald-explorer { overflow-x: auto; }
+  .ewald-explorer svg { width: 100%; min-width: 40rem; }
+  .ewald-explorer text { fill: currentColor; font-size: 13px; }
+  .ewald-explorer__real { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 2.6; }
+  .ewald-explorer__reciprocal { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-dasharray: 7 4; }
+  .ewald-explorer__total { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 3.2; }
+  .ewald-explorer__probe { stroke: var(--sl-color-gray-3); stroke-width: 1.3; }
+  .ewald-explorer__legend-real { fill: var(--sl-color-accent-high); }
+  .ewald-explorer__legend-reciprocal { fill: currentColor; }
+  .ewald-explorer__legend-total { fill: var(--sl-color-gray-2); }
+  .ewald-explorer__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+  .ewald-explorer__controls label { display: grid; gap: 0.35rem; }
+  .ewald-explorer__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 0.4rem 1rem; }
+  .ewald-explorer__fallback { max-width: 48rem; }
+</style>
