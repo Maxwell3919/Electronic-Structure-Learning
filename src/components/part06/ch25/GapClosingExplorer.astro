@@ -1,0 +1,109 @@
+---
+import { analyticGap, gapModel } from '../../../data/part06/ch25TeachingModels.mjs';
+const initialMass = gapModel.parameter.default;
+const initialGap = analyticGap(initialMass);
+const bandPath = (mass, sign) => {
+  const points = [];
+  const samples = 161;
+  for (let index = 0; index < samples; index += 1) {
+    const k = -Math.PI + (2 * Math.PI * index) / (samples - 1);
+    const energy = Math.hypot(Math.sin(k), mass + Math.cos(k));
+    const x = 48 + (544 * index) / (samples - 1);
+    const y = 150 - sign * energy * 42;
+    points.push(`${index === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`);
+  }
+  return points.join(' ');
+};
+---
+
+<figure class="chapter-visual gap-closing-explorer" data-gap-closing-explorer>
+  <figcaption>
+    <strong>原创交互模型 A：连续变形与体能隙闭合</strong>
+    <span lang="en">Original interactive model A: continuous deformation and bulk-gap closing</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>质量参数 m | Mass parameter</span>
+      <input
+        type="range"
+        min={gapModel.parameter.min}
+        max={gapModel.parameter.max}
+        step={gapModel.parameter.step}
+        value={initialMass}
+        data-gap-mass
+        aria-describedby="gap-model-boundary"
+      />
+      <output data-gap-mass-output>{initialMass.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 640 310" role="img" aria-labelledby="gap-title gap-desc">
+    <title id="gap-title">Two-band spectrum as the mass parameter crosses a gap closing</title>
+    <desc id="gap-desc">Upper and lower energies of H equals sine k sigma x plus m plus cosine k sigma z. The gap closes only at m equals plus or minus one.</desc>
+    <line x1="48" y1="150" x2="592" y2="150" class="visual-axis" />
+    <line x1="48" y1="30" x2="48" y2="270" class="visual-axis" />
+    <line x1="320" y1="35" x2="320" y2="265" class="visual-guide" />
+    <text x="48" y="292">−π</text>
+    <text x="315" y="292">0</text>
+    <text x="580" y="292">π</text>
+    <text x="18" y="155" transform="rotate(-90 18 155)">energy / model units</text>
+    <path d={bandPath(initialMass, 1)} class="band band--upper" data-gap-upper />
+    <path d={bandPath(initialMass, -1)} class="band band--lower" data-gap-lower />
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-gap-value>minimum direct gap = {initialGap.toFixed(4)}</span>
+    <strong data-gap-status>Gapped: an invariant may be defined for the isolated lower band.</strong>
+  </div>
+
+  <div class="chapter-visual__contract" id="gap-model-boundary">
+    <p><strong>Hamiltonian：</strong><code>H(k;m)=\sin k\,\sigma_x+(m+\cos k)\sigma_z</code>，<code>k\in[-\pi,\pi]</code>。两条能带为 <code>E_\pm=\pm\sqrt{1+m^2+2m\cos k}</code>，解析最小直接能隙为 <code>2\lvert\lvert m\rvert-1\rvert</code>。</p>
+    <p lang="en"><strong>Hamiltonian:</strong> <code>H(k;m)=\sin k\,\sigma_x+(m+\cos k)\sigma_z</code> on <code>k\in[-\pi,\pi]</code>. The energies are <code>E_\pm=\pm\sqrt{1+m^2+2m\cos k}</code> and the analytic minimum direct gap is <code>2\lvert\lvert m\rvert-1\rvert</code>.</p>
+    <p><strong>验收：</strong><code>m=1</code> 时在 <code>k=\pi</code> 闭隙；<code>m=-1</code> 时在 <code>k=0</code> 闭隙；离开这两点后解析值与采样值一致到声明网格精度。</p>
+    <p lang="en"><strong>Acceptance:</strong> the gap closes at <code>k=\pi</code> for <code>m=1</code> and at <code>k=0</code> for <code>m=-1</code>; away from these points the analytic and sampled gaps agree to the declared grid resolution.</p>
+    <p><strong>边界：</strong>模型只说明同一对称性类别内改变离散拓扑标签时必须经过模型闭隙点。它不证明任意真实材料的相变，也不排除通过改变保护对称性或目标能带流形改变分类。</p>
+    <p lang="en"><strong>Boundary:</strong> the model only shows that changing its discrete label within the same symmetry class crosses a model gap closing. It neither proves a transition in a material nor excludes changing the classification by changing the protecting symmetry or target band manifold.</p>
+  </div>
+</figure>
+
+<script>
+  import { analyticGap } from '../../../data/part06/ch25TeachingModels.mjs';
+  const makeBandPath = (mass, sign) => {
+    const points = [];
+    const samples = 161;
+    for (let index = 0; index < samples; index += 1) {
+      const k = -Math.PI + (2 * Math.PI * index) / (samples - 1);
+      const energy = Math.hypot(Math.sin(k), mass + Math.cos(k));
+      const x = 48 + (544 * index) / (samples - 1);
+      const y = 150 - sign * energy * 42;
+      points.push(`${index === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`);
+    }
+    return points.join(' ');
+  };
+  document.querySelectorAll('[data-gap-closing-explorer]').forEach((root) => {
+    const massInput = root.querySelector('[data-gap-mass]');
+    const massOutput = root.querySelector('[data-gap-mass-output]');
+    const gapOutput = root.querySelector('[data-gap-value]');
+    const statusOutput = root.querySelector('[data-gap-status]');
+    const upper = root.querySelector('[data-gap-upper]');
+    const lower = root.querySelector('[data-gap-lower]');
+    if (!(massInput instanceof HTMLInputElement)) return;
+
+    const update = () => {
+      const mass = Number(massInput.value);
+      const gap = analyticGap(mass);
+      if (massOutput instanceof HTMLOutputElement) massOutput.value = mass.toFixed(2);
+      if (gapOutput instanceof HTMLElement) gapOutput.textContent = `minimum direct gap = ${gap.toFixed(4)}`;
+      if (statusOutput instanceof HTMLElement) {
+        statusOutput.textContent = gap < 1e-9
+          ? 'Gap closing: the isolated-band invariant is undefined at this parameter.'
+          : 'Gapped: an invariant may be defined for the isolated lower band.';
+      }
+      if (upper instanceof SVGPathElement) upper.setAttribute('d', makeBandPath(mass, 1));
+      if (lower instanceof SVGPathElement) lower.setAttribute('d', makeBandPath(mass, -1));
+    };
+    massInput.addEventListener('input', update);
+    update();
+  });
+</script>

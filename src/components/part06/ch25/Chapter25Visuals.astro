@@ -1,0 +1,203 @@
+---
+import GapClosingExplorer from './GapClosingExplorer.astro';
+import BerryGaugeLoop from './BerryGaugeLoop.astro';
+import ChernMeshExplorer from './ChernMeshExplorer.astro';
+import BulkBoundaryDiagram from './BulkBoundaryDiagram.astro';
+---
+
+<section id="visual-laboratory" aria-labelledby="chapter-25-visual-title">
+  <h2 id="chapter-25-visual-title">原创可视化实验 | Original Visual Laboratory</h2>
+  <p>
+    三个交互模型分别检查能隙条件、规范变换和全布里渊区离散不变量。页面初始 SVG 与说明在禁用 JavaScript 时仍保留；控件只用于重新计算同一明确模型。
+  </p>
+  <p lang="en">
+    The three interactive models isolate the gap condition, gauge transformation, and a full-Brillouin-zone discrete invariant. The initial SVGs and contracts remain available without JavaScript; the controls only recompute the declared models.
+  </p>
+
+  <GapClosingExplorer />
+  <BerryGaugeLoop />
+  <ChernMeshExplorer />
+  <BulkBoundaryDiagram />
+</section>
+
+<style is:global>
+  #visual-laboratory {
+    margin-block: 2.5rem;
+  }
+
+  .chapter-visual {
+    margin-block: 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .chapter-visual figcaption {
+    display: grid;
+    gap: 0.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .chapter-visual__controls {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .visual-controls--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .visual-controls--three {
+    grid-template-columns: 1.2fr 0.7fr 1.3fr;
+    align-items: end;
+  }
+
+  .chapter-visual__controls label {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .checkbox-control {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+
+  .chapter-visual svg {
+    width: 100%;
+    height: auto;
+    color: var(--sl-color-text);
+  }
+
+  .chapter-visual text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .visual-axis {
+    stroke: var(--sl-color-gray-3);
+    stroke-width: 1.5;
+  }
+
+  .visual-guide {
+    stroke: var(--sl-color-gray-4);
+    stroke-dasharray: 5 5;
+  }
+
+  .band {
+    fill: none;
+    stroke-width: 3;
+  }
+
+  .band--upper {
+    stroke: var(--sl-color-accent-high);
+  }
+
+  .band--lower {
+    stroke: var(--sl-color-text-accent);
+    stroke-dasharray: 8 4;
+  }
+
+  .sphere-outline,
+  .sphere-equator,
+  .berry-latitude,
+  .phase-ring {
+    fill: none;
+    stroke: var(--sl-color-gray-3);
+  }
+
+  .sphere-equator {
+    stroke-dasharray: 6 5;
+  }
+
+  .berry-latitude {
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 4;
+  }
+
+  .berry-point,
+  .mass-marker-point {
+    fill: var(--sl-color-accent-high);
+  }
+
+  .phase-ring {
+    stroke-width: 2;
+  }
+
+  .phase-hand,
+  .mass-marker {
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 3;
+  }
+
+  .phase-region {
+    stroke: var(--sl-color-gray-3);
+    stroke-width: 1.5;
+  }
+
+  .phase-region--trivial {
+    fill: var(--sl-color-gray-6);
+  }
+
+  .phase-region--minus {
+    fill: color-mix(in srgb, var(--sl-color-accent) 24%, transparent);
+  }
+
+  .phase-region--plus {
+    fill: color-mix(in srgb, var(--sl-color-text-accent) 28%, transparent);
+  }
+
+  .bulk-box {
+    fill: var(--sl-color-gray-6);
+    stroke: var(--sl-color-gray-3);
+  }
+
+  .interface-arrow {
+    fill: none;
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 3;
+  }
+
+  .bulk-continuum {
+    fill: color-mix(in srgb, var(--sl-color-gray-4) 42%, transparent);
+  }
+
+  .spectral-flow {
+    fill: none;
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 5;
+  }
+
+  .ordinary-state {
+    fill: none;
+    stroke: var(--sl-color-gray-2);
+    stroke-width: 3;
+    stroke-dasharray: 8 6;
+  }
+
+  .chapter-visual__readout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.2rem;
+    padding: 0.75rem;
+    border-radius: 0.45rem;
+    background: var(--sl-color-bg-nav);
+  }
+
+  .chapter-visual__contract {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 48rem) {
+    .visual-controls--two,
+    .visual-controls--three {
+      grid-template-columns: 1fr;
+    }
+
+    .chapter-visual {
+      padding: 0.75rem;
+    }
+  }
+</style>

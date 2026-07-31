@@ -1,0 +1,70 @@
+---
+const sections = [
+  ['25.1', 'Introduction', 517, '本 Part 的问题设置、量子 Hall 先例与章节边界'],
+  ['25.2', 'Topology of What?', 519, 'Bloch Hamiltonian、本征矢、占据子空间与能隙条件'],
+  ['25.3', 'Bulk-Boundary Correspondence', 520, '界面连续插值、拓扑差异与边界谱流'],
+  ['25.4', 'Berry Phase and Topology for Bloch States in the Brillouin Zone', 521, '规范自由度、离散重叠、Berry connection 与闭合回路相位'],
+  ['25.5', 'Berry Flux and Chern Numbers: Winding of the Berry Phase', 524, '曲率、通量、Chern 数、patching 与整数绕行'],
+  ['25.6', 'Time-Reversal Symmetry and Topology of the Electronic System', 526, '反幺正时间反演、Kramers 对、TRIM 与曲率约束'],
+  ['25.7', 'Surface States and the Relation to the Quantum Hall Effect', 527, 'QHE/Chern 边界电导与拓扑绝缘体边缘态的边界'],
+  ['25.8', 'Wannier Functions and Topology', 528, '局域化、平滑规范和对称性保持的 Wannier 障碍'],
+  ['25.9', 'Topological Quantum Chemistry', 529, '原子极限、能带表示、对称指标与方法不完备性'],
+  ['25.10', 'Majorana Modes', 529, 'BdG 粒子—空穴结构、自共轭准粒子和必要附加条件'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-25-source-map-title">
+  <h2 id="chapter-25-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    Martin 第 2 版 Chapter 25 的印刷页范围为 517–529，原创练习从第 530 页另行设计；本站不转录原书习题。
+    Chapter 23、24 与 Appendix O、P、Q 只提供前置连接：Wannier 表示、Berry-phase 极化、spin–orbit、Berry/Chern 数学和量子 Hall 先例。
+  </p>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Chapter 25 source map table">
+    <table>
+      <thead>
+        <tr>
+          <th>原节</th>
+          <th>Martin 标题</th>
+          <th>印刷页</th>
+          <th>本站处理</th>
+          <th>状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sections.map(([id, title, page, scope]) => (
+          <tr>
+            <td>{id}</td>
+            <td lang="en">{title}</td>
+            <td>{page}</td>
+            <td>{scope}</td>
+            <td>原创双语正文</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-boundary">
+    【来源边界】目录标题和页码用于核验组织结构。正文、推导、图示、交互代码、证据矩阵与练习均为本站原创；外部论文只在明确标注处补充原书后的计算形式或归属。
+  </p>
+</section>
+
+<style>
+  .chapter-source-map {
+    margin-block: 1.5rem;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    border-radius: 0.45rem;
+  }
+
+  table {
+    min-width: 58rem;
+  }
+
+  .source-boundary {
+    border-left: 0.25rem solid var(--sl-color-accent);
+    padding: 0.75rem 0.9rem;
+    background: var(--sl-color-gray-7);
+  }
+</style>

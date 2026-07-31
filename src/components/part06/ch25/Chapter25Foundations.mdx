@@ -1,0 +1,346 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+
+<span id="section-25-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 25.1 引言 | Introduction
+
+<BilingualSection titleZh="谱之外的全局信息" titleEn="Global information beyond the spectrum" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 以量子 Hall 效应作为入口：二维体内可以有能隙，而边界仍承载定向传播的态；Hall 电导由整数控制。这个例子把三个对象联系起来：体 Bloch 态在整个 BZ 上的几何、闭合参数空间上的整数不变量，以及具有特定谱流的边界态。
+
+“拓扑”在这里表示保持目标能隙和指定对称性时，Hamiltonian 能否连续变形到另一个 Hamiltonian。若两者可以通过始终有隙的路径连接，它们属于同一分类；若离散不变量不同，任何保持分类条件的连接路径都必须遇到能隙闭合或使保护对称性失效。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin begins with the quantum Hall effect: a two-dimensional bulk may be gapped while its boundary carries directed propagating states, and the Hall conductance is controlled by an integer. This example connects three objects: the geometry of the bulk Bloch states over the full Brillouin zone, an integer invariant on a closed parameter space, and boundary states with a specified spectral flow.
+
+Here topology asks whether one Hamiltonian can be deformed continuously into another while preserving the target gap and the stated symmetries. If such an everywhere-gapped path exists, the two Hamiltonians belong to the same class. If their discrete invariants differ, every path that preserves the classification assumptions must encounter a gap closing or lose the protecting symmetry.
+
+  </div>
+</BilingualSection>
+
+<span id="section-25-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 25.2 拓扑的对象是什么？ | Topology of What?
+
+<BilingualSection titleZh="映射是核心对象" titleEn="The map is the central object" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+晶格和 BZ 本身的几何形状不是本章分类的对象。固定晶体结构后，$H(\mathbf k)$ 定义从 BZ 到 Hermitian 矩阵空间的映射；选择费米能或目标带流形后，$P(\mathbf k)$ 定义从 BZ 到固定维数子空间空间的映射。拓扑不变量描述这类映射在连续形变下不能改变的全局性质。
+
+能量本征值能够显示闭隙，却不能独立恢复本征矢的相位纹理。两个模型可具有相同的 $E_n(\mathbf k)$，但 $\mathbf d(\mathbf k)$ 或 $P(\mathbf k)$ 的绕行不同。因此拓扑分析必须保留本征矢、投影算符、对称性表示或与它们等价的信息。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The geometry of the lattice or of the Brillouin zone is not the object classified in this chapter. Once the crystal structure is fixed, $H(\mathbf k)$ defines a map from the Brillouin zone to Hermitian matrices. After choosing a Fermi level or a target band manifold, $P(\mathbf k)$ defines a map from the Brillouin zone to the space of subspaces of fixed dimension. A topological invariant records a global property of such a map that cannot change under an allowed continuous deformation.
+
+Energy eigenvalues reveal a gap closing, but they do not reconstruct the phase texture of the eigenvectors. Two models may have the same $E_n(\mathbf k)$ while the winding of $\mathbf d(\mathbf k)$ or $P(\mathbf k)$ differs. A topological analysis must therefore retain eigenvectors, projectors, symmetry representations, or equivalent information.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="有隙连续形变为何保持占据子空间拓扑 | Why a gapped deformation preserves the occupied-subspace class"
+  assumptions={[
+    'H(k,λ) 在 k 和 λ∈[0,1] 上连续；',
+    '占据与未占据谱之间存在统一正下界 Δmin>0；',
+    '占据带数在整个参数空间固定；',
+    '若分类依赖对称性，则 H(k,λ) 在整条路径上满足该对称性。',
+  ]}
+>
+
+令闭合轮廓 $\Gamma$ 在复能量平面中包围全部占据本征值而不包围未占据本征值。谱投影可以写成 resolvent 的轮廓积分：
+
+$$
+P(\mathbf k,\lambda)
+=
+-\frac{1}{2\pi i}
+\oint_\Gamma
+\left[H(\mathbf k,\lambda)-z\right]^{-1}dz.
+$$
+
+只要 $\Gamma$ 不碰到谱，逆算符存在。$H$ 的连续性与统一能隙保证 $P(\mathbf k,\lambda)$ 连续，因此 $\lambda$ 给出两个占据子空间映射之间的 homotopy。离散不变量在连续参数下不可能平滑地从一个整数跳到另一个整数；改变它需要使轮廓无法继续分离两组谱，即发生目标能隙闭合，或离开原来的对称性分类。
+
+The contour $\Gamma$ encloses all occupied eigenvalues and excludes the unoccupied spectrum. As long as the contour never intersects the spectrum, the resolvent exists. Continuity of $H$ and a uniform positive gap make $P(\mathbf k,\lambda)$ continuous, so $\lambda$ supplies a homotopy between the two occupied-subspace maps. A discrete invariant cannot vary continuously between distinct integers. It can change only when the contour ceases to separate the spectra—when the target gap closes—or when the path leaves the symmetry class used by the invariant.
+
+【不能推出 | Does not establish】这段论证不说明哪个材料参数会造成闭隙，也不保证实际相变只发生在高对称点。若结构、磁序、SOC 或占据流形定义同时改变，必须重新声明分类问题。
+
+</DerivationBlock>
+
+<span id="section-25-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 25.3 体—边对应 | Bulk–Boundary Correspondence
+
+<BilingualSection titleZh="从两个体相到一个界面" titleEn="From two bulk phases to an interface" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+体—边对应比较界面两侧的体分类。真空通常可建模为一个平庸、强能隙极限；也可以直接比较两个绝缘体。若两侧不变量不同，空间变化的界面 Hamiltonian 必须在某处完成无法保持局部体隙的插值。平行动量仍为好量子数时，这种插值在边界谱中表现为连接价带与导带投影连续谱的谱流。
+
+定理约束的是净谱流或交叉的奇偶性等全局结构，并不固定每条表面支的能量、速度和自旋纹理。边界粗糙、表面势、化学终止和有限厚度可以移动或混合普通表面态；保护对称性被破坏时，原本必需的边界简并也可能开隙。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Bulk–boundary correspondence compares the bulk classifications on the two sides of an interface. Vacuum is often modelled as a strongly gapped trivial limit, although two insulators may also be compared directly. If the two invariants differ, a spatially varying interface Hamiltonian cannot interpolate between them while maintaining a local bulk gap everywhere. When momentum parallel to the boundary remains a good quantum number, this obstruction appears as boundary spectral flow connecting the projected valence and conduction continua.
+
+The correspondence constrains a global quantity such as net spectral flow or the parity of crossings. It does not fix the energy, velocity, or spin texture of every surface branch. Roughness, surface potentials, chemical termination, and finite thickness can move or mix ordinary surface states; breaking the protecting symmetry can gap a boundary degeneracy that was required only in that symmetry class.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="边界态不是单一证据等级" titleEn="Boundary states are not one evidence level" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Tamm 态来自表面势，Shockley 态来自键序和终止方式，表面共振与投影体带混合。它们都可能位于体能隙附近。有限 slab 的上下表面还可杂化并产生人工小隙。要支持体—边对应，应同时给出体不变量、边界态的空间局域性、与投影体连续谱的连接、厚度与终止面收敛，以及保护对称性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Tamm states arise from a surface potential, Shockley states from bond ordering and termination, and surface resonances mix with projected bulk bands. Any of them may occur near a bulk gap. The two surfaces of a finite slab may also hybridize and open an artificial minigap. Evidence for bulk–boundary correspondence should combine a bulk invariant, spatial localization, connectivity to projected bulk continua, thickness and termination checks, and the protecting symmetry.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-25-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 25.4 布里渊区中 Bloch 态的 Berry 相位与拓扑 | Berry Phase and Topology for Bloch States in the Brillouin Zone
+
+<BilingualSection titleZh="局部相位自由度与闭合回路信息" titleEn="Local phase freedom and closed-loop information" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+归一化本征矢的绝对相位没有物理意义，但相邻 $\mathbf k$ 点本征矢的相对相位决定平行输运。对单条非简并带定义
+
+$$
+\mathbf A_n(\mathbf k)
+=i\langle u_{n\mathbf k}|\nabla_{\mathbf k}u_{n\mathbf k}\rangle,
+$$
+
+它依赖规范。沿有向闭合回路 $C$ 的 Berry 相位为
+
+$$
+\gamma_n[C]=\oint_C\mathbf A_n(\mathbf k)\cdot d\mathbf k.
+$$
+
+可以观测或进入极化、泵浦和拓扑量的是 $e^{i\gamma}$、$\gamma$ 的模 $2\pi$ 类，或由相位随横向参数绕行得到的整数，而不是任意选定分支上的裸数值。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The absolute phase of a normalized eigenvector is not physical, but relative phases between neighbouring $\mathbf k$ points determine parallel transport. For one nondegenerate band we define
+
+$$
+\mathbf A_n(\mathbf k)
+=i\langle u_{n\mathbf k}|\nabla_{\mathbf k}u_{n\mathbf k}\rangle,
+$$
+
+which is gauge dependent. The Berry phase along an oriented closed loop $C$ is
+
+$$
+\gamma_n[C]=\oint_C\mathbf A_n(\mathbf k)\cdot d\mathbf k.
+$$
+
+What enters polarization, pumping, and topological quantities is $e^{i\gamma}$, the equivalence class of $\gamma$ modulo $2\pi$, or an integer obtained from the winding of this phase as a transverse parameter changes—not the raw number on an arbitrarily chosen branch.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Berry connection 的规范变换 | Gauge transformation of the Berry connection"
+  assumptions={[
+    '单条带在所讨论 patch 内非简并且可微；',
+    '采用 A=i⟨u|∇k u⟩ 的符号约定；',
+    '规范函数 φ(k) 在 patch 内连续。',
+  ]}
+>
+
+施加
+
+$$
+|u'_{n\mathbf k}\rangle=e^{i\phi_n(\mathbf k)}|u_{n\mathbf k}\rangle.
+$$
+
+对 $\mathbf k$ 求导：
+
+$$
+\nabla_{\mathbf k}|u'_n\rangle
+=e^{i\phi_n}
+\left(i\nabla_{\mathbf k}\phi_n|u_n\rangle+\nabla_{\mathbf k}|u_n\rangle\right).
+$$
+
+左乘 $\langle u'_n|=e^{-i\phi_n}\langle u_n|$，使用 $\langle u_n|u_n\rangle=1$：
+
+$$
+\begin{aligned}
+\mathbf A'_n
+&=i\langle u'_n|\nabla_{\mathbf k}u'_n\rangle\\
+&=i\left[i\nabla_{\mathbf k}\phi_n+\langle u_n|\nabla_{\mathbf k}u_n\rangle\right]\\
+&=\mathbf A_n-\nabla_{\mathbf k}\phi_n.
+\end{aligned}
+$$
+
+因此闭合回路上
+
+$$
+\gamma'_n[C]-\gamma_n[C]
+=-\oint_C\nabla_{\mathbf k}\phi_n\cdot d\mathbf k
+=-2\pi w,
+$$
+
+其中 $w\in\mathbb Z$ 是 $e^{i\phi}$ 沿回路的绕行数。于是 $e^{i\gamma'}=e^{i\gamma}$。若回路不闭合，端点相位必须与物理比较过程一起保留，不能单独宣称路径积分规范不变。
+
+For an open path, the endpoint phase relation is part of the observable comparison. The integral of the connection alone is not gauge invariant.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="离散重叠乘积与规范抵消 | Discrete overlap product and gauge cancellation"
+  assumptions={[
+    '回路由 k0,k1,…,kN=k0 离散；',
+    '相邻态重叠非零；',
+    '每个态独立归一化。',
+  ]}
+>
+
+定义 link phase
+
+$$
+U_j=
+\frac{\langle u(\mathbf k_j)|u(\mathbf k_{j+1})\rangle}
+{\left|\langle u(\mathbf k_j)|u(\mathbf k_{j+1})\rangle\right|}.
+$$
+
+离散 Berry 相位可写为
+
+$$
+\gamma_N=-\operatorname{Im}\log\prod_{j=0}^{N-1}U_j,
+$$
+
+其整体符号需与连续 connection 约定保持一致。规范变换使 $U_j\to e^{-i\phi_j}U_je^{i\phi_{j+1}}$；闭合乘积中中间相位逐项消去，只剩端点的整数 $2\pi$ 分支。网格加密检查的是离散路径对连续回路的逼近；单次网格上的稳定小数位不是规范或收敛证明。
+
+Under a gauge transformation, neighbouring endpoint phases cancel telescopically in the closed product. Mesh refinement tests the approximation of the continuous loop; stable digits on one mesh are not by themselves a gauge or convergence proof.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="多带占据流形" titleEn="Multiband occupied manifolds" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+若占据带内部存在简并，逐带 Berry connection 依赖任意的带混合。定义矩阵 connection
+
+$$
+[\mathcal A_\mu]_{mn}=i\langle u_{m\mathbf k}|\partial_{k_\mu}u_{n\mathbf k}\rangle,
+$$
+
+在 $U(N_{\mathrm{occ}})$ 变换下按 connection 规则变化。沿回路的 path-ordered Wilson 矩阵，其本征值或行列式提供占据子空间信息。Chapter 27 将在时间反演约束下使用这类对象；本章只建立必要区分。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If occupied bands are degenerate, a band-by-band Berry connection depends on arbitrary band mixing. The matrix connection
+
+$$
+[\mathcal A_\mu]_{mn}=i\langle u_{m\mathbf k}|\partial_{k_\mu}u_{n\mathbf k}\rangle
+$$
+
+transforms as a connection under $U(N_{\mathrm{occ}})$. Eigenvalues or the determinant of a path-ordered Wilson matrix carry occupied-subspace information. Chapter 27 will use such objects under time-reversal constraints; here the purpose is to establish the distinction.
+
+  </div>
+</BilingualSection>
+
+<span id="section-25-5" class="chapter-anchor" aria-hidden="true"></span>
+
+## 25.5 Berry 通量、Chern 数与 Berry 相位绕行 | Berry Flux, Chern Numbers, and Winding of the Berry Phase
+
+<BilingualSection titleZh="局部曲率与全局整数" titleEn="Local curvature and a global integer" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+二维单带曲率取
+
+$$
+\Omega_{n,z}(\mathbf k)
+=\partial_{k_x}A_{n,y}-\partial_{k_y}A_{n,x}
+=-2\operatorname{Im}\langle\partial_{k_x}u_n|\partial_{k_y}u_n\rangle.
+$$
+
+在局部平滑规范内，$\mathbf A$ 改变一个梯度，curl 不变。Chern 数是闭合 BZ 上的总通量
+
+$$
+C_n=\frac{1}{2\pi}\int_{\mathrm{BZ}}\Omega_{n,z}(\mathbf k)\,d^2k.
+$$
+
+多条占据带时，应使用占据曲率的 trace 或投影算符形式。曲率可以高度集中在避免交叉附近，但 Chern 数由全 BZ 积分决定；单个 valley、单个 $k$ 点或高对称路径不能替代该积分。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For one band in two dimensions,
+
+$$
+\Omega_{n,z}(\mathbf k)
+=\partial_{k_x}A_{n,y}-\partial_{k_y}A_{n,x}
+=-2\operatorname{Im}\langle\partial_{k_x}u_n|\partial_{k_y}u_n\rangle.
+$$
+
+Within a smooth local gauge, changing $\mathbf A$ by a gradient leaves its curl unchanged. The Chern number is the total flux through the closed Brillouin zone,
+
+$$
+C_n=\frac{1}{2\pi}\int_{\mathrm{BZ}}\Omega_{n,z}(\mathbf k)\,d^2k.
+$$
+
+For several occupied bands one uses the trace of the occupied curvature or a projector formulation. Curvature may be concentrated near avoided crossings, but the Chern number is determined by the full-zone integral. One valley, one $k$ point, or a high-symmetry path cannot replace it.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Stokes 定理、patching 与整数性 | Stokes' theorem, patching, and integrality"
+  assumptions={[
+    '二维 BZ 是无边界的 torus；',
+    '目标占据流形在整个 BZ 上与其余谱直接分离；',
+    '每个局部 patch 内选择平滑规范；',
+    'BZ 方向约定为 (kx,ky) 与 +z 法向。',
+  ]}
+>
+
+若一条带能在整个 torus 上选取单值、周期、平滑的规范，则形式上
+
+$$
+\int_{T^2} d\mathbf A
+=\int_{\partial T^2}\mathbf A=0,
+$$
+
+因为 torus 没有边界。这说明非零 Chern 数与“一个全局平滑规范”不相容。实际做法是用两个或更多 patch 覆盖 BZ。以两个 patch 为例，交叠区域上的状态满足 $|u^{(2)}\rangle=e^{i\phi}|u^{(1)}\rangle$，因此 $\mathbf A^{(2)}=\mathbf A^{(1)}-\nabla\phi$。分别对 patch 使用 Stokes 定理后，内部边界沿相反方向出现，剩余为 transition function 的绕行：
+
+$$
+\begin{aligned}
+2\pi C
+&=\int_{T^2}\Omega\,d^2k\\
+&=\oint_{\partial S_1}\mathbf A^{(1)}\cdot d\mathbf k
+ +\oint_{\partial S_2}\mathbf A^{(2)}\cdot d\mathbf k\\
+&=\oint_{\partial S_1}\nabla\phi\cdot d\mathbf k
+=2\pi w,
+\end{aligned}
+$$
+
+故 $C=w\in\mathbb Z$。不同符号约定会同时改变曲率、方向或下带定义；报告 Chern 数必须连同这些约定。
+
+A nonzero Chern number is therefore a gauge obstruction: local smooth gauges exist, but they cannot be joined into one globally smooth periodic eigenvector. The integer is the winding of the transition function on patch overlaps.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="由混合 Wannier 中心读取绕行" titleEn="Reading winding from hybrid Wannier centers" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+固定 $k_y$，沿 $k_x$ 方向计算 Berry 相位 $\gamma_x(k_y)$。它与沿 $x$ 的混合 Wannier 中心只差晶格和电荷约定。令 $k_y$ 穿过一个周期，若 $\gamma_x$ 的连续展开值改变 $2\pi C$，则中心跨越 $C$ 个晶胞。这里的“绕行”是整个参数周期的净变化；某个局部中心的跳跃可能只是分支选择。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At fixed $k_y$, compute a Berry phase $\gamma_x(k_y)$ along $k_x$. Up to lattice and charge conventions, it gives a hybrid Wannier center along $x$. If a continuous unwrapping of $\gamma_x$ changes by $2\pi C$ as $k_y$ traverses one period, the center winds through $C$ unit cells. The winding is the net change over the full parameter cycle; a local jump of a plotted center may be only a branch choice.
+
+  </div>
+</BilingualSection>
