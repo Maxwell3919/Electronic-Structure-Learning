@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  statuses: write
 
 concurrency:
   group: github-pages
@@ -49,6 +50,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -56,3 +59,122 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  smoke:
+    name: Live Pages browser smoke
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PAGES_URL: ${{ needs.deploy.outputs.page_url }}
+      DEPLOYED_SHA: ${{ github.sha }}
+      SMOKE_ARTIFACT_DIR: artifacts/pages-smoke
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Locate Chrome
+        shell: bash
+        run: |
+          for browser in google-chrome google-chrome-stable chromium chromium-browser; do
+            if command -v "$browser" >/dev/null 2>&1; then
+              echo "CHROME_BIN=$(command -v "$browser")" >> "$GITHUB_ENV"
+              "$browser" --version
+              exit 0
+            fi
+          done
+          echo "No supported Chrome or Chromium binary is available" >&2
+          exit 1
+
+      - name: Install pinned browser-test dependency
+        shell: bash
+        run: |
+          python3 -m venv .venv-pages-smoke
+          .venv-pages-smoke/bin/python -m pip install --disable-pip-version-check selenium==4.34.2
+
+      - name: Run live desktop, narrow-screen, keyboard, and no-JavaScript checks
+        shell: bash
+        run: .venv-pages-smoke/bin/python scripts/smoke-pages.py
+
+      - name: Upload browser-smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-smoke-${{ github.run_id }}
+          path: artifacts/pages-smoke/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Publish successful deployment status
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS_STATE: success
+          STATUS_DESCRIPTION: Live Pages browser smoke passed
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          repository = os.environ["GITHUB_REPOSITORY"]
+          sha = os.environ["GITHUB_SHA"]
+          run_id = os.environ["GITHUB_RUN_ID"]
+          payload = {
+              "state": os.environ["STATUS_STATE"],
+              "target_url": f"https://github.com/{repository}/actions/runs/{run_id}",
+              "description": os.environ["STATUS_DESCRIPTION"],
+              "context": "pages/live-browser-smoke",
+          }
+          request = urllib.request.Request(
+              f"https://api.github.com/repos/{repository}/statuses/{sha}",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  "X-GitHub-Api-Version": "2022-11-28",
+              },
+              method="POST",
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              if response.status != 201:
+                  raise SystemExit(f"Unexpected GitHub status response: {response.status}")
+          PY
+
+      - name: Publish failed deployment status
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS_STATE: failure
+          STATUS_DESCRIPTION: Live Pages browser smoke failed
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          repository = os.environ["GITHUB_REPOSITORY"]
+          sha = os.environ["GITHUB_SHA"]
+          run_id = os.environ["GITHUB_RUN_ID"]
+          payload = {
+              "state": os.environ["STATUS_STATE"],
+              "target_url": f"https://github.com/{repository}/actions/runs/{run_id}",
+              "description": os.environ["STATUS_DESCRIPTION"],
+              "context": "pages/live-browser-smoke",
+          }
+          request = urllib.request.Request(
+              f"https://api.github.com/repos/{repository}/statuses/{sha}",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                  "X-GitHub-Api-Version": "2022-11-28",
+              },
+              method="POST",
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              if response.status != 201:
+                  raise SystemExit(f"Unexpected GitHub status response: {response.status}")
+          PY
