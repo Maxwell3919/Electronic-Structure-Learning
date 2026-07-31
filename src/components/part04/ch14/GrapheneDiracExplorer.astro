@@ -1,0 +1,127 @@
+---
+import { grapheneBands, grapheneKPoint, grapheneStructureFactor } from '../../../data/part04/ch14TeachingModels.mjs';
+
+const componentId = 'ch14-graphene-dirac';
+const width = 700;
+const height = 320;
+const pad = { left: 52, right: 22, top: 24, bottom: 48 };
+const defaults = { mass: 0, hopping: -1, bondLength: 1 };
+const K = grapheneKPoint({ bondLength: defaults.bondLength });
+const qs = Array.from({ length: 201 }, (_, index) => -0.8 + 1.6 * index / 200);
+const values = qs.map((q) => grapheneBands({
+  kx: K.kx + q,
+  ky: K.ky,
+  hopping: defaults.hopping,
+  sublatticeMass: defaults.mass,
+  bondLength: defaults.bondLength,
+}));
+const yMin = -1.5;
+const yMax = 1.5;
+const toPolyline = (key) => values.map((item, index) => {
+  const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+  const y = pad.top + (yMax - item[key]) * (height - pad.top - pad.bottom) / (yMax - yMin);
+  return `${x.toFixed(2)},${y.toFixed(2)}`;
+}).join(' ');
+const atK = grapheneBands({ kx: K.kx, ky: K.ky, hopping: defaults.hopping, sublatticeMass: defaults.mass });
+const factorAtK = grapheneStructureFactor({ kx: K.kx, ky: K.ky });
+---
+
+<figure class="chapter-visual graphene-dirac" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：graphene K 点与 sublattice mass</strong>
+    <span lang="en">Original interactive model: graphene K point and a sublattice mass</span>
+  </figcaption>
+
+  <label class="graphene-dirac__control">
+    <span>sublattice mass m（能量单位）</span>
+    <input data-graphene-mass type="range" min="0" max="0.8" step="0.05" value={defaults.mass} />
+    <output data-graphene-mass-output>{defaults.mass.toFixed(2)}</output>
+  </label>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Graphene nearest-neighbour bands near one K point</title>
+    <desc id={`${componentId}-desc`}>Two bands are plotted against a one-dimensional displacement from a K point. Equal sublattices give a linear crossing; a diagonal sublattice mass opens a direct gap.</desc>
+    <line class="plot-axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="plot-axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <line class="plot-guide" x1={(width + pad.left - pad.right) / 2} y1={pad.top} x2={(width + pad.left - pad.right) / 2} y2={height - pad.bottom} />
+    <polyline class="graphene-dirac__curve graphene-dirac__curve--lower" data-graphene-lower points={toPolyline('lower')} />
+    <polyline class="graphene-dirac__curve graphene-dirac__curve--upper" data-graphene-upper points={toPolyline('upper')} />
+    <text x={pad.left} y={height - 15} text-anchor="middle">−0.8</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 15} text-anchor="middle">K</text>
+    <text x={width - pad.right} y={height - 15} text-anchor="middle">+0.8</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 2} text-anchor="middle">qₓ around K</text>
+    <text transform={`translate(17 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">energy / |t|</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>|f(K)|=<strong data-graphene-factor>{factorAtK.magnitude.toExponential(2)}</strong></span>
+    <span>direct gap at K=<strong data-graphene-gap>{atK.directGap.toFixed(3)}</strong></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>nearest-neighbour honeycomb Hamiltonian <code>H(k)=[[m,t f(k)],[t f*(k),−m]]</code>，三条 bond 长度取 1，<code>t=−1</code>。横轴只是一条穿过 K 的局部路径。</p>
+    <p lang="en"><strong>Model:</strong> nearest-neighbour honeycomb Hamiltonian <code>H(k)=[[m,t f(k)],[t f*(k),−m]]</code>, with three unit bond lengths and <code>t=−1</code>. The horizontal axis is only a local path through K.</p>
+    <p><strong>验收：</strong><code>m=0</code> 时 <code>f(K)=0</code> 并在 K 线性交叉；任意 m 打开 <code>2|m|</code> direct gap。K 点数值零应仅受 floating-point 精度限制。</p>
+    <p lang="en"><strong>Acceptance:</strong> at <code>m=0</code>, <code>f(K)=0</code> and the bands cross linearly at K. Nonzero m opens a direct gap <code>2|m|</code>. The numerical K-point zero should be limited only by floating-point precision.</p>
+    <p><strong>边界：</strong>模型忽略 overlap、next-neighbour hopping、SOC、strain、many-body corrections 和真实 lattice relaxation。局部 Dirac gap 不自动给出全 BZ indirect gap 或拓扑分类。</p>
+    <p lang="en"><strong>Boundary:</strong> the model omits overlap, further-neighbour hopping, SOC, strain, many-body corrections, and structural relaxation. A local Dirac gap does not automatically determine the full-BZ indirect gap or topology.</p>
+  </div>
+
+  <noscript><p>关闭 JavaScript 后显示 m=0 的静态 Dirac crossing；K 点结构因子为数值零。</p></noscript>
+</figure>
+
+<script>
+  import { grapheneBands, grapheneKPoint, grapheneStructureFactor } from '../../../data/part04/ch14TeachingModels.mjs';
+
+  const root = document.getElementById('ch14-graphene-dirac');
+  if (root) {
+    const input = root.querySelector('[data-graphene-mass]');
+    const output = root.querySelector('[data-graphene-mass-output]');
+    const lower = root.querySelector('[data-graphene-lower]');
+    const upper = root.querySelector('[data-graphene-upper]');
+    const factorOutput = root.querySelector('[data-graphene-factor]');
+    const gapOutput = root.querySelector('[data-graphene-gap]');
+    if (
+      input instanceof HTMLInputElement && output instanceof HTMLOutputElement
+      && lower instanceof SVGPolylineElement && upper instanceof SVGPolylineElement
+      && factorOutput instanceof HTMLElement && gapOutput instanceof HTMLElement
+    ) {
+      const width = 700;
+      const height = 320;
+      const pad = { left: 52, right: 22, top: 24, bottom: 48 };
+      const K = grapheneKPoint({ bondLength: 1 });
+      const qs = Array.from({ length: 201 }, (_, index) => -0.8 + 1.6 * index / 200);
+      const yMin = -1.5;
+      const yMax = 1.5;
+      const points = (values) => values.map((value, index) => {
+        const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+        const y = pad.top + (yMax - value) * (height - pad.top - pad.bottom) / (yMax - yMin);
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      }).join(' ');
+      const update = () => {
+        const mass = Number(input.value);
+        const spectra = qs.map((q) => grapheneBands({ kx: K.kx + q, ky: K.ky, hopping: -1, sublatticeMass: mass }));
+        lower.setAttribute('points', points(spectra.map((item) => item.lower)));
+        upper.setAttribute('points', points(spectra.map((item) => item.upper)));
+        output.value = mass.toFixed(2);
+        const atK = grapheneBands({ kx: K.kx, ky: K.ky, hopping: -1, sublatticeMass: mass });
+        const factor = grapheneStructureFactor({ kx: K.kx, ky: K.ky });
+        factorOutput.textContent = factor.magnitude.toExponential(2);
+        gapOutput.textContent = atK.directGap.toFixed(3);
+      };
+      input.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .graphene-dirac__control { display: grid; gap: 0.35rem; }
+  .graphene-dirac input, .graphene-dirac svg { width: 100%; }
+  .graphene-dirac svg text { fill: currentColor; font-size: 13px; }
+  .graphene-dirac__curve { fill: none; stroke-width: 2.5; }
+  .graphene-dirac__curve--lower { stroke: var(--sl-color-accent-high); }
+  .graphene-dirac__curve--upper { stroke: currentColor; }
+  .plot-axis { stroke: currentColor; stroke-width: 1.4; }
+  .plot-guide { stroke: var(--sl-color-gray-4); stroke-dasharray: 5 5; }
+</style>

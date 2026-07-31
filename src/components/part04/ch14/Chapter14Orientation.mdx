@@ -1,0 +1,78 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reading-orientation" class="chapter-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章改变了什么" titleEn="What changes in this chapter" eyebrow="Chapter 14">
+  <div class="bilingual-section__zh">
+
+Chapter 12–13 用全空间平面波和均匀网格表示平滑轨道；Chapter 14 选择随原子位点平移的局域函数。连续 Hamiltonian 没有因此改变，改变的是有限表示、矩阵稀疏性和可直接施加的模型假设。局域轨道使“某个矩阵元连接哪些原子与轨道”具有明确含义，但这种直观性不等于自动准确。
+
+本章先建立一般非正交局域基的 Bloch 方程，再逐步加入 two-centre、Slater–Koster、有限邻居、on-site SOC 和经验参数等近似。每一步必须标出哪些关系来自平移/点群对称，哪些来自截断或拟合。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Chapters 12–13 used global plane waves and uniform grids for smooth orbitals. Chapter 14 chooses localized functions translated with atomic sites. The continuous Hamiltonian is unchanged; what changes is the finite representation, matrix sparsity, and the modelling assumptions that can be imposed directly. A localized basis makes it meaningful to ask which atoms and orbitals a matrix element connects, but this intuition does not imply automatic accuracy.
+
+The chapter first establishes the general Bloch equation in a nonorthogonal localized basis and then adds two-centre, Slater–Koster, finite-neighbour, on-site SOC, and empirical-parameter approximations. At every step, symmetry relations must be separated from truncation or fitting assumptions.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="与 Chapter 15 的边界" titleEn="Boundary with Chapter 15" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Chapter 14 主要把 Hamiltonian 和 overlap 矩阵元视为给定、参数化或按模型构造的量，用于理解能带结构与化学键。Chapter 15 才讨论 Gaussian/numerical orbitals、积分、自洽密度、总能泛函、Pulay force、Green’s functions 和 mixed basis。这里出现的 generalized eigenproblem 是两章的共同数学骨架，不等于已经完成 full localized-orbital DFT。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Chapter 14 treats Hamiltonian and overlap matrix elements primarily as given, parameterized, or model-constructed quantities for understanding bands and bonding. Chapter 15 addresses Gaussian/numerical orbitals, integrals, self-consistent density, total-energy functionals, Pulay forces, Green's functions, and mixed bases. The generalized eigenproblem is common mathematical infrastructure, not a completed localized-orbital DFT calculation.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="完成本章后应能判断什么" titleEn="Judgments enabled by the chapter">
+  <div class="bilingual-section__zh">
+    <p>完成本章后，应能够：</p>
+    <ul>
+      <li>由实空间 <code>H(T)</code> 与 <code>S(T)</code> 构造 <code>H(k)</code>、<code>S(k)</code> 和广义本征方程；</li>
+      <li>说明 <code>S(k)</code> 正定、S-归一化和正交极限的含义；</li>
+      <li>区分对称性允许/禁止的矩阵元与 two-centre、有限邻居或拟合近似；</li>
+      <li>用方向余弦从 σ、π、δ bond integrals 构造代表性 Slater–Koster 元；</li>
+      <li>推导单带、双带、graphene 与 nanotube 的核心模型并识别 gap 条件；</li>
+      <li>解释非正交性如何改变色散、正交化为何生成更长程矩阵元；</li>
+      <li>区分 band fitting、total-energy fitting、force fitting 与 transferability；</li>
+      <li>拒绝从一条 fitted band、一个 Dirac cone 或一个紧束缚参数集直接推出真实材料结论。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>After the chapter, a reader should be able to:</p>
+    <ul>
+      <li>construct <code>H(k)</code>, <code>S(k)</code>, and the generalized eigenproblem from real-space <code>H(T)</code> and <code>S(T)</code>;</li>
+      <li>state the meaning of positive-definite <code>S(k)</code>, S-normalization, and the orthogonal limit;</li>
+      <li>separate symmetry-allowed or forbidden matrix elements from two-centre, finite-neighbour, or fitted approximations;</li>
+      <li>use direction cosines to construct representative Slater–Koster elements from σ, π, and δ bond integrals;</li>
+      <li>derive the core single-band, two-band, graphene, and nanotube models and identify gap conditions;</li>
+      <li>explain how nonorthogonality changes dispersion and why orthogonalization generates longer-ranged matrix elements;</li>
+      <li>distinguish band, total-energy, and force fitting from transferability;</li>
+      <li>reject a direct real-material conclusion from one fitted band, one Dirac cone, or one tight-binding parameter set.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="证据层级" titleEn="Evidence hierarchy" kind="practice">
+  <div class="bilingual-section__zh">
+
+严格有限基关系 → 声明的模型 Hamiltonian → 参数拟合结果 → 对未拟合结构/能量范围的预测 → 真实材料解释，构成逐级更强的主张。前一层通过不能自动支持后一层。尤其是 band interpolation 很好，只证明所选数据范围内的能带表示，不证明总能、力、结构稳定性、磁序、全 BZ gap 或实验可实现性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Exact finite-basis relations, a declared model Hamiltonian, fitted results, predictions outside the fit domain, and real-material interpretation form successively stronger claims. Passing an earlier layer does not establish a later one. Good band interpolation shows a representation of selected bands over the fit domain; it does not validate total energies, forces, structural stability, magnetic order, a full-BZ gap, or experimental realizability.
+
+  </div>
+</BilingualCallout>

@@ -1,0 +1,136 @@
+---
+import { nonorthogonalChain } from '../../../data/part04/ch14TeachingModels.mjs';
+
+const componentId = 'ch14-nonorthogonal-chain';
+const width = 700;
+const height = 320;
+const pad = { left: 52, right: 22, top: 24, bottom: 48 };
+const defaults = { hopping: -1, overlap: 0.18, onsite: 0 };
+const samples = Array.from({ length: 201 }, (_, index) => -Math.PI + 2 * Math.PI * index / 200);
+const values = samples.map((k) => nonorthogonalChain({ k, ...defaults }));
+const yMin = Math.min(...values.map((item) => item.energy)) - 0.3;
+const yMax = Math.max(...values.map((item) => item.energy)) + 0.3;
+
+const toPolyline = (key) => values.map((item, index) => {
+  const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+  const value = item[key];
+  const y = pad.top + (yMax - value) * (height - pad.top - pad.bottom) / (yMax - yMin);
+  return `${x.toFixed(2)},${y.toFixed(2)}`;
+}).join(' ');
+---
+
+<figure class="chapter-visual nonorth-chain" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：非正交一维最近邻链</strong>
+    <span lang="en">Original interactive model: a nonorthogonal one-dimensional nearest-neighbour chain</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls nonorth-chain__controls">
+    <label>
+      <span>hopping t（能量单位）</span>
+      <input data-chain-hopping type="range" min="-2" max="-0.2" step="0.1" value={defaults.hopping} />
+      <output data-chain-hopping-output>{defaults.hopping.toFixed(1)}</output>
+    </label>
+    <label>
+      <span>overlap s（无量纲）</span>
+      <input data-chain-overlap type="range" min="-0.45" max="0.45" step="0.01" value={defaults.overlap} />
+      <output data-chain-overlap-output>{defaults.overlap.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Nonorthogonal one-band dispersion</title>
+    <desc id={`${componentId}-desc`}>The band energy is H of k divided by S of k for a nearest-neighbour chain. The overlap metric remains positive for the allowed overlap range.</desc>
+    <line class="plot-axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="plot-axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <line class="plot-guide" x1={(width + pad.left - pad.right) / 2} y1={pad.top} x2={(width + pad.left - pad.right) / 2} y2={height - pad.bottom} />
+    <polyline class="nonorth-chain__band" data-chain-band points={toPolyline('energy')} />
+    <text x={pad.left} y={height - 15} text-anchor="middle">−π</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 15} text-anchor="middle">0</text>
+    <text x={width - pad.right} y={height - 15} text-anchor="middle">π</text>
+    <text transform={`translate(17 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">energy</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 2} text-anchor="middle">ka</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>最小 overlap eigenvalue | minimum metric:</span>
+    <strong data-chain-min-metric>{(1 - 2 * Math.abs(defaults.overlap)).toFixed(3)}</strong>
+    <span data-chain-state>正定 | positive definite</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>H(k)=ε0+2t cos(ka)</code>、<code>S(k)=1+2s cos(ka)</code>、<code>ε(k)=H(k)/S(k)</code>，固定 <code>ε0=0</code>。t 使用任意一致能量单位，s 无量纲。</p>
+    <p lang="en"><strong>Model:</strong> <code>H(k)=ε0+2t cos(ka)</code>, <code>S(k)=1+2s cos(ka)</code>, and <code>ε(k)=H(k)/S(k)</code>, with fixed <code>ε0=0</code>. t uses an arbitrary consistent energy unit and s is dimensionless.</p>
+    <p><strong>验收：</strong>最近邻 metric 对所有 k 正定当且仅当 <code>|s|&lt;1/2</code>；<code>s=0</code> 恢复正交 cosine band。滑块范围限制在正定区间内。</p>
+    <p lang="en"><strong>Acceptance:</strong> the nearest-neighbour metric is positive for every k exactly when <code>|s|&lt;1/2</code>; <code>s=0</code> recovers the orthogonal cosine band. The control is restricted to the positive-definite domain.</p>
+    <p><strong>边界：</strong>这是一个轨道、最近邻、固定参数模型；不计算自洽密度、总能、力、电子关联或真实材料参数。非正交性改变色散，但不自动提升模型精度。</p>
+    <p lang="en"><strong>Boundary:</strong> this is a one-orbital nearest-neighbour fixed-parameter model. It computes no self-consistent density, total energy, force, correlation, or material parameter. Nonorthogonality changes dispersion but does not automatically improve accuracy.</p>
+  </div>
+
+  <noscript><p>关闭 JavaScript 后显示 t=−1、s=0.18 的静态正定非正交色散。</p></noscript>
+</figure>
+
+<script>
+  import { nonorthogonalChain } from '../../../data/part04/ch14TeachingModels.mjs';
+
+  const root = document.getElementById('ch14-nonorthogonal-chain');
+  if (root) {
+    const hopping = root.querySelector('[data-chain-hopping]');
+    const overlap = root.querySelector('[data-chain-overlap]');
+    const hoppingOutput = root.querySelector('[data-chain-hopping-output]');
+    const overlapOutput = root.querySelector('[data-chain-overlap-output]');
+    const metricOutput = root.querySelector('[data-chain-min-metric]');
+    const stateOutput = root.querySelector('[data-chain-state]');
+    const band = root.querySelector('[data-chain-band]');
+    if (
+      hopping instanceof HTMLInputElement
+      && overlap instanceof HTMLInputElement
+      && hoppingOutput instanceof HTMLOutputElement
+      && overlapOutput instanceof HTMLOutputElement
+      && metricOutput instanceof HTMLElement
+      && stateOutput instanceof HTMLElement
+      && band instanceof SVGPolylineElement
+    ) {
+      const width = 700;
+      const height = 320;
+      const pad = { left: 52, right: 22, top: 24, bottom: 48 };
+      const samples = Array.from({ length: 201 }, (_, index) => -Math.PI + 2 * Math.PI * index / 200);
+      const update = () => {
+        const t = Number(hopping.value);
+        const s = Number(overlap.value);
+        const values = samples.map((k) => nonorthogonalChain({ k, hopping: t, overlap: s, onsite: 0 }));
+        const energies = values.map((item) => item.energy);
+        const yMin = Math.min(...energies) - 0.3;
+        const yMax = Math.max(...energies) + 0.3;
+        const points = energies.map((energy, index) => {
+          const x = pad.left + index * (width - pad.left - pad.right) / (energies.length - 1);
+          const y = pad.top + (yMax - energy) * (height - pad.top - pad.bottom) / (yMax - yMin);
+          return `${x.toFixed(2)},${y.toFixed(2)}`;
+        }).join(' ');
+        band.setAttribute('points', points);
+        hoppingOutput.value = t.toFixed(1);
+        overlapOutput.value = s.toFixed(2);
+        const minimumMetric = 1 - 2 * Math.abs(s);
+        metricOutput.textContent = minimumMetric.toFixed(3);
+        stateOutput.textContent = minimumMetric > 0 ? '正定 | positive definite' : '非正定 | invalid metric';
+      };
+      hopping.addEventListener('input', update);
+      overlap.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .nonorth-chain__controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.8rem;
+  }
+  .nonorth-chain__controls label { display: grid; gap: 0.35rem; }
+  .nonorth-chain input, .nonorth-chain svg { width: 100%; }
+  .nonorth-chain svg text { fill: currentColor; font-size: 13px; }
+  .nonorth-chain__band { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 2.5; }
+  .plot-axis { stroke: currentColor; stroke-width: 1.4; }
+  .plot-guide { stroke: var(--sl-color-gray-4); stroke-dasharray: 5 5; }
+</style>

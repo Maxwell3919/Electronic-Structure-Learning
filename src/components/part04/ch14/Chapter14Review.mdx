@@ -1,0 +1,120 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="method-comparison" class="chapter-anchor" aria-hidden="true"></span>
+
+## 方法比较、计算连接与证据边界 | Method Comparison, Computational Links, and Evidence Boundaries
+
+<BilingualSection titleZh="同一个 tight-binding 名称可以指不同对象" titleEn="The label tight binding can denote different objects">
+  <div class="bilingual-section__zh">
+    <p>判断一个 tight-binding 结果前，需要先确认 Hamiltonian 的来源和目标：</p>
+    <ul>
+      <li><strong>解析教学模型：</strong>少量轨道和邻居，用于推导 symmetry、crossing、gap 或 DOS 趋势；</li>
+      <li><strong>经验 band model：</strong>参数拟合实验或 first-principles eigenvalues，目标是指定能量窗口内的 bands；</li>
+      <li><strong>downfolded Hamiltonian：</strong>从更大 Hilbert space 投影/消元得到，通常具有明确能量窗口、gauge 和 orbital subspace；</li>
+      <li><strong>total-energy tight binding：</strong>除 band Hamiltonian 外还定义 repulsive、charge、magnetic 或 environment energy；</li>
+      <li><strong>局域基 Kohn–Sham 实现：</strong>矩阵元由基函数和自洽密度构造，属于 Chapter 15 的 full calculation。</li>
+    </ul>
+    <p>这些对象可共享相似矩阵形式，却不共享同一 claim ceiling。band interpolation 通过不能自动验证 total energy、force 或结构 transferability。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Before interpreting a tight-binding result, identify the origin and target of its Hamiltonian:</p>
+    <ul>
+      <li><strong>Analytic teaching model:</strong> a few orbitals and neighbours used to derive symmetry, crossings, gaps, or DOS trends;</li>
+      <li><strong>Empirical band model:</strong> parameters fitted to measured or first-principles eigenvalues over a declared energy window;</li>
+      <li><strong>Downfolded Hamiltonian:</strong> projected or eliminated from a larger Hilbert space with a defined window, gauge, and orbital subspace;</li>
+      <li><strong>Total-energy tight binding:</strong> a band Hamiltonian plus repulsive, charge, magnetic, or environmental energy terms;</li>
+      <li><strong>Localized-basis Kohn–Sham implementation:</strong> matrix elements constructed from basis functions and a self-consistent density, treated in Chapter 15.</li>
+    </ul>
+    <p>These objects can share a matrix form without sharing a claim ceiling. Successful band interpolation does not automatically validate total energy, force, or structural transferability.</p>
+  </div>
+</BilingualSection>
+
+| 比较维度 | 解析/经验正交 TB | 非正交 TB | downfolded/Wannier-like model | total-energy TB |
+|---|---|---|---|---|
+| basis metric | $S=I$ | $S(\mathbf k)>0$ | 取决于构造，常正交 | 正交或非正交 |
+| real-space range | 截断由模型指定 | $H$、$S$ 均需截断与正定检查 | 受 gauge、window、disentanglement 影响 | 还包括 repulsive/environment range |
+| 主要目标 | bands、symmetry、趋势 | bands 与更原子型 basis | 选定 subspace 的 interpolation/analysis | energies、forces、stress、dynamics |
+| 主要参数来源 | 解析假设或 band fit | band/energy fit 或原子型构造 | first-principles projection/downfolding | energy/force/stress reference set |
+| 主要数值门槛 | k sampling、range、fit residual | 再加 $S$ 正定和 conditioning | 再加 subspace/gauge/window 稳定性 | 再加 derivative、cutoff smoothness、energy conservation |
+| 不能自动支持 | total energy、force、真实材料稳定性 | 同左；nonorthogonality 不是精度保证 | window 外 bands、未保留相互作用 | fit domain 外结构、相变或动力学 |
+
+<BilingualSection titleZh="从模型到真实计算的最低证据链" titleEn="A minimum evidence chain from model to calculation">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>明确 basis、orbital ordering、phase convention、spin convention 和单位。</li>
+      <li>核对 Hermiticity、晶体对称、time-reversal/inversion（若适用）及 $S(\mathbf k)$ 正定。</li>
+      <li>验证解析极限：零 hopping、正交极限、bond-axis SK 元、two-band gap、graphene K 点和 nanotube mod-3 family。</li>
+      <li>分别收敛 hopping/overlap range、k mesh、smearing/occupations 和目标能量窗口。</li>
+      <li>报告 fit set 与独立 validation set；检查 eigenvalues 之外的 orbital character、degeneracy、effective mass 或 derivatives。</li>
+      <li>若声称 total energy/force/stress，执行 energy–force finite difference、strain derivative、cutoff smoothness 和 energy conservation 检查。</li>
+      <li>最后才讨论 full-BZ gap、Fermi surface、magnetism、结构稳定性或材料解释。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Declare the basis, orbital ordering, phase convention, spin convention, and units.</li>
+      <li>Check Hermiticity, crystal symmetry, time reversal or inversion when applicable, and positive-definite $S(\mathbf k)$.</li>
+      <li>Verify analytic limits: zero hopping, the orthogonal limit, bond-axis Slater–Koster elements, the two-band gap, the graphene K point, and nanotube mod-three families.</li>
+      <li>Converge hopping or overlap range, k mesh, smearing or occupations, and the target energy window separately.</li>
+      <li>Report the fit set and an independent validation set; inspect orbital character, degeneracy, effective mass, or derivatives in addition to eigenvalues.</li>
+      <li>For total-energy, force, or stress claims, perform energy–force finite differences, strain derivatives, cutoff-smoothness checks, and energy-conservation tests.</li>
+      <li>Only then interpret a full-BZ gap, Fermi surface, magnetism, structural stability, or material behaviour.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="常见误判" titleEn="Common misjudgments" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li><strong>矩阵稀疏等于计算线性标度：</strong>稀疏构造不消除全对角化、正交化或通信成本；Chapter 18 才处理 O(N) 条件。</li>
+      <li><strong>局域轨道等于严格原子轨道：</strong>basis character 受 orthogonalization、downfolding 和 gauge 影响。</li>
+      <li><strong>Slater–Koster 表等于完整晶体 Hamiltonian：</strong>two-centre approximation 丢弃显式多中心环境依赖。</li>
+      <li><strong>Dirac crossing 等于拓扑：</strong>还需 occupied subspace、symmetry、full-BZ gap 和 invariant/edge connectivity。</li>
+      <li><strong>zone-folding metallic 等于真实金属：</strong>curvature、relaxation、SOC 和 σ–π mixing 可改变态；armchair 等特殊边界需单独检查。</li>
+      <li><strong>bands 拟合好等于 forces 可靠：</strong>forces 依赖 matrix-element derivatives、overlap derivatives 和完整能量项。</li>
+      <li><strong>更多参数等于更 transferable：</strong>参数可识别性和 independent validation 比参数数量更重要。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>Sparse matrices imply linear scaling:</strong> sparse construction does not remove diagonalization, orthogonalization, or communication costs; Chapter 18 treats O(N) conditions.</li>
+      <li><strong>A localized orbital is an exact atomic orbital:</strong> its character depends on orthogonalization, downfolding, and gauge.</li>
+      <li><strong>A Slater–Koster table is a complete crystal Hamiltonian:</strong> the two-centre approximation omits explicit multicentre environmental dependence.</li>
+      <li><strong>A Dirac crossing establishes topology:</strong> the occupied subspace, symmetry, full-BZ gap, and invariant or edge connectivity remain necessary.</li>
+      <li><strong>Zone-folding metallic means a real metal:</strong> curvature, relaxation, SOC, and σ–π mixing can change the result, with special cases such as armchair tubes requiring separate checks.</li>
+      <li><strong>Good band fitting gives reliable forces:</strong> forces depend on matrix-element derivatives, overlap derivatives, and every energy term.</li>
+      <li><strong>More parameters guarantee transferability:</strong> identifiability and independent validation matter more than parameter count.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<span id="exercises" class="chapter-anchor" aria-hidden="true"></span>
+
+## 原创练习 | Original Exercises
+
+<ol class="chapter14-exercises">
+  <li><strong>广义本征问题：</strong>从两个非正交 orbitals 的 $2\times2$ $H$、$S$ 出发，写出 secular determinant，并给出 $S$ 正定的判据。说明为何 $\det S>0$ 仍不足以单独保证所有 leading principal minors 合法。</li>
+  <li><strong>正交化与 range：</strong>对一维最近邻 overlap $S=I+sA$，把 $S^{-1/2}$ 展开到 $s^2$，指出为何正交化 Hamiltonian 出现 second-neighbour 项。</li>
+  <li><strong>Slater–Koster 极限：</strong>令 bond direction 为 $(1/\sqrt2,1/\sqrt2,0)$，由 $V_{pp\sigma}$、$V_{pp\pi}$ 计算 $p_xp_x$、$p_yp_y$ 和 $p_xp_y$。再把一个 p orbital 改相位，追踪哪些矩阵元符号改变、哪些 eigenvalues 不变。</li>
+  <li><strong>SOC 维度：</strong>说明为什么含 N 个 spatial orbitals 的 spinor Hamiltonian 至少是 $2N\times2N$。列出 time-reversal symmetry 对非磁 Hamiltonian 的约束，但不要假定 $s_z$ 守恒。</li>
+  <li><strong>方格 van Hove：</strong>在 $(\pi/a,0)$ 附近展开 nearest-neighbour dispersion，证明两个 principal curvatures 符号相反。讨论有限 k mesh 和 smearing 如何把 logarithmic singularity 变为有限峰。</li>
+  <li><strong>graphene mass：</strong>验证 $f(\mathbf K)=0$，并计算 sublattice mass $m$ 下 K 点 eigenvectors 的 sublattice character。解释局部 $2|m|$ gap 与 global indirect gap 的差别。</li>
+  <li><strong>nanotube family：</strong>对 $(10,10)$、$(12,0)$、$(13,0)$ 和 $(6,1)$ 使用 $(n-m)\bmod3$ 分类。然后列出至少三种使 zone-folding classification 与真实 gap 不同的机制。</li>
+  <li><strong>CuO₂ downfolding：</strong>对一个 d state 与两个高能 p states 的 block Hamiltonian，写出能量依赖 Schur complement。说明把它替换为常数 one-band hopping 时引入了哪些 energy-window 假设。</li>
+  <li><strong>force regression：</strong>给定距离依赖 hopping $t(R)$ 和 pair repulsion $\phi(R)$，写出 dimer energy 的解析导数；设计中心有限差分测试并说明步长过大和过小的两种误差。</li>
+  <li><strong>证据审查：</strong>某参数集在 equilibrium bulk 的 symmetry-line bands 上 RMS 很小。逐项判断这能否支持 full-BZ gap、surface bands、phonons、defect formation energy、molecular dynamics 和不同 coordination；为每项给出最低新增验证。</li>
+</ol>
+
+## 来源与边界 | Sources and Boundaries
+
+<BilingualSection titleZh="来源定位" titleEn="Source locators">
+  <div class="bilingual-section__zh">
+    <p>本章组织依据 Martin 第 2 版 Chapter 14，印刷页 295–315，§§14.1–14.12。Appendix N 用于任意角动量的 two-centre rotation，Appendix O 用于 SOC 的相对论边界。Chapter 15 接续 full localized-orbital calculations，Chapter 18 接续 locality 与 linear scaling。教材练习从印刷页 317 开始，未复制。</p>
+    <p>页面公式、推导、比较、图形和练习均为原创教学表达。五个交互只验证声明的有限模型，不是任何材料的 DFT、实验或生产 tight-binding 数据。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>The organization follows Martin, second edition, Chapter 14, printed pp. 295–315, §§14.1–14.12. Appendix N supports two-centre rotations for arbitrary angular momentum and Appendix O supplies the relativistic boundary of SOC. Chapter 15 continues with full localized-orbital calculations and Chapter 18 with locality and linear scaling. Source exercises begin on printed p. 317 and are not reproduced.</p>
+    <p>All public equations, derivations, comparisons, figures, and exercises are original teaching expressions. The five interactives validate only their declared finite models; they are not DFT, experimental, or production tight-binding data for a material.</p>
+  </div>
+</BilingualSection>
