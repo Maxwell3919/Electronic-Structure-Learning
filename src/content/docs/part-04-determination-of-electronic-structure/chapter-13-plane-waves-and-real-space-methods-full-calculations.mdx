@@ -1,20 +1,18 @@
 ---
-title: "Chapter 13 · Plane Waves and Real-Space Methods: Full Calculations"
-description: "Martin Chapter 13 的目录级阅读骨架；正文待填充。"
+title: "Chapter 13 · Plane Waves and Real-Space Methods: Full Calculations | 平面波与实空间全计算"
+description: "从 reciprocal-space 总能、力和非局域赝势进入 Kohn–Sham 自洽、介电 screening、PAW、exact exchange 与 supercell 边界。"
 sidebar:
   order: 2
-  label: "Chapter 13 · Plane Waves and Real-Space Methods: Full Calculations"
+  label: "Chapter 13 · Plane-Wave Full Calculations"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter13Body from '../../../components/part04/ch13/Chapter13Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[3].units[1].label}
-  sourcePage={catalog.parts[3].units[1].page}
-  sections={catalog.parts[3].units[1].sections}
-  exercisesPage={catalog.parts[3].units[1].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 13, printed pp. 283–292; sections 13.1–13.7. Exercises begin p. 293 and are not reproduced."
+  status="draft"
 />
+
+<Chapter13Body />
