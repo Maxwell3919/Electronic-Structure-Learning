@@ -1,0 +1,247 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import WindingEdgeExplorer from './WindingEdgeExplorer.astro';
+
+<span id="sec-26-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 26.3 体能带中的 Shockley 转变与表面态 | Shockley Transition in the Bulk Band Structure and Surface States
+
+<BilingualSection titleZh="从原子型次序到成键型次序" titleEn="From atomic-like ordering to covalent ordering" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 用一维 $s$–$p$ 模型说明 Shockley 转变。原子型极限中，$s$ 与 $p$ 轨道的在位能差大于跃迁引起的带宽，低能带在整个 BZ 中保持主要 $s$ 特征，高能带保持主要 $p$ 特征。增大跃迁后，区中心与区边界的最低态可以具有相反宇称；两条带在 BZ 中交换轨道特征，并在非高对称点通过异轨道跃迁形成避免交叉。
+
+对具有反演中心的模型，$k=0$ 与 $k=\pi/a$ 处 $\sin ka=0$，异宇称轨道之间的奇函数耦合消失，本征态恢复为纯 $s$ 或纯 $p$。这两个点的轨道次序因而是判断 band exchange 的直接入口。参数连续变化时，若两个反演不变动量处的最低态宇称关系改变，某个临界参数上必须出现体能隙闭合。
+
+有限链的结果还取决于边界。原子型情形通常没有孤立的隙内端态；成键中心从原子位置移向键中心后，某些切割方式会留下未配对的边界自由度，形成局域 Shockley 态。该端态的存在和精确能量受终止方式及附加表面势影响。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin uses the one-dimensional $s$–$p$ model to present the Shockley transition. In the atomic-like limit, the separation of the on-site $s$ and $p$ levels exceeds the hopping-induced bandwidths, so the lower band remains predominantly $s$-like throughout the Brillouin zone and the upper band remains predominantly $p$-like. Stronger hopping can make the lowest states at the zone centre and boundary have opposite parity. The bands then exchange orbital character across the Brillouin zone, while interorbital hopping produces an avoided crossing away from the high-symmetry points.
+
+For an inversion-symmetric model, $\sin ka=0$ at $k=0$ and $k=\pi/a$. The odd interorbital coupling vanishes there, so the eigenstates recover pure $s$ or $p$ character. The orbital ordering at these two inversion-invariant momenta is therefore a direct diagnostic of band exchange. If that ordering changes under a continuous parameter variation, the bulk gap must close at a critical point.
+
+The finite-chain result also depends on the boundary. The atomic-like regime normally has no isolated in-gap end state. When the bonding centre shifts from an atom to a bond, some cuts leave an unmatched boundary degree of freedom and produce a localized Shockley state. Its existence and exact energy remain sensitive to the termination and to additional surface potentials.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="反演不变动量处的质量符号与闭隙 | Mass signs and gap closing at inversion-invariant momenta"
+  assumptions={[
+    '采用 s–p 模型 d=(0,w sin ka, ξ+d cos ka)；',
+    '反演中心位于原子位置，因此常数异轨道混合项 u=0；',
+    'w≠0，使一般 k 点的 s–p 混合形成避免交叉。',
+  ]}
+>
+
+低能与高能分裂为
+
+$$
+\Delta E(k)=2\sqrt{w^2\sin^2ka+\bigl(\xi+d\cos ka\bigr)^2}.
+$$
+
+在两个反演不变动量，
+
+$$
+m_0=d_z(0)=\xi+d,
+\qquad
+m_\pi=d_z(\pi/a)=\xi-d.
+$$
+
+由于 $d_y=0$，$m_0$ 与 $m_\pi$ 的符号直接标记低能本征态在这两个点属于哪一个轨道宇称。若
+
+$$
+\boxed{m_0m_\pi=(\xi+d)(\xi-d)<0},
+$$
+
+则两个端点的低能态宇称不同，带必须在 BZ 中交换特征。临界条件为
+
+$$
+\boxed{|\xi|=|d|},
+$$
+
+此时 $k=0$ 或 $k=\pi/a$ 处同时有 $d_y=d_z=0$，两带接触。该推导只确定体能带转变；有限链端态仍需指定终止并检查局域性。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="band inversion 是受控模型诊断，不是单独的材料拓扑结论" titleEn="Band inversion is a controlled model diagnostic, not a standalone material classification" kind="boundary">
+  <div class="bilingual-section__zh">
+
+在这个两带、反演对称模型中，高对称点轨道次序交换与质量符号改变严格对应。真实材料中的“band inversion”可能涉及多条带、简并、SOC、磁性和远离高对称线的闭隙。仅凭一张路径能带图看到轨道颜色交换，不能建立全 BZ 能隙、适用不变量或边界谱证据。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Within this inversion-symmetric two-band model, an exchange of orbital ordering at the invariant momenta is rigorously tied to a change of mass sign. In a real material, “band inversion” may involve multiple bands, degeneracies, spin–orbit coupling, magnetism, and gap closings away from a plotted high-symmetry path. An orbital-colour exchange in one band plot does not establish a full-Brillouin-zone gap, an applicable invariant, or boundary spectral evidence.
+
+  </div>
+</BilingualCallout>
+
+### 两站点模型中的解析端态 | Analytic end state in the two-site model
+
+<DerivationBlock
+  title="半无限 chiral 链的零能递推 | Zero-energy recursion in a semi-infinite chiral chain"
+  assumptions={[
+    'Δ=0，且没有同子格跃迁，因此 σzHσz=−H；',
+    '链从 A0 位点开始，晶胞内 A_n–B_n 跃迁为 t1，晶胞间 B_n–A_{n+1} 跃迁为 t2；',
+    '讨论半无限左边界，右端杂化暂不出现。',
+  ]}
+>
+
+写零能态
+
+$$
+|\psi\rangle=\sum_{n\ge0}\left(A_n|A_n\rangle+B_n|B_n\rangle\right).
+$$
+
+$A$ 与 $B$ 子格方程分别为
+
+$$
+t_1B_n+t_2B_{n-1}=0,
+\qquad
+t_1A_n+t_2A_{n+1}=0,
+$$
+
+其中左边界没有 $B_{-1}$。取仅占据 $A$ 子格的解 $B_n=0$，得到
+
+$$
+A_{n+1}=-\frac{t_1}{t_2}A_n,
+\qquad
+A_n=A_0\left(-\frac{t_1}{t_2}\right)^n.
+$$
+
+可归一化条件是
+
+$$
+\boxed{|t_1/t_2|<1}.
+$$
+
+振幅包络可写成 $|A_n|\propto e^{-n/\xi}$，其中以晶胞为单位的局域长度为
+
+$$
+\boxed{\xi^{-1}=\left|\ln|t_2/t_1|\right|}.
+$$
+
+当 $|t_1|\to|t_2|$ 时，体能隙闭合且 $\xi\to\infty$。有限链左右端态会重叠，零能简并一般分裂为指数小的 $\pm\delta E$。加入 $\Delta$ 或其他破坏 chiral 对称的项后，端态可离开严格中隙位置。
+
+</DerivationBlock>
+
+<WindingEdgeExplorer />
+
+<span id="sec-26-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 26.4 一维 Hamiltonian 的绕行：Berry 相位与 Shockley 转变 | Winding of the Hamiltonian in One Dimension: Berry Phase and the Shockley Transition
+
+<BilingualSection titleZh="对称性把 d 曲线限制在一个平面" titleEn="Symmetry confines the d curve to a plane" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 在本节假设存在反演中心。对 $s$–$p$ 模型，常数异轨道混合 $u$ 被禁止，$\mathbf d(k)$ 被限制在 $d_y$–$d_z$ 平面；对等价的 two-site 模型，子格能差为零时 $\mathbf d(k)$ 被限制在 $d_x$–$d_y$ 平面。两者只相差 Pauli 空间中的固定旋转。
+
+参数 $k$ 穿过完整 BZ 时，$\mathbf d(k)$ 形成闭合曲线。若曲线绕过原点一次，则任何保持平面约束且不经过原点的连续变形都不能把它收缩为不绕行曲线。改变这一分类必须使 $\mathbf d=0$，即两带闭隙；或者增加离开受限平面的分量，从而破坏负责量子化的对称性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin assumes an inversion centre in this section. In the $s$–$p$ model, a constant interorbital mixing $u$ is forbidden and $\mathbf d(k)$ is confined to the $d_y$–$d_z$ plane. In the equivalent two-site model, zero sublattice offset confines $\mathbf d(k)$ to the $d_x$–$d_y$ plane. The two descriptions differ only by a fixed rotation in Pauli space.
+
+As $k$ traverses the full Brillouin zone, $\mathbf d(k)$ forms a closed curve. If that curve winds once around the origin, no continuous deformation that preserves the plane constraint and avoids the origin can contract it to a nonwinding curve. Changing the class requires either $\mathbf d=0$, a band-gap closing, or an additional component out of the constrained plane, which breaks the symmetry responsible for quantization.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="chiral two-site 模型的整数绕行 | Integer winding of the chiral two-site model"
+  assumptions={[
+    'Δ=0 且 d0 只作共同能移；',
+    'q(k)=t1+t2e^{ik} 在完整 BZ 上不为零；',
+    'Bloch basis 与 k 的取向已固定。',
+  ]}
+>
+
+Hamiltonian 可写为
+
+$$
+H(k)-d_0I=
+\begin{pmatrix}
+0&q^*(k)\\q(k)&0
+\end{pmatrix}.
+$$
+
+闭合曲线 $q:S^1\to\mathbb C\setminus\{0\}$ 的绕行数为
+
+$$
+\boxed{\nu=\frac{1}{2\pi i}\int_{-\pi}^{\pi}dk\,\partial_k\log q(k)}.
+$$
+
+对 $q(k)=t_1+t_2e^{ik}$，轨迹是圆心 $t_1$、半径 $|t_2|$ 的圆，因此
+
+$$
+\nu=
+\begin{cases}
+1,&|t_2|>|t_1|,\\
+0,&|t_2|<|t_1|.
+\end{cases}
+$$
+
+在 $|t_1|=|t_2|$ 时圆经过原点，$q=0$，积分失去定义并与 bulk gap closing 同时发生。绕行符号随 $k$ 取向和 off-diagonal convention 改变；“是否为零”及相邻相之间的差在约定固定后才有意义。
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="绕行与低能带 Berry 相位 | Winding and the lower-band Berry phase"
+  assumptions={[
+    '低能带在完整 BZ 上与高能带分离；',
+    '采用同一个 unit-cell/Bloch convention；',
+    'Berry phase 只按模 2π 比较。',
+  ]}
+>
+
+写 $q(k)=|q(k)|e^{i\varphi(k)}$。低能带可在局部取
+
+$$
+|u_-(k)\rangle=\frac{1}{\sqrt2}
+\begin{pmatrix}
+-e^{-i\varphi(k)}\\1
+\end{pmatrix}.
+$$
+
+Berry connection 为
+
+$$
+A(k)=i\langle u_-|\partial_k u_-\rangle
+=\frac12\partial_k\varphi(k).
+$$
+
+因此
+
+$$
+\gamma=\oint A(k)dk
+=\frac12\Delta\varphi
+=\pi\nu\pmod{2\pi}.
+$$
+
+反演对称把 $\gamma$ 量子化为 $0$ 或 $\pi$。结合一维极化关系，单占据带的 Wannier center 满足
+
+$$
+\bar x=\frac{a}{2\pi}\gamma\pmod a.
+$$
+
+两类分别对应相差半个晶格常数的 Wannier-center 位置。这里的 $\mathbb Z_2$ 只是“偶/奇”两类反演量子化 Berry phase；它与 Chapter 27 的 spinful time-reversal topological-insulator $\mathbb Z_2$ 不变量不是同一物理分类。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="体分类、端态和终止依赖的准确关系" titleEn="The precise relation among bulk class, end states, and termination" kind="boundary">
+  <div class="bilingual-section__zh">
+
+量子化 Berry phase 或 winding 是在给定对称性与 Bloch convention 下的 bulk 性质。把 unit cell 平移一个轨道位置可使代表值改变，同时边界终止的标签也必须一起改变。对固定的真实终止，bulk Wannier center 与离子/真空参考之间的不匹配可产生边界电荷或端态；但普通表面势可以移动 Shockley 态，破坏保护对称性可以使其离开中隙。不能把“任何隙内态”直接等同于后续拓扑绝缘体中保证跨越体隙的边界谱流。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A quantized Berry phase or winding is a bulk property only after the symmetry and Bloch convention are fixed. Translating the unit cell by one orbital position can change the representative value, and the boundary labels must be transformed with it. For a fixed physical termination, a mismatch between the bulk Wannier centre and the ionic or vacuum reference can generate boundary charge or an end state. Ordinary surface potentials may shift a Shockley state, and breaking the protecting symmetry may move it away from midgap. “An in-gap state” is not automatically the boundary spectral flow guaranteed in later topological-insulator problems.
+
+  </div>
+</BilingualCallout>
