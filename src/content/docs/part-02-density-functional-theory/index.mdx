@@ -29,6 +29,148 @@ Chapters 6–9 are complete. Part II now covers exact density-space foundations,
   </div>
 </BilingualSection>
 
+<BilingualSection titleZh="跨章节对象链" titleEn="Cross-chapter object chain" eyebrow="Objects">
+  <div class="bilingual-section__zh" style={{ minWidth: 0 }}>
+
+<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>允许密度与外势
+      ↓
+精确基态泛函 F[n]
+      ↓
+Kohn–Sham 辅助表示
+      ↓
+交换—关联近似的层级
+      ↓
+离散化、自洽与目标量收敛
+      ↓
+材料或实验主张的独立证据</code></pre>
+
+<ol>
+  <li><strong><a href="./chapter-06-density-functional-theory-foundations/">Chapter 6</a>：密度空间。</strong>研究对象是允许的粒子密度、外势和普适泛函。Hohenberg–Kohn 定理、Levy 约束搜索和变分原理建立精确理论的定义域，但不产生单粒子轨道或计算算法。</li>
+  <li><strong><a href="./chapter-07-the-kohn-sham-auxiliary-system/">Chapter 7</a>：辅助表示。</strong>把普适泛函组织为非相互作用动能、Hartree 项和交换—关联项，并用辅助轨道重建同一密度。轨道、自洽映射、总能双计数、力与应力都属于这一表示层。</li>
+  <li><strong><a href="./chapter-08-functionals-for-exchange-and-correlation-i/">Chapter 8</a>：局域与半局域结构。</strong>交换—关联洞、和规则与均匀电子气给出约束；LDA/LSDA、GGA、ADA/WDA 和数据库拟合展示如何把这些约束变成近似能量及其势。</li>
+  <li><strong><a href="./chapter-09-functionals-for-exchange-and-correlation-ii/">Chapter 9</a>：超越半局域。</strong>generalized Kohn–Sham、hybrid、meta-GGA、OEP、SIC/DFT+U、ACFD/RPA、非局域色散和 mBJ 依赖不同数学对象。能量泛函、势构造、非局域算符、局域子空间修正和后处理校正必须分别识别。</li>
+</ol>
+
+  </div>
+  <div class="bilingual-section__en" lang="en" style={{ minWidth: 0 }}>
+
+<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>Admissible densities and external potentials
+      ↓
+Exact ground-state functional F[n]
+      ↓
+Kohn–Sham auxiliary representation
+      ↓
+Hierarchy of exchange–correlation approximations
+      ↓
+Discretization, self-consistency, and observable convergence
+      ↓
+Independent evidence for material or experimental claims</code></pre>
+
+<ol>
+  <li><strong><a href="./chapter-06-density-functional-theory-foundations/">Chapter 6</a>: density space.</strong> The primary objects are admissible particle densities, external potentials, and the universal functional. The Hohenberg–Kohn theorems, Levy constrained search, and the variational principle establish the exact domain but do not provide one-particle orbitals or a computational algorithm.</li>
+  <li><strong><a href="./chapter-07-the-kohn-sham-auxiliary-system/">Chapter 7</a>: auxiliary representation.</strong> The universal functional is organized into noninteracting kinetic, Hartree, and exchange–correlation contributions, and auxiliary orbitals reproduce the same density. Orbitals, the self-consistent map, total-energy double counting, forces, and stress belong to this representational layer.</li>
+  <li><strong><a href="./chapter-08-functionals-for-exchange-and-correlation-i/">Chapter 8</a>: local and semilocal structure.</strong> Exchange–correlation holes, sum rules, and the uniform electron gas supply constraints. LDA/LSDA, GGA, ADA/WDA, and database fitting show how constraints become approximate energies and potentials.</li>
+  <li><strong><a href="./chapter-09-functionals-for-exchange-and-correlation-ii/">Chapter 9</a>: beyond semilocality.</strong> Generalized Kohn–Sham theory, hybrids, meta-GGA, OEP, SIC/DFT+U, ACFD/RPA, nonlocal dispersion, and mBJ depend on different mathematical objects. Energy functionals, potential constructions, nonlocal operators, localized-subspace corrections, and post-processing corrections must remain distinct.</li>
+</ol>
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="符号与证据的交接" titleEn="Notation and evidence handoff" eyebrow="Conventions">
+  <div class="bilingual-section__zh">
+
+<ul>
+  <li><code>n(r)</code> 在四章中始终表示电子密度，并满足粒子数归一化。试探密度、输入密度和输出密度是变分或迭代对象，不是不同的物理密度。</li>
+  <li><code>F[n]</code> 是与外势无关的普适泛函；<code>T_s[n]</code>、<code>E_H[n]</code> 和 <code>E_xc[n]</code> 是 Kohn–Sham 分解中的对象。近似通常落在 <code>E_xc</code> 或其导数/算符上，不改变 Hohenberg–Kohn 定理本身。</li>
+  <li><code>v_ext</code>、<code>v_H</code>、<code>v_xc</code> 和 <code>v_s</code> 是局域乘法势时才可直接相加。generalized Kohn–Sham 的非局域 exchange operator 不能默写成普通标量势。</li>
+  <li><code>ψ_i</code> 与 <code>ε_i</code> 属于辅助体系。密度和基态总能有精确定理支撑；一般 Kohn–Sham 本征值、轨道形状和能隙需要额外解释，不能自动视为测量值。</li>
+  <li><code>τ</code> 在 meta-GGA 语境中表示由 Kohn–Sham 轨道构造的正定 kinetic-energy density ingredient，不是总动能 <code>T_s</code>，也不是弛豫时间。</li>
+  <li><code>U</code>、<code>J</code>、projector occupation 和 correlated subspace 是方法定义的一部分。它们的数值与物理含义依赖 projector、double counting、spin 和结构响应，不能脱离实现比较。</li>
+</ul>
+
+证据层级也要连续传递：精确定理约束允许的理论结构；近似泛函给出可计算模型；确定性教学模型只验证声明的有限公式；软件收敛只验证数值过程；材料、光谱或实验结论仍需独立计算与测量证据。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<ul>
+  <li><code>n(r)</code> denotes the electron density throughout the four chapters and is normalized to the particle number. Trial, input, and output densities are variational or iterative objects, not different physical densities.</li>
+  <li><code>F[n]</code> is the external-potential-independent universal functional; <code>T_s[n]</code>, <code>E_H[n]</code>, and <code>E_xc[n]</code> belong to the Kohn–Sham decomposition. An approximation usually enters <code>E_xc</code> or its derivative/operator and does not alter the Hohenberg–Kohn theorems.</li>
+  <li><code>v_ext</code>, <code>v_H</code>, <code>v_xc</code>, and <code>v_s</code> can be added directly only when they are local multiplicative potentials. A nonlocal generalized-Kohn–Sham exchange operator must not be rewritten silently as an ordinary scalar potential.</li>
+  <li><code>ψ_i</code> and <code>ε_i</code> belong to the auxiliary system. Exact theorems support the density and ground-state total energy; generic Kohn–Sham eigenvalues, orbital shapes, and gaps require additional interpretation and are not automatically measured quantities.</li>
+  <li><code>τ</code> in a meta-GGA is the positive Kohn–Sham orbital kinetic-energy-density ingredient. It is neither the total kinetic energy <code>T_s</code> nor a relaxation time.</li>
+  <li><code>U</code>, <code>J</code>, projector occupations, and the correlated subspace are part of the method definition. Their numerical and physical meanings depend on projectors, double counting, spin, and structural response.</li>
+</ul>
+
+The evidence hierarchy must also carry across chapters: exact theorems constrain the admissible theoretical structure; approximate functionals define computable models; deterministic teaching models validate only their declared finite formulas; software convergence validates a numerical process; material, spectral, or experimental conclusions still require independent computational or measurement evidence.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="选择近似时的阅读顺序" titleEn="Reading order for choosing an approximation" eyebrow="Workflow">
+  <div class="bilingual-section__zh">
+
+面对一个实际问题时，不从“哪个泛函最好”开始，而按以下顺序判断：
+
+<ol>
+  <li><strong>先确定目标量。</strong>几何、相对能量、能隙、局域占据、色散结合和响应函数依赖不同误差通道，不能由一个平均 benchmark 排名统一代理。</li>
+  <li><strong>再确定必须保留的物理与约束。</strong>检查自旋、长程 exchange、非局域 correlation、局域 d/f 子空间、周期性、金属性和是否需要变分总能。</li>
+  <li><strong>识别方法对象。</strong>LDA/GGA 是密度与梯度的半局域能量泛函；hybrid 引入非局域 exchange；meta-GGA 引入轨道 kinetic-energy density；DFT+U 修改指定子空间；RPA/ACFD 使用响应函数；mBJ 主要是势构造。</li>
+  <li><strong>分开检查数值门。</strong>基组、k 点、网格、SCF、积分、未占据态、projector、超胞和目标 observable 的收敛必须分别报告。</li>
+  <li><strong>最后评估证据。</strong>方法适用性、实现正确性、内部收敛、目标量稳定性和与独立数据的一致性是不同问题。没有跨体系、跨性质都成立的普适泛函排序。</li>
+</ol>
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a practical problem, do not begin with “Which functional is best?” Use the following order instead:
+
+<ol>
+  <li><strong>Specify the target observable.</strong> Geometries, relative energies, gaps, localized occupations, dispersion binding, and response functions expose different error channels and cannot be represented by one average benchmark ranking.</li>
+  <li><strong>Identify the required physics and constraints.</strong> Check spin, long-range exchange, nonlocal correlation, localized d/f subspaces, periodicity, metallicity, and whether a variational total energy is required.</li>
+  <li><strong>Identify the mathematical object being changed.</strong> LDA/GGA are semilocal density-and-gradient energy functionals; hybrids introduce nonlocal exchange; meta-GGA introduces orbital kinetic-energy density; DFT+U modifies a declared subspace; RPA/ACFD uses response functions; mBJ is primarily a potential construction.</li>
+  <li><strong>Separate numerical gates.</strong> Basis, k-point, grid, SCF, integration, unoccupied-state, projector, supercell, and target-observable convergence require separate evidence.</li>
+  <li><strong>Evaluate the evidence last.</strong> Method applicability, implementation correctness, internal convergence, observable stability, and agreement with independent data are different questions. No universal functional ranking holds across all systems and properties.</li>
+</ol>
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="完成 Part II 后的判断清单" titleEn="Judgment checklist after Part II" eyebrow="Review">
+  <div class="bilingual-section__zh">
+
+完成四章后，应能独立回答以下问题：
+
+<ul>
+  <li>一个结论来自 Hohenberg–Kohn 定理、Kohn–Sham 构造、交换—关联近似，还是数值实现？</li>
+  <li>当前对象是总能泛函、局域势、非局域算符、局域子空间修正，还是后处理校正？</li>
+  <li>当前“收敛”指程序终止、SCF 固定点、目标量稳定、方法适用，还是科学接受？</li>
+  <li>某个能隙是 Kohn–Sham gap、generalized-Kohn–Sham gap、fundamental gap 还是 optical gap？缺少哪一项证据？</li>
+  <li>某个泛函或校正满足了哪些精确约束，又在哪些密度、长度、占据或响应区域缺乏保证？</li>
+  <li>一项材料主张是否同时给出了结构、磁性、全布里渊区、数值收敛、方法依赖和独立比较证据？</li>
+</ul>
+
+不能清楚区分这些层级时，应返回对应章节，而不是直接增加更昂贵的泛函或更复杂的软件设置。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+After the four chapters, a reader should be able to answer independently:
+
+<ul>
+  <li>Does a conclusion follow from a Hohenberg–Kohn theorem, the Kohn–Sham construction, an exchange–correlation approximation, or a numerical implementation?</li>
+  <li>Is the current object a total-energy functional, local potential, nonlocal operator, localized-subspace correction, or post-processing correction?</li>
+  <li>Does “converged” mean program termination, an SCF fixed point, a stable target observable, method applicability, or scientific acceptance?</li>
+  <li>Is a reported gap a Kohn–Sham gap, generalized-Kohn–Sham gap, fundamental gap, or optical gap, and what evidence is missing?</li>
+  <li>Which exact constraints does a functional or correction satisfy, and in which density, length, occupation, or response regimes is it uncontrolled?</li>
+  <li>Does a material claim include structural, magnetic, full-Brillouin-zone, numerical-convergence, method-dependence, and independent-comparison evidence?</li>
+</ul>
+
+When these layers cannot be separated clearly, return to the relevant chapter rather than immediately adding a more expensive functional or a more complex software setting.
+
+  </div>
+</BilingualSection>
+
 <TrackOverview
   sourceTitle={catalog.source.title}
   sourceRole={catalog.source.role}

@@ -1,0 +1,275 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import GaussianChargeExplorer from './GaussianChargeExplorer.astro';
+
+<span id="section-f-3"></span>
+
+## F.3 涂抹核或离子 | Smeared Nuclei or Ions
+
+<BilingualSection titleZh="从局域离子势定义伪电荷" titleEn="Defining a pseudocharge from the local ionic potential" eyebrow="【Martin F.3 | Martin F.3】">
+  <div class="bilingual-section__zh">
+
+平面波赝势计算不必把离子始终视为裸点电荷。对离子 $I$ 的局域势 $V_I^{\mathrm{loc}}(\mathbf r)$，可通过 Poisson 方程定义产生该势的模型电荷密度
+
+$$
+\rho_I^{\mathrm{loc}}(\mathbf r)
+=-\frac{1}{4\pi}\nabla^2V_I^{\mathrm{loc}}(\mathbf r).
+$$
+
+若 $V_I^{\mathrm{loc}}(r)$ 在远处趋于 $Z_I/r$ 的 Coulomb 尾部，则 $\int\rho_I^{\mathrm{loc}}d^3r=Z_I$。这里的符号取决于代码把电子电荷、离子价和势能写入 Hamiltonian 的方式；验收标准不是某个孤立符号，而是远场势、积分电荷和电子—离子能三者一致。
+
+把所有模型离子密度与电子带符号密度相加，定义
+
+$$
+\rho_{\mathrm{tot}}(\mathbf r)
+=\rho_e(\mathbf r)+\sum_I\rho_I^{\mathrm{loc}}(\mathbf r).
+$$
+
+对中性晶胞，$\rho_{\mathrm{tot}}(\mathbf G=0)=0$，其 Hartree-like 能量可直接用非零倒格矢计算。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A plane-wave pseudopotential calculation need not retain bare point ions throughout the electrostatics. For the local potential $V_I^{\mathrm{loc}}(\mathbf r)$ of ion $I$, Poisson's equation defines a model charge density
+
+$$
+\rho_I^{\mathrm{loc}}(\mathbf r)
+=-\frac{1}{4\pi}\nabla^2V_I^{\mathrm{loc}}(\mathbf r).
+$$
+
+If $V_I^{\mathrm{loc}}(r)$ approaches the Coulomb tail $Z_I/r$, then $\int\rho_I^{\mathrm{loc}}d^3r=Z_I$. The displayed sign depends on how a code places electron charge, ionic valence, and potential energy in the Hamiltonian. The acceptance condition is not one isolated sign but mutual consistency of the far-field potential, integrated charge, and electron-ion energy.
+
+Combining all model ionic densities with the signed electronic density gives
+
+$$
+\rho_{\mathrm{tot}}(\mathbf r)
+=\rho_e(\mathbf r)+\sum_I\rho_I^{\mathrm{loc}}(\mathbf r).
+$$
+
+For a neutral cell, $\rho_{\mathrm{tot}}(\mathbf G=0)=0$, and its Hartree-like energy can be evaluated directly from nonzero reciprocal vectors.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="总能重排、自能与重叠修正" titleEn="Total-energy rearrangement, self energy, and overlap correction" eyebrow="【Martin Eq. F.16 | Martin Eq. F.16】">
+  <div class="bilingual-section__zh">
+
+将局域电子—离子、离子—离子和电子 Hartree 长程项合并后，Kohn–Sham 能量可概括为
+
+$$
+E_{\mathrm{KS}}=T_s+E_{\mathrm{NL}}+E_{\mathrm{xc}}
++E_H[\rho_{\mathrm{tot}}]
+-\sum_I E_I^{\mathrm{self}}+\Delta E_{II}^{\mathrm{sr}}.
+$$
+
+$E_H[\rho_{\mathrm{tot}}]$ 包含每个模型离子密度与自身的非物理 Coulomb 相互作用，所以必须减去 $E_I^{\mathrm{self}}$。若两个伪电荷云重叠，单纯的合并 Hartree 形式与原始点离子或赝势定义之间会出现短程差异，必须由 $\Delta E_{II}^{\mathrm{sr}}$ 恢复。该修正应随离子间距进入非重叠区而消失。
+
+这三个对象——模型电荷、self term、overlap correction——共同定义一种能量 gauge。替换其中一个而保留另外两个，会改变总能和力；不能把自能视为只影响“无关常数”。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+After combining the long-range local electron-ion, ion-ion, and electronic Hartree terms, the Kohn-Sham energy can be summarized as
+
+$$
+E_{\mathrm{KS}}=T_s+E_{\mathrm{NL}}+E_{\mathrm{xc}}
++E_H[\rho_{\mathrm{tot}}]
+-\sum_I E_I^{\mathrm{self}}+\Delta E_{II}^{\mathrm{sr}}.
+$$
+
+The Hartree energy of $\rho_{\mathrm{tot}}$ includes the unphysical Coulomb interaction of each model ionic density with itself, so $E_I^{\mathrm{self}}$ must be subtracted. If two pseudocharge clouds overlap, the combined Hartree form differs at short range from the original point-ion or pseudopotential definition. The correction $\Delta E_{II}^{\mathrm{sr}}$ restores that difference and should vanish once the ions enter the nonoverlap regime.
+
+These three objects—the model charge, self term, and overlap correction—jointly define an energy gauge. Replacing one while retaining the other two changes the total energy and forces; the self energy is not automatically an irrelevant constant.
+
+  </div>
+</BilingualSection>
+
+<GaussianChargeExplorer />
+
+<BilingualSection titleZh="Gaussian 是 Ewald 与伪电荷形式的桥" titleEn="A Gaussian connects Ewald and pseudocharge formulations" eyebrow="【Martin F.2–F.3 + 原创解析模型 | Martin F.2–F.3 + original analytic model】">
+  <div class="bilingual-section__zh">
+
+取归一化 Gaussian
+
+$$
+\rho_\sigma(\mathbf r)
+=\frac{q}{(2\pi\sigma^2)^{3/2}}
+\exp\!\left(-\frac{r^2}{2\sigma^2}\right).
+$$
+
+两个同宽 Gaussian、中心距为 $R$ 时的 Coulomb 相互作用为
+
+$$
+U_{12}(R)=q_1q_2\frac{\operatorname{erf}(R/2\sigma)}{R},
+$$
+
+单个 Gaussian 的自能为
+
+$$
+E_{\mathrm{self}}=\frac{q^2}{2\sqrt\pi\,\sigma}.
+$$
+
+当 $R\gg\sigma$ 时，$U_{12}\to q_1q_2/R$；当 $R\to0$ 时，势保持有限。Ewald 的 reciprocal Gaussian、self subtraction 和 real-space erfc correction 正是这一解析分解的不同部分。伪电荷方法允许使用非 Gaussian 形状，但所有相应项仍必须来自同一形状。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For the normalized Gaussian
+
+$$
+\rho_\sigma(\mathbf r)
+=\frac{q}{(2\pi\sigma^2)^{3/2}}
+\exp\!\left(-\frac{r^2}{2\sigma^2}\right),
+$$
+
+the Coulomb interaction of two equal-width Gaussians separated by $R$ is
+
+$$
+U_{12}(R)=q_1q_2\frac{\operatorname{erf}(R/2\sigma)}{R},
+$$
+
+and the self energy of one Gaussian is
+
+$$
+E_{\mathrm{self}}=\frac{q^2}{2\sqrt\pi\,\sigma}.
+$$
+
+For $R\gg\sigma$, $U_{12}\to q_1q_2/R$; as $R\to0$, the potential remains finite. The reciprocal Gaussian, self subtraction, and real-space erfc correction of Ewald summation are different pieces of this analytic decomposition. A pseudocharge formulation may use a non-Gaussian shape, but every associated term must still be derived from the same shape.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="力与应力的显式位置依赖" titleEn="Explicit position dependence in forces and stress" kind="boundary">
+  <div class="bilingual-section__zh">
+
+$\rho_{\mathrm{tot}}$ 随离子中心移动，因此对 $E_H[\rho_{\mathrm{tot}}]$ 求导时必须保留模型离子密度的显式导数；$\Delta E_{II}^{\mathrm{sr}}$ 也贡献短程力。非局域赝势力另行加入。只有在电子态达到变分自洽、所有显式项齐全且 basis-set Pulay 边界已处理时，Hellmann–Feynman 形式才闭合。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Because $\rho_{\mathrm{tot}}$ moves with the ionic centers, differentiating $E_H[\rho_{\mathrm{tot}}]$ requires the explicit derivative of the model ionic density. The short-range term $\Delta E_{II}^{\mathrm{sr}}$ also contributes to the force, and the nonlocal pseudopotential force is added separately. A Hellmann-Feynman form closes only when the electronic state is variationally self-consistent, all explicit terms are retained, and basis-set Pulay boundaries are handled.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-f-4"></span>
+
+## F.4 相对于中性原子的能量 | Energy Relative to Neutral Atoms
+
+<BilingualSection titleZh="把成键问题写成中性密度差" titleEn="Writing bonding as a difference between neutral densities" eyebrow="【Martin F.4 | Martin F.4】">
+  <div class="bilingual-section__zh">
+
+为每个原子定义一个中性 atomic-like density $\rho_I^{0}(\mathbf r-\mathbf R_I)$，其中包含局域正离子模型和相应原子电子密度，并满足
+
+$$
+\int d^3r\,\rho_I^{0}(\mathbf r)=0.
+$$
+
+总电荷密度写成
+
+$$
+\rho_{\mathrm{tot}}(\mathbf r)
+=\rho^{0}(\mathbf r)+\Delta\rho(\mathbf r),
+\qquad
+\rho^{0}=\sum_I\rho_I^{0}.
+$$
+
+$\Delta\rho$ 是成键、极化和电荷重排相对于叠加中性原子的差。如果体系和每个参考原子都中性，则 $\rho^0$ 与 $\Delta\rho$ 分别没有 $G=0$ 分量，长程 Coulomb 记账转化为两个中性对象之间的相互作用。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For each atom, define a neutral atomic-like density $\rho_I^{0}(\mathbf r-\mathbf R_I)$ containing the local positive-ion model and a corresponding atomic electronic density, with
+
+$$
+\int d^3r\,\rho_I^{0}(\mathbf r)=0.
+$$
+
+Then write the total charge density as
+
+$$
+\rho_{\mathrm{tot}}(\mathbf r)
+=\rho^{0}(\mathbf r)+\Delta\rho(\mathbf r),
+\qquad
+\rho^{0}=\sum_I\rho_I^{0}.
+$$
+
+The difference $\Delta\rho$ describes bonding, polarization, and charge rearrangement relative to superposed neutral atoms. If both the full system and each reference atom are neutral, $\rho^0$ and $\Delta\rho$ separately have no $G=0$ component, converting the long-range bookkeeping into interactions between neutral objects.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Hartree 能的三项展开" titleEn="Three-term expansion of the Hartree energy" eyebrow="【Martin Eq. F.19 | Martin Eq. F.19】">
+  <div class="bilingual-section__zh">
+
+由二次型直接得到
+
+$$
+E_H[\rho_{\mathrm{tot}}]
+=E_H[\rho^0]
++\int d^3r\,V^0(\mathbf r)\Delta\rho(\mathbf r)
++E_H[\Delta\rho],
+$$
+
+其中 $V^0$ 是中性参考密度 $\rho^0$ 的 Coulomb 势。第一项可进一步拆为每个原子的内部常数和仅在中性球形密度重叠时出现的短程 pair term；第二项是参考原子势与成键密度差的相互作用；第三项是密度差自身的 Hartree 能。
+
+该重排的数值优势在于 $\Delta\rho$ 通常远小于完整电子与离子密度，且所有组分均中性。它不意味着 kinetic、nonlocal 或 exchange-correlation 能也能由简单二次展开得到；这些差值仍需从完整自洽态与参考原子分别计算。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The quadratic form gives directly
+
+$$
+E_H[\rho_{\mathrm{tot}}]
+=E_H[\rho^0]
++\int d^3r\,V^0(\mathbf r)\Delta\rho(\mathbf r)
++E_H[\Delta\rho],
+$$
+
+where $V^0$ is the Coulomb potential of the neutral reference density $\rho^0$. The first term can be reduced further to intra-atomic constants and short-range pair terms that appear only when neutral spherical densities overlap. The second is the interaction of the reference-atom potential with the bonding-density difference, and the third is the Hartree energy of the density difference itself.
+
+The numerical advantage is that $\Delta\rho$ is usually much smaller than the full electronic and ionic densities, while every component is neutral. This does not imply that kinetic, nonlocal, or exchange-correlation energies admit the same simple quadratic expansion; those differences still require calculations for the complete self-consistent state and the reference atoms.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="参考态可任意选择，但不能中途改变" titleEn="The reference may be chosen freely but not changed midstream" eyebrow="【Martin F.4 + 实现边界 | Martin F.4 + implementation boundary】">
+  <div class="bilingual-section__zh">
+
+中性参考密度可以是真实孤立原子、自洽赝原子或人为构造的有限支撑球形密度。不同选择改变分项大小和能量零点，但若所有 atomic constants、self terms、pair corrections 与电子项都一致重排，最终能量差和力应相同。
+
+跨赝势、跨价电子数或跨不同 reference atom 直接比较绝对总能通常无效。形成能必须使用同一赝势族、同一交换—相关泛函、同一自旋与相对论设置，并明确每个元素的参考化学势。中性原子重排提升数值稳定性，不会自动解决 reference chemistry。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A neutral reference density may be a real isolated atom, a self-consistent pseudoatom, or an artificial finite-support spherical density. Different choices alter component magnitudes and the energy zero, but final energy differences and forces should agree if all atomic constants, self terms, pair corrections, and electronic terms are rearranged consistently.
+
+Absolute total energies from different pseudopotentials, valence counts, or atomic references are generally not comparable. Formation energies require a common pseudopotential family, exchange-correlation functional, spin and relativistic setup, and explicit elemental chemical-potential references. Neutral-atom rearrangement improves numerical conditioning; it does not solve reference chemistry automatically.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="F.3 与 F.4 的一致性验收" titleEn="Consistency checks for F.3 and F.4" kind="practice">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>数值积分每个模型离子电荷并核对远场 $Z_I/r$。</li>
+      <li>对孤立模型离子核对 Poisson 势与 self energy。</li>
+      <li>把两离子拉远，确认 overlap correction 与其力同时趋零。</li>
+      <li>用两种 Gaussian width 或两套中性参考重排，确认完整总能差不变。</li>
+      <li>用有限差分核对模型密度移动、self、pair 和 nonlocal 项组成的总力。</li>
+      <li>确认参考原子与固体使用完全相同的赝势、泛函和电子占据 convention。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Numerically integrate each model ionic charge and check its far-field $Z_I/r$ tail.</li>
+      <li>For an isolated model ion, verify the Poisson potential and self energy.</li>
+      <li>Separate two ions and confirm that the overlap correction and its force vanish together.</li>
+      <li>Repeat the rearrangement with two Gaussian widths or neutral references and verify invariance of the complete energy difference.</li>
+      <li>Check the total force—model-density translation, self, pair, and nonlocal terms—against finite differences.</li>
+      <li>Ensure that reference atoms and the solid use identical pseudopotentials, functional, and electronic-occupation conventions.</li>
+    </ol>
+  </div>
+</BilingualCallout>

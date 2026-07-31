@@ -1,20 +1,18 @@
 ---
-title: "Appendix E · Dielectric Functions and Optical Properties"
-description: "Martin Appendix E 的目录级阅读骨架；正文待填充。"
+title: "Appendix E · Dielectric Functions and Optical Properties | 介电函数与光学性质"
+description: "从 Maxwell source/field convention、电导与介电张量、f-sum 和纵横响应，到 Born charge、LO–TO 与压电响应的双语参考附录。"
 sidebar:
   order: 5
   label: "Appendix E · Dielectric Functions and Optical Properties"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixEBody from '../../../components/part07/appE/AppendixEBody.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[4].label}
-  sourcePage={catalog.parts[6].units[4].page}
-  sections={catalog.parts[6].units[4].sections}
-  exercisesPage={catalog.parts[6].units[4].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix E, printed pages 600–606; sections E.1–E.6; equations E.1–E.23. Source exercises are not reproduced."
+  status="appendix-content-complete"
 />
+
+<AppendixEBody />

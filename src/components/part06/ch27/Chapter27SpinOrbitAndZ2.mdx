@@ -1,0 +1,296 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import KramersParityExplorer from './KramersParityExplorer.astro';
+
+<span id="sec-27-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 27.3 Spin–orbit interaction 与 diagonal approximation | Spin–Orbit Interaction and the Diagonal Approximation
+
+<BilingualSection titleZh="原子 SOC 把轨道角动量与真实自旋连接" titleEn="Atomic SOC couples orbital angular momentum to physical spin" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 将原子 spin–orbit interaction 写成
+
+$$
+H_{\mathrm{SO}}=\zeta\,\mathbf L\cdot\mathbf S
+=\zeta\left[L_zS_z+\frac12(L_+S_-+L_-S_+)\right].
+$$
+
+在 $p_\pm=(p_x\pm ip_y)/\sqrt2$ 基底中，$L_z|p_\pm\rangle=\pm\hbar|p_\pm\rangle$。第一项 $L_zS_z$ 对选定自旋轴是 diagonal：$p_+\uparrow$ 与 $p_-\downarrow$ 具有相同 $L_zS_z$ 符号，$p_+\downarrow$ 与 $p_-\uparrow$ 具有相反符号。两组分别形成 time-reversed Kramers partners。
+
+其余 $L_+S_-+L_-S_+$ 项翻转自旋，同时改变轨道角动量。对完整 $p_x,p_y,p_z$ manifold，它们把面内 $p_\pm$ 与 $p_z$、相反自旋状态连接。若低能模型只保留 $s,p_x,p_y$，则把这些矩阵元丢弃得到 Martin 所称的 diagonal approximation；在该近似中 $S_z$ 被人为保持为好量子数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin writes the atomic spin–orbit interaction as
+
+$$
+H_{\mathrm{SO}}=\zeta\,\mathbf L\cdot\mathbf S
+=\zeta\left[L_zS_z+\frac12(L_+S_-+L_-S_+)\right].
+$$
+
+In the basis $p_\pm=(p_x\pm ip_y)/\sqrt2$, $L_z|p_\pm\rangle=\pm\hbar|p_\pm\rangle$. The first term, $L_zS_z$, is diagonal along the chosen spin axis: $p_+\uparrow$ and $p_-\downarrow$ have the same sign of $L_zS_z$, while $p_+\downarrow$ and $p_-\uparrow$ have the opposite sign. The corresponding states form time-reversed Kramers partners.
+
+The remaining terms $L_+S_-+L_-S_+$ flip spin while changing orbital angular momentum. In a complete $p_x,p_y,p_z$ manifold they connect in-plane $p_\pm$ states to $p_z$ states with the opposite spin. If a low-energy model retains only $s,p_x,p_y$, discarding those matrix elements produces Martin's diagonal approximation, in which $S_z$ is artificially conserved.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="diagonal approximation 给出两个 time-reversed Chern blocks | The diagonal approximation gives two time-reversed Chern blocks"
+  assumptions={[
+    '选定轴上的 Sz 严格守恒；',
+    '每个 spin block 的低能轨道子空间与 §27.2 两带模型连续相连；',
+    '完整 bulk gap 在两个 blocks 中同时保持开放。',
+  ]}
+>
+
+令 $h_\uparrow(\mathbf k)$ 表示 §27.2 的 Chern block。time reversal 要求另一 block 为
+
+$$
+h_\downarrow(\mathbf k)=h_\uparrow^*(-\mathbf k).
+$$
+
+若上 block 的 occupied-band Chern number 为 $C_\uparrow=C$，则下 block 的 Berry curvature 反号，
+
+$$
+C_\downarrow=-C.
+$$
+
+因此 charge Chern number 与 charge Hall conductivity 抵消：
+
+$$
+C_{\rm total}=C_\uparrow+C_\downarrow=0,
+\qquad
+\sigma_{xy}^{\rm charge}=0.
+$$
+
+两个边缘 blocks 传播方向相反，并在 diagonal limit 中由相反 $S_z$ 标记。若 $|C|$ 为奇数，spin-conserving block picture 给出
+
+$$
+\boxed{\nu=|C|\bmod2=1}.
+$$
+
+该等式是通往二维 $\mathbb Z_2$ 指数的受控入口；它不是一般 SOC Hamiltonian 中独立 spin Chern numbers 的定义。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="diagonal approximation 的适用边界" titleEn="Boundary of the diagonal approximation" kind="boundary">
+  <div class="bilingual-section__zh">
+
+在严格二维 $p_x,p_y$ 投影模型中，$L_zS_z$ 可能是最低阶项，block picture 很有解释力。真实材料通常还含 $p_z$、d 轨道、buckling、Rashba field、substrate hybridization 或非共线磁性；这些因素允许 $S_z$ mixing。此时 edge states 可有动量依赖 spin texture，$C_\uparrow,C_\downarrow$ 不再是 gauge-independent occupied-subspace invariants。只要 time reversal 与 bulk gap 保持，odd/even $\mathbb Z_2$ obstruction 仍可定义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In a strictly two-dimensional $p_x,p_y$ projected model, $L_zS_z$ may be the leading term and the block picture is highly informative. Real materials commonly contain $p_z$ or d orbitals, buckling, Rashba fields, substrate hybridization, or noncollinear magnetism, all of which can mix $S_z$. The edge states then acquire a momentum-dependent spin texture and $C_\uparrow,C_\downarrow$ cease to be gauge-independent occupied-subspace invariants. As long as time reversal and the bulk gap remain intact, the odd/even $\mathbb Z_2$ obstruction can still be defined.
+
+  </div>
+</BilingualCallout>
+
+<span id="sec-27-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 27.4 Topological insulators 与 Z₂ topological invariant | Topological Insulators and the Z₂ Topological Invariant
+
+### Kramers pairs 与 time-reversal-invariant momenta | Kramers pairs and time-reversal-invariant momenta
+
+<DerivationBlock
+  title="Θ²=−1 强制 TRIM 处 Kramers degeneracy | Θ²=−1 enforces Kramers degeneracy at a TRIM"
+  assumptions={[
+    '电子为 half-integer-spin fermion，Θ=i sy K；',
+    'Hamiltonian 保持 time reversal：ΘH(k)Θ−1=H(−k)；',
+    'K 是满足 K≡−K modulo reciprocal lattice vector 的 TRIM。',
+  ]}
+>
+
+若
+
+$$
+H(\mathbf K)|u\rangle=E|u\rangle,
+$$
+
+则在 TRIM
+
+$$
+H(\mathbf K)\Theta|u\rangle
+=\Theta H(\mathbf K)|u\rangle
+=E\Theta|u\rangle.
+$$
+
+因此 $|u\rangle$ 与 $\Theta|u\rangle$ 等能。它们还必定正交。利用 antiunitary identity
+
+$$
+\langle\Theta\phi|\Theta\chi\rangle=\langle\chi|\phi\rangle
+$$
+
+并取 $\phi=u,\chi=\Theta u$，结合 $\Theta^2=-1$，得到
+
+$$
+\langle\Theta u|u\rangle
+=\langle\Theta u|\Theta^2u\rangle
+=-\langle\Theta u|u\rangle=0.
+$$
+
+这就是 Kramers pair。对一般 $\mathbf k$，$\Theta|u_{n\mathbf k}\rangle$ 位于 $-\mathbf k$ 而不是同一动量，因此 time reversal 只要求
+
+$$
+E_n(\mathbf k)=E_{\bar n}(-\mathbf k),
+$$
+
+不要求每个一般 $\mathbf k$ 点存在同动量简并。额外同动量简并需要 inversion 或其他 crystal symmetry。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="TRIM 处的 Kramers degeneracy 不等于整条带自旋简并" titleEn="Kramers degeneracy at TRIM is not spin degeneracy at every momentum" kind="boundary">
+  <div class="bilingual-section__zh">
+
+无 inversion 的 SOC 体系可在一般 $\mathbf k$ 发生 Rashba-like splitting，同时仍满足 $E(\mathbf k)=E(-\mathbf k)$ 的 Kramers 配对。将一般 $k$ 点的两条非简并带标为固定“spin up/down”可能失去 gauge 和物理意义；应追踪 occupied Kramers subspace、spin expectation texture 与 sewing relations。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An SOC system without inversion may exhibit Rashba-like splitting at generic $\mathbf k$ while still satisfying Kramers pairing between $E(\mathbf k)$ and $E(-\mathbf k)$. Labelling the two nondegenerate branches at a generic momentum as fixed “spin up/down” can lose both gauge and physical meaning. The occupied Kramers subspace, spin-expectation texture, and sewing relations must be tracked instead.
+
+  </div>
+</BilingualCallout>
+
+### inversion parity shortcut | Inversion-parity shortcut
+
+<BilingualSection titleZh="有 inversion 时的 Fu–Kane 乘积" titleEn="The Fu–Kane product in an inversion-symmetric system" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+二维 BZ 有四个 TRIM $\mathbf K_a$。若系统同时保持 inversion 与 time reversal，每个 occupied Kramers pair 在 TRIM 具有共同 parity $\xi_m(\mathbf K_a)=\pm1$。Martin 给出的二维指标为
+
+$$
+\boxed{(-1)^\nu=
+\prod_{a=1}^{4}\prod_{m=1}^{N_{\rm occ}/2}
+\xi_m(\mathbf K_a)}.
+$$
+
+乘积为 $-1$ 时 $\nu=1$，为 $+1$ 时 $\nu=0$。必须包含目标 gap 以下的全部 occupied Kramers pairs；只取一对“反转带”或只检查一个 TRIM 不能得到 bulk invariant。unit cell、inversion center 与 Bloch gauge 可改变局部代表，但在一致 convention 下完整乘积不变。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A two-dimensional Brillouin zone has four TRIM $\mathbf K_a$. If both inversion and time reversal are present, each occupied Kramers pair has a common parity $\xi_m(\mathbf K_a)=\pm1$ at a TRIM. Martin gives the two-dimensional index as
+
+$$
+\boxed{(-1)^\nu=
+\prod_{a=1}^{4}\prod_{m=1}^{N_{\rm occ}/2}
+\xi_m(\mathbf K_a)}.
+$$
+
+A product of $-1$ gives $\nu=1$, while $+1$ gives $\nu=0$. Every occupied Kramers pair below the target gap must be included. Selecting only a pair of “inverted bands,” or checking only one TRIM, does not yield the bulk invariant. The unit cell, inversion centre, and Bloch gauge can change local representatives, but the complete product is invariant within a consistent convention.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="用四个 TRIM product 计算 ν | Computing ν from four TRIM products"
+  assumptions={[
+    'inversion 与 spinful time reversal 均保持；',
+    '每个输入 parity 对应一个完整 occupied Kramers pair；',
+    '目标 gap 在完整 BZ 上开放。',
+  ]}
+>
+
+定义每个 TRIM 的 occupied-pair parity product
+
+$$
+\delta_a=\prod_{m=1}^{N_{\rm occ}/2}\xi_m(\mathbf K_a).
+$$
+
+则
+
+$$
+(-1)^\nu=\delta_1\delta_2\delta_3\delta_4.
+$$
+
+若参数变化只在一个 TRIM 交换一对相反 parity 的 occupied/unoccupied Kramers pairs，恰有一个 $\delta_a$ 变号，$\nu$ 翻转；这个变化必须经过该 TRIM 的 bulk gap closing。若两个 TRIM 同时发生相反 parity exchange，完整乘积不变，$\nu$ 不变。局部“band inversion 次数”只有在声明了 occupied manifold、对称性和所有 TRIM 后才可转化为 parity 结论。
+
+</DerivationBlock>
+
+### 无 inversion：sewing matrix、Pfaffian 与 Wannier-center flow | Without inversion: sewing matrix, Pfaffian, and Wannier-centre flow
+
+<BilingualSection titleZh="一般 time-reversal gauge obstruction" titleEn="The general time-reversal gauge obstruction" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+没有 inversion 时，不能给 Bloch states 赋予 parity。定义 occupied-subspace sewing matrix
+
+$$
+w_{mn}(\mathbf k)=
+\langle u_{m,-\mathbf k}|\Theta|u_{n,\mathbf k}\rangle.
+$$
+
+在 TRIM，$w(\mathbf K_a)$ 为 antisymmetric matrix，可定义 Pfaffian。Martin 引用的 Fu–Kane 形式为
+
+$$
+\delta_a=\frac{\sqrt{\det w(\mathbf K_a)}}{\operatorname{Pf}w(\mathbf K_a)}=\pm1,
+\qquad
+(-1)^\nu=\prod_{a=1}^{4}\delta_a,
+$$
+
+其中 square-root branch 必须在一致 gauge 下连续选择。单个 $\delta_a$ 可依赖 gauge，完整乘积是物理不变量。
+
+更适合数值和直观解释的方法是 hybrid Wannier-center/Wilson-loop flow。在半个二维 BZ 内，time reversal 强制 Wannier centers 在两个边界 TRIM 形成 Kramers pairs。若一端配对的 partners 在另一端重新与原 partner 配对，属于 even 类；若 partners 发生交换，任何保持 gap 与 time reversal 的连续 gauge 都无法消除该 odd switching，得到 $\nu=1$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Without inversion, Bloch states cannot be assigned parity eigenvalues. Define the occupied-subspace sewing matrix
+
+$$
+w_{mn}(\mathbf k)=
+\langle u_{m,-\mathbf k}|\Theta|u_{n,\mathbf k}\rangle.
+$$
+
+At a TRIM, $w(\mathbf K_a)$ is antisymmetric and has a Pfaffian. Martin cites the Fu–Kane form
+
+$$
+\delta_a=\frac{\sqrt{\det w(\mathbf K_a)}}{\operatorname{Pf}w(\mathbf K_a)}=\pm1,
+\qquad
+(-1)^\nu=\prod_{a=1}^{4}\delta_a,
+$$
+
+where the square-root branch must be chosen continuously in a consistent gauge. An individual $\delta_a$ may be gauge dependent; the complete product is physical.
+
+A numerically useful and physically transparent alternative is the hybrid-Wannier-centre or Wilson-loop flow. Over half of the two-dimensional Brillouin zone, time reversal forces the Wannier centres into Kramers pairs at the two boundary TRIM. If partners recombine with their original partners, the connectivity is even. If the partners switch, no continuous gauge that preserves the gap and time reversal can remove the odd switching, and $\nu=1$.
+
+  </div>
+</BilingualSection>
+
+### edge-state parity 与 bulk–boundary correspondence | Edge-state parity and bulk–boundary correspondence
+
+<BilingualSection titleZh="只保留 odd/even connectivity" titleEn="Only the odd/even connectivity is invariant" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+一维 edge BZ 有两个 projected TRIM，通常记为 $\bar\Lambda_1$ 与 $\bar\Lambda_2$。edge states 在这两个动量必须成 Kramers pairs；一般 edge momentum 处同一边缘上的 branches 可以 hybridize 并避免交叉。surface potential 可移动某个 crossing，甚至把一组 edge bands 推入 bulk continuum。
+
+不变量不是“某个 TRIM 有几条隙内态”，也不是“整张图总共有几个点落在 gap 内”。应在半个 edge BZ 内选取位于 bulk gap 的任意 Fermi energy，计算从一个 projected TRIM 到另一个 projected TRIM 的 edge crossings/partner connectivity parity。even 数量可成对重连并移出 gap；odd 数量等价于一个无法单独消除的 helical Kramers pair，要求边缘谱从 projected valence manifold 连到 projected conduction manifold。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A one-dimensional edge Brillouin zone has two projected TRIM, denoted here $\bar\Lambda_1$ and $\bar\Lambda_2$. Edge states must form Kramers pairs at those momenta, while branches at a generic edge momentum can hybridize and avoid crossing. A surface potential may shift a crossing or move a set of edge bands into the bulk continuum.
+
+The invariant is neither “the number of in-gap states at a TRIM” nor “the total number of plotted points inside the gap.” Choose any Fermi energy within the projected bulk gap and count the parity of edge crossings or partner connectivity over half of the edge Brillouin zone. An even number can reconnect in pairs and be removed from the gap. An odd number is equivalent to one helical Kramers pair that cannot be eliminated alone, forcing edge connectivity from the projected valence manifold to the projected conduction manifold.
+
+  </div>
+</BilingualSection>
+
+<KramersParityExplorer />
+
+<BilingualCallout titleZh="本章 Z₂ 与 Chapter 26 的一维 parity 不是同一对象" titleEn="This Z₂ index is not the one-dimensional parity label of Chapter 26" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Chapter 26 的 $\gamma=0/\pi$ 可在 inversion/chiral 约束下给一维 occupied band 一个 modulo-two 标签，并与终止相关的 Shockley/SSH 端态连接。本章的 $\nu$ 属于二维 spinful time-reversal occupied Kramers bundle，核心是 $\Theta^2=-1$、四个 bulk TRIM、partner switching 与 odd helical edge connectivity。两者都写成 $\mathbb Z_2$，但 Hilbert space、对称性、参数空间和 bulk–boundary statement 不同，不能直接互换。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The $\gamma=0/\pi$ quantization in Chapter 26 can give a one-dimensional occupied band a modulo-two label under inversion or chiral constraints, with a termination-dependent connection to Shockley or SSH end states. The present $\nu$ belongs to a two-dimensional spinful time-reversal occupied Kramers bundle. Its defining structure is $\Theta^2=-1$, four bulk TRIM, partner switching, and odd helical edge connectivity. Both classifications use the notation $\mathbb Z_2$, but their Hilbert spaces, symmetries, parameter spaces, and bulk–boundary statements differ and cannot be interchanged.
+
+  </div>
+</BilingualCallout>

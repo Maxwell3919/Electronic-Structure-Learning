@@ -1,0 +1,281 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import ChernMassExplorer from './ChernMassExplorer.astro';
+
+<span id="sec-27-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 27.1 二维：sp² 模型 | Two Dimensions: sp² Models
+
+<BilingualSection titleZh="从一维 s–p 链扩展到二维轨道空间" titleEn="Extending the one-dimensional s–p chain to a two-dimensional orbital space" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 从 Chapter 26 的一维 $s$–$p$ 两带模型出发。二维格点上的最小自然扩展含一个 $s$ 轨道和两个面内 $p$ 轨道 $p_x,p_y$；不计自旋时是三带 $sp^2$ 模型，计入电子自旋后是六带模型。图像上可以把系统看成沿 $x$ 方向的链，链间距与链内晶格常数之比从极大值连续变到方格极限，因此同一轨道模型可以追踪“isolated chains → coupled chains → plane”。
+
+这个基底同时保留两种互补语言。实轨道 $p_x,p_y$ 便于使用 Slater–Koster 跃迁理解键方向；复轨道
+
+$$
+|p_+\rangle=\frac{|p_x\rangle+i|p_y\rangle}{\sqrt2},
+\qquad
+|p_-\rangle=\frac{|p_x\rangle-i|p_y\rangle}{\sqrt2}
+$$
+
+是轨道角动量 $L_z$ 的 $m=+1$ 与 $m=-1$ 本征态，便于看出环流、time reversal 和原子 SOC 如何连接。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin starts from the one-dimensional $s$–$p$ two-band model of Chapter 26. Its minimal natural extension on a two-dimensional lattice contains one $s$ orbital and two in-plane $p$ orbitals, $p_x$ and $p_y$. It is a three-band $sp^2$ model without spin and a six-band model after electron spin is included. Geometrically the lattice may be viewed as chains along $x$, with the interchain spacing varied continuously from the isolated-chain limit to the square-lattice limit. The same orbital model can therefore track “isolated chains → coupled chains → plane.”
+
+The basis supports two complementary languages. Real orbitals $p_x,p_y$ are convenient for Slater–Koster hopping and bond directions. Complex orbitals
+
+$$
+|p_+\rangle=\frac{|p_x\rangle+i|p_y\rangle}{\sqrt2},
+\qquad
+|p_-\rangle=\frac{|p_x\rangle-i|p_y\rangle}{\sqrt2}
+$$
+
+are eigenstates of orbital $L_z$ with $m=+1$ and $m=-1$, making orbital circulation, time reversal, and atomic SOC transparent.
+
+  </div>
+</BilingualSection>
+
+<span id="complex-p-basis" class="chapter-anchor" aria-hidden="true"></span>
+
+### 复 p± 基底与 time reversal | The complex p± basis and time reversal
+
+<DerivationBlock
+  title="复共轭如何交换 p+ 与 p− | How complex conjugation exchanges p+ and p−"
+  assumptions={[
+    'px 与 py 取为实的局域轨道；',
+    '先讨论无自旋的 time reversal T=K；',
+    '轨道相位约定固定。',
+  ]}
+>
+
+对实轨道，$K|p_x\rangle=|p_x\rangle$、$K|p_y\rangle=|p_y\rangle$，因此
+
+$$
+K|p_+\rangle
+=\frac{|p_x\rangle-i|p_y\rangle}{\sqrt2}
+=|p_-\rangle.
+$$
+
+同理 $K|p_-\rangle=|p_+\rangle$。因此只保留一个 $p_+$ 或 $p_-$ 轨道、并把另一个推到远离目标能区的位置，会选择一个轨道环流方向并破坏 spinless time reversal。计入自旋后，完整算符 $\Theta=is_yK$ 同时反转轨道角动量、真实自旋和动量：一个允许 time-reversal symmetry 的模型必须把相应的 Kramers-related states 一起保留。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="sp² 是组织低能流形的模型，不自动等于化学杂化标签" titleEn="sp² is a model-space organization, not automatically a chemical-hybridization label" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本章的 $sp^2$ 表示每格点使用 $s,p_x,p_y$ 轨道构造二维 tight-binding Hilbert space。它不自动断言真实材料具有理想平面化学 $sp^2$ 杂化。真实体系可能含 $p_z$、d 轨道、基底原子、buckling、substrate hybridization 和远程跃迁；尤其完整原子 SOC 会通过高能 $p_z$ 或其他轨道改变低能 spin texture 与有效参数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Here $sp^2$ denotes a two-dimensional tight-binding Hilbert space built from $s,p_x,p_y$ orbitals on each site. It does not automatically assert ideal planar chemical $sp^2$ hybridization in a material. A real system may involve $p_z$ or d orbitals, multiple basis atoms, buckling, substrate hybridization, and longer-range hopping. In particular, full atomic SOC may modify low-energy spin texture and effective parameters through high-energy $p_z$ or other orbitals.
+
+  </div>
+</BilingualCallout>
+
+<span id="sec-27-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 27.2 Chern 绝缘体与反常量子霍尔效应 | Chern Insulator and Anomalous Quantum Hall Effect
+
+<BilingualSection titleZh="选择单个复 p 轨道得到两带 Chern precursor" titleEn="Selecting one complex p orbital produces a two-band Chern precursor" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 先忽略 SOC，并设磁性或等价的 time-reversal-breaking 场把一个自旋通道及一个轨道角动量通道选为低能态。若其余状态分裂足够大，目标流形只含 $s$ 与 $p_+$ 两个基底态。对各向同性方格、最近邻跃迁及晶格常数 $a=1$，Hamiltonian 写成
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+\xi_{sp}+V(\cos k_x+\cos k_y) & v(i\sin k_x+\sin k_y)\\
+v(-i\sin k_x+\sin k_y) & -\xi_{sp}-V(\cos k_x+\cos k_y)
+\end{pmatrix},
+$$
+
+其中 $V=t_{pp}-t_{ss}$、$v=\sqrt2\,t_{sp}$。在本章 Pauli convention 中
+
+$$
+\mathbf h(\mathbf k)=
+\bigl(v\sin k_y,\ v\sin k_x,\ \xi_{sp}+V(\cos k_x+\cos k_y)\bigr),
+$$
+
+且 $E_\pm=\pm|\mathbf h|$。$x$ 与 $y$ 跃迁间相差的因子 $i$ 来自所选 $p_x+ip_y$ 轨道，是 time-reversal breaking 的核心。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin first neglects SOC and assumes that magnetism, or an equivalent time-reversal-breaking field, selects one spin channel and one orbital-angular-momentum channel at low energy. If all other states are split sufficiently far away, the target manifold contains only $s$ and $p_+$ basis states. For an isotropic square lattice with nearest-neighbour hopping and lattice constant $a=1$,
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+\xi_{sp}+V(\cos k_x+\cos k_y) & v(i\sin k_x+\sin k_y)\\
+v(-i\sin k_x+\sin k_y) & -\xi_{sp}-V(\cos k_x+\cos k_y)
+\end{pmatrix},
+$$
+
+where $V=t_{pp}-t_{ss}$ and $v=\sqrt2\,t_{sp}$. In the Pauli convention used here,
+
+$$
+\mathbf h(\mathbf k)=
+\bigl(v\sin k_y,\ v\sin k_x,\ \xi_{sp}+V(\cos k_x+\cos k_y)\bigr),
+$$
+
+with $E_\pm=\pm|\mathbf h|$. The factor of $i$ between the $x$- and $y$-direction hybridizations comes from the selected $p_x+ip_y$ orbital and is the essential time-reversal-breaking ingredient.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="直接检查 spinless time reversal 被破坏 | Direct check of broken spinless time reversal"
+  assumptions={[
+    '两带基底本身不含真实自旋，T=K；',
+    'Pauli matrices use τy as the imaginary matrix；',
+    'all parameters ξsp, V, v are real。',
+  ]}
+>
+
+spinless time reversal 要求
+
+$$
+H(\mathbf k)=H^*(-\mathbf k).
+$$
+
+对 $H=h_x\tau_x+h_y\tau_y+h_z\tau_z$，该条件等价于
+
+$$
+h_x(\mathbf k)=h_x(-\mathbf k),\qquad
+h_y(\mathbf k)=-h_y(-\mathbf k),\qquad
+h_z(\mathbf k)=h_z(-\mathbf k).
+$$
+
+当前模型中 $h_y=v\sin k_x$ 与 $h_z$ 满足相应条件，但 $h_x=v\sin k_y$ 是奇函数而不是偶函数。因此除 $\sin k_y=0$ 的特殊线外，
+
+$$
+H(\mathbf k)\neq H^*(-\mathbf k).
+$$
+
+这与 $K|p_+\rangle=|p_-\rangle$ 的轨道论证一致：只保留 $p_+$ block 不能保持 time reversal。
+
+</DerivationBlock>
+
+<span id="chern-two-band-model" class="chapter-anchor" aria-hidden="true"></span>
+
+### TRIM mass、gap closing 与 Chern 相 | TRIM masses, gap closings, and Chern phases
+
+<DerivationBlock
+  title="四个 TRIM 控制相变位置 | Four TRIM control the phase-transition points"
+  assumptions={[
+    'v≠0；',
+    '两带流形在目标填充处定义；',
+    '方格 BZ 的 TRIM 为 Γ=(0,0), X=(π,0), Y=(0,π), M=(π,π)。',
+  ]}
+>
+
+两带闭隙要求 $h_x=h_y=h_z=0$。前两个条件要求 $\sin k_x=\sin k_y=0$，因此闭隙只能出现在四个 TRIM。对应 Dirac mass 为
+
+$$
+m_\Gamma=\xi_{sp}+2V,
+\qquad
+m_X=m_Y=\xi_{sp},
+\qquad
+m_M=\xi_{sp}-2V.
+$$
+
+所以相边界为
+
+$$
+\boxed{\xi_{sp}=-2V,\quad 0,\quad 2V}.
+$$
+
+以 Martin strip 示例的 $V=-0.75$ 为例，临界点为 $\xi_{sp}=-1.5,0,+1.5$。$\xi_{sp}=1$ 时 $m_\Gamma<0$ 而 $m_X,m_Y,m_M>0$，只有一个 TRIM sector 与其余三个符号相反；模型有 $|C|=1$。必须先确认完整 BZ gap，才能给出该整数。
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="由四个 massive Dirac points 得到有向 Chern 数 | Oriented Chern number from four massive Dirac points"
+  assumptions={[
+    '使用页面声明的 (kx,ky) orientation 与 h=(v sin ky,v sin kx,m)；',
+    '所有 TRIM mass 非零；',
+    '低能带 projector convention 与 Chapter 26 相同。',
+  ]}
+>
+
+在每个 TRIM 附近，$h_x,h_y$ 对小动量的 Jacobian 符号为
+
+$$
+\operatorname{sgn}J_\Gamma=\operatorname{sgn}J_M=-1,
+\qquad
+\operatorname{sgn}J_X=\operatorname{sgn}J_Y=+1.
+$$
+
+单个 massive Dirac cone 对低能带 Chern 数的局部贡献为
+
+$$
+-\frac12\operatorname{sgn}(J_a m_a).
+$$
+
+因此在当前 convention 中
+
+$$
+\boxed{C_-=
+\frac12\left[\operatorname{sgn}m_\Gamma+
+\operatorname{sgn}m_M-
+\operatorname{sgn}m_X-
+\operatorname{sgn}m_Y\right]}.
+$$
+
+由于 $m_X=m_Y$，可写成 $C_-=\tfrac12[\operatorname{sgn}m_\Gamma+\operatorname{sgn}m_M-2\operatorname{sgn}m_X]$。对 $V=-0.75,\xi_{sp}=1$ 得 $C_-=-1$。若交换 $k_x,k_y$、交换 $p_+$ 与 $p_-$、翻转边缘法向或改变 occupied-band convention，符号会翻转；Martin 对“Chern number one”的讨论对应相同的 $|C|=1$ 与一条 chiral branch per edge，而方向需随 convention 说明。
+
+</DerivationBlock>
+
+<ChernMassExplorer />
+
+<span id="chern-pump-edge" class="chapter-anchor" aria-hidden="true"></span>
+
+### Chern、electron pump 与单向边缘谱 | Chern number, electron pumping, and chiral edge spectra
+
+<BilingualSection titleZh="同一二维映射的三种解释" titleEn="Three interpretations of the same two-dimensional map" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+固定 $k_y$ 时，$H(k_x,k_y)$ 是一族一维绝缘体。让 $k_y$ 从 $0$ 走到 $2\pi$，hybrid Wannier center 的净移动等于 Chern 数。若把 $k_y$ 换成外部循环参数 $\lambda$，同一数学结构就是 Chapter 26 的 Thouless pump；在真实二维 Chern insulator 中，$k_y$ 是边缘方向的晶体动量，Wannier-center flow 体现为一条边缘支从 valence manifold 连到 conduction manifold，而另一条反向谱流位于条带的另一侧。
+
+对完全填充的 isolated band，bulk Hall conductivity 为
+
+$$
+\sigma_{xy}=C\frac{e^2}{h}.
+$$
+
+这类反常量子霍尔响应不要求净外磁场，但要求 time-reversal symmetry 已被破坏。边缘的传播方向、$C$ 的符号和样品法向必须使用同一 convention；边缘势可以移动交叉能量，却不能在不闭合 bulk gap 或引入相反 chiral branch 的情况下消除净 chirality。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At fixed $k_y$, $H(k_x,k_y)$ is a family of one-dimensional insulators. As $k_y$ advances from $0$ to $2\pi$, the net displacement of the hybrid Wannier centre equals the Chern number. Replacing $k_y$ by an external cyclic parameter $\lambda$ gives the Thouless pump of Chapter 26. In an actual two-dimensional Chern insulator, $k_y$ is the crystal momentum parallel to an edge. The Wannier-centre flow appears as one edge branch connecting the valence and conduction manifolds, with the opposite spectral flow localized on the other side of a strip.
+
+For a completely filled isolated band, the bulk Hall conductivity is
+
+$$
+\sigma_{xy}=C\frac{e^2}{h}.
+$$
+
+This anomalous quantum Hall response does not require a net external magnetic field, but time-reversal symmetry must be broken. The edge propagation direction, Chern sign, and sample normal must use one consistent convention. An edge potential may shift the crossing energy, but cannot remove the net chirality without closing the bulk gap or supplying an oppositely directed branch.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="Chern precursor 还不是二维 time-reversal topological insulator" titleEn="The Chern precursor is not yet a time-reversal topological insulator" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本节只有一个 $p_+$/spin block，time reversal 明确破坏，总 Chern 数非零，边缘态是单向 chiral mode。下一步在 diagonal approximation 中加入其 time-reversed partner，可得到 $C_\uparrow=-C_\downarrow$、总 Chern 数为零的两 block 模型；再加入完整 SOC 的 spin mixing 后，独立 spin Chern numbers 通常失去定义，最终分类降为受 $\Theta^2=-1$ 保护的 $\mathbb Z_2$ parity。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+This section contains only one $p_+$ or spin block. Time reversal is explicitly broken, the total Chern number is nonzero, and the edge state is a unidirectional chiral mode. Adding its time-reversed partner in the diagonal approximation produces two blocks with $C_\uparrow=-C_\downarrow$ and zero total Chern number. Once full SOC mixes spin, separate spin Chern numbers generally lose their definition and the robust classification reduces to the $\mathbb Z_2$ parity protected by $\Theta^2=-1$.
+
+  </div>
+</BilingualCallout>
