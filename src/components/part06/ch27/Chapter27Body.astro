@@ -1,0 +1,74 @@
+---
+import Chapter27Contents from './Chapter27Contents.astro';
+import Chapter27Content from './Chapter27Content.astro';
+---
+
+<div class="chapter27-root">
+  <Chapter27Contents />
+  <Chapter27Content />
+</div>
+
+<style is:global>
+  .chapter27-root,
+  .chapter27-root > *,
+  .chapter27-root .bilingual-section,
+  .chapter27-root .bilingual-section__grid,
+  .chapter27-root .bilingual-section__zh,
+  .chapter27-root .bilingual-section__en,
+  .chapter27-root .derivation-block,
+  .chapter27-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter27-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter27-root .chapter-source-map,
+  .chapter27-root .table-scroll,
+  .chapter27-root .katex-display,
+  .chapter27-root pre,
+  .chapter27-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter27-root p,
+  .chapter27-root li,
+  .chapter27-root th,
+  .chapter27-root td,
+  .chapter27-root code {
+    overflow-wrap: anywhere;
+  }
+
+  .chapter27-root .chapter-visual__controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .chapter27-root .chapter-visual__controls label {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .chapter27-root .chapter-visual__readout,
+  .chapter27-root .chapter-visual__contract {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  @media (max-width: 50rem) {
+    .chapter27-root .chapter-visual__controls {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
