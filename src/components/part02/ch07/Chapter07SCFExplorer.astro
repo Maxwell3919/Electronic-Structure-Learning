@@ -1,0 +1,58 @@
+---
+import SCFIterationVisualizer from '../../SCFIterationVisualizer.astro';
+---
+
+<figure class="chapter-visual chapter07-scf" data-ch07-scf>
+  <figcaption>
+    <strong>共享验证模型：SCF 固定点、响应斜率与线性混合</strong>
+    <span lang="en">Shared validated model: SCF fixed points, response slope, and linear mixing</span>
+  </figcaption>
+
+  <svg class="chapter07-scf__fallback" viewBox="0 0 760 280" role="img" aria-labelledby="ch07-scf-title ch07-scf-desc">
+    <title id="ch07-scf-title">Static fallback for three linearized SCF regimes</title>
+    <desc id="ch07-scf-desc">Three sequences approach, alternate around, or move away from a fixed point depending on the mixed error-propagation factor q.</desc>
+    <line x1="55" y1="225" x2="720" y2="225" class="plot-axis" />
+    <line x1="55" y1="35" x2="55" y2="225" class="plot-axis" />
+    <line x1="55" y1="105" x2="720" y2="105" class="chapter07-scf__target" />
+    <polyline points="55,205 150,170 245,145 340,128 435,118 530,112 625,108 720,106" class="chapter07-scf__series chapter07-scf__series--monotone" />
+    <polyline points="55,205 150,55 245,155 340,82 435,128 530,95 625,115 720,102" class="chapter07-scf__series chapter07-scf__series--oscillatory" />
+    <polyline points="55,205 150,40 245,245 340,20 435,265 530,5 625,275 720,0" class="chapter07-scf__series chapter07-scf__series--divergent" />
+    <text x="720" y="95" text-anchor="end">x*</text>
+    <text x="720" y="254" text-anchor="end">iteration k</text>
+    <text x="25" y="48">xk</text>
+  </svg>
+
+  <ul class="chapter07-scf__legend" aria-label="SCF regime legend">
+    <li><span class="chapter07-scf__key chapter07-scf__key--monotone"></span>0 &lt; q &lt; 1：单调衰减</li>
+    <li><span class="chapter07-scf__key chapter07-scf__key--oscillatory"></span>−1 &lt; q &lt; 0：振荡衰减</li>
+    <li><span class="chapter07-scf__key chapter07-scf__key--divergent"></span>|q| &gt; 1：发散</li>
+  </ul>
+
+  <SCFIterationVisualizer id="chapter-07-scf-iteration" />
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>共享内核采用 F(x) = x* + s(x − x*) 与混合更新 x(k+1) = xk + α[F(xk) − xk]，因此误差满足 e(k+1) = q ek，q = 1 − α(1 − s)。输入 s、α、x0、最大步数和残差阈值均为无量纲。</p>
+    <p lang="en"><strong>Model:</strong> the shared kernel uses F(x) = x* + s(x − x*) and x(k+1) = xk + α[F(xk) − xk], giving e(k+1) = q ek with q = 1 − α(1 − s). All controls are dimensionless.</p>
+    <p><strong>验收：</strong>q = 0 时一步到达；0 &lt; q &lt; 1 单调衰减；−1 &lt; q &lt; 0 符号交替且绝对值衰减；|q| &gt; 1 误差放大；s = 1 为无唯一固定点的退化映射。</p>
+    <p lang="en"><strong>Acceptance:</strong> q = 0 reaches the fixed point in one update; positive q below one gives monotone decay; negative q above minus one gives alternating decay; |q| above one diverges; s = 1 is a degenerate map without a unique fixed point.</p>
+    <p><strong>无 JavaScript：</strong>上方静态 SVG 保留三类线性化轨迹和公式边界；交互表格不可更新，但正文仍可独立阅读。</p>
+    <p lang="en"><strong>No JavaScript:</strong> the static SVG retains the three linearized regimes and formula boundary; the interactive table does not update, but the exposition remains complete.</p>
+    <p><strong>边界：</strong>真实 Kohn–Sham SCF 的变量是高维密度或势，响应是算符并含多个本征模。该标量模型不验证任何生产计算的收敛，也不替代残差、能量和目标 observable 的独立检查。</p>
+    <p lang="en"><strong>Boundary:</strong> a production Kohn–Sham SCF uses a high-dimensional density or potential and an operator-valued response with many modes. This scalar model validates no production convergence and does not replace separate checks of residual, energy, and target observables.</p>
+  </div>
+</figure>
+
+<style>
+  .chapter07-scf__fallback { width: 100%; max-height: 21rem; }
+  .chapter07-scf__fallback text { fill: currentColor; font-size: 14px; }
+  .chapter07-scf__target { stroke: var(--sl-color-gray-4); stroke-width: 2; stroke-dasharray: 7 5; }
+  .chapter07-scf__series { fill: none; stroke-width: 3; }
+  .chapter07-scf__series--monotone { stroke: var(--sl-color-text-accent); }
+  .chapter07-scf__series--oscillatory { stroke: var(--sl-color-accent-high); }
+  .chapter07-scf__series--divergent { stroke: var(--sl-color-gray-3); }
+  .chapter07-scf__legend { display: flex; flex-wrap: wrap; gap: 0.45rem 1rem; padding: 0; list-style: none; }
+  .chapter07-scf__key { display: inline-block; width: 1.8rem; margin-right: 0.35rem; border-top: 3px solid currentColor; vertical-align: middle; }
+  .chapter07-scf__key--monotone { color: var(--sl-color-text-accent); }
+  .chapter07-scf__key--oscillatory { color: var(--sl-color-accent-high); }
+  .chapter07-scf__key--divergent { color: var(--sl-color-gray-3); }
+</style>
