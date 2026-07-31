@@ -1,0 +1,366 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import Chapter07SourceMap from './Chapter07SourceMap.astro';
+import InteractingAuxiliaryMap from './InteractingAuxiliaryMap.astro';
+import OccupationDensityExplorer from './OccupationDensityExplorer.astro';
+
+<span id="reading-orientation" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章解决的问题" titleEn="The problem solved in this chapter" eyebrow="Orientation">
+  <div class="bilingual-section__zh">
+
+Chapter 6 证明并定义了基态能量在密度空间中的精确变分结构，但普适泛函 $F[n]$ 没有可直接计算的通式。Chapter 7 引入一个辅助非相互作用体系：它与真实相互作用体系具有相同的基态密度，而其多电子基态可以由单粒子轨道和占据构造。这样，主要动能项通过轨道显式计算，其余未知多体贡献归入交换—关联泛函 $E_{\mathrm{xc}}[n]$。
+
+本章的核心不是某个具体交换—关联近似，而是对任意给定 $E_{\mathrm{xc}}[n]$ 都成立的 Kohn–Sham 结构：能量分解、轨道约束变分、有效势、密度重构、自洽固定点、力和应力，以及本征值能支持的有限物理解释。LDA、GGA、hybrid 和其他泛函家族分别属于 Chapters 8–9。
+
+读完后，应能从能量泛函逐步推导 Kohn–Sham 方程，解释为什么 Lagrange 乘子最初是矩阵，复算本征值和的双计数修正，区分 SCF 残差收敛与科学结果收敛，并判断一个能带、本征值、力或应力主张需要哪些额外条件。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Chapter 6 established and defined an exact density-space variational structure for the ground-state energy, but it did not supply a generally computable expression for the universal functional $F[n]$. Chapter 7 introduces an auxiliary noninteracting system constrained to have the same ground-state density as the physical interacting system. Its many-electron ground state can be built from one-particle orbitals and occupations. The dominant kinetic contribution then becomes explicit in the orbitals, while the remaining unknown many-body contribution is assigned to the exchange–correlation functional $E_{\mathrm{xc}}[n]$.
+
+The chapter is not about choosing a particular exchange–correlation approximation. It develops the Kohn–Sham structure that applies to any specified $E_{\mathrm{xc}}[n]$: energy decomposition, orbital-constrained variation, effective potential, density reconstruction, self-consistent fixed points, forces and stress, and the limited physical interpretation supported by the eigenvalues. LDA, GGA, hybrids, and other functional families belong to Chapters 8–9.
+
+After completing the chapter, the reader should be able to derive the Kohn–Sham equations step by step from the energy functional, explain why the Lagrange multipliers initially form a matrix, reproduce the double-counting correction to the eigenvalue sum, distinguish SCF residual convergence from scientific convergence, and identify the extra conditions required by a claim about bands, eigenvalues, forces, or stress.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本章后的最低能力" titleEn="Minimum capability after this chapter" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>区分真实多体 Hamiltonian、辅助单粒子 Hamiltonian、真实基态和 Kohn–Sham 轨道；</li>
+      <li>说明非相互作用 ground-state $v$-representability 是构造假设，而非 Chapter 6 已证明结论；</li>
+      <li>从正交约束变分得到矩阵形式和规范形式的 Kohn–Sham 方程；</li>
+      <li>由占据轨道重构密度和 $T_s$，并检查粒子数与量纲；</li>
+      <li>写出总能的本征值和表达式，指出 Hartree 与 $v_{\mathrm{xc}}$ 双计数；</li>
+      <li>分别判断程序结束、SCF 固定点、能量/力收敛、observable 收敛和方法适用性。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>distinguish the physical many-body Hamiltonian, auxiliary one-particle Hamiltonian, physical ground state, and Kohn–Sham orbitals;</li>
+      <li>state that noninteracting ground-state $v$-representability is an assumption of the construction rather than a result already proved in Chapter 6;</li>
+      <li>derive the matrix and canonical forms of the Kohn–Sham equations from orthogonality-constrained variation;</li>
+      <li>reconstruct density and $T_s$ from occupied orbitals and check particle number and dimensions;</li>
+      <li>write the eigenvalue-sum expression for total energy and identify Hartree and $v_{\mathrm{xc}}$ double counting;</li>
+      <li>separate program termination, SCF fixed point, energy/force convergence, observable convergence, and method applicability.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<Chapter07SourceMap />
+
+<span id="objects-and-notation" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 物理对象、数学对象与符号 | Physical and Mathematical Objects
+
+<BilingualSection titleZh="对象层级与约定" titleEn="Hierarchy of objects and conventions" eyebrow="Notation">
+  <div class="bilingual-section__zh">
+
+除非另有说明，采用 Hartree 原子单位并先使用共线自旋表述。$\sigma$ 是自旋指标，$f_{i\sigma}$ 是轨道占据，满足 $0\le f_{i\sigma}\le1$；若把两种自旋合并到同一空间轨道，则占据上限可写为 2。
+
+- $\Psi_0$：真实相互作用体系的多体基态；它不是 Kohn–Sham 行列式。
+- $\phi_{i\sigma}(\mathbf r)$：辅助非相互作用体系的正交单粒子轨道。
+- $n_\sigma(\mathbf r)=\sum_i f_{i\sigma}|\phi_{i\sigma}(\mathbf r)|^2$：自旋密度；$n=\sum_\sigma n_\sigma$。
+- $T_s[n]$：产生目标密度的辅助非相互作用基态动能；用轨道表示时是显式轨道泛函。
+- $E_H[n]$：密度的经典 Coulomb 自相互作用能。
+- $E_{\mathrm{xc}}[n]$：由定义收集 $F[n]-T_s[n]-E_H[n]$ 的剩余项。
+- $v_s^\sigma$ 或 $v_{\mathrm{KS}}^\sigma$：局域乘法有效势；只确定到共同加法常数。
+- $\epsilon_{i\sigma}$：规范 Kohn–Sham 方程的 Lagrange 乘子本征值；一般不等于真实加减电子能量。
+- $n^{\mathrm{in}}$、$n^{\mathrm{out}}$：一次 SCF 映射的输入与输出密度；只有固定点满足两者相同。
+
+$T_s[n]$ 同时具有两层含义：形式上它是密度泛函；计算上它通过产生该密度的占据轨道求值。把“可写成密度泛函”误解为“已知显式局域密度公式”，会重新落入 Thomas–Fermi 动能的限制。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Hartree atomic units and a collinear-spin formulation are used unless stated otherwise. The orbital occupation $f_{i\sigma}$ satisfies $0\le f_{i\sigma}\le1$ for a spin orbital; if opposite spins are grouped into one spatial orbital, the occupation bound can be written as two.
+
+- $\Psi_0$ is the many-body ground state of the physical interacting system; it is not the Kohn–Sham determinant.
+- $\phi_{i\sigma}(\mathbf r)$ is an orthonormal one-particle orbital of the auxiliary noninteracting system.
+- $n_\sigma(\mathbf r)=\sum_i f_{i\sigma}|\phi_{i\sigma}(\mathbf r)|^2$ is the spin density and $n=\sum_\sigma n_\sigma$.
+- $T_s[n]$ is the ground-state kinetic energy of an auxiliary noninteracting system producing the target density; in orbital form it is an explicit orbital functional.
+- $E_H[n]$ is the classical Coulomb self-interaction energy of the density.
+- $E_{\mathrm{xc}}[n]$ is defined as the remainder $F[n]-T_s[n]-E_H[n]$.
+- $v_s^\sigma$ or $v_{\mathrm{KS}}^\sigma$ is a local multiplicative effective potential, defined only up to a common additive constant.
+- $\epsilon_{i\sigma}$ is a canonical Kohn–Sham Lagrange-multiplier eigenvalue and is generally not a physical electron-addition or removal energy.
+- $n^{\mathrm{in}}$ and $n^{\mathrm{out}}$ are the input and output densities of one SCF map; they coincide only at a fixed point.
+
+$T_s[n]$ has two levels of meaning. Formally it is a density functional; computationally it is evaluated from occupied orbitals that produce the density. Interpreting “density functional” as “known explicit local formula of the density” would return to the limitations of Thomas–Fermi kinetic energy.
+
+  </div>
+</BilingualSection>
+
+<span id="section-7-1" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.1 用一个问题替代另一个问题 | Replacing One Problem with Another
+
+<BilingualSection titleZh="Kohn–Sham 构造的两项假设" titleEn="Two assumptions of the Kohn–Sham construction">
+  <div class="bilingual-section__zh">
+
+真实体系满足
+
+$$
+\hat H=\hat T+\hat W+\int v_{\mathrm{ext}}(\mathbf r)\hat n(\mathbf r)\,d\mathbf r.
+$$
+
+Kohn–Sham 构造假定真实基态密度可以由某个非相互作用体系的基态重现，并选择通常的动能算符与局域有效势：
+
+$$
+\hat h_s^\sigma=-\frac12\nabla^2+v_s^\sigma(\mathbf r).
+$$
+
+第一项称为非相互作用 ground-state $v$-representability。对一般真实体系并没有普适证明；精确 Kohn–Sham 理论通常在该辅助体系存在的条件下讨论。第二项规定有效势是局域乘法算符，因此可以对辅助问题应用相应的 Hohenberg–Kohn 唯一性。Chapter 9 的 generalized Kohn–Sham 允许非局域轨道依赖算符，属于不同框架。
+
+辅助体系的目标不是复制真实多体波函数、pair density 或激发谱。其构造约束是基态密度相同；若精确 $E_{\mathrm{xc}}[n]$ 已知，则由该密度得到的真实基态能量也精确。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The physical system obeys
+
+$$
+\hat H=\hat T+\hat W+\int v_{\mathrm{ext}}(\mathbf r)\hat n(\mathbf r)\,d\mathbf r.
+$$
+
+The Kohn–Sham construction assumes that the physical ground-state density can be reproduced as the ground-state density of some noninteracting system and chooses the usual kinetic operator plus a local effective potential,
+
+$$
+\hat h_s^\sigma=-\frac12\nabla^2+v_s^\sigma(\mathbf r).
+$$
+
+The first assumption is noninteracting ground-state $v$-representability. It has no universal proof for arbitrary physical systems; exact Kohn–Sham theory is normally discussed conditional on existence of the auxiliary system. The second assumption makes the effective potential a local multiplicative operator, allowing the corresponding noninteracting Hohenberg–Kohn uniqueness statement. Generalized Kohn–Sham theory in Chapter 9 permits nonlocal orbital-dependent operators and is a different framework.
+
+The auxiliary system is not required to reproduce the physical many-body wavefunction, pair density, or excitation spectrum. Its construction matches the ground-state density; if the exact $E_{\mathrm{xc}}[n]$ were known, the physical ground-state energy obtained from that density would also be exact.
+
+  </div>
+</BilingualSection>
+
+<InteractingAuxiliaryMap />
+
+<DerivationBlock
+  title="辅助密度与非相互作用动能 | Auxiliary density and noninteracting kinetic energy"
+  assumptions={[
+    '占据轨道在每个自旋通道内正交归一；占据数位于允许区间并满足总粒子数约束。',
+    '轨道满足声明的边界条件，使分部积分边界项消失或按周期边界相消。',
+    '这里定义的是辅助体系的 Ts，不是相互作用体系真实动能。',
+  ]}
+>
+
+密度由占据轨道重构：
+
+$$
+n_\sigma(\mathbf r)=\sum_i f_{i\sigma}|\phi_{i\sigma}(\mathbf r)|^2,
+\qquad
+n(\mathbf r)=\sum_\sigma n_\sigma(\mathbf r).
+$$
+
+积分并使用轨道归一化：
+
+$$
+\int n(\mathbf r)d\mathbf r
+=\sum_{i\sigma}f_{i\sigma}\langle\phi_{i\sigma}|\phi_{i\sigma}\rangle
+=\sum_{i\sigma}f_{i\sigma}=N.
+$$
+
+辅助动能为
+
+$$
+T_s[\{\phi\}]
+=-\frac12\sum_{i\sigma}f_{i\sigma}
+\langle\phi_{i\sigma}|\nabla^2|\phi_{i\sigma}\rangle.
+$$
+
+在边界项消失时分部积分得到等价正定形式
+
+$$
+T_s[\{\phi\}]
+=\frac12\sum_{i\sigma}f_{i\sigma}
+\int |\nabla\phi_{i\sigma}(\mathbf r)|^2d\mathbf r.
+$$
+
+轨道梯度量纲为 $L^{-5/2}$，积分后 $T_s$ 量纲为 $L^{-2}$，在原子单位中是能量。形式上的 $T_s[n]$ 是在产生密度 $n$ 的非相互作用基态轨道中取得的动能；给定任意轨道集合直接代入只得到轨道泛函值，不自动证明该集合实现了密度约束下的基态极小值。
+
+The occupied orbitals reconstruct the density and conserve particle number. Integration by parts gives the equivalent positive kinetic-energy form when the boundary term vanishes. Formally, $T_s[n]$ is the noninteracting ground-state kinetic energy associated with density $n$; evaluating the orbital expression for an arbitrary set does not establish that the set is the constrained ground-state minimizer.
+
+</DerivationBlock>
+
+<OccupationDensityExplorer />
+
+<DerivationBlock
+  title="Kohn–Sham 能量分解与 Exc 的定义 | Kohn–Sham decomposition and the definition of Exc"
+  assumptions={[
+    '固定电子相互作用、粒子数和外势；核—核能 EII 在固定几何下为常数。',
+    '目标密度同时属于相互作用约束搜索域和所采用的辅助非相互作用表示域。',
+    'Hartree 项使用完整总密度。',
+  ]}
+>
+
+从 Chapter 6 的普适泛函 $F[n]$ 出发，加减 $T_s[n]$ 与 Hartree 能
+
+$$
+E_H[n]=\frac12\iint
+\frac{n(\mathbf r)n(\mathbf r')}{|\mathbf r-\mathbf r'|}
+\,d\mathbf r\,d\mathbf r',
+$$
+
+定义
+
+$$
+E_{\mathrm{xc}}[n]
+\equiv F[n]-T_s[n]-E_H[n].
+$$
+
+因此固定核位置的总能量为
+
+$$
+E[\{\phi\}]
+=T_s[\{\phi\}]
++\int v_{\mathrm{ext}}(\mathbf r)n(\mathbf r)d\mathbf r
++E_H[n]+E_{\mathrm{xc}}[n]+E_{II}.
+$$
+
+等价地，
+
+$$
+E_{\mathrm{xc}}[n]
+=\bigl(T[n]-T_s[n]\bigr)
++\bigl(W[n]-E_H[n]\bigr).
+$$
+
+所以 $E_{\mathrm{xc}}$ 不只包含“相关势能”。它还包含真实相互作用动能与辅助动能之差、Fermi 反对称性导致的交换，以及 Hartree 之外的相关效应。该分解是定义恒等式；实际误差来自对 $E_{\mathrm{xc}}$ 的近似及后续离散和数值步骤。
+
+Starting from the universal functional, adding and subtracting $T_s$ and $E_H$ defines $E_{\mathrm{xc}}$. It contains the difference between interacting and auxiliary kinetic energies as well as exchange and correlation beyond the classical Hartree term. The decomposition is an exact definition conditional on the domains; practical error enters through approximation and numerical realization.
+
+</DerivationBlock>
+
+<span id="section-7-2" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.2 Kohn–Sham 变分方程 | The Kohn–Sham Variational Equations
+
+<BilingualSection titleZh="为什么要对轨道而非任意密度直接变分" titleEn="Why variation is performed over orbitals">
+  <div class="bilingual-section__zh">
+
+除 $T_s$ 外的项被视为密度泛函，而 $T_s$ 对轨道有显式表达。于是以正交轨道为变分变量，通过链式法则把密度项的变化传递到轨道。正交约束不能用每条轨道一个独立标量简单处理，因为任意占据轨道之间都必须保持 $\langle\phi_i|\phi_j\rangle=\delta_{ij}$；Lagrange 乘子因此组成 Hermitian 矩阵 $\Lambda_{ij}$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+All terms except $T_s$ are treated as density functionals, whereas $T_s$ is explicit in the orbitals. The orthonormal orbitals are therefore used as variational variables and the chain rule carries density-functional variations to the orbitals. A separate scalar multiplier for each orbital is insufficient at the outset because every pair of occupied orbitals must satisfy $\langle\phi_i|\phi_j\rangle=\delta_{ij}$. The Lagrange multipliers form a Hermitian matrix $\Lambda_{ij}$.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Hartree 泛函导数 | Functional derivative of the Hartree energy"
+  assumptions={[
+    '密度变化足够规则，Coulomb 双积分有限。',
+    '核对称 1/|r−r′|，积分变量可交换。',
+  ]}
+>
+
+令 $n\to n+\eta\,\delta n$，保留 $\eta$ 的一阶项：
+
+$$
+\begin{aligned}
+\delta E_H
+&=\frac12\iint\frac{\delta n(\mathbf r)n(\mathbf r')+n(\mathbf r)\delta n(\mathbf r')}{|\mathbf r-\mathbf r'|}
+\,d\mathbf r\,d\mathbf r'\\
+&=\int d\mathbf r\,\delta n(\mathbf r)
+\int d\mathbf r'\frac{n(\mathbf r')}{|\mathbf r-\mathbf r'|}.
+\end{aligned}
+$$
+
+第二项交换 $\mathbf r$ 与 $\mathbf r'$ 后与第一项相同，抵消原来的 $1/2$。因此
+
+$$
+\frac{\delta E_H[n]}{\delta n(\mathbf r)}
+=v_H(\mathbf r)
+=\int\frac{n(\mathbf r')}{|\mathbf r-\mathbf r'|}\,d\mathbf r'.
+$$
+
+The two first-order contributions are identical after exchanging integration variables, so the factor one half is removed and the derivative is the Hartree potential.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="带正交约束的轨道变分 | Orbital variation with orthonormality constraints"
+  assumptions={[
+    '先固定占据数；分数占据和简并边界在 §7.8 处理。',
+    'E_xc 在目标密度处具有所需泛函导数；不可微点需要次梯度或系综表述。',
+    '轨道变分保持边界条件，并把 φ 与 φ* 作为独立复变量处理。',
+  ]}
+>
+
+定义约束泛函
+
+$$
+\mathcal L
+=E[\{\phi\}]
+-\sum_{ij\sigma}\Lambda_{ij}^{\sigma}
+\left(\langle\phi_{i\sigma}|\phi_{j\sigma}\rangle-\delta_{ij}\right).
+$$
+
+密度对复共轭轨道的变化为
+
+$$
+\frac{\delta n_\sigma(\mathbf r)}{\delta\phi_{i\sigma}^*(\mathbf r')}
+=f_{i\sigma}\phi_{i\sigma}(\mathbf r)\delta(\mathbf r-\mathbf r').
+$$
+
+定义
+
+$$
+v_{\mathrm{xc}}^\sigma(\mathbf r)
+=\frac{\delta E_{\mathrm{xc}}}{\delta n_\sigma(\mathbf r)},
+\qquad
+v_s^\sigma=v_{\mathrm{ext}}+v_H+v_{\mathrm{xc}}^\sigma.
+$$
+
+对 $\phi_{i\sigma}^*$ 变分得到
+
+$$
+f_{i\sigma}\hat h_s^\sigma\phi_{i\sigma}
+=\sum_j\Lambda_{ij}^\sigma\phi_{j\sigma},
+\qquad
+\hat h_s^\sigma=-\frac12\nabla^2+v_s^\sigma(\mathbf r).
+$$
+
+对占据轨道可把 $f_{i\sigma}$ 吸收到乘子定义。左乘 $\langle\phi_{k\sigma}|$ 得
+
+$$
+\Lambda_{ik}^\sigma
+=\langle\phi_{k\sigma}|\hat h_s^\sigma|\phi_{i\sigma}\rangle.
+$$
+
+由于 $\hat h_s^\sigma$ Hermitian，$\Lambda^\sigma$ 也是 Hermitian。存在单位变换 $U^\sigma$ 将其对角化。占据轨道子空间内的该单位旋转不改变密度和总能。定义规范轨道 $\widetilde\phi_{i\sigma}=\sum_jU_{ji}^\sigma\phi_{j\sigma}$ 后，方程化为
+
+$$
+\left[-\frac12\nabla^2+v_s^\sigma(\mathbf r)\right]
+\widetilde\phi_{i\sigma}(\mathbf r)
+=\epsilon_{i\sigma}\widetilde\phi_{i\sigma}(\mathbf r).
+$$
+
+这就是规范 Kohn–Sham 方程。$\epsilon_{i\sigma}$ 的出现源于正交约束矩阵的对角化；它们首先是变分乘子，而不是由推导自动获得的真实激发能。
+
+Variation produces a matrix equation in the occupied subspace. Hermiticity of the one-particle operator makes the multiplier matrix Hermitian, so a unitary rotation diagonalizes it without changing the density. The resulting canonical Kohn–Sham eigenvalues are constraint multipliers first; the derivation does not identify them with physical excitation energies.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="严格关系、构造假设和近似的位置" titleEn="Locations of exact relations, construction assumptions, and approximations" kind="boundary">
+  <div class="bilingual-section__zh">
+
+$E_{\mathrm{xc}}=F-T_s-E_H$ 是定义恒等式；轨道约束变分在所声明的可微性和辅助表示条件下是严格步骤；“目标密度存在局域非相互作用基态表示”是 Kohn–Sham 构造假设；选择 LDA、GGA 或其他 $E_{\mathrm{xc}}$ 是近似；用有限基组、网格、$k$ 点、赝势和有限阈值求解是数值离散。它们必须分别报告。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+$E_{\mathrm{xc}}=F-T_s-E_H$ is a defining identity. Orbital-constrained variation is exact under the stated differentiability and auxiliary-representation conditions. Existence of a local noninteracting ground-state representation is an assumption of the Kohn–Sham construction. Choosing LDA, GGA, or another $E_{\mathrm{xc}}$ is an approximation. A finite basis, grid, $k$ mesh, pseudopotential, and stopping threshold are numerical discretizations. These levels must be reported separately.
+
+  </div>
+</BilingualCallout>
