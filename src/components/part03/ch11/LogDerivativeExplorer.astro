@@ -1,0 +1,179 @@
+---
+import {
+  logDerivativeS,
+  matchedWeakWellDepth,
+} from '../../../data/part03/ch11TeachingModels.mjs';
+
+const defaultEnergy = 0.2;
+const defaultStrongDepth = 12;
+const defaultRc = 1;
+const defaultWeakDepth = matchedWeakWellDepth(defaultEnergy, defaultStrongDepth, defaultRc);
+const eMin = 0.02;
+const eMax = 0.8;
+const sample = (depth) => Array.from({ length: 421 }, (_, index) => {
+  const energy = eMin + (eMax - eMin) * index / 420;
+  const raw = logDerivativeS(energy, depth, defaultRc);
+  return { energy, value: Number.isFinite(raw) && Math.abs(raw) < 12 ? raw : null };
+});
+const x = (energy) => 62 + (energy - eMin) / (eMax - eMin) * 668;
+const y = (value) => 158 - value / 12 * 125;
+const pathFor = (values) => values.map((point) => point.value === null ? null : `${x(point.energy).toFixed(2)} ${y(point.value).toFixed(2)}`).reduce((parts, point) => {
+  if (point === null) { parts.push(null); return parts; }
+  const command = parts.length === 0 || parts.at(-1) === null ? `M ${point}` : `L ${point}`;
+  parts.push(command);
+  return parts;
+}, []).filter(Boolean).join(' ');
+const strongPath = pathFor(sample(defaultStrongDepth));
+const weakPath = pathFor(sample(defaultWeakDepth));
+const defaultTarget = logDerivativeS(defaultEnergy, defaultStrongDepth, defaultRc);
+---
+
+<figure class="chapter-visual log-derivative-explorer" data-log-derivative>
+  <figcaption>
+    <strong>原创方势阱模型：同一参考能量上的散射匹配 | Original square-well model: scattering match at one reference energy</strong>
+    <span>比较一个深势阱与第一散射分支上的较弱势阱在边界处的 s 通道对数导数。控件范围限制在存在唯一正深度弱势阱解的区域。</span>
+    <span lang="en">A deep well is compared with a weaker well on the first scattering branch through the s-channel boundary logarithmic derivative. The controls are restricted to the domain in which a unique positive-depth weak-well solution exists.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>参考能量 | Reference energy E₀: <output data-energy-output>0.20</output> Ha</span>
+      <input data-energy type="range" min="0.05" max="0.50" step="0.01" value="0.20" aria-label="Reference scattering energy in Hartree" />
+    </label>
+    <label>
+      <span>深势阱深度 | Strong-well depth: <output data-depth-output>12.0</output> Ha</span>
+      <input data-depth type="range" min="10.5" max="14" step="0.1" value="12" aria-label="Strong spherical well depth in Hartree" />
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 330" role="img" aria-labelledby="log-derivative-title log-derivative-desc">
+    <title id="log-derivative-title">Logarithmic derivatives for strong and matched weak square wells</title>
+    <desc id="log-derivative-desc">Energy-dependent boundary logarithmic derivatives, clipped near poles, with a marker at the matching energy.</desc>
+    <line class="plot-axis" x1="62" y1="158" x2="730" y2="158" />
+    <line class="plot-axis" x1="62" y1="33" x2="62" y2="283" />
+    <line class="plot-guide" data-reference-line x1={x(defaultEnergy)} y1="33" x2={x(defaultEnergy)} y2="283" />
+    <path class="log-derivative-explorer__strong" data-strong-curve d={strongPath} />
+    <path class="log-derivative-explorer__weak" data-weak-curve d={weakPath} />
+    <circle data-match-point cx={x(defaultEnergy)} cy={y(defaultTarget)} r="5" />
+    <text x="396" y="322" text-anchor="middle">E (Ha)</text>
+    <text x="16" y="158" transform="rotate(-90 16 158)" text-anchor="middle">D_0(E,r_c)</text>
+    <text x="625" y="49">solid: strong well</text>
+    <text x="625" y="68">dashed: weak match</text>
+  </svg>
+
+  <p class="chapter-visual__readout" aria-live="polite">
+    <span>匹配弱势阱深度：<strong data-weak-depth>{defaultWeakDepth.toFixed(6)}</strong> Ha</span>
+    <span>D₀ strong(E₀)：<strong data-strong-value>{defaultTarget.toFixed(6)}</strong></span>
+    <span>D₀ weak(E₀)：<strong data-weak-value>{logDerivativeS(defaultEnergy, defaultWeakDepth, defaultRc).toFixed(6)}</strong></span>
+    <span>差值：<strong data-difference>0.00e+0</strong></span>
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>半径 r_c=1 Bohr 的球形方势阱。l=0 时 <code>D₀=q r_c cot(q r_c)-1</code>，其中 <code>q=sqrt[2(E+V₀)]</code>。弱势阱根只在 <code>0&lt;q r_c&lt;π</code> 的第一分支上求解。</p>
+    <p lang="en"><strong>Model:</strong> a spherical square well of radius r_c=1 Bohr. For l=0, <code>D₀=q r_c cot(q r_c)-1</code> with <code>q=sqrt[2(E+V₀)]</code>. The weak-well root is solved only on the first branch <code>0&lt;q r_c&lt;π</code>.</p>
+    <p><strong>验收：</strong>参考能量处两条对数导数的绝对差必须小于 10^-8；弱势阱深度必须为正并小于深势阱；离开参考能量后允许分离。</p>
+    <p lang="en"><strong>Acceptance:</strong> the absolute logarithmic-derivative difference at the reference energy must be below 10^-8; the weak depth must be positive and smaller than the strong depth; the curves may separate away from the reference.</p>
+    <p><strong>边界：</strong>单能量、单通道、单分支匹配只说明该参考点的外区散射等效，不证明跨能量、跨 l 或化学环境的 transferability。</p>
+    <p lang="en"><strong>Boundary:</strong> a one-energy, one-channel, one-branch match establishes exterior scattering equivalence only at that reference point; it does not prove transferability across energies, angular momenta, or chemical environments.</p>
+  </div>
+
+  <noscript>
+    <p>无 JavaScript 时显示默认参考能量和解析匹配曲线；第一分支条件、极点裁剪及适用边界仍可见。</p>
+  </noscript>
+</figure>
+
+<script>
+  const logDerivative = (energy, depth, rc = 1) => {
+    const q = Math.sqrt(2 * (energy + depth));
+    const qr = q * rc;
+    if (Math.abs(Math.sin(qr)) < 1e-10) return Number.NaN;
+    return qr * Math.cos(qr) / Math.sin(qr) - 1;
+  };
+
+  const matchedDepth = (energy, strongDepth, rc = 1) => {
+    const target = logDerivative(energy, strongDepth, rc);
+    if (!Number.isFinite(target) || target >= 0) return Number.NaN;
+
+    const equation = (q) => q * rc / Math.tan(q * rc) - 1 - target;
+    let lower = 1e-8 / rc;
+    let upper = (Math.PI - 1e-8) / rc;
+    let lowerValue = equation(lower);
+    const upperValue = equation(upper);
+    if (!Number.isFinite(lowerValue) || !Number.isFinite(upperValue) || lowerValue * upperValue > 0) {
+      return Number.NaN;
+    }
+
+    for (let iteration = 0; iteration < 100; iteration += 1) {
+      const middle = 0.5 * (lower + upper);
+      const middleValue = equation(middle);
+      if (lowerValue * middleValue <= 0) {
+        upper = middle;
+      } else {
+        lower = middle;
+        lowerValue = middleValue;
+      }
+    }
+
+    const root = 0.5 * (lower + upper);
+    const depth = root ** 2 / 2 - energy;
+    return depth > 0 && depth < strongDepth ? depth : Number.NaN;
+  };
+
+  document.querySelectorAll('[data-log-derivative]').forEach((root) => {
+    const energyInput = root.querySelector('[data-energy]');
+    const depthInput = root.querySelector('[data-depth]');
+    const update = () => {
+      const referenceEnergy = Number(energyInput.value);
+      const strongDepth = Number(depthInput.value);
+      const weakDepth = matchedDepth(referenceEnergy, strongDepth, 1);
+      const eMin = 0.02;
+      const eMax = 0.8;
+      const count = 500;
+      const x = (energy) => 62 + (energy - eMin) / (eMax - eMin) * 668;
+      const y = (value) => 158 - value / 12 * 125;
+      const buildPath = (depth) => {
+        let path = '';
+        let active = false;
+        for (let index = 0; index <= count; index += 1) {
+          const energy = eMin + (eMax - eMin) * index / count;
+          const value = logDerivative(energy, depth, 1);
+          if (!Number.isFinite(value) || Math.abs(value) >= 12) {
+            active = false;
+            continue;
+          }
+          path += `${active ? 'L' : 'M'} ${x(energy).toFixed(2)} ${y(value).toFixed(2)} `;
+          active = true;
+        }
+        return path;
+      };
+      root.querySelector('[data-strong-curve]').setAttribute('d', buildPath(strongDepth));
+      root.querySelector('[data-weak-curve]').setAttribute('d', buildPath(weakDepth));
+      const referenceX = x(referenceEnergy);
+      const strongValue = logDerivative(referenceEnergy, strongDepth, 1);
+      const weakValue = logDerivative(referenceEnergy, weakDepth, 1);
+      const referenceLine = root.querySelector('[data-reference-line]');
+      referenceLine.setAttribute('x1', String(referenceX));
+      referenceLine.setAttribute('x2', String(referenceX));
+      const point = root.querySelector('[data-match-point]');
+      point.setAttribute('cx', String(referenceX));
+      point.setAttribute('cy', String(y(strongValue)));
+      root.querySelector('[data-energy-output]').textContent = referenceEnergy.toFixed(2);
+      root.querySelector('[data-depth-output]').textContent = strongDepth.toFixed(1);
+      root.querySelector('[data-weak-depth]').textContent = weakDepth.toFixed(6);
+      root.querySelector('[data-strong-value]').textContent = strongValue.toFixed(6);
+      root.querySelector('[data-weak-value]').textContent = weakValue.toFixed(6);
+      root.querySelector('[data-difference]').textContent = Math.abs(weakValue - strongValue).toExponential(2);
+    };
+    energyInput.addEventListener('input', update);
+    depthInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .log-derivative-explorer svg { width: 100%; min-height: 17rem; margin-top: 1rem; }
+  .log-derivative-explorer svg text { fill: currentColor; font-size: 12px; }
+  .log-derivative-explorer__strong { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 3; }
+  .log-derivative-explorer__weak { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-dasharray: 8 5; }
+  .log-derivative-explorer circle { fill: var(--sl-color-accent-high); }
+</style>

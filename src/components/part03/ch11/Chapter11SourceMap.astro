@@ -1,0 +1,51 @@
+---
+const sections = [
+  ['11.1', 'Scattering Amplitudes and Pseudopotentials', 230, 'complete'],
+  ['11.2', 'Orthogonalized Plane Waves (OPWs) and Pseudopotentials', 233, 'complete'],
+  ['11.3', 'Model Ion Potentials', 237, 'complete'],
+  ['11.4', 'Norm-Conserving Pseudopotentials (NCPPs)', 238, 'complete'],
+  ['11.5', 'Generation of l-Dependent Norm-Conserving Pseudopotentials', 241, 'complete'],
+  ['11.6', 'Unscreening and Core Corrections', 245, 'complete'],
+  ['11.7', 'Transferability and Hardness', 246, 'complete'],
+  ['11.8', 'Separable Pseudopotential Operators and Projectors', 247, 'complete'],
+  ['11.9', 'Extended Norm Conservation: Beyond the Linear Regime', 248, 'complete'],
+  ['11.10', 'Optimized Norm-Conserving Potentials', 249, 'complete'],
+  ['11.11', 'Ultrasoft Pseudopotentials', 250, 'complete'],
+  ['11.12', 'Projector Augmented Waves (PAWs): Keeping the Full Wavefunction', 252, 'complete'],
+  ['11.13', 'Additional Topics', 255, 'complete'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-11-source-map-title">
+  <h2 id="chapter-11-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    【Martin 原书 | Martin source】下表只记录第 2 版印刷页码与本页位置。正文、推导、练习和图形均为本站原创；练习页 256–258 不转录。
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>节 | Section</th>
+          <th>原节标题 | Source title</th>
+          <th>印刷页 | Page</th>
+          <th>网站锚点 | Site anchor</th>
+          <th>状态 | Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sections.map(([id, title, page, status]) => (
+          <tr>
+            <td>{id}</td>
+            <td lang="en">{title}</td>
+            <td>{page}</td>
+            <td><a href={`#section-${String(id).replace('.', '-')}`}>#{String(id).replace('.', '-')}</a></td>
+            <td>{status}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>
+    【外部权威来源 | External primary source】Sholl–Steckel §§3.2–3.2.1（印刷页 61–64）只补充平面波截断、冻结芯和一致截断能的实践判断。PseudoDojo 论文只用于说明现代 NCPP 验证需要互补测试和明确 provenance；两者均不替代 Martin 的算符推导。
+  </p>
+</section>

@@ -1,0 +1,116 @@
+---
+import {
+  residualFourierTail,
+  cutoffForTail,
+} from '../../../data/part03/ch11TeachingModels.mjs';
+
+const defaultRc = 1.8;
+const tolerance = 1e-6;
+const defaultCutoff = cutoffForTail(defaultRc, tolerance);
+const qMax = 6;
+const points = Array.from({ length: 401 }, (_, index) => {
+  const q = qMax * index / 400;
+  return { q, tail: residualFourierTail(defaultRc, q) };
+});
+const x = (q) => 62 + q / qMax * 668;
+const y = (tail) => 35 + (Math.log10(Math.max(tail, 1e-12)) + 12) / 12 * 245;
+const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.q).toFixed(2)} ${y(point.tail).toFixed(2)}`).join(' ');
+---
+
+<figure class="chapter-visual hardness-explorer" data-hardness-explorer>
+  <figcaption>
+    <strong>原创 Fourier-tail 模型：芯半径与“硬度” | Original Fourier-tail model: core radius and hardness</strong>
+    <span>用解析高频尾代理说明更短的光滑长度通常需要更大的倒空间范围。该图不预测任何真实赝势的推荐截断。</span>
+    <span lang="en">An analytic high-frequency-tail proxy illustrates why a shorter smoothing length generally requires a wider reciprocal-space range. It does not predict a recommended cutoff for any real pseudopotential.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>模型芯半径 | Model core radius r_c: <output data-rc-output>1.8</output> Bohr</span>
+      <input data-rc type="range" min="0.8" max="3.0" step="0.1" value="1.8" aria-label="Model core radius for Fourier-tail proxy" />
+    </label>
+    <label>
+      <span>尾部容差 | Tail tolerance</span>
+      <select data-tolerance aria-label="Fourier-tail tolerance">
+        <option value="0.0001">10^-4</option>
+        <option value="0.000001" selected>10^-6</option>
+        <option value="0.00000001">10^-8</option>
+      </select>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 330" role="img" aria-labelledby="hardness-title hardness-desc">
+    <title id="hardness-title">Fourier-tail proxy versus reciprocal cutoff</title>
+    <desc id="hardness-desc">The logarithm of an analytic reciprocal-space tail for an adjustable core radius.</desc>
+    <line class="plot-axis" x1="62" y1="280" x2="730" y2="280" />
+    <line class="plot-axis" x1="62" y1="35" x2="62" y2="280" />
+    <line class="plot-guide" data-tolerance-line x1="62" y1={y(tolerance)} x2="730" y2={y(tolerance)} />
+    <line class="plot-guide" data-cutoff-line x1={x(defaultCutoff)} y1="35" x2={x(defaultCutoff)} y2="280" />
+    <path class="hardness-explorer__curve" data-tail-curve d={path} />
+    <text x="396" y="322" text-anchor="middle">q (Bohr⁻¹)</text>
+    <text x="17" y="158" transform="rotate(-90 17 158)" text-anchor="middle">log10 tail</text>
+  </svg>
+
+  <p class="chapter-visual__readout" aria-live="polite">
+    <span>达到容差所需 q_c：<strong data-q-cut>{defaultCutoff.toFixed(4)}</strong> Bohr⁻¹</span>
+    <span>动能代理 q_c²/2：<strong data-energy-cut>{(defaultCutoff ** 2 / 2).toFixed(4)}</strong> Ha</span>
+    <span>r_c q_c：<strong data-product>{(defaultRc * defaultCutoff).toFixed(6)}</strong></span>
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>归一化尾部取 <code>T(q)=exp[-(r_c q)²]</code>。给定容差 τ 时，<code>q_c=sqrt(-ln τ)/r_c</code>。</p>
+    <p lang="en"><strong>Model:</strong> the normalized tail is <code>T(q)=exp[-(r_c q)²]</code>. For tolerance τ, <code>q_c=sqrt(-ln τ)/r_c</code>.</p>
+    <p><strong>验收：</strong>固定容差下 r_c q_c 保持常数；r_c 减半时 q_c 加倍，动能代理增加四倍。</p>
+    <p lang="en"><strong>Acceptance:</strong> r_c q_c remains constant at fixed tolerance; halving r_c doubles q_c and quadruples the kinetic-energy proxy.</p>
+    <p><strong>边界：</strong>真实 hardness 由赝波函数、各通道、局域分量、增广电荷和目标 observable 共同决定，不能由单一芯半径公式给出。</p>
+    <p lang="en"><strong>Boundary:</strong> real hardness depends on pseudo-wavefunctions, channels, local component, augmentation charge, and the target observable; it cannot be inferred from one core-radius formula.</p>
+  </div>
+
+  <noscript>
+    <p>无 JavaScript 时显示 r_c=1.8 Bohr、容差 10^-6 的解析尾部和截断代理。</p>
+  </noscript>
+</figure>
+
+<script>
+  document.querySelectorAll('[data-hardness-explorer]').forEach((root) => {
+    const rcInput = root.querySelector('[data-rc]');
+    const toleranceInput = root.querySelector('[data-tolerance]');
+    const update = () => {
+      const rc = Number(rcInput.value);
+      const tolerance = Number(toleranceInput.value);
+      const qMax = 6;
+      const count = 500;
+      const x = (q) => 62 + q / qMax * 668;
+      const y = (tail) => 35 + (Math.log10(Math.max(tail, 1e-12)) + 12) / 12 * 245;
+      const path = Array.from({ length: count + 1 }, (_, index) => {
+        const q = qMax * index / count;
+        const tail = Math.exp(-((rc * q) ** 2));
+        return `${index === 0 ? 'M' : 'L'} ${x(q).toFixed(2)} ${y(tail).toFixed(2)}`;
+      }).join(' ');
+      const qCut = Math.sqrt(-Math.log(tolerance)) / rc;
+      root.querySelector('[data-tail-curve]').setAttribute('d', path);
+      const toleranceY = y(tolerance);
+      const toleranceLine = root.querySelector('[data-tolerance-line]');
+      toleranceLine.setAttribute('y1', String(toleranceY));
+      toleranceLine.setAttribute('y2', String(toleranceY));
+      const cutoffX = x(Math.min(qCut, qMax));
+      const cutoffLine = root.querySelector('[data-cutoff-line]');
+      cutoffLine.setAttribute('x1', String(cutoffX));
+      cutoffLine.setAttribute('x2', String(cutoffX));
+      root.querySelector('[data-rc-output]').textContent = rc.toFixed(1);
+      root.querySelector('[data-q-cut]').textContent = qCut.toFixed(4);
+      root.querySelector('[data-energy-cut]').textContent = (qCut ** 2 / 2).toFixed(4);
+      root.querySelector('[data-product]').textContent = (rc * qCut).toFixed(6);
+    };
+    rcInput.addEventListener('input', update);
+    toleranceInput.addEventListener('change', update);
+    update();
+  });
+</script>
+
+<style>
+  .hardness-explorer select { min-height: 2.25rem; }
+  .hardness-explorer svg { width: 100%; min-height: 17rem; margin-top: 1rem; }
+  .hardness-explorer svg text { fill: currentColor; font-size: 13px; }
+  .hardness-explorer__curve { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 3; }
+</style>

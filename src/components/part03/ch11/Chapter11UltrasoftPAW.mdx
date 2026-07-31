@@ -1,0 +1,315 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import AugmentationComparisonDiagram from './AugmentationComparisonDiagram.astro';
+
+<span id="section-11-11" class="chapter-11-anchor" aria-hidden="true"></span>
+
+## 11.11 超软赝势 | Ultrasoft Pseudopotentials
+
+<BilingualSection titleZh="放松范数，显式保存缺失电荷" titleEn="Relaxing the norm while retaining the missing charge" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+某些价态处在一个角动量壳层的起始位置，例如早期 $p$ 或 $d$ 态，没有同 $l$ 的芯态可通过 OPW 投影消去。它们的全电子径向函数深入核区，范数守恒赝函数即使去掉节点也可能仍然较硬。ultrasoft 方法允许辅助平滑部分不再满足普通范数守恒，把全电子与辅助部分乘积之间的差保存在局域增广函数中。
+
+普通内积因此不再给出正确归一化，Hamiltonian 本征问题变为带重叠算符的广义本征问题。价密度也不能只用平滑轨道模方求和；必须加入由投影子占据矩阵加权的 augmentation charge。成本从更高的平面波截断转移为更复杂的重叠、密度、力和应力表达式。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Some valence states begin an angular-momentum shell—for example early $p$ or $d$ states—and have no same-$l$ core state to remove through an OPW projection. Their all-electron radial functions penetrate the core, so a norm-conserving pseudo function can remain relatively hard even after nodes are removed. The ultrasoft method allows the auxiliary smooth component to violate ordinary norm conservation and stores the difference between all-electron and auxiliary partial-wave products in localized augmentation functions.
+
+The ordinary inner product no longer provides the correct normalization, and the Hamiltonian eigenproblem becomes generalized through an overlap operator. The valence density cannot be formed solely from squared smooth orbitals; augmentation charges weighted by projector occupation matrices must be added. Cost is shifted from a larger plane-wave cutoff into more complex overlap, density, force, and stress expressions.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="核心推导 | Core derivation: generalized overlap and augmentation density"
+  assumptions={[
+    '在每个原子增广区有 AE partial waves phi_i、smooth partial waves tilde phi_i 与 projectors beta_i | AE and smooth partial waves and projectors are supplied in each augmentation region.',
+    'partial-wave product difference is localized inside the core radius | Partial-wave product differences are localized inside the core radius.',
+    'occupations f_n are declared | Orbital occupations are specified.',
+  ]}
+>
+
+对一对参考 partial waves 定义增广函数
+
+$$
+Q_{ij}(\mathbf r)
+=\phi_i^*(\mathbf r)\phi_j(\mathbf r)
+-\widetilde\phi_i^*(\mathbf r)\widetilde\phi_j(\mathbf r),
+$$
+
+以及其积分矩阵
+
+$$
+q_{ij}=\int_{\Omega_a}Q_{ij}(\mathbf r)d\mathbf r.
+$$
+
+若平滑态在投影子上的系数为 $\langle\beta_i|\widetilde\psi_n\rangle$，正确的广义归一化可以写成
+
+$$
+\langle\widetilde\psi_m|\hat S|\widetilde\psi_n\rangle
+=\delta_{mn},
+$$
+
+其中
+
+$$
+\boxed{
+\hat S=1+
+\sum_{a}\sum_{ij}
+q_{ij}^{a}|\beta_i^{a}\rangle\langle\beta_j^{a}|
+}.
+$$
+
+因此 Kohn–Sham 型方程成为
+
+$$
+\boxed{
+\hat H^{US}|\widetilde\psi_n\rangle
+=\varepsilon_n\hat S|\widetilde\psi_n\rangle
+}.
+$$
+
+非局域 Hamiltonian 可写成局域部分加有限投影子矩阵：
+
+$$
+\hat H^{US}=
+-\frac12\nabla^2+V_{loc}
++\sum_{aij}D_{ij}^{a}|\beta_i^{a}\rangle\langle\beta_j^{a}|
++V_H[n]+V_{xc}[n].
+$$
+
+平滑轨道的普通密度为
+
+$$
+\widetilde n(\mathbf r)=
+\sum_n f_n|\widetilde\psi_n(\mathbf r)|^2.
+$$
+
+定义原子投影子占据矩阵
+
+$$
+\rho_{ij}^{a}=
+\sum_n f_n
+\langle\widetilde\psi_n|\beta_i^{a}\rangle
+\langle\beta_j^{a}|\widetilde\psi_n\rangle.
+$$
+
+完整价密度重构为
+
+$$
+\boxed{
+n(\mathbf r)=\widetilde n(\mathbf r)
++\sum_{aij}\rho_{ij}^{a}Q_{ij}^{a}(\mathbf r)
+}.
+$$
+
+积分该式并使用 $q_{ij}=\int Q_{ij}$：
+
+$$
+\int n(\mathbf r)d\mathbf r
+=\sum_n f_n\langle\widetilde\psi_n|\hat S|\widetilde\psi_n\rangle
+=\sum_n f_n.
+$$
+
+这说明 generalized overlap 与 augmentation density 是同一缺失范数的两个表达。若所有 $q_{ij}=0$，$\hat S\to1$，并恢复普通范数守恒结构。
+
+<p lang="en">The product difference between all-electron and smooth partial waves defines a localized augmentation function. Its integral enters the overlap operator. The smooth states are normalized with that operator and solve a generalized eigenproblem. The same projector occupation matrix weights the spatial augmentation functions in the density. Integrating the reconstructed density reproduces the generalized norm. Setting every augmentation integral to zero recovers ordinary norm-conserving structure.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="力、应力和响应中的附加项" titleEn="Additional terms in forces, stress, and response" kind="boundary">
+  <div class="bilingual-section__zh">
+    <p>原子移动时，投影子、增广函数和重叠算符都随原子位置变化。对总能求导会产生普通 Hellmann–Feynman 项之外的 projector/overlap/augmentation 导数。USPP 总能收敛或 SCF 收敛不能证明这些导数、密度截断和响应实现已经收敛；力、应力、声子和 DFPT 需要各自验证。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>When atoms move, projectors, augmentation functions, and the overlap operator move with them. Differentiating the total energy produces projector, overlap, and augmentation derivatives beyond the ordinary Hellmann–Feynman term. A converged USPP total energy or SCF does not establish convergence of these derivatives, density cutoffs, or response implementations; forces, stress, phonons, and DFPT require their own validation.</p>
+  </div>
+</BilingualCallout>
+
+<span id="section-11-12" class="chapter-11-anchor" aria-hidden="true"></span>
+
+## 11.12 投影子增广波：保留全电子波函数 | Projector Augmented Waves: Keeping the Full Wavefunction
+
+<BilingualSection titleZh="PAW 是显式线性变换" titleEn="PAW is an explicit linear transformation" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+PAW 延续 OPW 的“平滑全空间部分 + 原子局域修正”结构，但把它组织为适合总能、力和应力的线性变换。在每个 augmentation sphere 内，辅助平滑 partial waves 与全电子 partial waves 成对出现；projectors 从辅助全局态中提取每个 one-centre 展开系数。球外两类 partial waves 相同，修正严格局域于声明的增广区。
+
+“保留全电子波函数”指通过数据集中的 partial waves、projectors 和冻结芯信息重构该方法定义的全电子态。它不解除有限 partial-wave 集、augmentation radius、frozen core、XC 和 relativistic approximation 的限制，也不是多电子波函数的精确重构。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+PAW continues the OPW structure of a smooth all-space component plus atom-local corrections, organizing it as a linear transformation suitable for total energies, forces, and stress. Inside each augmentation sphere, smooth auxiliary partial waves are paired with all-electron partial waves, and projectors extract the one-centre expansion coefficients from the global auxiliary state. The paired partial waves are identical outside the sphere, so the correction is localized to the declared augmentation region.
+
+“Keeping the full wavefunction” means reconstructing the all-electron state defined by the data set’s partial waves, projectors, and frozen-core information. It does not remove limitations from the finite partial-wave set, augmentation radius, frozen core, XC approximation, or relativistic approximation, and it is not an exact reconstruction of the interacting many-electron wavefunction.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="核心推导 | Core derivation: PAW transformation and one-centre correction"
+  assumptions={[
+    '每个 augmentation sphere 有成对 partial waves | Paired all-electron and smooth partial waves are provided in each augmentation sphere.',
+    'projectors satisfy biorthogonality with smooth partial waves | Projectors are biorthogonal to the smooth partial waves.',
+    'augmentation spheres and partial-wave completeness are declared data-set choices | Augmentation spheres and partial-wave completeness are declared data-set choices.',
+  ]}
+>
+
+在一个原子球内，辅助态展开为
+
+$$
+|\widetilde\Psi\rangle
+\approx\sum_i c_i|\widetilde\phi_i\rangle.
+$$
+
+引入对偶投影子，满足
+
+$$
+\langle\widetilde p_i|\widetilde\phi_j\rangle=\delta_{ij},
+$$
+
+因此系数为
+
+$$
+c_i=\langle\widetilde p_i|\widetilde\Psi\rangle.
+$$
+
+把每个辅助 partial wave 换成对应全电子 partial wave，得到
+
+$$
+|\Psi\rangle
+=|\widetilde\Psi\rangle
++\sum_i\left(|\phi_i\rangle-|\widetilde\phi_i\rangle\right)c_i.
+$$
+
+代入投影系数：
+
+$$
+\boxed{
+|\Psi\rangle=\hat{\mathcal T}|\widetilde\Psi\rangle,
+\qquad
+\hat{\mathcal T}=1+
+\sum_i\left(|\phi_i\rangle-|\widetilde\phi_i\rangle\right)
+\langle\widetilde p_i|
+}.
+$$
+
+因为 $|\phi_i\rangle-|\widetilde\phi_i\rangle$ 在球外为零，变换在球外等于恒等算符。对任意全电子算符 $\hat A$，辅助空间中的等价算符为
+
+$$
+\widetilde A=\hat{\mathcal T}^{\dagger}\hat A\hat{\mathcal T}.
+$$
+
+在不重叠、局域完备的理想 one-centre 分解中，期望值可组织为
+
+$$
+\boxed{
+\langle A\rangle
+=\langle\widetilde\Psi|\hat A|\widetilde\Psi\rangle
++\sum_{aij}\rho_{ij}^{a}
+\left(
+\langle\phi_i^{a}|\hat A|\phi_j^{a}\rangle
+-\langle\widetilde\phi_i^{a}|\hat A|\widetilde\phi_j^{a}\rangle
+\right)
+}.
+$$
+
+第一项在平滑全空间表示中计算；括号内是每个原子球的 AE–auxiliary 修正。对密度算符，该结构给出
+
+$$
+n(\mathbf r)=\widetilde n(\mathbf r)+n^{1}(\mathbf r)-\widetilde n^{1}(\mathbf r).
+$$
+
+若 partial-wave 集在目标态上不充分，one-centre 展开误差不会由提高平面波截断自动消失；需改变 PAW 数据集或投影子/partial-wave 设计并重新测试。
+
+<p lang="en">Biorthogonal projectors extract the smooth one-centre expansion coefficients. Replacing each smooth partial wave by its paired all-electron partial wave gives the PAW linear transformation. The correction vanishes outside each augmentation sphere. Expectation values separate into a smooth all-space contribution plus all-electron minus smooth one-centre corrections. Plane-wave convergence cannot repair an incomplete partial-wave set.</p>
+
+</DerivationBlock>
+
+<AugmentationComparisonDiagram />
+
+<div class="table-wrap">
+
+| Feature | NCPP | USPP | PAW |
+|---|---|---|---|
+| Ordinary orbital norm | conserved | replaced by $\hat S$ | auxiliary overlap from $\mathcal T^\dagger\mathcal T$ |
+| Primary numerical state | normalized pseudo state | smooth ultrasoft state | smooth auxiliary state |
+| Localized correction | nonlocal projector action | overlap and augmentation charge | AE–smooth partial-wave corrections |
+| Density near core | pseudo density, optional NLCC | smooth density + $Q_{ij}$ | reconstructed $\widetilde n+n^1-\widetilde n^1$ |
+| Generalized eigenproblem | normally no | yes | generally yes in auxiliary form |
+| All-electron reconstruction | external scheme needed | limited augmentation information | explicit within PAW data scope |
+| Typical cutoff tendency | often higher | often lower | data-set dependent; often comparable to USPP |
+| Validation requirement | target-specific | target-specific | target-specific |
+
+</div>
+
+<span id="section-11-13" class="chapter-11-anchor" aria-hidden="true"></span>
+
+## 11.13 其他主题 | Additional Topics
+
+<BilingualSection titleZh="非局域势改变算符关系" titleEn="Nonlocal potentials modify operator relations" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+非局域赝势使若干只对局域势成立的公式失效。速度不能总是简单写成动量除以质量；位置算符与非局域势的对易子产生附加项。这会进入光学矩阵元、电流、有效质量和响应函数。忽略该项可能在总能正常的同时使响应量系统偏差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Nonlocal pseudopotentials invalidate relations that hold only for local potentials. Velocity cannot always be written as momentum divided by mass; the commutator between position and the nonlocal operator produces an additional term. This enters optical matrix elements, currents, effective masses, and response functions. Omitting it can bias response quantities even when total energies appear normal.
+
+  </div>
+</BilingualSection>
+
+由 Heisenberg 方程，速度算符为
+
+$$
+\hat{\mathbf v}=\frac{1}{i\hbar}[\hat{\mathbf r},\hat H].
+$$
+
+对
+
+$$
+\hat H=\frac{\hat{\mathbf p}^2}{2m}+V_{loc}(\mathbf r)+\hat V_{NL},
+$$
+
+局域势与位置对易，而动能给出 $\hat{\mathbf p}/m$：
+
+$$
+\boxed{
+\hat{\mathbf v}=\frac{\hat{\mathbf p}}{m}
++\frac{1}{i\hbar}[\hat{\mathbf r},\hat V_{NL}]
+}.
+$$
+
+因此使用动量矩阵元替代速度矩阵元前，必须确认代码和方法如何处理非局域 commutator。
+
+<BilingualSection titleZh="重构、pseudohamiltonian 与多体芯效应" titleEn="Reconstruction, pseudohamiltonians, and many-body core effects">
+  <div class="bilingual-section__zh">
+
+普通赝势直接给出赝波函数。核磁共振、芯能级谱和核附近密度等量需要全电子或芯区重构；重构方式依赖生成数据和近似，不能从平滑波函数唯一恢复。PAW 把这种重构写进正式变换，其他赝势也可配套专用 reconstruction 数据。
+
+pseudohamiltonian 进一步允许修改核区动能或有效质量，而不只修改势；这扩大了设计空间，也引入新的算符和可迁移性条件。Martin 还指出可以把芯电子对低能价激发的多体重整化映射到价电子有效问题，但会产生超出简单单粒子离子势的有效相互作用。该主题在本章只建立边界，不给出通用生成算法。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A conventional pseudopotential directly yields a pseudo-wavefunction. NMR shifts, core spectroscopy, and near-nucleus densities require all-electron or core-region reconstruction. Reconstruction depends on generation data and approximations and is not uniquely recoverable from the smooth state alone. PAW includes this reconstruction in its formal transformation; other pseudopotentials may supply dedicated reconstruction data.
+
+A pseudohamiltonian enlarges the design space by modifying core-region kinetic or effective-mass terms as well as the potential, introducing additional operator and transferability conditions. Martin also notes that many-body renormalization by core electrons can be mapped into a low-energy valence problem, but the result can contain effective interactions beyond a simple one-particle ionic potential. This chapter establishes that boundary rather than a universal generation algorithm.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="方法名称不能替代数据集身份" titleEn="A method label does not replace data-set identity" kind="boundary">
+  <div class="bilingual-section__zh">
+    <p>“PAW”“USPP”或“NCPP”只给出形式家族。实际结果还由生成器版本、元素数据集、价电子组态、semicore、XC、相对论级别、芯修正、局域通道、投影子和推荐/实际截断决定。论文或输入必须记录可复现身份，而不是只写方法缩写。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>“PAW,” “USPP,” and “NCPP” identify formal families only. Results also depend on generator version, element data set, valence configuration, semicore choice, XC, relativistic level, core correction, local channel, projectors, and recommended and actual cutoffs. A paper or input must record a reproducible identity rather than only a method acronym.</p>
+  </div>
+</BilingualCallout>
