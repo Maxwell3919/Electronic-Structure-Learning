@@ -158,7 +158,7 @@ close(
   1e-14,
   'C6 alpha linearity',
 );
-const numericalC6 = numericalCasimirPolderC6({ ...parameters, maximumFrequency: 100, intervals: 200000 });
+const numericalC6 = numericalCasimirPolderC6({ ...parameters, maximumFrequency: 300, intervals: 200000 });
 relativeClose(numericalC6, analyticC6, 2e-8, 'Casimir-Polder quadrature');
 
 // 12. Damped dispersion has the finite short-range limit and long-range R^-6 behavior.
