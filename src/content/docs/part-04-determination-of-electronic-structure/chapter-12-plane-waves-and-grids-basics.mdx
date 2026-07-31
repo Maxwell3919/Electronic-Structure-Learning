@@ -1,20 +1,30 @@
 ---
-title: "Chapter 12 · Plane Waves and Grids: Basics"
-description: "Martin Chapter 12 的目录级阅读骨架；正文待填充。"
+title: "Chapter 12 · Plane Waves and Grids: Basics | 平面波与网格基础"
+description: "从周期边界、平面波矩阵和 Bloch 定理，到近自由电子、结构因子、FFT、有限差分与多分辨率方法。"
 sidebar:
   order: 1
-  label: "Chapter 12 · Plane Waves and Grids: Basics"
+  label: "Chapter 12 · Plane Waves and Grids"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter12Contents from '../../../components/part04/ch12/Chapter12Contents.astro';
+import Chapter12SourceMap from '../../../components/part04/ch12/Chapter12SourceMap.astro';
+import Chapter12Orientation from '../../../components/part04/ch12/Chapter12Orientation.mdx';
+import Chapter12PlaneWaveFoundations from '../../../components/part04/ch12/Chapter12PlaneWaveFoundations.mdx';
+import Chapter12BandsAndPotentials from '../../../components/part04/ch12/Chapter12BandsAndPotentials.mdx';
+import Chapter12DensityAndRealSpace from '../../../components/part04/ch12/Chapter12DensityAndRealSpace.mdx';
+import Chapter12Review from '../../../components/part04/ch12/Chapter12Review.mdx';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[3].units[0].label}
-  sourcePage={catalog.parts[3].units[0].page}
-  sections={catalog.parts[3].units[0].sections}
-  exercisesPage={catalog.parts[3].units[0].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Part IV overview, printed pp. 259–261; Chapter 12, printed pp. 262–280; sections 12.1–12.9. Exercises begin p. 280 and are not reproduced."
+  status="draft"
 />
+
+<Chapter12Contents />
+<Chapter12Orientation />
+<Chapter12SourceMap />
+<Chapter12PlaneWaveFoundations />
+<Chapter12BandsAndPotentials />
+<Chapter12DensityAndRealSpace />
+<Chapter12Review />
