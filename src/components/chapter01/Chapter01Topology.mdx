@@ -21,24 +21,30 @@ Shockley’s surface-state model showed that changing bulk-band connectivity may
 </BilingualSection>
 
 <DerivationBlock
-  title="补充推导：保持能隙的连续变形为何不能改变离散指标"
+  title="补充推导 | Supplemental derivation: 保持能隙的连续变形为何不能改变离散指标"
   assumptions={[
-    'H(k,λ) 连续依赖 λ；',
-    '占据与未占据子空间之间在整个 Brillouin 区保持有限能隙；',
-    '保护分类所需的对称性保持；',
-    '指标是占据子空间投影的连续泛函，并只取离散值。',
+    'H(k,λ) 连续依赖 λ | H(k,λ) depends continuously on λ.',
+    '整个 Brillouin 区保持占据—未占据能隙 | The occupied–unoccupied gap stays finite throughout the Brillouin zone.',
+    '保护分类所需的对称性保持 | The protecting symmetry is preserved.',
+    '指标连续依赖占据子空间投影且只取离散值 | The invariant is continuous in the occupied projector and takes discrete values.',
   ]}
 >
 
 能隙保持时，占据子空间投影可写为
+
+<p lang="en">While the gap remains open, the projector onto the occupied subspace can be written as</p>
 
 $$
 P(\mathbf k,\lambda)=\sum_{n\in\mathrm{occ}}
 |u_{n\mathbf k}(\lambda)\rangle\langle u_{n\mathbf k}(\lambda)|.
 $$
 
-Hamiltonian 连续且能隙不闭合时，$P(\mathbf k,\lambda)$ 可连续变化。若拓扑指标 $\nu[P]$ 只取离散值，它不能沿连续路径从一个值平滑变成另一个值，因此 $\nu(0)=\nu(1)$。若两端指标不同，至少有一个前提失效：体能隙闭合、保护对称性破坏，或体系离开所用有效 Hamiltonian 的分类范围。能隙闭合是可能的转变点，却不充分证明指标发生改变。
+Hamiltonian 连续且能隙不闭合时，$P(\mathbf k,\lambda)$ 可连续变化。若拓扑指标 $\nu[P]$ 只取离散值，它不能沿连续路径从一个值平滑变成另一个值，因此 $\nu(0)=\nu(1)$。
 
-<p lang="en">With a finite occupied–unoccupied gap, the occupied-band projector varies continuously. A topological invariant that is both continuous in this projector and restricted to discrete values cannot change along the path. Different endpoint invariants therefore require a gap closing, broken protecting symmetry, or departure from the chosen effective-Hamiltonian classification. A gap closing is a possible transition point, not sufficient proof of a changed invariant.</p>
+<p lang="en">If the Hamiltonian varies continuously without closing the gap, then $P(\mathbf k,\lambda)$ also varies continuously. A topological invariant $\nu[P]$ restricted to discrete values cannot change smoothly along that path, so $\nu(0)=\nu(1)$.</p>
+
+若两端指标不同，至少有一个前提失效：体能隙闭合、保护对称性破坏，或体系离开所用有效 Hamiltonian 的分类范围。能隙闭合是可能的转变点，却不充分证明指标发生改变。
+
+<p lang="en">Different endpoint invariants require at least one assumption to fail: the bulk gap closes, the protecting symmetry is broken, or the system leaves the classification defined by the effective Hamiltonian. A gap closing is a possible transition point, not sufficient proof that the invariant has changed.</p>
 
 </DerivationBlock>
