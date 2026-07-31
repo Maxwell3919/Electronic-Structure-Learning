@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "start": "astro start",
+    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "generate:framework": "node scripts/generate-framework.mjs",
