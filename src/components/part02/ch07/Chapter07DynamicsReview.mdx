@@ -1,0 +1,313 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+
+<span id="section-7-9" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.9 时间依赖密度泛函理论 | Time-Dependent Density Functional Theory
+
+<BilingualSection titleZh="激发能来自响应极点，不来自静态本征值差的直接识别" titleEn="Excitations arise from response poles, not direct identification with static eigenvalue differences">
+  <div class="bilingual-section__zh">
+
+静态 Kohn–Sham 本征值差一般不是相互作用体系的激发能。时间依赖 DFT 回到密度对外部扰动的响应：给定初态，在适当条件下，时间依赖密度确定时间依赖外势到纯时间函数；再构造一个辅助非相互作用体系，使其在全部时间重现相同密度。
+
+时间依赖 Kohn–Sham 方程为
+
+$$
+i\frac{\partial}{\partial t}\phi_i(\mathbf r,t)
+=\left[-\frac12\nabla^2+v_s(\mathbf r,t)\right]\phi_i(\mathbf r,t),
+$$
+
+其中
+
+$$
+v_s=v_{\mathrm{ext}}+v_H[n]+v_{\mathrm{xc}}[n;\Psi_0,\Phi_0].
+$$
+
+精确 $v_{\mathrm{xc}}$ 除瞬时密度外还可依赖密度历史以及真实和辅助初态。把它近似为当前密度上的基态泛函称为绝热近似；它降低了计算成本，也舍弃了记忆和某些频率依赖结构。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Static Kohn–Sham eigenvalue differences are generally not excitation energies of the interacting system. Time-dependent DFT returns to the density response to an external perturbation. For a specified initial state and under suitable conditions, the time-dependent density determines the time-dependent external potential up to a purely time-dependent function. An auxiliary noninteracting system is then constructed to reproduce the same density at all times.
+
+The time-dependent Kohn–Sham equation is
+
+$$
+i\frac{\partial}{\partial t}\phi_i(\mathbf r,t)
+=\left[-\frac12\nabla^2+v_s(\mathbf r,t)\right]\phi_i(\mathbf r,t),
+$$
+
+with
+
+$$
+v_s=v_{\mathrm{ext}}+v_H[n]+v_{\mathrm{xc}}[n;\Psi_0,\Phi_0].
+$$
+
+The exact $v_{\mathrm{xc}}$ can depend on the density history and on the physical and auxiliary initial states. Replacing it by a ground-state functional evaluated at the instantaneous density is the adiabatic approximation; this reduces cost but discards memory and parts of the frequency dependence.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="线性响应中的 TDDFT Dyson 方程 | TDDFT Dyson equation in linear response"
+  assumptions={[
+    '围绕一个稳定基态施加足够小的时间依赖外场。',
+    '采用因果 Fourier 变换并声明频率边界条件。',
+    '响应核在所选密度和频率处存在。',
+  ]}
+>
+
+定义密度响应
+
+$$
+\delta n(1)=\int d2\,\chi_s(1,2)\,\delta v_s(2),
+$$
+
+其中数字同时表示空间、时间和必要自旋变量。有效势变化为
+
+$$
+\delta v_s(1)=\delta v_{\mathrm{ext}}(1)
++\int d2\,[v_C(1,2)+f_{\mathrm{xc}}(1,2)]\delta n(2),
+$$
+
+且
+
+$$
+f_{\mathrm{xc}}(1,2)
+=\frac{\delta v_{\mathrm{xc}}(1)}{\delta n(2)}.
+$$
+
+代入并整理得到
+
+$$
+\chi
+=\chi_s+\chi_s\left(v_C+f_{\mathrm{xc}}\right)\chi.
+$$
+
+相互作用响应 $\chi(\omega)$ 的极点给出允许激发能。$\chi_s$ 的极点来自 Kohn–Sham 轨道差，但 Coulomb 核和 $f_{\mathrm{xc}}$ 移动、混合或产生响应极点。因此“TDDFT 使用 Kohn–Sham 轨道”不意味着激发能就是裸本征值差。
+
+The interacting response satisfies a Dyson-like equation built from the Kohn–Sham response, Coulomb kernel, and exchange–correlation kernel. Physical excitation energies are poles of $\chi(\omega)$; the kernels modify the poles of the independent-particle response, so the result is not generally a bare eigenvalue difference.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="绝热近似的证据上限" titleEn="Evidence ceiling of the adiabatic approximation" kind="boundary">
+  <div class="bilingual-section__zh">
+
+绝热局域或半局域核常用于有限体系的低能单激发和光谱趋势，但缺少频率依赖，难以普遍描述双激发、强记忆效应、长程电荷转移和某些固体激子。计算得到谱峰后，仍需检查基组、盒子/超胞、展宽、频率网格、核近似和有限时间传播误差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Adiabatic local or semilocal kernels are widely used for low-energy single excitations and spectral trends in finite systems, but their missing frequency dependence limits a general description of double excitations, strong memory, long-range charge transfer, and some solid-state excitons. A calculated spectrum still requires convergence with respect to basis, box or cell, broadening, frequency grid, kernel approximation, and finite propagation time.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-7-10" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.10 Kohn–Sham 方法的其他推广 | Other Generalizations of the Kohn–Sham Approach
+
+<BilingualSection titleZh="改变辅助体系需要重新声明匹配变量" titleEn="Changing the auxiliary system requires a new matching variable">
+  <div class="bilingual-section__zh">
+
+Kohn–Sham 方法的一般思想是用可处理辅助问题重现一组指定基本变量，而非要求所有辅助量都等于真实量。推广时必须明确新增变量、共轭外场、辅助 Hamiltonian 和精确泛函的定义。
+
+**自旋与非共线磁性。** 共线理论使用 $n_\uparrow,n_\downarrow$；非共线情形使用 $2\times2$ 自旋密度矩阵或总密度与磁化矢量，Kohn–Sham 势也成为自旋矩阵。自旋—轨道耦合是 Hamiltonian 中的相对论项，不应静默塞入标量 $E_{\mathrm{xc}}[n]$。
+
+**有限温度。** Mermin–Kohn–Sham 理论匹配热平衡密度并极小化自由能或 grand potential。有限温度交换—关联自由能一般不同于零温 $E_{\mathrm{xc}}$；数值 smearing 与物理温度需要区分。
+
+**超导密度泛函。** 除普通密度外引入 anomalous pair density，并以配对外场为共轭变量。辅助体系具有 Bogoliubov–de Gennes 型结构。该框架可组织电子—声子和 Coulomb 配对贡献，但其近似、参数和适用性仍需验证，不能由普通基态 Kohn–Sham 方程直接推出超导。
+
+**极化与其他宏观变量。** 周期绝缘体的宏观极化涉及波函数相位和 Berry 相位，可通过扩展基本变量或电场泛函处理。晶胞内周期密度本身不足以替代极化分支和绝热路径。
+
+**Generalized Kohn–Sham。** 允许辅助单粒子算符含非局域轨道依赖项，为 hybrid、exact exchange、meta-GGA 和其他 Chapter 9 泛函提供框架。其本征值、势唯一性和总能双计数公式不能无修改地沿用普通局域 Kohn–Sham 推导。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The general Kohn–Sham idea is to reproduce a specified set of basic variables with a tractable auxiliary problem, not to make every auxiliary quantity equal to its physical counterpart. Each extension must state the added variables, conjugate fields, auxiliary Hamiltonian, and exact functional.
+
+**Spin and noncollinear magnetism.** Collinear theory uses $n_\uparrow,n_\downarrow$. Noncollinear theory uses a $2\times2$ spin-density matrix or total density and magnetization vector, and the Kohn–Sham potential becomes a spin matrix. Spin–orbit coupling is a relativistic Hamiltonian term and must not be silently absorbed into a scalar $E_{\mathrm{xc}}[n]$.
+
+**Finite temperature.** Mermin–Kohn–Sham theory matches the thermal equilibrium density and minimizes a free energy or grand potential. The finite-temperature exchange–correlation free energy generally differs from the zero-temperature $E_{\mathrm{xc}}$; numerical smearing and physical temperature must be distinguished.
+
+**Superconducting density functional theory.** An anomalous pair density and its conjugate pairing field are introduced in addition to the normal density. The auxiliary system has a Bogoliubov–de Gennes structure. This framework can organize electron–phonon and Coulomb pairing contributions, but its approximations, parameters, and applicability still require validation. Ordinary ground-state Kohn–Sham equations do not directly imply superconductivity.
+
+**Polarization and other macroscopic variables.** Macroscopic polarization in a periodic insulator involves wavefunction phases and Berry phases and can require an extended basic-variable or electric-field functional. The periodic cell density alone does not replace the polarization branch and adiabatic path.
+
+**Generalized Kohn–Sham theory.** A nonlocal orbital-dependent auxiliary operator provides a framework for hybrids, exact exchange, meta-GGA, and other Chapter 9 functionals. Its eigenvalue interpretation, potential uniqueness, and total-energy double-counting formulas cannot be inherited without modification from the ordinary local Kohn–Sham derivation.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="推广不会自动提升精度" titleEn="A generalization does not automatically improve accuracy" kind="boundary">
+  <div class="bilingual-section__zh">
+
+增加基本变量或允许非局域辅助算符可以表达普通密度理论缺失的结构，但同时引入新的泛函、规范、投影、初态或参数依赖。只有当目标 observable、数据和比较标准预先明确，并完成数值与方法验证时，才可判断推广是否改善结果。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Adding basic variables or allowing a nonlocal auxiliary operator can represent structure absent from ordinary density theory, but it also introduces new functional, gauge, projector, initial-state, or parameter dependence. Improvement can be judged only after the target observable, data, comparison standard, numerical convergence, and method validation are specified.
+
+  </div>
+</BilingualCallout>
+
+## 数值实现连接 | Connection to Numerical Implementation
+
+<BilingualSection titleZh="从 Kohn–Sham 方程到一次可接受计算" titleEn="From the Kohn–Sham equations to an acceptable calculation">
+  <div class="bilingual-section__zh">
+
+理论和实现的最小层级为
+
+$$
+\text{辅助表示假设}
+\rightarrow
+\text{能量分解}
+\rightarrow
+\text{轨道 Euler–Lagrange 方程}
+\rightarrow
+\text{基组/网格与边界离散}
+\rightarrow
+\text{本征问题与占据}
+\rightarrow
+\text{SCF 固定点}
+\rightarrow
+\text{力/应力/响应求导}
+\rightarrow
+\text{目标 observable 收敛}
+\rightarrow
+\text{泛函和物理模型适用性}.
+$$
+
+软件输出中的 eigenvalues、bands、DOS、forces、stress 和 total energy 都来自同一自洽状态，但各自对空带数、$k$ 点、smearing、基组、赝势、对称性和后处理路径的敏感性不同。不能用一个总能收敛测试替代所有输出量的验收。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The minimum hierarchy is
+
+$$
+\text{auxiliary-representation assumption}
+\rightarrow
+\text{energy decomposition}
+\rightarrow
+\text{orbital Euler–Lagrange equation}
+\rightarrow
+\text{basis/grid and boundary discretization}
+\rightarrow
+\text{eigenproblem and occupations}
+\rightarrow
+\text{SCF fixed point}
+\rightarrow
+\text{force/stress/response derivatives}
+\rightarrow
+\text{target-observable convergence}
+\rightarrow
+\text{functional and physical-model applicability}.
+$$
+
+Eigenvalues, bands, DOS, forces, stress, and total energy can come from the same self-consistent state yet have different sensitivities to empty states, $k$ points, smearing, basis, pseudopotential, symmetry, and post-processing path. One total-energy convergence test cannot validate every output.
+
+  </div>
+</BilingualSection>
+
+<span id="review" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 常见误判、原创练习与来源 | Misconceptions, Original Exercises, and Sources
+
+<BilingualSection titleZh="常见误判" titleEn="Common misinterpretations">
+  <div class="bilingual-section__zh">
+    <dl>
+      <dt>“Kohn–Sham 轨道是真实电子轨道。”</dt>
+      <dd>它们是重现基态密度的辅助单粒子函数；一般不等于准粒子态或自然轨道。</dd>
+      <dt>“精确泛函意味着所有 Kohn–Sham 本征值精确。”</dt>
+      <dd>构造保证密度和总能；有限体系最高占据本征值有特殊定理，其他本征值没有普适保证。</dd>
+      <dt>“SCF 收敛意味着得到了全局基态。”</dt>
+      <dd>固定点可能依赖初始磁矩、占据、对称性和 mixing；还需比较候选解并验证数值和方法条件。</dd>
+      <dt>“总能变化很小就足以停止所有计算。”</dt>
+      <dd>力、应力、未占据态和响应量可能对残余非自洽更敏感。</dd>
+      <dt>“Hellmann–Feynman 力不需要任何修正。”</dt>
+      <dd>有限位置依赖基组产生 Pulay 项，非局域赝势和未自洽状态也有额外贡献。</dd>
+      <dt>“Kohn–Sham 轨道隙就是基本隙或光学隙。”</dt>
+      <dd>基本隙还含导数不连续，光学隙还含电子—空穴相互作用。</dd>
+      <dt>“Smearing 只是无害的数值技巧。”</dt>
+      <dd>它改变占据和驻定热力学量；必须与自由能、外推和目标 observable 的收敛一致。</dd>
+      <dt>“Generalized Kohn–Sham 只是同一方程换个泛函名称。”</dt>
+      <dd>非局域轨道依赖算符改变变分结构、本征值解释和双计数公式。</dd>
+    </dl>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <dl>
+      <dt>“Kohn–Sham orbitals are physical electron orbitals.”</dt>
+      <dd>They are auxiliary one-particle functions constrained to reproduce the ground-state density and are not generally quasiparticle states or natural orbitals.</dd>
+      <dt>“An exact functional makes every Kohn–Sham eigenvalue exact.”</dt>
+      <dd>The construction guarantees density and total energy. The finite-system highest occupied eigenvalue has a special theorem; other eigenvalues have no universal guarantee.</dd>
+      <dt>“SCF convergence means the global ground state has been found.”</dt>
+      <dd>A fixed point can depend on initial magnetization, occupations, symmetry, and mixing. Candidate solutions and numerical and methodological conditions still require comparison.</dd>
+      <dt>“A small total-energy change is sufficient for every calculation.”</dt>
+      <dd>Forces, stress, unoccupied states, and response quantities can be more sensitive to residual non-self-consistency.</dd>
+      <dt>“Hellmann–Feynman forces never need corrections.”</dt>
+      <dd>Finite position-dependent bases generate Pulay terms; nonlocal pseudopotentials and incomplete self-consistency add further contributions.</dd>
+      <dt>“The Kohn–Sham orbital gap is the fundamental or optical gap.”</dt>
+      <dd>The fundamental gap contains the derivative discontinuity, and the optical gap additionally contains electron–hole interaction.</dd>
+      <dt>“Smearing is a harmless numerical trick.”</dt>
+      <dd>It changes occupations and the stationary thermodynamic quantity and must be consistent with free-energy, extrapolation, and target-observable convergence.</dd>
+      <dt>“Generalized Kohn–Sham theory is the same equation with a different functional name.”</dt>
+      <dd>A nonlocal orbital-dependent operator changes the variational structure, eigenvalue interpretation, and double-counting formulas.</dd>
+    </dl>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="原创练习" titleEn="Original exercises" eyebrow="Practice">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>密度与占据。</strong> 对一组正交自旋轨道证明 $\int n=N$。再讨论分数占据和简并时哪些步骤保持不变。</li>
+      <li><strong>轨道变分。</strong> 从矩阵 Lagrange 乘子开始完整推导 Kohn–Sham 方程，证明乘子矩阵 Hermitian，并说明单位旋转为何不改变密度。</li>
+      <li><strong>Hartree 双计数。</strong> 从 $\int n v_H=2E_H$ 出发推导总能的本征值和公式。给定教学模型四个输入，手算并核对网页读数。</li>
+      <li><strong>SCF 稳定性。</strong> 对 $s=-0.8$ 求线性混合的稳定 $\alpha$ 区间，并分别选择单调、振荡和发散参数。说明标量结果如何推广为谱半径条件。</li>
+      <li><strong>停止条件。</strong> 设计一个力计算的最低充分 SCF 验证：明确输入文件、输出量、两档阈值和通过标准。说明它不能验证什么。</li>
+      <li><strong>Pulay 项。</strong> 对广义本征问题 $HC=SC\epsilon$ 求坐标导数，识别 $\partial S/\partial R$ 项。比较原子轨道和固定晶胞平面波。</li>
+      <li><strong>Janak 关系。</strong> 在轨道驻定条件下求 $dE/df_i$，明确哪些隐式导数消失。解释整数粒子数处为何需左右导数。</li>
+      <li><strong>带隙证据。</strong> 给定一个数值收敛的 PBE Kohn–Sham gap，列出把它解释为基本隙或光学隙仍缺少的理论和计算证据。</li>
+      <li><strong>势反演。</strong> 对一维无节点密度 $n(x)=A\exp(-\alpha x^2)$ 构造局域势到加法常数，并检查量纲与渐近行为。该题为原创重写，不使用教材题目文本。</li>
+      <li><strong>TDDFT 响应。</strong> 从 $\delta n=\chi_s\delta v_s$ 推导 Dyson 方程。分别说明 $f_{\mathrm{xc}}=0$、静态局域核和频率依赖核会改变哪些物理结构。</li>
+      <li><strong>多解比较。</strong> 两个不同初始磁矩得到两个均自洽解。制定比较总能、对称性、磁矩、力和数值参数的判定表，避免把先收敛者当作基态。</li>
+      <li><strong>层级审查。</strong> 对一个“hybrid 计算得到准确带隙”的主张，分别列出构造假设、泛函近似、数值离散、实验比较和因果解释所需证据。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Density and occupations.</strong> Prove $\int n=N$ for orthonormal spin orbitals and identify what remains unchanged for fractional occupations and degeneracy.</li>
+      <li><strong>Orbital variation.</strong> Derive the Kohn–Sham equations from a matrix of Lagrange multipliers, prove Hermiticity, and explain density invariance under occupied-space unitary rotation.</li>
+      <li><strong>Hartree double counting.</strong> Derive the eigenvalue-sum total-energy expression from $\int n v_H=2E_H$ and reproduce the webpage model by hand.</li>
+      <li><strong>SCF stability.</strong> For $s=-0.8$, find the stable interval of $\alpha$ and select monotone, oscillatory, and divergent cases. Generalize the scalar result to a spectral-radius condition.</li>
+      <li><strong>Stopping criterion.</strong> Design a minimum sufficient SCF validation for a force calculation, including inputs, outputs, two thresholds, and pass criteria. State what it cannot validate.</li>
+      <li><strong>Pulay term.</strong> Differentiate $HC=SC\epsilon$ with respect to a coordinate and identify the overlap derivative. Compare atom-centered orbitals with plane waves at fixed cell.</li>
+      <li><strong>Janak relation.</strong> Derive $dE/df_i$ at orbital stationarity and identify the vanished implicit derivatives. Explain the need for left and right derivatives at integer particle number.</li>
+      <li><strong>Gap evidence.</strong> Given a numerically converged PBE Kohn–Sham gap, list the missing theoretical and computational evidence required to interpret it as a fundamental or optical gap.</li>
+      <li><strong>Potential inversion.</strong> Construct a local potential, up to a constant, for the nodeless one-dimensional density $n(x)=A\exp(-\alpha x^2)$ and check dimensions and asymptotics. This is an original reformulation and does not reproduce source exercise wording.</li>
+      <li><strong>TDDFT response.</strong> Derive the Dyson equation from $\delta n=\chi_s\delta v_s$ and compare zero, static local, and frequency-dependent exchange–correlation kernels.</li>
+      <li><strong>Multiple fixed points.</strong> Two initial magnetic moments produce two self-consistent solutions. Build a comparison table for energy, symmetry, magnetization, forces, and numerical parameters without selecting the first solution to converge.</li>
+      <li><strong>Layered audit.</strong> For a claim that a hybrid calculation gives an accurate gap, list the evidence needed at the construction, functional, discretization, experimental-comparison, and causal-interpretation levels.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="来源与原创边界" titleEn="Sources and originality boundary" kind="source">
+  <div class="bilingual-section__zh">
+
+**主线来源：** Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Chapter 7，印刷页 145–167。**实践交叉参考：** Sholl–Steckel, *Density Functional Theory: A Practical Introduction*, Chapter 1 的 Kohn–Sham/SCF 介绍与 Chapter 3 §3.4 的迭代优化讨论。**经典来源定位：** Kohn–Sham 辅助体系、Slater–Janak 关系、导数不连续、Runge–Gross 时间依赖映射及 Mermin 有限温度框架。
+
+四项视觉元素均为原创页面组织：相互作用/辅助体系关系图、本征值和双计数模型、共享且已验证的标量 SCF 内核及其 Chapter 7 静态 fallback、粒子箱轨道占据—密度模型。本站没有复制教材图、正文、习题或答案。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+**Primary source:** Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Chapter 7, printed pp. 145–167. **Practical cross-reference:** Sholl–Steckel, *Density Functional Theory: A Practical Introduction*, the Kohn–Sham/SCF introduction in Chapter 1 and iterative optimization in Chapter 3 §3.4. **Classical source locators:** the Kohn–Sham auxiliary system, Slater–Janak relation, derivative discontinuity, Runge–Gross time-dependent mapping, and Mermin finite-temperature framework.
+
+All four visual elements are original page constructions: the interacting/auxiliary relation, the eigenvalue-sum double-counting model, the shared validated scalar SCF kernel with a Chapter 7 static fallback, and the particle-in-a-box occupation–density model. No textbook figure, prose, exercise, or answer is reproduced.
+
+  </div>
+</BilingualCallout>
