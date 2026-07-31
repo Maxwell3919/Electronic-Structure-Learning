@@ -41,19 +41,10 @@ jobs:
           scripts/smoke-part03-ch10.py
           scripts/smoke-part04-ch12.py
           scripts/smoke-pages-ch19.py
+          scripts/smoke-part05-ch20.py
           scripts/smoke-part06-ch25.py
           scripts/smoke-part07-app-a.py
+          scripts/smoke-part07-app-b.py
 
       - name: Validate models and build static site
-        shell: bash
-        run: |
-          set +e
-          npm run check > /tmp/site-check.log 2>&1
-          status=$?
-          set -e
-          if [ "$status" -ne 0 ]; then
-            echo "Aggregate check failed; showing the final 80 lines:"
-            tail -n 80 /tmp/site-check.log
-            exit "$status"
-          fi
-          cat /tmp/site-check.log
+        run: npm run check
