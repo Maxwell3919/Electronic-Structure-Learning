@@ -1,20 +1,26 @@
 ---
-title: "Appendix A · Functional Equations"
-description: "Martin Appendix A 的目录级阅读骨架；正文待填充。"
+title: "Appendix A · Functional Equations | 泛函方程"
+description: "函数空间、泛函导数、约束变分、梯度泛函、边界项与二阶稳定性的双语参考附录。"
 sidebar:
   order: 1
   label: "Appendix A · Functional Equations"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixAContents from '../../../components/part07/appA/AppendixAContents.astro';
+import AppendixAOrientation from '../../../components/part07/appA/AppendixAOrientation.mdx';
+import AppendixABasicVariation from '../../../components/part07/appA/AppendixABasicVariation.mdx';
+import AppendixAGradientFunctionals from '../../../components/part07/appA/AppendixAGradientFunctionals.mdx';
+import AppendixAReview from '../../../components/part07/appA/AppendixAReview.mdx';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[0].label}
-  sourcePage={catalog.parts[6].units[0].page}
-  sections={catalog.parts[6].units[0].sections}
-  exercisesPage={catalog.parts[6].units[0].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix A, printed pages 581–583; sections A.1–A.2. Source exercises are not reproduced."
+  status="substantive-draft"
 />
+
+<AppendixAContents />
+<AppendixAOrientation />
+<AppendixABasicVariation />
+<AppendixAGradientFunctionals />
+<AppendixAReview />
