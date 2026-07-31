@@ -1,0 +1,551 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-4-6">4.6 Brillouin zone 积分与 special points | Integration over the Brillouin Zone and Special Points</h2>
+
+<BilingualSection titleZh="从有限周期晶体的 k 求和到 BZ 积分" titleEn="From finite-crystal k sums to Brillouin-zone integrals" eyebrow="【Martin 原书 | Martin source】 §4.6 · pp. 101–105">
+  <div class="bilingual-section__zh">
+
+Born–von Karman 边界条件把有限晶体的 allowed k 离散化。若晶体含 $N_c$ 个 primitive cells，则每个 isolated band 在第一 BZ 内有 $N_c$ 个 k states。对 cell-periodic scalar quantity $f_n(\mathbf k)$，thermodynamic limit 为
+
+$$
+\frac{1}{N_c}\sum_{\mathbf k}f_n(\mathbf k)
+\longrightarrow
+\frac{\Omega_{\mathrm{cell}}}{(2\pi)^d}
+\int_{\mathrm{BZ}}d^dk\,f_n(\mathbf k),
+$$
+
+其中
+
+$$
+\Omega_{\mathrm{cell}}\Omega_{\mathrm{BZ}}=(2\pi)^d.
+$$
+
+因此 normalized BZ average 可写为
+
+$$
+\langle f_n\rangle_{\mathrm{BZ}}
+=\frac{1}{\Omega_{\mathrm{BZ}}}
+\int_{\mathrm{BZ}}f_n(\mathbf k)\,d^dk.
+$$
+
+实际计算用有限 mesh 近似积分：
+
+$$
+\langle f\rangle_{\mathrm{BZ}}
+\approx\sum_{j=1}^{N_k}w_j f(\mathbf k_j),
+\qquad
+\sum_jw_j=1.
+$$
+
+k-point convergence 必须针对目标 observable 测试。total energy、force、stress、DOS、Fermi-surface response 和 electron–phonon quantities 对 mesh 的敏感性不同；一个量收敛不能替代另一个量的测试。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Born–von Karman boundary conditions discretize the allowed wavevectors of a finite periodic crystal. With $N_c$ primitive cells, every isolated band contains $N_c$ states in the first Brillouin zone. In the thermodynamic limit,
+
+$$
+\frac{1}{N_c}\sum_{\mathbf k}f_n(\mathbf k)
+\longrightarrow
+\frac{\Omega_{\mathrm{cell}}}{(2\pi)^d}
+\int_{\mathrm{BZ}}d^dk\,f_n(\mathbf k).
+$$
+
+A numerical calculation replaces the integral by a weighted finite sum,
+
+$$
+\langle f\rangle_{\mathrm{BZ}}
+\approx\sum_jw_j f(\mathbf k_j),
+\qquad
+\sum_jw_j=1.
+$$
+
+Convergence must be tested for the target observable. Energies, forces, stresses, densities of states, Fermi-surface responses, and electron–phonon quantities can require very different meshes.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="k-state density in reciprocal space | k-state density in reciprocal space"
+  assumptions={[
+    'a d-dimensional supercell contains N_i primitive repeats along each primitive direction;',
+    'Born–von Karman boundary conditions are imposed;',
+    'the primitive reciprocal vectors satisfy a_i·b_j=2πδ_ij.']}
+>
+
+设
+
+$$
+\mathbf L_i=N_i\mathbf a_i,
+\qquad
+\psi(\mathbf r+\mathbf L_i)=\psi(\mathbf r).
+$$
+
+Bloch phase 要求
+
+$$
+e^{i\mathbf k\cdot\mathbf L_i}=1,
+$$
+
+所以
+
+$$
+\mathbf k=\sum_i\frac{m_i}{N_i}\mathbf b_i,
+\qquad m_i\in\mathbb Z.
+$$
+
+每个 k point 对应 reciprocal-space volume
+
+$$
+\Delta\Omega_k
+=\frac{\Omega_{\mathrm{BZ}}}{N_c},
+\qquad
+N_c=\prod_iN_i.
+$$
+
+因此
+
+$$
+\sum_{\mathbf k}f(\mathbf k)
+\approx
+\frac{N_c}{\Omega_{\mathrm{BZ}}}
+\int_{\mathrm{BZ}}f(\mathbf k)d^dk,
+$$
+
+除以 $N_c$ 即得到 normalized BZ integral。这个推导同时说明每个 spin-resolved band 每 primitive cell 贡献一个 state；spin degeneracy 必须作为独立因子处理，而不能隐含在 k counting 中。
+
+<p lang="en">Born–von Karman periodicity quantizes each reciprocal fractional coordinate in steps of $1/N_i$. One k point occupies reciprocal volume $\Omega_{\mathrm{BZ}}/N_c$, yielding the sum-to-integral rule and one state per band per primitive cell before spin multiplicity is applied.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="regular meshes、offsets 与 Monkhorst–Pack 思想" titleEn="Regular meshes, offsets, and the Monkhorst–Pack idea">
+  <div class="bilingual-section__zh">
+
+regular mesh 可写为
+
+$$
+\mathbf k(\mathbf m)
+=\sum_{i=1}^{d}
+\frac{m_i+s_i}{N_i}\mathbf b_i,
+$$
+
+其中 $s_i$ 决定是否包含 $\Gamma$ 或使用 half-grid offset。不同 code 对 gamma-centered、Monkhorst–Pack、even/odd grid 和 fractional coordinates 的 convention 不完全相同；输入报告必须给出实际 mesh 和 shifts，而不仅写“$6\times6\times6$ k-grid”。
+
+对 smooth periodic integrand，均匀 mesh 可快速收敛。insulator 在 zero temperature 有 separated occupied manifold，occupation 对 k 通常较平滑；metal 的 Fermi occupation 在 $\varepsilon_{n\mathbf k}=E_F$ 处有 nonanalytic boundary，因此同样 mesh 往往更难收敛。
+
+smearing 用连续函数替代 sharp occupation，可改善 SCF 与积分的 numerical behavior，但改变的是 finite-width auxiliary problem。需要报告 smearing family、width、对应 free-energy/energy correction 和 mesh convergence。smearing convergence 不能证明 Fermi-surface geometry 或 low-temperature response 已收敛。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A regular grid can be written
+
+$$
+\mathbf k(\mathbf m)
+=\sum_i\frac{m_i+s_i}{N_i}\mathbf b_i,
+$$
+
+where the offsets determine whether the grid is gamma centred or shifted. Codes differ in their conventions for even and odd Monkhorst–Pack meshes, so a reproducible report must state the actual points or fractional shifts rather than only the grid dimensions.
+
+Smooth periodic integrands can converge rapidly on uniform meshes. Metals are harder because the zero-temperature occupation changes nonanalytically at the Fermi surface. Smearing regularizes the numerical problem, but its family and width define an auxiliary finite-width calculation that must be converged and interpreted explicitly.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="irreducible BZ、k-star 与 weights" titleEn="Irreducible BZ, k-stars, and weights">
+  <div class="bilingual-section__zh">
+
+若 point/space-group operation $g$ 保持 Hamiltonian，scalar integrand 通常满足
+
+$$
+f(\mathbf R_g\mathbf k)=f(\mathbf k).
+$$
+
+full mesh 可按 symmetry stars 分组。选每个 star 的 representative $\mathbf k_j$，则
+
+$$
+\frac{1}{N_k}\sum_{\mathbf k\in\mathrm{full\ mesh}}f(\mathbf k)
+=\sum_{j\in\mathrm{IBZ}}w_j f(\mathbf k_j),
+$$
+
+其中
+
+$$
+w_j=\frac{N_j^{\mathrm{star}}}{N_k},
+\qquad
+\sum_jw_j=1.
+$$
+
+BZ boundary 上由 reciprocal translation 等价的点不能重复计数。若 integrand 不是 scalar，例如 density component、velocity、Berry connection 或 tensor response，必须同时变换空间/tensor indices；不能只乘 scalar weight。
+
+使用 symmetry reduction 前必须验证实际 relaxed structure、magnetic order、SOC treatment、external field 和 numerical tolerance 下仍有这些 operations。错误强制 symmetry 可删除真实 distortion、磁性或极化。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If a point- or space-group operation leaves the Hamiltonian invariant, a scalar integrand obeys $f(R_g\mathbf k)=f(\mathbf k)$. The full mesh can be partitioned into symmetry stars and reconstructed from irreducible representatives,
+
+$$
+\frac{1}{N_k}\sum_{\mathbf k}f(\mathbf k)
+=\sum_{j\in\mathrm{IBZ}}w_jf(\mathbf k_j),
+\qquad
+w_j=\frac{N_j^{\mathrm{star}}}{N_k}.
+$$
+
+Boundary points equivalent modulo reciprocal vectors must not be double counted. Vector, tensor, and gauge-dependent quantities require transformation of their components as well as k-point weights. Symmetry reduction is valid only for the actual relaxed, magnetic, SOC, and field configuration.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="special points 与误差抵消" titleEn="Special points and cancellation of Fourier errors">
+  <div class="bilingual-section__zh">
+
+任何 reciprocal-periodic smooth function 可展开为 direct-lattice Fourier series：
+
+$$
+f(\mathbf k)=\sum_{\mathbf R}c_{\mathbf R}e^{i\mathbf k\cdot\mathbf R}.
+$$
+
+exact BZ average 只保留 $\mathbf R=0$：
+
+$$
+\langle f\rangle_{\mathrm{BZ}}=c_{\mathbf 0}.
+$$
+
+有限 special-point set 的误差为
+
+$$
+\Delta f
+=\sum_{\mathbf R\ne0}c_{\mathbf R}
+\left(\sum_jw_je^{i\mathbf k_j\cdot\mathbf R}\right).
+$$
+
+因此 good special-point mesh 的目标是让最短、通常 coefficient 最大的 lattice vectors 对应 bracket 精确为零。Monkhorst–Pack grids 可视为满足这一 cancellation hierarchy 的系统构造。
+
+单个 special point 偶然给出准确 total energy，不意味着 band gap、force、phonon、DOS 或 metallic response 也准确。误差抵消依赖 integrand、symmetry 和 smoothness，必须用 systematic mesh sequence 验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A smooth reciprocal-periodic function has a direct-lattice Fourier expansion,
+
+$$
+f(\mathbf k)=\sum_{\mathbf R}c_{\mathbf R}e^{i\mathbf k\cdot\mathbf R}.
+$$
+
+Its exact BZ average retains only $c_{\mathbf0}$. A finite weighted set has error
+
+$$
+\Delta f
+=\sum_{\mathbf R\ne0}c_{\mathbf R}
+\left(\sum_jw_je^{i\mathbf k_j\cdot\mathbf R}\right).
+$$
+
+Special-point constructions cancel the factors associated with the shortest and usually largest Fourier components. Accidental accuracy for one total energy does not establish convergence of gaps, forces, phonons, densities of states, or metallic responses.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Why a high-symmetry band path cannot replace a BZ mesh | Why a high-symmetry band path cannot replace a BZ mesh"
+  assumptions={[
+    'the plotted path is a one-dimensional set of line segments in a d-dimensional BZ;',
+    'd is at least two;',
+    'the target is a volume integral or a Fermi-surface property.']}
+>
+
+BZ integral 需要 $d$-dimensional measure $d^dk$。一条 high-symmetry path 只有 one-dimensional line measure $ds$。对 $d\ge2$，path 在 BZ volume 中 measure zero：
+
+$$
+\int_{\mathrm{BZ}}d^dk\,f(\mathbf k)
+\ne C\int_{\mathrm{path}}ds\,f(\mathbf k(s))
+$$
+
+对一般 $f$ 不存在 universal constant $C$。任何仅离开 path 才出现的 pocket、avoided crossing、extremum 或 instability 都不会被路径采样发现。
+
+因此：band path 用于展示 symmetry-selected dispersion；SCF density、total energy、DOS、Fermi surface、phonon stability 与 response 必须使用覆盖目标 reciprocal space 的 mesh 或 interpolation。
+
+<p lang="en">A line path has zero volume measure in a two- or three-dimensional Brillouin zone. It can visualize selected dispersions but cannot substitute for a volume mesh in energies, densities, densities of states, Fermi surfaces, stability tests, or response functions.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="tetrahedron interpolation 与 metallic integrations" titleEn="Tetrahedron interpolation and metallic integrations">
+  <div class="bilingual-section__zh">
+
+regular k-grid 可分割成填满 BZ 的 simplices：3D 为 tetrahedra，2D 为 triangles。在线性 tetrahedron approximation 中，band energy 与 matrix element 在 vertices 间线性 interpolation。对 occupation、integrated DOS 或 $\delta(E-\varepsilon_{n\mathbf k})$，每个 tetrahedron 的 contribution 可解析积分。
+
+该方法显式重建 cell 内的 iso-energy surface，比在 vertices 上直接 step-function occupation 更适合 metallic Fermi surface。改进 tetrahedron schemes 可修正 matrix-element curvature 和系统偏差。
+
+但 interpolation 只使用已计算 vertex data。若 mesh 太粗而漏掉小 pocket、narrow avoided crossing、sharp curvature 或 near-degeneracy，tetrahedron 不能恢复不存在的信息。band crossings 还需要一致 band/subspace tracking；简单按 energy index interpolation 可能错误连接 states。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A regular mesh can be partitioned into simplices: tetrahedra in three dimensions and triangles in two. Linear tetrahedron integration interpolates band energies and, in its simplest form, matrix elements between vertices, allowing analytic integration of occupations, integrated densities of states, and delta-function energy surfaces.
+
+This is usually superior to applying a step occupation only at mesh vertices in a metal because it reconstructs an approximate Fermi surface inside each cell. It cannot recover pockets, sharp curvature, avoided crossings, or degeneracies that the vertex mesh never resolved, and reliable interpolation requires consistent band or subspace tracking.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="BZ integration 的验收顺序" titleEn="Acceptance sequence for BZ integration" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>报告 primitive/conventional cell、reciprocal convention、mesh、offset、symmetry 和 weights；</li>
+      <li>分别收敛 SCF mesh 与 post-processing/interpolation mesh；</li>
+      <li>金属同时测试 k density、smearing/tetrahedron choice 与 width；</li>
+      <li>对 force、stress、DOS、Fermi surface、phonon 或 EPC 使用各自 observable gate；</li>
+      <li>high-symmetry path 只作为展示，不替代 full-BZ evidence。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>report the real- and reciprocal-cell conventions, mesh, offsets, symmetry, and weights;</li>
+      <li>converge the SCF and post-processing/interpolation meshes separately;</li>
+      <li>for metals, vary k density together with smearing or tetrahedron choices;</li>
+      <li>apply observable-specific gates for forces, stresses, DOS, Fermi surfaces, phonons, and EPC;</li>
+      <li>treat high-symmetry paths as visualizations, not full-BZ evidence.</li>
+    </ol>
+  </div>
+</BilingualCallout>
+
+<h2 id="section-4-7">4.7 态密度 | Density of States</h2>
+
+<BilingualSection titleZh="DOS 是能量轴上的 BZ measure" titleEn="The DOS is Brillouin-zone measure projected onto energy" eyebrow="【Martin 原书 | Martin source】 §4.7 · pp. 105–106">
+  <div class="bilingual-section__zh">
+
+每体积、每能量的 independent-particle DOS 定义为
+
+$$
+\rho(E)
+=\frac{1}{\Omega}
+\sum_{n\mathbf k}\delta(E-\varepsilon_{n\mathbf k})
+=\frac{1}{(2\pi)^d}
+\sum_n\int_{\mathrm{BZ}}d^dk\,
+\delta(E-\varepsilon_n(\mathbf k)),
+$$
+
+其中 normalization convention 可能按 primitive cell、total cell、spin 或 volume 给出。比较 DOS 前必须统一这些 conventions。
+
+使用 delta-function identity，可改写为 constant-energy surface integral：
+
+$$
+\rho(E)
+=\frac{1}{(2\pi)^d}
+\sum_n\int_{S_{nE}}
+\frac{dS}{|\nabla_{\mathbf k}\varepsilon_n(\mathbf k)|}.
+$$
+
+因此 flat dispersion 或 critical point 使 denominator 变小，DOS 增强甚至产生 singularity。DOS peak 的来源是整个 constant-energy manifold，不由某一条 path 上“看起来平”的 band 单独决定。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The independent-particle density of states is
+
+$$
+\rho(E)
+=\frac{1}{(2\pi)^d}
+\sum_n\int_{\mathrm{BZ}}d^dk\,
+\delta(E-\varepsilon_n(\mathbf k)),
+$$
+
+with normalization reported per volume, cell, spin, or total calculation according to convention. Using the delta-function identity gives
+
+$$
+\rho(E)
+=\frac{1}{(2\pi)^d}
+\sum_n\int_{S_{nE}}
+\frac{dS}{|\nabla_{\mathbf k}\varepsilon_n|}.
+$$
+
+Flat dispersions and critical points enhance the DOS because the group velocity becomes small. A peak reflects the full constant-energy manifold, not merely the appearance of one selected band path.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Parabolic-band DOS in one, two, and three dimensions | Parabolic-band DOS in one, two, and three dimensions"
+  assumptions={[
+    'a single isotropic band has ε(k)=E0+ℏ²k²/(2m*);',
+    'the continuum approximation is used near a nondegenerate extremum;',
+    'spin/valley multiplicities are applied separately.']}
+>
+
+定义 $\epsilon=E-E_0\ge0$，则
+
+$$
+k(E)=\frac{\sqrt{2m^*\epsilon}}{\hbar}.
+$$
+
+d-dimensional k-space 内半径 k 的 state count 满足
+
+$$
+N(E)\propto k^d\propto\epsilon^{d/2}.
+$$
+
+求导得到
+
+$$
+\boxed{\rho_d(E)\propto(E-E_0)^{d/2-1}\Theta(E-E_0)}.
+$$
+
+所以
+
+$$
+\rho_{1D}\propto\frac{1}{\sqrt{E-E_0}},
+\qquad
+\rho_{2D}=\mathrm{constant},
+\qquad
+\rho_{3D}\propto\sqrt{E-E_0}.
+$$
+
+1D band edge divergence、2D step 和 3D square-root onset 是 dimension 与 local quadratic dispersion 的结果。真实 crystal 中 anisotropic effective mass、multiple valleys、nonparabolicity、finite lifetime 和 finite mesh 会修改 prefactor 与 line shape。
+
+<p lang="en">The number of states below energy $E$ scales as the d-dimensional k-space volume $k^d$. Differentiation produces the characteristic one-dimensional inverse-square-root divergence, two-dimensional step, and three-dimensional square-root onset.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="van Hove critical points" titleEn="van Hove critical points">
+  <div class="bilingual-section__zh">
+
+critical point 满足
+
+$$
+\nabla_{\mathbf k}\varepsilon_n(\mathbf k_c)=0.
+$$
+
+在 $\mathbf k_c$ 附近展开
+
+$$
+\varepsilon_n(\mathbf k)
+\approx E_c+rac12\sum_{ij}H_{ij}q_iq_j,
+\qquad
+\mathbf q=\mathbf k-\mathbf k_c,
+$$
+
+Hessian eigenvalue signs 区分 minimum、maximum 和 saddle。DOS nonanalyticity 的形式取决于 dimension 与 Hessian signature。二维 saddle 常产生 logarithmic singularity；三维 extrema 有 square-root onset，而 saddle 导致 derivative nonanalyticity。
+
+有限 k mesh、Gaussian/Lorentzian broadening、temperature 和 lifetime 会把 ideal singularity 变成 finite peak。报告 peak 时必须同时报告 mesh、broadening 和 projection convention；否则 peak height 不是可比较 observable。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A van Hove critical point satisfies
+
+$$
+\nabla_{\mathbf k}\varepsilon_n(\mathbf k_c)=0.
+$$
+
+A quadratic expansion in the Hessian eigen-directions classifies minima, maxima, and saddles. The nonanalytic DOS form depends on dimensionality and Hessian signature: a two-dimensional saddle commonly produces a logarithmic singularity, while three-dimensional extrema produce square-root onsets and saddles produce derivative nonanalyticities.
+
+Finite meshes, broadening, temperature, and lifetime convert ideal singularities into finite peaks. Mesh density, broadening, and normalization must accompany any comparison of peak heights.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="integrated DOS、electron count 与 Fermi level" titleEn="Integrated DOS, electron count, and the Fermi level">
+  <div class="bilingual-section__zh">
+
+integrated DOS 为
+
+$$
+N(E)=\int_{-\infty}^{E}\rho(E')\,dE'.
+$$
+
+给定 occupation $f(E,\mu,T)$，electron count 满足
+
+$$
+N_e
+=\int dE\,\rho(E)f(E,\mu,T).
+$$
+
+zero temperature 时 $f=\Theta(E_F-E)$。因此 $E_F$ 不是任意 DOS plot 的 zero reference，而是由 particle-number condition、spin treatment 和 temperature/smearing convention 决定。对 charged cell、defect、doping 或 grand-canonical treatment，electron count 与 compensating background 必须显式说明。
+
+insulator 的 chemical potential 可位于 gap 内一段 interval，DOS 图把 $E_F$ 设为零并不唯一确定 absolute band alignment。跨材料比较需共同 reference，例如 vacuum level、core level 或经过验证的 electrostatic alignment。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The integrated DOS is
+
+$$
+N(E)=\int_{-\infty}^{E}\rho(E')dE'.
+$$
+
+The electron count fixes the chemical potential through
+
+$$
+N_e=\int dE\,\rho(E)f(E,\mu,T).
+$$
+
+At zero temperature the occupation is a step at $E_F$. The Fermi level is therefore determined by particle number, spin treatment, and temperature or smearing convention, not by an arbitrary plotting zero. In an insulator the chemical potential can lie anywhere inside the gap, so separate DOS plots aligned to their own Fermi levels do not define absolute band offsets.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="projected DOS、local DOS 与 joint DOS" titleEn="Projected, local, and joint densities of states">
+  <div class="bilingual-section__zh">
+
+projected DOS 一般写为
+
+$$
+\rho_\alpha(E)
+=\sum_{n\mathbf k}
+\langle\psi_{n\mathbf k}|\hat P_\alpha|\psi_{n\mathbf k}\rangle
+\delta(E-\varepsilon_{n\mathbf k}).
+$$
+
+$\hat P_\alpha$ 可对应 atom、orbital、spin、layer 或 spatial region。若 projectors 不完备或 nonorthogonal，projected components 不必严格加和为 total DOS；不同 PAW sphere、atomic radius、basis/projector 和 population scheme 的数值不能直接横向比较。
+
+local DOS 可由 real-space spectral weight 定义。joint DOS 用两个 bands 的 energy difference：
+
+$$
+J(\hbar\omega)
+=\sum_{nm\mathbf k}
+\delta(\varepsilon_{m\mathbf k}-\varepsilon_{n\mathbf k}-\hbar\omega),
+$$
+
+但 optical spectrum 还需要 dipole/velocity matrix elements、occupations、local-field、electron–hole interaction 和 lifetime。joint DOS peak 不自动等于 optical peak，更不证明 transition allowed。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A projected DOS uses a projector weight,
+
+$$
+\rho_\alpha(E)
+=\sum_{n\mathbf k}
+\langle\psi_{n\mathbf k}|P_\alpha|\psi_{n\mathbf k}\rangle
+\delta(E-\varepsilon_{n\mathbf k}).
+$$
+
+Atomic, orbital, spin, layer, and spatial projections depend on the chosen projectors. Nonorthogonal or incomplete projectors need not sum exactly to the total DOS, and values from different sphere radii, PAW definitions, basis sets, or population schemes are not automatically comparable.
+
+A joint DOS counts band-energy differences, but an optical spectrum additionally requires matrix elements, occupations, screening, electron–hole interactions, and lifetimes. A joint-DOS peak does not establish an allowed optical transition.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="DOS 不能单独支持的结论" titleEn="Claims that DOS alone cannot support" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>$\rho(E_F)&gt;0$ 支持所用 independent-particle approximation 中有 states at $E_F$，但不单独证明 transport metallicity；</li>
+      <li>DOS peak 不证明 instability、magnetism、superconductivity 或 strong correlation；</li>
+      <li>total DOS 不给出 pocket location、Fermi velocity 或 full Fermi-surface topology；</li>
+      <li>PDOS weight 依赖 projector，不能直接当作唯一 oxidation state 或 Bader charge；</li>
+      <li>bands/DOS 不能推出 electron–phonon $\lambda$、$\omega_{\log}$ 或 $T_c$。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>a nonzero independent-particle DOS at $E_F$ identifies available states in that approximation but does not by itself establish transport metallicity;</li>
+      <li>a DOS peak does not prove an instability, magnetism, superconductivity, or strong correlation;</li>
+      <li>the total DOS does not locate pockets or determine Fermi velocities and Fermi-surface topology;</li>
+      <li>projected weights depend on projector definitions and are not unique oxidation states or charge partitions;</li>
+      <li>bands and DOS do not determine electron–phonon $\lambda$, $\omega_{\log}$, or $T_c$.</li>
+    </ul>
+  </div>
+</BilingualCallout>
