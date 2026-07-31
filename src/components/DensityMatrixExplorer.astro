@@ -1,0 +1,105 @@
+<figure class="chapter-visual ch03-density-matrix" data-ch03-density-matrix>
+  <figcaption>
+    <strong>原创交互模型：二能级 canonical 密度矩阵</strong>
+    <span lang="en">Original interactive model: a two-level canonical density matrix</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>能隙 Δ | Energy gap</span>
+      <input type="range" min="0" max="4" step="0.05" value="1.50" data-ch03-dm-gap />
+      <output data-ch03-dm-gap-output>1.50</output>
+    </label>
+    <label>
+      <span>kBT（模型单位） | kBT (model units)</span>
+      <input type="range" min="0" max="3" step="0.05" value="0.80" data-ch03-dm-temperature />
+      <output data-ch03-dm-temperature-output>0.80</output>
+    </label>
+  </div>
+
+  <div class="ch03-density-matrix__matrix" role="img" aria-label="Diagonal two-level density matrix">
+    <span data-ch03-dm-p0>0.867</span>
+    <span class="ch03-density-matrix__zero">0</span>
+    <span class="ch03-density-matrix__zero">0</span>
+    <span data-ch03-dm-p1>0.133</span>
+  </div>
+
+  <svg viewBox="0 0 700 270" role="img" aria-labelledby="ch03-dm-title ch03-dm-desc">
+    <title id="ch03-dm-title">Two-level thermal probabilities</title>
+    <desc id="ch03-dm-desc">Bars show the ground- and excited-state probabilities of a canonical two-level system.</desc>
+    <line x1="100" y1="225" x2="630" y2="225" class="plot-axis" />
+    <text x="180" y="252" text-anchor="middle">p0</text>
+    <text x="500" y="252" text-anchor="middle">p1</text>
+    <rect x="120" y="52" width="120" height="173" rx="6" data-ch03-dm-bar0 />
+    <rect x="440" y="198" width="120" height="27" rx="6" data-ch03-dm-bar1 />
+    <text x="180" y="42" text-anchor="middle" data-ch03-dm-label0>0.867</text>
+    <text x="500" y="188" text-anchor="middle" data-ch03-dm-label1>0.133</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <strong data-ch03-dm-probabilities>p0 = 0.867; p1 = 0.133</strong>
+    <span data-ch03-dm-thermo>U = 0.199; S/kB = 0.393; F = −0.116</span>
+    <span data-ch03-dm-purity>Tr(ρ²) = 0.769</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>能量 E0=0、E1=Δ；ρ=diag(p0,p1)，pi∝exp(−Ei/kBT)。</p>
+    <p lang="en"><strong>Model:</strong> energies E0=0 and E1=Δ, with ρ=diag(p0,p1) and pi∝exp(−Ei/kBT).</p>
+    <p><strong>验收：</strong>T→0 且 Δ&gt;0 时 p0→1、purity→1、S→0；高温时 p0,p1→1/2、purity→1/2、S→ln2。</p>
+    <p lang="en"><strong>Acceptance:</strong> for Δ&gt;0 and T→0, p0→1, purity→1, and S→0; at high temperature, both probabilities approach one half, purity approaches one half, and S approaches ln2.</p>
+    <p><strong>边界：</strong>该模型没有粒子数涨落、coherence、decoherence dynamics、entanglement 或真实材料能级简并。</p>
+    <p lang="en"><strong>Boundary:</strong> particle-number fluctuations, coherence, decoherence dynamics, entanglement, and real material degeneracies are omitted.</p>
+  </div>
+</figure>
+
+<script>
+  import { twoLevelCanonical } from '../lib/chapter03Models.mjs';
+
+  document.querySelectorAll('[data-ch03-density-matrix]').forEach((root) => {
+    const gapInput = root.querySelector('[data-ch03-dm-gap]');
+    const temperatureInput = root.querySelector('[data-ch03-dm-temperature]');
+    const gapOutput = root.querySelector('[data-ch03-dm-gap-output]');
+    const temperatureOutput = root.querySelector('[data-ch03-dm-temperature-output]');
+    const matrixP0 = root.querySelector('[data-ch03-dm-p0]');
+    const matrixP1 = root.querySelector('[data-ch03-dm-p1]');
+    const bar0 = root.querySelector('[data-ch03-dm-bar0]');
+    const bar1 = root.querySelector('[data-ch03-dm-bar1]');
+    const label0 = root.querySelector('[data-ch03-dm-label0]');
+    const label1 = root.querySelector('[data-ch03-dm-label1]');
+    const probabilities = root.querySelector('[data-ch03-dm-probabilities]');
+    const thermo = root.querySelector('[data-ch03-dm-thermo]');
+    const purity = root.querySelector('[data-ch03-dm-purity]');
+    if (!(gapInput instanceof HTMLInputElement) || !(temperatureInput instanceof HTMLInputElement)) return;
+    if (!(bar0 instanceof SVGRectElement) || !(bar1 instanceof SVGRectElement)) return;
+
+    const setBar = (bar, label, probability) => {
+      const height = 200 * probability;
+      const y = 225 - height;
+      bar.setAttribute('y', String(y));
+      bar.setAttribute('height', String(height));
+      if (label instanceof SVGTextElement) {
+        label.setAttribute('y', String(Math.max(22, y - 10)));
+        label.textContent = probability.toFixed(3);
+      }
+    };
+
+    const update = () => {
+      const gap = Number(gapInput.value);
+      const temperature = Number(temperatureInput.value);
+      const result = twoLevelCanonical(gap, temperature);
+      setBar(bar0, label0, result.p0);
+      setBar(bar1, label1, result.p1);
+      if (gapOutput instanceof HTMLOutputElement) gapOutput.value = gap.toFixed(2);
+      if (temperatureOutput instanceof HTMLOutputElement) temperatureOutput.value = temperature.toFixed(2);
+      if (matrixP0 instanceof HTMLElement) matrixP0.textContent = result.p0.toFixed(3);
+      if (matrixP1 instanceof HTMLElement) matrixP1.textContent = result.p1.toFixed(3);
+      if (probabilities instanceof HTMLElement) probabilities.textContent = `p0 = ${result.p0.toFixed(3)}; p1 = ${result.p1.toFixed(3)}`;
+      if (thermo instanceof HTMLElement) thermo.textContent = `U = ${result.internalEnergy.toFixed(3)}; S/kB = ${result.entropy.toFixed(3)}; F = ${result.freeEnergy.toFixed(3)}`;
+      if (purity instanceof HTMLElement) purity.textContent = `Tr(ρ²) = ${result.purity.toFixed(3)}`;
+    };
+
+    gapInput.addEventListener('input', update);
+    temperatureInput.addEventListener('input', update);
+    update();
+  });
+</script>
