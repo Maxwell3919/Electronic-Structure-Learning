@@ -1,20 +1,22 @@
 ---
-title: "Chapter 1 · Introduction"
-description: "Martin Chapter 1 的目录级阅读骨架；正文待填充。"
+title: "Chapter 1 · Introduction | 引言"
+description: "从电子的发现、独立电子图像与早期定量计算，进入电子关联、DFT、材料设计和电子结构拓扑。"
 sidebar:
   order: 1
   label: "Chapter 1 · Introduction"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter01Foundations from '../../../components/chapter01/Chapter01Foundations.astro';
+import Chapter01MethodsAndApplications from '../../../components/chapter01/Chapter01MethodsAndApplications.astro';
+import Chapter01Closing from '../../../components/chapter01/Chapter01Closing.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[0].units[0].label}
-  sourcePage={catalog.parts[0].units[0].page}
-  sections={catalog.parts[0].units[0].sections}
-  exercisesPage={catalog.parts[0].units[0].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 1, printed pages 1–14; sections 1.1–1.8. Sholl–Steckel Chapter 1 is used only for the practice connection."
+  status="review"
 />
+
+<Chapter01Foundations />
+<Chapter01MethodsAndApplications />
+<Chapter01Closing />
