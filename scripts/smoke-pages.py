@@ -242,10 +242,18 @@ def no_javascript_smoke(report: dict) -> None:
             fail("No-JavaScript page does not retain all three visualization contracts")
         if not all(contract.is_displayed() for contract in contracts):
             fail("A no-JavaScript visualization explanation is hidden")
-        if len(driver.find_elements(By.CSS_SELECTOR, ".chapter-visual svg")) < 3:
-            fail("No-JavaScript page does not retain static SVG fallbacks")
 
-        # With page JavaScript disabled, the default timeline remains fully readable.
+        # The two analytic plots use SVG; the historical visualization is an HTML timeline.
+        static_svgs = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual svg")
+        if len(static_svgs) < 2:
+            fail("No-JavaScript page does not retain both analytic SVG fallbacks")
+
+        timeline_items = driver.find_elements(By.CSS_SELECTOR, ".chapter-timeline__list [data-year]")
+        if len(timeline_items) != 11:
+            fail("No-JavaScript timeline does not retain all eleven source milestones")
+        if not all(item.is_displayed() for item in timeline_items):
+            fail("No-JavaScript timeline hides one or more source milestones")
+
         final_milestone = driver.find_element(By.CSS_SELECTOR, '[data-year="1965"]')
         if not final_milestone.is_displayed():
             fail("No-JavaScript timeline fallback hides source content")
@@ -253,7 +261,8 @@ def no_javascript_smoke(report: dict) -> None:
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-01-no-javascript.png"))
         report["no_javascript"] = {
             "visualization_contracts": len(contracts),
-            "static_svg_count": len(driver.find_elements(By.CSS_SELECTOR, ".chapter-visual svg")),
+            "static_svg_count": len(static_svgs),
+            "timeline_item_count": len(timeline_items),
             "timeline_fallback_visible": True,
         }
     except Exception:
