@@ -1,0 +1,262 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import BornOppenheimerTrajectory from './BornOppenheimerTrajectory.astro';
+
+<span id="section-19-2" className="chapter19-anchor" aria-hidden="true"></span>
+
+## 19.2 Born–Oppenheimer 分子动力学 | Born–Oppenheimer Molecular Dynamics
+
+<BilingualSection titleZh="每一个离子步都重新定义力" titleEn="Each ionic step requires a new electronic force" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+Born–Oppenheimer molecular dynamics（BOMD）在离子时间 $t_j$ 处固定 $\mathbf R(t_j)$，求解或最小化电子问题，得到近似基态 $n_j$、能量 $E_j$ 与力 $\mathbf F_j$；积分器再生成 $\mathbf R(t_{j+1})$ 和 $\mathbf V(t_{j+1})$。下一步电子求解通常以 $n_j$ 或轨道 $\psi_{n,j}$ 为初猜，但最终力应对应新的核构型，而不是沿用旧构型的力。
+
+算法的物理对象与程序对象需要分开。Born–Oppenheimer 面是连续函数；SCF 是在每个离散构型上近似定位该函数及其梯度的数值过程；Verlet 类积分器则近似求解 Newton 方程。三个误差来源分别来自电子结构模型、电子求解精度和时间离散。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Born–Oppenheimer molecular dynamics (BOMD) fixes $\mathbf R(t_j)$ at ionic time $t_j$, solves or minimizes the electronic problem, and obtains an approximate ground-state density $n_j$, energy $E_j$, and force $\mathbf F_j$. The integrator then generates $\mathbf R(t_{j+1})$ and $\mathbf V(t_{j+1})$. The next electronic calculation usually starts from $n_j$ or the previous orbitals, but its final force must correspond to the new nuclear configuration rather than to the old one.
+
+The physical and programmatic objects are distinct. The Born–Oppenheimer surface is continuous; SCF is the numerical process used to locate its value and gradient at discrete geometries; and a Verlet-type integrator approximates Newton’s equation. The three error classes arise from the electronic model, electronic convergence, and time discretization, respectively.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="由 Taylor 展开得到 position Verlet | Position Verlet from Taylor expansions"
+  assumptions={[
+    '位置在相邻时间点足够光滑；',
+    '加速度 a(t)=F(t)/M 可由当前位置计算；',
+    '固定时间步 Delta t；',
+    '推导只处理经典离子传播，不含 SCF 或力误差。',
+  ]}
+>
+
+【补充推导 | Supplemental derivation】分别向前和向后展开：
+
+$$
+\mathbf R(t+\Delta t)
+=
+\mathbf R(t)+\dot{\mathbf R}(t)\Delta t
++\frac12\ddot{\mathbf R}(t)\Delta t^2
++\frac16\mathbf R^{(3)}(t)\Delta t^3
++O(\Delta t^4),
+$$
+
+$$
+\mathbf R(t-\Delta t)
+=
+\mathbf R(t)-\dot{\mathbf R}(t)\Delta t
++\frac12\ddot{\mathbf R}(t)\Delta t^2
+-\frac16\mathbf R^{(3)}(t)\Delta t^3
++O(\Delta t^4).
+$$
+
+相加后奇数阶项消失：
+
+$$
+\mathbf R(t+\Delta t)
+=
+2\mathbf R(t)-\mathbf R(t-\Delta t)
++\ddot{\mathbf R}(t)\Delta t^2
++O(\Delta t^4).
+$$
+
+代入 $\ddot{\mathbf R}_I=\mathbf F_I/M_I$ 得到 position Verlet：
+
+$$
+\boxed{
+\mathbf R_I^{j+1}
+=
+2\mathbf R_I^j-\mathbf R_I^{j-1}
++\frac{\Delta t^2}{M_I}\mathbf F_I^j
+}
+$$
+
+单步位置截断误差为 $O(\Delta t^4)$，在固定总时间上的全局位置误差通常为 $O(\Delta t^2)$。该式不显式存储速度；速度可用中心差分
+
+$$
+\mathbf V_I^j
+=
+\frac{\mathbf R_I^{j+1}-\mathbf R_I^{j-1}}{2\Delta t}
++O(\Delta t^2)
+$$
+
+估计，但这不是独立提高精度的额外动力学方程。
+
+The forward and backward Taylor expansions cancel odd powers when added. Substituting Newton’s equation gives the position-Verlet update. Its local position defect is fourth order, while the accumulated position error over a fixed physical time is generally second order.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="velocity Verlet：位置、力和速度的同一步更新 | Velocity Verlet update"
+  assumptions={[
+    '同一保守力 F(R) 可在新位置重新计算；',
+    '质量恒定；',
+    '固定时间步；',
+    '无约束、热浴或可变晶胞项。',
+  ]}
+>
+
+将速度 Taylor 展开到二阶，并用旧、新加速度的梯形平均，可写成：
+
+$$
+\mathbf R_I^{j+1}
+=
+\mathbf R_I^j+\mathbf V_I^j\Delta t
++\frac12\mathbf A_I^j\Delta t^2,
+$$
+
+$$
+\mathbf A_I^{j+1}
+=
+\frac{\mathbf F_I(\mathbf R^{j+1})}{M_I},
+$$
+
+$$
+\boxed{
+\mathbf V_I^{j+1}
+=
+\mathbf V_I^j
++\frac12\left(\mathbf A_I^j+\mathbf A_I^{j+1}\right)\Delta t
+}.
+$$
+
+也可拆成半步速度：
+
+$$
+\mathbf V_I^{j+1/2}=\mathbf V_I^j+\frac12\mathbf A_I^j\Delta t,
+$$
+
+$$
+\mathbf R_I^{j+1}=\mathbf R_I^j+\mathbf V_I^{j+1/2}\Delta t,
+$$
+
+$$
+\mathbf V_I^{j+1}=\mathbf V_I^{j+1/2}+\frac12\mathbf A_I^{j+1}\Delta t.
+$$
+
+对于时间无关的保守 Hamiltonian，这一映射是时间可逆且辛的。有限步长下，数值轨迹通常围绕一个与真实 Hamiltonian 相近的“阴影 Hamiltonian”运动，因此能量可出现有界振荡；持续单向漂移更常提示力偏差、过大时间步、非对称收敛、热浴做功或实现错误。能量不严格恒定本身并不等价于算法失败。
+
+Velocity Verlet first advances the position, evaluates the force at the new geometry, and then completes the velocity update with the average acceleration. For a time-independent conservative Hamiltonian it is reversible and symplectic. Finite-step trajectories often conserve a nearby shadow Hamiltonian, producing bounded energy oscillations; sustained drift points instead toward force bias, an excessive timestep, asymmetric electronic convergence, thermostat work, or an implementation defect.
+
+</DerivationBlock>
+
+<BornOppenheimerTrajectory />
+
+<BilingualSection titleZh="时间步由最高相关频率限制" titleEn="The timestep is limited by the highest relevant frequency" eyebrow="Discretization">
+  <div className="bilingual-section__zh">
+
+在谐振子 $\ddot x=-\omega^2x$ 中，Verlet 稳定性由无量纲组合 $\omega\Delta t$ 控制；对标准 Verlet，线性稳定区要求 $\omega\Delta t<2$。工程上不能把稳定边界当作精度标准，因为在接近边界之前相位误差和能量振荡已经可能不可接受。真实体系的限制频率可能来自轻原子伸缩、强约束、赝势引入的高频电子最小化模式，或 CPMD 的虚拟轨道模式。
+
+时间步收敛应针对目标 observable 检查。例如，平均压力、扩散系数、振动谱峰位和反应事件率对时间步的敏感性不同。只展示总能曲线不能替代这些 observable 的收敛测试。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For the harmonic oscillator $\ddot x=-\omega^2x$, Verlet stability is controlled by the dimensionless product $\omega\Delta t$; the standard linear stability condition is $\omega\Delta t<2$. The stability edge is not an accuracy criterion, because phase errors and energy oscillations can become unacceptable well before instability. In a real calculation, the limiting frequency may arise from light-atom stretches, constraints, high-frequency electronic-minimization modes associated with the representation, or fictitious CPMD orbital modes.
+
+Timestep convergence must be tested for the target observable. Mean pressure, diffusion, vibrational peak positions, and event rates need not converge at the same rate. A total-energy trace alone does not replace observable-specific checks.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="微正则守恒量与能量漂移" titleEn="Microcanonical conservation and energy drift" eyebrow="Diagnostics">
+  <div className="bilingual-section__zh">
+
+理想 BOMD 在 NVE 条件下的连续守恒量为
+
+$$
+E_{\mathrm{tot}}(t)
+=
+\sum_I\frac12M_I|\mathbf V_I(t)|^2
++E_{\mathrm{BO}}(\mathbf R(t)).
+$$
+
+沿精确轨迹求导：
+
+$$
+\frac{dE_{\mathrm{tot}}}{dt}
+=
+\sum_I\mathbf V_I\cdot
+\left(M_I\dot{\mathbf V}_I+\nabla_{\mathbf R_I}E_{\mathrm{BO}}\right)=0.
+$$
+
+离散轨迹中应区分三个诊断：短周期有界振荡、线性或非线性长期漂移、以及突发跳变。它们可能分别对应积分器阴影能量、系统性力偏差/热浴或约束做功、以及 SCF 失败或邻居/基组不连续。报告漂移时至少给出每原子、每单位时间的归一化、拟合区间、平衡化处理和时间步。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For ideal continuous NVE BOMD, the conserved quantity is
+
+$$
+E_{\mathrm{tot}}(t)
+=
+\sum_I\frac12M_I|\mathbf V_I(t)|^2
++E_{\mathrm{BO}}(\mathbf R(t)).
+$$
+
+Differentiation along the exact trajectory gives
+
+$$
+\frac{dE_{\mathrm{tot}}}{dt}
+=
+\sum_I\mathbf V_I\cdot
+\left(M_I\dot{\mathbf V}_I+\nabla_{\mathbf R_I}E_{\mathrm{BO}}\right)=0.
+$$
+
+A discrete trajectory requires separate diagnosis of bounded short-period oscillations, secular drift, and abrupt jumps. They can reflect shadow-energy oscillation, systematic force bias or thermostat/constraint work, and SCF or representation discontinuities, respectively. A reported drift should state its per-atom and per-time normalization, fit interval, equilibration treatment, and timestep.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="SCF 阈值与力噪声的两种模式" titleEn="Two distinct patterns of electronic force error" kind="derivation">
+  <div className="bilingual-section__zh">
+    <p><strong>近零均值噪声：</strong>可能增加扩散和有效加热，但不必产生明显线性漂移。<strong>有偏残差：</strong>会沿轨迹持续做正功或负功，更容易形成漂移。两者即使具有相同的 RMS 力误差，也可能造成不同动力学后果。</p>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <p><strong>Approximately zero-mean noise</strong> can broaden dynamics and cause effective heating without a clear linear drift. A <strong>biased residual</strong> performs systematic positive or negative work and more readily produces drift. Equal RMS force errors therefore need not have equal dynamical consequences.</p>
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="系综与恒温器的边界" titleEn="Ensembles and thermostat boundaries" eyebrow="【外部权威来源 | External source】">
+  <div className="bilingual-section__zh">
+
+恒温器通过额外自由度、摩擦/随机力或速度重标定改变动力学方程，使采样目标从 NVE 转向近似 NVT。由此得到的“总能”通常不是上式的裸离子动能加 Born–Oppenheimer 能量，而是包含热浴变量或并不严格守恒。评估恒温轨迹时，应检查目标温度分布、相关时间和动力学扰动，而不是要求裸能量严格恒定。
+
+本章不规定某一种恒温器或固定耦合常数。参数需要相对于体系振动频率、所需平衡化速度和目标动力学 observable 选择。用于平衡的强耦合设置未必适合计算真实时间相关函数或扩散。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A thermostat modifies the equations through auxiliary variables, friction/stochastic forces, or velocity rescaling, changing the sampling target from NVE toward an approximate NVT ensemble. The relevant conserved quantity may include bath variables, or no exact conserved quantity may exist for the chosen stochastic scheme. A thermostatted trajectory should therefore be assessed through its target distribution, correlation time, and dynamical perturbation rather than through strict conservation of the bare ionic kinetic plus Born–Oppenheimer energy.
+
+No universal thermostat or coupling constant is prescribed here. Parameters must be chosen relative to the system’s vibrational frequencies, desired equilibration rate, and target dynamical observable. Strong coupling useful for equilibration may be unsuitable for physical time-correlation functions or diffusion.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="BOMD 数据流的验收门" titleEn="Acceptance gates for a BOMD workflow" kind="practice">
+  <div className="bilingual-section__zh">
+    <ol>
+      <li>每个离子步的电子求解正常结束；</li>
+      <li>力对电子阈值、初猜和混合策略稳定；</li>
+      <li>时间步对守恒量及目标 observable 收敛；</li>
+      <li>超胞、k 点、基组和边界条件对目标 observable 收敛；</li>
+      <li>平衡化、采样长度和独立轨迹足以估计统计不确定度；</li>
+      <li>所用电子结构和经典核近似适用于目标问题。</li>
+    </ol>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ol>
+      <li>the electronic solve terminates normally at every ionic step;</li>
+      <li>forces are stable with respect to electronic tolerance, initial guess, and mixing/minimization strategy;</li>
+      <li>the timestep converges both the conserved-quantity diagnostic and the target observable;</li>
+      <li>cell size, k sampling, basis, and boundary conditions converge the target observable;</li>
+      <li>equilibration, trajectory length, and independent runs support a statistical uncertainty estimate;</li>
+      <li>the electronic approximation and classical-nucleus treatment are applicable to the question.</li>
+    </ol>
+  </div>
+</BilingualCallout>

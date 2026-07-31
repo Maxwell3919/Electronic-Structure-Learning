@@ -1,0 +1,203 @@
+---
+import { adiabaticSeparationRatio } from '../../../data/part05/ch19TeachingModels.mjs';
+
+const componentId = 'ch19-bomd-cpmd-flow';
+const defaults = { gap: 2, fictitiousMass: 400, ionicFrequency: 0.08 };
+const initial = adiabaticSeparationRatio(defaults);
+const cap = 30;
+const initialWidth = Math.min(initial.ratio / cap, 1) * 100;
+---
+
+<figure class="chapter-visual cp-flow" id={componentId}>
+  <figcaption>
+    <strong>BOMD 与 CPMD 的数据流及频率分离 | BOMD/CPMD flow and frequency separation</strong>
+    <span>原创教学模型：上部比较求解流程，下部用 ωe ∝ Δ/√μ 表示虚拟电子频率的趋势。</span>
+    <span lang="en">Original teaching model: the upper diagram compares workflows; the lower model uses ωe ∝ Δ/√μ to show the trend of fictitious electronic frequency.</span>
+  </figcaption>
+
+  <div class="cp-flow__workflows" aria-label="BOMD and CPMD workflow comparison">
+    <section>
+      <h3>BOMD</h3>
+      <ol>
+        <li>固定 R at step j | fix ionic geometry</li>
+        <li>电子最小化/SCF 到定态 | electronic minimization</li>
+        <li>计算 F at step j | evaluate forces</li>
+        <li>传播离子到 j+1 | propagate ions</li>
+      </ol>
+    </section>
+    <section>
+      <h3>CPMD</h3>
+      <ol>
+        <li>离子与轨道同时作为动态变量 | ions and orbitals are dynamical variables</li>
+        <li>扩展 Lagrangian 给出耦合方程 | coupled extended-Lagrangian equations</li>
+        <li>正交约束持续施加 | enforce orthonormality</li>
+        <li>依赖频率分离保持近基态 | rely on adiabatic frequency separation</li>
+      </ol>
+    </section>
+  </div>
+
+  <div class="chapter-visual__controls">
+    <label>
+      模型能隙 Δ（无量纲）
+      <input data-gap type="range" min="0.2" max="5" step="0.1" value={defaults.gap} />
+    </label>
+    <label>
+      虚拟质量 μ（无量纲）
+      <input data-mass type="range" min="50" max="1600" step="50" value={defaults.fictitiousMass} />
+    </label>
+    <label>
+      离子频率 ωI（无量纲）
+      <input data-ionic type="range" min="0.02" max="0.2" step="0.01" value={defaults.ionicFrequency} />
+    </label>
+  </div>
+
+  <div class="cp-flow__separation" role="img" aria-label="Electronic to ionic frequency separation ratio">
+    <div class="cp-flow__scale" aria-hidden="true">
+      <span>0</span><span>10</span><span>20</span><span>30+</span>
+    </div>
+    <div class="cp-flow__bar-track">
+      <div class="cp-flow__bar" data-bar style={`width:${initialWidth}%`}></div>
+      <span class="cp-flow__threshold" aria-hidden="true"></span>
+    </div>
+    <p data-state>
+      当前模型比值 ωe/ωI={initial.ratio.toFixed(1)}。比值较大只表示频率分离更有利，不构成 CPMD 轨迹已等同于 BOMD 的证明。
+    </p>
+  </div>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>Δ = <output data-gap-output>{defaults.gap.toFixed(1)}</output></span>
+    <span>μ = <output data-mass-output>{defaults.fictitiousMass.toFixed(0)}</output></span>
+    <span>ωI = <output data-ionic-output>{defaults.ionicFrequency.toFixed(2)}</output></span>
+    <span>ωe = <output data-electronic-output>{initial.electronicFrequency.toFixed(3)}</output></span>
+    <span>ratio = <output data-ratio>{initial.ratio.toFixed(1)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>ωe = Δ/√μ 仅保留能隙和虚拟质量的尺度趋势；不包含真实轨道谱、预条件、金属占据或耦合矩阵元。</p>
+    <p><strong>验收：</strong>固定 Δ 与 ωI，将 μ 增大四倍时 ωe 与频率比应减半；固定 μ 时比值与 Δ 成正比。</p>
+    <p><strong>边界：</strong>较大比值是必要的数值趋势之一，不是 CPMD 与 BOMD 等价、绝热性成立或真实电子动力学被描述的充分条件。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback：</strong>BOMD/CPMD 流程与默认频率比仍完整显示；滑块不会更新。默认参数为 Δ=2、μ=400、ωI=0.08。</p>
+  </noscript>
+</figure>
+
+<script>
+  import { adiabaticSeparationRatio } from '../../../data/part05/ch19TeachingModels.mjs';
+
+  const root = document.getElementById('ch19-bomd-cpmd-flow');
+  if (root) {
+    const gap = root.querySelector('[data-gap]');
+    const mass = root.querySelector('[data-mass]');
+    const ionic = root.querySelector('[data-ionic]');
+    const bar = root.querySelector('[data-bar]');
+    const state = root.querySelector('[data-state]');
+    const gapOutput = root.querySelector('[data-gap-output]');
+    const massOutput = root.querySelector('[data-mass-output]');
+    const ionicOutput = root.querySelector('[data-ionic-output]');
+    const electronicOutput = root.querySelector('[data-electronic-output]');
+    const ratioOutput = root.querySelector('[data-ratio]');
+
+    if (
+      gap instanceof HTMLInputElement
+      && mass instanceof HTMLInputElement
+      && ionic instanceof HTMLInputElement
+      && bar instanceof HTMLElement
+      && state instanceof HTMLElement
+      && gapOutput instanceof HTMLOutputElement
+      && massOutput instanceof HTMLOutputElement
+      && ionicOutput instanceof HTMLOutputElement
+      && electronicOutput instanceof HTMLOutputElement
+      && ratioOutput instanceof HTMLOutputElement
+    ) {
+      const update = () => {
+        const params = {
+          gap: Number(gap.value),
+          fictitiousMass: Number(mass.value),
+          ionicFrequency: Number(ionic.value),
+        };
+        const result = adiabaticSeparationRatio(params);
+        const capped = Math.min(result.ratio / 30, 1) * 100;
+        bar.style.width = `${capped}%`;
+        gapOutput.value = params.gap.toFixed(1);
+        massOutput.value = params.fictitiousMass.toFixed(0);
+        ionicOutput.value = params.ionicFrequency.toFixed(2);
+        electronicOutput.value = result.electronicFrequency.toFixed(3);
+        ratioOutput.value = result.ratio.toFixed(1);
+        const descriptor = result.ratio >= 10
+          ? '模型显示较清楚的频率分离'
+          : '模型显示电子与离子频率接近，绝热跟随风险较高';
+        state.textContent = `当前模型比值 ωe/ωI=${result.ratio.toFixed(1)}：${descriptor}。该比值不是 CPMD 轨迹等同于 BOMD 的充分证明。`;
+      };
+
+      [gap, mass, ionic].forEach((control) => control.addEventListener('input', update));
+      update();
+    }
+  }
+</script>
+
+<style>
+  .cp-flow__workflows {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .cp-flow__workflows section {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.55rem;
+    padding: 0.8rem;
+    background: var(--sl-color-gray-6);
+  }
+
+  .cp-flow__workflows h3 {
+    margin-top: 0;
+  }
+
+  .cp-flow__separation {
+    margin-top: 1rem;
+  }
+
+  .cp-flow__scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+  }
+
+  .cp-flow__bar-track {
+    position: relative;
+    height: 1.5rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--sl-color-gray-6);
+  }
+
+  .cp-flow__bar {
+    height: 100%;
+    background: var(--sl-color-accent-high);
+    transition: width 120ms linear;
+  }
+
+  .cp-flow__threshold {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 33.333%;
+    border-left: 2px dashed currentColor;
+  }
+
+  @media (max-width: 50rem) {
+    .cp-flow__workflows {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cp-flow__bar {
+      transition: none;
+    }
+  }
+</style>
