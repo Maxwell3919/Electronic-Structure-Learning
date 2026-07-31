@@ -1,0 +1,335 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import SurfaceStateExplorer from './SurfaceStateExplorer.astro';
+
+<span id="section-22-3" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.3 表面态：Tamm 与 Shockley | Surface States: Tamm and Shockley
+
+<BilingualSection titleZh="先定义投影体谱，再谈表面态" titleEn="Define the projected bulk spectrum before naming a surface state" eyebrow="Classification prerequisite">
+  <div className="bilingual-section__zh">
+
+平面表面保留 $\mathbf k_\parallel$。对每个固定 $\mathbf k_\parallel$，体晶体允许所有实数法向波矢 $k_\perp$，由
+
+$$
+E_n(\mathbf k_\parallel,k_\perp)
+$$
+
+形成一个或多个投影能量区间。slab 计算把连续的 $k_\perp$ 离散成许多子带；随着 slab 变厚，这些子带逐渐填满投影体连续谱。表面束缚态必须在法向上可归一化，并在真空和体内衰减。若其能量位于投影体能隙中，它可与体态严格分离；若能量落入连续谱，局域边界扰动会与传播态混合，形成具有表面增强权重的共振。
+
+因此“slab 能带位于三维体带隙中”还不充分：必须在同一 $\mathbf k_\parallel$ 下构造投影体谱，并检查层分辨概率、反向参与率、两表面劈裂和厚度依赖。若投影采用原子球、局域轨道或 Wannier 子空间，其数值大小依赖投影定义；稳健结论应对合理投影方案保持一致。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A planar surface retains $\mathbf k_\parallel$. For each fixed parallel momentum the bulk crystal admits all real normal wavevectors $k_\perp$, and the energies
+
+$$
+E_n(\mathbf k_\parallel,k_\perp)
+$$
+
+form one or more projected intervals. A slab discretizes the continuous $k_\perp$ values into many subbands that fill the projected continuum as the slab thickens. A bound surface state must be normalizable in the normal direction and decay into both vacuum and bulk. In a projected gap it can remain discrete; inside the continuum it hybridizes with propagating states and becomes a surface resonance with enhanced boundary weight.
+
+A slab band drawn inside a three-dimensional bulk gap is therefore not enough. The projected spectrum at the same $\mathbf k_\parallel$, layer probability, inverse participation, opposite-surface splitting, and thickness dependence are required. Atomic-sphere, localized-orbital, or Wannier projections are representation dependent; a robust assignment should survive reasonable projection choices.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="表面 Green 函数、极点与共振 | Surface Green function, poles, and resonances"
+  assumptions={[
+    '体 Hamiltonian H0 与局域边界扰动 U 已定义；',
+    'retarded Green 函数采用 omega+i0+；',
+    '投影体连续谱由 H0 的谱支持定义。',
+  ]}
+>
+
+体 retarded Green 算符为
+
+$$
+G_0^R(E)=\frac{1}{E+i0^+-H_0}.
+$$
+
+加入局域边界势 $U$ 后，Dyson 方程为
+
+$$
+G^R=G_0^R+G_0^RUG^R,
+$$
+
+或
+
+$$
+G^R=(1-G_0^RU)^{-1}G_0^R.
+$$
+
+边界态对应
+
+$$
+\boxed{\det[1-G_0^R(E)U]=0.}
+$$
+
+若该零点位于投影体谱之外，$\operatorname{Im}G_0^R=0$，极点位于实轴并给出严格束缚态。若它位于连续谱内，$\operatorname{Im}G_0^R\ne0$，极点一般进入复能平面；表面谱函数
+
+$$
+A_s(E)=-\frac{1}{\pi}\operatorname{Im}\operatorname{Tr}[P_sG^R(E)]
+$$
+
+出现有限宽峰，对象是表面共振。展宽可以来自物理混合，也可来自人为 $\eta$、有限 slab 离散或后处理 smearing；必须通过 $\eta$、厚度和投影收敛区分。
+
+A real pole outside the projected continuum is a bound state. Coupling to a continuum generally produces a complex pole and a finite-width surface resonance. Numerical broadening, finite-slab level spacing, and physical lifetime are separate contributions.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Tamm 机制：局域边界势拉出一个态" titleEn="Tamm mechanism: a local boundary potential pulls out a state" eyebrow="Boundary-potential mechanism">
+  <div className="bilingual-section__zh">
+
+Tamm 型机制从固定体 Hamiltonian 出发，改变表面 onsite、配位、键强、吸附或化学势。边界扰动可把一个态从体带连续谱拉到带外或带隙中；谱权重守恒意味着离散态的出现伴随连续谱少一个态。其存在和能量通常对表面化学敏感，因此重构、钝化或吸附可移动甚至消除它。
+
+一维最近邻单带链特别清楚。体色散 $E(k)=2t\cos ka$ 的带宽为 $[-2|t|,2|t|]$。只移动第一个站点能量 $\Delta$，设束缚态振幅 $\psi_n\propto r^{n-1}$。体内 Schrödinger 方程给出
+
+$$
+E=t\left(r+r^{-1}\right),
+$$
+
+边界方程给出
+
+$$
+E=\Delta+tr.
+$$
+
+消去 $E$ 得 $r=t/\Delta$ 和
+
+$$
+\boxed{E=\Delta+\frac{t^2}{\Delta}.}
+$$
+
+可归一化要求 $|r|<1$，即 $|\Delta|>|t|$。这个阈值来自特定一维模型，不是任意真实表面的普适数值条件。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A Tamm-type mechanism holds the bulk Hamiltonian fixed and changes a surface onsite energy, coordination, bond strength, adsorbate, or chemical potential. The boundary perturbation can pull one state out of a bulk continuum into a gap or beyond a band edge. Spectral-weight conservation means that the discrete state is accompanied by one fewer state in the continuum. Its energy and existence are generally surface-chemistry sensitive, so reconstruction, passivation, or adsorption can move or eliminate it.
+
+For a nearest-neighbour one-band chain, $E(k)=2t\cos ka$ spans $[-2|t|,2|t|]$. Shifting only the first-site energy by $\Delta$ and using $\psi_n\propto r^{n-1}$ gives $E=t(r+r^{-1})$ in the bulk and $E=\Delta+tr$ at the boundary. Hence $r=t/\Delta$ and
+
+$$
+\boxed{E=\Delta+\frac{t^2}{\Delta}.}
+$$
+
+Normalizability requires $|\Delta|>|t|$. This threshold belongs to the declared one-dimensional model and is not a universal real-surface number.
+
+  </div>
+</BilingualSection>
+
+<SurfaceStateExplorer />
+
+<BilingualSection titleZh="Shockley 机制：体带角色交换与边界连接" titleEn="Shockley mechanism: bulk-band character exchange and boundary connectivity" eyebrow="Bulk-connected mechanism">
+  <div className="bilingual-section__zh">
+
+Shockley 的关键对象不是任意表面局域势，而是两条体带在参数变化时交换角色。若体 Hamiltonian 有反演对称，可在高对称点用奇偶性标记带角色。原子极限中，低带和高带分别继承不同原子轨道；随着原子接近和成键增强，带宽和杂化改变。两个绝缘相之间的角色交换要求中间闭隙。在某些终止下，交换后的体结构使边界态连接投影体带。
+
+表面条件仍然影响边界态的能量、穿透深度和是否与体连续谱混合。半导体 Shockley 态可对应悬挂键并被钝化移出带隙；金属中 projected gap 仍可容纳表面带。这里的“体—边界连接”是 Chapters 25–28 的历史先驱，但本章不把一维奇偶交换直接等同于一般拓扑不变量。真实拓扑分类还需要声明对称性、维度、占据子空间、完整 BZ、体隙与相应不变量。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Shockley’s central object is not an arbitrary localized surface potential but an exchange of character between two bulk bands as a parameter changes. With inversion symmetry, parity labels at high-symmetry points can track the character. In the atomic limit the two bands inherit distinct orbitals; increasing overlap and bonding changes their widths and hybridization. Exchanging their character between two insulating regimes requires a gap closure. For suitable terminations, the exchanged bulk structure produces a boundary state connecting projected bulk bands.
+
+Surface conditions still affect energy, penetration depth, and hybridization with the continuum. A semiconductor Shockley state may correspond to a dangling bond and be shifted by passivation, whereas a projected gap in a metal may retain a surface band. This bulk–boundary connection is a historical precursor to Chapters 25–28, not a substitute for a declared symmetry, dimension, occupied subspace, full Brillouin zone, bulk gap, and topological invariant.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="Tamm、Shockley、共振与拓扑边界态 | Tamm, Shockley, resonance, and topological boundary state" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+
+- **Tamm**：局域边界势或化学改变；固定体带也可产生。  
+- **Shockley**：体带角色交换/闭隙路径与边界连接；终止仍重要。  
+- **表面共振**：与投影体连续谱重叠，只有增强表面谱权重。  
+- **拓扑边界态**：由声明的体不变量与对称性要求保护；需排除有限尺寸、普通悬挂键和投影误判。
+
+同一个真实态可能同时表现出多种语言中的特征；分类应由可操作判据而非名称决定。
+
+    </div>
+    <div lang="en">
+
+- **Tamm**: a local boundary potential or chemical modification; it may occur at fixed bulk bands.  
+- **Shockley**: a bulk-character exchange/gap-closing path and boundary connectivity; termination still matters.  
+- **Surface resonance**: overlap with the projected continuum, leaving enhanced surface spectral weight.  
+- **Topological boundary state**: protection by a declared bulk invariant and symmetry, after excluding finite-size, dangling-bond, and projection artefacts.
+
+A real state may display features described by more than one historical language; operational criteria, not labels, decide the claim.
+
+    </div>
+  </div>
+</BilingualCallout>
+
+<span id="section-22-4" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.4 金属上的 Shockley 态：Au(111) 表面 | Shockley States on Metals: Au(111)
+
+<BilingualSection titleZh="金属也可以在投影体隙中有表面带" titleEn="A metal can host a surface band in a projected bulk gap" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+金属没有全局体带隙，但固定 $\mathbf k_\parallel$ 后仍可能有投影体隙。Au(111) 在表面 Brillouin 区中心附近存在这样的窗口，Shockley 表面带在其中色散并穿过费米能。随着 $|\mathbf k_\parallel|$ 增大，表面带最终并入体投影连续谱；局域长度增大，严格表面态转为共振。只画 slab 中一条看似自由电子的抛物线，不能替代这组 projected-continuum 和局域化检查。
+
+Au 是重元素，表面打破反演对称，SOC 允许 Rashba 型自旋劈裂。小 $k$ 下可写为
+
+$$
+H_R=\alpha_R(\hat{\mathbf z}\times\mathbf k_\parallel)\cdot\boldsymbol\sigma,
+$$
+
+给出
+
+$$
+E_\pm(k_\parallel)
+=
+E_0+\frac{\hbar^2k_\parallel^2}{2m^*}
+\pm \alpha_R k_\parallel.
+$$
+
+时间反演要求 $\mathbf k_\parallel=0$ 处 Kramers 简并；离开该点两支分裂并具有相反的切向自旋期望。$\alpha_R$ 的数值依赖表面势梯度、轨道混合、SOC 和结构，不能由原子序数或真空场单独推出。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A metal has no global bulk gap, but a projected gap may exist at fixed $\mathbf k_\parallel$. Au(111) has such a window near the surface-zone centre, where a Shockley surface band disperses through the Fermi level. At larger parallel momentum it merges into the projected bulk continuum; the penetration depth grows and the strict surface state becomes a resonance. A nearly free-electron parabola in a slab plot is not enough without the projected continuum and localization evidence.
+
+Gold is heavy and the surface breaks inversion, so spin–orbit coupling allows a Rashba term
+
+$$
+H_R=\alpha_R(\hat{\mathbf z}\times\mathbf k_\parallel)\cdot\boldsymbol\sigma,
+$$
+
+with
+
+$$
+E_\pm(k_\parallel)
+=
+E_0+\frac{\hbar^2k_\parallel^2}{2m^*}
+\pm \alpha_R k_\parallel.
+$$
+
+Time reversal enforces Kramers degeneracy at $\mathbf k_\parallel=0$. Away from that point the branches split and have opposite tangential spin expectation. The value of $\alpha_R$ depends on the surface potential gradient, orbital mixing, SOC, and structure; it does not follow from atomic number or a vacuum field alone.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="如何从 slab 识别 Au(111) 类表面带" titleEn="How a slab identifies an Au(111)-like surface band" eyebrow="Numerical evidence">
+  <div className="bilingual-section__zh">
+
+至少应同时检查：相同面内晶格下的体投影带；波函数在最外若干层的积分权重；上下表面组合的劈裂随层数衰减；态进入体连续谱后的展宽/层权重变化；SOC 开关和 k 点反向时的 Kramers/时间反演关系。若 slab 不对称，两个表面有不同势和局域环境，不能把每一支简单解释为“上/下表面简并劈裂”。
+
+光电子能谱测量的是电子移除过程的谱函数，Kohn–Sham slab 带只是一种起点。峰位置、质量、SOC 劈裂和寿命可受准粒子自能、电子—声子、缺陷和实验矩阵元影响；“DFT 曲线接近 ARPES”应逐 observable 比较，而非整体宣布验证。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A minimum analysis combines the bulk-projected bands at the same in-plane lattice, integrated weight in the outer layers, decay of the top/bottom-surface splitting with thickness, changes in width and layer weight upon entering the continuum, and the SOC/time-reversal relations between opposite momenta. In an asymmetric slab the two surfaces have different potentials and environments, so every pair of branches cannot be interpreted as a simple top/bottom splitting.
+
+Photoemission measures an electron-removal spectral function; a Kohn–Sham slab band is only a starting point. Peak position, effective mass, SOC splitting, and lifetime may be altered by quasiparticle self-energy, electron–phonon coupling, defects, and experimental matrix elements. Agreement must be judged observable by observable.
+
+  </div>
+</BilingualSection>
+
+<span id="section-22-5" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.5 半导体表面态 | Surface States on Semiconductors
+
+<BilingualSection titleZh="悬挂键、重构与钝化改变电子计数" titleEn="Dangling bonds, reconstruction, and passivation change electron counting" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+共价半导体被截断后，表面原子失去体配位，产生悬挂键和高表面能。体系通常通过层间弛豫、二聚、缺位、吸附或更大周期重构降低能量。结构改变重新组合表面轨道：对称二聚可形成 $\pi/\pi^*$ 组合，不对称 buckling 可通过电荷转移形成占据/空的表面态。氢、氧或其他原子钝化可饱和悬挂键并把态移出体带隙。
+
+因此表面电子结构不能与表面几何分离。比较候选重构至少需要相同化学势条件下的表面自由能/总能、足够大的表面晶胞、对称性破缺、力收敛和可能的磁性。只在理想未重构 slab 上计算 gap states，不能代表热力学稳定表面。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Truncating a covalent semiconductor removes bulk coordination and creates dangling bonds and a high surface energy. The system usually lowers its energy by interlayer relaxation, dimerization, vacancies, adsorption, or a larger-period reconstruction. Structural change recombines surface orbitals: a symmetric dimer may form $\pi/\pi^*$ combinations, while buckling can transfer charge and produce occupied/empty surface states. Hydrogen, oxygen, or other passivants may saturate dangling bonds and move the states out of the bulk gap.
+
+Surface electronic structure cannot therefore be separated from surface geometry. Comparing reconstructions requires surface free or total energies at the same chemical potentials, an adequate surface cell, allowed symmetry breaking, converged forces, and possible magnetism. Gap states of an ideal unreconstructed slab do not represent a thermodynamically stable surface automatically.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="体带隙误差传播到表面谱" titleEn="Bulk-gap errors propagate into the surface spectrum" eyebrow="Method boundary">
+  <div className="bilingual-section__zh">
+
+若近似泛函把体价带顶、导带底或带隙位置算错，表面态相对投影体谱的位置也会错。常见错误包括：半局域 Kohn–Sham gap 偏小；SOC 未包含；表面/体使用不同应变、晶格或能量参考；slab 量子限域改变带边；过薄 slab 使上下表面态杂化。Martin 的 Ge 表面例子说明，改进体准粒子带结构后，表面带与实验的比较也随之改变。
+
+一种可审计的分解是先在同一结构和方法下收敛体投影谱与表面局域态，再评估 quasiparticle 或 hybrid 修正对体带边和表面态是否近似刚性、轨道依赖或需要显式表面计算。把实验带隙直接剪刀修正到所有表面态不是一般严格步骤。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+If an approximate functional misplaces the bulk valence edge, conduction edge, or gap, it also misplaces a surface state relative to the projected continuum. Common errors include a small semilocal Kohn–Sham gap, omitted SOC, mismatched strain/lattice/reference between bulk and surface, slab confinement, and hybridization between opposite surfaces. Martin’s Ge example illustrates that improving the bulk quasiparticle structure changes the comparison of surface bands with experiment.
+
+An auditable route first converges the bulk-projected spectrum and localized surface state at the same structure and method, then determines whether a quasiparticle or hybrid correction is approximately rigid, orbital dependent, or requires an explicit surface calculation. Applying an experimental scissor shift to every surface state is not generally rigorous.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="层分辨局域化与参与率 | Layer localization and participation ratios"
+  assumptions={[
+    '波函数在选定层投影中归一化；',
+    '每层权重 w_l 非负且总和为 1；',
+    '投影定义在厚度扫描中保持一致。',
+  ]}
+>
+
+令第 $l$ 层权重为
+
+$$
+w_l=\langle\psi|P_l|\psi\rangle,
+\qquad
+\sum_l w_l=1.
+$$
+
+表面前 $m$ 层的累计权重为
+
+$$
+W_s(m)=\sum_{l=1}^{m}w_l.
+$$
+
+层参与率可定义为
+
+$$
+N_{\mathrm{eff}}
+=
+\frac{1}{\sum_l w_l^2}.
+$$
+
+严格局域在一层时 $N_{\mathrm{eff}}=1$；均匀分布在 $N$ 层时 $N_{\mathrm{eff}}=N$。但固定 $W_s$ 或 $N_{\mathrm{eff}}$ 阈值不是普适分类：轨道投影遗漏真空尾、层厚、原子数和 slab 总层数都会改变数值。更稳健的证据是厚度增加时表面区域权重和衰减长度趋于稳定，同时中央层权重按指数/代数规律减小。
+
+Layer weights and participation measures quantify localization only within a declared projection. Their values depend on layer grouping and orbital completeness. Thickness scaling and decay into a bulk-like centre are stronger evidence than one universal numerical threshold.
+
+</DerivationBlock>
+
+<BilingualCallout title="半导体表面态的最低判定记录 | Minimum record for a semiconductor surface-state claim" tone="note">
+  <div className="bilingual-callout__grid">
+    <div>
+
+- 晶面、终止、重构、覆盖度和化学势；
+- slab/真空、固定层、SOC、磁性和弛豫状态；
+- 对应应变和方法下的投影体谱；
+- 层/轨道权重、两表面劈裂和厚度扫描；
+- 表面态相对体带边的功能/准粒子敏感性；
+- 若与实验比较，声明 PES/STS/光学等不同 observable。
+
+    </div>
+    <div lang="en">
+
+- facet, termination, reconstruction, coverage, and chemical potentials;
+- slab/vacuum, fixed layers, SOC, magnetism, and relaxation state;
+- projected bulk spectrum at the matched strain and method;
+- layer/orbital weight, opposite-surface splitting, and thickness scan;
+- functional/quasiparticle sensitivity relative to bulk edges;
+- the experimental observable, such as PES, STS, or optics, when compared.
+
+    </div>
+  </div>
+</BilingualCallout>
