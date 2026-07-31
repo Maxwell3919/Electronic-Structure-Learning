@@ -1,0 +1,55 @@
+---
+import AppendixGContents from './AppendixGContents.astro';
+import AppendixGOrientation from './AppendixGOrientation.mdx';
+import AppendixGMacroscopicStress from './AppendixGMacroscopicStress.mdx';
+import AppendixGPairFourier from './AppendixGPairFourier.mdx';
+import AppendixGInternalReview from './AppendixGInternalReview.mdx';
+---
+
+<div class="appendix-g-root">
+  <AppendixGContents />
+  <AppendixGOrientation />
+  <AppendixGMacroscopicStress />
+  <AppendixGPairFourier />
+  <AppendixGInternalReview />
+</div>
+
+<style is:global>
+  .appendix-g-root,
+  .appendix-g-root > *,
+  .appendix-g-root .bilingual-section,
+  .appendix-g-root .bilingual-section__grid,
+  .appendix-g-root .bilingual-section__zh,
+  .appendix-g-root .bilingual-section__en,
+  .appendix-g-root .bilingual-callout,
+  .appendix-g-root .bilingual-callout__grid {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appendix-g-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .appendix-g-root .chapter-source-map,
+  .appendix-g-root .katex-display,
+  .appendix-g-root pre,
+  .appendix-g-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .appendix-g-root p,
+  .appendix-g-root li,
+  .appendix-g-root th,
+  .appendix-g-root td,
+  .appendix-g-root code {
+    overflow-wrap: anywhere;
+  }
+</style>
