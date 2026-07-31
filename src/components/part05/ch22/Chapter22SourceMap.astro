@@ -1,0 +1,58 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const treatments = {
+  '22.1': '建立降维、表面/界面与本征低维材料的对象边界 | Establish the object boundary among surfaces, interfaces, and intrinsically lower-dimensional materials',
+  '22.2': '真空参考、表面偶极、功函数、带弯曲与界面能量对齐 | Vacuum reference, surface dipoles, work functions, band bending, and interface energy alignment',
+  '22.3': 'Tamm 边界势束缚、Shockley 体能带交换、投影体连续谱与表面共振 | Tamm boundary-potential binding, Shockley bulk-band exchange, projected continua, and surface resonances',
+  '22.4': 'Au(111) Shockley 表面带、Rashba 分裂、局域化与体连续谱并合 | Au(111) Shockley surface bands, Rashba splitting, localization, and merger into the bulk continuum',
+  '22.5': '半导体悬挂键、重构/钝化、体带隙误差与表面谱指认 | Semiconductor dangling bonds, reconstruction/passivation, bulk-gap errors, and surface-spectrum assignment',
+  '22.6': '应变体带边、界面 lineup、价带/导带 offset 与非极性界面 | Strained bulk edges, interface lineup, valence/conduction offsets, and nonpolar interfaces',
+  '22.7': '极性不连续、电势累积、补偿机制与 STO 轨道子带 | Polar discontinuity, potential buildup, compensation mechanisms, and STO orbital subbands',
+  '22.8': '层间杂化、体到单层带隙变化、真空能级与范德华堆叠 | Interlayer hybridization, bulk-to-monolayer gap changes, vacuum levels, and van der Waals stacks',
+  '22.9': '曲率诱导轨道混合、纳米管能带与一维观测量边界 | Curvature-induced orbital mixing, nanotube bands, and one-dimensional observable boundaries',
+};
+
+const unit = catalog.parts[4].units[3];
+---
+
+<h2 id="source-map">来源地图 | Source Map</h2>
+
+<div class="chapter22-source-table chapter-source-map">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">节 | Section</th>
+        <th scope="col">Martin 原节标题 | Martin title</th>
+        <th scope="col">印刷页 | Print page</th>
+        <th scope="col">本站处理 | Website treatment</th>
+        <th scope="col">状态 | Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {unit.sections.map((section) => (
+        <tr>
+          <td><code>{section.id}</code></td>
+          <td>{section.title}</td>
+          <td>{section.page}</td>
+          <td>{treatments[section.id]}</td>
+          <td>draft</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<p>
+  【Martin 原书 | Martin source】章节结构与印刷页定位来自 Martin 第 2 版 Chapter 22，正文印刷页 465–478，习题从 p.479 开始。本站不转录原书正文、图、图注、习题或答案。
+</p>
+<p lang="en">
+  【Martin source】The section structure and printed-page locators follow Martin, 2nd ed., Chapter 22, with body text on pp. 465–478 and exercises beginning on p. 479. This site reproduces neither source prose, figures, captions, exercises, nor answers.
+</p>
+
+<p>
+  【实践补充 | Practical supplement】Sholl–Steckel Chapter 4 只补充周期 slab、真空、k 点、表面弛豫、表面能、对称/非对称 slab、重构、吸附与覆盖度的计算边界。Martin Appendix F 提供偶极与周期静电依赖；Appendix O 提供 Rashba/SOC 接口；Chapters 25–28 保留拓扑分类。
+</p>
+<p lang="en">
+  【Practical supplement】Sholl–Steckel Chapter 4 supplies only the numerical boundaries of periodic slabs, vacuum, k points, relaxation, surface energy, symmetric/asymmetric slabs, reconstruction, adsorption, and coverage. Martin Appendix F supplies dipole/periodic-electrostatic dependencies, Appendix O supplies the Rashba/SOC interface, and Chapters 25–28 retain topological classification.
+</p>
