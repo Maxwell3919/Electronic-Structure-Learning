@@ -1,0 +1,127 @@
+---
+import { formatZ2Indices, indicesFromTrimParities } from '../../../data/part06/ch28TeachingModels.mjs';
+const initialParities = [-1, 1, 1, 1, 1, 1, 1, 1];
+const initial = indicesFromTrimParities(initialParities);
+const nodes = [
+  { label: '000', x: 145, y: 255 },
+  { label: '100', x: 365, y: 255 },
+  { label: '010', x: 90, y: 185 },
+  { label: '110', x: 310, y: 185 },
+  { label: '001', x: 205, y: 135 },
+  { label: '101', x: 425, y: 135 },
+  { label: '011', x: 150, y: 65 },
+  { label: '111', x: 370, y: 65 },
+];
+---
+
+<figure class="chapter-visual weak-strong" data-weak-strong>
+  <figcaption>
+    <strong>原创交互模型：八个 TRIM parity products 与四个三维 Z₂ 指标</strong>
+    <span lang="en">Original interactive model: eight TRIM parity products and the four three-dimensional Z₂ indices</span>
+  </figcaption>
+
+  <fieldset class="chapter-visual__controls">
+    <legend>切换每个 TRIM 的 occupied-pair parity product δ | toggle each occupied-pair parity product</legend>
+    {nodes.map((node, index) => (
+      <label>
+        <input type="checkbox" checked={initialParities[index] === -1} data-ws-parity={index} />
+        <span>{node.label}: δ={initialParities[index] === -1 ? '−1' : '+1'}</span>
+      </label>
+    ))}
+  </fieldset>
+
+  <svg viewBox="0 0 760 350" role="img" aria-labelledby="ws-title ws-desc">
+    <title id="ws-title">Eight time-reversal-invariant momenta in a three-dimensional Brillouin-zone cube</title>
+    <desc id="ws-desc">The left panel shows the eight TRIM and their parity products. The right panel reports the strong index, three weak plane products, and the resulting teaching-model phase.</desc>
+
+    <g aria-label="TRIM cube">
+      <path d="M90 185 L310 185 L365 255 L145 255 Z M150 65 L370 65 L425 135 L205 135 Z M90 185 L150 65 M310 185 L370 65 M365 255 L425 135 M145 255 L205 135" class="ws-cube" />
+      {nodes.map((node, index) => (
+        <g>
+          <circle cx={node.x} cy={node.y} r="12" class:list={['ws-node', initialParities[index] === -1 && 'ws-node--negative']} data-ws-node={index} />
+          <text x={node.x + 15} y={node.y - 12}>{node.label}</text>
+          <text x={node.x + 15} y={node.y + 7} data-ws-node-text={index}>{initialParities[index] === -1 ? 'δ=−1' : 'δ=+1'}</text>
+        </g>
+      ))}
+      <text x="72" y="320">K(n₁n₂n₃)=½(n₁b₁+n₂b₂+n₃b₃)</text>
+    </g>
+
+    <g aria-label="strong and weak index readout">
+      <rect x="500" y="55" width="220" height="235" rx="12" class="ws-panel" />
+      <text x="525" y="92">strong product: Π₈δ</text>
+      <text x="525" y="122" data-ws-strong-product>{initial.strongProduct === -1 ? '−1 → ν₀=1' : '+1 → ν₀=0'}</text>
+      <text x="525" y="162">weak plane products</text>
+      <text x="525" y="190" data-ws-weak-products>{initial.weakProducts.map((value, index) => `Π${index + 1}=${value > 0 ? '+' : '−'}1`).join(', ')}</text>
+      <text x="525" y="230">indices</text>
+      <text x="525" y="260" class="ws-indices" data-ws-indices>{formatZ2Indices(initial)}</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-ws-index>four-index label = {formatZ2Indices(initial)}</span>
+    <span data-ws-vector>weak reciprocal-vector coefficients = (0.0, 0.0, 0.0)</span>
+    <strong data-ws-status>Strong phase: odd surface-Dirac parity on every ideal surface.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> 初始设置只有 Γ-like 000 TRIM 的完整 occupied-pair parity product 为 −1，因此八点总乘积为 −1，得到 $(\nu_0;\nu_1\nu_2\nu_3)=(1;000)$。这是 inversion-symmetric、full-BZ gapped teaching case。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>输入的八个 <code>δ(n₁n₂n₃)</code> 均代表一个 TRIM 下所有 occupied Kramers pairs 的 parity product。<code>(−1)^ν₀=Π₈δ</code>；<code>(−1)^νᵢ</code> 是 <code>nᵢ=1</code> 四点平面的 product。</p>
+    <p lang="en"><strong>Model:</strong> each input <code>δ(n₁n₂n₃)</code> is the parity product of every occupied Kramers pair at one TRIM. <code>(−1)^ν₀=Π₈δ</code>, while <code>(−1)^νᵢ</code> is the product over the four-point plane with <code>nᵢ=1</code>.</p>
+    <p><strong>验收：</strong>单独翻转 000 会改变 strong index 而不改变三个 weak plane products；在同一 <code>nᵢ=1</code> 平面翻转一个点会同时改变 strong 与相应 weak bit；翻转两个点可保持 strong bit 不变但生成 weak phase。</p>
+    <p lang="en"><strong>Acceptance:</strong> flipping 000 alone changes the strong index without changing the three weak-plane products. Flipping one point on an <code>nᵢ=1</code> plane changes both the strong and corresponding weak bit. Two flips can leave the strong bit unchanged while producing a weak phase.</p>
+    <p><strong>边界：</strong>该 parity shortcut 只适用于同时保持 inversion 与 spinful time reversal、且目标 gap 在完整 BZ 开放的体系。必须包含目标 gap 以下的完整 occupied Kramers manifold。无 inversion 时需使用 Wilson loop、sewing matrix/Pfaffian 或等价 gauge-consistent 方法。四个 indices 不单独决定具体表面 Dirac cone 的位置、速度或 spin texture。</p>
+    <p lang="en"><strong>Boundary:</strong> this parity shortcut applies only when inversion and spinful time reversal are both present and the target gap is open throughout the BZ. The complete occupied Kramers manifold below the target gap is required. Without inversion, use a Wilson loop, sewing-matrix/Pfaffian, or an equivalent gauge-consistent method. The four indices alone do not locate a particular surface Dirac cone or determine its velocity or spin texture.</p>
+  </div>
+</figure>
+
+<script>
+  import { formatZ2Indices, indicesFromTrimParities, weakReciprocalVector } from '../../../data/part06/ch28TeachingModels.mjs';
+  document.querySelectorAll('[data-weak-strong]').forEach((root) => {
+    const inputs = [...root.querySelectorAll('[data-ws-parity]')];
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element) element.textContent = value;
+    };
+    const update = () => {
+      const parities = inputs.map((input) => input instanceof HTMLInputElement && input.checked ? -1 : 1);
+      const result = indicesFromTrimParities(parities);
+      inputs.forEach((input, index) => {
+        if (!(input instanceof HTMLInputElement)) return;
+        const value = parities[index];
+        const label = input.closest('label')?.querySelector('span');
+        if (label) label.textContent = `${String(index).padStart(3, '0')}: δ=${value < 0 ? '−1' : '+1'}`;
+        const node = root.querySelector(`[data-ws-node="${index}"]`);
+        node?.classList.toggle('ws-node--negative', value < 0);
+        setText(`[data-ws-node-text="${index}"]`, value < 0 ? 'δ=−1' : 'δ=+1');
+      });
+      setText('[data-ws-strong-product]', `${result.strongProduct < 0 ? '−1' : '+1'} → ν₀=${result.nu0}`);
+      setText('[data-ws-weak-products]', result.weakProducts.map((value, index) => `Π${index + 1}=${value > 0 ? '+' : '−'}1`).join(', '));
+      setText('[data-ws-indices]', formatZ2Indices(result));
+      setText('[data-ws-index]', `four-index label = ${formatZ2Indices(result)}`);
+      const vector = weakReciprocalVector(result).map((value) => value.toFixed(1));
+      setText('[data-ws-vector]', `weak reciprocal-vector coefficients = (${vector.join(', ')})`);
+      const status = result.phase === 'strong'
+        ? 'Strong phase: odd surface-Dirac parity on every ideal surface.'
+        : result.phase === 'weak'
+          ? 'Weak phase: layered interpretation; surface stability depends on orientation and translation.'
+          : 'Trivial parity class within the declared inversion-symmetric teaching model.';
+      setText('[data-ws-status]', status);
+    };
+    inputs.forEach((input) => input.addEventListener('change', update));
+    update();
+  });
+</script>
+
+<style>
+  .weak-strong svg { width: 100%; max-height: 28rem; }
+  .weak-strong text { fill: currentColor; font-size: 13px; }
+  .weak-strong fieldset { border: 0; padding: 0; }
+  .weak-strong .chapter-visual__controls { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ws-cube { fill: none; stroke: var(--sl-color-gray-3); stroke-width: 2; }
+  .ws-node { fill: var(--sl-color-accent-high); stroke: var(--sl-color-gray-7); stroke-width: 2; }
+  .ws-node--negative { fill: var(--sl-color-red-high, #b42318); }
+  .ws-panel { fill: var(--sl-color-gray-7); stroke: var(--sl-color-gray-4); }
+  .ws-indices { font-size: 24px !important; font-weight: 700; fill: var(--sl-color-text-accent) !important; }
+  @media (max-width: 50rem) { .weak-strong .chapter-visual__controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
