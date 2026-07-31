@@ -25,7 +25,7 @@ $$
 =\varepsilon_{nl}u_{nl}(r).
 $$
 
-Hartree–Fock 也产生径向方程，但交换算符依赖被作用的轨道并且是非局域的。把 Kohn–Sham 的乘法势 $V_{\mathrm{xc}}(r)$ 与 Hartree–Fock 的 Fock 交换算符写成同一个“局域势”会丢失方法差别。
+Hartree–Fock 也产生径向方程，但交换算符依赖被作用的轨道并且是非局域的。把 Kohn–Sham 的乘法势 V_xc(r) 与 Hartree–Fock 的 Fock 交换算符写成同一个“局域势”会丢失方法差别。
 
   </div>
   <div class="bilingual-section__en" lang="en">
@@ -45,7 +45,7 @@ $$
 =\varepsilon_{nl}u_{nl}(r).
 $$
 
-Hartree–Fock also leads to radial equations, but its exchange operator is orbital dependent and nonlocal. Replacing both the Kohn–Sham multiplicative potential $V_{\mathrm{xc}}(r)$ and the Fock exchange operator by a single generic “local potential” erases a substantive methodological distinction.
+Hartree–Fock also leads to radial equations, but its exchange operator is orbital dependent and nonlocal. Replacing both the Kohn–Sham multiplicative potential V_xc(r) and the Fock exchange operator by a single generic “local potential” erases a substantive methodological distinction.
 
   </div>
 </BilingualSection>
@@ -59,7 +59,7 @@ Hartree–Fock also leads to radial equations, but its exchange operator is orbi
   ]}
 >
 
-设 $g_{nl}$ 是整个 $(n,l)$ 子壳层的电子数，范围为 $0\le g_{nl}\le2(2l+1)$。球平均占据意味着每个 $m$ 和自旋分量的平均占据相同。利用
+设 g_nl 是整个 $(n,l)$ 子壳层的电子数，范围为 0 ≤ g_nl ≤ 2(2l+1)。球平均占据意味着每个 $m$ 和自旋分量的平均占据相同。利用
 
 $$
 \sum_{m=-l}^{l}|Y_{lm}(\Omega)|^2=\frac{2l+1}{4\pi},
@@ -74,7 +74,7 @@ n(r)=\sum_{nl}\frac{g_{nl}}{4\pi}|R_{nl}(r)|^2
 }.
 $$
 
-对完整闭壳层，$g_{nl}=2(2l+1)$。电子数检查为
+对完整闭壳层，g_nl = 2(2l+1)。电子数检查为
 
 $$
 \begin{aligned}
@@ -86,7 +86,7 @@ $$
 
 这个等式同时检查占据、角向因子和径向归一化。若程序输出的是径向密度 $4\pi r^2n(r)$，则不能再额外乘一次 $4\pi r^2$。
 
-<p lang="en">Let $g_{nl}$ be the total population of the $(n,l)$ subshell, with $0\le g_{nl}\le2(2l+1)$. Uniform spherical occupation and the addition theorem give</p>
+<p lang="en">Let g_nl be the total population of the $(n,l)$ subshell, with 0 ≤ g_nl ≤ 2(2l+1). Uniform spherical occupation and the addition theorem give</p>
 
 $$
 \boxed{
@@ -95,7 +95,7 @@ n(r)=\sum_{nl}\frac{g_{nl}}{4\pi}|R_{nl}(r)|^2
 }.
 $$
 
-<p lang="en">A complete closed shell has $g_{nl}=2(2l+1)$. The electron-number check is</p>
+<p lang="en">A complete closed shell has g_nl = 2(2l+1). The electron-number check is</p>
 
 $$
 4\pi\int_0^\infty r^2n(r)dr
@@ -132,13 +132,13 @@ V_{\mathrm H}(r)=4\pi\left[
 }.
 $$
 
-第一项在 $r\to\infty$ 时趋于 $N/r$，第二项趋于零。若定义 $w(r)=rV_{\mathrm H}(r)$，则
+第一项在 $r\to\infty$ 时趋于 $N/r$，第二项趋于零。若定义 w(r) = rV_H(r)，则
 
 $$
 w''(r)=-4\pi r n(r),
 $$
 
-这才是没有一阶导数的二阶形式。数值实现中必须说明求解的是 $V_{\mathrm H}$ 还是 $w=rV_{\mathrm H}$；两者的源项和边界条件不同。
+这才是没有一阶导数的二阶形式。数值实现中必须说明求解的是 V_H 还是 w = rV_H；两者的源项和边界条件不同。
 
 <p lang="en">For a spherical density, the Hartree potential satisfies</p>
 
@@ -157,7 +157,7 @@ V_{\mathrm H}(r)=4\pi\left[
 }
 $$
 
-<p lang="en">The first term approaches $N/r$ and the second vanishes at large radius. Defining $w=rV_{\mathrm H}$ gives $w''=-4\pi r n(r)$. A numerical implementation must state whether it solves for $V_{\mathrm H}$ or for $w$ because the source and boundary conditions differ.</p>
+<p lang="en">The first term approaches $N/r$ and the second vanishes at large radius. Defining w = rV_H gives $w''=-4\pi r n(r)$. A numerical implementation must state whether it solves for V_H or for $w$ because the source and boundary conditions differ.</p>
 
 </DerivationBlock>
 
@@ -168,28 +168,28 @@ $$
 <BilingualSection titleZh="固定点问题与占据稳定性" titleEn="The fixed-point problem and occupation stability">
   <div class="bilingual-section__zh">
 
-给定输入密度 $n^{(k)}$，构造有效势并求解所有所需径向通道，得到输出密度 $n_{\mathrm{out}}^{(k)}$。最简单的线性 mixing 为
+给定输入密度 n^(k)，构造有效势并求解所有所需径向通道，得到输出密度 n_out^(k)。最简单的线性 mixing 为
 
 $$
 n^{(k+1)}=(1-\alpha)n^{(k)}+\alpha n_{\mathrm{out}}^{(k)},
 \qquad 0<\alpha\le1.
 $$
 
-密度残差可定义为 $\Delta n^{(k)}=n_{\mathrm{out}}^{(k)}-n^{(k)}$，但具体范数、径向权重和阈值必须声明。核附近的绝对密度很大，尾部密度很小；只报告未加权最大误差可能掩盖某一空间区域的问题。
+密度残差可定义为 Δn^(k) = n_out^(k) − n^(k)，但具体范数、径向权重和阈值必须声明。核附近的绝对密度很大，尾部密度很小；只报告未加权最大误差可能掩盖某一空间区域的问题。
 
 过渡元素的近简并 $3d$、$4s$ 状态可能在迭代中交换次序。每一步都按瞬时最低本征值重新填充，会使占据和势发生不连续跳变。解决方法可能包括固定参考占据、分数占据、有限温度展宽或更稳健的 mixing；它们改变的是数值路径或参考状态，必须与最终物理态的选择分开说明。
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
-Given an input density $n^{(k)}$, one constructs the effective potential, solves the required radial channels, and obtains an output density $n_{\mathrm{out}}^{(k)}$. The simplest linear mixing is
+Given an input density n^(k), one constructs the effective potential, solves the required radial channels, and obtains an output density n_out^(k). The simplest linear mixing is
 
 $$
 n^{(k+1)}=(1-\alpha)n^{(k)}+\alpha n_{\mathrm{out}}^{(k)},
 \qquad 0<\alpha\le1.
 $$
 
-A density residual may be defined as $\Delta n^{(k)}=n_{\mathrm{out}}^{(k)}-n^{(k)}$, but its norm, radial weight, and threshold must be stated. The absolute density is large near the nucleus and small in the tail, so an unweighted maximum error can hide a failure in one spatial region.
+A density residual may be defined as Δn^(k) = n_out^(k) − n^(k), but its norm, radial weight, and threshold must be stated. The absolute density is large near the nucleus and small in the tail, so an unweighted maximum error can hide a failure in one spatial region.
 
 Near-degenerate $3d$ and $4s$ states in transition elements may exchange order during iteration. Refilling strictly by the instantaneous eigenvalue order can produce discontinuous changes in occupation and potential. Fixed reference occupations, fractional occupations, finite-temperature smearing, or more robust mixing may stabilize the path. These choices alter the numerical route or reference state and must be distinguished from the selection of the final physical state.
 
