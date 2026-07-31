@@ -1,0 +1,49 @@
+## 常见误判 | Common Misconceptions
+
+1. **“独立电子”表示相互作用不存在。** 有效势、Hartree–Fock 和 Kohn–Sham 方程都可具有独立粒子形式，同时以平均场、交换或泛函形式包含相互作用效应。  
+   **“Independent electrons” means interactions are absent.** Independent-particle equations can still include mean fields, exchange, or functional interaction effects.
+2. **Pauli 排斥等同于 Coulomb 排斥。** 前者来自费米子反对称性，后者来自 Hamiltonian 的相互作用项。  
+   **Pauli exclusion is Coulomb repulsion.** They coexist but have different origins.
+3. **一条能带的容量由化学价决定。** 容量来自允许的 $\mathbf k$ 点数和内部简并；化学价决定填入多少电子。  
+   **Chemical valence fixes band capacity.** Capacity follows from state counting; valence fixes filling.
+4. **能带图出现 gap 就证明实验绝缘行为。** 方法误差、温度、缺陷、掺杂、表面通道和多体激发仍需判断。  
+   **A plotted gap proves experimental insulation.** Method error and additional conduction channels remain relevant.
+5. **DFT 的对象是独立电子。** 真实对象是相互作用体系；Kohn–Sham 独立粒子体系是辅助构造。  
+   **DFT describes independent physical electrons.** Its auxiliary system reproduces the interacting ground-state density.
+6. **拓扑能隙闭合必然产生非平庸相。** 闭合使指标改变成为可能，但两端指标仍需计算或由充分对称性信息确定。  
+   **Every gap closing creates a nontrivial phase.** A closing is possible transition evidence, not sufficient classification.
+
+## 练习与复盘 | Exercises and Review
+
+以下问题均为本站原创，不对应 Martin 原书习题。
+
+1. 给出 $\Psi(\mathbf{x}_1,\mathbf{x}_2)$、$\psi_i(\mathbf r)$、$n(\mathbf r)$、$g(E)$ 和 $\varepsilon_{n\mathbf k}$ 的定义域与物理角色，并说明从多体波函数得到密度时丢失了哪些信息。
+2. 从两自旋轨道写出二电子 Slater determinant，交换两套电子坐标验证符号变化，再令两个轨道相同并解释 determinant 为零。
+3. 从 Fermi–Dirac 公式推导 $T\to0^+$ 时 $\varepsilon<\mu$、$\varepsilon=\mu$、$\varepsilon>\mu$ 的极限，并用交互图检查趋势。
+4. 对一维含 $N$ 个原胞的周期环列出允许 $k$，再把态计数推广到三维 $N_1N_2N_3$ 个原胞。
+5. 日志显示 `convergence has been achieved` 且能带穿过费米能。列出判断“材料是稳定金属”仍缺少的结构、数值、方法和实验层证据。
+6. 解释 Hartree–Fock 已含交换却仍可能在断键、窄带或近简并问题中失效。
+7. 审查“PBE gap 为 0.8 eV，因此实验光学吸收边为 0.8 eV”，区分 Kohn–Sham gap、基本 gap、光学 gap、激子与数值收敛。
+8. 画出参数驱动的两带模型，分别表示保持 gap 的平庸变形、闭合后指标不变、闭合后指标改变，并说明为何仅观察闭合不够。
+
+### 解题检查框架 | Solution-check framework
+
+- 先写对象与假设，再写方程；
+- 每个等号注明定义、代数变形、边界条件或近似；
+- 检查单位、归一化与特殊极限；
+- 把模型内部结论与真实材料结论分开；
+- 指出最小反例或缺失证据。
+
+## 来源、原创内容与边界 | Sources, Original Work, and Boundaries
+
+- **Martin 主来源：** Chapter 1, printed pp. 1–14；1.1 p. 2，1.2 p. 3，1.3 p. 7，1.4 p. 10，1.5 p. 11，1.6 p. 11，1.7 p. 12，1.8 p. 13。
+- **Sholl–Steckel 实践连接：** Chapter 1 §§1.3–1.7, printed pp. 7–30；用于 Schrödinger 方程、密度、交换—关联和方法边界的实践交叉参考。
+- **本站原创：** 定态方程、Fermi 占据、周期边界态计数和拓扑连续性推导；量子历史时间线、Fermi 占据与两带填充可视化；全部练习。
+- **边界：** 时间线不是完整科学史；两带模型无色散、相互作用、无序或声子；交互不是实际 DFT 求解器；构建通过不验证真实材料或教材主张。
+
+## 章节连接 | Chapter Connections
+
+- [Part I 总览](./)
+- [Chapter 2 · Overview](./chapter-02-overview/)
+- [Chapter 3 · Theoretical Background](./chapter-03-theoretical-background/)
+- [Sholl–Steckel Chapter 1](../../practice-sholl-steckel/chapter-01-what-is-density-functional-theory/)
