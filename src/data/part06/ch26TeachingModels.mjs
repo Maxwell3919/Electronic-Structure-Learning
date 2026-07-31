@@ -5,6 +5,66 @@ function finite(value, name) {
   return value;
 }
 
+function dot(a, b) {
+  return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+function cross(a, b) {
+  return {
+    x: a.y * b.z - a.z * b.y,
+    y: a.z * b.x - a.x * b.z,
+    z: a.x * b.y - a.y * b.x,
+  };
+}
+
+function normalize(vector) {
+  const radius = Math.hypot(vector.x, vector.y, vector.z);
+  if (radius === 0) return null;
+  return { x: vector.x / radius, y: vector.y / radius, z: vector.z / radius };
+}
+
+function solidAngle(a, b, c) {
+  const numerator = dot(a, cross(b, c));
+  const denominator = 1 + dot(a, b) + dot(b, c) + dot(c, a);
+  return 2 * Math.atan2(numerator, denominator);
+}
+
+function multiplyComplex(left, right) {
+  return {
+    re: left.re * right.re - left.im * right.im,
+    im: left.re * right.im + left.im * right.re,
+  };
+}
+
+function lowerBandSpinor(vector) {
+  const radius = Math.hypot(vector.x, vector.y, vector.z);
+  if (radius === 0) throw new RangeError('lower-band spinor is undefined at a gap closing');
+
+  if (radius + vector.z > 1e-12) {
+    const denominator = Math.sqrt(2 * radius * (radius + vector.z));
+    return [
+      { re: -vector.x / denominator, im: vector.y / denominator },
+      { re: (radius + vector.z) / denominator, im: 0 },
+    ];
+  }
+
+  const denominator = Math.sqrt(2 * radius * (radius - vector.z));
+  return [
+    { re: -(radius - vector.z) / denominator, im: 0 },
+    { re: vector.x / denominator, im: vector.y / denominator },
+  ];
+}
+
+function spinorOverlap(left, right) {
+  let re = 0;
+  let im = 0;
+  for (let index = 0; index < left.length; index += 1) {
+    re += left[index].re * right[index].re + left[index].im * right[index].im;
+    im += left[index].re * right[index].im - left[index].im * right[index].re;
+  }
+  return { re, im };
+}
+
 export function wrapAngle(angle) {
   finite(angle, 'angle');
   return ((angle + Math.PI) % TAU + TAU) % TAU - Math.PI;
@@ -108,5 +168,100 @@ export function sshEdgeProfile(t1, t2, cells = 12) {
     ratio,
     localizationLength,
     amplitudes: normalized,
+  };
+}
+
+export function pumpVector(k, lambda, center = 1, radius = 0.65, v = 1, w = 1) {
+  [k, lambda, center, radius, v, w].forEach((value, index) => finite(value, ['k', 'lambda', 'center', 'radius', 'v', 'w'][index]));
+  if (radius < 0) throw new RangeError('radius must be non-negative');
+  return {
+    x: center + radius * Math.cos(lambda) + v * Math.cos(k),
+    y: w * Math.sin(k),
+    z: radius * Math.sin(lambda),
+  };
+}
+
+export function samplePumpTopology(center = 1, radius = 0.65, v = 1, w = 1, mesh = 31) {
+  [center, radius, v, w].forEach((value, index) => finite(value, ['center', 'radius', 'v', 'w'][index]));
+  if (!Number.isInteger(mesh) || mesh < 5) throw new RangeError('mesh must be an integer >= 5');
+
+  let totalSolidAngle = 0;
+  let minimumRadius = Infinity;
+  for (let i = 0; i < mesh; i += 1) {
+    const k0 = (TAU * i) / mesh;
+    const k1 = (TAU * ((i + 1) % mesh)) / mesh;
+    for (let j = 0; j < mesh; j += 1) {
+      const lambda0 = (TAU * j) / mesh;
+      const lambda1 = (TAU * ((j + 1) % mesh)) / mesh;
+      const raw = [
+        pumpVector(k0, lambda0, center, radius, v, w),
+        pumpVector(k1, lambda0, center, radius, v, w),
+        pumpVector(k1, lambda1, center, radius, v, w),
+        pumpVector(k0, lambda1, center, radius, v, w),
+      ];
+      raw.forEach((vector) => {
+        minimumRadius = Math.min(minimumRadius, Math.hypot(vector.x, vector.y, vector.z));
+      });
+      const unit = raw.map(normalize);
+      if (unit.some((vector) => vector === null)) {
+        return { gapClosed: true, minimumGap: 0, mappingDegree: null, lowerBandChern: null };
+      }
+      totalSolidAngle += solidAngle(unit[0], unit[1], unit[2]) + solidAngle(unit[0], unit[2], unit[3]);
+    }
+  }
+
+  const mappingDegreeRaw = totalSolidAngle / (4 * Math.PI);
+  const mappingDegree = Math.round(mappingDegreeRaw);
+  return {
+    gapClosed: minimumRadius < 1e-8,
+    minimumGap: 2 * minimumRadius,
+    mappingDegree,
+    lowerBandChern: -mappingDegree,
+    residual: mappingDegreeRaw - mappingDegree,
+  };
+}
+
+export function pumpBerryPhase(lambda, center = 1, radius = 0.65, v = 1, w = 1, samples = 181) {
+  [lambda, center, radius, v, w].forEach((value, index) => finite(value, ['lambda', 'center', 'radius', 'v', 'w'][index]));
+  if (!Number.isInteger(samples) || samples < 5) throw new RangeError('samples must be an integer >= 5');
+
+  const spinors = Array.from({ length: samples }, (_, index) => {
+    const k = (TAU * index) / samples;
+    return lowerBandSpinor(pumpVector(k, lambda, center, radius, v, w));
+  });
+
+  let product = { re: 1, im: 0 };
+  for (let index = 0; index < samples; index += 1) {
+    const overlap = spinorOverlap(spinors[index], spinors[(index + 1) % samples]);
+    const magnitude = Math.hypot(overlap.re, overlap.im);
+    if (magnitude < 1e-14) throw new RangeError('adjacent lower-band states became numerically orthogonal');
+    product = multiplyComplex(product, { re: overlap.re / magnitude, im: overlap.im / magnitude });
+  }
+  return wrapAngle(-Math.atan2(product.im, product.re));
+}
+
+export function pumpWannierFlow(center = 1, radius = 0.65, v = 1, w = 1, lambdaSamples = 65, kSamples = 181) {
+  [center, radius, v, w].forEach((value, index) => finite(value, ['center', 'radius', 'v', 'w'][index]));
+  if (!Number.isInteger(lambdaSamples) || lambdaSamples < 3) throw new RangeError('lambdaSamples must be an integer >= 3');
+
+  const wrapped = Array.from({ length: lambdaSamples }, (_, index) => {
+    const lambda = (TAU * index) / (lambdaSamples - 1);
+    return pumpBerryPhase(lambda, center, radius, v, w, kSamples);
+  });
+  const unwrapped = [wrapped[0]];
+  for (let index = 1; index < wrapped.length; index += 1) {
+    let value = wrapped[index];
+    const previous = unwrapped[index - 1];
+    while (value - previous > Math.PI) value -= TAU;
+    while (value - previous < -Math.PI) value += TAU;
+    unwrapped.push(value);
+  }
+
+  const centers = unwrapped.map((phase) => phase / TAU);
+  return {
+    wrapped,
+    unwrapped,
+    centers,
+    netShift: centers.at(-1) - centers[0],
   };
 }
