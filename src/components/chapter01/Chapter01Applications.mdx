@@ -1,5 +1,53 @@
-## 1.6 电子结构研究 | Electronic-structure research
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
 
-电子结构计算连接候选结构、可计算物理量与可检验预测。
+## 1.6 电子结构已成为研究的基础组成 | Electronic Structure as an Essential Part of Research
 
-Electronic-structure calculations connect candidate structures, computable observables, and testable predictions.
+<BilingualSection titleZh="从少数高对称晶体到复杂体系" titleEn="From a few symmetric crystals to complex systems" eyebrow="Martin 1.6 · pp. 11–12">
+  <div class="bilingual-section__zh">
+
+算法、基组、赝势、并行计算和分子动力学的发展扩大了可处理体系的规模与类型。现代计算可研究表面、界面、缺陷、液体、反应路径和有限温度采样，但这些能力由不同近似和收敛条件支撑。原子数增加只改变可表示的结构复杂度，不会自动减少交换—关联误差、有限尺寸误差或采样偏差。
+
+电子结构计算通常建立可检验连接：从候选结构得到能量、力、密度或响应；据此提出相稳定性、光谱、输运或反应机制的预测；再与更高层理论、不同实现或实验比较。计算与实验承担不同证据功能，二者不能相互替代。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Developments in algorithms, basis representations, pseudopotentials, parallel computing, and molecular dynamics expanded both the size and type of accessible systems. Modern calculations address surfaces, interfaces, defects, liquids, reaction paths, and finite-temperature sampling, but each capability rests on distinct approximations and convergence conditions. Increasing atom count expands structural complexity; it does not automatically reduce exchange–correlation, finite-size, or sampling errors.
+
+Electronic-structure calculations commonly build testable connections: a candidate structure yields energies, forces, densities, or responses; these quantities support predictions of stability, spectra, transport, or mechanism; the predictions are then compared with higher-level theory, independent implementations, or experiment. Calculation and experiment provide different kinds of evidence and do not replace one another.
+
+  </div>
+</BilingualSection>
+
+## 1.7 材料设计 | Materials by Design
+
+<BilingualSection titleZh="设计需要稳定性、性质与可实现路径" titleEn="Design requires stability, property, and a realizable path" eyebrow="Martin 1.7 · pp. 12–13">
+  <div class="bilingual-section__zh">
+
+材料可以是体相、团簇、缺陷、表面、界面、层状堆垛、液体或非平衡结构。材料设计因此不能只在固定数据库中寻找最大目标值。至少需要分别判断：候选在给定组成和环境下是否具有足够低的自由能；目标性质是否对方法和数值参数稳健；是否存在现实的合成、制备或保持路径。
+
+基态 DFT 对结构和许多基态性质很有用，却不存在对所有材料、所有激发和所有环境都定量可靠的单一近似。高通量流程必须保存结构身份、计算条件、失败状态和误差边界。排序模型可缩小搜索空间，最终接受仍需与目标 observable 匹配的收敛和验证标准。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A material may be a bulk phase, cluster, defect, surface, interface, layered stack, liquid, or nonequilibrium structure. Materials design is therefore more than maximizing a target value in a fixed database. At least three questions must be separated: whether a candidate has sufficiently low free energy under the specified composition and environment; whether the target property is robust with respect to method and numerical parameters; and whether a realistic synthesis, fabrication, or retention path exists.
+
+Ground-state DFT is useful for structures and many ground-state properties, but no single approximation is quantitatively reliable for every material, excitation, and environment. High-throughput workflows must preserve structural identity, computational conditions, failure states, and uncertainty boundaries. Ranking models can reduce the search space; final acceptance still requires convergence and validation criteria matched to the target observable.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="最小计算证据链" titleEn="Minimal computational evidence chain" kind="practice">
+  <div class="bilingual-section__zh">
+
+候选结构来源 → 输入与赝势身份 → 结构优化收敛 → 独立稳定性检查 → 目标物理量参数收敛 → 方法适用性比较 → 与实验或独立方法的可比验证。任一步缺失都应限制最终主张。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Candidate provenance → input and pseudopotential identity → converged structural optimization → separate stability checks → parameter convergence of the target observable → method-applicability comparison → comparable validation against experiment or an independent method. A missing step limits the final claim.
+
+  </div>
+</BilingualCallout>
