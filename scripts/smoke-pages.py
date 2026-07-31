@@ -22,6 +22,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 
 
@@ -105,9 +106,7 @@ def load_with_retry(driver: webdriver.Chrome, url: str, marker: str, attempts: i
     for _ in range(attempts):
         try:
             driver.get(url)
-            WebDriverWait(driver, 20).until(
-                lambda active: marker in active.page_source
-            )
+            WebDriverWait(driver, 20).until(lambda active: marker in active.page_source)
             return
         except Exception as exc:  # Selenium raises several transient subclasses.
             last_error = exc
@@ -123,6 +122,30 @@ def grid_column_count(driver: webdriver.Chrome, selector: str) -> int:
     )
     columns = [item for item in str(value).split() if item]
     return len(columns)
+
+
+def focus_for_keyboard(driver: webdriver.Chrome, element: WebElement) -> None:
+    """Focus a control without letting the fixed Starlight header intercept a click."""
+    driver.execute_script(
+        """
+        arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});
+        arguments[0].focus({preventScroll: true});
+        """,
+        element,
+    )
+    WebDriverWait(driver, 10).until(
+        lambda _: driver.execute_script(
+            "return document.activeElement === arguments[0];",
+            element,
+        )
+    )
+
+
+def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
+    try:
+        driver.save_screenshot(str(ARTIFACT_DIR / filename))
+    except Exception:
+        pass
 
 
 def desktop_and_interaction_smoke(report: dict) -> None:
@@ -156,7 +179,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         fermi_curve = driver.find_element(By.CSS_SELECTOR, "[data-fermi-curve]")
         old_value = mu_slider.get_attribute("value")
         old_curve = fermi_curve.get_attribute("d")
-        mu_slider.click()
+        focus_for_keyboard(driver, mu_slider)
         mu_slider.send_keys(Keys.ARROW_RIGHT)
         WebDriverWait(driver, 10).until(
             lambda _: mu_slider.get_attribute("value") != old_value
@@ -165,7 +188,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
 
         # Band filling: keyboard-select N=3 and confirm the physical classification.
         electron_slider = driver.find_element(By.CSS_SELECTOR, "[data-band-electrons]")
-        electron_slider.click()
+        focus_for_keyboard(driver, electron_slider)
         electron_slider.send_keys(Keys.HOME)
         for _ in range(3):
             electron_slider.send_keys(Keys.ARROW_RIGHT)
@@ -178,7 +201,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         # Timeline: keyboard HOME must hide the late entries; END must reveal them.
         timeline_slider = driver.find_element(By.CSS_SELECTOR, "[data-timeline-year]")
         final_milestone = driver.find_element(By.CSS_SELECTOR, '[data-year="1965"]')
-        timeline_slider.click()
+        focus_for_keyboard(driver, timeline_slider)
         timeline_slider.send_keys(Keys.HOME)
         WebDriverWait(driver, 10).until(lambda _: not final_milestone.is_displayed())
         timeline_slider.send_keys(Keys.END)
@@ -203,6 +226,9 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Narrow-screen bilingual layout is not a single column")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-01-narrow.png"))
         report["narrow"] = {"viewport": [390, 844], "bilingual_columns": 1}
+    except Exception:
+        save_failure_screenshot(driver, "chapter-01-desktop-failure.png")
+        raise
     finally:
         driver.quit()
 
@@ -230,6 +256,9 @@ def no_javascript_smoke(report: dict) -> None:
             "static_svg_count": len(driver.find_elements(By.CSS_SELECTOR, ".chapter-visual svg")),
             "timeline_fallback_visible": True,
         }
+    except Exception:
+        save_failure_screenshot(driver, "chapter-01-no-javascript-failure.png")
+        raise
     finally:
         driver.quit()
 
@@ -260,5 +289,17 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except Exception as exc:
+        failure = {
+            "base_url": BASE_URL,
+            "chapter_url": CHAPTER_URL,
+            "manifest_url": MANIFEST_URL,
+            "expected_sha": EXPECTED_SHA,
+            "error_type": type(exc).__name__,
+            "error": str(exc),
+        }
+        (ARTIFACT_DIR / "failure.json").write_text(
+            json.dumps(failure, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
         print(f"Pages smoke test failed: {exc}", file=sys.stderr)
         raise
