@@ -175,6 +175,37 @@ def assert_soc_unit_convention(driver: webdriver.Chrome, context: str) -> tuple[
     return audit, model
 
 
+def assert_soc_math_scrollers(driver: webdriver.Chrome, context: str) -> dict:
+    scrollers = driver.find_elements(By.CSS_SELECTOR, "[data-soc-math-scroll]")
+    if len(scrollers) != 6:
+        fail(f"{context} should contain six SOC equation scrollers, received {len(scrollers)}")
+    if not all(item.is_displayed() for item in scrollers):
+        fail(f"{context} hides one or more SOC equation scrollers")
+
+    locally_scrollable = 0
+    for item in scrollers:
+        if item.get_attribute("role") != "region":
+            fail(f"{context} SOC equation scroller lost its region role")
+        if item.get_attribute("tabindex") != "0":
+            fail(f"{context} SOC equation scroller is not keyboard focusable")
+        if not (item.get_attribute("aria-label") or "").strip():
+            fail(f"{context} SOC equation scroller is missing an accessible label")
+        scroll_width, client_width = driver.execute_script(
+            "return [arguments[0].scrollWidth, arguments[0].clientWidth];",
+            item,
+        )
+        if client_width <= 0:
+            fail(f"{context} SOC equation scroller has no rendered width")
+        if scroll_width > client_width + 1:
+            locally_scrollable += 1
+
+    return {
+        "count": len(scrollers),
+        "keyboard_focusable": True,
+        "locally_scrollable": locally_scrollable,
+    }
+
+
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
@@ -213,6 +244,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
                 fail(f"Chapter link escaped the Pages base path: {href}")
 
         soc_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 desktop page")
+        soc_scrollers = assert_soc_math_scrollers(driver, "Chapter 10 desktop page")
         driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
             soc_audit,
@@ -283,6 +315,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "horizontal_overflow_px": desktop_overflow,
             "visuals": len(visuals),
             "visualization_contracts": len(contracts),
+            "soc_math_scrollers": soc_scrollers,
             "spin_orbit_unit_convention": {
                 "displayed": True,
                 "normalized_operator": "LdotS-over-hbar2",
@@ -306,6 +339,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         if not driver.find_element(By.CSS_SELECTOR, ".chapter-contents").is_displayed():
             fail("Chapter 10 contents is hidden on the narrow viewport")
         narrow_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 narrow page")
+        narrow_scrollers = assert_soc_math_scrollers(driver, "Chapter 10 narrow page")
         driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
             narrow_audit,
@@ -318,6 +352,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "viewport": [390, 844],
             "bilingual_columns": 1,
             "horizontal_overflow_px": narrow_overflow,
+            "soc_math_scrollers": narrow_scrollers,
             "spin_orbit_unit_convention": True,
         }
     except Exception:
@@ -342,6 +377,7 @@ def no_javascript_smoke(report: dict) -> None:
         if len(driver.find_elements(By.CSS_SELECTOR, ".katex")) < 35:
             fail("No-JavaScript page lost rendered formulas")
         no_js_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 no-JavaScript page")
+        no_js_scrollers = assert_soc_math_scrollers(driver, "Chapter 10 no-JavaScript page")
         driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
             no_js_audit,
@@ -354,6 +390,7 @@ def no_javascript_smoke(report: dict) -> None:
             "horizontal_overflow_px": no_js_overflow,
             "visualization_contracts": len(contracts),
             "static_svg_count": len(static_svgs),
+            "soc_math_scrollers": no_js_scrollers,
             "spin_orbit_unit_convention": True,
         }
     except Exception:
