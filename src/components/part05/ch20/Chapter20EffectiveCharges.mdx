@@ -1,0 +1,199 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import LOTOEffectiveChargeExplorer from './LOTOEffectiveChargeExplorer.astro';
+
+<span id="section-20-7" className="chapter20-anchor" aria-hidden="true"></span>
+
+## 20.7 介电响应函数与有效电荷 | Dielectric Response Functions and Effective Charges
+
+<BilingualSection titleZh="均匀电场与周期边界的冲突" titleEn="The conflict between a homogeneous electric field and periodic boundaries" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+有限体系中的均匀静电场可通过势 $-e\mathbf E\cdot\mathbf r$ 表示，但位置算符不保持周期性。无限晶体中，直接把该势放入周期 Hamiltonian 会破坏普通 Bloch 边界。因此介电响应可以从有限波矢 $\mathbf q\to0$ 的极限、位置算符的带间矩阵元、Berry-phase 极化或有限电场能量泛函得到。Chapter 24 将系统建立 Berry-phase 极化；本节只保留得到介电张量、Born 有效电荷和长程声子项所需的接口。
+
+需要区分电子固定离子响应 $\epsilon_\infty$ 与允许红外活性声子弛豫后的静态响应 $\epsilon_0$。前者来自电子密度在固定核坐标下的线性响应；后者还包含离子位移通过有效电荷与电场耦合的贡献。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For a finite system a uniform electric field can be represented by the potential $-e\mathbf E\cdot\mathbf r$, but the position operator does not preserve periodicity. In an infinite crystal, inserting this potential directly into a periodic Hamiltonian breaks ordinary Bloch boundary conditions. Dielectric response can instead be obtained from a finite-wavevector limit, interband position matrix elements, Berry-phase polarization, or a finite-field energy functional. Chapter 24 develops Berry-phase polarization systematically; the present section keeps only the interface needed for dielectric tensors, Born effective charges, and long-range phonon terms.
+
+The clamped-ion electronic response $\epsilon_\infty$ must be distinguished from the static response $\epsilon_0$ after infrared-active phonons are allowed to relax. The former is the electronic density response at fixed nuclei; the latter also includes ionic displacement coupled to the field through effective charges.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="带间位置矩阵元与速度/对易子 | Interband position matrix elements from a commutator"
+  assumptions={[
+    '考虑不同本征值的两个本征态；',
+    'Hamiltonian 与位置对易子的矩阵元存在；',
+    '非局域赝势贡献不被遗漏。',
+  ]}
+>
+
+由
+
+$$
+\hat H|\psi_n\rangle=\varepsilon_n|\psi_n\rangle
+$$
+
+可得
+
+$$
+\langle\psi_m|[\hat H,\hat r_\alpha]|\psi_n\rangle
+=
+(\varepsilon_m-\varepsilon_n)
+\langle\psi_m|\hat r_\alpha|\psi_n\rangle.
+$$
+
+因此对 $m\ne n$，
+
+$$
+\boxed{
+\langle\psi_m|\hat r_\alpha|\psi_n\rangle
+=
+\frac{\langle\psi_m|[\hat H,\hat r_\alpha]|\psi_n\rangle}
+{\varepsilon_m-\varepsilon_n}.
+}
+$$
+
+对局域 Hamiltonian，$[H,r_\alpha]$ 与速度或动量算符相关；在原子单位、无矢势时，$[p^2/2,r_\alpha]=-ip_\alpha$。非局域赝势还贡献 $[V_{\mathrm{NL}},r_\alpha]$。只用动量矩阵元而忽略该项会破坏光学和有效电荷的一致性。
+
+在简并子空间内分母为零，单个带的矩阵元不是合适对象；应在子空间内做协变导数、投影或退化微扰处理。这个等式处理的是带间位置矩阵元，不定义周期晶体的绝对位置期望值。
+
+The commutator converts an off-diagonal position matrix element into a Hamiltonian or velocity matrix element divided by an energy difference. A nonlocal potential contributes its own commutator. Degenerate subspaces require covariant or projected treatment, and this relation does not define an absolute position expectation value in a periodic crystal.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Born 有效电荷是混合响应" titleEn="A Born effective charge is a mixed response" eyebrow="Definition">
+  <div className="bilingual-section__zh">
+
+Born effective charge tensor 定义为固定宏观电场条件下，极化对一个原子子晶格位移的导数：
+
+$$
+\boxed{
+Z^*_{s,\alpha\beta}
+=
+\Omega
+\left.
+\frac{\partial P_\alpha}
+{\partial u_{s\beta}}
+\right|_{\mathbf E=0}
+}
+$$
+
+在能量中采用 $-\Omega\mathbf E\cdot\mathbf P$ 耦合时，Maxwell 关系给出等价的力响应
+
+$$
+Z^*_{s,\alpha\beta}
+=
+\left.
+\frac{\partial F_{s\beta}}
+{\partial E_\alpha}
+\right|_{\mathbf u=0}
+=
+-\frac{\partial^2E}
+{\partial E_\alpha\partial u_{s\beta}},
+$$
+
+具体符号取决于电荷和场耦合 convention。$Z^*$ 描述移动原子时跨晶胞输运的动态电荷，可显著偏离形式价态。它与 Bader、Mulliken 或静态差分电荷不是同一 observable；后者不能替代极化—位移或力—电场导数。
+
+总平移不改变体极化（模 polarization quantum），因此绝缘体满足 charge-neutrality sum rule
+
+$$
+\sum_s Z^*_{s,\alpha\beta}=0.
+$$
+
+与 ASR 相同，这先是严格对称或电荷守恒关系，再是数值诊断。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The Born effective-charge tensor is defined as the derivative of polarization with respect to a sublattice displacement at fixed macroscopic electric field:
+
+$$
+\boxed{
+Z^*_{s,\alpha\beta}
+=
+\Omega
+\left.
+\frac{\partial P_\alpha}
+{\partial u_{s\beta}}
+\right|_{\mathbf E=0}.
+}
+$$
+
+With an energy coupling $-\Omega\mathbf E\cdot\mathbf P$, a Maxwell relation gives the equivalent force response
+
+$$
+Z^*_{s,\alpha\beta}
+=
+\left.
+\frac{\partial F_{s\beta}}
+{\partial E_\alpha}
+\right|_{\mathbf u=0}
+=
+-\frac{\partial^2E}
+{\partial E_\alpha\partial u_{s\beta}},
+$$
+
+up to the chosen charge and field sign convention. $Z^*$ measures the dynamic charge transported across the crystal by a sublattice displacement and can differ greatly from a formal valence. It is not a Bader, Mulliken, or static charge-difference observable, none of which replaces a polarization–displacement or force–field derivative.
+
+A uniform translation does not change the bulk polarization modulo its quantum, giving the insulating charge-neutrality sum rule $\sum_s Z^*_{s,\alpha\beta}=0$. As with the ASR, this is first a symmetry or conservation identity and then a numerical diagnostic.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="极性晶体的非解析动力学矩阵 | Nonanalytic dynamical matrix in a polar crystal"
+  assumptions={[
+    '三维体绝缘体；',
+    'q 接近 Gamma 但不等于零；',
+    '采用 clamped-ion 介电张量 epsilon-infinity；',
+    'Born 有效电荷和本征向量 convention 一致。',
+  ]}
+>
+
+长波纵向位移产生宏观极化电荷和电场。其对动力学矩阵的 leading nonanalytic contribution 可写为
+
+$$
+\boxed{
+D^{\mathrm{NA}}_{s\alpha,s'\beta}(\mathbf q\to0)
+=
+\frac{4\pi}{\Omega\sqrt{M_sM_{s'}}}
+\frac{
+\left[\sum_\gamma q_\gamma Z^*_{s,\gamma\alpha}\right]
+\left[\sum_\delta q_\delta Z^*_{s',\delta\beta}\right]
+}
+{\sum_{\gamma\delta}q_\gamma\epsilon_{\infty,\gamma\delta}q_\delta}
+}
+$$
+
+（Gaussian 或 atomic-unit 型 convention；SI 单位需相应常数）。分子为沿 $\mathbf q$ 的模式有效电荷，分母为电子介电屏蔽。横向模式若 $\mathbf q\cdot Z^*\cdot\mathbf e=0$，不产生该宏观场；纵向极性模式则提高 $\omega^2$，形成方向依赖的 LO–TO splitting。
+
+该项在 $\mathbf q=0$ 的值依赖宏观电边界与取极限方向，因此不能只从一个 Gamma 动力学矩阵无条件恢复。实际 Fourier 插值常把短程解析力常数与长程非解析项分开。二维材料的长波 Coulomb kernel 与三维体不同，不能直接使用含真空体积的三维公式而期待真空收敛。
+
+The leading long-range contribution is a directional matrix built from Born effective charges and the clamped-ion dielectric tensor. It shifts longitudinal polar modes but not transverse modes with zero longitudinal mode charge. The Gamma limit depends on electrical boundary conditions and direction; short-range interpolation and the long-range nonanalytic term must be treated separately. Two-dimensional systems require a different long-wavelength Coulomb form.
+
+</DerivationBlock>
+
+<LOTOEffectiveChargeExplorer />
+
+<BilingualSection titleZh="介电、压电与内部应变的统一混合导数" titleEn="Dielectric, piezoelectric, and internal-strain responses as mixed derivatives" eyebrow="Response family">
+  <div className="bilingual-section__zh">
+
+同一二阶能量框架还产生：固定离子介电 susceptibility $\partial P/\partial E$；内部应变张量 $\partial F_s/\partial\eta$；clamped-ion 压电张量 $\partial P/\partial\eta$；以及原子弛豫后通过 $Z^*$、内部应变和力常数逆矩阵形成的离子贡献。柔软模式会放大 relaxed-ion response，但接近零频率时谐振逆矩阵也更敏感于数值误差、非谐性和边界条件。
+
+报告介电或压电量时应说明：固定离子还是弛豫离子；定应变还是定应力；电场 $\mathbf E$ 还是位移场 $\mathbf D$ 边界；电子或离子贡献；单位和晶胞体积 convention。对二维体系，用任意真空厚度定义的三维体介电常数不是唯一材料常数，通常应转化为面极化率或明确有效厚度。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The same second-order energy framework generates the clamped-ion dielectric susceptibility $\partial P/\partial E$, internal-strain tensor $\partial F_s/\partial\eta$, clamped-ion piezoelectric tensor $\partial P/\partial\eta$, and relaxed-ion contributions formed from $Z^*$, internal strain, and the inverse force-constant matrix. Soft modes can amplify a relaxed-ion response, but a nearly singular harmonic inverse is also more sensitive to numerical error, anharmonicity, and boundary conditions.
+
+A dielectric or piezoelectric result must state whether ions are clamped or relaxed, strain or stress is fixed, the electrical boundary is $\mathbf E$ or $\mathbf D$, electronic and ionic contributions are included, and which unit or cell-volume convention is used. For a two-dimensional material, a three-dimensional dielectric constant based on arbitrary vacuum is not a unique material property; an areal polarizability or declared effective thickness is normally needed.
+
+  </div>
+</BilingualSection>

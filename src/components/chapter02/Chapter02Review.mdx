@@ -1,0 +1,90 @@
+<h2 id="review">常见误判、练习与来源边界 | Misconceptions, Exercises, and Source Boundaries</h2>
+
+## 常见误判 | Common Misconceptions
+
+1. **结构优化完成等于材料稳定。** 优化只找到给定初态附近的驻点；还需比较候选相、分解、声子、有限温度和动力学路径。  
+   **A completed relaxation means the material is stable.** It finds a stationary point near one initial structure; candidate phases, decomposition, phonons, finite temperature, and kinetic paths remain separate.
+2. **最低总能相在任意压力都稳定。** 固定压力比较焓 $H=E+PV$，有限温度比较 Gibbs 自由能。  
+   **The lowest total-energy phase is stable at every pressure.** Enthalpy is compared at fixed pressure and Gibbs free energy at finite temperature.
+3. **先进泛函对所有性质都更准确。** 泛函表现依赖材料类别与 observable；改善带隙不保证改善相能差。  
+   **A more advanced functional improves every property.** Performance depends on material class and observable; a better gap does not guarantee better phase energies.
+4. **实频声子谱证明可合成。** 它只支持指定结构的局域谐波稳定。  
+   **A real phonon spectrum proves synthesizability.** It supports only local harmonic stability of the specified structure.
+5. **总磁矩为零表示非磁。** 反铁磁和补偿亚铁磁也可有零总矩。  
+   **Zero total moment means nonmagnetic.** Antiferromagnets and compensated ferrimagnets can also have zero total moment.
+6. **差分密度等值面直接给出电荷转移。** 差分依赖参考密度和几何，原子电荷还需额外分区。  
+   **A difference-density isosurface directly gives charge transfer.** The difference depends on reference density and geometry, while atomic charge requires an additional partition.
+7. **能带穿过费米能证明良好金属。** 输运还依赖局域化、散射、关联和载流子寿命。  
+   **A Fermi-level band crossing proves a good metal.** Transport also depends on localization, scattering, correlation, and carrier lifetime.
+8. **Kohn–Sham gap、基本 gap 和光学 gap 可以互换。** 三者定义不同，激子与导数不连续会使其分离。  
+   **Kohn–Sham, fundamental, and optical gaps are interchangeable.** Their definitions differ, and exciton binding and derivative discontinuity separate them.
+9. **看到表面态就证明拓扑。** 普通悬挂键、Shockley/Tamm 态和重构也产生表面态。  
+   **Observing a surface state proves topology.** Dangling bonds, Shockley/Tamm states, and reconstruction also create surface states.
+10. **二维异质结构的层间作用弱，因此单层性质保持不变。** 界面偶极、应变、扭角、杂化与声子失配可以改变性质。  
+    **Weak interlayer binding preserves isolated-layer properties.** Interface dipoles, strain, twist, hybridization, and phonon mismatch can alter them.
+
+## 练习与复盘 | Exercises and Review
+
+以下题目均为本站原创，不转录 Martin 的练习。  
+The following problems are original to this site and do not reproduce Martin's exercises.
+
+1. 将内聚能、平衡结构、声子、电子比热、ARPES 和光学吸收分别归入电子基态、加减电子激发、定粒子数激发或核运动，并说明存在交叉耦合的情况。  
+   Classify cohesive energy, equilibrium structure, phonons, electronic heat capacity, ARPES, and optical absorption as ground-state, addition/removal, neutral-excitation, or nuclear-motion quantities, noting relevant couplings.
+2. 从 $dE=-P\,dV$ 推导 $P=-dE/dV$ 和 $B=Vd^2E/dV^2$，检查单位，并解释为什么体模量比平衡体积更容易受数值噪声影响。  
+   Derive pressure and bulk modulus from $dE=-P\,dV$, check units, and explain why the bulk modulus is more sensitive to numerical noise than equilibrium volume.
+3. 给定两个二次 $E(V)$ 曲线，推导其最小焓并求转变压力；用状态方程交互模型验证正压力为何偏好小体积相。  
+   For two quadratic $E(V)$ curves, derive minimized enthalpies and the transition pressure; use the interactive model to verify why positive pressure favours the smaller-volume phase.
+4. 设计一个比较 LDA、PBE、SCAN 和 hybrid 结构预测的最低成本方案，明确材料集合、目标量、数值收敛和实验温度修正。  
+   Design a minimum-cost comparison of LDA, PBE, SCAN, and hybrid structural predictions, specifying materials, target quantities, numerical convergence, and experimental temperature corrections.
+5. 一个候选在 0 GPa 位于形成焓凸包上，但在 100 GPa 高于 H$_3$S+S 连线。解释两种压力下的分解结论，并列出还需检查的动力学与有限温度问题。  
+   A candidate lies on the formation-enthalpy hull at 0 GPa but above an H$_3$S+S tie line at 100 GPa. Explain the decomposition conclusions and remaining kinetic and finite-temperature questions.
+6. 从 $m=\chi_0(V_{ext}+Im)$ 推导 Stoner 磁化率，说明 $IN(E_F)>1$ 能支持什么，以及它不能决定什么。  
+   Derive the Stoner susceptibility and state what $IN(E_F)>1$ supports and what it cannot determine.
+7. 选择一个立方晶体应变路径，从能量二阶展开推导可获得的弹性常数组合，并说明固定内部坐标和弛豫内部坐标的差别。  
+   Choose a cubic-crystal strain path, derive the elastic-constant combination obtained from the quadratic energy, and distinguish clamped-ion from relaxed-ion results.
+8. 对一个 Γ 点有小虚频的二维材料，写出最低验证序列：数值收敛、声学/旋转和规则、真空、超胞/DFPT、全 $q$ 区检查和有限温度。  
+   For a two-dimensional material with a small imaginary Γ mode, write the minimum validation sequence covering numerical convergence, acoustic/rotational sum rules, vacuum, supercell/DFPT, full-$q$ checks, and finite temperature.
+9. 从简谐振子配分函数推导振动自由能的低温和高温极限，说明零点能如何改变两个轻元素相的相序。  
+   Derive low- and high-temperature limits of harmonic vibrational free energy and explain how zero-point energy can reorder two light-element phases.
+10. 为二元半导体表面写出化学势约束和表面自由能，说明为什么不同化学计量 slab 的裸总能不可直接比较。  
+    Write the chemical-potential constraints and surface free energy for a binary semiconductor and explain why raw total energies of slabs with different stoichiometry are not directly comparable.
+11. 设计二维异质结构的 Type-III 判定：分别列出孤立层参考、显式界面势对齐、层分辨 full-BZ 态身份、应变/registry 收敛和电荷分析的证据作用。  
+    Design a Type-III heterostructure assessment covering isolated-layer references, explicit-interface potential lineup, layer-resolved full-BZ state identity, strain/registry convergence, and the role of charge analyses.
+12. 使用 gap 层级模型构造两个体系：一个弱束缚三维半导体和一个强束缚二维激子体系。解释参数变化的物理含义和模型失效处。  
+    Use the gap-hierarchy model to construct a weakly bound three-dimensional semiconductor and a strongly bound two-dimensional exciton system. Explain the parameter changes and where the model fails.
+13. ARPES 显示一条宽峰随动量色散，DFT 给出尖锐能带。列出比较峰位置、宽度、谱权重和表面/体身份所需的理论对象。  
+    ARPES shows a broad dispersive peak while DFT gives a sharp band. List the theoretical objects required to compare position, width, spectral weight, and surface/bulk identity.
+14. 给出一个“表面局域态但体拓扑平庸”的反例机制，并说明需要什么计算才能把它与拓扑表面态区分。  
+    Give a mechanism for a surface-localized state in a topologically trivial bulk and state the calculations needed to distinguish it from a topological surface state.
+15. 为一个疑似关联绝缘体建立方法升级门槛：常规 DFT、磁序、DFT+$U$/hybrid、GW/DMFT/QMC 分别需要回答什么问题，何时不应继续增加复杂度。  
+    Establish method-escalation gates for a suspected correlated insulator: what should ordinary DFT, magnetic-order tests, DFT+$U$/hybrids, and GW/DMFT/QMC answer, and when should complexity not be increased further?
+
+### 解题检查框架 | Solution-check framework
+
+- 先指定系综、结构、粒子数、边界条件和目标 observable。  
+  Specify ensemble, structure, particle number, boundary conditions, and target observable first.
+- 标出定义、严格关系、物理近似、数值离散和经验参数。  
+  Mark definitions, exact relations, physical approximations, numerical discretizations, and empirical parameters.
+- 检查能量参考、归一化、单位和极限。  
+  Check energy reference, normalization, units, and limiting cases.
+- 把程序/内部收敛、observable 收敛、方法适用性和科学结论分开。  
+  Separate program/internal convergence, observable convergence, method applicability, and the scientific conclusion.
+- 对结构、相图、谱和拓扑主张分别寻找最小反例。  
+  Seek the minimal counterexample for structural, phase-diagram, spectral, and topological claims.
+
+## 来源、原创内容与边界 | Sources, Original Work, and Boundaries
+
+- **Martin 主来源 | Primary Martin source:** Chapter 2, printed pp. 15–59; §§2.1–2.17. The website follows the directory order but does not reproduce textbook prose, figures 2.1–2.27, figure captions, or the further-reading text.
+- **Sholl–Steckel 实践连接 | Practice connection:** Chapters 2–4 and 8–10 are used only as later practical cross-reference points for cells, $k$ sampling, surfaces, DOS, magnetism, and accuracy. No practice-chapter body is reproduced here.
+- **补充推导 | Supplemental derivations:** pressure and bulk modulus, common tangent, convex hull, Stoner response, elasticity expansion, dynamical matrix, harmonic free energy, surface grand potential, gap hierarchy, and exciton binding are original website derivations.
+- **原创可视化 | Original visualizations:** the two-phase EOS model, gap-hierarchy model, and property-evidence router use local deterministic code and no textbook data.
+- **边界 | Boundary:** Chapter completion validates source coverage, original exposition, formula rendering, declared teaching models, and site behaviour. It does not independently validate Martin's claims, any material result, DFT convergence, superconductivity, topology, synthesizability, or learner outcomes.
+
+## 章节连接 | Chapter Connections
+
+- [Chapter 1 · Introduction](../chapter-01-introduction/)
+- [Part I 总览 | Part I overview](../)
+- [Chapter 3 · Theoretical Background](../chapter-03-theoretical-background/)
+- [Chapter 4 · Periodic Solids and Electron Bands](../chapter-04-periodic-solids-and-electron-bands/)
+- [Chapter 5 · Uniform Electron Gas and sp-Bonded Metals](../chapter-05-uniform-electron-gas-and-sp-bonded-metals/)
+- [Sholl–Steckel practical track](../../practice-sholl-steckel/)

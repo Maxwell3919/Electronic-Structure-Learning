@@ -1,0 +1,278 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-3-1">3.1 相互作用电子与原子核的基本方程 | Basic Equations for Interacting Electrons and Nuclei</h2>
+
+<BilingualSection titleZh="完整非相对论 Coulomb Hamiltonian" titleEn="The full nonrelativistic Coulomb Hamiltonian" eyebrow="【Martin 原书 | Martin source】 §3.1 · pp. 60–64">
+  <div class="bilingual-section__zh">
+
+对 $N_e$ 个电子和 $N_n$ 个原子核，固定总粒子数的非相对论 Hamiltonian 可分为电子动能、电子—核吸引、电子—电子排斥、核动能和核—核排斥：
+
+$$
+\begin{aligned}
+\hat H={}&-\sum_{i=1}^{N_e}\frac{\hbar^2}{2m_e}\nabla_i^2
+-\sum_{iI}\frac{Z_Ie^2}{4\pi\epsilon_0|\mathbf r_i-\mathbf R_I|}
++\frac12\sum_{i\ne j}\frac{e^2}{4\pi\epsilon_0|\mathbf r_i-\mathbf r_j|}\\
+&-\sum_{I=1}^{N_n}\frac{\hbar^2}{2M_I}\nabla_I^2
++\frac12\sum_{I\ne J}\frac{Z_IZ_Je^2}{4\pi\epsilon_0|\mathbf R_I-\mathbf R_J|}.
+\end{aligned}
+$$
+
+电子用小写指标 $i,j$，核用大写指标 $I,J$。每一个 Coulomb 双重求和都带 $1/2$，用于消除有序对 $(i,j)$ 与 $(j,i)$ 的重复计数。电子—核项没有 $1/2$，因为电子集合和核集合不同。
+
+该 Hamiltonian 是后续近似的共同起点。自旋—轨道、外磁场的 vector potential、Zeeman 项、相对论效应和量子电动力学修正并未包含；它们需要在目标现象依赖时显式加入。对重元素拓扑、磁各向异性或芯层谱，忽略这些项可能改变定性结论。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For $N_e$ electrons and $N_n$ nuclei at fixed total particle number, the nonrelativistic Hamiltonian separates into electronic kinetic energy, electron–nuclear attraction, electron–electron repulsion, nuclear kinetic energy, and nuclear–nuclear repulsion:
+
+$$
+\begin{aligned}
+\hat H={}&-\sum_{i=1}^{N_e}\frac{\hbar^2}{2m_e}\nabla_i^2
+-\sum_{iI}\frac{Z_Ie^2}{4\pi\epsilon_0|\mathbf r_i-\mathbf R_I|}
++\frac12\sum_{i\ne j}\frac{e^2}{4\pi\epsilon_0|\mathbf r_i-\mathbf r_j|}\\
+&-\sum_{I=1}^{N_n}\frac{\hbar^2}{2M_I}\nabla_I^2
++\frac12\sum_{I\ne J}\frac{Z_IZ_Je^2}{4\pi\epsilon_0|\mathbf R_I-\mathbf R_J|}.
+\end{aligned}
+$$
+
+Lower-case indices denote electrons and upper-case indices denote nuclei. Each Coulomb double sum carries $1/2$ to remove duplicate ordered pairs. The electron–nuclear term has no such factor because the two index sets are distinct.
+
+This Hamiltonian is the common starting point for later approximations. Spin–orbit coupling, vector potentials for external magnetic fields, Zeeman terms, relativistic corrections, and quantum-electrodynamic effects are not included. They must be added when the target phenomenon depends on them. For heavy-element topology, magnetic anisotropy, or core spectroscopy, omission can change the qualitative result.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Born–Oppenheimer 分离" titleEn="Born–Oppenheimer separation">
+  <div class="bilingual-section__zh">
+
+五项中唯一普遍含小参数的是核动能中的 $1/M_I$。令 $M_I\to\infty$，核动能首先被忽略，核位置成为电子 Hamiltonian 的参数：
+
+$$
+\hat H_e(\{\mathbf R_I\})
+=\hat T_e+\hat V_{\mathrm{ext}}+\hat V_{ee}+E_{II}.
+$$
+
+在 Hartree 原子单位中，
+
+$$
+\hat T_e=-\frac12\sum_i\nabla_i^2,
+\qquad
+\hat V_{\mathrm{ext}}=\sum_i V_{\mathrm{ext}}(\mathbf r_i),
+\qquad
+\hat V_{ee}=\frac12\sum_{i\ne j}\frac1{|\mathbf r_i-\mathbf r_j|}.
+$$
+
+$E_{II}$ 对电子波函数只是加法常数，却是比较结构、求力和相稳定性时不可缺少的总能项。若使用 nonlocal pseudopotential，$V_{\mathrm{ext}}$ 不再是简单乘法势，但“固定核参数下的电子问题”这一分解仍成立。
+
+Born–Oppenheimer 近似没有删除核自由度。它先求每组核坐标的电子本征值面 $E_a(\mathbf R)$，再让核在这些势能面上运动。声子、结构优化和从头算分子动力学通常从基态面开始；电子—声子耦合、非绝热动力学和锥形交叉则需要考虑不同电子面之间的导数耦合。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The only generally small parameter among the five terms is $1/M_I$ in the nuclear kinetic energy. Taking $M_I\to\infty$ first removes nuclear kinetic energy and turns nuclear positions into parameters of the electronic Hamiltonian:
+
+$$
+\hat H_e(\{\mathbf R_I\})
+=\hat T_e+\hat V_{\mathrm{ext}}+\hat V_{ee}+E_{II}.
+$$
+
+In Hartree atomic units,
+
+$$
+\hat T_e=-\frac12\sum_i\nabla_i^2,
+\qquad
+\hat V_{\mathrm{ext}}=\sum_i V_{\mathrm{ext}}(\mathbf r_i),
+\qquad
+\hat V_{ee}=\frac12\sum_{i\ne j}\frac1{|\mathbf r_i-\mathbf r_j|}.
+$$
+
+$E_{II}$ is an additive constant for the electronic wavefunction, but it is indispensable for structural energies, forces, and phase stability. With nonlocal pseudopotentials, $V_{\mathrm{ext}}$ is no longer a simple multiplicative potential, while the fixed-nuclear-parameter decomposition remains valid.
+
+Born–Oppenheimer separation does not remove nuclear degrees of freedom. It first defines electronic eigenvalue surfaces $E_a(\mathbf R)$ for each nuclear geometry and then lets the nuclei move on those surfaces. Phonons, relaxation, and ab initio molecular dynamics commonly start from the ground-state surface. Electron–phonon coupling, nonadiabatic dynamics, and conical intersections require derivative coupling among electronic surfaces.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: adiabatic expansion and nonadiabatic couplings"
+  assumptions={[
+    '电子 Hamiltonian 在每组核坐标上具有完备正交本征态；',
+    '暂不处理相对论和外磁场的规范结构；',
+    '核坐标可作为慢变量展开。',
+  ]}
+>
+
+把总波函数展开为瞬时电子态
+
+$$
+\Psi(\mathbf x,\mathbf R)
+=\sum_a \chi_a(\mathbf R)\Phi_a(\mathbf x;\mathbf R),
+\qquad
+\hat H_e(\mathbf R)\Phi_a=E_a(\mathbf R)\Phi_a.
+$$
+
+核动能作用于乘积时同时微分 $\chi_a$ 和 $\Phi_a$：
+
+$$
+\nabla_I^2(\chi_a\Phi_a)
+=(\nabla_I^2\chi_a)\Phi_a
++2(\nabla_I\chi_a)\cdot(\nabla_I\Phi_a)
++\chi_a\nabla_I^2\Phi_a.
+$$
+
+投影到 $\Phi_b$ 后得到耦合核方程。非对角项含
+
+$$
+\mathbf d_{ba}^{(I)}(\mathbf R)
+=\langle\Phi_b|\nabla_I\Phi_a\rangle,
+\qquad
+D_{ba}^{(I)}(\mathbf R)
+=\langle\Phi_b|\nabla_I^2\Phi_a\rangle.
+$$
+
+绝热近似忽略 $b\ne a$ 的导数耦合，使核主要在单个 $E_a(\mathbf R)$ 面上运动。该近似在电子能隙大、核慢且没有近简并时较好；在 avoided crossing、金属低能连续谱、强电子—声子耦合或超快激发中需要重新检查。
+
+<p lang="en">Expanding the total state in instantaneous electronic eigenstates and applying nuclear kinetic energy produces first- and second-derivative couplings. The adiabatic approximation neglects off-diagonal couplings and propagates nuclei on one electronic energy surface. It is controlled when electronic gaps are large and nuclear motion is slow, and becomes delicate near avoided crossings, low-energy continua, strong electron–phonon coupling, or ultrafast driving.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="多体 Schrödinger 方程、期望值与密度" titleEn="Many-body Schrödinger equation, expectation values, and density">
+  <div class="bilingual-section__zh">
+
+电子多体态满足
+
+$$
+i\hbar\frac{\partial}{\partial t}|\Psi(t)\rangle
+=\hat H_e|\Psi(t)\rangle.
+$$
+
+定态写成 $|\Psi(t)\rangle=e^{-iEt/\hbar}|\Psi\rangle$，并满足 $\hat H_e|\Psi\rangle=E|\Psi\rangle$。对任意算符 $\hat O$，归一化态的期望值为
+
+$$
+\langle\hat O\rangle=\langle\Psi|\hat O|\Psi\rangle.
+$$
+
+一体密度算符
+
+$$
+\hat n(\mathbf r)=\sum_{i=1}^{N_e}\delta(\mathbf r-\mathbf r_i)
+$$
+
+给出
+
+$$
+n(\mathbf r)=\langle\Psi|\hat n(\mathbf r)|\Psi\rangle,
+\qquad
+\int n(\mathbf r)\,d^3r=N_e.
+$$
+
+总能可组织为
+
+$$
+E=\langle\hat T_e\rangle+\langle\hat V_{ee}\rangle
++\int V_{\mathrm{ext}}(\mathbf r)n(\mathbf r)\,d^3r+E_{II}.
+$$
+
+外势项只需要一体密度；电子—电子项一般需要 pair density 或更高层多体信息。这个差别正是“密度很有用”与“多体问题仍然困难”同时成立的原因。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The electronic many-body state obeys
+
+$$
+i\hbar\frac{\partial}{\partial t}|\Psi(t)\rangle
+=\hat H_e|\Psi(t)\rangle.
+$$
+
+A stationary state has $|\Psi(t)\rangle=e^{-iEt/\hbar}|\Psi\rangle$ and satisfies $\hat H_e|\Psi\rangle=E|\Psi\rangle$. For a normalized state, the expectation value of an operator is
+
+$$
+\langle\hat O\rangle=\langle\Psi|\hat O|\Psi\rangle.
+$$
+
+The one-body density operator
+
+$$
+\hat n(\mathbf r)=\sum_{i=1}^{N_e}\delta(\mathbf r-\mathbf r_i)
+$$
+
+gives
+
+$$
+n(\mathbf r)=\langle\Psi|\hat n(\mathbf r)|\Psi\rangle,
+\qquad
+\int n(\mathbf r)\,d^3r=N_e.
+$$
+
+The total energy can be organized as
+
+$$
+E=\langle\hat T_e\rangle+\langle\hat V_{ee}\rangle
++\int V_{\mathrm{ext}}(\mathbf r)n(\mathbf r)\,d^3r+E_{II}.
+$$
+
+The external-potential term requires only the one-body density. The electron–electron term generally requires a pair density or higher many-body information. This is why density can be extremely useful while the many-body problem remains difficult.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Rayleigh–Ritz 变分原理 | Rayleigh–Ritz variational principle"
+  assumptions={[
+    'Hamiltonian 为自伴算符并在目标子空间有下界；',
+    '试探态满足归一化、反对称性和目标守恒量；',
+    '简并情形按整个基态子空间处理。',
+  ]}
+>
+
+对归一化试探态，能量泛函为
+
+$$
+\mathcal E[\Psi]
+=\frac{\langle\Psi|\hat H|\Psi\rangle}
+{\langle\Psi|\Psi\rangle}.
+$$
+
+引入归一化乘子 $E$，对 bra 作独立变分：
+
+$$
+\delta\left[
+\langle\Psi|\hat H|\Psi\rangle
+-E(\langle\Psi|\Psi\rangle-1)
+\right]=0.
+$$
+
+得到
+
+$$
+\langle\delta\Psi|(\hat H-E)|\Psi\rangle=0.
+$$
+
+由于 $\langle\delta\Psi|$ 在允许空间任意，必须有
+
+$$
+\hat H|\Psi\rangle=E|\Psi\rangle.
+$$
+
+任一本征态是能量泛函的驻点；只有最低本征值是全局最小值。激发态在无额外正交约束时通常不是最小值，而是 saddle point。数值优化若限制在有限 ansatz 中，只证明该 ansatz 流形上的驻点或极小值。
+
+<p lang="en">Stationarity of the normalized energy quotient gives the many-body eigenvalue equation. Every eigenstate is stationary, but only the lowest eigenvalue is the global minimum. Excited states are generally saddle points unless orthogonality or symmetry restrictions are imposed. A variational calculation in a finite ansatz establishes stationarity only within that ansatz.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="本节的证据上限" titleEn="Evidence ceiling of this section" kind="boundary">
+  <div class="bilingual-section__zh">
+
+写出基本 Hamiltonian 不等于能够求解真实材料。Born–Oppenheimer 电子能量面不自动包含核量子效应或非绝热跃迁；一个变分能量很低不证明试探空间完备；一个 SCF 解也不自动是全多体 Hamiltonian 的基态。后续所有近似都应明确说明它限制了波函数、密度、轨道、相关函数还是响应函数中的哪一部分。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Writing the fundamental Hamiltonian does not make a material solvable. A Born–Oppenheimer surface does not automatically include nuclear quantum effects or nonadiabatic transitions. A low variational energy does not establish completeness of the trial space, and an SCF solution is not automatically the ground state of the full many-body Hamiltonian. Every later approximation should state whether it restricts the wavefunction, density, orbitals, correlation functions, or response functions.
+
+  </div>
+</BilingualCallout>

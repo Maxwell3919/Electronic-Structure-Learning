@@ -1,0 +1,198 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-2-14">2.14 电子激发：能带与带隙 | Electronic Excitations: Bands and Bandgaps</h2>
+
+<BilingualSection titleZh="基本带隙是多体总能差" titleEn="The fundamental gap is a many-body total-energy difference" eyebrow="【Martin 原书 | Martin source】 §2.14 · pp. 50–54">
+  <div class="bilingual-section__zh">
+
+加电子和减电子激发连接不同粒子数扇区。对 $N$ 电子基态，总能分别为 $E(N-1)$、$E(N)$ 和 $E(N+1)$。电离能与电子亲和能可写成
+
+$$
+I=E(N-1)-E(N),
+\qquad
+A=E(N)-E(N+1).
+$$
+
+基本带隙为
+
+$$
+E_g^{\mathrm{fund}}=I-A
+=E(N+1)+E(N-1)-2E(N).
+$$
+
+这个定义对相互作用多体体系成立，不依赖独立电子近似。金属在热力学极限具有零基本隙和离域低能载流态；非零隙通常支持绝缘，但无序局域化也可在零单粒子隙之外抑制输运，因此“gap = 0/非零”不能覆盖所有金属—绝缘机制。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electron-addition and removal excitations connect sectors with different particle number. For an $N$-electron ground state with energies $E(N-1)$, $E(N)$, and $E(N+1)$, the ionization energy and electron affinity are
+
+$$
+I=E(N-1)-E(N),
+\qquad
+A=E(N)-E(N+1).
+$$
+
+The fundamental gap is
+
+$$
+E_g^{\mathrm{fund}}=I-A
+=E(N+1)+E(N-1)-2E(N).
+$$
+
+This definition applies to an interacting many-body system and does not rely on an independent-electron approximation. A metal has zero fundamental gap and delocalized low-energy carrier states in the thermodynamic limit. A nonzero gap generally supports insulation, while disorder localization can suppress transport through a different mechanism, so a zero/nonzero bandgap does not exhaust metal–insulator physics.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: Kohn–Sham gap and derivative discontinuity"
+  assumptions={[
+    '讨论精确基态 DFT 的整数粒子数左右导数；',
+    '忽略有限尺寸带电超胞修正的实现细节；',
+    '普通局域 Kohn–Sham 势与广义 Kohn–Sham 非局域算符需要分开。',
+  ]}
+>
+
+精确总能作为粒子数的分段线性函数，在整数 $N$ 两侧的导数分别为
+
+$$
+\left.\frac{\partial E}{\partial N}\right|_{N^-}=-I,
+\qquad
+\left.\frac{\partial E}{\partial N}\right|_{N^+}=-A.
+$$
+
+两者之差就是基本隙：
+
+$$
+E_g^{\mathrm{fund}}
+=\left.\frac{\partial E}{\partial N}\right|_{N^+}
+-\left.\frac{\partial E}{\partial N}\right|_{N^-}.
+$$
+
+对局域 Kohn–Sham 体系，轨道本征值隙
+
+$$
+E_g^{\mathrm{KS}}=\varepsilon_{\mathrm{LUMO}}-\varepsilon_{\mathrm{HOMO}}
+$$
+
+一般还缺少交换—关联势跨过整数粒子数时的导数不连续 $\Delta_{\mathrm{xc}}$：
+
+$$
+E_g^{\mathrm{fund}}=E_g^{\mathrm{KS}}+\Delta_{\mathrm{xc}}.
+$$
+
+常用 LDA/GGA 近似缺少或低估这一项，并伴随自相互作用和离域误差，因此带隙往往偏小。广义 Kohn–Sham 杂化泛函把部分非局域交换放入辅助算符，通常改善加减电子能量，但其本征值仍是近似并具有材料与参数依赖。
+
+<p lang="en">The exact total energy is piecewise linear in particle number. Its left and right derivatives at an integer give minus the ionization energy and minus the electron affinity, respectively. The fundamental gap is therefore the derivative jump. A local Kohn–Sham eigenvalue gap generally differs by the exchange–correlation derivative discontinuity. Semilocal approximations miss much of this effect, whereas generalized Kohn–Sham hybrids can improve addition/removal energies without becoming exact quasiparticle theories.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="ARPES 测量的是去电子谱函数" titleEn="ARPES measures the electron-removal spectral function">
+  <div class="bilingual-section__zh">
+
+角分辨光电子能谱通过光子移出电子，测量平行于表面的动量和结合能。它是表面敏感实验；垂直动量的恢复依赖光子能量和末态模型。独立粒子图像给出尖锐能带，而相互作用体系的谱函数包含有限寿命准粒子峰、非整数谱权重、卫星峰和非相干背景。
+
+因此实验“能带点”不是直接读取裸 Hamiltonian 本征值。峰位置、宽度和强度分别包含自能实部、寿命/散射与矩阵元信息。理论与 ARPES 比较需要表面终止、掺杂导致的费米能位置、光子能量、矩阵元和仪器展宽；只把 DFT 线条叠在强度图上不足以验证准粒子理论。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Angle-resolved photoemission removes an electron with a photon and measures binding energy and momentum parallel to the surface. It is surface sensitive, while reconstruction of perpendicular momentum depends on photon energy and a final-state model. An independent-particle picture gives sharp bands, whereas the interacting spectral function contains finite-lifetime quasiparticle peaks, fractional spectral weight, satellites, and incoherent background.
+
+Experimental “band points” are therefore not direct eigenvalues of a bare Hamiltonian. Peak position, width, and intensity carry information about the real self-energy, lifetime or scattering, and matrix elements. Theory–ARPES comparison requires surface termination, doping-dependent Fermi-level placement, photon energy, matrix elements, and instrumental broadening. Overlaying DFT lines on an intensity map is not sufficient validation of a quasiparticle theory.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="三种 gap 必须区分" titleEn="Three gaps that must be distinguished" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li><strong>Kohn–Sham gap：</strong>辅助轨道本征值差；</li>
+      <li><strong>基本 gap：</strong>加入与移去电子的多体能量差；</li>
+      <li><strong>光学 gap：</strong>最低允许定粒子数光学激发，可能因激子结合低于基本 gap。</li>
+    </ul>
+    三者只有在额外条件下才接近。比较“带隙”时必须写明定义、温度、结构相、直接/间接性质、自旋—轨道耦合、声子辅助过程和实验探针。
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>Kohn–Sham gap:</strong> an auxiliary-orbital eigenvalue difference;</li>
+      <li><strong>fundamental gap:</strong> a many-body addition/removal energy difference;</li>
+      <li><strong>optical gap:</strong> the lowest allowed fixed-particle-number optical excitation, potentially reduced below the fundamental gap by exciton binding.</li>
+    </ul>
+    The three become similar only under additional conditions. Any gap comparison must specify its definition, temperature, structural phase, direct or indirect character, spin–orbit coupling, phonon-assisted processes, and experimental probe.
+  </div>
+</BilingualCallout>
+
+<h2 id="section-2-15">2.15 电子激发与光学谱 | Electronic Excitations and Optical Spectra</h2>
+
+<BilingualSection titleZh="光学响应需要激发能和跃迁矩阵元" titleEn="Optical response requires excitation energies and transition matrix elements" eyebrow="【Martin 原书 | Martin source】 §2.15 · pp. 54–57">
+  <div class="bilingual-section__zh">
+
+光吸收通常保持电子总数不变。独立粒子近似把光谱写成占据态到空态的跃迁，并由偶极或速度矩阵元加权。即使单粒子带隙正确，忽略电子—空穴吸引也可能错过激子峰、重分配谱权重或改变吸收边。GaAs 等材料中，改善单粒子能带可以显著改善吸收起点；LiF 等宽隙绝缘体则由强束缚激子主导，短程核的 TDDFT 近似可能完全缺失主要峰。
+
+光谱与 DOS 不同。联合态密度提供可用跃迁相空间，实际强度还受偏振、选择定则、轨道性质、局域场和多体核影响。DOS 峰不能直接对应光学峰，单个 bandgap 也不能预测完整介电函数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Optical absorption usually preserves total electron number. An independent-particle approximation sums transitions from occupied to empty states weighted by dipole or velocity matrix elements. Even with a correct one-particle gap, neglecting electron–hole attraction can miss exciton peaks, redistribute spectral weight, or shift the absorption edge. In materials such as GaAs, improved one-particle bands can improve the onset substantially. In wide-gap insulators such as LiF, strongly bound excitons dominate and TDDFT approximations with short-range kernels may miss the principal peak entirely.
+
+An optical spectrum is not a DOS. The joint density of states supplies transition phase space, while actual intensity also depends on polarization, selection rules, orbital character, local fields, and the many-body kernel. A DOS peak does not map directly onto an optical peak, and one bandgap cannot predict the full dielectric function.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: exciton binding energy"
+  assumptions={[
+    '基本 gap 与最低光学激发属于同一结构和温度；',
+    '最低光学态为电子—空穴束缚态且光学允许；',
+    '忽略声子辅助间接跃迁和暗激子排序的额外复杂性。',
+  ]}
+>
+
+基本 gap 创建相距无穷远的电子和空穴所需最低能量，最低光学激发则允许二者相互吸引。激子结合能定义为
+
+$$
+E_b^{\mathrm{exc}}
+=E_g^{\mathrm{fund}}-E_g^{\mathrm{opt}}.
+$$
+
+若 $E_b^{\mathrm{exc}}>0$，光学峰位于连续电子—空穴阈值以下。二维体系的介电屏蔽减弱且 Coulomb 相互作用形式改变，$E_b$ 往往比三维体相更大，并强烈依赖基底与环境。因此将单层光学峰与体相基本 gap 比较会混合维度、屏蔽和激发定义。
+
+<p lang="en">The fundamental gap is the minimum energy for separated added-electron and removed-electron excitations. A bound electron–hole pair can produce an optical excitation below that continuum, with binding energy $E_b=E_g^{\mathrm{fund}}-E_g^{\mathrm{opt}}$. In two dimensions reduced screening and modified Coulomb interaction often increase binding and make the result strongly environment dependent.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="TDDFT 与长程非局域性" titleEn="TDDFT and long-range nonlocality">
+  <div class="bilingual-section__zh">
+
+时间依赖 DFT 在原则上可描述定粒子数响应，实际结果取决于交换—关联核。局域或短程核难以产生宽隙绝缘体中的长程电子—空穴吸引。含长程交换的范围分离杂化或介电依赖方法可以改善激子，但若参数通过实验 gap 调节，所得峰位不是无参数预测。
+
+长程 Hartree–Fock 交换对绝缘体激子有用，却在金属中因缺少屏蔽而产生错误。可迁移方法需要根据介电屏蔽或响应自洽调节长程作用，而不是对金属和绝缘体使用同一固定比例并假定统一准确。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Time-dependent DFT can in principle describe fixed-particle-number response, but practical results depend on the exchange–correlation kernel. Local or short-range kernels struggle to produce the long-range electron–hole attraction of wide-gap insulators. Range-separated hybrids or dielectric-dependent approaches containing long-range exchange can improve excitons, but when parameters are tuned to an experimental gap, the resulting peak position is not a parameter-free prediction.
+
+Long-range Hartree–Fock exchange can help describe excitons in insulators but fails in metals when screening is absent. A transferable approach must connect the long-range interaction to dielectric screening or determine it self-consistently, rather than using one fixed fraction for metals and insulators and assuming uniform accuracy.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="光谱计算的验收对象" titleEn="Acceptance objects for an optical calculation" kind="practice">
+  <div class="bilingual-section__zh">
+
+分别收敛基态结构、$k$ 点、空带数、能量截断、介电矩阵、展宽和频率网格；说明是否含自旋—轨道、局域场、电子—空穴核、声子辅助过程和有限温度。比较实验时不能通过任意刚性平移和展宽掩盖方法误差；若使用 scissor、调参或实验输入，应明确其作用范围和主张上限。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Converge the ground-state structure, $k$ mesh, number of empty bands, energy cutoffs, dielectric matrix, broadening, and frequency grid separately. State whether spin–orbit coupling, local fields, an electron–hole kernel, phonon-assisted processes, and finite temperature are included. Arbitrary shifts and broadenings must not conceal method error in comparison with experiment. Any scissor correction, fitted parameter, or experimental input must be declared together with the resulting claim ceiling.
+
+  </div>
+</BilingualCallout>

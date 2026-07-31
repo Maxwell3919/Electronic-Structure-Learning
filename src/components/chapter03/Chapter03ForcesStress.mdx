@@ -1,0 +1,268 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-3-3">3.3 力与应力定理 | Force and Stress Theorems</h2>
+
+<BilingualSection titleZh="力是能量对参数的负导数" titleEn="Force is the negative derivative of energy" eyebrow="【Martin 原书 | Martin source】 §3.3 · pp. 65–67">
+  <div class="bilingual-section__zh">
+
+对核位置 $\mathbf R_I$，共轭力定义为
+
+$$
+\mathbf F_I=-\frac{\partial E}{\partial\mathbf R_I}.
+$$
+
+若归一化电子态 $|\Psi(\mathbf R)\rangle$ 是 $\hat H(\mathbf R)$ 的精确本征态或能量泛函的完整变分驻点，能量导数只保留 Hamiltonian 的显式参数依赖：
+
+$$
+\frac{\partial E}{\partial\mathbf R_I}
+=\left\langle\Psi\left|
+\frac{\partial\hat H}{\partial\mathbf R_I}
+\right|\Psi\right\rangle.
+$$
+
+对局域电子—核势，电子部分可写成密度积分：
+
+$$
+\mathbf F_I
+=-\int n(\mathbf r)
+\frac{\partial V_{\mathrm{ext}}(\mathbf r)}
+{\partial\mathbf R_I}\,d^3r
+-\frac{\partial E_{II}}{\partial\mathbf R_I}.
+$$
+
+因此即使电子动能、电子—电子能、交换和关联随核移动发生变化，它们的一阶隐式导数在驻点相互抵消。对纯 Coulomb 局域势，结果等价于核电荷乘以其他电荷产生的总电场。对 nonlocal pseudopotential，仍使用 $-\langle\partial_{R_I}\hat H\rangle$，但不能仅由 $n(\mathbf r)$ 表示。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a nuclear coordinate $\mathbf R_I$, the conjugate force is
+
+$$
+\mathbf F_I=-\frac{\partial E}{\partial\mathbf R_I}.
+$$
+
+If the normalized electronic state $|\Psi(\mathbf R)\rangle$ is an exact eigenstate of $\hat H(\mathbf R)$ or a fully variational stationary point, the energy derivative contains only explicit parameter dependence of the Hamiltonian:
+
+$$
+\frac{\partial E}{\partial\mathbf R_I}
+=\left\langle\Psi\left|
+\frac{\partial\hat H}{\partial\mathbf R_I}
+\right|\Psi\right\rangle.
+$$
+
+For a local electron–nuclear potential, the electronic contribution becomes a density integral:
+
+$$
+\mathbf F_I
+=-\int n(\mathbf r)
+\frac{\partial V_{\mathrm{ext}}(\mathbf r)}
+{\partial\mathbf R_I}\,d^3r
+-\frac{\partial E_{II}}{\partial\mathbf R_I}.
+$$
+
+Electronic kinetic, electron–electron, exchange, and correlation energies all change when a nucleus moves, but their first-order implicit derivatives cancel at the stationary state. For local Coulomb potentials, the result equals nuclear charge times the total field of the other charges. With a nonlocal pseudopotential, $-\langle\partial_{R_I}\hat H\rangle$ remains valid, but it cannot generally be written from $n(\mathbf r)$ alone.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Hellmann–Feynman 推导 | Hellmann–Feynman derivation"
+  assumptions={[
+    '态归一化并且对参数可微；',
+    'Hamiltonian 为自伴，态满足精确本征方程；',
+    '简并情形先在简并子空间对 ∂λH 对角化。',
+  ]}
+>
+
+从
+
+$$
+E(\lambda)=\langle\Psi_\lambda|\hat H_\lambda|\Psi_\lambda\rangle
+$$
+
+求导：
+
+$$
+\frac{dE}{d\lambda}
+=\langle\partial_\lambda\Psi|\hat H|\Psi\rangle
++\left\langle\Psi\left|\partial_\lambda\hat H\right|\Psi\right\rangle
++\langle\Psi|\hat H|\partial_\lambda\Psi\rangle.
+$$
+
+使用 $\hat H|\Psi\rangle=E|\Psi\rangle$ 以及 Hermiticity：
+
+$$
+\frac{dE}{d\lambda}
+=E\left[
+\langle\partial_\lambda\Psi|\Psi\rangle
++\langle\Psi|\partial_\lambda\Psi\rangle
+\right]
++\langle\Psi|\partial_\lambda\hat H|\Psi\rangle.
+$$
+
+归一化条件 $\langle\Psi|\Psi\rangle=1$ 的导数使方括号为零，因此
+
+$$
+\boxed{
+\frac{dE}{d\lambda}
+=\langle\Psi|\partial_\lambda\hat H|\Psi\rangle}.
+$$
+
+更一般地，如果 $|\Psi\rangle$ 不是精确本征态但使近似能量对所有内部变分参数达到驻点，同样的隐式参数导数在该近似空间内消失。若优化不充分，残余一阶项会污染力。
+
+<p lang="en">Differentiating the eigenstate expectation value produces two state-derivative terms and one explicit Hamiltonian derivative. The eigenvalue equation converts the state terms into the derivative of normalization, which vanishes. A variational approximate state obeys the same cancellation only within its allowed parameter space and only when that space has been optimized to stationarity.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Pulay 项来自移动的不完备表示" titleEn="Pulay terms arise from a moving incomplete representation">
+  <div class="bilingual-section__zh">
+
+设近似轨道写在依赖核位置的基组中：
+
+$$
+|\psi_n\rangle=\sum_\mu c_{\mu n}|\chi_\mu(\mathbf R)\rangle.
+$$
+
+即使系数 $c_{\mu n}$ 已在当前有限基组中变分优化，移动核时基函数本身也改变：$\partial_{R_I}|\chi_\mu\rangle\ne0$。能量导数出现 basis-response 或 Pulay 项。非正交基组的广义本征问题
+
+$$
+\mathbf H\mathbf c_n=\varepsilon_n\mathbf S\mathbf c_n
+$$
+
+求导时同时含 $\partial_{R_I}\mathbf H$ 和 $\partial_{R_I}\mathbf S$。轨道级力贡献具有
+
+$$
+\frac{d\varepsilon_n}{dR_I}
+=\mathbf c_n^\dagger
+\left(\frac{\partial\mathbf H}{\partial R_I}
+-\varepsilon_n\frac{\partial\mathbf S}{\partial R_I}
+\right)\mathbf c_n
+$$
+
+的结构，第二项是典型 overlap/Pulay 修正。
+
+平面波基在固定 cutoff 与固定胞下不随原子位置移动，原子位移 Pulay 力通常较小或为零；但变胞时基组中平面波数目会变化，产生 Pulay stress。局域原子轨道、APW/LAPW、PAW augmentation 和自适应实空间基都有各自的响应项，不能复用别的方法公式。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Suppose an approximate orbital is expanded in a nuclear-position-dependent basis:
+
+$$
+|\psi_n\rangle=\sum_\mu c_{\mu n}|\chi_\mu(\mathbf R)\rangle.
+$$
+
+Even when the coefficients are variationally optimized in the current finite basis, the basis itself moves with the nuclei. The energy derivative then contains basis-response or Pulay terms. For the generalized eigenproblem
+
+$$
+\mathbf H\mathbf c_n=\varepsilon_n\mathbf S\mathbf c_n,
+$$
+
+differentiation gives the characteristic form
+
+$$
+\frac{d\varepsilon_n}{dR_I}
+=\mathbf c_n^\dagger
+\left(\frac{\partial\mathbf H}{\partial R_I}
+-\varepsilon_n\frac{\partial\mathbf S}{\partial R_I}
+\right)\mathbf c_n.
+$$
+
+The overlap derivative is a typical Pulay correction. Plane waves at fixed cell and cutoff do not move with atomic positions, so atomic Pulay forces are often absent, but variable-cell calculations change the represented plane-wave set and create Pulay stress. Local orbitals, APW/LAPW, PAW augmentation, and adaptive real-space bases require their own response terms.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="应力是对均匀应变的广义力" titleEn="Stress is the generalized force for homogeneous strain">
+  <div class="bilingual-section__zh">
+
+令空间按小应变 $\epsilon_{\alpha\beta}$ 缩放，$r_\alpha\to(\delta_{\alpha\beta}+\epsilon_{\alpha\beta})r_\beta$。Martin 采用
+
+$$
+\sigma_{\alpha\beta}
+=-\frac1\Omega\frac{\partial E}{\partial\epsilon_{\alpha\beta}}
+$$
+
+定义应力。电子坐标、核位置和晶格矢量必须一致缩放，波函数还要乘 Jacobian 因子以保持归一化。由于波函数和内部核坐标在平衡时为驻点，一阶能量变化只保留显式尺度依赖。
+
+对所有粒子和中心势相互作用，广义 virial 结构为
+
+$$
+\sigma_{\alpha\beta}
+=-\frac1\Omega\left[
+\sum_k\left\langle\frac{p_{k\alpha}p_{k\beta}}{m_k}\right\rangle
+-\frac12\sum_{k\ne l}
+\left\langle
+\frac{x_{kl,\alpha}x_{kl,\beta}}{x_{kl}}
+\frac{dV(x_{kl})}{dx_{kl}}
+\right\rangle
+\right].
+$$
+
+取 trace 得到静水压力。纯 Coulomb 相互作用满足 $r\,dV/dr=-V$，于是
+
+$$
+3P\Omega=2E_{\mathrm{kin}}+E_{\mathrm{pot}}.
+$$
+
+符号约定在不同领域和程序中可能相反；比较前必须确认“正值表示拉伸还是压缩”。有限温度、pseudopotential、Ewald、exchange-correlation、熵和基组 cutoff 都会产生实现特有项。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Under a small homogeneous strain, $r_\alpha\to(\delta_{\alpha\beta}+\epsilon_{\alpha\beta})r_\beta$. Martin defines
+
+$$
+\sigma_{\alpha\beta}
+=-\frac1\Omega\frac{\partial E}{\partial\epsilon_{\alpha\beta}}.
+$$
+
+Electronic coordinates, nuclei, and lattice vectors must be scaled consistently, and the wavefunction acquires a Jacobian factor to preserve normalization. At equilibrium, wavefunction and internal-coordinate first variations vanish, leaving explicit scale dependence.
+
+For particles interacting through central potentials, the generalized virial structure is
+
+$$
+\sigma_{\alpha\beta}
+=-\frac1\Omega\left[
+\sum_k\left\langle\frac{p_{k\alpha}p_{k\beta}}{m_k}\right\rangle
+-\frac12\sum_{k\ne l}
+\left\langle
+\frac{x_{kl,\alpha}x_{kl,\beta}}{x_{kl}}
+\frac{dV(x_{kl})}{dx_{kl}}
+\right\rangle
+\right].
+$$
+
+The trace yields hydrostatic pressure. For Coulomb interactions, $r\,dV/dr=-V$, giving
+
+$$
+3P\Omega=2E_{\mathrm{kin}}+E_{\mathrm{pot}}.
+$$
+
+Sign conventions differ among communities and codes. Finite temperature, pseudopotentials, Ewald terms, exchange-correlation, entropy, and basis cutoffs all add implementation-specific stress contributions.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="力与应力的最低验证" titleEn="Minimum validation of force and stress" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>用正负有限位移或有限应变验证解析力/应力的斜率和符号；</li>
+      <li>分别收敛 SCF、基组、FFT/grid、$k$ 点和 augmentation 参数；</li>
+      <li>比较解析力与总能差时使用相同电子占据、对称性和弛豫约束；</li>
+      <li>检查总平移力、总转矩、声学和规则及应力对胞取向的张量变换；</li>
+      <li>残余力小只证明局域驻点，不证明全局、声子或有限温度稳定。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>verify analytic force and stress signs and slopes with positive and negative finite displacements or strains;</li>
+      <li>converge SCF, basis, FFT/grid, $k$ sampling, and augmentation parameters separately;</li>
+      <li>use identical occupations, symmetry, and relaxation constraints when comparing analytic derivatives with total-energy differences;</li>
+      <li>check net translation force, net torque, acoustic sum rules, and tensor transformation under cell rotation;</li>
+      <li>small residual forces establish a local stationary geometry, not global, phonon, or finite-temperature stability.</li>
+    </ul>
+  </div>
+</BilingualCallout>

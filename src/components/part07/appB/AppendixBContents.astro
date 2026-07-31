@@ -1,0 +1,94 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[1];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-b-contents-title">
+  <h2 id="appendix-b-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、单位与约定 | Objects, units, and conventions</a></li>
+    <li><a href="#section-b-1">B.1 局域自旋密度近似 | Local spin-density approximation</a></li>
+    <li><a href="#spin-interpolation">自旋插值与势 | Spin interpolation and potentials</a></li>
+    <li><a href="#section-b-2">B.2 广义梯度近似 | Generalized-gradient approximations</a></li>
+    <li><a href="#section-b-3">B.3 显式 PBE 形式 | Explicit PBE form</a></li>
+    <li><a href="#pbe-limits">约束、极限与数值实现 | Constraints, limits, and implementation</a></li>
+    <li><a href="#cross-references">正文交叉引用 | Chapter cross-references</a></li>
+    <li><a href="#review">误判、练习与来源边界 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-b-source-title">
+  <h2 id="appendix-b-source-title">来源地图 | Source map</h2>
+  <p>
+    下表只记录 Martin 原书的目录标题和印刷页定位。网站正文、补充推导、图形和练习均为原创；原书中的参数化公式只在科学表达所需范围内重写并逐项解释。
+  </p>
+  <p lang="en">
+    The table records only Martin's directory titles and printed-page locators. Website prose, supplemental derivations, diagrams, and exercises are original; parametrized scientific formulas are restated only as needed and are explained term by term.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>
+            {section.id === 'B.1'
+              ? '均匀电子气输入、LSDA、自旋极化、相关能与相关势'
+              : section.id === 'B.2'
+                ? 'GGA 信息层级、密度梯度、无量纲约化梯度与适用边界'
+                : 'PBE 交换增强因子、相关修正、精确约束与极限'}
+          </td>
+          <td>content complete</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Website supplement</td>
+        <td>No directory-listed source exercise section</td>
+        <td>原创单位、极限、泛函导数和数值回归练习 | Original unit, limit, derivative, and regression exercises</td>
+        <td>original supplement complete</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 {
+    margin-top: 0;
+  }
+
+  .appendix-contents ol {
+    columns: 2;
+    column-gap: 2rem;
+    margin-bottom: 0;
+  }
+
+  .appendix-contents li {
+    break-inside: avoid;
+    margin-block: 0.35rem;
+  }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol {
+      columns: 1;
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="section-2-1">2.1 电子结构与物质性质 | Electronic Structure and the Properties of Matter</h2>
+
+<BilingualSection titleZh="基态性质与激发态性质" titleEn="Ground-state and excited-state properties" eyebrow="【Martin 原书 | Martin source】 §2.1 · pp. 15–16">
+  <div class="bilingual-section__zh">
+
+物质性质可以先按电子是否处于基态来组织。电子基态决定成键能量面，因此直接关联内聚能、平衡晶体结构、不同结构间的相变、弹性常数、电荷密度、磁序和静态响应。在绝热近似适用时，核振动和较慢的核运动也由这一基态能量面控制。
+
+激发态性质关注从基态离开所需的能量以及激发态本身的结构。金属中的低能电子激发参与电子比热、Pauli 自旋响应和输运；更高能激发决定绝缘体的加减电子能隙、光学吸收以及光电子谱。把这些性质都称为“电子性质”并不足够：理论上必须先说明激发是否改变电子总数，以及观测量对应能量、矩阵元还是谱权重。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Properties of matter can first be organized by whether the electrons remain in their ground state. The electronic ground state defines the bonding energy surface and is therefore directly connected to cohesive energies, equilibrium crystal structures, transitions between structures, elastic constants, charge density, magnetic order, and static response. When the adiabatic approximation applies, nuclear vibrations and slower nuclear motion are also governed by this ground-state energy surface.
+
+Excited-state properties concern both the energy needed to leave the ground state and the structure of the resulting state. Low-energy electronic excitations in metals contribute to electronic heat capacity, Pauli spin response, and transport. Higher-energy excitations determine addition/removal gaps in insulators, optical absorption, and photoemission spectra. Calling all of these “electronic properties” is insufficient: the theory must state whether electron number changes and whether the observable is an energy, a matrix element, or a spectral weight.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="为什么电子基态先决定结构" titleEn="Why the electronic ground state determines structure first">
+  <div class="bilingual-section__zh">
+
+电子的典型能量和时间尺度通常高于重核的低能运动。对一组瞬时核位置，电子可以先调整到相应的低能状态；核随后在电子基态给出的势能面上运动。这就是本章使用 Born–Oppenheimer 或绝热图像的原因。它解释了为什么同一种元素的不同电子成键方式可以产生性质差异极大的结构，例如碳的硬质金刚石和层状石墨。
+
+这一分离不是无条件成立。接近简并电子态、强非绝热耦合、锥形交叉或快速受激过程会使“电子始终处于瞬时基态”的描述失效。即使绝热近似合理，核量子零点运动和有限温度熵仍可能改变相对稳定性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Typical electronic energies and time scales are usually larger and faster than low-energy motion of heavy nuclei. For a set of instantaneous nuclear positions, the electrons can first adjust to the corresponding low-energy state; the nuclei then move on the potential-energy surface supplied by the electronic ground state. This is the Born–Oppenheimer or adiabatic picture used throughout the chapter. It explains why different electronic bonding arrangements of the same element can produce sharply different structures, such as hard diamond and layered graphite.
+
+The separation is conditional. Near-degenerate electronic states, strong nonadiabatic coupling, conical intersections, and rapid driven processes can invalidate the assumption that electrons remain in their instantaneous ground state. Even when the adiabatic approximation is adequate, nuclear zero-point motion and finite-temperature entropy may alter relative stability.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="两类电子激发" titleEn="Two classes of electronic excitation">
+  <div class="bilingual-section__zh">
+
+第一类激发改变电子数：向体系加入一个电子或移去一个电子。其能量出现在光电子、反光电子、扫描隧道和单粒子 Green 函数描述中。严格对象是 $N$ 粒子基态与 $N\pm1$ 粒子本征态之间的能量差及谱权重。
+
+第二类激发保持粒子数不变，例如电子从占据态跃迁到未占据态形成电子—空穴对。光学吸收通常属于这一类，电子与空穴之间的吸引可以形成激子。两类激发都不能仅凭普通基态 Kohn–Sham 能带无条件读取；广义 Kohn–Sham、Green 函数、时间依赖 DFT 或其他多体方法各自处理不同对象。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The first class changes electron number by adding or removing one electron. These energies enter photoemission, inverse photoemission, scanning-tunnelling, and one-particle Green-function descriptions. The strict objects are energy differences and spectral weights connecting the $N$-particle ground state with $N\pm1$ eigenstates.
+
+The second class preserves particle number, for example by promoting an electron from an occupied to an unoccupied state and creating an electron–hole pair. Optical absorption commonly belongs to this class, and electron–hole attraction may bind an exciton. Neither class can be read unconditionally from an ordinary ground-state Kohn–Sham band plot; generalized Kohn–Sham, Green-function, time-dependent DFT, and other many-body methods address different objects.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="电子—声子耦合跨越基态与激发态分界" titleEn="Electron–phonon coupling crosses the ground/excited-state divide" kind="boundary">
+  <div class="bilingual-section__zh">
+
+电子态依赖核位置，核运动又受到电子能量面的作用，因此电子激发与声子并非独立。耦合可以造成电子谱线宽化、能量重整化、结构软化和新相。金属在费米能附近具有任意低能电子激发，使其特别容易与低能核振动混合。由此可以建立超导理论，但能带穿越费米能或存在软声子本身都不能证明超导；还需要收敛的电子—声子矩阵元、全布里渊区积分和适用的超导理论。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electronic states depend on nuclear positions, while nuclear motion is governed by electronic energy surfaces, so electronic excitations and phonons are not independent. Their coupling can broaden spectra, renormalize energies, soften structures, and create new phases. Metals possess arbitrarily low-energy electronic excitations near the Fermi level and can therefore mix strongly with low-energy nuclear vibrations. This coupling can underpin a theory of superconductivity, but a Fermi-level crossing or a soft phonon alone does not establish superconductivity; converged electron–phonon matrix elements, full-Brillouin-zone integration, and an applicable superconducting theory are still required.
+
+  </div>
+</BilingualCallout>

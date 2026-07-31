@@ -1,0 +1,464 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import Chapter08SourceMap from './Chapter08SourceMap.astro';
+import XcHoleExplorer from './XcHoleExplorer.astro';
+import UniformGasExplorer from './UniformGasExplorer.astro';
+
+<span id="reading-orientation" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章处理的问题" titleEn="The problem addressed in this chapter" eyebrow="Orientation">
+  <div className="bilingual-section__zh">
+
+Chapter 7 把未知的多体部分压缩到交换—关联泛函 $E_{\mathrm{xc}}[n]$，但该定义恒等式没有提供可计算表达式。Chapter 8 从交换—关联洞出发，建立一条从严格关系到局域和半局域近似的路线：先确定 pair probability 相对 Hartree 独立分布缺少了多少电子，再把这一缺失沿 Coulomb 核和 coupling constant 积分，最后用均匀电子气、密度梯度或邻域平均构造近似。
+
+本章的关键判断不在于记忆某个函数名称，而在于辨认信息层级。LDA/LSDA 使用一点处的密度；GGA 加入一点处的梯度；ADA/WDA 使用邻域加权密度；数据库拟合则额外引入训练集合和目标函数。信息更多会扩大表达能力，也会引入新的参数、约束取舍和适用域。
+
+完成本章后，应能从 pair density 定义交换—关联洞并证明其电荷 sum rule，解释 coupling-constant average 如何同时包含 interaction 和 kinetic correlation，写出 LDA/LSDA 与 GGA 的基本形式，推导局域与梯度泛函的势，并区分理论约束、参数拟合、数值实现和材料结果验证。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Chapter 7 collected the unknown many-body contribution into the exchange–correlation functional $E_{\mathrm{xc}}[n]$, but the defining identity did not provide a computable expression. Chapter 8 develops a route from exact relations to local and semilocal approximations. The pair probability first identifies the electron deficit relative to an uncorrelated Hartree product. That deficit is then averaged over the Coulomb kernel and the interaction coupling constant. Practical approximations finally replace the exact hole by information from a uniform gas, local gradients, or a weighted neighborhood.
+
+The central task is to track the level of information rather than memorize functional names. LDA and LSDA use the density at one point; GGA adds local gradients; ADA and WDA use a nonlocal weighted density; database-fitted functionals additionally depend on a training set and an objective. More information enlarges expressive capacity while adding parameters, constraint trade-offs, and domain dependence.
+
+After the chapter, the reader should be able to define the exchange–correlation hole from the pair density and derive its charge sum rule, explain why the coupling-constant average contains both interaction and kinetic correlation, state LDA/LSDA and GGA forms, derive local and gradient-dependent potentials, and separate exact constraints, fitting choices, numerical implementation, and validation of material results.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="与相邻章节的边界" titleEn="Boundary with adjacent chapters" kind="boundary">
+  <div className="bilingual-section__zh">
+
+Chapter 7 已经定义 $E_{\mathrm{xc}}$ 和 $v_{\mathrm{xc}}$，本章负责构造 local、semilocal 和早期 weighted-density 近似。Hybrid、range separation、meta-GGA、OEP、SIC、DFT+U、response-derived functional、nonlocal dispersion 和 mBJ 属于 Chapter 9。这里可说明它们为何需要更丰富信息，但不提前完成其推导。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Chapter 7 defined $E_{\mathrm{xc}}$ and $v_{\mathrm{xc}}$. This chapter constructs local, semilocal, and early weighted-density approximations. Hybrids, range separation, meta-GGA, OEP, SIC, DFT+U, response-derived functionals, nonlocal dispersion, and mBJ belong to Chapter 9. Their motivation may be identified here, but their derivations are not pre-empted.
+
+  </div>
+</BilingualCallout>
+
+<Chapter08SourceMap />
+
+<span id="objects-and-notation" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 物理对象、数学对象与符号 | Physical and Mathematical Objects
+
+<BilingualSection titleZh="对象层级与约定" titleEn="Hierarchy of objects and conventions" eyebrow="Notation">
+  <div className="bilingual-section__zh">
+
+除非另有说明，采用 Hartree 原子单位，并把空间—自旋坐标写成 $x=(\mathbf r,\sigma)$。
+
+- $\Psi(x_1,\ldots,x_N)$：归一化反对称多体态。
+- $n(x)$：自旋分辨一体密度；$n(\mathbf r)=\sum_\sigma n(\mathbf r,\sigma)$。
+- $n^{(2)}(x,x')$：有序电子对的 pair density，积分为 $N(N-1)$。
+- $n_{\mathrm{cond}}(x'|x)$：已知在 $x$ 有电子时，在 $x'$ 找到另一电子的条件密度。
+- $n_{\mathrm{xc}}(x,x')$：条件密度相对独立分布 $n(x')$ 的差；积分为 $-1$。
+- $n_x$ 与 $n_c$：exchange hole 和 correlation hole。交换洞对同自旋 Pauli 排斥负责并积分为 $-1$；相关洞重新分布条件概率并积分为零。
+- $\bar n_{\mathrm{xc}}$：沿保持密度不变的 coupling-constant path 对洞平均。
+- $\epsilon_{\mathrm{xc}}([n];\mathbf r)$：选定规范下每电子交换—关联能量密度。它不是唯一可观测量。
+- $r_s$、$k_F$、$\zeta$：均匀电子气的密度参数、Fermi wavevector 和局域自旋极化。
+- $s=|\nabla n|/(2k_Fn)$：一阶 reduced gradient。
+- $F_{\mathrm{xc}}$ 或 $F_x$：相对均匀气参考的无量纲 enhancement factor。
+
+需要同时区分三种“局域性”：能量写成空间积分不表示被积函数只依赖局域密度；普通 Kohn–Sham 势是局域乘法算符不表示 $E_{\mathrm{xc}}$ 是局域泛函；LDA 的“local”特指每一点只使用该点的均匀气数据。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Hartree atomic units are used unless stated otherwise, and a combined space–spin coordinate is denoted by $x=(\mathbf r,\sigma)$.
+
+- $\Psi(x_1,\ldots,x_N)$ is a normalized antisymmetric many-body state.
+- $n(x)$ is the spin-resolved one-particle density and $n(\mathbf r)=\sum_\sigma n(\mathbf r,\sigma)$.
+- $n^{(2)}(x,x')$ is the ordered-pair density and integrates to $N(N-1)$.
+- $n_{\mathrm{cond}}(x'|x)$ is the conditional density of another electron at $x'$ given one at $x$.
+- $n_{\mathrm{xc}}(x,x')$ is the difference between that conditional density and the independent distribution $n(x')$; it integrates to $-1$.
+- $n_x$ and $n_c$ are the exchange and correlation holes. The exchange hole accounts for same-spin Pauli exclusion and carries charge $-1$; the correlation hole redistributes conditional probability and integrates to zero.
+- $\bar n_{\mathrm{xc}}$ is the hole averaged along a density-preserving coupling-constant path.
+- $\epsilon_{\mathrm{xc}}([n];\mathbf r)$ is an exchange–correlation energy per electron in a chosen gauge. It is not a unique observable.
+- $r_s$, $k_F$, and $\zeta$ are the uniform-gas density parameter, Fermi wavevector, and local spin polarization.
+- $s=|\nabla n|/(2k_Fn)$ is the first reduced gradient.
+- $F_{\mathrm{xc}}$ or $F_x$ is a dimensionless enhancement relative to a uniform-gas reference.
+
+Three notions of locality must be separated. Writing an energy as a spatial integral does not make the integrand a local functional; a local multiplicative Kohn–Sham potential does not make $E_{\mathrm{xc}}$ local; and “local” in LDA specifically means that each point uses only uniform-gas data at the density of that point.
+
+  </div>
+</BilingualSection>
+
+<span id="section-8-1" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 8.1 概览 | Overview
+
+<BilingualSection titleZh="从精确未知量到可用近似" titleEn="From an exact unknown to usable approximations">
+  <div className="bilingual-section__zh">
+
+Kohn–Sham 构造的实用性取决于 $E_{\mathrm{xc}}$ 是否能以远低于多体求解的成本得到有用近似。Chapter 8 采用一条物理约束路线：交换和相关改变电子对的条件概率，因此能量可由 exchange–correlation hole 的 Coulomb 加权确定。近似泛函应尽可能保留洞的电荷、spin structure、scaling、密度极限和其他 exact conditions，而非只在一个数据集上给出低平均误差。
+
+局域近似引用均匀电子气；半局域近似再感知密度变化；weighted-density 方法直接让一点的能量依赖邻域密度；数据库拟合则在预先选择的系统和性质上优化参数。各路线的成功条件和失败模式不同，不能把“属于更高复杂度”直接翻译为“对任意 observable 更准确”。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The usefulness of the Kohn–Sham construction depends on approximating $E_{\mathrm{xc}}$ at a cost far below a many-body solution. Chapter 8 follows a physical-constraint route. Exchange and correlation alter conditional pair probabilities, so the energy can be represented by a Coulomb-weighted exchange–correlation hole. An approximation should preserve the hole charge, spin structure, scaling, density limits, and other exact conditions where possible rather than merely minimize an average error on one dataset.
+
+A local approximation uses the uniform electron gas. A semilocal approximation senses local density variation. Weighted-density methods make the energy at a point depend on a neighborhood. Database fitting optimizes parameters on selected systems and properties. These routes have different success conditions and failure modes; greater formal complexity does not imply universal accuracy for every observable.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="实践交叉参考" titleEn="Practical cross-reference" kind="practice">
+  <div className="bilingual-section__zh">
+
+Sholl–Steckel 在入门层面说明：LDA 用局域密度，GGA 还使用局域梯度；不同 GGA 会给出不同结果，因此报告中必须写明具体 functional，而不能只写“做了 DFT”。该实践规则不决定哪一个泛函适用于当前体系，仍需根据目标性质、已知偏差和基准证据判断。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+At an introductory practical level, Sholl–Steckel distinguishes LDA by its use of local density and GGA by its additional use of local gradients. Different GGAs give different results, so a calculation must name the functional rather than report only “DFT.” This reporting rule does not select a functional for a system; the target property, known bias, and benchmark evidence remain necessary.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-8-2" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 8.2 $E_{\mathrm{xc}}$ 与交换—关联洞 | $E_{\mathrm{xc}}$ and the Exchange–Correlation Hole
+
+<DerivationBlock
+  title="从 pair density 到条件密度和洞 | From pair density to conditional density and the hole"
+  assumptions={[
+    '固定粒子数 N，并使用归一化反对称多体态。',
+    'pair density 计数有序的不同电子对，不包含 i=j 自配对。',
+    '离散/连续自旋求和与空间积分均收敛。',
+  ]}
+>
+
+自旋坐标下的一体密度为
+
+$$
+n(x)=N\int dx_2\cdots dx_N\,|\Psi(x,x_2,\ldots,x_N)|^2,
+$$
+
+满足
+
+$$
+\int dx\,n(x)=N.
+$$
+
+有序 pair density 定义为
+
+$$
+n^{(2)}(x,x')
+=N(N-1)\int dx_3\cdots dx_N\,
+|\Psi(x,x',x_3,\ldots,x_N)|^2.
+$$
+
+对第二坐标积分：
+
+$$
+\int dx'\,n^{(2)}(x,x')=(N-1)n(x).
+$$
+
+若 $n(x)>0$，条件密度为
+
+$$
+n_{\mathrm{cond}}(x'|x)=\frac{n^{(2)}(x,x')}{n(x)}.
+$$
+
+因此
+
+$$
+\int dx'\,n_{\mathrm{cond}}(x'|x)=N-1.
+$$
+
+Hartree 独立分布会在 $x'$ 放置总密度 $n(x')$，其积分为 $N$。定义
+
+$$
+n_{\mathrm{xc}}(x,x')
+= n_{\mathrm{cond}}(x'|x)-n(x'),
+$$
+
+立刻得到 exact charge sum rule
+
+$$
+\int dx'\,n_{\mathrm{xc}}(x,x')=-1.
+$$
+
+洞不是额外粒子，也不是总密度中的实际负电荷团。它是“已知一个电子后，其他电子的条件分布相对独立分布减少了多少”的统计差。
+
+The pair-density normalization gives $N-1$ conditional electrons around a tagged electron, whereas the independent density contains $N$. Their difference therefore carries exactly one missing electron. The hole is a conditional-probability deficit, not an additional physical particle.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="交换洞与相关洞的积分 | Integrals of the exchange and correlation holes"
+  assumptions={[
+    '以产生相同一体密度的 Kohn–Sham determinant 定义 exchange hole。',
+    'correlation hole 定义为全相互作用洞减去 exchange hole。',
+  ]}
+>
+
+写成
+
+$$
+n_{\mathrm{xc}}=n_x+n_c.
+$$
+
+Kohn–Sham determinant 的同自旋反对称性产生 $n_x$。由于 determinant 的条件密度也只有 $N-1$ 个其他电子，
+
+$$
+\int dx'\,n_x(x,x')=-1.
+$$
+
+全相互作用洞同样积分为 $-1$，故
+
+$$
+\int dx'\,n_c(x,x')=0.
+$$
+
+相关洞可以在某些距离为负、另一些距离为正：电子回避短程区域后，概率必须在其他区域补回。交换洞对同自旋通道非正；相关洞没有这样的逐点符号限制。
+
+The exchange hole already accounts for one missing electron. Correlation redistributes that deficit without changing its total charge, so its integral is zero and it can contain both negative and positive regions.
+
+</DerivationBlock>
+
+<XcHoleExplorer />
+
+<DerivationBlock
+  title="interaction energy、kinetic correlation 与 coupling-constant average | Interaction energy, kinetic correlation, and the coupling-constant average"
+  assumptions={[
+    '构造一族 Hamiltonian Hλ=T+λW+Vλ，使所有 λ∈[0,1] 具有同一基态密度 n。',
+    'λ=0 是 Kohn–Sham 非相互作用体系，λ=1 是真实相互作用体系。',
+    '沿路径基态能量可作所需的 Hellmann–Feynman 求导。',
+  ]}
+>
+
+对密度固定的路径，
+
+$$
+\frac{dE_\lambda}{d\lambda}
+=\langle\Psi_\lambda|\hat W|\Psi_\lambda\rangle
++\int n(\mathbf r)\frac{\partial v_\lambda(\mathbf r)}{\partial\lambda}d\mathbf r.
+$$
+
+把外势变化与 Kohn–Sham/真实能量分解一致整理，并减去 Hartree 项，可写成
+
+$$
+E_{\mathrm{xc}}[n]
+=\int_0^1 d\lambda\,
+\bigl(\langle\hat W\rangle_\lambda-E_H[n]\bigr).
+$$
+
+每个 λ 的 interaction correction 可由该 λ 的洞表示：
+
+$$
+\langle\hat W\rangle_\lambda-E_H[n]
+=\frac12\int d\mathbf r\,n(\mathbf r)
+\int d\mathbf r'\,
+\frac{n_{\mathrm{xc}}^\lambda(\mathbf r,\mathbf r')}{|\mathbf r-\mathbf r'|}.
+$$
+
+定义 coupling-constant-averaged hole
+
+$$
+\bar n_{\mathrm{xc}}(\mathbf r,\mathbf r')
+=\int_0^1 n_{\mathrm{xc}}^\lambda(\mathbf r,\mathbf r')d\lambda,
+$$
+
+得到
+
+$$
+E_{\mathrm{xc}}[n]
+=\frac12\int d\mathbf r\,n(\mathbf r)
+\int d\mathbf r'\,
+\frac{\bar n_{\mathrm{xc}}(\mathbf r,\mathbf r')}{|\mathbf r-\mathbf r'|}.
+$$
+
+固定密度时从 λ=0 到 1 改变相互作用，轨道和多体态会重组。积分后的表达式因此不仅包含 full-coupling interaction hole，也把真实动能与 $T_s$ 的差编码进 $\lambda$ 路径。用 λ=1 的 interaction hole 直接替代 $\bar n_{\mathrm{xc}}$ 会漏掉 kinetic correlation。
+
+The density-preserving adiabatic connection converts the full exchange–correlation energy into the Coulomb energy of a coupling-constant-averaged hole. The averaging carries the kinetic-correlation contribution; the full-coupling interaction hole alone is not the complete $E_{\mathrm{xc}}$.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="能量只需要球平均，但泛函仍可非局域" titleEn="The energy uses a spherical average, yet the functional can remain nonlocal" kind="boundary">
+  <div className="bilingual-section__zh">
+
+Coulomb 核只依赖 $u=|\mathbf r-\mathbf r'|$，因此对固定参考点 $\mathbf r$，能量只看到洞关于相对方向的球平均。详细角向形状可以错误而能量仍较好，但这不意味着局域密度足以确定球平均洞。精确 $\bar n_{\mathrm{xc}}$ 可以依赖全空间密度、边界条件和远程响应。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Because the Coulomb kernel depends only on the separation, the energy samples the spherical average of the hole around each reference point. Angular details can be inaccurate while the energy remains good, but this does not make the spherical average a local function of density. The exact averaged hole can depend on the density and response throughout space.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-8-3" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 8.3 局域（自旋）密度近似 | Local (Spin) Density Approximation
+
+<BilingualSection titleZh="均匀电子气作为局域参考" titleEn="The uniform electron gas as a local reference">
+  <div className="bilingual-section__zh">
+
+均匀电子气在给定 $n_\uparrow,n_\downarrow$ 下具有平移对称的交换—关联能。LSDA 假设非均匀体系每一点的每电子交换—关联能，等于同一点 spin densities 对应的均匀气值：
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}[n_\uparrow,n_\downarrow]
+=\int d\mathbf r\,n(\mathbf r)
+\epsilon_{\mathrm{xc}}^{\mathrm{hom}}
+\bigl(n_\uparrow(\mathbf r),n_\downarrow(\mathbf r)\bigr).
+$$
+
+无自旋极化时 $n_\uparrow=n_\downarrow=n/2$，得到 LDA。LSDA 的输入是局域密度，不是“密度在空间中为常数”的要求；它可应用于剧烈非均匀密度，只是近似误差可能变大。
+
+均匀气 correlation energy 来自 many-body 数据和参数化，exchange 则有解析式。必须区分：Monte Carlo 数据的统计/有限尺寸误差、参数化误差、把均匀气局域移植到非均匀体系的 functional error，以及最终离散计算误差。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For specified $n_\uparrow$ and $n_\downarrow$, the uniform electron gas has a translationally invariant exchange–correlation energy. LSDA assumes that the energy per electron at each point of an inhomogeneous system equals that of a uniform gas with the spin densities found at that point,
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}
+=\int d\mathbf r\,n(\mathbf r)
+\epsilon_{\mathrm{xc}}^{\mathrm{hom}}(n_\uparrow,n_\downarrow).
+$$
+
+The unpolarized restriction gives LDA. The approximation uses a local density value; it does not require the physical density to be constant. Uniform-gas many-body data, their parameterization, the local transfer to an inhomogeneous system, and the final numerical discretization are distinct error sources.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="均匀气尺度与 exchange energy | Uniform-gas scales and exchange energy"
+  assumptions={[
+    '三维、零温、非相对论均匀电子气。',
+    '采用 Hartree 原子单位。',
+  ]}
+>
+
+每个电子平均占据球体积 $4\pi r_s^3/3=1/n$，所以
+
+$$
+r_s=\left(\frac{3}{4\pi n}\right)^{1/3}.
+$$
+
+无自旋极化气体的 Fermi wavevector 由状态计数得到
+
+$$
+k_F=(3\pi^2 n)^{1/3}.
+$$
+
+exchange energy per electron 为
+
+$$
+\epsilon_x^{\mathrm{unpol}}(n)
+=-C_x n^{1/3},
+\qquad
+C_x=\frac34\left(\frac3\pi\right)^{1/3},
+$$
+
+故
+
+$$
+E_x^{\mathrm{LDA}}[n]
+=-C_x\int n(\mathbf r)^{4/3}d\mathbf r.
+$$
+
+量纲检查：$n^{4/3}d^3r$ 的量纲为 $L^{-1}$，在原子单位中对应 Coulomb energy。
+
+The density parameter, Fermi wavevector, and exchange energy all follow from three-dimensional state counting and Coulomb scaling. The local exchange functional integrates the uniform-gas energy density over the inhomogeneous density.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="exchange 的 exact spin scaling | Exact spin scaling of exchange"
+  assumptions={[
+    'exchange 由同自旋 one-body density matrix 决定。',
+    '把 Ex[n] 记作无自旋极化密度 n 的 exchange functional。',
+  ]}
+>
+
+两个自旋通道没有 exchange cross term，因此
+
+$$
+E_x[n_\uparrow,n_\downarrow]
+=\frac12E_x[2n_\uparrow]+\frac12E_x[2n_\downarrow].
+$$
+
+对均匀气，令
+
+$$
+\zeta=\frac{n_\uparrow-n_\downarrow}{n},
+\qquad
+n_{\uparrow,\downarrow}=\frac n2(1\pm\zeta),
+$$
+
+则
+
+$$
+\epsilon_x(n,\zeta)
+=\epsilon_x(n,0)
+\frac{(1+\zeta)^{4/3}+(1-\zeta)^{4/3}}{2}.
+$$
+
+该关系对 exchange 是严格 spin scaling；correlation 的自旋依赖需要独立 many-body 输入或参数化，不能直接沿用同一因子。
+
+Exchange separates exactly into the two spin channels. For a uniform gas this produces the stated even function of $\zeta$. Correlation spin dependence is not fixed by the exchange relation.
+
+</DerivationBlock>
+
+<UniformGasExplorer />
+
+<DerivationBlock
+  title="LDA exchange potential | LDA exchange potential"
+  assumptions={[
+    '密度为正且允许所需局域变分。',
+    '忽略整数粒子数不可微边界；这里只求普通局域导数。',
+  ]}
+>
+
+对
+
+$$
+E_x^{\mathrm{LDA}}[n]=-C_x\int n^{4/3}d\mathbf r,
+$$
+
+令 $n\to n+\eta\delta n$，一阶变化为
+
+$$
+\delta E_x
+=-C_x\int \frac43 n^{1/3}\delta n\,d\mathbf r.
+$$
+
+因此
+
+$$
+v_x^{\mathrm{LDA}}(\mathbf r)
+=\frac{\delta E_x}{\delta n(\mathbf r)}
+=-\frac43C_x n(\mathbf r)^{1/3}
+=\frac43\epsilon_x^{\mathrm{hom}}(n(\mathbf r)).
+$$
+
+“势等于每电子能量的 $4/3$”只适用于均匀气 exchange 的 $n^{1/3}$ scaling；一般 correlation 或 GGA 不能套用该比例。
+
+The factor four thirds follows from the specific homogeneous-gas exchange scaling. It is not a general relation between an exchange–correlation energy per particle and its potential.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="LSDA 的严格部分与近似部分" titleEn="Exact and approximate parts of LSDA" kind="boundary">
+  <div className="bilingual-section__zh">
+
+均匀气 exchange、spin scaling 和相应的 scaling relations 可以是严格结果；均匀气 correlation 数据可在其模型和数值误差内高度准确。把这些值逐点用于任意非均匀体系是 LSDA 的核心近似。SCF、基组和网格收敛只能减少数值误差，不能把该局域替代升级为精确泛函。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Uniform-gas exchange, spin scaling, and associated scaling relations can be exact, while uniform-gas correlation data can be highly accurate within their model and numerical uncertainties. Applying those values pointwise to an arbitrary inhomogeneous density is the defining LSDA approximation. Tighter SCF, basis, and grid settings cannot convert that approximation into the exact functional.
+
+  </div>
+</BilingualCallout>

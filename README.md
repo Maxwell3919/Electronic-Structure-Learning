@@ -8,12 +8,6 @@
 https://maxwell3919.github.io/Electronic-Structure-Learning/
 ```
 
-已完成章节：
-
-```text
-https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-01-introduction/
-```
-
 当前 Pages 部署来源记录：
 
 ```text
@@ -39,10 +33,23 @@ https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.
 
 ## 内容状态
 
-- Martin Part I, Chapter 1 · Introduction：已完成中英文对照正文、补充推导、原创交互可视化、练习和来源边界，并通过站点构建检查。
-- 其余 Martin 章节、附录和 Sholl–Steckel 实践章节：当前仍为 `outline`，只含标题、页码、结构导航和后续内容插槽。
+当前已合并到 `main` 的 substantive 单元包括：
 
-任何章节的 `complete` 状态只说明网站内容、来源定位和构建门槛已经完成，不自动验证其中涉及的真实材料、计算方法或科学结论。
+- Part I · [Chapter 1 · Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-01-introduction/)
+- Part I · [Chapter 2 · Overview](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-02-overview/)
+- Part I · [Chapter 3 · Theoretical Background](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-03-theoretical-background/)
+- Part II · [Chapter 6 · Density Functional Theory: Foundations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-06-density-functional-theory-foundations/)
+- Part II · [Chapter 7 · The Kohn–Sham Auxiliary System](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-07-the-kohn-sham-auxiliary-system/)
+- Part II · [Chapter 8 · Functionals for Exchange and Correlation I](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-08-functionals-for-exchange-and-correlation-i/)
+- Part III · [Chapter 10 · Electronic Structure of Atoms](https://maxwell3919.github.io/Electronic-Structure-Learning/part-03-important-preliminaries-on-atoms/chapter-10-electronic-structure-of-atoms/)
+- Part IV · [Chapter 12 · Plane Waves and Grids: Basics](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-12-plane-waves-and-grids-basics/)
+- Part V · [Chapter 19 · Quantum Molecular Dynamics (QMD)](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-19-quantum-molecular-dynamics-qmd/)
+- Part VI · [Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-25-topology-of-the-electronic-structure-of-a-crystal-introduction/)
+- Part VII · [Appendix A · Functional Equations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-a-functional-equations/)
+
+其他页面仍处于 `outline` 或独立 PR 编写状态。每个 substantive 单元包含其适用范围内的双语正文、推导、来源定位、原创练习或教学可视化，并通过相应的静态构建与 chapter-local validation 门槛。
+
+任何单元的 `complete` 状态只说明网站内容、来源定位、声明的教学模型和部署门槛已经完成，不自动验证其中涉及的真实材料、计算方法或科学结论。
 
 ## 结构权威
 
@@ -81,10 +88,11 @@ npm run check
 `npm run check` 依次执行：
 
 1. 完整框架计数、文件、slug 和页码一致性验证；
-2. SCF 教学模型的五个确定性情形；
-3. Astro 静态构建。
+2. SCF 教学模型的确定性验证；
+3. 所有已注册 substantive 单元的 chapter-local deterministic validators；
+4. Astro/MDX/KaTeX 静态构建。
 
-框架验证通过只说明导航骨架与目录数据一致，不证明正文、公式、可视化或科学结论正确。
+部署 workflow 还会在实际 GitHub Pages URL 上运行 exact-SHA Chrome smoke，覆盖已注册页面的桌面、窄屏、键盘交互和无 JavaScript fallback。任何验证通过都只支持其声明的内容与网站行为，不证明真实材料计算或科学主张正确。
 
 ## 维护入口
 
