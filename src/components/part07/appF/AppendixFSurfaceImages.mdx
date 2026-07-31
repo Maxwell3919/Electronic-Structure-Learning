@@ -1,0 +1,283 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import SlabDipoleImageExplorer from './SlabDipoleImageExplorer.astro';
+
+<span id="section-f-5"></span>
+
+## F.5 表面与界面偶极 | Surface and Interface Dipoles
+
+<BilingualSection titleZh="平面平均提取唯一的长程分量" titleEn="Planar averaging isolates the only long-range component" eyebrow="【Martin F.5 | Martin F.5】">
+  <div class="bilingual-section__zh">
+
+对法向为 $z$ 的表面或界面，把带符号总电荷密度分解为平面平均与面内起伏：
+
+$$
+\bar\rho(z)=\frac{1}{A}\int_A dx\,dy\,\rho(x,y,z),
+\qquad
+\delta\rho(\mathbf r)=\rho(\mathbf r)-\bar\rho(z).
+$$
+
+非零面内 reciprocal vector 的势离开界面后按 $e^{-|\mathbf G_\parallel||z|}$ 衰减，因此远处留下的只有 $\mathbf G_\parallel=0$ 平面平均分量。有限表面或界面能量要求
+
+$$
+\int dz\,\bar\rho(z)=0.
+$$
+
+中性并不排除偶极矩
+
+$$
+p_z/A=\int dz\,z\bar\rho(z),
+$$
+
+它在界面两侧产生不同的常数势平台。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a surface or interface normal to $z$, decompose the signed total charge density into a planar average and in-plane fluctuations:
+
+$$
+\bar\rho(z)=\frac{1}{A}\int_A dx\,dy\,\rho(x,y,z),
+\qquad
+\delta\rho(\mathbf r)=\rho(\mathbf r)-\bar\rho(z).
+$$
+
+The potential of every nonzero in-plane reciprocal vector decays away from the interface as $e^{-|\mathbf G_\parallel||z|}$. The only long-range component is therefore the $\mathbf G_\parallel=0$ planar average. A finite surface or interface energy requires
+
+$$
+\int dz\,\bar\rho(z)=0.
+$$
+
+Neutrality does not eliminate the dipole moment
+
+$$
+p_z/A=\int dz\,z\bar\rho(z),
+$$
+
+which produces distinct constant potential plateaus on the two sides of the interface.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="偶极矩决定势阶跃" titleEn="The dipole moment determines the potential step" eyebrow="【Martin Eq. F.22 + normalization audit | Martin Eq. F.22 + normalization audit】">
+  <div class="bilingual-section__zh">
+
+在本网站采用的 Gaussian、带符号电荷密度 convention 中，一维 Poisson 方程为
+
+$$
+\frac{d^2\bar V}{dz^2}=-4\pi\bar\rho(z).
+$$
+
+若界面两侧电场均趋零，则积分两次得到
+
+$$
+\Delta\bar V
+=4\pi\int dz\,z\bar\rho(z),
+$$
+
+其整体正负号随“右平台减左平台”和电荷符号定义改变。Martin Eq. F.22 写成 $\Delta\bar V_{\mathrm{Coulomb}}=\int dz\,z\sigma(z)$；读取该式时必须保留原书对 $\sigma$ 和 Coulomb prefactor 的 normalization，不能把它与这里的 $\bar\rho$ 静默等同。
+
+对两张面电荷 $-\sigma_s$ 与 $+\sigma_s$、间距 $d$ 的理想偶极层，势阶跃大小为 $4\pi|\sigma_s|d$。增大真空只拉开周期镜像，不改变单个偶极层自身的势阶跃。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In the website's Gaussian convention for a signed charge density, the one-dimensional Poisson equation is
+
+$$
+\frac{d^2\bar V}{dz^2}=-4\pi\bar\rho(z).
+$$
+
+If the electric field vanishes on both sides of the interface, integrating twice gives
+
+$$
+\Delta\bar V
+=4\pi\int dz\,z\bar\rho(z),
+$$
+
+with the overall sign depending on whether the step is defined as right minus left and on the charge-sign convention. Martin Eq. F.22 is printed as $\Delta\bar V_{\mathrm{Coulomb}}=\int dz\,z\sigma(z)$. Its normalization of $\sigma$ and the Coulomb prefactor must be retained rather than silently identifying it with the website's $\bar\rho$.
+
+For ideal sheets carrying $-\sigma_s$ and $+\sigma_s$ separated by $d$, the magnitude of the step is $4\pi|\sigma_s|d$. Increasing the vacuum separates periodic images but does not alter the intrinsic step of one dipole layer.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="从势阶跃到功函数与 band offset" titleEn="From the potential step to work functions and band offsets" eyebrow="【Martin F.5 + Chapters 13 and 22 cross-reference | Martin F.5 + Chapters 13 and 22 cross-reference】">
+  <div class="bilingual-section__zh">
+
+表面功函数需要同一 slab 计算中的真空平台与 Fermi level：$\Phi=V_{\mathrm{vac}}-E_F$。界面 band offset 通常先在各材料 bulk calculation 中求 band edge 相对于某个内部平均势或 core reference，再用显式界面计算得到两个 bulk-like 区域的 reference lineup。界面偶极决定 lineup，但不能仅由孤立材料的绝对 Kohn–Sham 本征值预测。
+
+若 slab 两侧不等价，周期边界会把一个净偶极重复成偶极晶格，在真空区产生人工斜坡或 sawtooth。此时平面平均势必须与 charge-density dipole、外加 dipole correction 和 cell orientation 一起检查。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A surface work function requires the vacuum plateau and Fermi level from the same slab calculation: $\Phi=V_{\mathrm{vac}}-E_F$. An interface band offset is commonly obtained by referencing the band edges of separate bulk calculations to an internal average potential or core level, then using an explicit interface calculation to align the references in the two bulk-like regions. The interface dipole controls that lineup, but isolated absolute Kohn-Sham eigenvalues do not predict it by themselves.
+
+If the two sides of a slab are inequivalent, periodic boundaries repeat a net dipole as a dipole lattice and generate an artificial slope or sawtooth in the vacuum region. The planar-average potential must then be checked together with the charge-density dipole, any applied dipole correction, and the cell orientation.
+
+  </div>
+</BilingualSection>
+
+<SlabDipoleImageExplorer />
+
+<span id="section-f-6"></span>
+
+## F.6 减小人工镜像电荷效应 | Reducing Effects of Artificial Image Charges
+
+<BilingualSection titleZh="周期超胞引入两类误差" titleEn="A periodic supercell introduces two classes of error" eyebrow="【Martin F.6 | Martin F.6】">
+  <div class="bilingual-section__zh">
+
+用周期代码模拟分子、cluster、surface 或 defect 时，首先出现的是波函数重叠导致的人工带宽；对局域束缚态，该误差通常随 cell size 指数衰减。第二类是长程 Coulomb 镜像相互作用，按 monopole、dipole、quadrupole 等幂律衰减，常在波函数已充分局域后仍主导有限尺寸误差。
+
+对一个 cell 的多极矩可写成
+
+$$
+M^{(\ell)}=\int d^3r\,r^\ell\rho(\mathbf r),
+$$
+
+实际计算需保留 tensor indices 并声明原点。带电 cell 的 monopole 周期和发散；dipole 项依赖 cell shape 与边界；quadrupole 可使能量收敛但势仍可能条件收敛。只看总能随真空变化趋平，不能区分这些来源。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Using a periodic code for a molecule, cluster, surface, or defect introduces two classes of error. Artificial bandwidth from overlap of localized wavefunctions usually decays exponentially with cell size. Long-range Coulomb image interactions instead decay as power laws associated with monopole, dipole, quadrupole, and higher moments, and can remain dominant after the wavefunctions are already well localized.
+
+A schematic multipole moment of one cell is
+
+$$
+M^{(\ell)}=\int d^3r\,r^\ell\rho(\mathbf r),
+$$
+
+although an actual calculation must retain tensor indices and specify the origin. The monopole lattice sum of a charged cell diverges; a dipole contribution depends on cell shape and boundary; a quadrupole can permit energy convergence while leaving the potential conditionally convergent. Apparent flattening of total energy with added vacuum does not identify which source has converged.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="局域矩 countercharge 是自洽势的组成" titleEn="A local-moment countercharge belongs inside the self-consistent potential" eyebrow="【Martin Eqs. F.24–F.25 | Martin Eqs. F.24–F.25】">
+  <div class="bilingual-section__zh">
+
+Martin 介绍的通用策略是构造模型 countercharge $\rho_{\mathrm{LM}}$，使其复制真实密度到阶数 $\ell_{\max}$ 的低阶矩：
+
+$$
+\rho=\rho'+\rho_{\mathrm{LM}},
+$$
+
+其中 $\rho'$ 的相应低阶矩全部为零。$\rho'$ 用周期 reciprocal-space solver 处理，$\rho_{\mathrm{LM}}$ 用 isolated boundary 求势，再组合为
+
+$$
+V_{\mathrm C}=V'[\rho']+V_{\mathrm{iso}}[\rho_{\mathrm{LM}}].
+$$
+
+关键点是该组合必须进入每一步自洽迭代，而非在普通周期 SCF 完成后只修正最终能量。若势在 SCF 中仍包含镜像场，电子密度和几何已经被错误极化，单个 post-processing 常数无法恢复 isolated solution。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin's general strategy constructs a model countercharge $\rho_{\mathrm{LM}}$ that reproduces the low-order moments of the true density through order $\ell_{\max}$:
+
+$$
+\rho=\rho'+\rho_{\mathrm{LM}},
+$$
+
+where the corresponding moments of $\rho'$ vanish. The residual $\rho'$ is treated with the periodic reciprocal-space solver, while $\rho_{\mathrm{LM}}$ is solved with isolated boundaries, giving
+
+$$
+V_{\mathrm C}=V'[\rho']+V_{\mathrm{iso}}[\rho_{\mathrm{LM}}].
+$$
+
+The combined potential must enter every self-consistency iteration rather than merely correcting the final energy after an ordinary periodic SCF calculation. If the SCF potential retains the image field, the density and geometry have already been spuriously polarized, and a single post-processing constant cannot recover the isolated solution.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="带电 cubic cell 的渐近修正" titleEn="Asymptotic correction for a charged cubic cell" eyebrow="【Martin Eq. F.26 | Martin Eq. F.26】">
+  <div class="bilingual-section__zh">
+
+周期带电单元通常通过均匀背景实现数值中性。对边长 $L$ 的三维 cubic cell，Martin 给出的渐近形式为
+
+$$
+E(L)=E_\infty-\frac{\alpha_M Z^2}{2L}
+-\frac{2\pi ZQ_2}{3L^3}+O(L^{-5}),
+$$
+
+其中 $\alpha_M$ 是该点电荷—背景晶格的 Madelung 常数，$Q_2=\int r^2\rho(\mathbf r)d^3r$ 是原书采用的各向同性二阶矩。实际 correction 的符号还取决于把“周期能减 correction”或“在周期能中识别误差项”作为定义；实现时应从代码文档与测试体系重建，而不是只背一行公式。
+
+该展开要求三维、近 cubic、局域电荷和明确 dielectric treatment。带电 defect 在可极化固体中还涉及介电 screening、potential alignment、有限 cell 中不完全局域的诱导密度和 charge-state reference。原书也指出任意 cell shape 需要更一般处理。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A periodic charged unit is usually made numerically neutral by a uniform background. For a three-dimensional cubic cell of side $L$, Martin gives the asymptotic form
+
+$$
+E(L)=E_\infty-\frac{\alpha_M Z^2}{2L}
+-\frac{2\pi ZQ_2}{3L^3}+O(L^{-5}),
+$$
+
+where $\alpha_M$ is the Madelung constant of the point-charge/background lattice and $Q_2=\int r^2\rho(\mathbf r)d^3r$ is the isotropic second moment used in the source. The operational sign of a correction also depends on whether one defines it as a term subtracted from the periodic energy or as an error term identified inside that energy. An implementation should be reconstructed from code documentation and test systems rather than from a memorized line alone.
+
+The expansion assumes three-dimensional, nearly cubic geometry, localized charge, and a declared dielectric treatment. A charged defect in a polarizable solid also involves dielectric screening, potential alignment, a finite-cell induced density that may not be fully localized, and the charge-state reference. Martin likewise notes that arbitrary cell shapes require a more general treatment.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="修正方法必须按几何与电荷状态选择" titleEn="Correction methods must be selected by geometry and charge state" eyebrow="【补充方法地图 | Supplemental method map】">
+  <div class="bilingual-section__zh">
+
+<p>常见策略的作用不同：</p>
+<table>
+  <thead><tr><th>方法</th><th>主要改变</th><th>合理使用范围</th><th>不能替代</th></tr></thead>
+  <tbody>
+    <tr><td>增大 cell/vacuum</td><td>拉远所有镜像</td><td>中性局域体系的直接外推</td><td>消除固定偶极场或 monopole 发散</td></tr>
+    <tr><td>dipole correction</td><td>在指定方向抵消周期 slab 偶极场</td><td>中性、具有净法向偶极的 slab</td><td>带电 slab 的完整二维 electrostatics</td></tr>
+    <tr><td>Coulomb cutoff/truncation</td><td>改写 interaction kernel，切断非物理方向耦合</td><td>slab、wire 或 isolated geometry，取决于 kernel</td><td>未收敛波函数、错误 charge reference</td></tr>
+    <tr><td>multipole/countercharge</td><td>去除低阶镜像矩并恢复 isolated potential</td><td>局域有限体系</td><td>非局域介电响应与任意金属 screening</td></tr>
+    <tr><td>charged-defect finite-size expansion</td><td>拟合或扣除 $L^{-1},L^{-3},\ldots$</td><td>声明 cell shape、dielectric 与局域性后</td><td>二维 charged defect 或高度各向异性体系的直接套用</td></tr>
+  </tbody>
+</table>
+
+应先用物理边界选择 solver，再用 cell-size series 验证 residual scaling。不能反过来只因某个修正让两个 cell 的数字接近，就宣布 isolated limit 已得到。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<p>Common strategies act on different objects:</p>
+<table>
+  <thead><tr><th>Method</th><th>Primary change</th><th>Reasonable scope</th><th>Does not replace</th></tr></thead>
+  <tbody>
+    <tr><td>Larger cell or vacuum</td><td>Separates every image</td><td>Direct extrapolation for a neutral localized system</td><td>Removal of a fixed dipole field or monopole divergence</td></tr>
+    <tr><td>Dipole correction</td><td>Cancels the periodic slab dipole field along one direction</td><td>Neutral slab with a net normal dipole</td><td>Complete two-dimensional electrostatics of a charged slab</td></tr>
+    <tr><td>Coulomb cutoff or truncation</td><td>Changes the interaction kernel to remove coupling in nonphysical directions</td><td>Slab, wire, or isolated geometry according to the kernel</td><td>Unconverged wavefunctions or an incorrect charge reference</td></tr>
+    <tr><td>Multipole or countercharge</td><td>Removes low-order image moments and restores an isolated potential</td><td>Localized finite systems</td><td>Nonlocal dielectric response or arbitrary metallic screening</td></tr>
+    <tr><td>Charged-defect finite-size expansion</td><td>Fits or removes $L^{-1},L^{-3},\ldots$ terms</td><td>After cell shape, dielectric response, and localization are declared</td><td>Direct application to two-dimensional charged defects or strongly anisotropic cells</td></tr>
+  </tbody>
+</table>
+
+The solver should first be selected from the physical boundary condition, followed by a cell-size series that verifies the residual scaling. Agreement of two cells after one correction is not by itself evidence that the isolated limit has been obtained.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="周期镜像验收矩阵" titleEn="Periodic-image acceptance matrix" kind="practice">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>分别收敛 wavefunction overlap 与 electrostatic image error。</li>
+      <li>记录总电荷、dipole vector、quadrupole convention 和 multipole origin。</li>
+      <li>对 slab 检查真空区电场是否为零、两侧势平台是否存在。</li>
+      <li>对带电体系记录 background、dielectric tensor、potential alignment 与 charge correction。</li>
+      <li>至少使用三个 cell size 验证预期的 $1/L$、$1/L^3$、$1/L_z$ 或指数缩放。</li>
+      <li>同时检查能量、局域势、力、几何与 charge density；只修正能量不足以证明自洽态正确。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Converge wavefunction overlap and electrostatic image error separately.</li>
+      <li>Record the net charge, dipole vector, quadrupole convention, and multipole origin.</li>
+      <li>For a slab, verify zero vacuum field and the existence of potential plateaus on both sides.</li>
+      <li>For a charged system, record the background, dielectric tensor, potential alignment, and charge correction.</li>
+      <li>Use at least three cell sizes to verify the expected $1/L$, $1/L^3$, $1/L_z$, or exponential scaling.</li>
+      <li>Inspect energy, local potential, forces, geometry, and charge density together; an energy-only correction does not certify the self-consistent state.</li>
+    </ol>
+  </div>
+</BilingualCallout>
