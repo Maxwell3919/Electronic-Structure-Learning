@@ -1,0 +1,318 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import TwoBandHybridizationExplorer from './TwoBandHybridizationExplorer.astro';
+
+<span id="section-14-5" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.5 紧束缚能带：单 s 带 | Tight-Binding Bands: Example of a Single s Band
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 303–305 从一个 s-like orbital、on-site energy 和最近邻 hopping 建立链、square/cubic lattice 的 cosine bands，讨论带宽、带中心、方格半填充对称、saddle point、van Hove singularity 和非正交修正。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 303–305 construct cosine bands for chains and square/cubic lattices from one s-like orbital, an onsite energy, and nearest-neighbour hopping, and discuss bandwidth, band centre, half-filled square-lattice symmetry, saddle points, van Hove singularities, and nonorthogonal corrections.</div>
+</BilingualCallout>
+
+<DerivationBlock
+  title="一维最近邻 cosine band | One-dimensional nearest-neighbour cosine band"
+  assumptions={[
+    '每原胞一个正交 s-like orbital；',
+    '只保留 on-site ε0 与左右最近邻 hopping t；',
+    '晶格常数 a，Bloch phase exp(ikT)。',
+  ]}
+>
+
+实空间 Hamiltonian 只有
+
+$$
+H(0)=\varepsilon_0,
+\qquad
+H(\pm a)=t.
+$$
+
+Fourier 变换得到
+
+$$
+\boxed{\varepsilon(k)=\varepsilon_0+2t\cos(ka)}.
+$$
+
+band centre 为 $\varepsilon_0$，带宽为
+
+$$
+W=\varepsilon_{\max}-\varepsilon_{\min}=4|t|.
+$$
+
+若 $t<0$，bonding minimum 在 $k=0$；若 $t>0$，minimum 在 zone boundary。hopping 符号与 orbital phase/bonding convention 相关，不能只用“正 hopping/负 hopping”脱离定义讨论。
+
+在极值附近展开 $\cos ka\approx1-(ka)^2/2$，有效质量由 curvature 决定：
+
+$$
+\frac1{m^*}=\frac1{\hbar^2}\frac{d^2\varepsilon}{dk^2}.
+$$
+
+该 $m^*$ 是模型 band curvature，不包含 many-body mass renormalization。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="coordination 与 bandwidth" titleEn="Coordination and bandwidth">
+  <div class="bilingual-section__zh">
+
+在 hypercubic 最近邻模型中
+
+$$
+\varepsilon(\mathbf k)=\varepsilon_0+2t\sum_{i=1}^d\cos(k_i a).
+$$
+
+coordination number 为 $z=2d$，bandwidth 为 $W=2z|t|$。这解释了固定 hopping 下配位越高、band 越宽的模型趋势；真实材料中 hopping 本身随距离、方向、轨道和环境变化，不能把 coordination 与 bandwidth 写成独立因果常数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a hypercubic nearest-neighbour model,
+
+$$
+\varepsilon(\mathbf k)=\varepsilon_0+2t\sum_{i=1}^d\cos(k_i a).
+$$
+
+The coordination number is $z=2d$ and the bandwidth is $W=2z|t|$. This gives the model trend that higher coordination produces a wider band at fixed hopping. In a real material the hopping itself changes with distance, direction, orbital character, and environment, so coordination and bandwidth are not independent causal constants.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="方格最近邻模型的半填充对称与 saddle point | Half-filling symmetry and saddle point of the square-lattice model"
+  assumptions={[
+    '正交方格 lattice，一个 orbital；',
+    '最近邻 hopping t，on-site energy set to zero；',
+    '不含 next-nearest-neighbour hopping。',
+  ]}
+>
+
+$$
+\varepsilon(\mathbf k)=2t[\cos(k_xa)+\cos(k_ya)].
+$$
+
+平移 $\mathbf Q=(\pi/a,\pi/a)$ 给出
+
+$$
+\varepsilon(\mathbf k+\mathbf Q)=-\varepsilon(\mathbf k),
+$$
+
+所以 DOS 关于零能对称，半填充 chemical potential 位于零。$X=(\pi/a,0)$ 附近令 $k_x=\pi/a+q_x$、$k_y=q_y$：
+
+$$
+\varepsilon\approx t a^2(q_x^2-q_y^2).
+$$
+
+两个方向 curvature 符号相反，这是二维 saddle point。二维能量等值线在此改变拓扑，DOS 出现 logarithmic van Hove divergence。加入 next-nearest-neighbour hopping、非正交性或 sublattice asymmetry 会破坏简单 particle-hole-like symmetry 并移动 singularity。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="非正交单带并非简单能量平移" titleEn="A nonorthogonal one-band model is not a simple energy shift">
+  <div class="bilingual-section__zh">
+
+最近邻 overlap 给出
+
+$$
+H(k)=\varepsilon_0+2t\cos ka,
+\qquad
+S(k)=1+2s\cos ka,
+$$
+
+因此
+
+$$
+\varepsilon(k)=\frac{\varepsilon_0+2t\cos ka}{1+2s\cos ka}.
+$$
+
+分母改变带宽和上下边缘的不对称，也会改变 fitted $t$ 与 $\varepsilon_0$ 的解释。合法模型要求所有 k 上 $S(k)>0$；最近邻链等价于 $|s|<1/2$。不能允许 metric 穿零后把极点解释成物理能带。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Nearest-neighbour overlap gives
+
+$$
+H(k)=\varepsilon_0+2t\cos ka,
+\qquad
+S(k)=1+2s\cos ka,
+$$
+
+and therefore
+
+$$
+\varepsilon(k)=\frac{\varepsilon_0+2t\cos ka}{1+2s\cos ka}.
+$$
+
+The denominator changes bandwidth and asymmetry between upper and lower edges, and changes the interpretation of fitted $t$ and $\varepsilon_0$. A valid model requires $S(k)>0$ at every k; for the nearest-neighbour chain this is $|s|<1/2$. A metric zero cannot be interpreted as a physical band pole.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="DOS 需要全 BZ 积分" titleEn="A DOS requires full-BZ integration" kind="boundary">
+  <div class="bilingual-section__zh">
+
+能带沿高对称路径可展示 extrema 或 crossing，但 DOS、band filling、metallicity 和 van Hove singularity 需要全 Brillouin-zone sampling。路径图上未穿越某能量不证明全 BZ 无态；反之，路径上的 saddle-like curvature 也不自动量化 DOS divergence。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A symmetry-line band plot can display extrema or crossings, but a DOS, filling, metallicity, and a van Hove singularity require full-Brillouin-zone sampling. Absence of a crossing on a path does not prove absence of states throughout the BZ, and saddle-like curvature on a path does not by itself quantify a DOS divergence.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-14-6" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.6 双带模型 | Two-Band Models
+
+<BilingualSection titleZh="一般 Hermitian 2×2 Hamiltonian" titleEn="General Hermitian 2×2 Hamiltonian">
+  <div class="bilingual-section__zh">
+
+两个 basis states A、B 的正交模型可写为
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+\varepsilon_A(\mathbf k)&f(\mathbf k)\\
+f^*(\mathbf k)&\varepsilon_B(\mathbf k)
+\end{pmatrix}.
+$$
+
+定义
+
+$$
+d_0=\frac{\varepsilon_A+\varepsilon_B}{2},
+\qquad
+d_z=\frac{\varepsilon_A-\varepsilon_B}{2},
+\qquad
+f=d_x-id_y,
+$$
+
+则
+
+$$
+H=d_0I+\mathbf d\cdot\boldsymbol\sigma
+$$
+
+和
+
+$$
+\boxed{E_\pm=d_0\pm\sqrt{d_z^2+|f|^2}}.
+$$
+
+本征值只依赖 $|\mathbf d|$，但 eigenvectors、orbital weights、Berry phase 和 spin/sublattice texture 依赖 $\mathbf d$ 的方向与 basis gauge。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An orthogonal model of two basis states A and B is
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+\varepsilon_A(\mathbf k)&f(\mathbf k)\\
+f^*(\mathbf k)&\varepsilon_B(\mathbf k)
+\end{pmatrix}.
+$$
+
+Define
+
+$$
+d_0=\frac{\varepsilon_A+\varepsilon_B}{2},
+\qquad
+d_z=\frac{\varepsilon_A-\varepsilon_B}{2},
+\qquad
+f=d_x-id_y.
+$$
+
+Then
+
+$$
+H=d_0I+\mathbf d\cdot\boldsymbol\sigma
+$$
+
+and
+
+$$
+\boxed{E_\pm=d_0\pm\sqrt{d_z^2+|f|^2}}.
+$$
+
+Eigenvalues depend only on $|\mathbf d|$, whereas eigenvectors, orbital weights, Berry phase, and spin/sublattice texture depend on the direction of $\mathbf d$ and on basis gauge.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="crossing、avoided crossing 与 gap 条件 | Conditions for crossing, avoided crossing, and a gap"
+  assumptions={[
+    '正交二态模型；',
+    '只讨论给定 k 或给定参数路径上的局部简并；',
+    '不把路径 gap 自动升级为 full-BZ gap。',
+  ]}
+>
+
+两带简并要求
+
+$$
+d_x=d_y=d_z=0,
+$$
+
+即 $f=0$ 且 $\varepsilon_A=\varepsilon_B$。仅使对角能量相等并不足够；非零 hybridization 给出最小分裂 $2|f|$。若对称性要求两个 states 属于不同 irreducible representations，$f$ 可在特定 k/path 上严格为零，允许 crossing。若破坏该对称，原先禁止的 matrix element 可出现并打开 avoided crossing。
+
+一个二维/三维 crystal 的 global gap 为
+
+$$
+E_g=\min_{\mathbf k}E_+(\mathbf k)-\max_{\mathbf k}E_-(\mathbf k).
+$$
+
+某个 k 点的 direct splitting $2|\mathbf d|$ 不等于 global indirect gap。
+
+</DerivationBlock>
+
+<TwoBandHybridizationExplorer />
+
+<BilingualSection titleZh="orbital weights 与 mixing angle" titleEn="Orbital weights and mixing angle">
+  <div class="bilingual-section__zh">
+
+取 $f=|f|e^{-i\phi}$，定义 $\cos\theta=d_z/|\mathbf d|$。下带可选为
+
+$$
+|u_-\rangle=
+\begin{pmatrix}
+-e^{-i\phi}\sin(\theta/2)\\
+\cos(\theta/2)
+\end{pmatrix},
+$$
+
+其 A/B weights 分别为 $\sin^2(\theta/2)$ 与 $\cos^2(\theta/2)$。远离 resonance，$|d_z|\gg|f|$，states 接近单一 orbital；在 $d_z=0$，weights 为 1/2。相位 $\phi$ 不影响本征值，却控制 relative phase 和许多 matrix elements。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Let $f=|f|e^{-i\phi}$ and define $\cos\theta=d_z/|\mathbf d|$. One gauge choice for the lower band is
+
+$$
+|u_-\rangle=
+\begin{pmatrix}
+-e^{-i\phi}\sin(\theta/2)\\
+\cos(\theta/2)
+\end{pmatrix},
+$$
+
+with A/B weights $\sin^2(\theta/2)$ and $\cos^2(\theta/2)$. Far from resonance, $|d_z|\gg|f|$, states approach one orbital; at $d_z=0$, the weights are one half. The phase $\phi$ does not affect eigenvalues but controls relative phase and many matrix elements.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="2×2 形式是结构，不是材料结论" titleEn="A 2×2 form is structure, not a material conclusion" kind="boundary">
+  <div class="bilingual-section__zh">
+
+许多不同物理问题都可写成 $d_0I+\mathbf d\cdot\sigma$：sublattice、orbital、spin、particle-hole 或有效 low-energy states。Pauli matrix 符号本身不告诉我们这些自由度是什么。gap term、symmetry action、Berry curvature 或 topology 必须连同 basis、BZ、occupied subspace 和对称操作定义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Many physical problems share the form $d_0I+\mathbf d\cdot\sigma$: sublattice, orbital, spin, particle-hole, or effective low-energy states. Pauli matrices alone do not identify the degree of freedom. A gap term, symmetry action, Berry curvature, or topology must be defined together with basis, BZ, occupied subspace, and symmetry operations.
+
+  </div>
+</BilingualCallout>
