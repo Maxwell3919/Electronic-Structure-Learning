@@ -1,0 +1,246 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import PressureEosExplorer from './PressureEosExplorer.astro';
+import SurfaceForceExplorer from './SurfaceForceExplorer.astro';
+
+<span id="section-i-3"></span>
+
+## I.3 压力 | Pressure
+
+<BilingualSection titleZh="Pressure 是 volume 的 generalized force" titleEn="Pressure is the generalized force conjugate to volume" eyebrow="【Martin I.3 | Martin I.3】">
+  <div class="bilingual-section__zh">
+
+对各向同性体积变化，定义
+
+$$
+P=-\frac{dE}{dV}.
+$$
+
+若使用线性尺度 $r$ 描述球形或 atomic-sphere volume，$V\propto r^3$，则
+
+$$
+P=-\frac{1}{4\pi r^2}\frac{dE}{dr}
+$$
+
+只在球面对称与相应 normalization 下成立。Martin I.3 利用 Appendix I 的路径自由，把体积变化组织成 sphere boundary 上的 kinetic、potential 和 electrostatic quantities；这种表达对 atomic-sphere approximation 有意义，但不是一般 triclinic cell 的完整 stress tensor。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For an isotropic volume change, define
+
+$$
+P=-\frac{dE}{dV}.
+$$
+
+If a spherical or atomic-sphere volume is described by a linear scale $r$, with $V\propto r^3$, then
+
+$$
+P=-\frac{1}{4\pi r^2}\frac{dE}{dr}
+$$
+
+only under the corresponding spherical symmetry and normalization. Martin I.3 uses the path freedom of this Appendix to organize the volume derivative in terms of kinetic, potential, and electrostatic quantities at a sphere boundary. This is meaningful in the atomic-sphere approximation but is not the complete stress tensor of a general triclinic cell.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Bulk modulus 与稳定性" titleEn="Bulk modulus and stability" eyebrow="【Martin Eqs. I.8–I.9 | Martin Eqs. I.8–I.9】">
+  <div class="bilingual-section__zh">
+
+isothermal-like static curvature quantity写成
+
+$$
+B_T=-V\frac{dP}{dV}=V\frac{d^2E}{dV^2}.
+$$
+
+在零外压平衡体积 $V_0$，应满足 $P(V_0)=0$；局部机械稳定要求 $B_T(V_0)>0$。若 $P=0$ 但 $B_T<0$，该点是能量极大值或不稳定 stationary point。有限温度、zero-point、magnetic、electronic entropy 或 external pressure 需要相应 free-energy/enthalpy derivative，不能直接沿用 ground-state $E(V)$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The static isothermal-like curvature is
+
+$$
+B_T=-V\frac{dP}{dV}=V\frac{d^2E}{dV^2}.
+$$
+
+At the zero-external-pressure equilibrium volume $V_0$, one requires $P(V_0)=0$, and local mechanical stability requires $B_T(V_0)>0$. A point with $P=0$ but $B_T<0$ is an energy maximum or unstable stationary point. Finite temperature, zero-point motion, magnetic or electronic entropy, and external pressure require derivatives of the appropriate free energy or enthalpy rather than the ground-state $E(V)$ alone.
+
+  </div>
+</BilingualSection>
+
+<PressureEosExplorer />
+
+<BilingualSection titleZh="由 pressure 重建 energy difference" titleEn="Reconstructing an energy difference from pressure" eyebrow="【Martin I.3 integration route | Martin I.3 integration route】">
+  <div class="bilingual-section__zh">
+
+因为 $P=-dE/dV$，两体积间
+
+$$
+E(V_2)-E(V_1)=-\int_{V_1}^{V_2}P(V)\,dV.
+$$
+
+这提供独立 consistency check：直接 total-energy difference 应与收敛 pressure curve 的 numerical quadrature 一致。若不一致，应检查 stress sign、Pulay stress、cutoff、$k$ mesh、SCF residual、volume-dependent basis、pseudopotential/core terms 和 pressure interpolation。
+
+在 phase transition 区域，$P(V)$ 可能多值或对应不同 metastable branches。积分必须沿同一结构/电子分支进行；跨分支需要 common-tangent/enthalpy construction，而不是把所有 points 强行拟合成一条曲线。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Since $P=-dE/dV$,
+
+$$
+E(V_2)-E(V_1)=-\int_{V_1}^{V_2}P(V)\,dV.
+$$
+
+This provides an independent consistency check: a direct total-energy difference should agree with numerical quadrature of a converged pressure curve. A disagreement calls for checks of the stress sign, Pulay stress, cutoff, $k$ mesh, SCF residual, volume-dependent basis, pseudopotential or core terms, and pressure interpolation.
+
+Near a phase transition, $P(V)$ can be multivalued or correspond to distinct metastable branches. Integration must follow one structural and electronic branch. Crossing branches requires a common-tangent or enthalpy construction rather than forcing all points into one fitted curve.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="ASA pressure 的 claim ceiling" titleEn="Claim ceiling of an ASA pressure" kind="warning">
+  <div class="bilingual-section__zh">
+    <p>Atomic-sphere boundary pressure 可以用于 spherical approximation 内的 equilibrium 与 EOS 分析，但不能单独给出 shear stress、anisotropic elastic constants、surface stress、low-symmetry internal strain 或 full-potential material accuracy。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>An atomic-sphere boundary pressure can support equilibrium and equation-of-state analysis within a spherical approximation, but it does not by itself provide shear stress, anisotropic elastic constants, surface stress, low-symmetry internal strain, or full-potential material accuracy.</p>
+  </div>
+</BilingualCallout>
+
+<span id="section-i-4"></span>
+
+## I.4 力与应力 | Force and Stress
+
+<BilingualSection titleZh="体力与 surface traction 的 divergence theorem" titleEn="The divergence theorem connecting volume force and surface traction" eyebrow="【Martin Eqs. I.10–I.11 | Martin Eqs. I.10–I.11】">
+  <div class="bilingual-section__zh">
+
+Appendix H 给出
+
+$$
+f_\alpha(\mathbf r)=\partial_\beta\sigma_{\alpha\beta}(\mathbf r).
+$$
+
+对包围目标原子或区域的体积 $V$，
+
+$$
+F_\alpha(V)
+=\int_V d^3r\,f_\alpha
+=\oint_{\partial V}dS\,\sigma_{\alpha\beta}n_\beta.
+$$
+
+因此可以绕开核附近 singular/high-gradient region，在较平滑的 closed surface 上计算 transmitted force。surface 必须完整闭合；若只取一个 open patch，缺失的 edge/face flux 不会自动消失。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Appendix H gives
+
+$$
+f_\alpha(\mathbf r)=\partial_\beta\sigma_{\alpha\beta}(\mathbf r).
+$$
+
+For a volume $V$ enclosing the target atom or region,
+
+$$
+F_\alpha(V)
+=\int_V d^3r\,f_\alpha
+=\oint_{\partial V}dS\,\sigma_{\alpha\beta}n_\beta.
+$$
+
+One may therefore avoid the singular or high-gradient region near the nucleus and calculate the transmitted force on a smoother closed surface. The surface must be complete. An open patch retains the omitted edge or face flux.
+
+  </div>
+</BilingualSection>
+
+<SurfaceForceExplorer />
+
+<BilingualSection titleZh="Surface force 必须包含全部 crossing contributions" titleEn="A surface force requires every crossing contribution" eyebrow="【完整性审计 | Completeness audit】">
+  <div class="bilingual-section__zh">
+
+电子结构 stress/traction 不是单一 Maxwell field。完整 crossing flux 通常包含：
+
+- orbital/kinetic momentum flux；
+- Hartree 与 ion/electron electrostatic Maxwell-like terms；
+- local XC pressure/stress；
+- nonlocal pseudopotential/projector contribution；
+- explicit core/augmentation contribution；
+- moving localized basis、APW boundary 或 incomplete basis 的 Pulay-like terms。
+
+只积分 electrostatic field 或只积分 kinetic stress，结果一般不是总原子力。若某实现声称一部分在 closed surface 上消失，必须给出其 divergence、boundary condition 或 pairwise cancellation proof。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electronic-structure stress or traction is not a single Maxwell field. The complete crossing flux generally includes:
+
+- orbital or kinetic momentum flux;
+- Hartree and ion-electron electrostatic Maxwell-like terms;
+- local XC pressure or stress;
+- nonlocal pseudopotential or projector contributions;
+- explicit core or augmentation contributions;
+- Pulay-like terms from a moving localized basis, APW boundary, or incomplete basis.
+
+Integrating only the electrostatic field or only the kinetic stress does not generally give the total atomic force. If an implementation claims that one contribution vanishes on the closed surface, it must provide a divergence, boundary-condition, or pairwise-cancellation proof.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Stress gauge 与 closed-surface invariance" titleEn="Stress gauge and closed-surface invariance" eyebrow="【Appendix H cross-reference | Appendix H cross-reference】">
+  <div class="bilingual-section__zh">
+
+若
+
+$$
+\sigma'_{\alpha\beta}
+=\sigma_{\alpha\beta}+\Delta\sigma_{\alpha\beta},
+\qquad
+\partial_\beta\Delta\sigma_{\alpha\beta}=0,
+$$
+
+则二者给出同一 force density。对 closed surface，
+
+$$
+\oint dS\,\Delta\sigma_{\alpha\beta}n_\beta
+=\int d^3r\,\partial_\beta\Delta\sigma_{\alpha\beta}=0.
+$$
+
+因此 pointwise traction map 可以随 gauge 改变，完整 closed-surface force 不变。离散计算中，stress 和 divergence 必须使用 compatible operators；否则 continuum cancellation 会留下 grid error。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If
+
+$$
+\sigma'_{\alpha\beta}
+=\sigma_{\alpha\beta}+\Delta\sigma_{\alpha\beta},
+\qquad
+\partial_\beta\Delta\sigma_{\alpha\beta}=0,
+$$
+
+the two stresses give the same force density. On a closed surface,
+
+$$
+\oint dS\,\Delta\sigma_{\alpha\beta}n_\beta
+=\int d^3r\,\partial_\beta\Delta\sigma_{\alpha\beta}=0.
+$$
+
+The pointwise traction map can therefore change with gauge while the complete closed-surface force remains invariant. In a discrete calculation, the stress and divergence must use compatible operators; otherwise the continuum cancellation leaves a grid error.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="选择 surface 的数值原则" titleEn="Numerical principles for choosing the surface" eyebrow="【实践层 | Practical layer】">
+  <div class="bilingual-section__zh">
+
+surface 应避开 nucleus singularity、augmentation discontinuity 和 basis boundary pathology，同时不能穿过被忽略的 nonlocal support。结果应对 surface shape/position 做 plateau test：在一段允许范围内改变 surface，closed flux 应保持不变。若力随 surface 显著漂移，说明缺项、离散不兼容、区域未闭合或电子态未充分驻定。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The surface should avoid the nuclear singularity, augmentation discontinuities, and pathological basis boundaries, while not cutting through neglected nonlocal support. A plateau test should vary the surface shape or position within an allowed region; the closed flux should remain invariant. Significant drift indicates a missing term, incompatible discretization, an open region, or insufficient electronic stationarity.
+
+  </div>
+</BilingualSection>
