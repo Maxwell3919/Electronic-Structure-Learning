@@ -57,6 +57,7 @@ const lsMinus = -(defaultL + 1) / 2;
     const update = () => {
       const l = Number(lInput.value);
       const xi = Number(xiInput.value);
+      const plusExists = l >= 0;
       const minusExists = l > 0;
       const lsPlus = l / 2;
       const lsMinus = -(l + 1) / 2;
@@ -81,8 +82,9 @@ const lsMinus = -(defaultL + 1) / 2;
       root.querySelector('[data-xi-output]').textContent = xi.toFixed(2);
       root.querySelector('[data-ls-plus]').textContent = lsPlus.toFixed(2);
       root.querySelector('[data-ls-minus]').textContent = minusExists ? lsMinus.toFixed(2) : 'not present';
-      const trace = gPlus * ePlus + (minusExists ? gMinus * eMinus : 0);
-      root.querySelector('[data-trace]').textContent = trace.toFixed(6);
+      const trace = plusExists ? gPlus * ePlus + (minusExists ? gMinus * eMinus : 0) : 0;
+      const normalizedTrace = Math.abs(trace) < 1e-12 ? 0 : trace;
+      root.querySelector('[data-trace]').textContent = normalizedTrace.toFixed(6);
     };
     lInput.addEventListener('input', update);
     xiInput.addEventListener('input', update);
@@ -91,10 +93,25 @@ const lsMinus = -(defaultL + 1) / 2;
 </script>
 
 <style>
-  .spin-orbit-explorer svg { width: 100%; min-height: 15rem; }
-  .spin-orbit-explorer svg text { fill: currentColor; font-size: 14px; }
-  .soc-centre { stroke: var(--sl-color-gray-4); stroke-dasharray: 6 5; }
-  .soc-level { stroke-width: 5; }
+  .spin-orbit-explorer svg {
+    width: 100%;
+    min-height: 15rem;
+  }
+
+  .spin-orbit-explorer svg text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .soc-centre {
+    stroke: var(--sl-color-gray-4);
+    stroke-dasharray: 6 5;
+  }
+
+  .soc-level {
+    stroke-width: 5;
+  }
+
   .soc-plus { stroke: #3273dc; }
   .soc-minus { stroke: #d97706; }
 </style>
