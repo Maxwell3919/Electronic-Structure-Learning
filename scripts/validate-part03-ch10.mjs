@@ -153,8 +153,11 @@ const spinOrbitExplorer = readFileSync(
 );
 assert.match(spinOrbitExplorer, /data-normalized-operator="LdotS-over-hbar2"/);
 assert.match(spinOrbitExplorer, /data-xi-unit="energy"/);
-assert.match(spinOrbitExplorer, /\\mathbf L\\cdot\\mathbf S\/\\hbar\^2/);
-assert.match(spinOrbitExplorer, /eV\/\$\\hbar\^2\$/);
+assert.ok(
+  spinOrbitExplorer.includes('H_SO(model)=ξ(L·S/ℏ²)'),
+  'Spin-orbit explorer must display the normalized model Hamiltonian',
+);
+assert.ok(spinOrbitExplorer.includes('eV/ℏ²'), 'Spin-orbit explorer must state direct-operator coefficient units');
 assert.doesNotMatch(
   spinOrbitExplorer,
   /The model Hamiltonian is H_SO = ξ L·S|模型 Hamiltonian 为 H_SO = ξ L·S/,
