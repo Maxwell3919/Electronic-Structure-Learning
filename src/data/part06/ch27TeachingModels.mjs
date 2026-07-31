@@ -150,3 +150,50 @@ export function doubledSpinChernBlocks(xi = 1, V = -0.75, v = Math.SQRT1_2 / 2, 
     z2FromSpinBlock: Math.abs(up.lowerBandChern) % 2,
   };
 }
+
+export function helicalEdgeSpectrum(k, pairs = 1, mixing = 0, velocity = 1) {
+  [k, mixing, velocity].forEach((value, index) => finite(value, ['k', 'mixing', 'velocity'][index]));
+  if (![1, 2].includes(pairs)) throw new RangeError('pairs must be 1 or 2');
+  if (mixing < 0) throw new RangeError('mixing must be non-negative');
+  const linear = velocity * k;
+  if (pairs === 1) {
+    return {
+      pairs,
+      mixingAllowed: false,
+      energies: [-linear, linear].sort((a, b) => a - b),
+      directGapAtTrim: 0,
+      z2Parity: 1,
+    };
+  }
+  const energy = Math.hypot(linear, mixing);
+  return {
+    pairs,
+    mixingAllowed: true,
+    energies: [-energy, -energy, energy, energy],
+    directGapAtTrim: 2 * mixing,
+    z2Parity: 0,
+  };
+}
+
+export function inversionParityZ2(paritiesByTrim) {
+  if (!Array.isArray(paritiesByTrim) || paritiesByTrim.length !== 4) {
+    throw new RangeError('paritiesByTrim must contain four TRIM arrays');
+  }
+  let product = 1;
+  const trimProducts = paritiesByTrim.map((trim, trimIndex) => {
+    if (!Array.isArray(trim) || trim.length === 0) {
+      throw new RangeError(`TRIM ${trimIndex} must contain at least one occupied Kramers-pair parity`);
+    }
+    const value = trim.reduce((accumulator, parity) => {
+      if (parity !== 1 && parity !== -1) throw new RangeError('each parity must be +1 or -1');
+      return accumulator * parity;
+    }, 1);
+    product *= value;
+    return value;
+  });
+  return {
+    trimProducts,
+    globalProduct: product,
+    nu: product === -1 ? 1 : 0,
+  };
+}
