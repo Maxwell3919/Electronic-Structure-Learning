@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const repositoryRoot = new URL('..', import.meta.url);
-const read = (path) => readFileSync(new URL(path, repositoryRoot), 'utf8');
+const repositoryRoot = fileURLToPath(new URL('..', import.meta.url));
+const read = (path) => readFileSync(join(repositoryRoot, path), 'utf8');
 
 const allowedStatuses = new Set(['outline', 'draft', 'review', 'validated']);
 const part01Directory = 'src/content/docs/part-01-overview-and-background';
@@ -43,11 +44,11 @@ const walk = (directory) => {
   return entries;
 };
 
-for (const filePath of walk(new URL('src', repositoryRoot))) {
+for (const filePath of walk(join(repositoryRoot, 'src'))) {
   const content = readFileSync(filePath, 'utf8');
   const matches = content.matchAll(/<SourceNote[\s\S]*?status="([^"]+)"[\s\S]*?\/>/g);
   for (const match of matches) {
-    const path = relative(new URL('.', repositoryRoot).pathname, filePath);
+    const path = relative(repositoryRoot, filePath);
     assert.ok(allowedStatuses.has(match[1]), `${path} uses invalid SourceNote status ${match[1]}`);
   }
 }
