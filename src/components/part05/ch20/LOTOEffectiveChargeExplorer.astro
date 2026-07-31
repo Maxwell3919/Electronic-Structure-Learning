@@ -1,0 +1,169 @@
+---
+import { loToFrequencies } from '../../../data/part05/ch20TeachingModels.mjs';
+
+const componentId = 'ch20-loto-explorer';
+const defaults = {
+  transverseFrequency: 1,
+  effectiveCharge: 2,
+  dielectricConstant: 5,
+  volume: 1,
+  directionCosine: 1,
+};
+const initial = loToFrequencies(defaults);
+const maxDisplayFrequency = 2.5;
+const toPercent = (frequency) => Math.min(100, frequency / maxDisplayFrequency * 100);
+---
+
+<figure class="chapter-visual loto-explorer" id={componentId}>
+  <figcaption>
+    <strong>Born 有效电荷与方向依赖 LO–TO splitting | Born effective charge and directional LO–TO splitting</strong>
+    <span>原创非解析长程模型：短程横向频率固定，宏观电场只增加纵向投影的平方频率。</span>
+    <span lang="en">Original nonanalytic long-range model: the short-range transverse frequency is fixed while the macroscopic field shifts only the longitudinal projection of the squared frequency.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      有效电荷 |Z*|（模型单位）
+      <input data-charge type="range" min="0" max="4" step="0.1" value={defaults.effectiveCharge} />
+    </label>
+    <label>
+      高频介电常数 ε∞
+      <input data-dielectric type="range" min="1" max="20" step="0.5" value={defaults.dielectricConstant} />
+    </label>
+    <label>
+      q 与模式极化夹角 θ
+      <input data-angle type="range" min="0" max="90" step="1" value="0" />
+    </label>
+  </div>
+
+  <div class="loto-explorer__bars" role="img" aria-label="Transverse and longitudinal model frequencies">
+    <div class="frequency-row">
+      <span>TO / transverse</span>
+      <div class="frequency-track"><span class="frequency-bar frequency-bar--to" style={`width:${toPercent(initial.transverse)}%`}></span></div>
+      <output data-to>{initial.transverse.toFixed(3)}</output>
+    </div>
+    <div class="frequency-row">
+      <span>LO / longitudinal</span>
+      <div class="frequency-track"><span class="frequency-bar frequency-bar--lo" data-lo-bar style={`width:${toPercent(initial.longitudinal)}%`}></span></div>
+      <output data-lo>{initial.longitudinal.toFixed(3)}</output>
+    </div>
+  </div>
+
+  <p class="chapter-visual__readout" aria-live="polite" data-readout>
+    当前非解析平方频率增量为 {initial.nonanalyticShift.toFixed(3)}。Z*=0 或横向投影时 splitting 消失。
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>ω_TO=1、Ω=1，Δω²=(Z* cosθ)²/(ε∞Ω)；省略张量指标、质量、本征向量和单位制常数。</p>
+    <p><strong>验收：</strong>Z*=0 时 LO=TO；θ=90° 时纵向投影为零；固定 Z* 时增大 ε∞ 会减小 splitting；频率差不与静态 Bader 电荷直接对应。</p>
+    <p><strong>边界：</strong>真实非解析项是由 q 方向、Born 有效电荷张量、模式本征向量、质量和介电张量组成的矩阵；二维体系还需要与三维不同的长波极限。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 |Z*|=2、ε∞=5、θ=0° 的 TO/LO 条形和数值仍可见；控件不更新。</p>
+  </noscript>
+</figure>
+
+<script>
+  import { loToFrequencies } from '../../../data/part05/ch20TeachingModels.mjs';
+
+  const root = document.getElementById('ch20-loto-explorer');
+  if (root) {
+    const chargeInput = root.querySelector('[data-charge]');
+    const dielectricInput = root.querySelector('[data-dielectric]');
+    const angleInput = root.querySelector('[data-angle]');
+    const loBar = root.querySelector('[data-lo-bar]');
+    const toOutput = root.querySelector('[data-to]');
+    const loOutput = root.querySelector('[data-lo]');
+    const readout = root.querySelector('[data-readout]');
+
+    if (
+      chargeInput instanceof HTMLInputElement
+      && dielectricInput instanceof HTMLInputElement
+      && angleInput instanceof HTMLInputElement
+      && loBar instanceof HTMLElement
+      && toOutput instanceof HTMLOutputElement
+      && loOutput instanceof HTMLOutputElement
+      && readout instanceof HTMLElement
+    ) {
+      const update = () => {
+        const effectiveCharge = Number(chargeInput.value);
+        const dielectricConstant = Number(dielectricInput.value);
+        const angle = Number(angleInput.value);
+        const directionCosine = Math.cos(angle * Math.PI / 180);
+        const result = loToFrequencies({
+          transverseFrequency: 1,
+          effectiveCharge,
+          dielectricConstant,
+          volume: 1,
+          directionCosine,
+        });
+        loBar.style.width = `${Math.min(100, result.longitudinal / 2.5 * 100)}%`;
+        toOutput.value = result.transverse.toFixed(3);
+        loOutput.value = result.longitudinal.toFixed(3);
+        readout.textContent = `Δω²=${result.nonanalyticShift.toFixed(3)}；|Z*|=${effectiveCharge.toFixed(1)}，ε∞=${dielectricConstant.toFixed(1)}，θ=${angle.toFixed(0)}°。`;
+      };
+
+      chargeInput.addEventListener('input', update);
+      dielectricInput.addEventListener('input', update);
+      angleInput.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .loto-explorer {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+
+  .loto-explorer__bars {
+    display: grid;
+    gap: 0.8rem;
+    margin-block: 1rem;
+  }
+
+  .frequency-row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.8fr) minmax(12rem, 2fr) 5rem;
+    gap: 0.7rem;
+    align-items: center;
+  }
+
+  .frequency-track {
+    height: 1.35rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--sl-color-gray-7);
+  }
+
+  .frequency-bar {
+    display: block;
+    height: 100%;
+  }
+
+  .frequency-bar--to {
+    background: currentColor;
+  }
+
+  .frequency-bar--lo {
+    background: var(--sl-color-accent-high);
+    transition: width 120ms linear;
+  }
+
+  @media (max-width: 40rem) {
+    .frequency-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frequency-bar--lo {
+      transition: none;
+    }
+  }
+</style>
