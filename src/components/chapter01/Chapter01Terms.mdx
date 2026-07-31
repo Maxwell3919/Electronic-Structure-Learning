@@ -5,35 +5,59 @@ import BilingualCallout from '../BilingualCallout.astro';
 <dl class="chapter-terms">
   <div>
     <dt>多电子波函数 | Many-electron wavefunction</dt>
-    <dd>$\Psi(\mathbf{x}_1,\ldots,\mathbf{x}_N)$，其中 $\mathbf{x}=(\mathbf{r},\sigma)$ 同时包含空间与自旋坐标。它编码联合概率振幅，并对相同电子交换满足反对称性。</dd>
+    <dd>
+      <p>$\Psi(\mathbf{x}_1,\ldots,\mathbf{x}_N)$，其中 $\mathbf{x}=(\mathbf{r},\sigma)$ 同时包含空间与自旋坐标。它编码联合概率振幅，并对相同电子交换满足反对称性。</p>
+      <p lang="en">$\Psi(\mathbf{x}_1,\ldots,\mathbf{x}_N)$ uses the complete coordinate $\mathbf{x}=(\mathbf{r},\sigma)$, containing position and spin. It encodes joint probability amplitudes and is antisymmetric under exchange of identical electrons.</p>
+    </dd>
   </div>
   <div>
     <dt>轨道 | Orbital</dt>
-    <dd>$\psi_i(\mathbf{r})$ 或自旋轨道 $\chi_i(\mathbf{x})$ 是单粒子函数。轨道不等同于完整多体态，也不自动对应可直接测量的粒子路径。</dd>
+    <dd>
+      <p>$\psi_i(\mathbf{r})$ 或自旋轨道 $\chi_i(\mathbf{x})$ 是单粒子函数。轨道不等同于完整多体态，也不自动对应可直接测量的粒子路径。</p>
+      <p lang="en">$\psi_i(\mathbf{r})$, or the spin orbital $\chi_i(\mathbf{x})$, is a one-particle function. An orbital is not the complete many-body state and does not represent a directly measurable particle trajectory.</p>
+    </dd>
   </div>
   <div>
     <dt>态与能级 | State and level</dt>
-    <dd>“态”指 Hilbert 空间中的量子态；“能级”指 Hamiltonian 的本征值。简并时，一个能级可对应多个线性独立态。</dd>
+    <dd>
+      <p>“态”指 Hilbert 空间中的量子态；“能级”指 Hamiltonian 的本征值。简并时，一个能级可对应多个线性独立态。</p>
+      <p lang="en">A state is a quantum state in Hilbert space; an energy level is an eigenvalue of the Hamiltonian. A degenerate level corresponds to more than one linearly independent state.</p>
+    </dd>
   </div>
   <div>
     <dt>能带 | Band</dt>
-    <dd>周期体系中随晶体动量 $\mathbf{k}$ 连续变化的一族单粒子本征值 $\varepsilon_{n\mathbf{k}}$。能带不是离散原子能级的简单复制。</dd>
+    <dd>
+      <p>周期体系中随晶体动量 $\mathbf{k}$ 连续变化的一族单粒子本征值 $\varepsilon_{n\mathbf{k}}$。能带不是离散原子能级的简单复制。</p>
+      <p lang="en">A band is a family of one-particle eigenvalues $\varepsilon_{n\mathbf{k}}$ that varies with crystal momentum in a periodic system. It is not a simple repetition of isolated-atom levels.</p>
+    </dd>
   </div>
   <div>
     <dt>密度 | Density</dt>
-    <dd>$n(\mathbf{r})$ 是单位体积内的期望电子数，满足 $\int n(\mathbf{r})\,d\mathbf{r}=N$。它比多体波函数包含的信息少得多。</dd>
+    <dd>
+      <p>$n(\mathbf{r})$ 是单位体积内的期望电子数，满足 $\int n(\mathbf{r})\,d\mathbf{r}=N$。它比多体波函数包含的信息少得多。</p>
+      <p lang="en">$n(\mathbf{r})$ is the expected number of electrons per unit volume and satisfies $\int n(\mathbf{r})\,d\mathbf{r}=N$. It contains far less information than the many-body wavefunction.</p>
+    </dd>
   </div>
   <div>
     <dt>态密度 | Density of states</dt>
-    <dd>$g(E)$ 统计单位能量区间内可用态的数量。它与实空间电子密度 $n(\mathbf{r})$ 是不同对象。</dd>
+    <dd>
+      <p>$g(E)$ 统计单位能量区间内可用态的数量。它与实空间电子密度 $n(\mathbf{r})$ 是不同对象。</p>
+      <p lang="en">$g(E)$ counts available states per unit energy. It is a different object from the real-space electron density $n(\mathbf{r})$.</p>
+    </dd>
   </div>
   <div>
     <dt>总能 | Total energy</dt>
-    <dd>给定 Hamiltonian 与量子态的能量期望或本征值。单粒子本征值之和通常不能直接当作相互作用体系的总能。</dd>
+    <dd>
+      <p>给定 Hamiltonian 与量子态的能量期望或本征值。单粒子本征值之和通常不能直接当作相互作用体系的总能。</p>
+      <p lang="en">The total energy is an energy expectation value or eigenvalue for a specified Hamiltonian and quantum state. A sum of one-particle eigenvalues is generally not the total energy of an interacting system.</p>
+    </dd>
   </div>
   <div>
     <dt>参考与单位 | Reference and units</dt>
-    <dd>本章公式默认 SI 记号并显式保留 $\hbar$ 与电子质量 $m_e$；交互图以 eV 表示能量。绝对单粒子能量零点可平移，多数判断依赖能量差。</dd>
+    <dd>
+      <p>本章公式默认 SI 记号并显式保留 $\hbar$ 与电子质量 $m_e$；交互图以 eV 表示能量。绝对单粒子能量零点可平移，多数判断依赖能量差。</p>
+      <p lang="en">Equations use SI notation and retain $\hbar$ and the electron mass $m_e$ explicitly; interactive diagrams use eV. The absolute zero of one-particle energy may be shifted, while most physical judgments depend on energy differences.</p>
+    </dd>
   </div>
 </dl>
 
