@@ -75,44 +75,44 @@
 
     const phaseA = { equilibriumVolume: 20, curvature: 0.12, offset: 0 };
     const xForVolume = (volume) => 70 + (volume - 10) * 28;
-+    const update = () => {
-+      const pressure = Number(pressureInput.value);
-+      const phaseB = {
-+        equilibriumVolume: Number(volumeInput.value),
-+        curvature: 0.16,
-+        offset: Number(offsetInput.value),
-+      };
-+      const samples = [];
-+      for (let index = 0; index <= 100; index += 1) {
-+        const volume = 10 + 20 * index / 100;
-+        samples.push({ volume, a: quadraticPhaseEnergy(volume, phaseA), b: quadraticPhaseEnergy(volume, phaseB) });
-+      }
-+      const maxEnergy = Math.max(...samples.flatMap((item) => [item.a, item.b]), 1);
-+      const yForEnergy = (energy) => 270 - 215 * energy / maxEnergy;
-+      curveA.setAttribute('d', samples.map((item, index) => `${index === 0 ? 'M' : 'L'} ${xForVolume(item.volume).toFixed(2)} ${yForEnergy(item.a).toFixed(2)}`).join(' '));
-+      curveB.setAttribute('d', samples.map((item, index) => `${index === 0 ? 'M' : 'L'} ${xForVolume(item.volume).toFixed(2)} ${yForEnergy(item.b).toFixed(2)}`).join(' '));
-+
-+      const result = compareQuadraticPhases(pressure, phaseA, phaseB);
-+      pointA.setAttribute('cx', String(xForVolume(result.phaseA.volume)));
-+      pointA.setAttribute('cy', String(yForEnergy(result.phaseA.energy)));
-+      pointB.setAttribute('cx', String(xForVolume(result.phaseB.volume)));
-+      pointB.setAttribute('cy', String(yForEnergy(result.phaseB.energy)));
-+
-+      if (pressureOutput instanceof HTMLOutputElement) pressureOutput.value = pressure.toFixed(2);
-+      if (offsetOutput instanceof HTMLOutputElement) offsetOutput.value = phaseB.offset.toFixed(2);
-+      if (volumeOutput instanceof HTMLOutputElement) volumeOutput.value = phaseB.equilibriumVolume.toFixed(1);
-+      if (stable instanceof HTMLElement) stable.textContent = `稳定相 | Stable phase: ${result.stablePhase}`;
-+      if (values instanceof HTMLElement) values.textContent = `H_A = ${result.phaseA.enthalpy.toFixed(3)}; H_B = ${result.phaseB.enthalpy.toFixed(3)}; ΔH(B−A) = ${result.enthalpyDifferenceBMinusA.toFixed(3)}`;
-+      if (explanation instanceof HTMLElement) explanation.textContent = result.stablePhase === 'coexistence'
-+        ? 'The two minimized enthalpies are equal within the teaching-model tolerance.'
-+        : result.stablePhase === 'B'
-+          ? 'The PV contribution is sufficient to stabilise the denser phase B.'
-+          : 'The zero-pressure energy advantage of phase A still exceeds the PV advantage of B.';
-+    };
-+
-+    pressureInput.addEventListener('input', update);
-+    offsetInput.addEventListener('input', update);
-+    volumeInput.addEventListener('input', update);
-+    update();
-+  });
-+</script>
+    const update = () => {
+      const pressure = Number(pressureInput.value);
+      const phaseB = {
+        equilibriumVolume: Number(volumeInput.value),
+        curvature: 0.16,
+        offset: Number(offsetInput.value),
+      };
+      const samples = [];
+      for (let index = 0; index <= 100; index += 1) {
+        const volume = 10 + 20 * index / 100;
+        samples.push({ volume, a: quadraticPhaseEnergy(volume, phaseA), b: quadraticPhaseEnergy(volume, phaseB) });
+      }
+      const maxEnergy = Math.max(...samples.flatMap((item) => [item.a, item.b]), 1);
+      const yForEnergy = (energy) => 270 - 215 * energy / maxEnergy;
+      curveA.setAttribute('d', samples.map((item, index) => `${index === 0 ? 'M' : 'L'} ${xForVolume(item.volume).toFixed(2)} ${yForEnergy(item.a).toFixed(2)}`).join(' '));
+      curveB.setAttribute('d', samples.map((item, index) => `${index === 0 ? 'M' : 'L'} ${xForVolume(item.volume).toFixed(2)} ${yForEnergy(item.b).toFixed(2)}`).join(' '));
+
+      const result = compareQuadraticPhases(pressure, phaseA, phaseB);
+      pointA.setAttribute('cx', String(xForVolume(result.phaseA.volume)));
+      pointA.setAttribute('cy', String(yForEnergy(result.phaseA.energy)));
+      pointB.setAttribute('cx', String(xForVolume(result.phaseB.volume)));
+      pointB.setAttribute('cy', String(yForEnergy(result.phaseB.energy)));
+
+      if (pressureOutput instanceof HTMLOutputElement) pressureOutput.value = pressure.toFixed(2);
+      if (offsetOutput instanceof HTMLOutputElement) offsetOutput.value = phaseB.offset.toFixed(2);
+      if (volumeOutput instanceof HTMLOutputElement) volumeOutput.value = phaseB.equilibriumVolume.toFixed(1);
+      if (stable instanceof HTMLElement) stable.textContent = `稳定相 | Stable phase: ${result.stablePhase}`;
+      if (values instanceof HTMLElement) values.textContent = `H_A = ${result.phaseA.enthalpy.toFixed(3)}; H_B = ${result.phaseB.enthalpy.toFixed(3)}; ΔH(B−A) = ${result.enthalpyDifferenceBMinusA.toFixed(3)}`;
+      if (explanation instanceof HTMLElement) explanation.textContent = result.stablePhase === 'coexistence'
+        ? 'The two minimized enthalpies are equal within the teaching-model tolerance.'
+        : result.stablePhase === 'B'
+          ? 'The PV contribution is sufficient to stabilise the denser phase B.'
+          : 'The zero-pressure energy advantage of phase A still exceeds the PV advantage of B.';
+    };
+
+    pressureInput.addEventListener('input', update);
+    offsetInput.addEventListener('input', update);
+    volumeInput.addEventListener('input', update);
+    update();
+  });
+</script>
