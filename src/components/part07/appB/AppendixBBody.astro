@@ -1,0 +1,57 @@
+---
+import AppendixBContents from './AppendixBContents.astro';
+import AppendixBOrientation from './AppendixBOrientation.mdx';
+import DensityIngredientHierarchy from './DensityIngredientHierarchy.astro';
+import AppendixBLSDA from './AppendixBLSDA.mdx';
+import AppendixBGgaPbe from './AppendixBGgaPbe.mdx';
+import AppendixBReview from './AppendixBReview.mdx';
+---
+
+<div class="appendix-b-root">
+  <AppendixBContents />
+  <AppendixBOrientation />
+  <DensityIngredientHierarchy />
+  <AppendixBLSDA />
+  <AppendixBGgaPbe />
+  <AppendixBReview />
+</div>
+
+<style is:global>
+  .appendix-b-root,
+  .appendix-b-root > *,
+  .appendix-b-root .bilingual-section,
+  .appendix-b-root .bilingual-section__grid,
+  .appendix-b-root .bilingual-section__zh,
+  .appendix-b-root .bilingual-section__en,
+  .appendix-b-root .bilingual-callout,
+  .appendix-b-root .derivation-block {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appendix-b-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .appendix-b-root .chapter-source-map,
+  .appendix-b-root .katex-display,
+  .appendix-b-root pre,
+  .appendix-b-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .appendix-b-root p,
+  .appendix-b-root li,
+  .appendix-b-root th,
+  .appendix-b-root td,
+  .appendix-b-root code {
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -1,0 +1,416 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import SpinInterpolationExplorer from './SpinInterpolationExplorer.astro';
+
+<span id="section-b-1"></span>
+
+## B.1 局域自旋密度近似 | Local Spin-Density Approximation
+
+<BilingualSection titleZh="均匀电子气的局域取样" titleEn="Local sampling of the uniform electron gas" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+LSDA 在每个位置使用具有相同 $n_\uparrow$ 和 $n_\downarrow$ 的均匀电子气作为参考：
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}[n_\uparrow,n_\downarrow]
+=
+\int d^3r\,n(\mathbf r)
+\left[
+\varepsilon_x^{\mathrm{hom}}(r_s,\zeta)
++
+\varepsilon_c^{\mathrm{hom}}(r_s,\zeta)
+\right].
+$$
+
+交换部分对均匀气是解析的。未极化情况下
+
+$$
+\varepsilon_x^{\mathrm{hom}}(n,0)
+=-\frac{3}{4}\left(\frac{3}{\pi}\right)^{1/3}n^{1/3}
+$$
+
+（Hartree 原子单位）。共线自旋的精确交换自旋缩放可写成
+
+$$
+\varepsilon_x(n,\zeta)
+=
+\varepsilon_x(n,0)
+\,f_x(\zeta),
+\qquad
+f_x(\zeta)
+=
+\frac{(1+\zeta)^{4/3}+(1-\zeta)^{4/3}}{2}.
+$$
+
+$f_x(0)=1$，而完全极化时 $f_x(\pm1)=2^{1/3}$。该关系来自两个自旋通道各自的 $n_\sigma^{4/3}$ 交换能，不是对相关能的通用定理。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At each position, LSDA uses a uniform electron gas with the same $n_\uparrow$ and $n_\downarrow$ as its reference:
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}[n_\uparrow,n_\downarrow]
+=
+\int d^3r\,n(\mathbf r)
+\left[
+\varepsilon_x^{\mathrm{hom}}(r_s,\zeta)
++
+\varepsilon_c^{\mathrm{hom}}(r_s,\zeta)
+\right].
+$$
+
+Exchange is analytic for the uniform gas. In the unpolarized case,
+
+$$
+\varepsilon_x^{\mathrm{hom}}(n,0)
+=-\frac{3}{4}\left(\frac{3}{\pi}\right)^{1/3}n^{1/3}
+$$
+
+in Hartree atomic units. Exact collinear spin scaling for exchange is
+
+$$
+\varepsilon_x(n,\zeta)
+=
+\varepsilon_x(n,0)
+\,f_x(\zeta),
+\qquad
+f_x(\zeta)
+=
+\frac{(1+\zeta)^{4/3}+(1-\zeta)^{4/3}}{2}.
+$$
+
+The factor satisfies $f_x(0)=1$ and $f_x(\pm1)=2^{1/3}$. It follows from adding the $n_\sigma^{4/3}$ exchange contributions of the two spin channels; it is not a universal theorem for correlation.
+
+  </div>
+</BilingualSection>
+
+<SpinInterpolationExplorer />
+
+<span id="spin-interpolation"></span>
+
+## 从相关能到相关势 | From Correlation Energy to Correlation Potential
+
+<BilingualSection titleZh="式 B.1 的逐步推导" titleEn="Step-by-step derivation of Eq. B.1" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+对未极化均匀电子气，局域相关能量密度为
+
+$$
+e_c(n)=n\varepsilon_c(r_s(n)).
+$$
+
+相关势是对密度的普通导数：
+
+$$
+V_c(n)=\frac{d}{dn}\left[n\varepsilon_c(r_s(n))\right]
+=\varepsilon_c+n\frac{d\varepsilon_c}{dr_s}\frac{dr_s}{dn}.
+$$
+
+由 $r_s\propto n^{-1/3}$，
+
+$$
+\frac{dr_s}{dn}=-\frac{r_s}{3n}.
+$$
+
+代回得到 Martin 式 B.1：
+
+$$
+\boxed{
+V_c(r_s)
+=
+\varepsilon_c(r_s)
+-
+\frac{r_s}{3}
+\frac{d\varepsilon_c(r_s)}{dr_s}
+}.
+$$
+
+第一项来自显式的密度因子 $n$，第二项来自 $r_s$ 随密度变化。只对 $\varepsilon_c$ 求导会漏掉第一项；把 $d\varepsilon_c/dr_s$ 直接当作势也会漏掉链式法则中的 $dr_s/dn$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For an unpolarized uniform electron gas, the local correlation energy density is
+
+$$
+e_c(n)=n\varepsilon_c(r_s(n)).
+$$
+
+The correlation potential is its derivative with respect to density:
+
+$$
+V_c(n)=\frac{d}{dn}\left[n\varepsilon_c(r_s(n))\right]
+=\varepsilon_c+n\frac{d\varepsilon_c}{dr_s}\frac{dr_s}{dn}.
+$$
+
+Since $r_s\propto n^{-1/3}$,
+
+$$
+\frac{dr_s}{dn}=-\frac{r_s}{3n}.
+$$
+
+Substitution gives Martin's Eq. B.1,
+
+$$
+\boxed{
+V_c(r_s)
+=
+\varepsilon_c(r_s)
+-
+\frac{r_s}{3}
+\frac{d\varepsilon_c(r_s)}{dr_s}
+}.
+$$
+
+The first term comes from the explicit factor $n$, while the second arises because $r_s$ changes with density. Differentiating $\varepsilon_c$ alone loses the first term; identifying $d\varepsilon_c/dr_s$ directly with a potential also omits the chain rule through $dr_s/dn$.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="单位检查" titleEn="Dimensional check" kind="derivation">
+  <div class="bilingual-section__zh">
+
+$r_s$ 无量纲，因此 $d\varepsilon_c/dr_s$ 与 $\varepsilon_c$ 都具有能量单位，式 B.1 的两项可以相加。若相关参数化以 Rydberg 而代码以 Hartree 工作，能量与势必须同时转换；只转换能量而保留旧势会破坏变分一致性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Because $r_s$ is dimensionless, both $d\varepsilon_c/dr_s$ and $\varepsilon_c$ have units of energy, so the two terms in Eq. B.1 are commensurate. If a correlation parametrization is tabulated in Rydberg while a code uses Hartree, both energy and potential must be converted. Converting the energy alone breaks variational consistency.
+
+  </div>
+</BilingualCallout>
+
+## 代表性相关参数化 | Representative Correlation Parametrizations
+
+<BilingualSection titleZh="Hedin–Lundqvist 形式" titleEn="Hedin-Lundqvist form" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+对未极化情况，Martin 记录 Hedin–Lundqvist 形式
+
+$$
+\varepsilon_c^{\mathrm{HL}}(r_s)
+=-\frac{C}{2}
+\left[
+(1+x^3)\ln\left(1+\frac{1}{x}\right)
++\frac{x}{2}-x^2-\frac{1}{3}
+\right],
+$$
+
+其中 $A=21$、$C=0.045$、$x=r_s/A$，并采用原子单位能量尺度。对该表达求导并代入式 B.1，可化简为
+
+$$
+V_c^{\mathrm{HL}}(r_s)
+=-\frac{C}{2}\ln\left(1+\frac{1}{x}\right).
+$$
+
+这里的简洁势依赖于能量式中各项的精确组合；若更改常数、单位或舍入方式，应重新从能量表达求导，而不是独立复制势公式。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For the unpolarized gas, Martin lists the Hedin-Lundqvist form
+
+$$
+\varepsilon_c^{\mathrm{HL}}(r_s)
+=-\frac{C}{2}
+\left[
+(1+x^3)\ln\left(1+\frac{1}{x}\right)
++\frac{x}{2}-x^2-\frac{1}{3}
+\right],
+$$
+
+where $A=21$, $C=0.045$, and $x=r_s/A$, with the energy scale expressed in atomic units. Differentiation and substitution into Eq. B.1 reduce the potential to
+
+$$
+V_c^{\mathrm{HL}}(r_s)
+=-\frac{C}{2}\ln\left(1+\frac{1}{x}\right).
+$$
+
+The compact potential relies on the exact combination of terms in the energy. If constants, units, or rounding are changed, the potential should be re-derived from the energy rather than copied independently.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Perdew–Zunger 分段形式" titleEn="Perdew-Zunger piecewise form" eyebrow="【Martin 原书 + 补充导数 | Martin source + supplemental derivative】">
+  <div class="bilingual-section__zh">
+
+Martin 给出的未极化 PZ 相关能为
+
+$$
+\varepsilon_c^{\mathrm{PZ}}(r_s)
+=
+\begin{cases}
+-0.0480+0.0311\ln r_s-0.0116r_s+0.0020r_s\ln r_s,
+& r_s<1,\\[4pt]
+-\dfrac{0.1423}{1+1.0529\sqrt{r_s}+0.3334r_s},
+& r_s>1.
+\end{cases}
+$$
+
+高密度支的导数为
+
+$$
+\frac{d\varepsilon_c}{dr_s}
+=
+\frac{0.0311}{r_s}-0.0116+0.0020(\ln r_s+1),
+$$
+
+低密度支则令
+
+$$
+D(r_s)=1+1.0529\sqrt{r_s}+0.3334r_s,
+$$
+
+得到
+
+$$
+\frac{d\varepsilon_c}{dr_s}
+=
+\frac{0.1423}{D(r_s)^2}
+\left[
+\frac{1.0529}{2\sqrt{r_s}}+0.3334
+\right].
+$$
+
+两支分别代入式 B.1 即得势。印刷系数只有有限位数，因此在 $r_s=1$ 处能量值约相差 $3.2\times10^{-5}$ Hartree；这属于舍入层面的实现边界。生产代码应说明采用的原始参数表、分界点处理以及能量和一阶导数是否连续。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin gives the unpolarized PZ correlation energy as
+
+$$
+\varepsilon_c^{\mathrm{PZ}}(r_s)
+=
+\begin{cases}
+-0.0480+0.0311\ln r_s-0.0116r_s+0.0020r_s\ln r_s,
+& r_s<1,\\[4pt]
+-\dfrac{0.1423}{1+1.0529\sqrt{r_s}+0.3334r_s},
+& r_s>1.
+\end{cases}
+$$
+
+The derivative of the high-density branch is
+
+$$
+\frac{d\varepsilon_c}{dr_s}
+=
+\frac{0.0311}{r_s}-0.0116+0.0020(\ln r_s+1),
+$$
+
+while the low-density branch can be written with
+
+$$
+D(r_s)=1+1.0529\sqrt{r_s}+0.3334r_s
+$$
+
+to give
+
+$$
+\frac{d\varepsilon_c}{dr_s}
+=
+\frac{0.1423}{D(r_s)^2}
+\left[
+\frac{1.0529}{2\sqrt{r_s}}+0.3334
+\right].
+$$
+
+Each branch is inserted into Eq. B.1 to obtain the potential. The printed constants carry limited precision, so the two energy branches differ by about $3.2\times10^{-5}$ Hartree at $r_s=1$. This is an implementation-level rounding boundary. Production code should identify the parameter source, branch convention, and whether energy and first derivative are continuous.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Vosko–Wilk–Nusair 形式" titleEn="Vosko-Wilk-Nusair form" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 还记录 VWN 的未极化参数化。定义
+
+$$
+y=\sqrt{r_s},\qquad
+Y(y)=y^2+by+c,\qquad
+Q=\sqrt{4c-b^2},
+$$
+
+以及 $y_0=-0.10498$、$b=3.72744$、$c=12.93532$、$A=0.0621814$。相关能由对数与反正切项组合：
+
+$$
+\begin{aligned}
+\varepsilon_c^{\mathrm{VWN}}(r_s)
+=\frac{Ae^2}{2}\Bigg[
+&\ln\frac{y^2}{Y(y)}
++\frac{2b}{Q}\tan^{-1}\frac{Q}{2y+b}\\
+&-\frac{by_0}{Y(y_0)}
+\left(
+\ln\frac{(y-y_0)^2}{Y(y)}
++\frac{2(b+2y_0)}{Q}\tan^{-1}\frac{Q}{2y+b}
+\right)
+\Bigg].
+\end{aligned}
+$$
+
+Martin 给出用于式 B.1 的导数组合
+
+$$
+r_s\frac{d\varepsilon_c^{\mathrm{VWN}}}{dr_s}
+=
+A\frac{e^2}{2}
+\frac{c(y-y_0)-by_0y}{(y-y_0)(y^2+by+c)}.
+$$
+
+VWN 与 PZ 都是对均匀电子气数据的解析拟合。它们数值接近并不表示公式、导数或自旋插值完全相同；软件标签应保留具体参数化身份。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin also records the unpolarized VWN parametrization. Define
+
+$$
+y=\sqrt{r_s},\qquad
+Y(y)=y^2+by+c,\qquad
+Q=\sqrt{4c-b^2},
+$$
+
+with $y_0=-0.10498$, $b=3.72744$, $c=12.93532$, and $A=0.0621814$. The correlation energy combines logarithmic and inverse-tangent terms,
+
+$$
+\begin{aligned}
+\varepsilon_c^{\mathrm{VWN}}(r_s)
+=\frac{Ae^2}{2}\Bigg[
+&\ln\frac{y^2}{Y(y)}
++\frac{2b}{Q}\tan^{-1}\frac{Q}{2y+b}\\
+&-\frac{by_0}{Y(y_0)}
+\left(
+\ln\frac{(y-y_0)^2}{Y(y)}
++\frac{2(b+2y_0)}{Q}\tan^{-1}\frac{Q}{2y+b}
+\right)
+\Bigg].
+\end{aligned}
+$$
+
+For use in Eq. B.1, Martin gives
+
+$$
+r_s\frac{d\varepsilon_c^{\mathrm{VWN}}}{dr_s}
+=
+A\frac{e^2}{2}
+\frac{c(y-y_0)-by_0y}{(y-y_0)(y^2+by+c)}.
+$$
+
+Both VWN and PZ are analytic fits to uniform-electron-gas data. Their numerical similarity does not make their formulas, derivatives, or spin interpolation identical; software labels should preserve the specific parametrization identity.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="相关自旋插值的边界" titleEn="Boundary of correlation spin interpolation" kind="boundary">
+  <div class="bilingual-section__zh">
+
+原书指出 PZ 与 VWN 都需要在未极化和完全极化数据之间构造分数自旋极化插值。交换的 $f_x(\zeta)$ 可以作为插值形状的一部分，但中间极化相关能仍依赖所选参数化及拟合数据。不能用交换的精确自旋缩放替代相关能的独立定义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin notes that both PZ and VWN require interpolation between unpolarized and fully polarized correlation data. The exchange factor $f_x(\zeta)$ may enter the interpolation shape, but intermediate-polarization correlation still depends on the selected parametrization and fitted data. Exact exchange spin scaling cannot replace an independent definition of correlation.
+
+  </div>
+</BilingualCallout>

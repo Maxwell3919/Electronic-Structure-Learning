@@ -1,0 +1,181 @@
+---
+import { projectedTwoLevelResponse } from '../../../data/part05/ch20TeachingModels.mjs';
+
+const componentId = 'ch20-sternheimer-response';
+const defaults = { occupiedEnergy: -1, emptyEnergy: 2, coupling: 0.2 };
+const initial = projectedTwoLevelResponse(defaults);
+---
+
+<figure class="chapter-visual sternheimer-response" id={componentId}>
+  <figcaption>
+    <strong>空态求和与投影 Sternheimer 方程 | Empty-state sum and projected Sternheimer equation</strong>
+    <span>原创二能级模型：两条路线计算同一个一阶空态振幅，显式显示能隙和微扰矩阵元。</span>
+    <span lang="en">Original two-level model: two routes evaluate the same first-order empty-state amplitude while exposing the gap and perturbation matrix element.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      能隙 Δε | energy separation
+      <input data-gap type="range" min="0.2" max="5" step="0.1" value="3" />
+    </label>
+    <label>
+      耦合 v | perturbation coupling
+      <input data-coupling type="range" min="0" max="1" step="0.02" value={defaults.coupling} />
+    </label>
+  </div>
+
+  <div class="sternheimer-response__diagram" role="img" aria-label="Two-level response calculated by explicit empty-state summation and a projected linear equation">
+    <div class="sternheimer-response__levels">
+      <div class="level level--empty">
+        <span>empty | e</span>
+        <output data-empty-energy>{defaults.emptyEnergy.toFixed(2)}</output>
+      </div>
+      <div class="transition" aria-hidden="true">↑ v</div>
+      <div class="level level--occupied">
+        <span>occupied | o</span>
+        <output data-occupied-energy>{defaults.occupiedEnergy.toFixed(2)}</output>
+      </div>
+    </div>
+
+    <div class="sternheimer-response__routes">
+      <section>
+        <h3>显式空态求和 | Explicit sum</h3>
+        <p>cₑ = v /(εₒ − εₑ)</p>
+        <output data-sum-amplitude>{initial.explicitSumAmplitude.toFixed(5)}</output>
+      </section>
+      <section>
+        <h3>投影线性方程 | Projected solve</h3>
+        <p>(H − εₒ)cₑ = −v</p>
+        <output data-solve-amplitude>{initial.projectedLinearSolveAmplitude.toFixed(5)}</output>
+      </section>
+    </div>
+  </div>
+
+  <p class="chapter-visual__readout" aria-live="polite" data-readout>
+    两条路线一致；当前响应振幅为 {initial.emptyAmplitude.toFixed(5)}。能隙减小时响应增大，且绝缘体投影模型逐渐接近简并/金属边界。
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>一个占据态和一个空态，εₒ=-1，εₑ=εₒ+Δε；微扰只有实矩阵元 v；不含自洽 Hartree-XC kernel。</p>
+    <p><strong>验收：</strong>显式求和与投影线性方程的空态振幅在机器精度内一致；固定 v 时振幅按 1/Δε 缩放；v=0 时响应为零。</p>
+    <p><strong>边界：</strong>真实 DFPT 还需 occupied-subspace gauge、简并、金属占据、自洽屏蔽、k/q 网格和预条件；二能级一致性不验证生产实现。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 Δε=3、v=0.2 的两条等价路线及振幅仍可见；控件不更新。</p>
+  </noscript>
+</figure>
+
+<script>
+  import { projectedTwoLevelResponse } from '../../../data/part05/ch20TeachingModels.mjs';
+
+  const root = document.getElementById('ch20-sternheimer-response');
+  if (root) {
+    const gapInput = root.querySelector('[data-gap]');
+    const couplingInput = root.querySelector('[data-coupling]');
+    const emptyEnergyOutput = root.querySelector('[data-empty-energy]');
+    const occupiedEnergyOutput = root.querySelector('[data-occupied-energy]');
+    const sumOutput = root.querySelector('[data-sum-amplitude]');
+    const solveOutput = root.querySelector('[data-solve-amplitude]');
+    const readout = root.querySelector('[data-readout]');
+
+    if (
+      gapInput instanceof HTMLInputElement
+      && couplingInput instanceof HTMLInputElement
+      && emptyEnergyOutput instanceof HTMLOutputElement
+      && occupiedEnergyOutput instanceof HTMLOutputElement
+      && sumOutput instanceof HTMLOutputElement
+      && solveOutput instanceof HTMLOutputElement
+      && readout instanceof HTMLElement
+    ) {
+      const update = () => {
+        const gap = Number(gapInput.value);
+        const coupling = Number(couplingInput.value);
+        const occupiedEnergy = -1;
+        const emptyEnergy = occupiedEnergy + gap;
+        const result = projectedTwoLevelResponse({ occupiedEnergy, emptyEnergy, coupling });
+        occupiedEnergyOutput.value = occupiedEnergy.toFixed(2);
+        emptyEnergyOutput.value = emptyEnergy.toFixed(2);
+        sumOutput.value = result.explicitSumAmplitude.toFixed(5);
+        solveOutput.value = result.projectedLinearSolveAmplitude.toFixed(5);
+        const boundary = gap < 0.6
+          ? '能级接近，绝缘体式非简并投影假设变脆弱'
+          : '非简并二能级假设在该模型中保持';
+        readout.textContent = `两条路线一致；响应振幅 ${result.emptyAmplitude.toFixed(5)}。${boundary}。`;
+      };
+
+      gapInput.addEventListener('input', update);
+      couplingInput.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .sternheimer-response {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+
+  .sternheimer-response__diagram {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.8fr) minmax(18rem, 1.7fr);
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .sternheimer-response__levels,
+  .sternheimer-response__routes section {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.6rem;
+    padding: 0.85rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .sternheimer-response__levels {
+    display: grid;
+    align-content: center;
+    gap: 0.55rem;
+  }
+
+  .level {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    border-bottom: 3px solid currentColor;
+    padding-bottom: 0.25rem;
+  }
+
+  .level--empty {
+    border-color: var(--sl-color-accent-high);
+  }
+
+  .transition {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .sternheimer-response__routes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .sternheimer-response__routes h3 {
+    margin-top: 0;
+  }
+
+  .sternheimer-response__routes output {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 50rem) {
+    .sternheimer-response__diagram,
+    .sternheimer-response__routes {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
