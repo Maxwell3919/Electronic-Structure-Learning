@@ -43,8 +43,10 @@ const holeSamples = sampleExchangeHole({ maximumY: 30, count: 601 });
 assert.equal(holeSamples.length, 601);
 assert.ok(holeSamples.every((point) => Number.isFinite(point.kernel) && point.pair >= -1e-12 && point.pair <= 1 + 1e-12));
 
-const maximumY = 180;
-const intervals = 180000;
+// The exchange hole has an oscillatory algebraic tail. Integrate far enough that
+// the omitted charge is explicitly controlled by the 1/y_max envelope.
+const maximumY = 1000;
+const intervals = 1000000;
 const step = maximumY / intervals;
 let radialIntegral = 0;
 for (let index = 0; index <= intervals; index += 1) {
@@ -54,7 +56,7 @@ for (let index = 0; index <= intervals; index += 1) {
 }
 radialIntegral *= step;
 const exchangeHoleCharge = 2 * radialIntegral / (3 * Math.PI);
-close(exchangeHoleCharge, -1, 8e-3, 'exchange-hole normalization');
+close(exchangeHoleCharge, -1, 2e-3, 'exchange-hole normalization');
 
 close(staticLindhardShape(0), 1, 1e-14, 'Lindhard q=0');
 close(staticLindhardShape(1), 0.5, 1e-14, 'Lindhard 2kF value');
