@@ -72,10 +72,12 @@ Every arrow needs inputs and an acceptance criterion. Normal program termination
 
 Sholl–Steckel 对简单固体和表面计算的实践讨论可转化为四个独立序列：
 
-1. 固定几何、k 网格和其他设置，增加平面波 cutoff 或减小实空间 spacing；
-2. 固定表示精度，增加 k 点密度；
-3. 对分子、表面或缺陷，增加 supercell 尺寸或真空厚度；
-4. 对每条序列记录目标量，而不只记录总能或程序 residual。
+<ol>
+  <li>固定几何、k 网格和其他设置，增加平面波 cutoff 或减小实空间 spacing；</li>
+  <li>固定表示精度，增加 k 点密度；</li>
+  <li>对分子、表面或缺陷，增加 supercell 尺寸或真空厚度；</li>
+  <li>对每条序列记录目标量，而不只记录总能或程序 residual。</li>
+</ol>
 
 判定标准应在运行前给出，例如相对能量差、最大力、带隙或密度积分在相邻两个更严格设置间变化小于给定容差。一个参数的稳定不能替代另一个参数的检查；若序列间强耦合，应采用二维或分阶段验证并说明固定条件。
 
@@ -84,10 +86,12 @@ Sholl–Steckel 对简单固体和表面计算的实践讨论可转化为四个�
 
 The practical discussions of simple solids and surfaces in Sholl–Steckel can be converted into four independent sequences:
 
-1. hold geometry, k mesh, and other settings fixed while raising the plane-wave cutoff or reducing the real-space spacing;
-2. hold representation accuracy fixed while increasing k-point density;
-3. for molecules, surfaces, or defects, enlarge the supercell or vacuum region;
-4. record the target observable in every sequence rather than only the total energy or program residual.
+<ol>
+  <li>Hold geometry, k mesh, and other settings fixed while raising the plane-wave cutoff or reducing the real-space spacing.</li>
+  <li>Hold representation accuracy fixed while increasing k-point density.</li>
+  <li>For molecules, surfaces, or defects, enlarge the supercell or vacuum region.</li>
+  <li>Record the target observable in every sequence rather than only the total energy or program residual.</li>
+</ol>
 
 The acceptance criterion should be declared before the runs, for example a change below a specified tolerance in a relative energy, maximum force, band gap, or density integral between the two strictest settings. Stability in one parameter does not replace checks in another. Strongly coupled sequences require a two-dimensional or staged validation with fixed conditions stated explicitly.
 
@@ -112,22 +116,26 @@ The required cutoff or spacing depends on pseudopotential or all-electron treatm
 <BilingualSection titleZh="需要被排除的推断跳跃" titleEn="Inference jumps that must be rejected">
   <div class="bilingual-section__zh">
 
-- **“平面波基是完备的，所以有限 cutoff 已经准确。”** 完备性属于无限极限；有限计算仍有截断误差。
-- **“cutoff 增加后总能下降，因此所有性质都收敛。”** Rayleigh–Ritz 单调性只在固定线性问题和嵌套子空间中成立；不同 observable 需要分别检查。
-- **“FFT 网格很细，所以 k 点也足够。”** 实空间分辨率与 Brillouin 区积分是独立离散。
-- **“高对称线没有穿越费米能，所以体系绝缘。”** 路径外状态仍可能形成口袋。
-- **“实空间矩阵稀疏，所以算法一定更快。”** 自由度数、谱条件、预条件、通信和精度目标共同决定成本。
-- **“两个程序结果接近，所以结果正确。”** 一致性只有在 Hamiltonian、边界、核处理、占据和收敛标准对齐后才有明确含义；共同偏差仍可能存在。
+<ul>
+  <li><strong>“平面波基是完备的，所以有限 cutoff 已经准确。”</strong> 完备性属于无限极限；有限计算仍有截断误差。</li>
+  <li><strong>“cutoff 增加后总能下降，因此所有性质都收敛。”</strong> Rayleigh–Ritz 单调性只在固定线性问题和嵌套子空间中成立；不同 observable 需要分别检查。</li>
+  <li><strong>“FFT 网格很细，所以 k 点也足够。”</strong> 实空间分辨率与 Brillouin 区积分是独立离散。</li>
+  <li><strong>“高对称线没有穿越费米能，所以体系绝缘。”</strong> 路径外状态仍可能形成口袋。</li>
+  <li><strong>“实空间矩阵稀疏，所以算法一定更快。”</strong> 自由度数、谱条件、预条件、通信和精度目标共同决定成本。</li>
+  <li><strong>“两个程序结果接近，所以结果正确。”</strong> 一致性只有在 Hamiltonian、边界、核处理、占据和收敛标准对齐后才有明确含义；共同偏差仍可能存在。</li>
+</ul>
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
-- **“The plane-wave basis is complete, so a finite cutoff is already accurate.”** Completeness belongs to the infinite limit; a finite calculation retains truncation error.
-- **“The total energy decreases with cutoff, so every property is converged.”** Rayleigh–Ritz monotonicity applies to a fixed linear problem in nested subspaces; different observables require separate checks.
-- **“The FFT grid is fine, so the k mesh is also sufficient.”** Real-space resolution and Brillouin-zone integration are independent discretizations.
-- **“No symmetry-line band crosses the Fermi level, so the system is insulating.”** Off-path states can still form pockets.
-- **“A real-space matrix is sparse, so the algorithm must be faster.”** Degrees of freedom, spectral conditioning, preconditioning, communication, and accuracy jointly set cost.
-- **“Two codes agree, so the result is correct.”** Agreement has a clear meaning only after aligning Hamiltonian, boundaries, core treatment, occupations, and convergence criteria; a shared bias may remain.
+<ul>
+  <li><strong>“The plane-wave basis is complete, so a finite cutoff is already accurate.”</strong> Completeness belongs to the infinite limit; a finite calculation retains truncation error.</li>
+  <li><strong>“The total energy decreases with cutoff, so every property is converged.”</strong> Rayleigh–Ritz monotonicity applies to a fixed linear problem in nested subspaces; different observables require separate checks.</li>
+  <li><strong>“The FFT grid is fine, so the k mesh is also sufficient.”</strong> Real-space resolution and Brillouin-zone integration are independent discretizations.</li>
+  <li><strong>“No symmetry-line band crosses the Fermi level, so the system is insulating.”</strong> Off-path states can still form pockets.</li>
+  <li><strong>“A real-space matrix is sparse, so the algorithm must be faster.”</strong> Degrees of freedom, spectral conditioning, preconditioning, communication, and accuracy jointly set cost.</li>
+  <li><strong>“Two codes agree, so the result is correct.”</strong> Agreement has a clear meaning only after aligning Hamiltonian, boundaries, core treatment, occupations, and convergence criteria; a shared bias may remain.</li>
+</ul>
 
   </div>
 </BilingualSection>
@@ -139,26 +147,30 @@ The required cutoff or spacing depends on pseudopotential or all-electron treatm
 <BilingualSection titleZh="推导与证据审查" titleEn="Derivation and evidence audit">
   <div class="bilingual-section__zh">
 
-1. **周期归一化。** 从一维积分开始，推导三维平面波的 Kronecker 正交关系，并说明无限体积极限中求和测度如何变成积分测度。
-2. **势矩阵。** 对 $V(x)=2V_1\cos(G_0x)$，列出非零 $\langle k+G|V|k+G'\rangle$，画出矩阵带状结构，并说明为何只耦合相差 $\pm G_0$ 的基函数。
-3. **Bragg 能隙。** 从一般复数 $V_G=|V_G|e^{i\phi}$ 的二态矩阵求本征值和归一化本征矢，判断 $\phi$ 影响哪些量。
-4. **结构因子。** 对一维三点基元 $0,a/3,2a/3$ 计算 $S_m$，找出消光级次，并区分振幅消光和强度消光。
-5. **密度带宽。** 设轨道仅含 $G=0,\pm G_0$，显式展开 $|\psi|^2$，列出密度中出现的所有 Fourier 分量。
-6. **有限差分误差。** 用 Taylor 展开推导五点四阶二阶导数 stencil，并对 $e^{ikx}$ 求数值色散至 $O((kh)^4)$。
-7. **收敛设计。** 为“两个晶体结构的相对能量达到 1 meV/atom 精度”设计 cutoff、k 点和体积三类检查，列出固定输入、输出和接受标准。
-8. **证据上限。** 给定一次成功运行、一个小 SCF residual、一张高对称线能带和两个程序接近的总能，逐项写出它们能支持和不能支持的结论。
+<ol>
+  <li><strong>周期归一化。</strong> 从一维积分开始，推导三维平面波的 Kronecker 正交关系，并说明无限体积极限中求和测度如何变成积分测度。</li>
+  <li><strong>势矩阵。</strong> 对 <code>V(x)=2V₁ cos(G₀x)</code>，列出非零 <code>⟨k+G|V|k+G′⟩</code>，画出矩阵带状结构，并说明为何只耦合相差 <code>±G₀</code> 的基函数。</li>
+  <li><strong>Bragg 能隙。</strong> 从一般复数 <code>V_G=|V_G| exp(iφ)</code> 的二态矩阵求本征值和归一化本征矢，判断 <code>φ</code> 影响哪些量。</li>
+  <li><strong>结构因子。</strong> 对一维三点基元 <code>0,a/3,2a/3</code> 计算 <code>S_m</code>，找出消光级次，并区分振幅消光和强度消光。</li>
+  <li><strong>密度带宽。</strong> 设轨道仅含 <code>G=0,±G₀</code>，显式展开 <code>|ψ|²</code>，列出密度中出现的所有 Fourier 分量。</li>
+  <li><strong>有限差分误差。</strong> 用 Taylor 展开推导五点四阶二阶导数 stencil，并对 <code>exp(ikx)</code> 求数值色散至 <code>O((kh)⁴)</code>。</li>
+  <li><strong>收敛设计。</strong> 为“两个晶体结构的相对能量达到 1 meV/atom 精度”设计 cutoff、k 点和体积三类检查，列出固定输入、输出和接受标准。</li>
+  <li><strong>证据上限。</strong> 给定一次成功运行、一个小 SCF residual、一张高对称线能带和两个程序接近的总能，逐项写出它们能支持和不能支持的结论。</li>
+</ol>
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
-1. **Periodic normalization.** Begin from a one-dimensional integral, derive the three-dimensional Kronecker orthogonality of plane waves, and explain how the sum measure becomes an integral measure in the infinite-volume limit.
-2. **Potential matrix.** For $V(x)=2V_1\cos(G_0x)$, list the nonzero $\langle k+G|V|k+G'\rangle$ elements, sketch the matrix bandwidth, and explain why only basis functions separated by $\pm G_0$ are coupled.
-3. **Bragg gap.** Starting from a general complex $V_G=|V_G|e^{i\phi}$, obtain eigenvalues and normalized eigenvectors of the two-state matrix and identify which quantities depend on $\phi$.
-4. **Structure factor.** For a one-dimensional three-site basis at $0,a/3,2a/3$, calculate $S_m$, find extinct orders, and distinguish amplitude extinction from intensity extinction.
-5. **Density bandwidth.** Let an orbital contain only $G=0,\pm G_0$. Expand $|\psi|^2$ explicitly and list all Fourier components appearing in the density.
-6. **Finite-difference error.** Derive a five-point fourth-order stencil for the second derivative by Taylor expansion and obtain its numerical dispersion for $e^{ikx}$ through $O((kh)^4)$.
-7. **Convergence design.** Design cutoff, k-point, and volume checks for a relative energy target of 1 meV/atom between two crystal structures, specifying fixed inputs, outputs, and acceptance criteria.
-8. **Evidence ceiling.** Given a successful run, a small SCF residual, one symmetry-line band plot, and similar total energies from two codes, state separately what each observation does and does not support.
+<ol>
+  <li><strong>Periodic normalization.</strong> Begin from a one-dimensional integral, derive the three-dimensional Kronecker orthogonality of plane waves, and explain how the sum measure becomes an integral measure in the infinite-volume limit.</li>
+  <li><strong>Potential matrix.</strong> For <code>V(x)=2V₁ cos(G₀x)</code>, list the nonzero <code>⟨k+G|V|k+G′⟩</code> elements, sketch the matrix bandwidth, and explain why only basis functions separated by <code>±G₀</code> are coupled.</li>
+  <li><strong>Bragg gap.</strong> Starting from a general complex <code>V_G=|V_G| exp(iφ)</code>, obtain eigenvalues and normalized eigenvectors of the two-state matrix and identify which quantities depend on <code>φ</code>.</li>
+  <li><strong>Structure factor.</strong> For a one-dimensional three-site basis at <code>0,a/3,2a/3</code>, calculate <code>S_m</code>, find extinct orders, and distinguish amplitude extinction from intensity extinction.</li>
+  <li><strong>Density bandwidth.</strong> Let an orbital contain only <code>G=0,±G₀</code>. Expand <code>|ψ|²</code> explicitly and list all Fourier components appearing in the density.</li>
+  <li><strong>Finite-difference error.</strong> Derive a five-point fourth-order stencil for the second derivative by Taylor expansion and obtain its numerical dispersion for <code>exp(ikx)</code> through <code>O((kh)⁴)</code>.</li>
+  <li><strong>Convergence design.</strong> Design cutoff, k-point, and volume checks for a relative energy target of 1 meV/atom between two crystal structures, specifying fixed inputs, outputs, and acceptance criteria.</li>
+  <li><strong>Evidence ceiling.</strong> Given a successful run, a small SCF residual, one symmetry-line band plot, and similar total energies from two codes, state separately what each observation does and does not support.</li>
+</ol>
 
   </div>
 </BilingualSection>
@@ -168,20 +180,24 @@ The required cutoff or spacing depends on pseudopotential or all-electron treatm
 <BilingualSection titleZh="本章来源记录" titleEn="Source record for this chapter">
   <div class="bilingual-section__zh">
 
-- 【Martin 原书 | Martin source】Part IV overview，印刷页 259–261；Chapter 12，印刷页 262–280，§§12.1–12.9。
-- 【Martin 原书 | Martin source】Appendix F，印刷页 607–619，用于扩展体系 Coulomb 与周期边界背景；Appendix L，651–659，用于有限差分背景；Appendix M，661–676，用于 FFT、迭代和预条件的数值背景。
-- 【外部实践来源 | External practice source】Sholl–Steckel Chapter 2，印刷页 35–47；Chapter 4，83–109；Chapter 10，209–225。仅用于周期固体、表面 supercell 和精度检查的实践连接。
-- 【原创教学模型 | Original teaching models】Fourier 截断、二态近自由电子、两点结构因子、中心差分色散。其解析条件由 `scripts/validate-part04-ch12.mjs` 检查。
-- 本页未复制教材图、教材正文、教材练习或答案；所有图形、推导和练习均为网站原创表达。
+<ul>
+  <li>【Martin 原书 | Martin source】Part IV overview，印刷页 259–261；Chapter 12，印刷页 262–280，§§12.1–12.9。</li>
+  <li>【Martin 原书 | Martin source】Appendix F，印刷页 607–619，用于扩展体系 Coulomb 与周期边界背景；Appendix L，651–659，用于有限差分背景；Appendix M，661–676，用于 FFT、迭代和预条件的数值背景。</li>
+  <li>【外部实践来源 | External practice source】Sholl–Steckel Chapter 2，印刷页 35–47；Chapter 4，83–109；Chapter 10，209–225。仅用于周期固体、表面 supercell 和精度检查的实践连接。</li>
+  <li>【原创教学模型 | Original teaching models】Fourier 截断、二态近自由电子、两点结构因子、中心差分色散。其解析条件由 <code>scripts/validate-part04-ch12.mjs</code> 检查。</li>
+  <li>本页未复制教材图、教材正文、教材练习或答案；所有图形、推导和练习均为网站原创表达。</li>
+</ul>
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
-- 【Martin source】Part IV overview, printed pp. 259–261; Chapter 12, printed pp. 262–280, §§12.1–12.9.
-- 【Martin source】Appendix F, printed pp. 607–619, for periodic Coulomb background; Appendix L, pp. 651–659, for finite-difference background; Appendix M, pp. 661–676, for numerical background on FFTs, iteration, and preconditioning.
-- 【External practice source】Sholl–Steckel Chapter 2, printed pp. 35–47; Chapter 4, pp. 83–109; Chapter 10, pp. 209–225. These are used only for practical links to periodic solids, surface supercells, and accuracy checks.
-- 【Original teaching models】Fourier truncation, a two-state nearly-free-electron model, a two-site structure factor, and central-difference dispersion. Their analytic conditions are checked by `scripts/validate-part04-ch12.mjs`.
-- No textbook figure, body prose, exercise, or answer is reproduced. All diagrams, derivations, and exercises are original website expressions.
+<ul>
+  <li>【Martin source】Part IV overview, printed pp. 259–261; Chapter 12, printed pp. 262–280, §§12.1–12.9.</li>
+  <li>【Martin source】Appendix F, printed pp. 607–619, for periodic Coulomb background; Appendix L, pp. 651–659, for finite-difference background; Appendix M, pp. 661–676, for numerical background on FFTs, iteration, and preconditioning.</li>
+  <li>【External practice source】Sholl–Steckel Chapter 2, printed pp. 35–47; Chapter 4, pp. 83–109; Chapter 10, pp. 209–225. These are used only for practical links to periodic solids, surface supercells, and accuracy checks.</li>
+  <li>【Original teaching models】Fourier truncation, a two-state nearly-free-electron model, a two-site structure factor, and central-difference dispersion. Their analytic conditions are checked by <code>scripts/validate-part04-ch12.mjs</code>.</li>
+  <li>No textbook figure, body prose, exercise, or answer is reproduced. All diagrams, derivations, and exercises are original website expressions.</li>
+</ul>
 
   </div>
 </BilingualSection>
