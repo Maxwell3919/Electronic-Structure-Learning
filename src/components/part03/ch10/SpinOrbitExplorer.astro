@@ -5,27 +5,32 @@ const lsPlus = defaultL / 2;
 const lsMinus = -(defaultL + 1) / 2;
 ---
 
-<figure class="chapter-visual spin-orbit-explorer" data-spin-orbit>
+<figure
+  class="chapter-visual spin-orbit-explorer"
+  data-spin-orbit
+  data-normalized-operator="LdotS-over-hbar2"
+  data-xi-unit="energy"
+>
   <figcaption>
-    <strong>原创教学模型：$\mathbf L\cdot\mathbf S$ 分裂 | Original teaching model: $\mathbf L\cdot\mathbf S$ splitting</strong>
-    <span>模型 Hamiltonian 为 H_SO = ξ L·S，采用单电子 $s=1/2$。</span>
-    <span lang="en">The model Hamiltonian is H_SO = ξ L·S for one electron with $s=1/2$.</span>
+    <strong>原创教学模型：L·S 分裂 | Original teaching model: L·S splitting</strong>
+    <span>模型 Hamiltonian 为 <code>H_SO(model)=ξ(L·S/ℏ²)</code>，采用单电子 <code>s=1/2</code>，其中 <code>ξ</code> 以能量为单位。</span>
+    <span lang="en">The model Hamiltonian is <code>H_SO(model)=ξ(L·S/ℏ²)</code> for one electron with <code>s=1/2</code>, with <code>ξ</code> in energy units.</span>
   </figcaption>
 
   <div class="chapter-visual__controls">
     <label>
-      <span>轨道角动量 $l$: <output data-l-output>{defaultL}</output></span>
+      <span>轨道角动量 l: <output data-l-output>{defaultL}</output></span>
       <input data-l type="range" min="0" max="5" step="1" value={defaultL} aria-label="Orbital angular momentum l" />
     </label>
     <label>
-      <span>耦合常数 $\xi$: <output data-xi-output>{defaultXi.toFixed(2)}</output> eV</span>
-      <input data-xi type="range" min="-1" max="1" step="0.05" value={defaultXi} aria-label="Spin orbit coupling constant xi in electron volts" />
+      <span>耦合能量 ξ: <output data-xi-output>{defaultXi.toFixed(2)}</output> eV</span>
+      <input data-xi type="range" min="-1" max="1" step="0.05" value={defaultXi} aria-label="Spin orbit coupling energy xi in electron volts" />
     </label>
   </div>
 
   <svg viewBox="0 0 760 300" role="img" aria-labelledby="soc-title soc-desc">
     <title id="soc-title">Spin orbit splitting into j equals l plus or minus one half</title>
-    <desc id="soc-desc">Energy levels from the analytic L dot S eigenvalues, with degeneracies two j plus one.</desc>
+    <desc id="soc-desc">Energy levels from the dimensionless L dot S over hbar squared eigenvalues, with degeneracies two j plus one.</desc>
     <line class="soc-centre" x1="90" y1="150" x2="670" y2="150" />
     <line data-plus-line class="soc-level soc-plus" x1="390" y1="120" x2="650" y2="120" />
     <line data-minus-line class="soc-level soc-minus" x1="110" y1="195" x2="370" y2="195" />
@@ -35,19 +40,19 @@ const lsMinus = -(defaultL + 1) / 2;
   </svg>
 
   <p class="chapter-visual__readout" aria-live="polite">
-    <span>〈L·S〉 for j = l + 1/2 = <strong data-ls-plus>{lsPlus.toFixed(2)}</strong></span>
-    <span>〈L·S〉 for j = l − 1/2 = <strong data-ls-minus>{lsMinus.toFixed(2)}</strong></span>
+    <span>〈L·S/ℏ²〉 for j = l + 1/2 = <strong data-ls-plus>{lsPlus.toFixed(2)}</strong></span>
+    <span>〈L·S/ℏ²〉 for j = l − 1/2 = <strong data-ls-minus>{lsMinus.toFixed(2)}</strong></span>
     <span>简并度加权迹：<strong data-trace>0.000000</strong> eV</span>
   </p>
 
   <div class="chapter-visual__contract">
-    <p><strong>验收：</strong>对 $l>0$，两支本征值分别为 $l/2$ 和 $-(l+1)/2$；用简并度 $2j+1$ 加权后，完整 $l\otimes s$ 空间中的能量迹为零。</p>
-    <p lang="en"><strong>Acceptance:</strong> for $l>0$, the two eigenvalues are $l/2$ and $-(l+1)/2$; weighting by degeneracy $2j+1$ gives zero trace over the complete $l\otimes s$ space.</p>
-    <p><strong>边界：</strong>$\xi$ 在真实原子中来自径向势梯度和径向波函数，通常依赖壳层与化学环境。此图不计算 $\xi$，也不包含晶场或多电子多重态。</p>
-    <p lang="en"><strong>Boundary:</strong> in a real atom, $\xi$ follows from the radial potential gradient and radial wavefunction and generally depends on shell and environment. The figure does not calculate $\xi$ and omits crystal fields and many-electron multiplets.</p>
+    <p><strong>验收：</strong>对 <code>l&gt;0</code>，无量纲算符 <code>L·S/ℏ²</code> 的两支本征值分别为 <code>l/2</code> 和 <code>−(l+1)/2</code>；用简并度 <code>2j+1</code> 加权后，完整 <code>l⊗s</code> 空间中的能量迹为零。</p>
+    <p lang="en"><strong>Acceptance:</strong> for <code>l&gt;0</code>, the two eigenvalues of the dimensionless operator <code>L·S/ℏ²</code> are <code>l/2</code> and <code>−(l+1)/2</code>; weighting by degeneracy <code>2j+1</code> gives zero energy trace over the complete <code>l⊗s</code> space.</p>
+    <p><strong>边界：</strong><code>ξ</code> 在此模型中是能量；若直接把 Hamiltonian 写成 <code>ξ̃ L·S</code>，则 <code>ξ̃</code> 必须具有 <code>eV/ℏ²</code> 的量纲。真实原子的耦合还取决于径向势梯度、径向波函数、壳层和化学环境；此图不包含晶场或多电子多重态。</p>
+    <p lang="en"><strong>Boundary:</strong> <code>ξ</code> is an energy in this model. A Hamiltonian written directly as <code>ξ̃ L·S</code> requires <code>ξ̃</code> to have units of <code>eV/ℏ²</code>. The physical atomic coupling also depends on the radial potential gradient, radial wavefunction, shell, and environment; the figure omits crystal fields and many-electron multiplets.</p>
   </div>
 
-  <noscript><p>无 JavaScript 时显示默认 $l=2$、$\xi=0.20$ eV 的解析分裂。</p></noscript>
+  <noscript><p>无 JavaScript 时显示默认 l=2、ξ=0.20 eV 的解析分裂，并采用 L·S/ℏ² 无量纲算符。</p></noscript>
 </figure>
 
 <script>
