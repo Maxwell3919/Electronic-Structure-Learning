@@ -1,0 +1,330 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import DensityMatrixExplorer from './DensityMatrixExplorer.astro';
+import GaussianProductExplorer from './GaussianProductExplorer.astro';
+
+<span id="section-15-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.1 局域基中的 Kohn–Sham 方程 | Solution of Kohn–Sham Equations in Localized Bases
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 320–322 将 Chapter 14 的局域 atom-centred orbitals 用于 full Kohn–Sham/Hartree–Fock calculations，区分 analytic 与 numerical basis，并介绍 multiple-ζ、polarization 和 basis optimization。下面补足 generalized variation、density matrix 与 electron-count trace。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 320–322 use the localized atom-centred orbitals of Chapter 14 in full Kohn–Sham or Hartree–Fock calculations, distinguish analytic and numerical bases, and introduce multiple-ζ, polarization, and basis optimization. The generalized variation, density matrix, and electron-count trace below are supplemental derivations.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="finite basis expansion 与 self-consistent matrix" titleEn="Finite-basis expansion and a self-consistent matrix">
+  <div class="bilingual-section__zh">
+    <p>在给定核位置与边界条件下，选取 $M$ 个局域 basis functions $\{\chi_\mu(\mathbf r)\}$：</p>
+
+$$
+\psi_i(\mathbf r)=\sum_{\mu=1}^{M}C_{\mu i}\chi_\mu(\mathbf r).
+$$
+
+    <p>连续 Kohn–Sham operator 与有限矩阵必须区分：</p>
+
+$$
+H_{\mu\nu}[n]=\langle\chi_\mu|\hat H_{\mathrm{KS}}[n]|\chi_\nu\rangle,
+\qquad
+S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle.
+$$
+
+    <p>$S$ 是 coefficient space 的 metric。线性独立 basis 要求 $S$ Hermitian positive definite；small eigenvalues 表示 near-linear dependence，并会放大 numerical noise。即使每个 $\chi_\mu$ individually well behaved，basis union 仍可能 overcomplete。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For fixed nuclei and boundary conditions, choose $M$ localized basis functions $\{\chi_\mu(\mathbf r)\}$:</p>
+
+$$
+\psi_i(\mathbf r)=\sum_{\mu=1}^{M}C_{\mu i}\chi_\mu(\mathbf r).
+$$
+
+    <p>The continuous Kohn–Sham operator and the finite matrices are distinct objects:</p>
+
+$$
+H_{\mu\nu}[n]=\langle\chi_\mu|\hat H_{\mathrm{KS}}[n]|\chi_\nu\rangle,
+\qquad
+S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle.
+$$
+
+    <p>$S$ is the metric of coefficient space. A linearly independent basis requires Hermitian positive-definite $S$. Small eigenvalues signal near-linear dependence and amplify numerical noise. Even if each $\chi_\mu$ is individually well behaved, their union can be overcomplete.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="nonorthogonal Rayleigh–Ritz variation | Nonorthogonal Rayleigh–Ritz variation"
+  assumptions={[
+    '有限、线性独立 basis；',
+    'H 与 S Hermitian，S positive definite；',
+    '固定 density 时求解单粒子 stationary problem。',
+  ]}
+>
+
+对 coefficient vector $c$，Rayleigh quotient 为
+
+$$
+\mathcal R[c]=\frac{c^\dagger Hc}{c^\dagger Sc}.
+$$
+
+用 Lagrange multiplier $\varepsilon$ 固定 $c^\dagger Sc=1$：
+
+$$
+\delta\left(c^\dagger Hc-\varepsilon(c^\dagger Sc-1)\right)=0.
+$$
+
+对 $c^\dagger$ 独立变分得到
+
+$$
+\boxed{Hc_i=\varepsilon_iSc_i}.
+$$
+
+多个 eigenvectors 可选为
+
+$$
+C^\dagger SC=I,
+\qquad
+C^\dagger HC=\operatorname{diag}(\varepsilon_i).
+$$
+
+若进行 symmetric orthogonalization，$S=U s U^\dagger$，则
+
+$$
+\widetilde H=S^{-1/2}HS^{-1/2},
+\qquad
+\widetilde H\widetilde c_i=\varepsilon_i\widetilde c_i,
+\qquad
+c_i=S^{-1/2}\widetilde c_i.
+$$
+
+该变换没有消除 basis incompleteness；当 $s_{\min}$ 很小时，$S^{-1/2}$ 放大误差，并且 orthogonalized orbitals 往往比原始 basis 更长程。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="density matrix、electron count 与 real-space density" titleEn="Density matrix, electron count, and real-space density">
+  <div class="bilingual-section__zh">
+    <p>给定 occupations $f_i$，coefficient-space density matrix 定义为</p>
+
+$$
+P_{\mu\nu}=\sum_i f_i C_{\mu i}C^*_{\nu i}.
+$$
+
+    <p>在非正交 basis 中，electron count 不是一般的 $\mathrm{Tr}(P)$：</p>
+
+$$
+N=\sum_i f_i=\operatorname{Tr}(PS).
+$$
+
+    <p>连续 density 由 basis products 重构：</p>
+
+$$
+n(\mathbf r)=\sum_{\mu\nu}P_{\mu\nu}\chi_\mu(\mathbf r)\chi_\nu^*(\mathbf r).
+$$
+
+    <p>矩阵 $P$、metric $S$ 与函数 $n(\mathbf r)$ 的维度、index placement 和 transformation law 不同。把 coefficient matrix 元直接解释为 atomic charge 需要额外 population convention；Mulliken、Löwdin、Bader 等分析不能静默互换。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For occupations $f_i$, define the coefficient-space density matrix by</p>
+
+$$
+P_{\mu\nu}=\sum_i f_i C_{\mu i}C^*_{\nu i}.
+$$
+
+    <p>In a nonorthogonal basis, the electron count is not generally $\mathrm{Tr}(P)$:</p>
+
+$$
+N=\sum_i f_i=\operatorname{Tr}(PS).
+$$
+
+    <p>The continuous density is reconstructed from basis products:</p>
+
+$$
+n(\mathbf r)=\sum_{\mu\nu}P_{\mu\nu}\chi_\mu(\mathbf r)\chi_\nu^*(\mathbf r).
+$$
+
+    <p>$P$, the metric $S$, and the function $n(\mathbf r)$ have different dimensions, index conventions, and transformation laws. Interpreting coefficient-matrix elements as atomic charges requires an additional population convention; Mulliken, Löwdin, Bader, and other analyses are not silently interchangeable.</p>
+  </div>
+</BilingualSection>
+
+<DensityMatrixExplorer />
+
+<BilingualSection titleZh="self-consistency data flow" titleEn="Self-consistency data flow">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>由输入 density 构造 local potential、nonlocal projectors 和 $H[n]$；</li>
+      <li>构造/复用 $S$、kinetic 与 position-only two-centre integrals；</li>
+      <li>解 $HC=SC\varepsilon$ 或等价 iterative subspace problem；</li>
+      <li>由 $C,f$ 形成 $P$ 与 $n_{\mathrm{out}}(\mathbf r)$；</li>
+      <li>求 Poisson/XC 等 potential，mix density/potential，再迭代；</li>
+      <li>分别检查 eigensolver residual、SCF residual、basis/grid、forces/stress 和 target observable。</li>
+    </ol>
+    <p>localized basis 降低 active coefficient count，不意味着 local-potential integrals 不再需要 real-space grid，也不意味着 SCF automatically easier。matrix conditioning、charge sloshing、metal occupations 和 basis motion 仍是独立问题。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Build the local potential, nonlocal projectors, and $H[n]$ from an input density.</li>
+      <li>Construct or reuse $S$, kinetic terms, and position-only two-centre integrals.</li>
+      <li>Solve $HC=SC\varepsilon$ or an equivalent iterative subspace problem.</li>
+      <li>Form $P$ and $n_{\mathrm{out}}(\mathbf r)$ from $C$ and the occupations.</li>
+      <li>Solve for Poisson and XC potentials, mix density or potential, and iterate.</li>
+      <li>Check eigensolver residual, SCF residual, basis or grid convergence, forces or stress, and the target observable separately.</li>
+    </ol>
+    <p>A localized basis reduces the active coefficient count. It does not remove real-space grids for local-potential integrals or make self-consistency automatically easy. Matrix conditioning, charge sloshing, metallic occupations, and basis motion remain separate problems.</p>
+  </div>
+</BilingualSection>
+
+### Basis naming, radial flexibility, and polarization
+
+<BilingualSection titleZh="multiple-ζ 与 polarization functions" titleEn="Multiple-zeta and polarization functions">
+  <div class="bilingual-section__zh">
+    <p>同一 $(l,m)$ channel 使用一、二、三条 radial functions 常记为 SZ、DZ、TZ。增加 ζ 允许同一 angular character 在核附近、bonding region 和 tail 区域以不同 radial shape 响应。polarization functions 增加 atomic ground-state occupied manifold 之外的 angular channel，用于描述 nonspherical environment、bond bending、electric response 和 anisotropic density。</p>
+    <p>“更大 basis”不是单一序列。可能分别增加 radial multiplicity、higher $l$、diffuse functions、tight/core-like functions 或 support radius。每种扩展改变的误差机制不同；只报告 basis label 而不说明 species、confinement、exponents 和 polarization definition 不足以复现。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>One, two, or three radial functions in the same $(l,m)$ channel are commonly labelled SZ, DZ, and TZ. Additional zeta functions let the same angular character respond with different radial shapes near the nucleus, in the bonding region, and in the tail. Polarization functions add angular channels beyond the occupied atomic ground-state manifold to describe nonspherical environments, bond bending, electric response, and anisotropic density.</p>
+    <p>A “larger basis” is not a single sequence. One may separately add radial multiplicity, higher $l$, diffuse functions, tight or core-like functions, or support radius. Each changes a different error mechanism. A basis label without species, confinement, exponents, and polarization definition is not reproducible.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="diffuse 与 compressed functions 的竞争" titleEn="Competing needs for diffuse and compressed functions" kind="boundary">
+  <div class="bilingual-section__zh">bonding environments 往往需要比 isolated-atom valence tail 更 compressed 的 functions，以减少无关长程 overlap；molecules、anions、surfaces、weak binding 和 vacuum decay 又可能需要 diffuse functions。只向一个方向调整 range 会在另一类 observable 上失败，因此 basis convergence 必须绑定体系与 observable。</div>
+  <div class="bilingual-section__en" lang="en">Bonding environments often favour functions more compressed than isolated-atom valence tails, reducing irrelevant long-range overlap. Molecules, anions, surfaces, weak binding, and vacuum decay can instead require diffuse functions. Changing range in only one direction can fail for another observable, so basis convergence must be tied to the system and observable.</div>
+</BilingualCallout>
+
+<span id="section-15-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.2 解析基函数：Gaussians | Analytic Basis Functions: Gaussians
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 322–324 以 Gaussian product theorem 解释 analytic integral efficiency，并讨论 contracted/Slater-type representations。下面给出完整 product algebra、normalization 与 basis-quality 边界。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 322–324 use the Gaussian product theorem to explain analytic-integral efficiency and discuss contracted or Slater-type representations. The explicit product algebra, normalization, and basis-quality boundaries below are supplemental.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="primitive Cartesian Gaussian" titleEn="Primitive Cartesian Gaussian">
+  <div class="bilingual-section__zh">
+
+$$
+g_{abc}(\mathbf r;\alpha,\mathbf A)
+=N_{abc}(\alpha)
+(x-A_x)^a(y-A_y)^b(z-A_z)^c
+ e^{-\alpha|\mathbf r-\mathbf A|^2}.
+$$
+
+    <p>exponent $\alpha$ 的量纲为 $L^{-2}$；larger $\alpha$ 对应 tighter function。polynomial degree $a+b+c$ 提供 Cartesian angular character。spherical-harmonic Gaussians 可由 Cartesian combinations 形成；basis convention 必须说明使用 Cartesian 还是 pure/spherical functions。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+$$
+g_{abc}(\mathbf r;\alpha,\mathbf A)
+=N_{abc}(\alpha)
+(x-A_x)^a(y-A_y)^b(z-A_z)^c
+ e^{-\alpha|\mathbf r-\mathbf A|^2}.
+$$
+
+    <p>The exponent $\alpha$ has dimension $L^{-2}$; larger $\alpha$ gives a tighter function. The polynomial degree $a+b+c$ supplies Cartesian angular character. Spherical-harmonic Gaussians can be formed from Cartesian combinations, and the basis convention must state whether Cartesian or pure spherical functions are used.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Gaussian product theorem | Gaussian product theorem"
+  assumptions={[
+    '两个 unnormalized primitive s Gaussians；',
+    'positive exponents α,β；',
+    'Euclidean three-dimensional coordinates。',
+  ]}
+>
+
+从
+
+$$
+\alpha|\mathbf r-\mathbf A|^2+\beta|\mathbf r-\mathbf B|^2
+$$
+
+展开并配方。定义
+
+$$
+\gamma=\alpha+\beta,
+\qquad
+\mathbf P=\frac{\alpha\mathbf A+\beta\mathbf B}{\gamma}.
+$$
+
+可验证
+
+$$
+\alpha|\mathbf r-\mathbf A|^2+\beta|\mathbf r-\mathbf B|^2
+=\gamma|\mathbf r-\mathbf P|^2
++\frac{\alpha\beta}{\gamma}|\mathbf A-\mathbf B|^2.
+$$
+
+因此
+
+$$
+\boxed{
+e^{-\alpha|\mathbf r-\mathbf A|^2}
+e^{-\beta|\mathbf r-\mathbf B|^2}
+=K_{AB}e^{-\gamma|\mathbf r-\mathbf P|^2}
+},
+$$
+
+$$
+K_{AB}=\exp\left[-\frac{\alpha\beta}{\alpha+\beta}|\mathbf A-\mathbf B|^2\right].
+$$
+
+s-type overlap follows immediately:
+
+$$
+\int d^3r\,e^{-\alpha|\mathbf r-\mathbf A|^2}e^{-\beta|\mathbf r-\mathbf B|^2}
+=K_{AB}\left(\frac{\pi}{\alpha+\beta}\right)^{3/2}.
+$$
+
+Polynomial prefactors can be recast as finite polynomials about $\mathbf P$, reducing overlap, kinetic, nuclear-attraction and electron-repulsion integrals to reusable one-centre Gaussian moments and recurrence relations.
+
+</DerivationBlock>
+
+<GaussianProductExplorer />
+
+<BilingualSection titleZh="contracted Gaussians 与 basis hierarchy" titleEn="Contracted Gaussians and basis hierarchies">
+  <div class="bilingual-section__zh">
+    <p>contracted function 是 primitives 的固定线性组合：</p>
+
+$$
+\chi_\mu(\mathbf r)=\sum_{p=1}^{N_p}d_{\mu p}g_p(\mathbf r).
+$$
+
+    <p>tight primitives 描述核附近，diffuse primitives 描述长程 tail；contraction 以较少 variational coefficients 保留 radial flexibility。segmented/general contractions、core/valence separation、polarization 和 diffuse augmentation 形成不同 hierarchy。basis family 名称不自动给出同一 completeness ordering across elements or properties。</p>
+    <p>Gaussian 在核处没有 Coulomb cusp，远处衰减为 $e^{-\alpha r^2}$ 而不是 atomic-like $e^{-\zeta r}$。用多条 exponents 可逼近 cusp/tail，但可能产生更多 functions 与 near-linear dependence。analytic integrals 是 algorithmic advantage，不是物理精度证明。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>A contracted function is a fixed linear combination of primitives:</p>
+
+$$
+\chi_\mu(\mathbf r)=\sum_{p=1}^{N_p}d_{\mu p}g_p(\mathbf r).
+$$
+
+    <p>Tight primitives describe the near-nuclear region and diffuse primitives the long-range tail; contraction retains radial flexibility with fewer variational coefficients. Segmented or general contractions, core or valence separation, polarization, and diffuse augmentation define different hierarchies. A basis-family name does not automatically provide one common completeness ordering across elements or properties.</p>
+    <p>A Gaussian lacks the Coulomb cusp at a nucleus and decays as $e^{-\alpha r^2}$ rather than the atomic-like $e^{-\zeta r}$. Multiple exponents can approximate cusp and tail behaviour at the cost of more functions and possible near-linear dependence. Analytic integrals are an algorithmic advantage, not proof of physical accuracy.</p>
+  </div>
+</BilingualSection>
+
+<span id="section-15-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.3 Gaussian 方法：基态与激发能 | Gaussian Methods: Ground-State and Excitation Energies
+
+<BilingualSection titleZh="basis family 与 electronic-structure method 是两个选择" titleEn="Basis family and electronic-structure method are separate choices">
+  <div class="bilingual-section__zh">
+    <p>Gaussian functions 可承载 Kohn–Sham DFT、Hartree–Fock、hybrid/exact exchange 和 many-body/post-Kohn–Sham methods。使用 Gaussian 不决定 exchange–correlation approximation，也不把 Kohn–Sham eigenvalue difference 变为 measured excitation。</p>
+    <p>ground-state total energy、ionization/addition quasiparticle energy、neutral optical excitation 和 response pole 是不同 observables。它们可能使用相同 integral engine，却需要不同 equations、approximations 和 convergence tests。本节只说明 Gaussian integral structure 为这些方法提供高效基础，不展开 companion-volume many-body theory。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Gaussian functions can support Kohn–Sham DFT, Hartree–Fock, hybrid or exact exchange, and many-body or post-Kohn–Sham methods. Using Gaussians does not select an exchange–correlation approximation or turn a Kohn–Sham eigenvalue difference into a measured excitation.</p>
+    <p>Ground-state total energy, ionization or addition quasiparticle energy, neutral optical excitation, and a response pole are different observables. They may use the same integral engine but require different equations, approximations, and convergence tests. This section only explains why Gaussian integral structure provides an efficient foundation; it does not develop companion-volume many-body theory.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="periodic Gaussian calculations" titleEn="Periodic Gaussian calculations" kind="derivation">
+  <div class="bilingual-section__zh">周期体系用 lattice sums 构造 Bloch-adapted Gaussian basis，并对 Coulomb、exchange 和 density matrix 施加 periodic boundary conditions。局域性可减少远程 integral 数量，但 diffuse functions、long-range Coulomb/exchange、k sampling 和 linear dependence 仍需单独控制。分子 basis 在 crystal 中可用，不代表其对 stress、bandgap、surface state 或 magnetic state 已收敛。</div>
+  <div class="bilingual-section__en" lang="en">Periodic systems use lattice sums to form Bloch-adapted Gaussian bases and impose periodic boundary conditions on Coulomb, exchange, and density-matrix objects. Locality can reduce the number of distant integrals, but diffuse functions, long-range Coulomb or exchange, k sampling, and linear dependence remain separate controls. A molecular basis can be used in a crystal without being converged for stress, a band gap, a surface state, or a magnetic state.</div>
+</BilingualCallout>
+
+<BilingualCallout titleZh="basis-set superposition 的预告" titleEn="Basis-set superposition preview" kind="boundary">
+  <div class="bilingual-section__zh">当 fragments 接近时，每个 fragment 可借用对方 basis，complex 的 finite-basis energy 可能比 isolated fragments 获得额外 variational lowering。BSSE 与 ordinary basis incompleteness 有关但不相同；counterpoise 等诊断依赖 fragment definition。本章只建立该误差边界，不给所有材料通用的修正处方。</div>
+  <div class="bilingual-section__en" lang="en">When fragments approach, each can borrow basis functions from the other, so a finite-basis complex can receive extra variational lowering relative to isolated fragments. Basis-set superposition error is related to, but distinct from, ordinary basis incompleteness. Counterpoise and related diagnostics depend on a fragment definition. This chapter establishes the boundary rather than prescribing one universal correction for all materials.</div>
+</BilingualCallout>
