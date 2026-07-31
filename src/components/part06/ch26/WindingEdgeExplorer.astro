@@ -66,13 +66,13 @@ const circleR = scale * Math.abs(t2Initial);
     <strong data-we-status>Origin enclosed; a normalizable left-edge solution exists for the shown termination.</strong>
   </div>
 
-  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> t₁=0.55、t₂=1.00，复平面圆包围原点，bulk gap=0.90，左端解析振幅按 $(-t_1/t_2)^n$ 衰减。</p></noscript>
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> t₁=0.55、t₂=1.00，复平面圆包围原点，bulk gap=0.90，左端解析振幅按 (−t₁/t₂)ⁿ 衰减。</p></noscript>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$q(k)=t_1+t_2e^{ik}$，$\Delta=0$。本站 Bloch convention 下，圆包围原点时 winding 为 1。所示左端半无限链取 A 位点起始，零能解满足 $A_{n+1}=-(t_1/t_2)A_n$、$B_n=0$。</p>
-    <p lang="en"><strong>Model:</strong> $q(k)=t_1+t_2e^{ik}$ with $\Delta=0$. In the stated Bloch convention the winding is one when the circle encloses the origin. The displayed semi-infinite chain starts on an A site and its zero-energy solution obeys $A_{n+1}=-(t_1/t_2)A_n$, $B_n=0$.</p>
-    <p><strong>验收：</strong>$|t_2|>|t_1|$ 时圆包围原点、解析解可归一化；$|t_2|=|t_1|$ 时 bulk gap 闭合且局域长度发散；$|t_2|<|t_1|$ 时同一终止下该左端解不可归一化。</p>
-    <p lang="en"><strong>Acceptance:</strong> for $|t_2|>|t_1|$ the circle encloses the origin and the analytic solution is normalizable; at equality the bulk gap closes and the localization length diverges; for $|t_2|<|t_1|$ the same left-boundary solution is not normalizable.</p>
+    <p><strong>模型：</strong><code>q(k)=t₁+t₂ exp(ik)</code>，<code>Δ=0</code>。本站 Bloch convention 下，圆包围原点时 winding 为 1。所示左端半无限链取 A 位点起始，零能解满足 <code>Aₙ₊₁=−(t₁/t₂)Aₙ</code>、<code>Bₙ=0</code>。</p>
+    <p lang="en"><strong>Model:</strong> <code>q(k)=t₁+t₂ exp(ik)</code> with <code>Δ=0</code>. In the stated Bloch convention the winding is one when the circle encloses the origin. The displayed semi-infinite chain starts on an A site and its zero-energy solution obeys <code>Aₙ₊₁=−(t₁/t₂)Aₙ</code>, <code>Bₙ=0</code>.</p>
+    <p><strong>验收：</strong><code>|t₂|&gt;|t₁|</code> 时圆包围原点、解析解可归一化；两者相等时 bulk gap 闭合且局域长度发散；<code>|t₂|&lt;|t₁|</code> 时同一终止下该左端解不可归一化。</p>
+    <p lang="en"><strong>Acceptance:</strong> for <code>|t₂|&gt;|t₁|</code> the circle encloses the origin and the analytic solution is normalizable; at equality the bulk gap closes and the localization length diverges; for <code>|t₂|&lt;|t₁|</code> the same left-boundary solution is not normalizable.</p>
     <p><strong>边界：</strong>该结论依赖 chiral 对称和所示终止。有限链两端会杂化并产生指数小的能级分裂；加入子格势或同子格跃迁可移动端态能量。普通 Shockley 状态与受更强拓扑保护的边界谱必须分级讨论。</p>
     <p lang="en"><strong>Boundary:</strong> the statement assumes chiral symmetry and the shown termination. Two ends of a finite chain hybridize and acquire an exponentially small splitting; sublattice potentials or same-sublattice hopping may shift the end-state energy. Ordinary Shockley states and more strongly protected boundary spectral flow require separate evidence levels.</p>
   </div>
