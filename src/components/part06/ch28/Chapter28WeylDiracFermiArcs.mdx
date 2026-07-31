@@ -11,7 +11,7 @@ import FermiArcSliceExplorer from './FermiArcSliceExplorer.astro';
 <BilingualSection titleZh="从 gapped topological phase 转向受控 bulk nodes" titleEn="From a gapped topological phase to controlled bulk nodes" eyebrow="【Martin 原书 | Martin source】">
   <div class="bilingual-section__zh">
 
-topological insulator 的 bulk 在目标能量处有 gap，拓扑信息存储在完整 occupied manifold 中。Weyl 或 Dirac semimetal 的 bulk gap 则在离散 momentum points 闭合。节点不是数值缺陷：它由维度、对称性和 topological charge 稳定，并决定邻近二维 momentum slices 的 Chern number 如何改变。
+A topological insulator has a bulk gap at the target energy, with topology stored in the complete occupied manifold. A Weyl or Dirac semimetal instead has a bulk gap that closes at isolated momentum points. Such a node is not a numerical defect: dimensionality, symmetry, and topological charge stabilize it, and it controls how the Chern number of nearby two-dimensional momentum slices changes.
 
 最一般的 spinless/two-band Hermitian Hamiltonian 可写为
 
@@ -73,8 +73,6 @@ $$
 $$
 \dim(\text{node set})=d-3.
 $$
-
-因此：
 
 - $d=2$ 时，维数为 $-1$，表示 generic solution 不存在；需要调参数或 symmetry。
 - $d=3$ 时，维数为 $0$，得到 isolated Weyl points。
@@ -306,51 +304,51 @@ A credible Fermi-arc claim requires verified bulk Weyl nodes and chiralities, a 
 
 <BilingualSection titleZh="本章判断链复核" titleEn="Review of the chapter's judgment chain" eyebrow="【复核 | Review】">
   <div class="bilingual-section__zh">
-
-- **三维绝缘体：**先验证 full-BZ bulk gap，再计算完整 occupied manifold 的 $(\nu_0;\nu_1\nu_2\nu_3)$。
-- **weak/strong：**weak phase 是 translation-sensitive layered class；strong phase 的理想 TR-preserving surface 具有 odd connectivity modulo 2。
-- **surface/bulk Dirac：**surface cone 位于 insulating bulk 的 boundary；bulk Dirac node 是四重 bulk crossing。
-- **Weyl：**generic two-band node 在三维 codimension 为三；闭合小球上的 Chern charge 非零。
-- **Fermi arc：**是 nonzero-Chern momentum slices 的 chiral boundaries 随第三个 momentum 拼接后的 surface-resolved open contour。
-
+    <ul>
+      <li><strong>三维绝缘体：</strong>先验证 full-BZ bulk gap，再计算完整 occupied manifold 的 $(\nu_0;\nu_1\nu_2\nu_3)$。</li>
+      <li><strong>weak/strong：</strong>weak phase 是 translation-sensitive layered class；strong phase 的理想 TR-preserving surface 具有 odd connectivity modulo 2。</li>
+      <li><strong>surface/bulk Dirac：</strong>surface cone 位于 insulating bulk 的 boundary；bulk Dirac node 是四重 bulk crossing。</li>
+      <li><strong>Weyl：</strong>generic two-band node 在三维 codimension 为三；闭合小球上的 Chern charge 非零。</li>
+      <li><strong>Fermi arc：</strong>是 nonzero-Chern momentum slices 的 chiral boundaries 随第三个 momentum 拼接后的 surface-resolved open contour。</li>
+    </ul>
   </div>
   <div class="bilingual-section__en" lang="en">
-
-- **Three-dimensional insulator:** first verify a full-BZ bulk gap, then compute $(\nu_0;\nu_1\nu_2\nu_3)$ from the complete occupied manifold.
-- **Weak versus strong:** a weak phase is a translation-sensitive layered class; an ideal time-reversal-preserving surface of a strong phase has odd connectivity modulo two.
-- **Surface versus bulk Dirac:** a surface cone is a boundary of an insulating bulk; a bulk Dirac node is a fourfold bulk crossing.
-- **Weyl:** a generic two-band node has codimension three in three dimensions and nonzero Chern charge on a small enclosing sphere.
-- **Fermi arc:** it is the surface-resolved open contour obtained by joining the chiral boundaries of nonzero-Chern momentum slices.
-
+    <ul>
+      <li><strong>Three-dimensional insulator:</strong> first verify a full-BZ bulk gap, then compute $(\nu_0;\nu_1\nu_2\nu_3)$ from the complete occupied manifold.</li>
+      <li><strong>Weak versus strong:</strong> a weak phase is a translation-sensitive layered class; an ideal time-reversal-preserving surface of a strong phase has odd connectivity modulo two.</li>
+      <li><strong>Surface versus bulk Dirac:</strong> a surface cone is a boundary of an insulating bulk; a bulk Dirac node is a fourfold bulk crossing.</li>
+      <li><strong>Weyl:</strong> a generic two-band node has codimension three in three dimensions and nonzero Chern charge on a small enclosing sphere.</li>
+      <li><strong>Fermi arc:</strong> it is the surface-resolved open contour obtained by joining the chiral boundaries of nonzero-Chern momentum slices.</li>
+    </ul>
   </div>
 </BilingualSection>
 
 <BilingualCallout titleZh="原创练习" titleEn="Original exercises" kind="practice">
   <div class="bilingual-section__zh">
-
-1. 构造八个 $\delta_{n_1n_2n_3}$，分别得到 trivial、weak $(0;001)$ 与 strong $(1;000)$；说明最少需要翻转几个 parity products。
-2. 对 lattice Dirac mass $M=m+B\sum_i(1-\cos k_i)$，列出八个 TRIM masses，并找出随 $m/B$ 改变的所有 gap-closing values。
-3. 从 $m(z)$ domain wall 方程求表面态衰减长度，并比较 bulk mass 接近零时的行为。
-4. 证明 generic $2\times2$ Hermitian crossing 在三维是 isolated point；再给出一个 mirror symmetry 将条件数降为二并形成 nodal line 的例子。
-5. 从 Martin mass–field spectrum 推导 $b>m$ 时的 Weyl-node separation，并检查接近 $b=m$ 时的 scaling。
-6. 对 anisotropic Weyl Hamiltonian $H=\sum_{ij}v_{ij}p_j\sigma_i$，说明 chirality 与 $\det v$ 的关系。
-7. 设 slice Chern number 在 $-k_0<k_z<k_0$ 为 1，写出一个 chiral surface dispersion 并画出三个不同 energies 的 arcs。
-8. 设计一份 first-principles Weyl-node evidence manifest，明确 full-BZ search、closed-surface flux、surface termination 和 convergence 字段。
-9. 解释为何薄膜 surface gap 随 thickness 衰减支持 hybridization interpretation，而不自动证明 time-reversal-breaking mass。
-
+    <ol>
+      <li>构造八个 $\delta_{n_1n_2n_3}$，分别得到 trivial、weak $(0;001)$ 与 strong $(1;000)$；说明最少需要翻转几个 parity products。</li>
+      <li>对 lattice Dirac mass $M=m+B\sum_i(1-\cos k_i)$，列出八个 TRIM masses，并找出随 $m/B$ 改变的所有 gap-closing values。</li>
+      <li>从 $m(z)$ domain wall 方程求表面态衰减长度，并比较 bulk mass 接近零时的行为。</li>
+      <li>证明 generic $2\times2$ Hermitian crossing 在三维是 isolated point；再给出一个 mirror symmetry 将条件数降为二并形成 nodal line 的例子。</li>
+      <li>从 Martin mass–field spectrum 推导 $b>m$ 时的 Weyl-node separation，并检查接近 $b=m$ 时的 scaling。</li>
+      <li>对 anisotropic Weyl Hamiltonian $H=\sum_{ij}v_{ij}p_j\sigma_i$，说明 chirality 与 $\det v$ 的关系。</li>
+      <li>设 slice Chern number 在 $-k_0<k_z<k_0$ 为 1，写出一个 chiral surface dispersion 并画出三个不同 energies 的 arcs。</li>
+      <li>设计一份 first-principles Weyl-node evidence manifest，明确 full-BZ search、closed-surface flux、surface termination 和 convergence 字段。</li>
+      <li>解释为何薄膜 surface gap 随 thickness 衰减支持 hybridization interpretation，而不自动证明 time-reversal-breaking mass。</li>
+    </ol>
   </div>
   <div class="bilingual-section__en" lang="en">
-
-1. Construct eight $\delta_{n_1n_2n_3}$ values for a trivial phase, a weak $(0;001)$ phase, and a strong $(1;000)$ phase. Determine the minimum number of parity-product flips in each case.
-2. For $M=m+B\sum_i(1-\cos k_i)$, list the eight TRIM masses and find every gap-closing value as $m/B$ changes.
-3. Solve for the decay length of a surface state at a mass domain wall and examine its behaviour as the bulk mass approaches zero.
-4. Prove that a generic $2\times2$ Hermitian crossing is an isolated point in three dimensions, then give a mirror-symmetric example in which the number of independent conditions drops to two and a nodal line appears.
-5. Derive the Weyl-node separation for $b>m$ from Martin's mass–field spectrum and determine its scaling near $b=m$.
-6. For $H=\sum_{ij}v_{ij}p_j\sigma_i$, explain the relation between chirality and $\det v$.
-7. Let the slice Chern number equal one for $-k_0<k_z<k_0$. Write a chiral surface dispersion and draw the arcs at three energies.
-8. Design a first-principles Weyl-node evidence manifest with explicit fields for a full-BZ search, closed-surface flux, surface termination, and convergence.
-9. Explain why a surface gap that decays with film thickness supports a hybridization interpretation but does not by itself prove a time-reversal-breaking mass.
-
+    <ol>
+      <li>Construct eight $\delta_{n_1n_2n_3}$ values for a trivial phase, a weak $(0;001)$ phase, and a strong $(1;000)$ phase. Determine the minimum number of parity-product flips in each case.</li>
+      <li>For $M=m+B\sum_i(1-\cos k_i)$, list the eight TRIM masses and find every gap-closing value as $m/B$ changes.</li>
+      <li>Solve for the decay length of a surface state at a mass domain wall and examine its behaviour as the bulk mass approaches zero.</li>
+      <li>Prove that a generic $2\times2$ Hermitian crossing is an isolated point in three dimensions, then give a mirror-symmetric example in which the number of independent conditions drops to two and a nodal line appears.</li>
+      <li>Derive the Weyl-node separation for $b>m$ from Martin's mass–field spectrum and determine its scaling near $b=m$.</li>
+      <li>For $H=\sum_{ij}v_{ij}p_j\sigma_i$, explain the relation between chirality and $\det v$.</li>
+      <li>Let the slice Chern number equal one for $-k_0<k_z<k_0$. Write a chiral surface dispersion and draw the arcs at three energies.</li>
+      <li>Design a first-principles Weyl-node evidence manifest with explicit fields for a full-BZ search, closed-surface flux, surface termination, and convergence.</li>
+      <li>Explain why a surface gap that decays with film thickness supports a hybridization interpretation but does not by itself prove a time-reversal-breaking mass.</li>
+    </ol>
   </div>
 </BilingualCallout>
 
