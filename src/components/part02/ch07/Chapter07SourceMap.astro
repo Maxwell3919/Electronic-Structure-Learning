@@ -1,0 +1,47 @@
+---
+const sections = [
+  ['7.1', 'Replacing One Problem with Another', 145, '辅助非相互作用体系、密度约束与能量分解'],
+  ['7.2', 'The Kohn–Sham Variational Equations', 148, '轨道正交约束变分、Lagrange 乘子矩阵与规范轨道'],
+  ['7.3', 'Solution of the Self-Consistent Coupled Kohn–Sham Equations', 150, '密度—势—轨道—密度闭合与离散求解层级'],
+  ['7.4', 'Achieving Self-Consistency', 157, '残差、响应、mixing、preconditioning 与收敛边界'],
+  ['7.5', 'Force and Stress', 160, 'Hellmann–Feynman、Pulay 项、应力及基组依赖'],
+  ['7.6', 'Interpretation of the Exchange–Correlation Potential', 161, 'v_xc 的定义、常数规范与势的物理边界'],
+  ['7.7', 'Meaning of the Eigenvalues', 162, '占据最高能级、轨道本征值与可观测量证据上限'],
+  ['7.8', 'Intricacies of Exact Kohn–Sham Theory', 163, '非相互作用可表示性、简并、分数占据与导数不连续'],
+  ['7.9', 'Time-Dependent Density Functional Theory', 166, '时间依赖映射、辅助体系与记忆效应'],
+  ['7.10', 'Other Generalizations', 167, '自旋、有限温度、系综及其他基本变量'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-07-source-map-title">
+  <h2 id="chapter-07-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    Martin 第 2 版 Chapter 7 的印刷页范围为 145–167；原书习题从第 169 页开始，本站不转录题目。
+    Sholl–Steckel Chapter 1 用于实践语境，Chapter 3 §3.4 用于自洽迭代交叉参考；二者不替代 Martin 的理论顺序。
+  </p>
+  <table>
+    <thead>
+      <tr><th>原节</th><th>Martin 标题</th><th>印刷页</th><th>本站处理</th><th>状态</th></tr>
+    </thead>
+    <tbody>
+      {sections.map(([id, title, page, scope]) => (
+        <tr>
+          <td>{id}</td><td lang="en">{title}</td><td>{page}</td><td>{scope}</td><td>原创双语正文</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="source-boundary">
+    【来源边界】目录标题和印刷页码用于定位；正文、推导、图示、数值模型和练习均为本站原创。Chapter 7 只定义和推导 Kohn–Sham 结构，不提前展开 Chapters 8–9 的泛函家族。
+  </p>
+</section>
+
+<style>
+  .chapter-source-map { margin-block: 1.5rem; }
+  table { min-width: 55rem; }
+  .source-boundary {
+    border-left: 0.25rem solid var(--sl-color-accent);
+    padding: 0.75rem 0.9rem;
+    background: var(--sl-color-gray-7);
+  }
+</style>
