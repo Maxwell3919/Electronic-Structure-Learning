@@ -98,7 +98,7 @@ export const matchedWeakWellDepth = (energy, strongDepth, rc = 1) => {
   return best ** 2 / 2 - energy;
 };
 
-export const residualFourierTail = (coreRadius, cutoffQ) => Math.exp(-(coreRadius * cutoffQ) ** 2);
+export const residualFourierTail = (coreRadius, cutoffQ) => Math.exp(-((coreRadius * cutoffQ) ** 2));
 
 export const cutoffForTail = (coreRadius, tolerance = 1e-6) => Math.sqrt(-Math.log(tolerance)) / coreRadius;
 
