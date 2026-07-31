@@ -94,3 +94,9 @@ Shared `package.json`, CI and Pages registration will be added only after a fres
 ## Copyright and data boundary
 
 Only bibliographic identity, section titles and printed-page locators are retained from sources. Public prose, derivations, exercises, diagrams and numerical kernels are original. The repository will not contain textbook PDFs/scans/figures/captions/exercises/answers, licensed material, credentials, private records or raw/restart/wavefunction calculation outputs.
+
+## Validation history
+
+- `site-ci` run `30661191191` installed the locked dependencies and passed smoke-script syntax plus every deterministic validator, including all twelve Chapter 22 model/content groups.
+- The same run failed during Astro/MDX assembly at `Chapter22SurfaceStates.mdx:323` because a Markdown list was nested inside raw HTML in the final bilingual callout. This failure is retained as a failure, not reclassified as a pass.
+- The list was converted to explicit `<ul>/<li>` markup without changing the scientific content, acceptance conditions, or other Parts. A full combined rerun is required before readiness.
