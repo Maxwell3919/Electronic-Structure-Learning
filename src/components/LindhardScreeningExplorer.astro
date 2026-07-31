@@ -1,0 +1,103 @@
+<figure class="chapter-visual ch05-lindhard" data-ch05-lindhard>
+  <figcaption>
+    <strong>原创交互模型：static Lindhard response 与 screening</strong>
+    <span lang="en">Original interactive model: static Lindhard response and screening</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>x = q/(2kF)</span>
+      <input type="range" min="0.02" max="2.50" step="0.01" value="0.80" data-ch05-lindhard-x />
+      <output data-ch05-lindhard-x-output>0.80</output>
+    </label>
+    <label>
+      <span>density radius rₛ</span>
+      <input type="range" min="1" max="8" step="0.1" value="3.0" data-ch05-lindhard-rs />
+      <output data-ch05-lindhard-rs-output>3.0</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 860 420" role="img" aria-labelledby="ch05-lindhard-title ch05-lindhard-desc">
+    <title id="ch05-lindhard-title">Static three-dimensional Lindhard shape and screened-to-bare interaction ratio</title>
+    <desc id="ch05-lindhard-desc">The Lindhard shape is continuous with a derivative nonanalyticity at q equals two kF. The screening ratio rises from zero toward one with increasing q.</desc>
+    <line x1="85" y1="350" x2="790" y2="350" class="plot-axis" />
+    <line x1="85" y1="55" x2="85" y2="350" class="plot-axis" />
+    <line x1="367" y1="55" x2="367" y2="350" class="plot-guide ch05-lindhard__two-kf" />
+    <text x="350" y="382">2kF</text>
+    <text x="775" y="382">q</text>
+    <text x="26" y="65">F, W/V</text>
+    <path d="M 85 70 C 210 80 320 110 367 205 C 470 260 620 305 790 325" class="plot-curve ch05-lindhard__shape" data-ch05-lindhard-shape />
+    <path d="M 85 345 C 180 330 300 285 430 230 C 570 170 690 120 790 95" class="plot-curve ch05-lindhard__screening" data-ch05-lindhard-screening />
+    <line x1="311" y1="55" x2="311" y2="350" class="ch05-lindhard__cursor" data-ch05-lindhard-cursor />
+    <circle cx="311" cy="150" r="7" data-ch05-lindhard-shape-point />
+    <circle cx="311" cy="270" r="7" data-ch05-lindhard-screen-point />
+    <text x="615" y="95">F(x)</text>
+    <text x="615" y="275">screened / bare</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <strong data-ch05-lindhard-shape-readout>F(0.80) = 0.7472</strong>
+    <span data-ch05-lindhard-q>q = 1.0235 a₀⁻¹; kTF = 0.9024 a₀⁻¹</span>
+    <span data-ch05-lindhard-screen>εRPA(q,0) = 1.580; screened/bare = 0.633</span>
+    <span data-ch05-lindhard-cusp>F is continuous at x=1 with a nonanalytic derivative.</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>F(x)=1/2+(1−x²)ln|(1+x)/(1−x)|/(4x)</code>，<code>ε=1+kTF²F/q²</code>。</p>
+    <p lang="en"><strong>Model:</strong> the zero-temperature three-dimensional static Lindhard shape is inserted into the RPA dielectric denominator.</p>
+    <p><strong>验收：</strong><code>F(0)=1</code>、<code>F(1)=1/2</code>、large-q 为 <code>1/(3x²)</code>，且 screened interaction 在 q→0 消失。</p>
+    <p lang="en"><strong>Acceptance:</strong> the long-wavelength, two-kF, large-q, and screened-potential limits are checked independently.</p>
+    <p><strong>边界：</strong>无 dynamic continuum、plasmon dispersion、finite temperature、local fields、interband transitions、lifetime 或 anisotropic Fermi surface。</p>
+    <p lang="en"><strong>Boundary:</strong> dynamic continua, plasmon dispersion, temperature, local fields, interband transitions, lifetimes, and anisotropic Fermi surfaces are omitted.</p>
+  </div>
+</figure>
+
+<script>
+  import { sampleStaticLindhard, staticRpaScreening } from '../lib/chapter05Models.mjs';
+
+  document.querySelectorAll('[data-ch05-lindhard]').forEach((root) => {
+    const xInput = root.querySelector('[data-ch05-lindhard-x]');
+    const rsInput = root.querySelector('[data-ch05-lindhard-rs]');
+    const xOutput = root.querySelector('[data-ch05-lindhard-x-output]');
+    const rsOutput = root.querySelector('[data-ch05-lindhard-rs-output]');
+    const shapePath = root.querySelector('[data-ch05-lindhard-shape]');
+    const screeningPath = root.querySelector('[data-ch05-lindhard-screening]');
+    const cursor = root.querySelector('[data-ch05-lindhard-cursor]');
+    const shapePoint = root.querySelector('[data-ch05-lindhard-shape-point]');
+    const screenPoint = root.querySelector('[data-ch05-lindhard-screen-point]');
+    const shapeReadout = root.querySelector('[data-ch05-lindhard-shape-readout]');
+    const qReadout = root.querySelector('[data-ch05-lindhard-q]');
+    const screenReadout = root.querySelector('[data-ch05-lindhard-screen]');
+    if (!(xInput instanceof HTMLInputElement) || !(rsInput instanceof HTMLInputElement)) return;
+    if (!(shapePath instanceof SVGPathElement) || !(screeningPath instanceof SVGPathElement)) return;
+    if (!(cursor instanceof SVGLineElement) || !(shapePoint instanceof SVGCircleElement) || !(screenPoint instanceof SVGCircleElement)) return;
+
+    const xMap = (x) => 85 + x / 2.5 * 705;
+    const yMap = (value) => 350 - Math.max(0, Math.min(1, value)) * 280;
+
+    const update = () => {
+      const x = Number(xInput.value);
+      const rs = Number(rsInput.value);
+      const samples = sampleStaticLindhard({ maximumX: 2.5, count: 451, rs });
+      shapePath.setAttribute('d', samples.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.x).toFixed(2)} ${yMap(point.shape).toFixed(2)}`).join(' '));
+      screeningPath.setAttribute('d', samples.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.x).toFixed(2)} ${yMap(point.screenedToBare).toFixed(2)}`).join(' '));
+      const result = staticRpaScreening({ rs, x });
+      const plotX = xMap(x);
+      cursor.setAttribute('x1', String(plotX));
+      cursor.setAttribute('x2', String(plotX));
+      shapePoint.setAttribute('cx', String(plotX));
+      shapePoint.setAttribute('cy', String(yMap(result.shape)));
+      screenPoint.setAttribute('cx', String(plotX));
+      screenPoint.setAttribute('cy', String(yMap(result.screenedToBare)));
+      if (xOutput instanceof HTMLOutputElement) xOutput.value = x.toFixed(2);
+      if (rsOutput instanceof HTMLOutputElement) rsOutput.value = rs.toFixed(1);
+      if (shapeReadout instanceof HTMLElement) shapeReadout.textContent = `F(${x.toFixed(2)}) = ${result.shape.toFixed(4)}`;
+      if (qReadout instanceof HTMLElement) qReadout.textContent = `q = ${result.q.toFixed(4)} a₀⁻¹; kTF = ${result.thomasFermiWavevector.toFixed(4)} a₀⁻¹`;
+      if (screenReadout instanceof HTMLElement) screenReadout.textContent = `εRPA(q,0) = ${result.dielectric.toFixed(3)}; screened/bare = ${result.screenedToBare.toFixed(3)}`;
+    };
+
+    xInput.addEventListener('input', update);
+    rsInput.addEventListener('input', update);
+    update();
+  });
+</script>

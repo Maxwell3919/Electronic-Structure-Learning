@@ -1,0 +1,149 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="notation">对象、符号与证据门槛 | Objects, Notation, and Evidence Gates</h2>
+
+<BilingualSection titleZh="密度与自旋变量" titleEn="Density and spin variables">
+  <div class="bilingual-section__zh">
+
+除特别说明外使用 Hartree atomic units：$\hbar=m_e=e=4\pi\epsilon_0=1$。总 density、spin densities 和 polarization 为
+
+$$
+n=n_\uparrow+n_\downarrow,
+\qquad
+\zeta=\frac{n_\uparrow-n_\downarrow}{n},
+\qquad
+n_{\uparrow,\downarrow}=\frac n2(1\pm\zeta),
+$$
+
+其中 $-1\le\zeta\le1$。Wigner–Seitz density radius 定义为
+
+$$
+\frac{4\pi}{3}r_s^3=\frac1n,
+\qquad
+n=\frac{3}{4\pi r_s^3}.
+$$
+
+$r_s$ 是由 average volume per electron 定义的 density parameter，不是 nearest-neighbour distance，也不是 correlation length。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Hartree atomic units are used unless stated otherwise. Total density, spin densities, and polarization are
+
+$$
+n=n_\uparrow+n_\downarrow,
+\qquad
+\zeta=\frac{n_\uparrow-n_\downarrow}{n},
+\qquad
+n_{\uparrow,\downarrow}=\frac n2(1\pm\zeta).
+$$
+
+The density radius obeys
+
+$$
+\frac{4\pi}{3}r_s^3=\frac1n.
+$$
+
+It represents the average volume per electron, not a nearest-neighbour distance or a correlation length.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Fermi 与 screening scales" titleEn="Fermi and screening scales">
+  <div class="bilingual-section__zh">
+
+每个 spin channel 的 Fermi wavevector 为
+
+$$
+k_{F\sigma}=(6\pi^2n_\sigma)^{1/3},
+$$
+
+unpolarized gas 有
+
+$$
+k_F=(3\pi^2n)^{1/3}
+=\left(\frac{9\pi}{4}\right)^{1/3}\frac1{r_s}.
+$$
+
+常用 scales：
+
+$$
+E_F=\frac{k_F^2}{2},
+\qquad
+v_F=k_F,
+\qquad
+\omega_p=\sqrt{4\pi n}=\sqrt{\frac3{r_s^3}},
+\qquad
+k_{\mathrm{TF}}^2=\frac{4k_F}{\pi}.
+$$
+
+$\omega_p$ 是 long-wavelength homogeneous-gas plasma scale；真实 crystal 的 plasmon 会受 band structure、interband screening 与 damping 修改。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Each spin channel has
+
+$$
+k_{F\sigma}=(6\pi^2n_\sigma)^{1/3}.
+$$
+
+For an unpolarized gas,
+
+$$
+k_F=(3\pi^2n)^{1/3}
+=\left(\frac{9\pi}{4}\right)^{1/3}r_s^{-1}.
+$$
+
+Useful reference scales are $E_F=k_F^2/2$, $v_F=k_F$, $\omega_p=\sqrt{4\pi n}$, and $k_{\mathrm{TF}}^2=4k_F/\pi$. The plasma frequency is a homogeneous long-wavelength reference, not an exact crystal plasmon.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="能量与 hole conventions" titleEn="Energy and hole conventions">
+  <div class="bilingual-section__zh">
+
+每电子能量用 lowercase $\varepsilon$ 或 explicit $E/N$。noninteracting kinetic、exchange 与 correlation 分别记为 $t_s$、$\varepsilon_x$、$\varepsilon_c$。exchange–correlation energy 是
+
+$$
+\varepsilon_{xc}=\varepsilon_x+\varepsilon_c,
+$$
+
+但其 potential-energy hole expression 必须使用 coupling-constant-averaged hole，才能包含 kinetic correlation。
+
+pair distribution $g_{\sigma\sigma'}(r)$ 给定参考 electron 周围的 conditional density $n_{\sigma'}g_{\sigma\sigma'}(r)$。hole density 为
+
+$$
+n_{h,\sigma\sigma'}(r)
+=n_{\sigma'}[g_{\sigma\sigma'}(r)-1].
+$$
+
+同 spin exchange hole 积分为 $-1$；correlation hole 在固定 exchange definition 下净积分为 $0$；total xc hole 积分为 $-1$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Per-electron kinetic, exchange, and correlation energies are denoted $t_s$, $\varepsilon_x$, and $\varepsilon_c$. The full exchange–correlation energy requires a coupling-constant-averaged hole when expressed as a Coulomb hole integral, because kinetic correlation is included.
+
+The conditional pair density is $n_{\sigma'}g_{\sigma\sigma'}(r)$ and the associated hole is
+
+$$
+n_{h,\sigma\sigma'}(r)=n_{\sigma'}[g_{\sigma\sigma'}(r)-1].
+$$
+
+The same-spin exchange hole integrates to minus one electron, the correlation hole carries zero net charge under the declared decomposition, and the total exchange–correlation hole integrates to minus one.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="response convention" titleEn="Response convention" kind="boundary">
+  <div class="bilingual-section__zh">
+    <p>本章使用 $\chi_0(q,\omega)$ 表示 noninteracting density response，$\chi^*(q,\omega)$ 表示 proper interacting response，并写</p>
+    <p>$$\epsilon(q,\omega)=1-v(q)\chi^*(q,\omega),\qquad v(q)=\frac{4\pi}{q^2}.$$</p>
+    <p>不同文献对 $\chi$ 的 sign、spin factor、volume normalization 和 retarded Fourier convention 可能不同。比较公式必须先统一这些 conventions。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>This chapter writes $\epsilon(q,\omega)=1-v(q)\chi^*(q,\omega)$ with $v(q)=4\pi/q^2$. Sign, spin, volume, and Fourier conventions differ among sources and codes and must be aligned before formulas are compared.</p>
+  </div>
+</BilingualCallout>
