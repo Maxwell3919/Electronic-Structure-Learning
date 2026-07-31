@@ -58,7 +58,7 @@ export const sameSpinPairDistribution = (y) => {
   return 1 - kernel ** 2;
 };
 
-export const exchangeHoleDimensionless = (y) => -densityMatrixKernel(y) ** 2;
+export const exchangeHoleDimensionless = (y) => -(densityMatrixKernel(y) ** 2);
 
 export const sampleExchangeHole = ({ maximumY = 24, count = 481 } = {}) => {
   assertFinite(maximumY, 'maximumY');
