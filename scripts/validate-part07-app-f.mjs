@@ -160,7 +160,8 @@ const paths = {
   orientation: 'src/components/part07/appF/AppendixFOrientation.mdx',
   pointEwald: 'src/components/part07/appF/AppendixFPointEwald.mdx',
   smearedReference: 'src/components/part07/appF/AppendixFSmearedReference.mdx',
-  surfaceImages: 'src/components/part07/appF/AppendixFSurfaceImagesReview.mdx',
+  surfaceImages: 'src/components/part07/appF/AppendixFSurfaceImages.mdx',
+  review: 'src/components/part07/appF/AppendixFReview.mdx',
   neutrality: 'src/components/part07/appF/NeutralityGZeroMap.astro',
   ewald: 'src/components/part07/appF/EwaldSplitExplorer.astro',
   gaussian: 'src/components/part07/appF/GaussianChargeExplorer.astro',
@@ -177,14 +178,15 @@ for (const component of [
   'AppendixFOrientation',
   'AppendixFPointEwald',
   'AppendixFSmearedReference',
-  'AppendixFSurfaceImagesReview',
+  'AppendixFSurfaceImages',
+  'AppendixFReview',
 ]) {
   assert.match(content.body, new RegExp(`<${component}\\s*/>`), `body must render ${component}`);
 }
 for (const section of ['F.1', 'F.2', 'F.3', 'F.4', 'F.5', 'F.6']) {
   assert.ok(content.contents.includes(section), `source map must contain ${section}`);
 }
-const combinedSections = `${content.pointEwald}\n${content.smearedReference}\n${content.surfaceImages}`;
+const combinedSections = `${content.pointEwald}\n${content.smearedReference}\n${content.surfaceImages}\n${content.review}`;
 for (const marker of [
   'section-f-1',
   'section-f-2',
@@ -219,11 +221,11 @@ for (const required of [
   'Makov-Payne',
   'Coulomb cutoff',
   'Martin Eq. F.22',
-  'exercises are not reproduced',
+  'source exercises not reproduced',
 ]) {
   assert.ok(combinedText.includes(required), `required scientific boundary missing: ${required}`);
 }
-assert.ok((content.surfaceImages.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
+assert.ok((content.review.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
 assert.match(content.index, /F · Coulomb Interactions in Extended Systems \| content complete/, 'Part VII index must expose Appendix F content-complete state');
 assert.match(content.index, /G–R \| outline/, 'Part VII index must preserve later appendices as outlines');
 
