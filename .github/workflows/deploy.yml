@@ -100,6 +100,7 @@ jobs:
           .venv-pages-smoke/bin/python scripts/smoke-chapter03-pages.py
           .venv-pages-smoke/bin/python scripts/smoke-chapter04-pages.py
           .venv-pages-smoke/bin/python scripts/smoke-chapter05-pages.py
+          .venv-pages-smoke/bin/python scripts/smoke-part01-index.py
           .venv-pages-smoke/bin/python scripts/smoke-part02-index.py
           .venv-pages-smoke/bin/python scripts/smoke-part02-ch06.py
           .venv-pages-smoke/bin/python scripts/smoke-part02-ch07.py
@@ -110,6 +111,7 @@ jobs:
           .venv-pages-smoke/bin/python scripts/smoke-part04-ch12.py
           .venv-pages-smoke/bin/python scripts/smoke-part04-ch13.py
           .venv-pages-smoke/bin/python scripts/smoke-part04-ch14.py
+          .venv-pages-smoke/bin/python scripts/smoke-part04-ch15.py
           .venv-pages-smoke/bin/python scripts/smoke-pages-ch19.py
           .venv-pages-smoke/bin/python scripts/smoke-part05-ch20.py
           .venv-pages-smoke/bin/python scripts/smoke-part05-ch21.py
@@ -122,6 +124,7 @@ jobs:
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-d.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-e.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-f.py
+          .venv-pages-smoke/bin/python scripts/smoke-part07-app-g.py
 
       - name: Upload browser-smoke evidence
         if: always()

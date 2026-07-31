@@ -128,7 +128,18 @@ for (const key of ['gaussianVisual', 'confinementVisual', 'densityVisual', 'pula
 }
 assert.equal((content.contents.match(/section-15-/g) ?? []).length, 8);
 assert.match(content.sourceMap, /正文与推导已填充/);
-assert.doesNotMatch(joined, /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/, 'content contains a disallowed control character');
+const disallowedControl = /[\u0000-\u0008\u000B\u000C\u000E-\u001F]/;
+for (const [key, text] of Object.entries(content)) {
+  const match = disallowedControl.exec(text);
+  if (match) {
+    const offset = match.index;
+    const before = text.slice(0, offset);
+    const line = before.split('\n').length;
+    const column = offset - before.lastIndexOf('\n');
+    const codePoint = match[0].codePointAt(0).toString(16).toUpperCase().padStart(4, '0');
+    assert.fail(`${key} (${paths[key]}) contains U+${codePoint} at ${line}:${column}`);
+  }
+}
 assert.doesNotMatch(joined, /教材习题|source exercise text|答案如下/);
 
 console.log('Part IV Chapter 15 validation passed: 6 deterministic/content groups.');

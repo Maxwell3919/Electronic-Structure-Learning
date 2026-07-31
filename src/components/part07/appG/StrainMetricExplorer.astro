@@ -1,0 +1,177 @@
+---
+import { deformation2D, stressModelDefaults, transform2D } from '../../../data/part07/stressStrainModel.mjs';
+
+const defaults = deformation2D(stressModelDefaults.strain2D);
+const origin = [155, 250];
+const scale = 92;
+const reference = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+const mapPoint = (point, deformation = [[1, 0], [0, 1]], offset = origin) => {
+  const transformed = transform2D({ deformation, vector: point });
+  return [offset[0] + scale * transformed[0], offset[1] - scale * transformed[1]];
+};
+const polygon = (deformation, offset) => reference.map((point) => mapPoint(point, deformation, offset).map((value) => value.toFixed(2)).join(',')).join(' ');
+const referencePolygon = polygon([[1, 0], [0, 1]], [155, 250]);
+const deformedPolygon = polygon(defaults.deformation, [505, 250]);
+const fallbackCases = [
+  { label: 'isotropic expansion', exx: 0.08, eyy: 0.08, exy: 0, rotation: 0 },
+  { label: 'pure shear', exx: 0, eyy: 0, exy: 0.08, rotation: 0 },
+  { label: 'same strain + rigid rotation', exx: 0.08, eyy: -0.03, exy: 0.06, rotation: 25 },
+].map((entry) => ({ ...entry, ...deformation2D(entry) }));
+---
+
+<figure class="chapter-visual strain-metric" data-strain-metric>
+  <figcaption>
+    <strong>原创交互模型：对称应变、刚体转动与 metric</strong>
+    <span lang="en">Original interactive model: symmetric strain, rigid rotation, and the metric</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls strain-metric__controls">
+    <label>
+      <span>u<sub>xx</sub></span>
+      <input type="range" min="-0.16" max="0.16" step="0.01" value={stressModelDefaults.strain2D.exx} data-strain-exx />
+      <output data-strain-exx-output>{stressModelDefaults.strain2D.exx.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>u<sub>yy</sub></span>
+      <input type="range" min="-0.16" max="0.16" step="0.01" value={stressModelDefaults.strain2D.eyy} data-strain-eyy />
+      <output data-strain-eyy-output>{stressModelDefaults.strain2D.eyy.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>u<sub>xy</sub>=u<sub>yx</sub></span>
+      <input type="range" min="-0.14" max="0.14" step="0.01" value={stressModelDefaults.strain2D.exy} data-strain-exy />
+      <output data-strain-exy-output>{stressModelDefaults.strain2D.exy.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>rigid rotation θ | 刚体转角</span>
+      <input type="range" min="-40" max="40" step="1" value={stressModelDefaults.strain2D.rotation} data-strain-rotation />
+      <output data-strain-rotation-output>{stressModelDefaults.strain2D.rotation.toFixed(0)}°</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 700 365" role="img" aria-labelledby="strain-metric-title strain-metric-desc">
+    <title id="strain-metric-title">Reference square and a deformed square separated into symmetric strain and rigid rotation</title>
+    <desc id="strain-metric-desc">
+      The left panel shows an undeformed square. The right panel applies a symmetric small-strain stretch followed by an exact rigid rotation. The rotation changes orientation but not metric eigenvalues or area. Controls are keyboard operable.
+    </desc>
+    <rect x="30" y="30" width="270" height="285" rx="12" class="strain-metric__panel" />
+    <rect x="380" y="30" width="290" height="285" rx="12" class="strain-metric__panel" />
+    <text x="165" y="62" text-anchor="middle">reference coordinates</text>
+    <text x="525" y="62" text-anchor="middle">R(θ)[I+u]r</text>
+    <polygon points={referencePolygon} class="strain-metric__reference" />
+    <polygon points={deformedPolygon} class="strain-metric__deformed" data-strain-polygon />
+    <line x1="155" y1="250" x2="247" y2="250" class="strain-metric__basis" />
+    <line x1="155" y1="250" x2="155" y2="158" class="strain-metric__basis" />
+    <line x1="505" y1="250" x2={mapPoint([1, 0], defaults.deformation, [505, 250])[0]} y2={mapPoint([1, 0], defaults.deformation, [505, 250])[1]} class="strain-metric__basis" data-strain-x-axis />
+    <line x1="505" y1="250" x2={mapPoint([0, 1], defaults.deformation, [505, 250])[0]} y2={mapPoint([0, 1], defaults.deformation, [505, 250])[1]} class="strain-metric__basis" data-strain-y-axis />
+    <text x="165" y="300" text-anchor="middle">g = I</text>
+    <text x="525" y="300" text-anchor="middle" data-strain-metric-label>g₁₂={defaults.metric[0][1].toFixed(3)}</text>
+  </svg>
+
+  <div class="chapter-visual__readout strain-metric__readout" aria-live="polite">
+    <span>principal strain 1</span><strong data-strain-principal-1>{defaults.principalStrains[0].toFixed(4)}</strong>
+    <span>principal strain 2</span><strong data-strain-principal-2>{defaults.principalStrains[1].toFixed(4)}</strong>
+    <span>area ratio det F</span><strong data-strain-area>{defaults.areaRatio.toFixed(5)}</strong>
+    <span>metric trace</span><strong data-strain-metric-trace>{(defaults.metric[0][0] + defaults.metric[1][1]).toFixed(5)}</strong>
+  </div>
+
+  <div class="strain-metric__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>case</th><th>principal strains</th><th>det F</th><th>g12</th></tr></thead>
+      <tbody>
+        {fallbackCases.map((entry) => (
+          <tr>
+            <td>{entry.label}</td>
+            <td>{entry.principalStrains.map((value) => value.toFixed(3)).join(', ')}</td>
+            <td>{entry.areaRatio.toFixed(4)}</td>
+            <td>{entry.metric[0][1].toFixed(4)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>二维 symmetric strain <code>u</code> 后接 exact rigid rotation <code>R(θ)</code>，即 <code>F=R(θ)(I+u)</code>。这把 Martin G.2 的对称应变与反对称 infinitesimal rotation 边界显式分离。</p>
+    <p lang="en"><strong>Model:</strong> a two-dimensional symmetric strain <code>u</code> is followed by an exact rigid rotation <code>R(θ)</code>, so <code>F=R(θ)(I+u)</code>. This explicitly separates Martin G.2 symmetric strain from an antisymmetric infinitesimal rotation.</p>
+    <p><strong>验收：</strong>改变 θ 只旋转图形；principal strains、<code>det F</code> 与 <code>g=FᵀF</code> 不变。改变 <code>u</code> 才改变长度、角度、面积和 metric。</p>
+    <p lang="en"><strong>Acceptance:</strong> changing θ rotates the shape but leaves the principal strains, <code>det F</code>, and <code>g=FᵀF</code> invariant. Changing <code>u</code> changes lengths, angles, area, and the metric.</p>
+    <p><strong>边界：</strong>Martin G.1–G.3 是 small-strain relation；图中 exact rotation 仅用于避免把有限角度的 <code>I+Ω</code> 误当成严格刚体转动。有限应变需要声明所用 strain measure。</p>
+    <p lang="en"><strong>Boundary:</strong> Martin G.1–G.3 are small-strain relations. Exact rotation is used only to avoid treating finite-angle <code>I+Ω</code> as a strict rigid rotation. Finite strain requires a declared strain measure.</p>
+  </div>
+</figure>
+
+<script>
+  import { deformation2D, transform2D } from '../../../data/part07/stressStrainModel.mjs';
+
+  document.querySelectorAll('[data-strain-metric]').forEach((root) => {
+    const exx = root.querySelector('[data-strain-exx]');
+    const eyy = root.querySelector('[data-strain-eyy]');
+    const exy = root.querySelector('[data-strain-exy]');
+    const rotation = root.querySelector('[data-strain-rotation]');
+    if (!(exx instanceof HTMLInputElement) || !(eyy instanceof HTMLInputElement)
+      || !(exy instanceof HTMLInputElement) || !(rotation instanceof HTMLInputElement)) return;
+    const polygon = root.querySelector('[data-strain-polygon]');
+    const xAxis = root.querySelector('[data-strain-x-axis]');
+    const yAxis = root.querySelector('[data-strain-y-axis]');
+    const outputs = {
+      exx: root.querySelector('[data-strain-exx-output]'),
+      eyy: root.querySelector('[data-strain-eyy-output]'),
+      exy: root.querySelector('[data-strain-exy-output]'),
+      rotation: root.querySelector('[data-strain-rotation-output]'),
+      p1: root.querySelector('[data-strain-principal-1]'),
+      p2: root.querySelector('[data-strain-principal-2]'),
+      area: root.querySelector('[data-strain-area]'),
+      trace: root.querySelector('[data-strain-metric-trace]'),
+      metric: root.querySelector('[data-strain-metric-label]'),
+    };
+    const reference = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+    const origin = [505, 250];
+    const scale = 92;
+    const map = (point, deformation) => {
+      const value = transform2D({ deformation, vector: point });
+      return [origin[0] + scale * value[0], origin[1] - scale * value[1]];
+    };
+    const update = () => {
+      const input = {
+        exx: Number(exx.value),
+        eyy: Number(eyy.value),
+        exy: Number(exy.value),
+        rotation: Number(rotation.value),
+      };
+      const result = deformation2D(input);
+      if (polygon instanceof SVGPolygonElement) {
+        polygon.setAttribute('points', reference.map((point) => map(point, result.deformation).map((value) => value.toFixed(2)).join(',')).join(' '));
+      }
+      const x = map([1, 0], result.deformation);
+      const y = map([0, 1], result.deformation);
+      if (xAxis instanceof SVGLineElement) { xAxis.setAttribute('x2', x[0].toFixed(2)); xAxis.setAttribute('y2', x[1].toFixed(2)); }
+      if (yAxis instanceof SVGLineElement) { yAxis.setAttribute('x2', y[0].toFixed(2)); yAxis.setAttribute('y2', y[1].toFixed(2)); }
+      if (outputs.exx instanceof HTMLOutputElement) outputs.exx.value = input.exx.toFixed(2);
+      if (outputs.eyy instanceof HTMLOutputElement) outputs.eyy.value = input.eyy.toFixed(2);
+      if (outputs.exy instanceof HTMLOutputElement) outputs.exy.value = input.exy.toFixed(2);
+      if (outputs.rotation instanceof HTMLOutputElement) outputs.rotation.value = `${input.rotation.toFixed(0)}°`;
+      if (outputs.p1 instanceof HTMLElement) outputs.p1.textContent = result.principalStrains[0].toFixed(4);
+      if (outputs.p2 instanceof HTMLElement) outputs.p2.textContent = result.principalStrains[1].toFixed(4);
+      if (outputs.area instanceof HTMLElement) outputs.area.textContent = result.areaRatio.toFixed(5);
+      if (outputs.trace instanceof HTMLElement) outputs.trace.textContent = (result.metric[0][0] + result.metric[1][1]).toFixed(5);
+      if (outputs.metric instanceof SVGTextElement) outputs.metric.textContent = `g₁₂=${result.metric[0][1].toFixed(3)}`;
+    };
+    [exx, eyy, exy, rotation].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .strain-metric { overflow-x: auto; }
+  .strain-metric svg { width: 100%; min-width: 42rem; }
+  .strain-metric text { fill: currentColor; font-size: 14px; }
+  .strain-metric__panel { fill: var(--sl-color-gray-6); stroke: var(--sl-color-gray-4); stroke-width: 2; }
+  .strain-metric__reference { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 3; }
+  .strain-metric__deformed { fill: color-mix(in srgb, var(--sl-color-accent-high) 18%, transparent); stroke: var(--sl-color-accent-high); stroke-width: 3; }
+  .strain-metric__basis { stroke: currentColor; stroke-width: 2.2; }
+  .strain-metric__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.8rem; }
+  .strain-metric__controls label { display: grid; gap: 0.3rem; }
+  .strain-metric__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.4rem 1rem; }
+  .strain-metric__fallback { max-width: 48rem; }
+</style>

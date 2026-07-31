@@ -1,0 +1,264 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import ElasticStressExplorer from './ElasticStressExplorer.astro';
+
+<span id="section-g-1"></span>
+
+## G.1 宏观应力与应变 | Macroscopic Stress and Strain
+
+<BilingualSection titleZh="局部位移如何改变线元" titleEn="How a local displacement changes a line element" eyebrow="【Martin Eqs. G.1–G.3 | Martin Eqs. G.1–G.3】">
+  <div class="bilingual-section__zh">
+
+取两个相邻点，undeformed separation 为 $d\mathbf r$，位移差为
+
+$$
+du_\alpha=\frac{\partial u_\alpha}{\partial r_\beta}dr_\beta.
+$$
+
+变形后的 separation 为 $d\mathbf r'=d\mathbf r+d\mathbf u$。保留位移梯度的一阶项：
+
+$$
+(dl')^2
+=dl^2+
+\left(
+\frac{\partial u_\alpha}{\partial r_\beta}
++
+\frac{\partial u_\beta}{\partial r_\alpha}
+\right)
+dr_\alpha dr_\beta
+=dl^2+2u_{\alpha\beta}dr_\alpha dr_\beta.
+$$
+
+因为 $dr_\alpha dr_\beta$ 对指标交换对称，antisymmetric gradient 自动消失。这一推导说明应变是“局部长度与夹角变化”的 tensor，不是任意 cell-matrix difference。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For two neighbouring points, let the undeformed separation be $d\mathbf r$ and the displacement difference be
+
+$$
+du_\alpha=\frac{\partial u_\alpha}{\partial r_\beta}dr_\beta.
+$$
+
+The deformed separation is $d\mathbf r'=d\mathbf r+d\mathbf u$. Retaining first order in the displacement gradient gives
+
+$$
+(dl')^2
+=dl^2+
+\left(
+\frac{\partial u_\alpha}{\partial r_\beta}
++
+\frac{\partial u_\beta}{\partial r_\alpha}
+\right)
+dr_\alpha dr_\beta
+=dl^2+2u_{\alpha\beta}dr_\alpha dr_\beta.
+$$
+
+Because $dr_\alpha dr_\beta$ is symmetric under index exchange, the antisymmetric gradient drops out. Strain is therefore a tensor of local changes in lengths and angles, not an arbitrary difference between two cell matrices.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="homogeneous strain 同时缩放实空间与体积" titleEn="Homogeneous strain scales real space and volume together" eyebrow="【Martin G.1 + supplemental derivation | Martin G.1 + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+对 homogeneous unsymmetrized scaling
+
+$$
+r_\alpha'=(\delta_{\alpha\beta}+\epsilon_{\alpha\beta})r_\beta,
+$$
+
+cell matrix 变为 $\mathbf h'=(\mathbf I+\boldsymbol\epsilon)\mathbf h$，体积变为
+
+$$
+\Omega'=\det(\mathbf I+\boldsymbol\epsilon)\Omega
+=\left[1+\operatorname{Tr}\boldsymbol\epsilon+O(\epsilon^2)\right]\Omega.
+$$
+
+到一阶 $\operatorname{Tr}\epsilon=\operatorname{Tr}u$，所以纯 shear 的一阶体积变化为零。若数值代码在 finite strain 下直接使用 deformed volume、reference volume 或 logarithmic volume derivative，得到的 stress tensor 形式会不同；small-strain limit 必须一致。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For the homogeneous unsymmetrized scaling
+
+$$
+r_\alpha'=(\delta_{\alpha\beta}+\epsilon_{\alpha\beta})r_\beta,
+$$
+
+the cell matrix becomes $\mathbf h'=(\mathbf I+\boldsymbol\epsilon)\mathbf h$ and the volume becomes
+
+$$
+\Omega'=\det(\mathbf I+\boldsymbol\epsilon)\Omega
+=\left[1+\operatorname{Tr}\boldsymbol\epsilon+O(\epsilon^2)\right]\Omega.
+$$
+
+To first order, $\operatorname{Tr}\epsilon=\operatorname{Tr}u$, so a pure shear has no first-order volume change. At finite strain, codes can normalize derivatives by the deformed volume, reference volume, or a logarithmic volume measure, producing different finite-strain tensors that must share the same small-strain limit.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="应力是 cell-shape generalized force" titleEn="Stress is the generalized force conjugate to cell shape" eyebrow="【Martin Eq. G.4 | Martin Eq. G.4】">
+  <div class="bilingual-section__zh">
+
+对一个 infinitesimal strain increment，内部能量变化写成
+
+$$
+dE_{\mathrm{total}}
+=-\Omega\,\sigma_{\alpha\beta}^{\mathrm{int}}du_{\alpha\beta}.
+$$
+
+这与原子位移下 $dE=-\mathbf F_I\cdot d\mathbf R_I$ 同构：atomic force 与 position 共轭，stress 与 strain 共轭。若使用 metric derivative，$g_{\alpha\beta}=\delta_{\alpha\beta}+2u_{\alpha\beta}$ 给出
+
+$$
+\sigma_{\alpha\beta}
+=-\frac{1}{2\Omega}\frac{\partial E}{\partial g_{\alpha\beta}}
+=-\frac{1}{\Omega}\frac{\partial E}{\partial u_{\alpha\beta}}.
+$$
+
+数值 finite difference 应使用成对正负 strain 以消除奇偶截断误差，并同时报告 strain amplitude、cell-volume convention、内部坐标是否固定以及 SCF/cutoff/$k$ mesh 是否一致。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For an infinitesimal strain increment, the internal-energy change is
+
+$$
+dE_{\mathrm{total}}
+=-\Omega\,\sigma_{\alpha\beta}^{\mathrm{int}}du_{\alpha\beta}.
+$$
+
+This is structurally identical to $dE=-\mathbf F_I\cdot d\mathbf R_I$ for atomic displacements: force is conjugate to position, while stress is conjugate to strain. Using the metric derivative and $g_{\alpha\beta}=\delta_{\alpha\beta}+2u_{\alpha\beta}$ gives
+
+$$
+\sigma_{\alpha\beta}
+=-\frac{1}{2\Omega}\frac{\partial E}{\partial g_{\alpha\beta}}
+=-\frac{1}{\Omega}\frac{\partial E}{\partial u_{\alpha\beta}}.
+$$
+
+A finite-difference check should use paired positive and negative strains to suppress truncation error and should report the strain amplitude, volume convention, whether internal coordinates were fixed, and whether SCF, cutoff, and $k$-mesh settings were kept identical.
+
+  </div>
+</BilingualSection>
+
+<ElasticStressExplorer />
+
+<BilingualSection titleZh="elastic constants 是 stress derivative 与 energy Hessian" titleEn="Elastic constants are stress derivatives and an energy Hessian" eyebrow="【Martin Eq. G.5 | Martin Eq. G.5】">
+  <div class="bilingual-section__zh">
+
+在 reference state 附近展开
+
+$$
+\frac{E-E_0}{\Omega}
+=-\sigma^{(0)}_{\alpha\beta}u_{\alpha\beta}
++rac{1}{2}C_{\alpha\beta;\gamma\delta}
+ u_{\alpha\beta}u_{\gamma\delta}+O(u^3).
+$$
+
+于是
+
+$$
+C_{\alpha\beta;\gamma\delta}
+=\frac{1}{\Omega}rac{\partial^2E}{\partial u_{\alpha\beta}\partial u_{\gamma\delta}}
+=-\frac{\partial\sigma_{\alpha\beta}^{\mathrm{int}}}{\partial u_{\gamma\delta}}.
+$$
+
+在零初始应力、能量二阶可微且使用同一 strain measure 时，minor/major symmetries 将 fourth-rank tensor 压缩为 Voigt matrix。若 reference state 已有 finite stress，某些“measured elastic coefficient”、energy Hessian 和 stress–strain derivative 之间还会出现 geometric stress terms，不能只比较一个 $6\times6$ 数组的名称。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Near a reference state,
+
+$$
+\frac{E-E_0}{\Omega}
+=-\sigma^{(0)}_{\alpha\beta}u_{\alpha\beta}
++rac{1}{2}C_{\alpha\beta;\gamma\delta}
+ u_{\alpha\beta}u_{\gamma\delta}+O(u^3).
+$$
+
+Therefore
+
+$$
+C_{\alpha\beta;\gamma\delta}
+=\frac{1}{\Omega}rac{\partial^2E}{\partial u_{\alpha\beta}\partial u_{\gamma\delta}}
+=-\frac{\partial\sigma_{\alpha\beta}^{\mathrm{int}}}{\partial u_{\gamma\delta}}.
+$$
+
+At zero initial stress, with a twice-differentiable energy and one consistent strain measure, the minor and major symmetries reduce the fourth-rank tensor to a Voigt matrix. Under finite initial stress, measured elastic coefficients, the energy Hessian, and a stress-strain derivative can differ by geometric stress terms, so matching only the name of a $6\times6$ array is insufficient.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="cubic symmetry 只剩三个独立常数" titleEn="Cubic symmetry leaves three independent constants" eyebrow="【Martin G.1 | Martin G.1】">
+  <div class="bilingual-section__zh">
+
+cubic crystal 的线性弹性由 $C_{11}$、$C_{12}$、$C_{44}$ 决定。对 normal strains，energy density 为
+
+$$
+U=\frac{1}{2}C_{11}(u_{xx}^2+u_{yy}^2+u_{zz}^2)
++C_{12}(u_{xx}u_{yy}+u_{yy}u_{zz}+u_{zz}u_{xx}).
+$$
+
+常用组合包括
+
+$$
+B=\frac{C_{11}+2C_{12}}{3},
+\qquad
+C'=\frac{C_{11}-C_{12}}{2}.
+$$
+
+harmonic mechanical stability 至少要求 $C_{11}+2C_{12}>0$、$C_{11}-C_{12}>0$、$C_{44}>0$。这只是 reference structure 对小 homogeneous strains 的稳定性；它不排除 finite-$q$ phonon instability、内部坐标不稳或另一结构具有更低能量。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The linear elasticity of a cubic crystal is determined by $C_{11}$, $C_{12}$, and $C_{44}$. For normal strains, the energy density is
+
+$$
+U=\frac{1}{2}C_{11}(u_{xx}^2+u_{yy}^2+u_{zz}^2)
++C_{12}(u_{xx}u_{yy}+u_{yy}u_{zz}+u_{zz}u_{xx}).
+$$
+
+Useful combinations are
+
+$$
+B=\frac{C_{11}+2C_{12}}{3},
+\qquad
+C'=\frac{C_{11}-C_{12}}{2}.
+$$
+
+Harmonic mechanical stability requires at least $C_{11}+2C_{12}>0$, $C_{11}-C_{12}>0$, and $C_{44}>0$. This establishes stability of the reference structure only against small homogeneous strains. It does not exclude a finite-$q$ phonon instability, an unstable internal coordinate, or a lower-energy competing structure.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="reference state 与 finite strain 不能省略" titleEn="The reference state and finite strain cannot be omitted" eyebrow="【Martin G.1 boundary | Martin G.1 boundary】">
+  <div class="bilingual-section__zh">
+
+strain 总是相对于 reference configuration 定义。对于 nonlinear stress–strain relation，以下选择都会改变中间公式：reference/current cell；deformation gradient 的左右乘法；Lagrangian/Eulerian strain；Cauchy、first/second Piola–Kirchhoff stress；是否在每个 strain point 重新弛豫内部坐标。只有在 small-strain、zero-initial-stress limit 下这些定义才自然汇合。
+
+因此一条“应力随应变曲线”至少应附带：reference structure、strain matrix、stress sign、volume normalization、是否 relaxed-ion、对称约束、电子温度/occupation、数值收敛参数和拟合区间。否则曲线无法被独立复现或与实验 elastic constants 对齐。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Strain is always defined relative to a reference configuration. For a nonlinear stress-strain relation, the intermediate formulas depend on the reference or current cell, left or right action of the deformation gradient, Lagrangian or Eulerian strain, Cauchy or first/second Piola-Kirchhoff stress, and whether internal coordinates are re-relaxed at every strain point. These definitions merge naturally only in the small-strain, zero-initial-stress limit.
+
+A reported stress-strain curve should therefore specify the reference structure, strain matrix, stress sign, volume normalization, clamped-ion or relaxed-ion treatment, symmetry constraints, electronic temperature or occupations, numerical convergence settings, and fitting interval. Without these data, the curve cannot be reproduced independently or aligned reliably with experimental elastic constants.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="数值 finite-difference 最小审计" titleEn="Minimal audit for numerical finite differences" kind="boundary">
+  <div class="bilingual-section__zh">
+
+对每个独立 strain path 使用多个正负 amplitude；检查 $E(+\eta)$ 与 $E(-\eta)$ 的奇偶结构；比较 analytic stress 与 central finite difference；分别拟合 clamped-ion 与 relaxed-ion curves；验证更密 $k$ mesh、更高 cutoff、更紧 SCF 与更小 strain window 后 elastic constants 稳定。若使用 variable-cell optimization，还要核对优化器读取的 stress sign 与目标 external stress sign。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Use several positive and negative amplitudes for each independent strain path; inspect the even and odd parts of $E(+\eta)$ and $E(-\eta)$; compare analytic stress with a central finite difference; fit clamped-ion and relaxed-ion curves separately; and verify stability under denser $k$ meshes, higher cutoffs, tighter SCF thresholds, and a smaller strain window. In a variable-cell optimization, also verify that the optimizer interprets the code's stress sign consistently with the target external stress.
+
+  </div>
+</BilingualCallout>

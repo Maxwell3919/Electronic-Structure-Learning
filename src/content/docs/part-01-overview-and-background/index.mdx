@@ -1,15 +1,155 @@
 ---
-title: "Part I · Overview and Background Topics"
-description: "概览与背景主题的完整目录级阅读骨架。"
+title: "Part I · Overview and Background Topics | 概览与背景主题"
+description: "从量子论起点、电子结构问题与多体理论，经周期固体和均匀电子气，建立进入密度泛函理论前的对象链、符号约定与证据边界。"
 sidebar:
   order: 0
   label: "Part I · Overview and Background Topics"
 ---
 
 import TrackOverview from '../../../components/TrackOverview.astro';
+import BilingualSection from '../../../components/BilingualSection.astro';
 import catalog from '../../../data/martin/index.mjs';
 
-# 概览与背景主题
+# 概览与背景主题 | Overview and Background Topics
+
+<BilingualSection titleZh="Part I 的阅读任务" titleEn="The task of Part I" eyebrow="Part I complete">
+  <div class="bilingual-section__zh">
+
+Part I 的五章已经完成。它不直接给出一个可运行的 DFT workflow，而是建立后续所有章节反复使用的语言：量子态与可观测量、多电子 Hamiltonian 与近似层级、周期平移与 Bloch 表示、均匀电子气的解析尺度，以及“理论对象—数值模型—材料主张”之间不可跨越的证据边界。
+
+阅读顺序具有依赖关系。Chapter 1 解释电子结构问题为何形成；Chapter 2 给出全书对象和性质路线；Chapter 3 写出多体问题并区分 Born–Oppenheimer、独立电子、Hartree 与 Hartree–Fock；Chapter 4 把无限周期固体压缩到晶胞和 Brillouin 区；Chapter 5 用均匀电子气展示 Fermi statistics、exchange、correlation 与 screening 的基准结构。Part II 才从密度变分原理开始建立 DFT。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+All five chapters of Part I are complete. This Part does not yet provide a runnable DFT workflow. It establishes the language reused throughout the book: quantum states and observables, the many-electron Hamiltonian and approximation hierarchy, periodic translations and the Bloch representation, analytic scales of the uniform electron gas, and the evidence boundaries separating theoretical objects, numerical models, and material claims.
+
+The order is dependency-driven. Chapter 1 explains how the electronic-structure problem emerged. Chapter 2 maps the objects and property routes of the book. Chapter 3 formulates the many-body problem and separates Born–Oppenheimer, independent-electron, Hartree, and Hartree–Fock levels. Chapter 4 reduces an infinite periodic solid to cells and the Brillouin zone. Chapter 5 uses the uniform electron gas to expose the reference structure of Fermi statistics, exchange, correlation, and screening. Part II then begins density-functional theory from density-space variational principles.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="五章对象链" titleEn="Object chain across the five chapters" eyebrow="Objects">
+  <div class="bilingual-section__zh" style={{ minWidth: 0 }}>
+
+<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>量子态、Hamiltonian 与测量
+        ↓
+电子结构问题、性质路线与证据层级
+        ↓
+电子—核多体 Hamiltonian 与近似层级
+        ↓
+晶格 + 基元、倒空间、Bloch bands 与 BZ 积分
+        ↓
+均匀电子气、exchange/correlation holes 与 screening
+        ↓
+密度作为基本变量的 Part II</code></pre>
+
+<ol>
+  <li><strong><a href="./chapter-01-introduction/">Chapter 1：量子起点与研究对象。</a></strong>从量子论和电子结构概念的形成出发，区分状态、算符、测量、近似与计算表示。历史叙述只负责定位问题，不代替后续推导。</li>
+  <li><strong><a href="./chapter-02-overview/">Chapter 2：全书路线图。</a></strong>把结构、总能、力、激发、响应和材料性质放入同一对象链，并明确 Kohn–Sham gap、fundamental gap、光学 gap 和实验 observable 不能混用。</li>
+  <li><strong><a href="./chapter-03-theoretical-background/">Chapter 3：多体理论背景。</a></strong>写出电子—核 Hamiltonian、Born–Oppenheimer 分离、Coulomb 项、density matrix、Hartree 与 Hartree–Fock，并区分 exchange、correlation、force 和 stress 的适用条件。</li>
+  <li><strong><a href="./chapter-04-periodic-solids-and-electron-bands/">Chapter 4：周期固体的表示。</a></strong>由 Bravais lattice 与 basis 构造 crystal；由 reciprocal lattice、Bloch theorem 和 symmetry 构造 band representation；由全 Brillouin 区积分得到 electron count 与 DOS。</li>
+  <li><strong><a href="./chapter-05-uniform-electron-gas-and-sp-bonded-metals/">Chapter 5：均匀参考体系。</a></strong>用 `r_s`、`k_F` 和 `E_F` 建立密度尺度，观察 Hartree–Fock failure、exchange/correlation holes、simple-metal binding 与 Lindhard/RPA screening。该模型提供约束和基准，不等同于真实晶体。</li>
+</ol>
+
+  </div>
+  <div class="bilingual-section__en" lang="en" style={{ minWidth: 0 }}>
+
+<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>Quantum states, Hamiltonians, and measurement
+        ↓
+Electronic-structure questions, property routes, and evidence levels
+        ↓
+Electron–nuclear many-body Hamiltonian and approximation hierarchy
+        ↓
+Lattice + basis, reciprocal space, Bloch bands, and BZ integration
+        ↓
+Uniform electron gas, exchange/correlation holes, and screening
+        ↓
+Density as the basic variable in Part II</code></pre>
+
+<ol>
+  <li><strong><a href="./chapter-01-introduction/">Chapter 1: quantum origins and objects.</a></strong> The chapter introduces the emergence of quantum theory and electronic structure while separating states, operators, measurements, approximations, and computational representations. Historical positioning does not replace later derivations.</li>
+  <li><strong><a href="./chapter-02-overview/">Chapter 2: map of the book.</a></strong> Structures, total energies, forces, excitations, responses, and material properties are placed in one object chain. Kohn–Sham, fundamental, optical, and measured gaps remain distinct.</li>
+  <li><strong><a href="./chapter-03-theoretical-background/">Chapter 3: many-body background.</a></strong> The electron–nuclear Hamiltonian, Born–Oppenheimer separation, Coulomb organization, density matrices, Hartree, and Hartree–Fock are developed with explicit boundaries for exchange, correlation, force, and stress claims.</li>
+  <li><strong><a href="./chapter-04-periodic-solids-and-electron-bands/">Chapter 4: representation of periodic solids.</a></strong> A Bravais lattice and basis define a crystal. Reciprocal space, Bloch's theorem, and symmetry define band representations. Full-Brillouin-zone integration defines electron counts and densities of states.</li>
+  <li><strong><a href="./chapter-05-uniform-electron-gas-and-sp-bonded-metals/">Chapter 5: homogeneous reference system.</a></strong> The scales `r_s`, `k_F`, and `E_F` expose Hartree–Fock failure, exchange and correlation holes, simple-metal binding, and Lindhard/RPA screening. This model supplies constraints and references; it is not a real crystal.</li>
+</ol>
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="符号与表示的交接" titleEn="Handoff of notation and representations" eyebrow="Conventions">
+  <div class="bilingual-section__zh">
+
+<ul>
+  <li><code>R</code>、<code>r</code>、<code>k</code> 与 <code>G</code> 分别用于核/晶格位置、电子坐标、第一 Brillouin 区的 crystal momentum class 和 reciprocal-lattice vector。路径坐标不是全 BZ 数据。</li>
+  <li><code>Ψ</code> 表示多体波函数，<code>ψ_i</code> 或 <code>ψ_nk</code> 表示给定独立粒子或辅助表示中的轨道。轨道表示的有效性不能从记号本身推出。</li>
+  <li><code>n(r)</code> 是粒子密度；one-body density matrix、pair distribution、DOS、JDOS 和 response function 是不同对象，具有不同归一化和可观测关系。</li>
+  <li><code>E</code>、单粒子 eigenvalue、quasiparticle energy 和 excitation energy 必须分别定义。总能差、band eigenvalue 差和光谱峰不能自动互换。</li>
+  <li><code>r_s</code> 是均匀电子气的密度参数；它为 LDA 和许多 electron-gas constraints 提供输入，但不把非均匀晶体变成均匀体系。</li>
+</ul>
+
+所有章节中的 teaching visualizations 都是声明模型的有限实现。确定性测试验证公式和界面行为；它们不验证真实材料、生产代码、实验结果或未声明的连续极限。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<ul>
+  <li><code>R</code>, <code>r</code>, <code>k</code>, and <code>G</code> denote nuclear/lattice positions, electronic coordinates, crystal-momentum classes in the first Brillouin zone, and reciprocal-lattice vectors. A path coordinate is not full-BZ data.</li>
+  <li><code>Ψ</code> denotes a many-body wavefunction; <code>ψ_i</code> or <code>ψ_nk</code> denotes an orbital in a declared independent-particle or auxiliary representation. Notation alone does not establish the validity of that representation.</li>
+  <li><code>n(r)</code> is the particle density. A one-body density matrix, pair distribution, DOS, JDOS, and response function are different objects with different normalizations and observable relations.</li>
+  <li>Total energies, one-particle eigenvalues, quasiparticle energies, and excitation energies require separate definitions. Total-energy differences, band-eigenvalue differences, and spectral peaks are not automatically interchangeable.</li>
+  <li><code>r_s</code> is a density parameter of the uniform electron gas. It supplies input to LDA and many electron-gas constraints but does not make an inhomogeneous crystal homogeneous.</li>
+</ul>
+
+Every teaching visualization in Part I is a finite implementation of a declared model. Deterministic checks validate formulas and interface behaviour; they do not validate real materials, production scientific codes, experiments, or undeclared continuum limits.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="进入 Part II 的桥接" titleEn="Bridge into Part II" eyebrow="Next">
+  <div class="bilingual-section__zh">
+
+Chapter 5 的均匀电子气经常出现在 LDA、exchange–correlation hole 和 response-derived approximations 中，但 Part II 的逻辑起点仍是 Chapter 6 的 Hohenberg–Kohn 与 Levy–Lieb density-space formulation。不能从 electron-gas formulas 直接跳到“DFT 已被证明”，也不能把 Hartree–Fock、Kohn–Sham 和 quasiparticle bands 视为同一种单粒子理论。
+
+进入 Part II 前，应能回答：Hamiltonian 中哪些相互作用被保留；采用了哪一层 Born–Oppenheimer/independent-particle/mean-field approximation；周期体系的数据来自路径还是全 BZ；一个 energy、gap、DOS 或 response claim 依赖哪些归一化、极限和外部证据。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The uniform electron gas of Chapter 5 enters LDA, exchange–correlation-hole constraints, and response-derived approximations, but the logical starting point of Part II remains the Hohenberg–Kohn and Levy–Lieb density-space formulation of Chapter 6. Electron-gas formulas do not by themselves prove DFT, and Hartree–Fock, Kohn–Sham, and quasiparticle bands are not one interchangeable single-particle theory.
+
+Before entering Part II, the reader should be able to state which interactions remain in the Hamiltonian, which Born–Oppenheimer/independent-particle/mean-field level is used, whether periodic data come from a path or the full BZ, and which normalizations, limits, and external evidence support an energy, gap, DOS, or response claim.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Part I 完成后的判断清单" titleEn="Judgment checklist after Part I" eyebrow="Review">
+  <div class="bilingual-section__zh">
+
+<ul>
+  <li>能否从原子坐标与边界条件写出研究对象，而不是直接从软件输入开始？</li>
+  <li>能否区分多体波函数、轨道、密度、density matrix、pair correlation、band、DOS 和 response function？</li>
+  <li>能否说明 Born–Oppenheimer、Hartree、Hartree–Fock 与后续 Kohn–Sham 构造分别省略或重组了什么？</li>
+  <li>能否由 real-space lattice 构造 reciprocal lattice、BZ、k-grid，并解释 path band plot 的证据上限？</li>
+  <li>能否用 `r_s` 的标度判断 kinetic、exchange 和 correlation 的相对趋势，同时避免把 jellium 结论外推为具体材料结论？</li>
+  <li>能否为每个公式或图标注其 source locator、model assumptions、normalization、numerical gate 与 scientific claim ceiling？</li>
+</ul>
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<ul>
+  <li>Can the physical object be specified from atomic coordinates and boundary conditions rather than starting from software input?</li>
+  <li>Can many-body wavefunctions, orbitals, densities, density matrices, pair correlations, bands, DOS, and response functions be kept distinct?</li>
+  <li>Can the omissions or reorganizations introduced by Born–Oppenheimer, Hartree, Hartree–Fock, and the later Kohn–Sham construction be stated explicitly?</li>
+  <li>Can the reciprocal lattice, BZ, and k grid be constructed from a real-space lattice, and can the evidence ceiling of a path band plot be explained?</li>
+  <li>Can `r_s` scaling be used to compare kinetic, exchange, and correlation trends without promoting a jellium result to a material conclusion?</li>
+  <li>Can every formula or figure be accompanied by a source locator, model assumptions, normalization, numerical gate, and scientific claim ceiling?</li>
+</ul>
+
+  </div>
+</BilingualSection>
 
 <TrackOverview
   sourceTitle={catalog.source.title}
