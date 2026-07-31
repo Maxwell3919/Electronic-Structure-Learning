@@ -1,0 +1,370 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import GrapheneDiracExplorer from './GrapheneDiracExplorer.astro';
+import NanotubeZoneFoldingExplorer from './NanotubeZoneFoldingExplorer.astro';
+
+<span id="section-14-7" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.7 Graphene
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 306–308 以两个等价 sublattices、最近邻 hopping 和 2×2 Hamiltonian 建立 graphene bands，定位 K/K′ crossing，并把低能色散连接到 Dirac 型方程。下面使用原创 bond-vector 规范重推结构因子。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 306–308 construct graphene bands from two equivalent sublattices, nearest-neighbour hopping, and a 2×2 Hamiltonian, locate K/K′ crossings, and connect the low-energy dispersion to a Dirac-type equation. The structure factor below is re-derived under an original bond-vector convention.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="honeycomb 是带两个基元的 triangular Bravais lattice" titleEn="The honeycomb lattice is triangular with a two-site basis">
+  <div class="bilingual-section__zh">
+
+Graphene 的 honeycomb 点集不是 Bravais lattice；A、B 两个 sublattices 构成 triangular Bravais lattice 的二原子基元。每个 A 位点连接三个 B 最近邻。取 bond length $a$，一组 bond vectors 为
+
+$$
+\boldsymbol\delta_1=(0,a),\qquad
+\boldsymbol\delta_2=(\sqrt3a/2,-a/2),\qquad
+\boldsymbol\delta_3=(-\sqrt3a/2,-a/2).
+$$
+
+只保留每个 site 的 $p_z$ orbital、等价 on-site energy 与 A–B hopping $t$，正交模型为
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+0&t f(\mathbf k)\\
+t f^*(\mathbf k)&0
+\end{pmatrix},
+\qquad
+f(\mathbf k)=\sum_{j=1}^3e^{i\mathbf k\cdot\boldsymbol\delta_j}.
+$$
+
+bands 为
+
+$$
+E_\pm(\mathbf k)=\pm|t|\,|f(\mathbf k)|.
+$$
+
+off-diagonal phase depends on basis positions and gauge，eigenvalues 只依赖 magnitude。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The graphene honeycomb point set is not a Bravais lattice. Two sublattices A and B form a two-site basis on a triangular Bravais lattice. Each A site has three nearest B neighbours. With bond length $a$, choose
+
+$$
+\boldsymbol\delta_1=(0,a),\qquad
+\boldsymbol\delta_2=(\sqrt3a/2,-a/2),\qquad
+\boldsymbol\delta_3=(-\sqrt3a/2,-a/2).
+$$
+
+Keeping one $p_z$ orbital per site, equivalent onsite energies, and A–B hopping $t$, an orthogonal model is
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+0&t f(\mathbf k)\\
+t f^*(\mathbf k)&0
+\end{pmatrix},
+\qquad
+f(\mathbf k)=\sum_{j=1}^3e^{i\mathbf k\cdot\boldsymbol\delta_j}.
+$$
+
+The bands are
+
+$$
+E_\pm(\mathbf k)=\pm|t|\,|f(\mathbf k)|.
+$$
+
+The off-diagonal phase depends on basis positions and gauge, while eigenvalues depend only on its magnitude.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="K 点结构因子零与 Dirac 线性化 | Structure-factor zero and Dirac linearization at K"
+  assumptions={[
+    'nearest-neighbour orthogonal p_z model；',
+    'A/B on-site energies equal；',
+    '不含 SOC、strain、next-neighbour hopping 或 interaction。',
+  ]}
+>
+
+对上述 bond convention，可取
+
+$$
+\mathbf K=\left(\frac{4\pi}{3\sqrt3a},0\right).
+$$
+
+三项 phase 为 $1,e^{i2\pi/3},e^{-i2\pi/3}$，所以
+
+$$
+f(\mathbf K)=1+e^{i2\pi/3}+e^{-i2\pi/3}=0.
+$$
+
+令 $\mathbf k=\mathbf K+\mathbf q$ 并对小 $\mathbf q$ 展开：
+
+$$
+f(\mathbf K+\mathbf q)
+=\sum_j e^{i\mathbf K\cdot\delta_j}
+(1+i\mathbf q\cdot\delta_j+\cdots).
+$$
+
+常数项相消，线性项在一个 gauge 中可写为
+
+$$
+f(\mathbf K+\mathbf q)
+\simeq-\frac{3a}{2}(q_x-iq_y)
+$$
+
+（整体相位/坐标 convention 可改变形式但不改变 spectrum）。于是
+
+$$
+H_{\mathbf K}(\mathbf q)
+\simeq\hbar v_F(q_x\sigma_x+q_y\sigma_y),
+\qquad
+v_F=\frac{3|t|a}{2\hbar},
+$$
+
+并有线性色散 $E_\pm\simeq\pm\hbar v_F|\mathbf q|$。这是 sublattice pseudospin 的 Dirac equation，不是自由电子真实 spin 的 relativistic equation。
+
+</DerivationBlock>
+
+<GrapheneDiracExplorer />
+
+<BilingualSection titleZh="哪些项可以打开 gap" titleEn="Terms that can open a gap">
+  <div class="bilingual-section__zh">
+
+给 A/B 不同 on-site energies：
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+m&t f(\mathbf k)\\
+t f^*(\mathbf k)&-m
+\end{pmatrix},
+$$
+
+则
+
+$$
+E_\pm=\pm\sqrt{m^2+|t f|^2},
+$$
+
+在 K 的 direct gap 为 $2|m|$。该项破坏 sublattice equivalence。next-nearest-neighbour hopping 可破坏简单 particle-hole symmetry 并移动 Dirac energy，但在保持相关对称时不必打开 gap。SOC、周期势、strain pattern 或 interaction 可生成其他 mass/shift terms，必须分别说明所破坏/保留的对称。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Different A/B onsite energies give
+
+$$
+H(\mathbf k)=
+\begin{pmatrix}
+m&t f(\mathbf k)\\
+t f^*(\mathbf k)&-m
+\end{pmatrix},
+$$
+
+and
+
+$$
+E_\pm=\pm\sqrt{m^2+|t f|^2},
+$$
+
+with direct gap $2|m|$ at K. This term breaks sublattice equivalence. Next-nearest-neighbour hopping can break simple particle-hole symmetry and shift the Dirac energy without necessarily opening a gap when the relevant symmetry is retained. SOC, periodic potentials, strain patterns, or interactions can generate other mass or shift terms; each requires its own symmetry statement.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="Dirac cone 不是完整材料证明" titleEn="A Dirac cone is not a complete material proof" kind="boundary">
+  <div class="bilingual-section__zh">
+
+模型中 K 点 crossing 由假设的 basis、hopping range 和 symmetries 导出。真实计算还需检查全 BZ、SOC、磁性、结构畸变、Fermi level、band entanglement 和 numerical convergence。高对称路径上的线性交叉不能单独证明 protected semimetal、拓扑分类或实验可访问性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The model K-point crossing follows from assumed basis, hopping range, and symmetries. A real calculation must also check the full BZ, SOC, magnetism, structural distortions, Fermi level, band entanglement, and numerical convergence. A linear crossing on a symmetry path alone does not establish a protected semimetal, topology, or experimental accessibility.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-14-8" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.8 Nanotubes
+
+<BilingualSection titleZh="rolling condition 与 transverse quantization" titleEn="Rolling condition and transverse quantization">
+  <div class="bilingual-section__zh">
+
+把 graphene 沿 chiral vector
+
+$$
+\mathbf C_h=n\mathbf a_1+m\mathbf a_2
+$$
+
+卷起，circumference 上的周期条件要求
+
+$$
+\psi(\mathbf r+\mathbf C_h)=\psi(\mathbf r),
+\qquad
+\mathbf k\cdot\mathbf C_h=2\pi\nu,
+$$
+
+其中 $\nu$ 为整数。二维 graphene BZ 被一组平行 allowed lines 采样；沿 tube axis 的 k 仍连续（无限 tube limit），横向动量离散。每条 line 切过 graphene bands，形成一维 subbands。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Roll graphene along the chiral vector
+
+$$
+\mathbf C_h=n\mathbf a_1+m\mathbf a_2.
+$$
+
+Periodicity around the circumference requires
+
+$$
+\psi(\mathbf r+\mathbf C_h)=\psi(\mathbf r),
+\qquad
+\mathbf k\cdot\mathbf C_h=2\pi\nu,
+$$
+
+with integer $\nu$. The two-dimensional graphene BZ is sampled by parallel allowed lines. Momentum along an infinitely long tube remains continuous, whereas transverse momentum is discrete. Each line cuts the graphene bands and generates one-dimensional subbands.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="nearest-neighbour zone-folding family | Nearest-neighbour zone-folding family"
+  assumptions={[
+    '理想未弛豫 graphene sheet；',
+    'nearest-neighbour p_z model；',
+    '忽略 curvature、SOC、strain 和 interaction。',
+  ]}
+>
+
+graphene K points 与 allowed-line condition 的几何关系给出：
+
+$$
+(n-m)\bmod3=0
+$$
+
+时至少一条 allowed line 穿过 K/K′ family，nearest-neighbour zone-folding model 为 metallic；其余两类有有限 transverse offset，形成 semiconducting subbands。armchair $(n,n)$ 总满足条件；zigzag $(n,0)$ 仅在 n 可被 3 整除时满足。
+
+这是一项 family classification，不给出 gap 大小、Fermi velocity 或 conductance。小直径 non-armchair tubes 的 curvature-induced $\sigma$–$\pi$ mixing 可在 zone-folding metallic family 中打开小 gap。
+
+</DerivationBlock>
+
+<NanotubeZoneFoldingExplorer />
+
+<BilingualSection titleZh="BN nanotube 与 sublattice asymmetry" titleEn="BN nanotubes and sublattice asymmetry">
+  <div class="bilingual-section__zh">
+
+若 A、B sublattices 由不同元素占据，on-site difference 在 sheet model 中已打开 gap。rolling 只把二维 gapped bands 量子化为一维 subbands，因此不同 chiralities 通常仍保持 gap；具体数值受 curvature、ionicity、strain 和 first-principles corrections 影响。graphene tube 的 mod-3 metallicity 不能直接移植到所有 honeycomb compounds。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If different elements occupy A and B sublattices, their onsite difference already opens a gap in the sheet model. Rolling quantizes the gapped two-dimensional bands into one-dimensional subbands, so different chiralities usually remain gapped; numerical values depend on curvature, ionicity, strain, and first-principles corrections. The mod-three metallicity of graphene tubes cannot be transferred directly to every honeycomb compound.
+
+  </div>
+</BilingualSection>
+
+<span id="section-14-9" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.9 方格与 CuO2 平面 | Square Lattice and CuO2 Planes
+
+<BilingualSection titleZh="方格 one-band 模型的用途与边界" titleEn="Use and boundary of the square-lattice one-band model">
+  <div class="bilingual-section__zh">
+
+方格 nearest-neighbour one-band model 是研究 Fermi-surface geometry、nesting 和 van Hove saddle 的最小模型。加入 next-nearest-neighbour hopping
+
+$$
+\varepsilon(\mathbf k)=arepsilon_0
++2t(\cos k_xa+\cos k_ya)
++4t'\cos k_xa\cos k_ya
+$$
+
+会破坏 $\varepsilon(\mathbf k+\mathbf Q)=-\varepsilon(\mathbf k)$，移动 saddle energy 并改变 Fermi-surface topology。$t'$ 的符号和大小可以来自拟合或 downfolding；它不是由 lattice geometry 单独决定。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The nearest-neighbour square-lattice one-band model is a minimal description of Fermi-surface geometry, nesting, and a van Hove saddle. Adding next-nearest-neighbour hopping,
+
+$$
+\varepsilon(\mathbf k)=\varepsilon_0
++2t(\cos k_xa+\cos k_ya)
++4t'\cos k_xa\cos k_ya,
+$$
+
+breaks $\varepsilon(\mathbf k+\mathbf Q)=-\varepsilon(\mathbf k)$, moves the saddle energy, and changes Fermi-surface topology. The sign and magnitude of $t'$ come from fitting or downfolding, not lattice geometry alone.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Cu–O 多轨道结构" titleEn="Cu–O multi-orbital structure">
+  <div class="bilingual-section__zh">
+
+CuO2 plane 的最小化学基通常包含 Cu $d_{x^2-y^2}$ 与两个 O $p_\sigma$ orbitals。Cu–O hopping 的 sign 随 $d$ 和 $p$ lobes 方向变化，Bloch matrix elements 因 basis positions 产生 $\sin(k_xa/2)$、$\sin(k_ya/2)$ 型 structure factors；O–O hopping 再连接两个 oxygen channels。模型参数包括 charge-transfer-like on-site difference $\Delta=\varepsilon_p-\varepsilon_d$、$t_{pd}$ 和 $t_{pp}$。
+
+该多轨道 Hamiltonian 可产生 bonding、nonbonding 与 antibonding bands。哪一条低能 band 可被 one-band model 表示，取决于 filling、hybridization、interaction 和能量窗口。只把三条 bands 中一条拟合得好，不说明 orbital-resolved charge transfer 或 many-body low-energy model 唯一。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A minimal chemical basis for a CuO2 plane commonly contains Cu $d_{x^2-y^2}$ and two O $p_\sigma$ orbitals. Signs of Cu–O hopping follow the orientations of d and p lobes. Basis positions produce Bloch factors of the form $\sin(k_xa/2)$ and $\sin(k_ya/2)$, while O–O hopping connects the oxygen channels. Parameters include a charge-transfer-like onsite difference $\Delta=\varepsilon_p-\varepsilon_d$, $t_{pd}$, and $t_{pp}$.
+
+The multi-orbital Hamiltonian produces bonding, nonbonding, and antibonding bands. Whether one low-energy band admits a useful one-band representation depends on filling, hybridization, interactions, and energy window. Fitting one of three bands does not uniquely determine orbital-resolved charge transfer or a many-body low-energy model.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="block downfolding 的能量依赖 | Energy dependence of block downfolding"
+  assumptions={[
+    '将 Hilbert space 分为保留子空间 L 与消去子空间 H；',
+    '有限矩阵问题，暂不处理 many-body interaction；',
+    'E 不位于 H_HH−E 的奇异点。',
+  ]}
+>
+
+分块方程
+
+$$
+\begin{pmatrix}
+H_{LL}&H_{LH}\\
+H_{HL}&H_{HH}
+\end{pmatrix}
+\begin{pmatrix}c_L\\c_H\end{pmatrix}
+=E\begin{pmatrix}c_L\\c_H\end{pmatrix}
+$$
+
+给出
+
+$$
+c_H=(E-H_{HH})^{-1}H_{HL}c_L.
+$$
+
+代回得到 energy-dependent effective Hamiltonian
+
+$$
+\boxed{
+H_{\mathrm{eff}}(E)=H_{LL}+H_{LH}(E-H_{HH})^{-1}H_{HL}.
+}
+$$
+
+若高能 states 与目标窗口相隔 $\Delta$，可在 reference energy 附近展开，得到 effective hoppings 与 onsite shifts。该近似对能量窗口敏感，并常生成更长程 hopping。downfolded parameter 不等于 bare atomic integral，也不保证对 doping、structure 或 interaction transfer。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="CuO2 tight-binding 不是超导结论" titleEn="A CuO2 tight-binding model is not a superconductivity conclusion" kind="boundary">
+  <div class="bilingual-section__zh">
+
+单粒子 tight-binding 可描述 band topology、orbital mixing 和 Fermi-surface geometry；它不单独给出 pairing interaction、correlation strength、magnetic fluctuations、EPC 或 Tc。将其用于超导需要额外 many-body/phonon model 与独立证据。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A one-particle tight-binding model can describe band topology, orbital mixing, and Fermi-surface geometry. It does not by itself determine pairing interaction, correlation strength, magnetic fluctuations, electron–phonon coupling, or Tc. A superconductivity claim needs an additional many-body or phonon model and independent evidence.
+
+  </div>
+</BilingualCallout>
