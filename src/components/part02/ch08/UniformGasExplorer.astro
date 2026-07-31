@@ -1,0 +1,104 @@
+---
+import { uniformGasQuantities } from '../../../data/part02/ch08TeachingModels.mjs';
+
+const initial = uniformGasQuantities(0.02, 0);
+---
+
+<figure class="chapter-visual uniform-gas" data-uniform-gas>
+  <figcaption>
+    <strong>原创交互模型：均匀电子气尺度与交换自旋标度</strong>
+    <span lang="en">Original interactive model: uniform-electron-gas scales and exchange spin scaling</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>总密度 n | Total density</span>
+      <input type="range" min="0.002" max="0.20" step="0.002" value="0.02" data-ueg-density />
+      <output data-ueg-density-output>0.020</output>
+    </label>
+    <label>
+      <span>自旋极化 ζ | Spin polarization</span>
+      <input type="range" min="-1" max="1" step="0.05" value="0" data-ueg-zeta />
+      <output data-ueg-zeta-output>0.00</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 300" role="img" aria-labelledby="ueg-title ueg-desc">
+    <title id="ueg-title">Uniform-gas density parameter, Fermi wavevector, and spin-scaled exchange</title>
+    <desc id="ueg-desc">Three bars represent inverse density length scale, Fermi wavevector, and magnitude of exchange per electron for a model uniform gas.</desc>
+    <line x1="60" y1="240" x2="720" y2="240" class="plot-axis" />
+    <rect x="120" y="95" width="110" height="145" class="ueg-bar ueg-bar--rs" data-ueg-rs-bar />
+    <rect x="325" y="145" width="110" height="95" class="ueg-bar ueg-bar--kf" data-ueg-kf-bar />
+    <rect x="530" y="170" width="110" height="70" class="ueg-bar ueg-bar--ex" data-ueg-ex-bar />
+    <text x="175" y="270" text-anchor="middle">1/rs</text>
+    <text x="380" y="270" text-anchor="middle">kF</text>
+    <text x="585" y="270" text-anchor="middle">|εx|</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-ueg-rs>rs = {initial.rs.toFixed(6)} bohr</span>
+    <span data-ueg-kf>kF = {initial.kF.toFixed(6)} bohr⁻¹</span>
+    <span data-ueg-scale>spin-scaling factor = {initial.exchangeSpinScaling.toFixed(6)}</span>
+    <strong data-ueg-ex>εx = {initial.exchangePerElectron.toFixed(6)} Hartree/electron</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>三维均匀电子气，Hartree 原子单位。rs=[3/(4πn)]¹ᐟ³，kF=(3π²n)¹ᐟ³，εx(n,ζ)=−(3/4)(3/π)¹ᐟ³n¹ᐟ³f(ζ)，其中 f(ζ)=[(1+ζ)⁴ᐟ³+(1−ζ)⁴ᐟ³]/2。</p>
+    <p lang="en"><strong>Model:</strong> a three-dimensional uniform electron gas in Hartree atomic units with the standard density parameter, Fermi wavevector, and exact exchange spin scaling.</p>
+    <p><strong>验收：</strong>密度增加时 rs 单调减小、kF 与 |εx| 单调增加；ζ=0 时 f=1，|ζ|=1 时 f=2¹ᐟ³，且 f(ζ)=f(−ζ)。</p>
+    <p lang="en"><strong>Acceptance:</strong> increasing density decreases rs and increases kF and |εx|. The spin factor is one at ζ=0, 2¹ᐟ³ at full polarization, and even in ζ.</p>
+    <p><strong>边界：</strong>这里只包含均匀气交换，不包含相关能参数化、有限温度、真实晶体非均匀性或赝势。模型解释 LSDA 的局域参考输入，不验证任何材料结果。</p>
+    <p lang="en"><strong>Boundary:</strong> only uniform-gas exchange is included. Correlation parameterization, temperature, material inhomogeneity, and pseudopotentials are absent.</p>
+  </div>
+</figure>
+
+<script>
+  import { uniformGasQuantities } from '../../../data/part02/ch08TeachingModels.mjs';
+
+  document.querySelectorAll('[data-uniform-gas]').forEach((root) => {
+    const densityInput = root.querySelector('[data-ueg-density]');
+    const zetaInput = root.querySelector('[data-ueg-zeta]');
+    if (!(densityInput instanceof HTMLInputElement) || !(zetaInput instanceof HTMLInputElement)) return;
+
+    const text = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLOutputElement) element.value = value;
+      else if (element instanceof HTMLElement) element.textContent = value;
+    };
+    const setBar = (selector, normalized) => {
+      const bar = root.querySelector(selector);
+      if (!(bar instanceof SVGRectElement)) return;
+      const height = 35 + 150 * Math.max(0, Math.min(1, normalized));
+      bar.setAttribute('y', (240 - height).toFixed(2));
+      bar.setAttribute('height', height.toFixed(2));
+    };
+
+    const update = () => {
+      const density = Number(densityInput.value);
+      const zeta = Number(zetaInput.value);
+      const result = uniformGasQuantities(density, zeta);
+      text('[data-ueg-density-output]', density.toFixed(3));
+      text('[data-ueg-zeta-output]', zeta.toFixed(2));
+      text('[data-ueg-rs]', `rs = ${result.rs.toFixed(6)} bohr`);
+      text('[data-ueg-kf]', `kF = ${result.kF.toFixed(6)} bohr⁻¹`);
+      text('[data-ueg-scale]', `spin-scaling factor = ${result.exchangeSpinScaling.toFixed(6)}`);
+      text('[data-ueg-ex]', `εx = ${result.exchangePerElectron.toFixed(6)} Hartree/electron`);
+      setBar('[data-ueg-rs-bar]', (1 / result.rs) / 1.0);
+      setBar('[data-ueg-kf-bar]', result.kF / 1.9);
+      setBar('[data-ueg-ex-bar]', Math.abs(result.exchangePerElectron) / 0.6);
+    };
+
+    densityInput.addEventListener('input', update);
+    zetaInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .uniform-gas svg { width: 100%; max-height: 22rem; }
+  .uniform-gas text { fill: currentColor; font-size: 14px; }
+  .ueg-bar { opacity: 0.82; }
+  .ueg-bar--rs { fill: var(--sl-color-text-accent); }
+  .ueg-bar--kf { fill: var(--sl-color-accent-high); }
+  .ueg-bar--ex { fill: var(--sl-color-gray-3); }
+</style>

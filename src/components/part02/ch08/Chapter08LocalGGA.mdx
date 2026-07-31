@@ -1,0 +1,343 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import LdaSamplingExplorer from './LdaSamplingExplorer.astro';
+import GgaEnhancementExplorer from './GgaEnhancementExplorer.astro';
+
+<span id="section-8-4" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 8.4 局域近似为何可能有效 | Why the Local Approximation Can Work
+
+<BilingualSection titleZh="正确约束可以补偿错误形状" titleEn="Correct constraints can compensate for an inaccurate shape">
+  <div className="bilingual-section__zh">
+
+LDA 在原子、分子和晶体中都把真实洞替换为同一点密度的均匀气洞。真实洞会随参考电子位置、原子壳层、键方向和边界改变，并不具有均匀气的平移对称性。局域近似仍常给出合理总能，主要有三类原因。
+
+第一，均匀气洞来自合法电子 Hamiltonian，自动满足交换—关联洞的电荷 sum rule 和一组相关约束。第二，Coulomb energy 对固定参考点只依赖洞的球平均；角向细节误差可在积分中被弱化。第三，exchange 和 correlation 的误差有时方向相反，导致总 $E_{\mathrm{xc}}$ 出现误差抵消。
+
+这些机制解释“为什么可能成功”，不构成精度保证。总能误差抵消可能在原子化能、势垒、带隙、弱相互作用、表面能或磁性上失效；一种性质的良好结果也不能证明洞、势和其他导数量均正确。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+LDA replaces the physical hole in atoms, molecules, and crystals by the uniform-gas hole at the local density. A physical hole changes with the reference-electron position, shell structure, bond direction, and boundary, and therefore lacks uniform-gas translational symmetry. Three mechanisms help explain why the local approximation can nevertheless yield useful total energies.
+
+First, a uniform-gas hole comes from a valid electronic Hamiltonian and automatically obeys the exchange–correlation charge sum rule and related constraints. Second, the Coulomb energy uses only the spherical average of the hole around each reference point, which can reduce sensitivity to angular errors. Third, exchange and correlation errors can partially cancel in the total $E_{\mathrm{xc}}$.
+
+These mechanisms explain possible success; they do not guarantee accuracy. Error cancellation in a total energy can fail for atomization energies, barriers, gaps, weak interactions, surfaces, or magnetism, and success for one property does not establish that the hole, potential, and all derivatives are correct.
+
+  </div>
+</BilingualSection>
+
+<LdaSamplingExplorer />
+
+<BilingualSection titleZh="原子、H₂ 与固体例证的证据上限" titleEn="Evidence ceiling of atomic, H₂, and solid examples">
+  <div className="bilingual-section__zh">
+
+Martin 用原子、拉伸 H₂ 和硅中的洞来展示局域近似的能力与断点。原子是强非均匀有限体系，但交换洞的球平均可以比完整三维形状更接近局域参考。H₂ 在大键长时暴露 mean-field 和 spin-symmetry breaking：unrestricted LSDA 可通过让两个原子带相反局域磁化降低能量，却不再保持精确 singlet 的空间—自旋对称性。硅的例子说明高密度区域的洞较短程，而低密度区域更延展，局域尺度随位置变化。
+
+这些图像是来源提供的示例，不足以支持“LDA 对原子/分子/固体普遍准确”。严谨比较必须指定 observable、参考数据、几何、spin state、basis/pseudopotential、数值收敛和误差统计。网页不复制原书图，而用可复算模型呈现 sum rule、局域积分和 density-scale dependence。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Martin uses atoms, stretched H₂, and holes in silicon to illustrate both the capability and the limits of locality. An atom is a strongly inhomogeneous finite system, yet the spherical average of its exchange hole can resemble a local reference more closely than the full three-dimensional shape. Stretched H₂ exposes mean-field spin-symmetry breaking: unrestricted LSDA can lower the energy by assigning opposite local magnetizations to the two atoms while losing the exact singlet symmetry. Silicon illustrates that high-density regions have shorter-ranged holes than low-density regions.
+
+These are source examples rather than a universal validation of LDA. A rigorous comparison must specify the observable, reference data, geometry, spin state, basis or pseudopotential, numerical convergence, and error statistics. The website does not reproduce the source figures and instead uses reproducible models for the sum rule, local integration, and density-scale dependence.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="一电子体系是局域近似的强测试" titleEn="A one-electron system is a stringent local test" kind="boundary">
+  <div className="bilingual-section__zh">
+
+一电子体系没有真实 electron–electron interaction。精确泛函必须满足 $E_x=-E_H$ 且 $E_c=0$，从而完全消除 Hartree self-interaction。LDA/LSDA 的局域 exchange 通常不能逐点产生该抵消，并可能再给出虚假 correlation。总能中某些误差抵消不改变这一 self-interaction 断点。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A one-electron system has no physical electron–electron interaction. The exact functional must satisfy $E_x=-E_H$ and $E_c=0$, eliminating Hartree self-interaction exactly. Local exchange generally fails to provide that cancellation pointwise and can add spurious correlation. Partial cancellation in a total energy does not remove the self-interaction failure.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-8-5" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 8.5 广义梯度近似 | Generalized-Gradient Approximations
+
+<BilingualSection titleZh="从 gradient expansion 到受约束的 GGA" titleEn="From a gradient expansion to constrained GGA">
+  <div className="bilingual-section__zh">
+
+若密度变化足够缓慢，可以尝试围绕均匀气作 gradient expansion。最低非零修正通常含 $|\nabla n|^2$ 或等价二阶量。然而真实原子、键区、表面和低密度尾部常出现大 reduced gradient，低阶展开失去控制；直接截断的 gradient expansion 还可能违反洞的 sum rule、scaling 或能量界。
+
+GGA 不等同于“把展开多保留一项”。它把密度与梯度组织成在小梯度极限连接已知展开、在大梯度区域满足选定 exact constraints 或渐近条件的非线性函数。一般 spin-GGA 可写为
+
+$$
+E_{\mathrm{xc}}^{\mathrm{GGA}}
+=\int d\mathbf r\,n(\mathbf r)
+\epsilon_{\mathrm{xc}}
+\bigl(n_\uparrow,n_\downarrow,|\nabla n_\uparrow|,|\nabla n_\downarrow|,\ldots\bigr).
+$$
+
+也常写成均匀气 exchange reference 乘 enhancement factor。不同 GGA 选择不同约束、渐近行为和参数，因此名称不可互换。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For a sufficiently slowly varying density one can expand around the uniform gas. The leading nonzero correction usually contains $|\nabla n|^2$ or an equivalent second-order quantity. Real atoms, bonds, surfaces, and density tails often reach large reduced gradients where a low-order expansion is uncontrolled. A directly truncated gradient expansion can also violate the hole sum rule, scaling relations, or energy bounds.
+
+A GGA is not merely an expansion with one additional term. It organizes density and gradient information into a nonlinear function that connects to known small-gradient behavior while enforcing selected exact constraints or asymptotic conditions at large gradients,
+
+$$
+E_{\mathrm{xc}}^{\mathrm{GGA}}
+=\int d\mathbf r\,n\,\epsilon_{\mathrm{xc}}(n_\uparrow,n_\downarrow,|\nabla n_\uparrow|,|\nabla n_\downarrow|,\ldots).
+$$
+
+Different GGAs select different constraints, asymptotics, and parameters, so their names are not interchangeable.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="一阶 reduced gradient | First reduced gradient"
+  assumptions={[
+    '使用三维均匀电子气局域 Fermi wavevector kF=(3π²n)¹ᐟ³。',
+    'n>0 且密度可微。',
+  ]}
+>
+
+密度梯度量纲为 $L^{-4}$，而 $k_Fn$ 同样为 $L^{-4}$。因此
+
+$$
+s=\frac{|\nabla n|}{2k_Fn}
+=\frac{|\nabla n|}{2(3\pi^2)^{1/3}n^{4/3}}
+$$
+
+是无量纲量。又因
+
+$$
+n=\frac{3}{4\pi r_s^3},
+$$
+
+有
+
+$$
+\frac{|\nabla n|}{n}=3\frac{|\nabla r_s|}{r_s},
+$$
+
+代入得到与 $|\nabla r_s|$ 成正比的等价表达。$s\ll1$ 表示密度在 local Fermi wavelength 上缓慢变化；$s$ 大只说明相对变化快，不自动给出相关强弱或计算误差大小。
+
+The reduced gradient compares density variation with the local Fermi scale. It is dimensionless and characterizes inhomogeneity, but it is not by itself a correlation-strength parameter or an error estimate.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="GGA exchange 与 spin scaling | GGA exchange and spin scaling"
+  assumptions={[
+    'exchange 保持 Chapter 8.3 的 exact spin-scaling relation。',
+    '先定义无自旋极化 exchange enhancement Fx(s)。',
+  ]}
+>
+
+无自旋极化 GGA exchange 常写为
+
+$$
+E_x^{\mathrm{GGA}}[n]
+=\int d\mathbf r\,n(\mathbf r)
+\epsilon_x^{\mathrm{unif}}(n(\mathbf r))F_x(s(\mathbf r)).
+$$
+
+当 $F_x(0)=1$ 时恢复 LDA。再由 exact spin scaling，
+
+$$
+E_x[n_\uparrow,n_\downarrow]
+=\frac12E_x[2n_\uparrow]+\frac12E_x[2n_\downarrow],
+$$
+
+即可构造 spin-polarized exchange。correlation 的 spin 和 gradient dependence 需要独立表达，不能仅把同一 $F_x$ 乘到 $\epsilon_c$ 上。
+
+A spin-unpolarized enhancement factor plus exact exchange spin scaling is sufficient for GGA exchange. Correlation requires a separate construction.
+
+</DerivationBlock>
+
+<GgaEnhancementExplorer />
+
+<BilingualSection titleZh="小梯度与大梯度是不同约束区" titleEn="Small- and large-gradient regions impose different constraints">
+  <div className="bilingual-section__zh">
+
+在 $s\to0$ 极限，enhancement factor 应与已知 gradient expansion 的低阶系数相容，或明确说明为了满足其他约束而采用不同系数。在较大 $s$ 区域，不同泛函可能分别优先满足 Lieb–Oxford-type bound、nonuniform scaling、原子尾部 exchange energy density 或简化参数化。一个极限的正确选择不会自动保证另一类体系或性质。
+
+Martin 比较 B88、PW91 和 PBE 的 exchange enhancement，指出常见材料中相关 $s$ 范围内曲线可相近，而大 $s$ 极限明显分开。该观察支持“常规体系的结果可能相似”，不支持“这些 GGA 数学等价”或“任意一个都可替代另一个”。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+At $s\to0$, an enhancement factor should recover a known gradient-expansion coefficient or explicitly trade it for another exact condition. At larger $s$, functionals may prioritize a Lieb–Oxford-type bound, nonuniform scaling, an atomic-tail energy density, or a simpler parameterization. Correct behavior in one limit does not guarantee accuracy for another class of systems or properties.
+
+Martin compares B88, PW91, and PBE exchange enhancements. They can be similar over reduced gradients common in many materials yet differ strongly in the large-$s$ limit. This supports possible similarity of conventional results, not mathematical equivalence or universal interchangeability.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="GGA 常减弱 LDA 过结合，但不是定理" titleEn="GGA often reduces LDA overbinding, but not by theorem" kind="boundary">
+  <div className="bilingual-section__zh">
+
+许多常用 GGA 的 $F_x\ge1$，使 exchange 比 LDA 更负。原子中快速变化区域往往比固体或分子键区占比更大，因此原子 exchange 可被降低得更多，进而减小某些结合能并纠正 LDA overbinding。该解释依赖能量差中的不均匀性分布和 correlation 项，不能推广为所有 GGA、所有结合或所有结构参数的严格方向。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For many common GGAs, $F_x\ge1$ makes exchange more negative than in LDA. Rapidly varying regions can contribute more strongly in atoms than in bonded systems, lowering atomic exchange more and reducing some binding energies. This explanation depends on the distribution of inhomogeneity and on correlation; it is not a theorem fixing the direction of every GGA error.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-8-6" className="chapter-08-anchor" aria-hidden="true"></span>
+
+## 8.6 LDA 与 GGA 的交换—关联势 | Exchange–Correlation Potentials for LDA and GGA
+
+<DerivationBlock
+  title="一般 LDA 势 | General LDA potential"
+  assumptions={[
+    '局域被积函数 f(n↑,n↓)=n εxc(n↑,n↓) 可微。',
+    '变分保持所需边界和粒子数条件。',
+  ]}
+>
+
+写成
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}
+=\int f(n_\uparrow(\mathbf r),n_\downarrow(\mathbf r))d\mathbf r.
+$$
+
+一阶变化为
+
+$$
+\delta E_{\mathrm{xc}}
+=\sum_\sigma\int d\mathbf r\,
+\frac{\partial f}{\partial n_\sigma}\delta n_\sigma.
+$$
+
+所以
+
+$$
+v_{\mathrm{xc}}^\sigma(\mathbf r)
+=\frac{\partial}{\partial n_\sigma}
+\left[n\epsilon_{\mathrm{xc}}^{\mathrm{hom}}(n_\uparrow,n_\downarrow)\right]_{\mathbf r}.
+$$
+
+在单一总密度变量下，这等于 $\epsilon_{\mathrm{xc}}+n\,d\epsilon_{\mathrm{xc}}/dn$。只有 exchange 的 $n^{1/3}$ scaling 进一步给出 $v_x=(4/3)\epsilon_x$。
+
+The LSDA potential is an ordinary derivative of the local energy density with respect to the appropriate spin density. The special four-thirds factor belongs to homogeneous-gas exchange, not to a general $\epsilon_{\mathrm{xc}}$.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="density-and-gradient functional 的 Euler derivative | Euler derivative of a density-and-gradient functional"
+  assumptions={[
+    'E[n]=∫f(n,∇n)dr，f 对两个变量可微。',
+    'δn 在边界为零、周期相消或满足使 surface term 消失的条件。',
+    '密度和梯度具有足够 regularity；singular points 需单独处理。',
+  ]}
+>
+
+一阶变化为
+
+$$
+\delta E
+=\int d\mathbf r\left[
+\frac{\partial f}{\partial n}\delta n
++\frac{\partial f}{\partial(\nabla n)}\cdot\nabla\delta n
+\right].
+$$
+
+对第二项分部积分：
+
+$$
+\int \mathbf A\cdot\nabla\delta n\,d\mathbf r
+=\oint \delta n\,\mathbf A\cdot d\mathbf S
+-\int \delta n\,\nabla\cdot\mathbf A\,d\mathbf r,
+$$
+
+令 $\mathbf A=\partial f/\partial(\nabla n)$，在 surface term 消失时
+
+$$
+\frac{\delta E}{\delta n(\mathbf r)}
+=\frac{\partial f}{\partial n}
+-\nabla\cdot\frac{\partial f}{\partial(\nabla n)}.
+$$
+
+对 spin-GGA，每个 $n_\sigma$ 都有相应项，并可能通过总密度和 spin polarization 相互耦合。该势包含比能量更高阶的 density derivatives，因此即使总能积分平滑，势也可能在核附近、节点附近或低密度尾部数值尖锐。
+
+Integration by parts converts the gradient variation into a local multiplicative Euler derivative when the boundary term vanishes. The potential contains higher spatial derivatives than the energy and can therefore be numerically more singular or noisy.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="三种实现路径必须保持能量—势一致" titleEn="Three implementation paths must preserve energy–potential consistency">
+  <div className="bilingual-section__zh">
+
+Martin 区分三类处理方式。
+
+1. **连续分部积分形式。** 直接使用 $\partial f/\partial n-\nabla\cdot[\partial f/\partial(\nabla n)]$，得到局域乘法势。优点是保持普通 Kohn–Sham 形式；缺点是需要高阶 density derivatives。
+2. **算符矩阵元形式。** 不把梯度项完全转成局域势，而把含 $\nabla$ 的向量算符放进轨道矩阵元。数值可能更稳定，但 Hamiltonian application 更昂贵，并改变实现接口。
+3. **离散链式求导。** 先定义网格或 basis 上的离散梯度 $g=Cn$，再对离散 $E(n,g(n))$ 求导。得到的 potential 依赖所选离散算符，但与实际离散能量严格一致。
+
+第三条路径的关键不是“非局域一定更准确”，而是离散 adjoint 必须与能量使用的 gradient operator 配对。若能量和势使用不同 stencil、FFT convention 或边界处理，SCF 可能收敛到与报告能量不一致的驻点，力和响应也会受影响。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Martin distinguishes three implementation routes: use the continuously integrated local Euler derivative; retain gradient operators in orbital matrix elements; or define the gradient on the numerical grid or basis and differentiate the discrete energy by the chain rule. The last route makes the potential depend on the chosen discretization while preserving exact consistency with the implemented energy.
+
+The central requirement is not that a nonlocal discrete form is automatically more accurate. The discrete adjoint must match the gradient operator used by the energy. Different stencils, Fourier conventions, or boundary treatments in energy and potential can produce an SCF stationary point inconsistent with the reported energy and can contaminate forces and response.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="离散梯度的 chain rule | Chain rule for a discrete gradient"
+  assumptions={[
+    '在周期网格上定义 g=Cn。',
+    '离散能量 E=Σm ΔV f(nm,gm)。',
+  ]}
+>
+
+离散变化为
+
+$$
+\delta E
+=\sum_m\Delta V
+\left[
+\frac{\partial f_m}{\partial n_m}\delta n_m
++\frac{\partial f_m}{\partial g_m}\cdot\sum_j C_{mj}\delta n_j
+\right].
+$$
+
+交换求和次序后，
+
+$$
+\frac{\partial E}{\partial n_j}
+=\Delta V\frac{\partial f_j}{\partial n_j}
++\sum_m\Delta V
+\frac{\partial f_m}{\partial g_m}\cdot C_{mj}.
+$$
+
+第二项是离散 gradient operator 的 adjoint action。对中心差分周期矩阵，$C^T=-C$，它对应连续式中的负 divergence。有限差分验证应比较 analytic discrete gradient 与独立 finite difference，而不是只比较连续公式。
+
+The discrete chain rule applies the adjoint of the implemented gradient operator. For a periodic centered difference, the transpose is the negative discrete derivative, reproducing the continuous divergence structure in a discretization-consistent way.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="势的病态不等于总能错误" titleEn="A pathological potential does not imply an incorrect algebraic total energy" kind="boundary">
+  <div className="bilingual-section__zh">
+
+同一个 GGA energy 经合法分部积分可以得到包含高阶导数的势。该势在核附近出现 singular 或 oscillatory structure 时，总能表达式仍可能是同一泛函的正确变分重写；问题在于有限 basis/grid 能否稳定表示它，以及该近似势是否具有合理物理行为。必须分别检查能量一致性、势的数值稳定、SCF、力/响应和最终 observable。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A legal integration by parts can turn a well-defined GGA energy into a potential with higher derivatives and sharp structure. The total-energy algebra can remain correct while a finite basis or grid represents the potential poorly or while the approximate potential has undesirable physical behavior. Energy consistency, potential stability, SCF, forces or response, and the target observable require separate checks.
+
+  </div>
+</BilingualCallout>
