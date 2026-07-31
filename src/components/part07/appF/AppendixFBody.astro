@@ -1,0 +1,55 @@
+---
+import AppendixFContents from './AppendixFContents.astro';
+import AppendixFOrientation from './AppendixFOrientation.mdx';
+import AppendixFPointEwald from './AppendixFPointEwald.mdx';
+import AppendixFSmearedReference from './AppendixFSmearedReference.mdx';
+import AppendixFSurfaceImagesReview from './AppendixFSurfaceImagesReview.mdx';
+---
+
+<div class="appendix-f-root">
+  <AppendixFContents />
+  <AppendixFOrientation />
+  <AppendixFPointEwald />
+  <AppendixFSmearedReference />
+  <AppendixFSurfaceImagesReview />
+</div>
+
+<style is:global>
+  .appendix-f-root,
+  .appendix-f-root > *,
+  .appendix-f-root .bilingual-section,
+  .appendix-f-root .bilingual-section__grid,
+  .appendix-f-root .bilingual-section__zh,
+  .appendix-f-root .bilingual-section__en,
+  .appendix-f-root .bilingual-callout,
+  .appendix-f-root .bilingual-callout__grid {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appendix-f-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .appendix-f-root .chapter-source-map,
+  .appendix-f-root .katex-display,
+  .appendix-f-root pre,
+  .appendix-f-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .appendix-f-root p,
+  .appendix-f-root li,
+  .appendix-f-root th,
+  .appendix-f-root td,
+  .appendix-f-root code {
+    overflow-wrap: anywhere;
+  }
+</style>
