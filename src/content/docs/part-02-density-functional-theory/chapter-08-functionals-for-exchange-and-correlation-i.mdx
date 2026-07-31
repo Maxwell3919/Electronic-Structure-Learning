@@ -1,20 +1,27 @@
 ---
-title: "Chapter 8 · Functionals for Exchange and Correlation I"
-description: "Martin Chapter 8 的目录级阅读骨架；正文待填充。"
+title: "Chapter 8 · Functionals for Exchange and Correlation I | 交换与关联泛函 I"
+description: "从交换—关联洞、均匀电子气与 LSDA，进入 GGA、LDA/GGA 势、ADA/WDA 和数据库拟合的严格关系与适用边界。"
 sidebar:
   order: 3
-  label: "Chapter 8 · Functionals for Exchange and Correlation I"
+  label: "Chapter 8 · XC Functionals I"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter08Contents from '../../../components/part02/ch08/Chapter08Contents.astro';
+import Chapter08Foundations from '../../../components/part02/ch08/Chapter08Foundations.mdx';
+import Chapter08LocalGGA from '../../../components/part02/ch08/Chapter08LocalGGA.mdx';
+import Chapter08NonlocalDataReview from '../../../components/part02/ch08/Chapter08NonlocalDataReview.mdx';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[1].units[2].label}
-  sourcePage={catalog.parts[1].units[2].page}
-  sections={catalog.parts[1].units[2].sections}
-  exercisesPage={catalog.parts[1].units[2].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 8, printed pages 171–185; sections 8.1–8.8. Sholl–Steckel Chapter 1 §1.5 is a practical cross-reference only."
+  status="review"
 />
+
+<Chapter08Contents />
+
+<div className="chapter08-body">
+  <Chapter08Foundations />
+  <Chapter08LocalGGA />
+  <Chapter08NonlocalDataReview />
+</div>

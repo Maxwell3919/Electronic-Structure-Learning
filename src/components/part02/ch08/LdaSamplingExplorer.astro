@@ -1,0 +1,108 @@
+---
+import { samplePeriodicDensity } from '../../../data/part02/ch08TeachingModels.mjs';
+
+const initial = samplePeriodicDensity({ averageDensity: 0.02, modulation: 0.4, length: 1, sampleCount: 401 });
+const xScale = (x) => 55 + 650 * x;
+const densityScale = (value) => 235 - (value / 0.04) * 165;
+const energyScale = (value) => 235 - ((value + 0.012) / 0.012) * 165;
+const densityPath = initial.samples.map((point, index) =>
+  `${index === 0 ? 'M' : 'L'} ${xScale(point.x).toFixed(2)} ${densityScale(point.density).toFixed(2)}`,
+).join(' ');
+const energyPath = initial.samples.map((point, index) =>
+  `${index === 0 ? 'M' : 'L'} ${xScale(point.x).toFixed(2)} ${energyScale(point.exchangeEnergyDensity).toFixed(2)}`,
+).join(' ');
+---
+
+<figure class="chapter-visual lda-sampling" data-lda-sampling>
+  <figcaption>
+    <strong>原创交互模型：LDA 的逐点均匀气取样与空间积分</strong>
+    <span lang="en">Original interactive model: pointwise uniform-gas sampling and LDA integration</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>密度调制幅度 a | Density modulation</span>
+      <input type="range" min="0" max="0.85" step="0.05" value="0.4" data-lda-modulation />
+      <output data-lda-modulation-output>0.40</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 300" role="img" aria-labelledby="lda-sampling-title lda-sampling-desc">
+    <title id="lda-sampling-title">Periodic model density and local exchange energy density</title>
+    <desc id="lda-sampling-desc">A cosine-modulated density with fixed spatial average is sampled pointwise by the uniform-gas exchange formula and integrated.</desc>
+    <line x1="55" y1="235" x2="705" y2="235" class="plot-axis" />
+    <line x1="55" y1="45" x2="55" y2="235" class="plot-axis" />
+    <path d={densityPath} class="lda-sampling__density" data-lda-density-path />
+    <path d={energyPath} class="lda-sampling__energy" data-lda-energy-path />
+    <text x="705" y="270" text-anchor="end">x/L</text>
+    <text x="20" y="55">scaled curves</text>
+  </svg>
+
+  <ul class="lda-sampling__legend" aria-label="LDA explorer legend">
+    <li><span class="lda-key lda-key--density"></span>n(x)</li>
+    <li><span class="lda-key lda-key--energy"></span>−Cx n(x)⁴ᐟ³</li>
+  </ul>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-lda-average>grid average n̄ = {initial.averageFromGrid.toFixed(8)}</span>
+    <strong data-lda-exchange>Ex/L = {initial.exchangeEnergy.toFixed(8)} model energy/length</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>单位长度和单位横截面积的周期密度 n(x)=n̄[1+a cos(2πx/L)]，n̄=0.02。每一点使用三维均匀气交换能密度 −Cx n⁴ᐟ³，再沿 x 积分。</p>
+    <p lang="en"><strong>Model:</strong> a periodic density with fixed mean is sampled pointwise by the three-dimensional uniform-gas exchange energy density and integrated along one model coordinate.</p>
+    <p><strong>验收：</strong>任意 a 下空间平均保持 n̄；a=0 给均匀结果 −CxLn̄⁴ᐟ³；由于 n⁴ᐟ³ 的凸性，在固定平均密度下增大 a 会使交换能更负。</p>
+    <p lang="en"><strong>Acceptance:</strong> the mean density is invariant. The uniform case reproduces −CxLn̄⁴ᐟ³, and modulation makes exchange more negative at fixed mean by convexity.</p>
+    <p><strong>边界：</strong>该一维剖面只演示局域取样和积分，不是低维电子气，也没有相关能、轨道、自洽势或真实晶格。</p>
+    <p lang="en"><strong>Boundary:</strong> the one-dimensional profile illustrates local sampling only; it is not a lower-dimensional electron gas or a self-consistent material calculation.</p>
+  </div>
+</figure>
+
+<script>
+  import { samplePeriodicDensity } from '../../../data/part02/ch08TeachingModels.mjs';
+
+  document.querySelectorAll('[data-lda-sampling]').forEach((root) => {
+    const input = root.querySelector('[data-lda-modulation]');
+    const densityPath = root.querySelector('[data-lda-density-path]');
+    const energyPath = root.querySelector('[data-lda-energy-path]');
+    if (!(input instanceof HTMLInputElement) || !(densityPath instanceof SVGPathElement) || !(energyPath instanceof SVGPathElement)) return;
+
+    const xScale = (x) => 55 + 650 * x;
+    const densityScale = (value) => 235 - (value / 0.04) * 165;
+    const energyScale = (value) => 235 - ((value + 0.012) / 0.012) * 165;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLOutputElement) element.value = value;
+      else if (element instanceof HTMLElement) element.textContent = value;
+    };
+
+    const update = () => {
+      const modulation = Number(input.value);
+      const model = samplePeriodicDensity({ averageDensity: 0.02, modulation, length: 1, sampleCount: 401 });
+      densityPath.setAttribute('d', model.samples.map((point, index) =>
+        `${index === 0 ? 'M' : 'L'} ${xScale(point.x).toFixed(2)} ${densityScale(point.density).toFixed(2)}`,
+      ).join(' '));
+      energyPath.setAttribute('d', model.samples.map((point, index) =>
+        `${index === 0 ? 'M' : 'L'} ${xScale(point.x).toFixed(2)} ${energyScale(point.exchangeEnergyDensity).toFixed(2)}`,
+      ).join(' '));
+      setText('[data-lda-modulation-output]', modulation.toFixed(2));
+      setText('[data-lda-average]', `grid average n̄ = ${model.averageFromGrid.toFixed(8)}`);
+      setText('[data-lda-exchange]', `Ex/L = ${model.exchangeEnergy.toFixed(8)} model energy/length`);
+    };
+
+    input.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .lda-sampling svg { width: 100%; max-height: 23rem; }
+  .lda-sampling text { fill: currentColor; font-size: 14px; }
+  .lda-sampling__density, .lda-sampling__energy { fill: none; stroke-width: 3; }
+  .lda-sampling__density { stroke: var(--sl-color-text-accent); }
+  .lda-sampling__energy { stroke: var(--sl-color-accent-high); stroke-dasharray: 8 5; }
+  .lda-sampling__legend { display: flex; gap: 1rem; padding: 0; list-style: none; }
+  .lda-key { display: inline-block; width: 1.8rem; margin-right: 0.35rem; border-top: 3px solid currentColor; vertical-align: middle; }
+  .lda-key--density { color: var(--sl-color-text-accent); }
+  .lda-key--energy { color: var(--sl-color-accent-high); border-top-style: dashed; }
+</style>
