@@ -12,7 +12,8 @@ Martin 第 2 版提供电子结构理论主干，Sholl–Steckel 提供实践与
 - Part I / Chapter 1 目前只有阅读骨架，不是完整教材正文；
 - 首个交互实验是“SCF 固定点与线性 mixing”；
 - SCF 页面使用原创单标量仿射模型，不代表真实材料或具体 DFT 程序；
-- 公网部署、域名和后端尚未配置。
+- GitHub Pages 公网部署已配置，目标地址为：
+  `https://maxwell3919.github.io/Electronic-Structure-Learning/`。
 
 ## 技术栈
 
@@ -20,8 +21,7 @@ Martin 第 2 版提供电子结构理论主干，Sholl–Steckel 提供实践与
 - MDX + KaTeX：正文、公式和局部组件；
 - Astro/TypeScript/ES modules：交互组件与共享数学内核；
 - JSON Schema：可视化规格和 DFT 派生数据契约；
-- GitHub Actions：锁定依赖、确定性模型检查和静态构建；
-- Cloudflare Pages 或 GitHub Pages：后续单独配置的公网发布目标。
+- GitHub Actions：锁定依赖、确定性模型检查、静态构建与 GitHub Pages 部署。
 
 ## 主要结构
 
@@ -51,7 +51,9 @@ Martin 第 2 版提供电子结构理论主干，Sholl–Steckel 提供实践与
 │   │   └── part-01-overview-and-background/
 │   ├── lib/scfToyModel.mjs
 │   └── styles/custom.css
-└── .github/workflows/ci.yml
+└── .github/workflows/
+    ├── ci.yml
+    └── deploy.yml
 ```
 
 ## 本地运行
@@ -74,6 +76,17 @@ npm run check
 1. `scripts/validate-scf-model.mjs` 的五个确定性模型检查；
 2. Astro 静态构建。
 
+## GitHub Pages 部署
+
+`main` 更新后，`.github/workflows/deploy.yml` 会执行验证、构建并发布 `dist/`。项目站点使用：
+
+```text
+site = https://maxwell3919.github.io
+base = /Electronic-Structure-Learning
+```
+
+GitHub Pages 必须在仓库设置中使用 **GitHub Actions** 作为发布源。首次启用后，后续合并到 `main` 的内容会自动重新部署。
+
 ## 验证边界
 
 `npm run check` 通过只能说明：共享 SCF 数学内核满足已声明的五个仿射模型情形，并且网站可以在声明的 Node 环境完成静态构建。它不能证明真实 Kohn–Sham SCF、任何具体 mixing 实现、DFT 参数收敛或材料科学结论正确。
@@ -88,4 +101,4 @@ npm run check
 4. [`docs/visualization-and-data-contract.md`](docs/visualization-and-data-contract.md)
 5. [`docs/source-and-copyright-policy.md`](docs/source-and-copyright-policy.md)
 
-所有持续性修改使用短期分支和 PR。公网发布、仓库可见性变化和服务端后端属于单独决策。
+所有持续性修改使用短期分支和 PR。自定义域名、仓库可见性变化和服务端后端仍属于单独决策。
