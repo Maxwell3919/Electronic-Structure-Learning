@@ -64,7 +64,7 @@ const defaults = sample(defaultZ, defaultL);
   </div>
 
   <p class="chapter-visual__readout" aria-live="polite">
-    <span>在 $r=1\,a_0$：$V_C=$ <strong data-vc>-1.000</strong> Ha；$V_l=$ <strong data-vl>1.000</strong> Ha；$V_{\rm eff}=$ <strong data-vt>0.000</strong> Ha。</span>
+    <span>在 $r=1\,a_0$：$V_C=$ <strong data-vc>-1.000</strong> Ha；$V_l=$ <strong data-vl>1.000</strong> Ha；V_eff = <strong data-vt>0.000</strong> Ha。</span>
   </p>
 
   <div class="chapter-visual__contract">
@@ -74,9 +74,7 @@ const defaults = sample(defaultZ, defaultL);
     <p lang="en"><strong>Boundary:</strong> this analytic Coulomb model omits screening, exchange-correlation, finite-nucleus, and relativistic effects and does not represent a real many-electron atom.</p>
   </div>
 
-  <noscript>
-    <p>无 JavaScript 时显示默认 $Z=1,l=1$ 的静态曲线；公式和验收关系仍可用于手工检查。</p>
-  </noscript>
+  <noscript><p>无 JavaScript 时显示默认 $Z=1,l=1$ 的静态曲线；公式和验收关系仍可用于手工检查。</p></noscript>
 </figure>
 
 <script>
@@ -124,45 +122,15 @@ const defaults = sample(defaultZ, defaultL);
 </script>
 
 <style>
-  .radial-potential svg {
-    width: 100%;
-    min-height: 17rem;
-    margin-top: 1rem;
-  }
-
-  .radial-potential svg text {
-    fill: currentColor;
-    font-size: 13px;
-  }
-
-  .radial-potential path {
-    fill: none;
-    stroke-width: 2.5;
-  }
-
+  .radial-potential svg { width: 100%; min-height: 17rem; margin-top: 1rem; }
+  .radial-potential svg text { fill: currentColor; font-size: 13px; }
+  .radial-potential path { fill: none; stroke-width: 2.5; }
   .radial-potential__coulomb { stroke: #3273dc; }
   .radial-potential__centrifugal { stroke: #d97706; }
   .radial-potential__total { stroke: #8b5cf6; stroke-width: 3.2; }
-
-  .radial-potential__legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    margin-top: 0.5rem;
-  }
-
-  .radial-potential__legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .radial-potential__legend i {
-    display: inline-block;
-    width: 1.4rem;
-    height: 0.18rem;
-  }
-
+  .radial-potential__legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.5rem; }
+  .radial-potential__legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .radial-potential__legend i { display: inline-block; width: 1.4rem; height: 0.18rem; }
   .legend-coulomb { background: #3273dc; }
   .legend-centrifugal { background: #d97706; }
   .legend-total { background: #8b5cf6; }
