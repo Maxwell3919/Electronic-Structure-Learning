@@ -1,0 +1,84 @@
+---
+import { sampleGaussianHole } from '../../../data/part02/ch08TeachingModels.mjs';
+
+const initial = sampleGaussianHole({ width: 0.8, maximumRadius: 4.8, sampleCount: 401 });
+const xScale = (radius) => 55 + (radius / initial.maximumRadius) * 650;
+const yScale = (charge) => 235 - ((charge + 0.75) / 0.75) * 175;
+const radialPath = initial.samples
+  .map((point, index) => `${index === 0 ? 'M' : 'L'} ${xScale(point.radius).toFixed(2)} ${yScale(point.radialCharge).toFixed(2)}`)
+  .join(' ');
+---
+
+<figure class="chapter-visual xc-hole" data-xc-hole>
+  <figcaption>
+    <strong>原创交互模型：归一化的球平均交换—关联洞</strong>
+    <span lang="en">Original interactive model: normalized spherical exchange–correlation hole</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>洞宽度 σ | Hole width</span>
+      <input type="range" min="0.45" max="1.25" step="0.05" value="0.8" data-hole-width />
+      <output data-hole-width-output>0.80</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 300" role="img" aria-labelledby="xc-hole-title xc-hole-desc">
+    <title id="xc-hole-title">Radial charge of a normalized Gaussian exchange–correlation hole</title>
+    <desc id="xc-hole-desc">The curve is four pi u squared times a negative normalized Gaussian hole. Changing its width changes the spatial extent but preserves one missing electron.</desc>
+    <line x1="55" y1="235" x2="705" y2="235" class="plot-axis" />
+    <line x1="55" y1="40" x2="55" y2="235" class="plot-axis" />
+    <path d={radialPath} class="xc-hole__curve" data-hole-path />
+    <text x="705" y="270" text-anchor="end">u / model length</text>
+    <text x="20" y="55">4πu² n̄xc(u)</text>
+    <text x="55" y="258" text-anchor="middle">0</text>
+    <text x="705" y="258" text-anchor="middle">4.8</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <strong data-hole-charge>∫4πu² n̄xc(u)du = {initial.integratedCharge.toFixed(6)}</strong>
+    <span>精确 sum rule：−1 | Exact sum rule: −1</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>采用三维归一化负 Gaussian 洞 n̄xc(u)=−exp[−u²/(2σ²)]/[(2π)³ᐟ²σ³]。横轴是相对距离 u，纵轴是径向电荷 4πu²n̄xc；长度和密度均为模型单位。</p>
+    <p lang="en"><strong>Model:</strong> a normalized negative three-dimensional Gaussian hole is used. The horizontal axis is relative distance and the vertical axis is radial charge; all quantities are in model units.</p>
+    <p><strong>验收：</strong>改变 σ 只能改变洞的空间分布；把积分上限取到 6σ 时，数值积分应在 10⁻⁵ 内接近 −1。曲线始终非正。</p>
+    <p lang="en"><strong>Acceptance:</strong> changing σ changes only the spatial distribution. With a six-σ cutoff, the numerical charge approaches −1 within 10⁻⁵ and the hole remains non-positive.</p>
+    <p><strong>边界：</strong>Gaussian 形状不是原子、分子、均匀电子气或真实材料的交换—关联洞。模型只隔离 sum rule 与“洞形状不唯一”的概念，不包含 coupling-constant dependence、spin resolution 或 kinetic correlation。</p>
+    <p lang="en"><strong>Boundary:</strong> the Gaussian is not a physical hole for any stated material. It isolates normalization and shape freedom and omits coupling-constant, spin, and kinetic-correlation structure.</p>
+  </div>
+</figure>
+
+<script>
+  import { sampleGaussianHole } from '../../../data/part02/ch08TeachingModels.mjs';
+
+  document.querySelectorAll('[data-xc-hole]').forEach((root) => {
+    const input = root.querySelector('[data-hole-width]');
+    const output = root.querySelector('[data-hole-width-output]');
+    const path = root.querySelector('[data-hole-path]');
+    const charge = root.querySelector('[data-hole-charge]');
+    if (!(input instanceof HTMLInputElement) || !(path instanceof SVGPathElement)) return;
+
+    const xScale = (radius) => 55 + (radius / 7.5) * 650;
+    const yScale = (value) => 235 - ((value + 1.35) / 1.35) * 175;
+    const update = () => {
+      const width = Number(input.value);
+      const model = sampleGaussianHole({ width, maximumRadius: 6 * width, sampleCount: 601 });
+      const d = model.samples.map((point, index) =>
+        `${index === 0 ? 'M' : 'L'} ${xScale(point.radius).toFixed(2)} ${yScale(point.radialCharge).toFixed(2)}`,
+      ).join(' ');
+      path.setAttribute('d', d);
+      if (output instanceof HTMLOutputElement) output.value = width.toFixed(2);
+      if (charge instanceof HTMLElement) charge.textContent = `∫4πu² n̄xc(u)du = ${model.integratedCharge.toFixed(6)}`;
+    };
+    input.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .xc-hole svg { width: 100%; max-height: 23rem; }
+  .xc-hole text { fill: currentColor; font-size: 14px; }
+  .xc-hole__curve { fill: none; stroke: var(--sl-color-text-accent); stroke-width: 3.5; }
+</style>
