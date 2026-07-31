@@ -67,10 +67,10 @@ const defaultPSNorm = normInside((r) => reducedPseudo(r, defaultRc, true), defau
   </p>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$u_{AE}=r(1-0.65r)e^{-0.55r}$。赝函数在芯区使用 Hermite 匹配，并可加入在 $r=0$、$r=r_c$ 及其边界斜率上不改变匹配的局域修正。</p>
-    <p lang="en"><strong>Model:</strong> $u_{AE}=r(1-0.65r)e^{-0.55r}$. A Hermite replacement is used in the core, with an optional localized correction that preserves the origin, the value at $r_c$, and the boundary slope.</p>
-    <p><strong>验收：</strong>核外差值应为机器精度；开启范数条件时，两条芯内累计范数的差应小于 $10^{-8}$。</p>
-    <p lang="en"><strong>Acceptance:</strong> the exterior difference must be at machine precision; with norm enforcement enabled, the interior norms must differ by less than $10^{-8}$.</p>
+    <p><strong>模型：</strong><code>u_AE = r(1 - 0.65 r) exp(-0.55 r)</code>。赝函数在芯区使用 Hermite 匹配，并可加入在 <code>r=0</code>、<code>r=r_c</code> 及其边界斜率上不改变匹配的局域修正。</p>
+    <p lang="en"><strong>Model:</strong> <code>u_AE = r(1 - 0.65 r) exp(-0.55 r)</code>. A Hermite replacement is used in the core, with an optional localized correction that preserves the origin, the value at <code>r_c</code>, and the boundary slope.</p>
+    <p><strong>验收：</strong>核外差值应为机器精度；开启范数条件时，两条芯内累计范数的差应小于 <code>10^-8</code>。</p>
+    <p lang="en"><strong>Acceptance:</strong> the exterior difference must be at machine precision; with norm enforcement enabled, the interior norms must differ by less than <code>10^-8</code>.</p>
     <p><strong>边界：</strong>这不是原子方程反演所得的真实赝势，也不检验本征值、相移或 transferability。</p>
     <p lang="en"><strong>Boundary:</strong> this is not a real pseudopotential obtained by radial inversion and does not test eigenvalues, phase shifts, or transferability.</p>
   </div>
@@ -108,7 +108,9 @@ const defaultPSNorm = normInside((r) => reducedPseudo(r, defaultRc, true), defau
     return sum * h;
   };
   const normInside = (fn, rc) => integrate((r) => fn(r) ** 2, rc);
+  const coefficientCache = new Map();
   const correctionCoefficient = (rc) => {
+    if (coefficientCache.has(rc)) return coefficientCache.get(rc);
     const target = normInside(reducedAllElectron, rc);
     const baseNorm = normInside((r) => hermiteBase(r, rc), rc);
     const cross = 2 * integrate((r) => hermiteBase(r, rc) * correctionShape(r, rc), rc);
@@ -116,7 +118,9 @@ const defaultPSNorm = normInside((r) => reducedPseudo(r, defaultRc, true), defau
     const discriminant = cross ** 2 - 4 * square * (baseNorm - target);
     const rootA = (-cross + Math.sqrt(Math.max(0, discriminant))) / (2 * square);
     const rootB = (-cross - Math.sqrt(Math.max(0, discriminant))) / (2 * square);
-    return Math.abs(rootA) <= Math.abs(rootB) ? rootA : rootB;
+    const coefficient = Math.abs(rootA) <= Math.abs(rootB) ? rootA : rootB;
+    coefficientCache.set(rc, coefficient);
+    return coefficient;
   };
   const reducedPseudo = (r, rc, conserveNorm) => {
     if (r >= rc) return reducedAllElectron(r);
