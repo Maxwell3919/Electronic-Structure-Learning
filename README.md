@@ -8,6 +8,18 @@
 https://maxwell3919.github.io/Electronic-Structure-Learning/
 ```
 
+已完成章节：
+
+```text
+https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-01-introduction/
+```
+
+当前 Pages 部署来源记录：
+
+```text
+https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.json
+```
+
 本项目不搬运教材正文，而是把原创解释、可检查推导、交互教学模型、轻量 DFT 派生数据、数值边界和练习组织为连续学习系统。
 
 ## 当前框架
