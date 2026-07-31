@@ -54,12 +54,17 @@ for (const [routeId, route] of Object.entries(propertyRoutes)) {
   }
 }
 
-const foundations = read('src/components/chapter02/Chapter02Foundations.astro');
-assert.match(foundations, /Chapter02StonerConventionAudit/);
+const magnetism = read('src/components/chapter02/Chapter02MagnetismElasticity.mdx');
+assert.match(magnetism, /Chapter02StonerConventionAudit/);
 assert.ok(
-  foundations.indexOf('<StonerConventionAudit />') < foundations.indexOf('<MagnetismElasticity />'),
-  'The Stoner convention audit must appear immediately before the Section 2.7–2.8 component',
+  magnetism.indexOf('<StonerConventionAudit />') < magnetism.indexOf('Supplemental derivation: Stoner susceptibility'),
+  'The source-convention audit must appear immediately before the Stoner derivation',
 );
+assert.match(magnetism, /m=\\chi_0 h_{\\mathrm{eff}}/);
+assert.match(magnetism, /h_{\\mathrm{eff}}=h_{\\mathrm{ext}}\+I m/);
+assert.match(magnetism, /\\chi_h\\equiv\\frac{m}{h_{\\mathrm{ext}}}/);
+assert.doesNotMatch(magnetism, /m=\\chi_0 V_m/, 'The corrected derivation must not reuse the ambiguous signed potential');
+assert.match(magnetism, /同一自旋计数、磁矩和场单位|one matched convention/);
 
 const stonerAudit = read('src/components/chapter02/Chapter02StonerConventionAudit.mdx');
 assert.match(stonerAudit, /data-ch2-stoner-convention-audit/);
@@ -85,4 +90,4 @@ assert.match(gapExplorer, /零值只是绘图截断/);
 assert.match(gapExplorer, /zero is only a plotting clamp/);
 assert.doesNotMatch(gapExplorer, /lang="en" data-gap-note>/, 'The live status must not remain English-only');
 
-console.log('Chapter 2 validation passed: EOS competition, gap hierarchy, 5 property routes, Stoner source-field/DOS conventions, and bilingual live-status accessibility checked.');
+console.log('Chapter 2 validation passed: EOS competition, gap hierarchy, 5 property routes, corrected Stoner source-field/DOS conventions, and bilingual live-status accessibility checked.');
