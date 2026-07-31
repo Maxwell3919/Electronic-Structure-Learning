@@ -147,6 +147,24 @@ def assert_no_horizontal_overflow(driver: webdriver.Chrome, context: str) -> Non
         fail(f"{context} has horizontal overflow: scrollWidth={width}, innerWidth={viewport}")
 
 
+def assert_convention_audit(driver: webdriver.Chrome, context: str) -> tuple[WebElement, str]:
+    audits = driver.find_elements(By.CSS_SELECTOR, "[data-norm-conservation-convention-audit]")
+    if len(audits) != 1:
+        fail(f"{context} should contain exactly one norm-conservation convention audit, received {len(audits)}")
+    audit = audits[0]
+    if not audit.is_displayed():
+        fail(f"{context} hides the norm-conservation convention audit")
+    text = " ".join(audit.text.split())
+    for equation_number in ("11.24", "11.25", "11.27", "11.28"):
+        if equation_number not in text:
+            fail(f"{context} convention audit is missing Eq. ({equation_number})")
+    if "Rydberg" not in text:
+        fail(f"{context} convention audit is missing the Rydberg energy scaling")
+    if "不能在同一个" not in text and "cannot be mixed under one definition" not in text:
+        fail(f"{context} convention audit is missing the non-mixing boundary")
+    return audit, text
+
+
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
@@ -183,6 +201,13 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             href = link.get_attribute("href") or ""
             if "/Electronic-Structure-Learning/" not in href:
                 fail(f"Chapter link escaped the Pages base path: {href}")
+
+        convention_audit, convention_text = assert_convention_audit(driver, "Chapter 11 desktop page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            convention_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-11-convention-audit-desktop.png"))
 
         visuals = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual")
         contracts = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual__contract")
@@ -243,6 +268,12 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "contents_links": len(contents_links),
             "visuals": len(visuals),
             "visualization_contracts": len(contracts),
+            "source_convention_audit": {
+                "displayed": True,
+                "equations": ["11.24", "11.25", "11.27", "11.28"],
+                "rydberg_scaling": "Rydberg" in convention_text,
+                "non_mixing_boundary": True,
+            },
             "keyboard_controls": [
                 "pseudo_core_radius", "norm_mode", "reference_energy",
                 "strong_well_depth", "hardness_core_radius",
@@ -258,9 +289,20 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Chapter 11 narrow-screen bilingual layout is not a single column")
         if not driver.find_element(By.CSS_SELECTOR, ".chapter-contents").is_displayed():
             fail("Chapter 11 contents is hidden on the narrow viewport")
+        narrow_audit, _ = assert_convention_audit(driver, "Chapter 11 narrow page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            narrow_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-11-convention-audit-narrow.png"))
         assert_no_horizontal_overflow(driver, "Chapter 11 narrow page")
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-11-narrow.png"))
-        report["narrow"] = {"viewport": [390, 844], "bilingual_columns": 1}
+        report["narrow"] = {
+            "viewport": [390, 844],
+            "bilingual_columns": 1,
+            "source_convention_audit": True,
+        }
     except Exception:
         save_failure_screenshot(driver, "chapter-11-desktop-failure.png")
         raise
@@ -284,11 +326,19 @@ def no_javascript_smoke(report: dict) -> None:
             fail("No-JavaScript page lost rendered formulas")
         if len(driver.find_elements(By.CSS_SELECTOR, ".chapter-source-map tbody tr")) != 13:
             fail("No-JavaScript page lost the thirteen-row source map")
+        no_js_audit, _ = assert_convention_audit(driver, "Chapter 11 no-JavaScript page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            no_js_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-11-convention-audit-no-javascript.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-11-no-javascript.png"))
         report["no_javascript"] = {
             "visualization_contracts": len(contracts),
             "static_svg_count": len(static_svgs),
             "noscript_count": len(driver.find_elements(By.CSS_SELECTOR, "noscript")),
+            "source_convention_audit": True,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-11-no-javascript-failure.png")
