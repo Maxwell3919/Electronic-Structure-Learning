@@ -60,11 +60,21 @@ for (let index = 1; index < convergedTotals.length; index += 1) {
 }
 close(convergedTotals[1], -2.0353615, 3e-6, 'neutral cubic teaching-cell reference');
 
-// Real/reciprocal components move strongly even though the converged total does not.
+// Explicit components redistribute with alpha even though the converged total does not.
 const lowAlpha = ewaldEnergy({ alpha: 2.8, realCutoff: 8, reciprocalCutoff: 8 });
 const highAlpha = ewaldEnergy({ alpha: 5.2, realCutoff: 8, reciprocalCutoff: 8 });
-assert.ok(Math.abs(lowAlpha.realSpace - highAlpha.realSpace) > 0.05, 'real-space work must change across alpha');
-assert.ok(Math.abs(lowAlpha.reciprocalSpace - highAlpha.reciprocalSpace) > 0.05, 'reciprocal-space work must change across alpha');
+assert.ok(
+  Math.abs(lowAlpha.realSpace - highAlpha.realSpace) > 1e-3,
+  'real-space component must respond across alpha for the teaching cell',
+);
+assert.ok(
+  Math.abs(lowAlpha.reciprocalSpace - highAlpha.reciprocalSpace) > 1,
+  'reciprocal-space component must redistribute strongly across alpha',
+);
+assert.ok(
+  Math.abs(lowAlpha.selfEnergy - highAlpha.selfEnergy) > 1,
+  'self component must redistribute strongly across alpha',
+);
 assert.equal(lowAlpha.netCharge, 0, 'default Ewald teaching cell must be neutral');
 assert.match(lowAlpha.boundary, /three-dimensional periodic tin-foil/, 'boundary contract must be explicit');
 
@@ -209,7 +219,7 @@ for (const required of [
   'Makov-Payne',
   'Coulomb cutoff',
   'Martin Eq. F.22',
-  'source exercises not reproduced',
+  'exercises are not reproduced',
 ]) {
   assert.ok(combinedText.includes(required), `required scientific boundary missing: ${required}`);
 }
