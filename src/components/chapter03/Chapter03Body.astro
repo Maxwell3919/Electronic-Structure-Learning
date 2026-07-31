@@ -1,0 +1,187 @@
+---
+import Contents from './Chapter03Contents.astro';
+import Orientation from './Chapter03Orientation.mdx';
+import SourceMap from './Chapter03SourceMap.astro';
+import Notation from './Chapter03Notation.mdx';
+import BasicEquations from './Chapter03BasicEquations.mdx';
+import Coulomb from './Chapter03Coulomb.mdx';
+import ForcesStress from './Chapter03ForcesStress.mdx';
+import GeneralizedForce from './Chapter03GeneralizedForce.mdx';
+import DensityMatrix from './Chapter03DensityMatrix.mdx';
+import IndependentElectrons from './Chapter03IndependentElectrons.mdx';
+import ExchangeCorrelation from './Chapter03ExchangeCorrelation.mdx';
+import Visualizations from './Chapter03Visualizations.mdx';
+import Review from './Chapter03Review.mdx';
+---
+
+<div class="chapter03-root">
+  <Contents />
+  <Orientation />
+  <SourceMap />
+  <Notation />
+  <BasicEquations />
+  <Coulomb />
+  <ForcesStress />
+  <GeneralizedForce />
+  <DensityMatrix />
+  <IndependentElectrons />
+  <ExchangeCorrelation />
+  <Visualizations />
+  <Review />
+</div>
+
+<style is:global>
+  .chapter03-root,
+  .chapter03-root > *,
+  .chapter03-root .bilingual-section,
+  .chapter03-root .bilingual-section__grid,
+  .chapter03-root .bilingual-section__zh,
+  .chapter03-root .bilingual-section__en,
+  .chapter03-root .derivation-block,
+  .chapter03-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter03-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter03-root .chapter-source-map,
+  .chapter03-root .katex-display,
+  .chapter03-root pre,
+  .chapter03-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter03-root p,
+  .chapter03-root li,
+  .chapter03-root th,
+  .chapter03-root td,
+  .chapter03-root code {
+    overflow-wrap: anywhere;
+  }
+
+  .chapter03-root .chapter-visual svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 0.8rem;
+  }
+
+  .chapter03-root .chapter-visual svg text {
+    fill: currentColor;
+    font-size: 13px;
+  }
+
+  .chapter03-root .ch03-avoided__diabatic {
+    fill: none;
+    stroke: var(--sl-color-gray-4);
+    stroke-width: 1.5;
+    stroke-dasharray: 7 5;
+  }
+
+  .chapter03-root .ch03-avoided__upper {
+    stroke-dasharray: 8 4;
+  }
+
+  .chapter03-root .ch03-avoided__cursor {
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 4;
+  }
+
+  .chapter03-root [data-ch03-lower-point],
+  .chapter03-root [data-ch03-upper-point] {
+    fill: var(--sl-color-accent-high);
+    stroke: var(--sl-color-bg);
+    stroke-width: 2;
+  }
+
+  .chapter03-root .ch03-avoided__weights {
+    display: flex;
+    min-height: 2rem;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.45rem;
+  }
+
+  .chapter03-root .ch03-avoided__weights span {
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    transition: width 120ms linear;
+  }
+
+  .chapter03-root [data-ch03-weight-one] {
+    background: var(--sl-color-accent-low);
+  }
+
+  .chapter03-root [data-ch03-weight-two] {
+    background: var(--sl-color-gray-6);
+  }
+
+  .chapter03-root .ch03-density-matrix__matrix {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(4.5rem, 8rem));
+    width: max-content;
+    max-width: 100%;
+    margin: 1rem auto 0;
+    border-inline: 0.2rem solid currentColor;
+    border-radius: 0.6rem;
+    padding: 0.65rem;
+    gap: 0.5rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chapter03-root .ch03-density-matrix__zero {
+    color: var(--sl-color-gray-3);
+  }
+
+  .chapter03-root [data-ch03-dm-bar0],
+  .chapter03-root [data-ch03-dm-bar1] {
+    fill: var(--sl-color-accent-high);
+  }
+
+  .chapter03-root .ch03-hole__exchange {
+    fill: none;
+    stroke: var(--sl-color-gray-2);
+    stroke-width: 2;
+    stroke-dasharray: 7 4;
+  }
+
+  .chapter03-root .ch03-hole__correlation {
+    fill: none;
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 2;
+    stroke-dasharray: 3 4;
+  }
+
+  .chapter03-root .ch03-hole__xc {
+    stroke-width: 3;
+  }
+
+  .chapter03-root .ch03-hole__legend {
+    font-size: 12px;
+  }
+
+  @media (max-width: 50rem) {
+    .chapter03-root .chapter-visual__controls {
+      grid-template-columns: 1fr;
+    }
+
+    .chapter03-root .ch03-density-matrix__matrix {
+      width: 100%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

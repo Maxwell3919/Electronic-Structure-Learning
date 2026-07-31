@@ -1,0 +1,77 @@
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="notation">对象、符号与证据门槛 | Objects, Notation, and Evidence Gates</h2>
+
+<dl class="chapter-terms">
+  <div>
+    <dt>电子坐标 | Electronic coordinate</dt>
+    <dd>$\mathbf x_i=(\mathbf r_i,\sigma_i)$ 同时包含空间和自旋；交换任意两电子坐标时费米多体波函数变号。<span lang="en">$\mathbf x_i=(\mathbf r_i,\sigma_i)$ contains position and spin; a fermionic many-body wavefunction changes sign under exchange of any two electron coordinates.</span></dd>
+  </div>
+  <div>
+    <dt>核坐标 | Nuclear coordinate</dt>
+    <dd>核位置与质量记为 $\mathbf R_I,M_I$，核电荷为 $Z_I$。Born–Oppenheimer 电子问题中 $\{\mathbf R_I\}$ 是外部参数。<span lang="en">Nuclear positions and masses are $\mathbf R_I,M_I$, with charge $Z_I$. In the Born–Oppenheimer electronic problem, $\{\mathbf R_I\}$ are external parameters.</span></dd>
+  </div>
+  <div>
+    <dt>多体态 | Many-body state</dt>
+    <dd>$|\Psi\rangle$ 属于固定粒子数反对称 Hilbert 空间；其信息多于一体密度或一组轨道。<span lang="en">$|\Psi\rangle$ belongs to the antisymmetric fixed-particle-number Hilbert space and contains more information than a one-body density or a set of orbitals.</span></dd>
+  </div>
+  <div>
+    <dt>一体密度 | One-body density</dt>
+    <dd>$n(\mathbf r)=\langle\Psi|\hat n(\mathbf r)|\Psi\rangle$，满足 $\int n=N$。它不是 pair density、轨道占据或原子电荷分区。<span lang="en">$n(\mathbf r)=\langle\Psi|\hat n(\mathbf r)|\Psi\rangle$ with $\int n=N$. It is not a pair density, orbital occupation, or atomic-charge partition.</span></dd>
+  </div>
+  <div>
+    <dt>pair density</dt>
+    <dd>同时在 $(\mathbf r\sigma)$ 与 $(\mathbf r'\sigma')$ 找到两个电子的联合概率密度；电子—电子能和交换关联洞由它构造。<span lang="en">The joint probability density for finding electrons at $(\mathbf r\sigma)$ and $(\mathbf r'\sigma')$; electron–electron energy and exchange-correlation holes are built from it.</span></dd>
+  </div>
+  <div>
+    <dt>变分驻点 | Variational stationary point</dt>
+    <dd>一阶允许变分为零。基态是最低能驻点；激发态可为 saddle point。数值迭代停止不自动等价于变分驻点。<span lang="en">All allowed first variations vanish. The ground state is the lowest stationary point; excited states may be saddle points. Numerical termination is not automatically variational stationarity.</span></dd>
+  </div>
+  <div>
+    <dt>显式与隐式参数依赖 | Explicit and implicit dependence</dt>
+    <dd>Hamiltonian 对参数 $\lambda$ 的显式导数与最优态 $|\Psi_\lambda\rangle$ 的隐式变化必须分开；force theorem 依赖隐式一阶项在驻点消失。<span lang="en">Explicit $\lambda$ dependence of the Hamiltonian must be separated from implicit change of the optimized state; the force theorem uses stationarity to remove the latter at first order.</span></dd>
+  </div>
+  <div>
+    <dt>密度矩阵 | Density operator</dt>
+    <dd>$\hat\rho$ 是正半定、Hermitian、迹为一的算符；纯态满足 $\hat\rho^2=\hat\rho$，混合态一般不满足。<span lang="en">$\hat\rho$ is positive semidefinite, Hermitian, and trace one; a pure state satisfies $\hat\rho^2=\hat\rho$, whereas a mixed state generally does not.</span></dd>
+  </div>
+  <div>
+    <dt>独立电子 | Independent electrons</dt>
+    <dd>Hamiltonian 是一体算符之和，多体本征态可由单粒子轨道占据构造。该结构不等于真实电子之间没有 Coulomb 相互作用。<span lang="en">The Hamiltonian is a sum of one-body operators and many-body eigenstates are built from orbital occupations. This mathematical structure does not mean real electrons lack Coulomb interaction.</span></dd>
+  </div>
+  <div>
+    <dt>Hartree 与 Hartree–Fock</dt>
+    <dd>Hartree 使用轨道乘积并忽略整体反对称性；Hartree–Fock 限制在单个 Slater determinant 上并包含 exact exchange，但缺少 determinant 之外的 correlation。<span lang="en">Hartree uses an orbital product and omits global antisymmetry. Hartree–Fock restricts the state to one Slater determinant and includes exact exchange, but misses correlation beyond that determinant.</span></dd>
+  </div>
+  <div>
+    <dt>交换洞与关联洞 | Exchange and correlation holes</dt>
+    <dd>交换洞来自费米反对称性；关联洞描述相互作用导致的进一步概率重排。定义必须说明参考密度或参考态。<span lang="en">The exchange hole follows from fermionic antisymmetry; the correlation hole describes additional interaction-driven rearrangement. A definition must state its reference density or reference state.</span></dd>
+  </div>
+  <div>
+    <dt>Hartree 原子单位 | Hartree atomic units</dt>
+    <dd>除非另有说明，$\hbar=m_e=e=4\pi\epsilon_0=1$。质量、长度、能量和力的换算必须在与实验比较前恢复。<span lang="en">Unless stated otherwise, $\hbar=m_e=e=4\pi\epsilon_0=1$. Mass, length, energy, and force units must be restored before comparison with experiment.</span></dd>
+  </div>
+</dl>
+
+<BilingualCallout titleZh="六个不能合并的门槛" titleEn="Six gates that must remain separate" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>Hamiltonian、边界条件、粒子数和系综是否定义明确；</li>
+      <li>离散基组、网格、超胞和积分是否数值收敛；</li>
+      <li>SCF、优化或本征问题是否达到声明阈值；</li>
+      <li>所得态是否是目标对称性扇区内的最低态或所需激发态；</li>
+      <li>力、应力、谱或关联量是否包含 Pulay、有限尺寸和方法特有修正；</li>
+      <li>科学结论是否获得与其强度相称且误差结构不同的证据。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>whether Hamiltonian, boundary conditions, particle number, and ensemble are defined;</li>
+      <li>whether basis, grid, cell, and integration are numerically converged;</li>
+      <li>whether SCF, optimization, or eigensolution meets its declared threshold;</li>
+      <li>whether the state is the required minimum or excitation in the target symmetry sector;</li>
+      <li>whether forces, stresses, spectra, and correlations include Pulay, finite-size, and method-specific corrections;</li>
+      <li>whether the scientific conclusion has evidence of matching strength and sufficiently distinct error structure.</li>
+    </ol>
+  </div>
+</BilingualCallout>
