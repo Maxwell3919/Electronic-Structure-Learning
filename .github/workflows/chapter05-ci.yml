@@ -1,0 +1,44 @@
+name: chapter05-ci
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/chapter05-ci.yml'
+      - 'scripts/smoke-chapter05-pages.py'
+      - 'scripts/validate-chapter05-models.mjs'
+      - 'src/components/ElectronGasScaleExplorer.astro'
+      - 'src/components/ExchangeHoleExplorer.astro'
+      - 'src/components/LindhardScreeningExplorer.astro'
+      - 'src/components/chapter05/**'
+      - 'src/content/docs/part-01-overview-and-background/chapter-05-uniform-electron-gas-and-sp-bonded-metals.mdx'
+      - 'src/lib/chapter05Models.mjs'
+      - 'src/styles/chapter05.css'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chapter05-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.12.0
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Validate Chapter 5 model and smoke syntax
+        run: |
+          node scripts/validate-chapter05-models.mjs
+          python3 -m py_compile scripts/smoke-chapter05-pages.py
+      - name: Build the complete static site
+        run: npm run build
