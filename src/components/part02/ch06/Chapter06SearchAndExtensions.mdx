@@ -1,0 +1,277 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import ConstrainedSearchExplorer from './ConstrainedSearchExplorer.astro';
+import RepresentabilityDiagram from './RepresentabilityDiagram.astro';
+
+<span id="section-6-4" class="chapter-06-anchor" aria-hidden="true"></span>
+
+## 6.4 DFT 的约束搜索表述 | Constrained Search Formulation of DFT
+
+<BilingualSection titleZh="为什么需要约束搜索" titleEn="Why constrained search is needed">
+  <div class="bilingual-section__zh">
+
+原始 HK 表述从某个外势的基态密度出发，因此变分域容易与 ground-state $v$-representability 纠缠：给定一个试探函数 $n(\mathbf r)$，我们未必知道是否存在局域外势使它成为相互作用基态密度。Levy 的构造改变搜索顺序。先固定密度，在所有产生该密度的允许多体态中寻找最低内部能；再对密度搜索。这样，普适泛函的定义不需要先反演外势。
+
+选择具体定义域时必须说明使用纯态还是系综。以下先写纯态形式，并在随后给出系综推广。令 $\mathcal W_N$ 表示归一化、反对称、具有有限动能的 $N$ 电子波函数集合；写作 $\Psi\to n$ 表示 $\Psi$ 的一体密度为 $n$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The original Hohenberg–Kohn formulation starts from densities that already occur as ground states of an external potential. This entangles the variational domain with ground-state $v$-representability: for an arbitrary trial function $n(\mathbf r)$, one may not know whether a local potential exists for which it is an interacting ground-state density. Levy reverses the order of questions. At fixed density, first minimize the internal energy over all admissible many-body states producing that density; then minimize over densities. The universal functional can therefore be defined without first inverting the density to obtain a potential.
+
+The domain must specify pure states or ensembles. We begin with a pure-state version. Let $\mathcal W_N$ be the set of normalized antisymmetric $N$-electron wavefunctions with finite kinetic energy; $\Psi\to n$ means that the one-body density of $\Psi$ is $n$.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Levy–Lieb 普适泛函 | Levy–Lieb universal functional"
+  assumptions={[
+    '固定粒子数 N 与电子间相互作用 W。',
+    '密度属于由至少一个允许 N 电子态产生的集合；空约束集合不进入变分。',
+    '内部能期望值有限，或在扩展实数意义下定义。',
+    '“min”在严格数学处理中可能需要写为 inf；这里在极小态存在时使用 min。',
+  ]}
+>
+
+纯态约束搜索定义
+
+$$
+F_{\mathrm{LL}}[n]
+=
+\min_{\Psi\in\mathcal W_N,\;\Psi\to n}
+\langle\Psi|\hat T+\hat W|\Psi\rangle.
+$$
+
+固定 $n$ 时，外势能
+
+$$
+\langle\Psi|\hat V_v|\Psi\rangle
+=\int v(\mathbf r)n(\mathbf r)\,d\mathbf r
+$$
+
+对所有满足 $\Psi\to n$ 的波函数相同，因此内层搜索只需最小化 $\hat T+\hat W$。$F_{\mathrm{LL}}$ 不含 $v$，所以在固定 $N$ 与 $\hat W$ 下对所有外势普适。
+
+多体基态能量可重新分组：
+
+$$
+\begin{aligned}
+E_0[v]
+&=\min_{\Psi\in\mathcal W_N}
+\left\{
+\langle\Psi|\hat T+\hat W|\Psi\rangle
++\int v n_\Psi
+\right\}\\
+&=\min_{n\in\mathcal D_N}
+\left\{
+\min_{\Psi\to n}
+\langle\Psi|\hat T+\hat W|\Psi\rangle
++\int v n
+\right\}\\
+&=\min_{n\in\mathcal D_N}
+\left\{F_{\mathrm{LL}}[n]+\int v(\mathbf r)n(\mathbf r)\,d\mathbf r\right\}.
+\end{aligned}
+$$
+
+第一行搜索所有允许波函数；第二行按它们产生的密度把同一搜索集合分组；第三行使用内层极小值定义。这里没有把波函数自由度删除：它们被压缩进 $F_{\mathrm{LL}}[n]$ 的定义。
+
+The constrained-search functional is the minimum internal energy among admissible states that yield a prescribed density. Grouping the full wavefunction search by density gives
+
+$$
+E_0[v]=\min_{n\in\mathcal D_N}\left\{F_{\mathrm{LL}}[n]+\int vn\right\}.
+$$
+
+The wavefunction degrees of freedom have not disappeared; they are contained in the definition of $F_{\mathrm{LL}}[n]$.
+
+</DerivationBlock>
+
+<ConstrainedSearchExplorer />
+
+<BilingualSection titleZh="纯态、系综与可表示性" titleEn="Pure states, ensembles, and representability">
+  <div class="bilingual-section__zh">
+
+一个密度是 **pure-state $N$-representable**，若存在允许纯态波函数 $\Psi$ 产生它；它是 **ensemble $N$-representable**，若存在密度矩阵
+
+$$
+\hat\Gamma=\sum_I w_I|\Psi_I\rangle\langle\Psi_I|,
+\qquad
+w_I\ge0,\quad\sum_Iw_I=1,
+$$
+
+产生它。系综约束搜索写为
+
+$$
+F_{\mathrm{ens}}[n]
+=
+\min_{\Gamma\to n}\operatorname{Tr}\left[\Gamma(\hat T+\hat W)\right].
+$$
+
+若某个允许局域外势的基态或基态系综产生 $n$，则称其为 ground-state $v$-representable。$v$-representability 是比 $N$-representability 更强的要求，因为它还要求状态在某个 $\hat H_v$ 下位于最低能量子空间。约束搜索只需要后者中的状态存在，不要求提前找到生成势。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A density is **pure-state $N$-representable** if an admissible pure wavefunction produces it. It is **ensemble $N$-representable** if it is produced by a density matrix
+
+$$
+\hat\Gamma=\sum_I w_I|\Psi_I\rangle\langle\Psi_I|,
+\qquad
+w_I\ge0,\quad\sum_Iw_I=1.
+$$
+
+The ensemble constrained-search functional is
+
+$$
+F_{\mathrm{ens}}[n]
+=
+\min_{\Gamma\to n}\operatorname{Tr}\left[\Gamma(\hat T+\hat W)\right].
+$$
+
+A density is ground-state $v$-representable if it is produced by a ground state or ground-state ensemble of an admissible local potential. This is a stronger condition than $N$-representability because the producing state must also lie in the lowest-energy subspace of some $\hat H_v$. Constrained search requires a producing state, not prior knowledge of a generating potential.
+
+  </div>
+</BilingualSection>
+
+<RepresentabilityDiagram />
+
+<DerivationBlock
+  title="系综形式的凸性 | Convexity of the ensemble functional"
+  assumptions={[
+    'n₁、n₂ 属于声明的系综 N-representable 域。',
+    '0≤λ≤1；允许把产生各密度的系综再作经典概率混合。',
+    '使用达到或任意逼近约束极小值的密度矩阵。',
+  ]}
+>
+
+设 $\Gamma_1\to n_1$、$\Gamma_2\to n_2$。混合
+
+$$
+\Gamma_\lambda=\lambda\Gamma_1+(1-\lambda)\Gamma_2
+$$
+
+产生密度 $n_\lambda=\lambda n_1+(1-\lambda)n_2$，且内部能量线性：
+
+$$
+\operatorname{Tr}[\Gamma_\lambda(\hat T+\hat W)]
+=\lambda\operatorname{Tr}[\Gamma_1(\hat T+\hat W)]
++(1-\lambda)\operatorname{Tr}[\Gamma_2(\hat T+\hat W)].
+$$
+
+由于 $F_{\mathrm{ens}}[n_\lambda]$ 是所有产生 $n_\lambda$ 的系综中的最小值，
+
+$$
+F_{\mathrm{ens}}[n_\lambda]
+\le
+\lambda F_{\mathrm{ens}}[n_1]+(1-\lambda)F_{\mathrm{ens}}[n_2].
+$$
+
+这说明系综普适泛函是凸的。凸性支持用次梯度表达不可微点，也解释为什么精确能量关于粒子数或密度方向可能出现折点而非光滑曲面。
+
+Mixing two density matrices produces the mixed density and a linearly mixed internal energy. Because the constrained-search functional chooses the lowest internal energy among all ensembles producing that density, it satisfies the convexity inequality above. Convexity permits subgradients at nondifferentiable points and is compatible with kinks in the exact energy landscape.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="允许变分集合必须先声明" titleEn="The variational domain must be declared first" kind="boundary">
+  <div class="bilingual-section__zh">
+
+写出 $\min_n$ 并不意味着可以在所有非负归一化函数上任意变分。实际定义域通常还包含可由反对称有限动能态产生、相应能量有限及必要边界条件。若数值参数化生成了不在该域内的密度，形式上的 Euler 方程不能替代可表示性检查。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Writing $\min_n$ does not license variation over every nonnegative normalized function. The domain generally also requires production by an antisymmetric finite-kinetic-energy state, finite relevant energies, and appropriate boundary conditions. If a numerical parametrization leaves that domain, a formal Euler equation cannot replace a representability check.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-6-5" class="chapter-06-anchor" aria-hidden="true"></span>
+
+## 6.5 Hohenberg–Kohn 定理的推广 | Extensions of the Hohenberg–Kohn Theorems
+
+<BilingualSection titleZh="改变基本变量或统计系综" titleEn="Changing the basic variable or statistical ensemble">
+  <div class="bilingual-section__zh">
+
+HK 逻辑可以推广，但每次推广都需要重新指定外场、基本变量和唯一性条件，不能只把 $n$ 换成另一个符号。
+
+**自旋密度。** 在共线自旋表述中，可用 $n_\uparrow(\mathbf r)$ 与 $n_\downarrow(\mathbf r)$，或总密度 $n$ 与磁化密度 $m$。外场相应包含标量势与 Zeeman 型磁场。由于自旋势存在额外非唯一性情形，映射边界比纯标量 HK 定理更细。
+
+**有限温度。** Mermin 表述在给定温度与化学势的巨正则系综中，以平衡密度最小化巨势泛函。熵项进入普适自由能泛函，零温纯基态的变分原理不能原样替代有限温度问题。
+
+**流密度和磁场。** 当 Hamiltonian 含矢势时，普通粒子密度通常不足以唯一编码外场。电流密度泛函理论引入参数流或物理流等额外变量，其规范不变性与外场非唯一性必须明确处理。
+
+**时间依赖。** 时间依赖密度理论研究给定初态下，随时间变化的密度与外势之间的映射。它依赖初态和时间解析条件，不是基态 HK 定理的简单逐时刻应用。Martin 在 Chapter 7 再连接到时间依赖 Kohn–Sham 方法。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The Hohenberg–Kohn logic can be generalized, but every extension must redefine the external fields, basic variables, and uniqueness conditions.
+
+**Spin density.** A collinear formulation can use $n_\uparrow$ and $n_\downarrow$, or total density and magnetization density. The conjugate external fields include a scalar potential and a Zeeman-like magnetic field. Additional nonuniqueness can occur in spin-dependent potentials.
+
+**Finite temperature.** Mermin's formulation minimizes a grand-potential functional at specified temperature and chemical potential. Entropy enters the universal free-energy functional, so the zero-temperature pure-ground-state variational principle cannot simply be reused unchanged.
+
+**Current density and magnetic fields.** With a vector potential in the Hamiltonian, the particle density alone is generally insufficient to encode the external fields. Current-density functional theories introduce paramagnetic or physical current variables and must address gauge invariance and nonuniqueness.
+
+**Time dependence.** Time-dependent density theory concerns the mapping between a time-dependent density and potential for a specified initial state. It depends on the initial state and temporal regularity and is not obtained by applying the ground-state theorem independently at each instant. Chapter 7 returns to time-dependent Kohn–Sham methods.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="有限温度变分结构 | Finite-temperature variational structure"
+  assumptions={[
+    '温度 T>0、化学势 μ 与电子相互作用固定。',
+    '在允许统计密度矩阵 Γ 上变分；Tr Γ=1。',
+    '熵采用 S[Γ]=−k_B Tr(Γ ln Γ)。',
+  ]}
+>
+
+巨势的统计变分原理写为
+
+$$
+\Omega_{v,T,\mu}
+=
+\min_\Gamma
+\left\{
+\operatorname{Tr}\left[\Gamma(\hat T+\hat W+\hat V_v-\mu\hat N)\right]
+-T S[\Gamma]
+\right\}.
+$$
+
+按密度分组可定义有限温度普适泛函
+
+$$
+\mathcal F_T[n]
+=
+\min_{\Gamma\to n}
+\left\{
+\operatorname{Tr}[\Gamma(\hat T+\hat W)]-T S[\Gamma]
+\right\},
+$$
+
+从而
+
+$$
+\Omega_{v,T,\mu}[n]
+=\mathcal F_T[n]+\int [v(\mathbf r)-\mu]n(\mathbf r)\,d\mathbf r.
+$$
+
+温度趋零时可连接基态理论，但简并基态的系综权重、熵极限和粒子数处理需要单独检查。实际电子温度或 smearing 参数是否代表物理温度，也取决于计算设置，不能从公式自动推断。
+
+The grand-potential variational principle can be grouped by density to define a universal free-energy functional containing the entropy term. Its zero-temperature limit connects to ground-state DFT only after checking degeneracy, ensemble weights, and particle-number treatment. A numerical smearing parameter is not automatically a physical electronic temperature.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="推广不自动继承原定理全部结论" titleEn="An extension does not inherit every conclusion automatically" kind="boundary">
+  <div class="bilingual-section__zh">
+
+改变为自旋密度、流密度、有限温度密度或时间依赖密度时，必须重新检查共轭外场、规范自由度、初态依赖、系综和唯一性。基态标量密度定理的证明不能只替换变量名称后继续使用。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For spin, current, finite-temperature, or time-dependent densities, the conjugate fields, gauge freedom, initial-state dependence, ensemble, and uniqueness must be re-examined. The scalar ground-state proof cannot be reused by merely renaming its variable.
+
+  </div>
+</BilingualCallout>
