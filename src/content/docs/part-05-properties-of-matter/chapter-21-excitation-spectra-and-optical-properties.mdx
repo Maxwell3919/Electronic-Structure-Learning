@@ -1,20 +1,20 @@
 ---
-title: "Chapter 21 · Excitation Spectra and Optical Properties"
-description: "Martin Chapter 21 的目录级阅读骨架；正文待填充。"
+title: "Chapter 21 · Excitation Spectra and Optical Properties | 激发谱与光学性质"
+description: "从时间依赖 Kohn–Sham 理论推导独立粒子与相互作用线性响应、频率域 TDDFPT、实时间传播、分子和晶体光谱、局域场、激子及超越绝热近似的证据边界。"
 sidebar:
   order: 3
   label: "Chapter 21 · Excitation Spectra and Optical Properties"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter21Contents from '../../../components/part05/ch21/Chapter21Contents.astro';
+import Chapter21Body from '../../../components/part05/ch21/Chapter21Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[4].units[2].label}
-  sourcePage={catalog.parts[4].units[2].page}
-  sections={catalog.parts[4].units[2].sections}
-  exercisesPage={catalog.parts[4].units[2].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 21, printed pages 446–464; sections 21.1–21.9. Chapters 7, 9, 20 and Appendices D–E are used only as declared dependencies."
+  status="review"
 />
+
+<Chapter21Contents />
+<Chapter21Body />
