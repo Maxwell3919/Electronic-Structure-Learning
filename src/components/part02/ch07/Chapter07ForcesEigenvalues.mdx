@@ -1,0 +1,413 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+
+<span id="section-7-5" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.5 力与应力 | Force and Stress
+
+<BilingualSection titleZh="能量驻定性如何进入力" titleEn="How stationarity enters the force">
+  <div class="bilingual-section__zh">
+
+对核坐标 $\mathbf R_I$，力定义为
+
+$$
+\mathbf F_I=-\frac{dE}{d\mathbf R_I}.
+$$
+
+总导数包含 Hamiltonian 的显式坐标依赖和自洽轨道、密度随原子移动产生的隐式变化。若轨道在完整允许空间中使能量对正交约束变分驻定，隐式一阶项相消，只剩显式导数。这是 Hellmann–Feynman 或静电力表达式的基础。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For nuclear coordinate $\mathbf R_I$, the force is
+
+$$
+\mathbf F_I=-\frac{dE}{d\mathbf R_I}.
+$$
+
+The total derivative contains explicit coordinate dependence of the Hamiltonian and implicit changes of the self-consistent orbitals and density as the atom moves. If the orbitals are stationary under orthonormality-constrained variation in the complete admissible space, the implicit first-order terms cancel, leaving the explicit derivative. This is the basis of the Hellmann–Feynman or electrostatic force expression.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Hellmann–Feynman 力及其成立条件 | Hellmann–Feynman force and its conditions"
+  assumptions={[
+    '电子态对给定核坐标达到所用能量泛函的自洽驻点。',
+    '轨道正交约束在求导时一致处理。',
+    '基组对核位置无显式依赖，或基组完整，或 Pulay 修正已加入。',
+    '赝势、外场和核—核项的显式坐标依赖均被纳入。',
+  ]}
+>
+
+将能量写成 $E(\mathbf R,\{\phi\})$，总导数为
+
+$$
+\frac{dE}{d\mathbf R_I}
+=\frac{\partial E}{\partial\mathbf R_I}
++\sum_i\left\langle\frac{\delta E}{\delta\phi_i},
+\frac{\partial\phi_i}{\partial\mathbf R_I}\right\rangle
++\mathrm{c.c.}
+$$
+
+在带约束驻点，轨道变化项与正交约束乘子项合并后为零。因此对局域外势，
+
+$$
+\mathbf F_I
+=-\int n(\mathbf r)
+\frac{\partial v_{\mathrm{ext}}(\mathbf r;\{\mathbf R\})}{\partial\mathbf R_I}
+\,d\mathbf r
+-\frac{\partial E_{II}}{\partial\mathbf R_I}.
+$$
+
+这不是“只要用了 DFT 就自动精确”的公式。若电子步骤未自洽，变分消去不完整；若使用随原子移动的有限原子轨道基，允许变分子空间本身改变，产生 Pulay 力；若有非局域赝势，显式导数通常以轨道投影而非单纯密度积分求值。
+
+At a constrained stationary point, implicit orbital derivatives cancel against the orthonormality terms. The remaining explicit derivative yields the force expression above for a local external potential. Incomplete self-consistency, position-dependent finite bases, and nonlocal pseudopotentials introduce additional terms.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Pulay 力与基组运动" titleEn="Pulay force and basis motion">
+  <div class="bilingual-section__zh">
+
+若轨道展开为 $\phi_i=\sum_\mu c_{\mu i}\chi_\mu(\mathbf r;\mathbf R)$，原子移动时基函数与重叠矩阵 $S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle$ 也改变。即使系数在当前有限子空间内使能量驻定，子空间本身的移动仍贡献一阶导数。广义本征问题
+
+$$
+H C=S C\varepsilon
+$$
+
+的导数因此包含 $\partial H/\partial\mathbf R_I$ 和 $\partial S/\partial\mathbf R_I$。后者及相关基组导数构成 Pulay 项。平面波基在固定截断和固定晶胞下不随单个原子坐标移动，因此原子力的该类 Pulay 项消失；改变晶胞时平面波集合可能改变，仍需处理应力和截断相关误差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If $\phi_i=\sum_\mu c_{\mu i}\chi_\mu(\mathbf r;\mathbf R)$, moving an atom changes both the basis functions and the overlap matrix $S_{\mu\nu}$. Even when the coefficients are stationary within the current finite subspace, motion of the subspace contributes at first order. Differentiating the generalized eigenproblem $HC=SC\varepsilon$ therefore produces derivatives of both $H$ and $S$; these basis-motion contributions form the Pulay term. A plane-wave basis at fixed cell and cutoff does not move with an individual atom, but cell deformation can still change the basis set and affect stress.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="应力作为对均匀应变的能量导数 | Stress as an energy derivative with respect to strain"
+  assumptions={[
+    '采用小应变张量 ηαβ，并明确符号约定。',
+    '原子内部坐标和电子自由度按所声明条件固定或充分弛豫。',
+    '体积 Ω 和周期边界定义明确；基组随晶胞变化的修正已处理。',
+  ]}
+>
+
+采用“拉伸应变增加能量给正应力”的约定，
+
+$$
+\sigma_{\alpha\beta}
+=\frac{1}{\Omega}
+\frac{\partial E}{\partial\eta_{\alpha\beta}}.
+$$
+
+另一常用约定带整体负号，因此软件间比较必须先核对定义。静水压力对应应力张量迹的组合，剪切则来自非对角分量。晶胞优化的平衡条件是原子力满足目标阈值，且内部应力与外加应力相等；只有其中一项收敛不能证明完整结构平衡。
+
+With the stated sign convention, stress is the energy derivative with respect to homogeneous strain divided by volume. Some codes use the opposite sign. Cell equilibrium requires both atomic forces and the mismatch between internal and applied stress to satisfy their criteria.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="力比总能更敏感" titleEn="Forces can be more sensitive than total energy" kind="boundary">
+  <div class="bilingual-section__zh">
+
+能量在驻点附近对轨道误差常为二阶，而力是能量的一阶导数，可能对残余非自洽、基组运动和积分误差保持一阶敏感。因此“总能已稳定”不能替代力的 SCF、截断、$k$ 点和基组收敛检查；声子和力常数还需要更严格的一致性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Energy is often second-order in orbital error near stationarity, whereas force is a first derivative and can retain first-order sensitivity to incomplete self-consistency, basis motion, and integration error. Stable total energy therefore does not replace force convergence with respect to SCF, cutoff, $k$ points, and basis; phonons and force constants can require still tighter consistency.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-7-6" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.6 交换—关联势的解释 | Interpretation of the Exchange–Correlation Potential
+
+<BilingualSection titleZh="vxc 是泛函导数，不是粒子间势" titleEn="vxc is a functional derivative, not a pair potential">
+  <div class="bilingual-section__zh">
+
+交换—关联势定义为
+
+$$
+v_{\mathrm{xc}}^\sigma(\mathbf r)
+=\frac{\delta E_{\mathrm{xc}}[n_\uparrow,n_\downarrow]}
+{\delta n_\sigma(\mathbf r)}.
+$$
+
+它是“密度在某点发生微小变化时总交换—关联能的一阶响应”，并非可识别为某个电子施加给另一电子的普通二体势。$E_{\mathrm{xc}}$ 可以非局域依赖整个密度、梯度、轨道或响应；即使 $v_{\mathrm{xc}}$ 在普通 Kohn–Sham 方程中表现为局域乘法函数，其数值仍可编码远处密度变化。
+
+势的共同加法常数不改变固定粒子数密度，却平移全部 Kohn–Sham 本征值。讨论绝对势、本征值对齐或不同片段之间的台阶时，必须声明规范和边界条件。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The exchange–correlation potential is
+
+$$
+v_{\mathrm{xc}}^\sigma(\mathbf r)
+=\frac{\delta E_{\mathrm{xc}}[n_\uparrow,n_\downarrow]}
+{\delta n_\sigma(\mathbf r)}.
+$$
+
+It is the first-order response of the total exchange–correlation energy to a density variation at a point, not an ordinary two-particle interaction exerted by one electron on another. $E_{\mathrm{xc}}$ can depend nonlocally on the full density, gradients, orbitals, or response. Even when $v_{\mathrm{xc}}$ appears as a local multiplicative function in the ordinary Kohn–Sham equation, its value can encode density changes far away.
+
+A common additive constant leaves a fixed-particle-number density unchanged while shifting every Kohn–Sham eigenvalue. Absolute-potential alignment, eigenvalue alignment, and steps between fragments require an explicit gauge and boundary convention.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="能量密度表示中的响应项 | Response term in an energy-density representation"
+  assumptions={[
+    '选择一个交换—关联能量密度表示 Exc=∫n(r) εxc([n];r)dr。',
+    '能量密度本身不是唯一可观测量；不同规范可给同一 Exc。',
+    '泛函导数和积分交换在所选函数空间中成立。',
+  ]}
+>
+
+若
+
+$$
+E_{\mathrm{xc}}[n]
+=\int n(\mathbf r')\epsilon_{\mathrm{xc}}([n];\mathbf r')d\mathbf r',
+$$
+
+则
+
+$$
+\begin{aligned}
+v_{\mathrm{xc}}(\mathbf r)
+&=\epsilon_{\mathrm{xc}}([n];\mathbf r)\\
+&\quad+\int n(\mathbf r')
+\frac{\delta\epsilon_{\mathrm{xc}}([n];\mathbf r')}
+{\delta n(\mathbf r)}d\mathbf r'.
+\end{aligned}
+$$
+
+第二项是密度变化导致整个交换—关联环境重新组织的响应项。只有当能量密度在每点只依赖局域 $n(\mathbf r)$ 时，它才缩成普通导数 $n\,d\epsilon_{\mathrm{xc}}/dn$。因此 $v_{\mathrm{xc}}$ 一般不等于“每电子交换—关联能”。
+
+The potential contains the chosen energy-per-particle term plus a response term describing how the entire exchange–correlation environment changes with density. Only a strictly local representation reduces this to an ordinary local derivative.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="导数不连续与空间台阶" titleEn="Derivative discontinuities and spatial steps" kind="source">
+  <div class="bilingual-section__zh">
+
+精确能量关于粒子数在整数之间是分段线性的，左右导数可在整数处不同。为了在增加无穷小电子时保持正确密度，精确 Kohn–Sham 势可发生空间常数跳变；分离片段之间还可能形成非局域台阶。局域或半局域显式密度泛函通常不具备完整结构，这不是 SCF 阈值收紧能够修复的数值误差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The exact energy is piecewise linear between integer particle numbers and its left and right derivatives can differ at an integer. To maintain the correct density when an infinitesimal electron is added, the exact Kohn–Sham potential can jump by a spatial constant and can develop nonlocal steps between separated fragments. Local and semilocal explicit density functionals generally lack the full structure; tightening an SCF threshold cannot repair this approximation error.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-7-7" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.7 本征值的含义 | Meaning of the Eigenvalues
+
+<BilingualSection titleZh="约束乘子的精确边界" titleEn="Exact boundary of the constraint multipliers">
+  <div class="bilingual-section__zh">
+
+Kohn–Sham 本征值首先来自正交约束矩阵的对角化。普通基态 Kohn–Sham 构造只要求密度和总能正确，并不要求每个 $\epsilon_i$ 等于相互作用体系的加电子、去电子或中性激发能。
+
+对有限束缚体系，在精确泛函、正确渐近势和整数基态条件下，最高占据本征值满足
+
+$$
+\epsilon_{\mathrm H}(N)=-I(N)=E(N)-E(N-1).
+$$
+
+该结论来自远区密度衰减和粒子数左导数。它不自动推广到所有占据能级、最低未占据态或周期固体的任意能带。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Kohn–Sham eigenvalues first arise from diagonalizing the orthonormality multiplier matrix. The ordinary ground-state construction requires the density and total energy to be correct; it does not require every $\epsilon_i$ to equal an interacting electron-addition, removal, or neutral-excitation energy.
+
+For a finite bound system, with the exact functional, correct asymptotic potential, and an integer ground state, the highest occupied eigenvalue satisfies
+
+$$
+\epsilon_{\mathrm H}(N)=-I(N)=E(N)-E(N-1).
+$$
+
+This result follows from the asymptotic density decay and the left derivative with respect to particle number. It does not extend automatically to every occupied level, the lowest unoccupied state, or arbitrary bands of a periodic solid.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Janak 关系 | Janak relation"
+  assumptions={[
+    '允许连续改变轨道占据并在每个占据处重新达到轨道驻定。',
+    '能量泛函在所考察占据方向上可微；整数处的左右导数分别处理。',
+    '规范轨道使 Lagrange 乘子矩阵对角。',
+  ]}
+>
+
+能量对占据 $f_i$ 的显式变化为
+
+$$
+\frac{dE}{df_i}
+=\left\langle\phi_i\left|-rac12\nabla^2\right|\phi_i\right\rangle
++\int v_s(\mathbf r)|\phi_i(\mathbf r)|^2d\mathbf r.
+$$
+
+隐式轨道变化项因每个占据处重新满足驻定条件而消失，于是
+
+$$
+\frac{dE}{df_i}
+=\langle\phi_i|\hat h_s|\phi_i\rangle
+=\epsilon_i.
+$$
+
+该关系给出本征值作为分数占据方向能量导数的数学含义。若 $E(N)$ 在整数处有折点，只能讨论左右导数；不能把一个固定整数计算的任意本征值差直接等同于真实激发能。
+
+At an orbital-stationary fractional occupation, implicit orbital-response terms vanish and the derivative of total energy with respect to the occupation equals the canonical Kohn–Sham eigenvalue. Nondifferentiability at integer particle number requires separate left and right derivatives.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="基本带隙与导数不连续 | Fundamental gap and derivative discontinuity"
+  assumptions={[
+    '讨论整数 N 的基本电荷隙 Eg=I−A，而非中性光学激发能。',
+    '使用精确普通 Kohn–Sham 理论并区分 N− 与 N+ 的势规范。',
+    '系统具有定义良好的加减电子能量。',
+  ]}
+>
+
+基本隙为
+
+$$
+E_g=I-A=E(N+1)+E(N-1)-2E(N).
+$$
+
+粒子数左右导数满足
+
+$$
+\mu^-=-I,
+\qquad
+\mu^+=-A.
+$$
+
+在精确 Kohn–Sham 理论中，左导数由最高占据本征值给出，而越过整数时交换—关联势可跳变 $\Delta_{\mathrm{xc}}$。因此
+
+$$
+E_g
+=\left[\epsilon_{\mathrm L}(N)-\epsilon_{\mathrm H}(N)\right]
++\Delta_{\mathrm{xc}}.
+$$
+
+括号是同一个 $N$ 电子 Kohn–Sham 势的轨道隙。即使基组、$k$ 网格和 SCF 完全收敛，缺失或近似错误的 $\Delta_{\mathrm{xc}}$ 仍可造成基本隙误差。光学隙还包含电子—空穴相互作用，不能由上式直接得到。
+
+The fundamental charge gap equals the Kohn–Sham orbital gap plus the exchange–correlation derivative discontinuity. Numerical convergence of the orbital gap cannot recover a missing discontinuity, and the optical gap additionally involves electron–hole interactions.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="可用输入不等于物理谱" titleEn="Useful input is not the physical spectrum" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Kohn–Sham 轨道和本征值可作为 GW、BSE、量子 Monte Carlo、configuration interaction 或时间依赖响应计算的输入。后续方法得到的结果依赖这些输入，不代表原始 Kohn–Sham 本征值已经获得相同物理意义。报告能带与实验光电子谱的一致性时，应区分经验相似、近似误差抵消和有理论保证的量。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Kohn–Sham orbitals and eigenvalues can serve as inputs to GW, BSE, quantum Monte Carlo, configuration interaction, or time-dependent response calculations. Dependence of a later method on these inputs does not confer the later method's physical meaning on the original eigenvalues. Comparisons between bands and photoemission must distinguish empirical resemblance, error cancellation, and quantities protected by theory.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-7-8" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.8 精确 Kohn–Sham 理论的细节 | Intricacies of Exact Kohn–Sham Theory
+
+<BilingualSection titleZh="允许密度与辅助体系存在性" titleEn="Admissible densities and existence of the auxiliary system">
+  <div class="bilingual-section__zh">
+
+$N$-representability 只要求某个允许费米态产生密度；相互作用 ground-state $v$-representability 要求它是某个相互作用局域势的基态密度；非相互作用 ground-state $v$-representability 进一步要求某个局域单粒子势的最低占据轨道产生同一密度。最后一个条件正是普通 Kohn–Sham 构造所需，但对一般相互作用基态密度没有普适存在性证明。
+
+一电子和适当两电子 singlet 情形可通过单轨道反演构造势；均匀气体及其小扰动也支持该构造。一般多电子密度可能需要简并、分数占据或系综 Kohn–Sham 表述。实际反演成功是特定密度和数值设置的证据，不构成对所有真实体系的证明。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+$N$-representability requires only that an admissible fermionic state produce the density. Interacting ground-state $v$-representability requires the density to arise as a ground state of an interacting local potential. Noninteracting ground-state $v$-representability further requires the lowest occupied orbitals of a local one-particle potential to reproduce the same density. The last condition is needed by ordinary Kohn–Sham theory but has no universal existence proof for arbitrary interacting ground-state densities.
+
+One-electron and suitable two-electron singlet cases allow direct one-orbital inversion, while the homogeneous gas and small perturbations support the construction. General many-electron densities can require degeneracy, fractional occupations, or ensemble Kohn–Sham formulations. Successful numerical inversion is evidence for a particular density and setup, not a proof for all physical systems.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="一条无节点轨道的势反演 | Potential inversion for a nodeless one-orbital density"
+  assumptions={[
+    '一电子，或两电子闭壳层共享同一空间轨道。',
+    '密度严格为正且足够光滑，φ=√(n/f) 无节点。',
+    '局域标量势，边界条件使基态能量 ε 定义明确。',
+  ]}
+>
+
+若 $n(\mathbf r)=f|\phi(\mathbf r)|^2$，选择实正基态轨道
+
+$$
+\phi(\mathbf r)=\sqrt{\frac{n(\mathbf r)}{f}}.
+$$
+
+由
+
+$$
+\left[-\frac12\nabla^2+v_s(\mathbf r)\right]\phi(\mathbf r)
+=\epsilon\phi(\mathbf r)
+$$
+
+解出
+
+$$
+v_s(\mathbf r)
+=\epsilon+\frac12\frac{\nabla^2\sqrt{n(\mathbf r)}}{\sqrt{n(\mathbf r)}}.
+$$
+
+$\epsilon$ 只设定势的加法常数。若密度有节点、非光滑点或不合适渐近行为，右侧可出现奇点；多轨道体系也不能从总密度唯一分解出每条轨道后逐条使用该公式。
+
+For a nodeless one-orbital density, direct inversion gives the local potential up to the additive constant $\epsilon$. Nodes, insufficient regularity, or inappropriate asymptotics can create singularities, and a many-orbital total density cannot be uniquely decomposed into orbital densities for separate inversion.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="精确理论保证和不保证的性质" titleEn="Properties guaranteed and not guaranteed by exact theory">
+  <div class="bilingual-section__zh">
+
+在辅助体系存在且精确泛函已知的条件下，基态总密度和总能按构造正确；自旋 DFT 在相应变量和势下可要求自旋密度正确；静态基态能量对外场的导数可给出相应静态响应。以下量没有由普通基态 Kohn–Sham 本征问题自动保证：
+
+- 除有限体系最高占据态外的加减电子能量；
+- 中性激发谱和连续谱；
+- Kohn–Sham Fermi surface 与真实 quasiparticle Fermi surface 的普适相等；
+- 仅由周期晶胞体密度确定的宏观极化；
+- 强关联绝缘体的实际谱隙由单一普通轨道隙直接给出。
+
+“密度形式上决定 Hamiltonian”仍允许这些性质通过更复杂的密度泛函、响应理论或后 Kohn–Sham 多体方法获得，但不等于可从静态轨道图直接读取。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Conditional on existence of the auxiliary system and knowledge of the exact functional, the ground-state density and total energy are correct by construction. Spin DFT can require the spin density to be correct for the corresponding variables and fields, and derivatives of the ground-state energy with respect to static fields give static responses. The ordinary ground-state Kohn–Sham eigenproblem does not automatically guarantee electron-addition or removal energies beyond the finite-system highest occupied level, neutral excitation spectra, universal equality of Kohn–Sham and quasiparticle Fermi surfaces, macroscopic polarization from the bulk cell density alone, or a strongly correlated spectral gap from a single ordinary orbital gap.
+
+Formal determination of the Hamiltonian by the density permits more elaborate density functionals, response theories, or post-Kohn–Sham many-body methods. It does not make those quantities directly readable from a static orbital plot.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="“精确 Kohn–Sham”仍是条件命题" titleEn="“Exact Kohn–Sham” remains a conditional statement" kind="boundary">
+  <div class="bilingual-section__zh">
+
+通常所说“精确 Kohn–Sham 理论”包含两个条件：目标密度存在所需的局域非相互作用基态表示，并且使用精确 $E_{\mathrm{xc}}[n]$。实际计算还使用近似泛函和有限离散。因此不能把精确理论的条件性结论直接转写为某次 LDA、GGA、hybrid 或 DFT+U 计算的已验证事实。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+“Exact Kohn–Sham theory” normally carries two conditions: the target density admits the required local noninteracting ground-state representation, and the exact $E_{\mathrm{xc}}[n]$ is used. Practical calculations add an approximate functional and finite discretization. Conditional exact-theory statements therefore cannot be transferred directly to a particular LDA, GGA, hybrid, or DFT+U result as verified facts.
+
+  </div>
+</BilingualCallout>
