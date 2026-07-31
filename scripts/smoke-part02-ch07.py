@@ -139,7 +139,7 @@ def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
-        load_with_retry(driver, PART_URL, "Chapters 6–7 are complete")
+        load_with_retry(driver, PART_URL, "Density Functional Theory")
         if "Part II" not in driver.title:
             fail(f"Unexpected Part II page title: {driver.title}")
         if grid_column_count(driver, ".bilingual-section__grid") != 2:
