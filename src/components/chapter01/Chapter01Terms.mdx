@@ -1,0 +1,51 @@
+import BilingualCallout from '../BilingualCallout.astro';
+
+## 物理对象、术语与记号 | Physical Objects, Terms, and Notation
+
+<dl class="chapter-terms">
+  <div>
+    <dt>多电子波函数 | Many-electron wavefunction</dt>
+    <dd>$\Psi(\mathbf{x}_1,\ldots,\mathbf{x}_N)$，其中 $\mathbf{x}=(\mathbf{r},\sigma)$ 同时包含空间与自旋坐标。它编码联合概率振幅，并对相同电子交换满足反对称性。</dd>
+  </div>
+  <div>
+    <dt>轨道 | Orbital</dt>
+    <dd>$\psi_i(\mathbf{r})$ 或自旋轨道 $\chi_i(\mathbf{x})$ 是单粒子函数。轨道不等同于完整多体态，也不自动对应可直接测量的粒子路径。</dd>
+  </div>
+  <div>
+    <dt>态与能级 | State and level</dt>
+    <dd>“态”指 Hilbert 空间中的量子态；“能级”指 Hamiltonian 的本征值。简并时，一个能级可对应多个线性独立态。</dd>
+  </div>
+  <div>
+    <dt>能带 | Band</dt>
+    <dd>周期体系中随晶体动量 $\mathbf{k}$ 连续变化的一族单粒子本征值 $\varepsilon_{n\mathbf{k}}$。能带不是离散原子能级的简单复制。</dd>
+  </div>
+  <div>
+    <dt>密度 | Density</dt>
+    <dd>$n(\mathbf{r})$ 是单位体积内的期望电子数，满足 $\int n(\mathbf{r})\,d\mathbf{r}=N$。它比多体波函数包含的信息少得多。</dd>
+  </div>
+  <div>
+    <dt>态密度 | Density of states</dt>
+    <dd>$g(E)$ 统计单位能量区间内可用态的数量。它与实空间电子密度 $n(\mathbf{r})$ 是不同对象。</dd>
+  </div>
+  <div>
+    <dt>总能 | Total energy</dt>
+    <dd>给定 Hamiltonian 与量子态的能量期望或本征值。单粒子本征值之和通常不能直接当作相互作用体系的总能。</dd>
+  </div>
+  <div>
+    <dt>参考与单位 | Reference and units</dt>
+    <dd>本章公式默认 SI 记号并显式保留 $\hbar$ 与电子质量 $m_e$；交互图以 eV 表示能量。绝对单粒子能量零点可平移，多数判断依赖能量差。</dd>
+  </div>
+</dl>
+
+<BilingualCallout titleZh="证据边界" titleEn="Evidence boundary" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本章出现的单粒子方程用于建立概念结构。它不证明真实材料中的电子彼此独立。能带、态密度或 Kohn–Sham 本征值图也不能单独证明电子—声子耦合强度、超导转变温度、动力学稳定性或可合成性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The one-particle equations introduced here organize concepts; they do not prove that electrons in a real material are independent. A band plot, density of states, or set of Kohn–Sham eigenvalues alone cannot establish electron–phonon coupling, a superconducting transition temperature, dynamical stability, or synthesizability.
+
+  </div>
+</BilingualCallout>
