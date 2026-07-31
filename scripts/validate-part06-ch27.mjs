@@ -170,7 +170,7 @@ for (const section of ['27.1', '27.2', '27.3', '27.4', '27.5', '27.6', '27.7', '
 for (const phrase of [
   'diagonal approximation',
   'full-BZ',
-  'complete occupied',
+  'Every occupied Kramers pair below the target gap must be included',
   'Kramers',
   'partner switching',
   '【版权边界】',
