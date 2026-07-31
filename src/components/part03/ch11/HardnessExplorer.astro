@@ -84,7 +84,7 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
       const y = (tail) => 35 + (Math.log10(Math.max(tail, 1e-12)) + 12) / 12 * 245;
       const path = Array.from({ length: count + 1 }, (_, index) => {
         const q = qMax * index / count;
-        const tail = Math.exp(-(rc * q) ** 2);
+        const tail = Math.exp(-((rc * q) ** 2));
         return `${index === 0 ? 'M' : 'L'} ${x(q).toFixed(2)} ${y(tail).toFixed(2)}`;
       }).join(' ');
       const qCut = Math.sqrt(-Math.log(tolerance)) / rc;
