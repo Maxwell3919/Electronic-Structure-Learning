@@ -1,0 +1,88 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[0];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-a-contents-title">
+  <h2 id="appendix-a-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">数学对象与约定 | Objects and conventions</a></li>
+    <li><a href="#section-a-1">A.1 基本定义与变分方程 | Basic definitions and variational equations</a></li>
+    <li><a href="#constrained-variation">约束变分 | Constrained variation</a></li>
+    <li><a href="#second-variation">二阶变分与稳定性 | Second variation and stability</a></li>
+    <li><a href="#section-a-2">A.2 含梯度的 DFT 泛函 | DFT functionals including gradients</a></li>
+    <li><a href="#boundary-conditions">边界项与边界条件 | Boundary terms and conditions</a></li>
+    <li><a href="#cross-references">正文交叉引用 | Chapter cross-references</a></li>
+    <li><a href="#review">误判、练习与来源边界 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-a-source-title">
+  <h2 id="appendix-a-source-title">来源地图 | Source map</h2>
+  <p>
+    下表只记录 Martin 原书的目录标题和印刷页定位。网站正文、推导、图形和练习均为原创，不转录教材正文或习题。
+  </p>
+  <p lang="en">
+    The table records only Martin's directory titles and printed-page locators. The website exposition, derivations, diagrams, and exercises are original and do not reproduce the textbook body or exercises.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>{section.id === 'A.1' ? '定义、方向变分、泛函导数、约束变分与二阶变分' : '含梯度泛函、分部积分、边界项和 DFT 连接'}</td>
+          <td>substantive draft</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Exercises, printed p. {appendix.exercisesPage}</td>
+        <td>Source exercises not reproduced</td>
+        <td>原创推导、极限和数值检查练习 | Original derivation, limit, and numerical checks</td>
+        <td>original replacement</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 {
+    margin-top: 0;
+  }
+
+  .appendix-contents ol {
+    columns: 2;
+    column-gap: 2rem;
+    margin-bottom: 0;
+  }
+
+  .appendix-contents li {
+    break-inside: avoid;
+    margin-block: 0.35rem;
+  }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol {
+      columns: 1;
+    }
+  }
+</style>
