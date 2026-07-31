@@ -170,9 +170,10 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Stoner source-convention audit is hidden")
         stoner_text = stoner_audit.text
         for marker in (
-            "h ≡ −V",
-            "single-spin or two-spin DOS",
-            "cannot be directly compared",
+            "positive magnetization",
+            "per-spin or two-spin DOS",
+            "comparable only after",
+            "confirmed erratum",
         ):
             if marker not in stoner_text:
                 fail(f"Stoner source-convention audit lost marker: {marker}")
@@ -302,7 +303,10 @@ def no_javascript_smoke(report: dict) -> None:
         gap_note_en = driver.find_element(By.CSS_SELECTOR, "[data-gap-note-en]")
         if not gap_note_zh.is_displayed() or not gap_note_en.is_displayed():
             fail("No-JavaScript page lost one bilingual gap-status line")
-        if "绘图截断" not in contracts[1].text or "plotting clamp" not in contracts[1].text:
+        gap_contract = driver.find_element(
+            By.CSS_SELECTOR, "[data-gap-explorer] .chapter-visual__contract"
+        )
+        if "绘图截断" not in gap_contract.text or "plotting clamp" not in gap_contract.text:
             fail("Gap contract lost the outside-model plotting-clamp boundary")
 
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-02-no-javascript.png"))
