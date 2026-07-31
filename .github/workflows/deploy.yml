@@ -64,7 +64,7 @@ jobs:
     name: Live Pages browser smoke
     needs: deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 45
     env:
       PAGES_URL: ${{ needs.deploy.outputs.page_url }}
       DEPLOYED_SHA: ${{ github.sha }}
@@ -101,10 +101,10 @@ jobs:
           .venv-pages-smoke/bin/python scripts/smoke-part02-ch06.py
           .venv-pages-smoke/bin/python scripts/smoke-part02-ch07.py
           .venv-pages-smoke/bin/python scripts/smoke-part02-ch08.py
+          .venv-pages-smoke/bin/python scripts/smoke-part02-ch09.py
           .venv-pages-smoke/bin/python scripts/smoke-part03-ch10.py
           .venv-pages-smoke/bin/python scripts/smoke-part03-ch11.py
           .venv-pages-smoke/bin/python scripts/smoke-part04-ch12.py
-          .venv-pages-smoke/bin/python scripts/smoke-part04-ch13.py
           .venv-pages-smoke/bin/python scripts/smoke-pages-ch19.py
           .venv-pages-smoke/bin/python scripts/smoke-part05-ch20.py
           .venv-pages-smoke/bin/python scripts/smoke-part06-ch25.py

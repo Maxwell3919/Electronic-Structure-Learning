@@ -1,0 +1,152 @@
+---
+import { dampedDispersionEnergy, singlePoleC6 } from '../../../data/part02/ch09TeachingModels.mjs';
+
+const c6 = singlePoleC6({
+  staticPolarizabilityA: 10,
+  poleFrequencyA: 0.5,
+  staticPolarizabilityB: 8,
+  poleFrequencyB: 0.8,
+});
+const samples = Array.from({ length: 241 }, (_, index) => {
+  const distance = 1.5 + (10.5 * index) / 240;
+  return dampedDispersionEnergy(distance, c6, 3);
+});
+const xScale = (distance) => 55 + ((distance - 1.5) / 10.5) * 650;
+const yScale = (energy) => 235 - ((energy + 0.8) / 0.8) * 170;
+const dampedPath = samples.map((point, index) =>
+  `${index === 0 ? 'M' : 'L'} ${xScale(point.distance).toFixed(2)} ${yScale(point.damped).toFixed(2)}`,
+).join(' ');
+const undampedPath = samples.map((point, index) =>
+  `${index === 0 ? 'M' : 'L'} ${xScale(point.distance).toFixed(2)} ${yScale(Math.max(point.undamped, -0.8)).toFixed(2)}`,
+).join(' ');
+---
+
+<figure class="chapter-visual dispersion-model" data-dispersion-model>
+  <figcaption>
+    <strong>原创交互模型：single-pole Casimir–Polder C6 与短程 damping</strong>
+    <span lang="en">Original interactive model: single-pole Casimir–Polder C6 and short-range damping</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>static polarizability αA(0)</span>
+      <input type="range" min="2" max="20" step="1" value="10" data-vdw-alpha-a />
+      <output data-vdw-alpha-a-output>10</output>
+    </label>
+    <label>
+      <span>static polarizability αB(0)</span>
+      <input type="range" min="2" max="20" step="1" value="8" data-vdw-alpha-b />
+      <output data-vdw-alpha-b-output>8</output>
+    </label>
+    <label>
+      <span>damping length R0</span>
+      <input type="range" min="2" max="5" step="0.1" value="3" data-vdw-r0 />
+      <output data-vdw-r0-output>3.0</output>
+    </label>
+    <label>
+      <span>probe distance R</span>
+      <input type="range" min="1.5" max="12" step="0.1" value="6" data-vdw-r />
+      <output data-vdw-r-output>6.0</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 300" role="img" aria-labelledby="vdw-title vdw-desc">
+    <title id="vdw-title">Undamped and damped minus C6 over R to the sixth dispersion energy</title>
+    <desc id="vdw-desc">The undamped asymptote diverges at short distance. A damping function removes short-range double counting while preserving the long-range inverse-sixth-power tail.</desc>
+    <line x1="55" y1="235" x2="705" y2="235" class="plot-axis" />
+    <line x1="55" y1="45" x2="55" y2="235" class="plot-axis" />
+    <path d={undampedPath} class="dispersion-line dispersion-line--undamped" data-vdw-undamped />
+    <path d={dampedPath} class="dispersion-line dispersion-line--damped" data-vdw-damped />
+    <text x="705" y="270" text-anchor="end">R / model length</text>
+    <text x="20" y="55">Edisp</text>
+  </svg>
+
+  <ul class="dispersion-legend" aria-label="Dispersion model legend">
+    <li><span class="dispersion-key dispersion-key--undamped"></span>−C6/R6 asymptote</li>
+    <li><span class="dispersion-key dispersion-key--damped"></span>damped pair correction</li>
+  </ul>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-vdw-c6>C6 = {c6.toFixed(6)} model units</span>
+    <span data-vdw-damping>damping(R=6) = {dampedDispersionEnergy(6, c6, 3).damping.toFixed(6)}</span>
+    <strong data-vdw-energy>Edamped(R=6) = {dampedDispersionEnergy(6, c6, 3).damped.toFixed(8)}</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>动态极化率取 α(iu) = α(0)·ω0²/(ω0²+u²)，解析 Casimir–Polder 积分给 C6 = (3/2)·αA(0)·αB(0)·ωA·ωB/(ωA+ωB)。固定 ωA=0.5、ωB=0.8，pair energy 为 −fdamp(R)·C6/R6，fdamp = 1−exp[−(R/R0)6]。</p>
+    <p lang="en"><strong>Model:</strong> single-pole dynamic polarizabilities yield an analytic Casimir–Polder coefficient. A smooth damping function suppresses the short-range divergence while preserving the inverse-sixth-power tail.</p>
+    <p><strong>验收：</strong>C6 对两个静态极化率线性；交换 A/B 不变；大 R 时 damping 趋于 1 且 E(2R)/E(R)→1/64；R→0 时 damped energy 趋于有限 −C6/R0⁶。</p>
+    <p lang="en"><strong>Acceptance:</strong> C6 is linear in each static polarizability and symmetric in A/B. At long range the energy follows R⁻⁶; the damped short-range limit is finite.</p>
+    <p><strong>边界：</strong>single-pole、pairwise additivity 和经验 damping 不包含环境依赖、many-body dispersion、metal screening 或 density overlap。正确 asymptote 不保证平衡距离和结合能准确。</p>
+    <p lang="en"><strong>Boundary:</strong> the model omits environment dependence, many-body dispersion, metallic screening, and density overlap. A correct asymptote does not guarantee equilibrium accuracy.</p>
+  </div>
+</figure>
+
+<script>
+  import { dampedDispersionEnergy, singlePoleC6 } from '../../../data/part02/ch09TeachingModels.mjs';
+
+  document.querySelectorAll('[data-dispersion-model]').forEach((root) => {
+    const alphaAInput = root.querySelector('[data-vdw-alpha-a]');
+    const alphaBInput = root.querySelector('[data-vdw-alpha-b]');
+    const r0Input = root.querySelector('[data-vdw-r0]');
+    const rInput = root.querySelector('[data-vdw-r]');
+    const undampedPath = root.querySelector('[data-vdw-undamped]');
+    const dampedPath = root.querySelector('[data-vdw-damped]');
+    if (!(alphaAInput instanceof HTMLInputElement) || !(alphaBInput instanceof HTMLInputElement) || !(r0Input instanceof HTMLInputElement) || !(rInput instanceof HTMLInputElement) || !(undampedPath instanceof SVGPathElement) || !(dampedPath instanceof SVGPathElement)) return;
+
+    const xScale = (distance) => 55 + ((distance - 1.5) / 10.5) * 650;
+    const yScale = (energy) => 235 - ((energy + 0.8) / 0.8) * 170;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLOutputElement) element.value = value;
+      else if (element instanceof HTMLElement) element.textContent = value;
+    };
+    const update = () => {
+      const staticPolarizabilityA = Number(alphaAInput.value);
+      const staticPolarizabilityB = Number(alphaBInput.value);
+      const dampingLength = Number(r0Input.value);
+      const probeDistance = Number(rInput.value);
+      const c6 = singlePoleC6({
+        staticPolarizabilityA,
+        poleFrequencyA: 0.5,
+        staticPolarizabilityB,
+        poleFrequencyB: 0.8,
+      });
+      const samples = Array.from({ length: 241 }, (_, index) => {
+        const distance = 1.5 + (10.5 * index) / 240;
+        return dampedDispersionEnergy(distance, c6, dampingLength);
+      });
+      undampedPath.setAttribute('d', samples.map((point, index) =>
+        `${index === 0 ? 'M' : 'L'} ${xScale(point.distance).toFixed(2)} ${yScale(Math.max(point.undamped, -0.8)).toFixed(2)}`,
+      ).join(' '));
+      dampedPath.setAttribute('d', samples.map((point, index) =>
+        `${index === 0 ? 'M' : 'L'} ${xScale(point.distance).toFixed(2)} ${yScale(Math.max(point.damped, -0.8)).toFixed(2)}`,
+      ).join(' '));
+      const probe = dampedDispersionEnergy(probeDistance, c6, dampingLength);
+      setText('[data-vdw-alpha-a-output]', staticPolarizabilityA.toFixed(0));
+      setText('[data-vdw-alpha-b-output]', staticPolarizabilityB.toFixed(0));
+      setText('[data-vdw-r0-output]', dampingLength.toFixed(1));
+      setText('[data-vdw-r-output]', probeDistance.toFixed(1));
+      setText('[data-vdw-c6]', `C6 = ${c6.toFixed(6)} model units`);
+      setText('[data-vdw-damping]', `damping(R=${probeDistance.toFixed(1)}) = ${probe.damping.toFixed(6)}`);
+      setText('[data-vdw-energy]', `Edamped(R=${probeDistance.toFixed(1)}) = ${probe.damped.toFixed(8)}`);
+    };
+    alphaAInput.addEventListener('input', update);
+    alphaBInput.addEventListener('input', update);
+    r0Input.addEventListener('input', update);
+    rInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .dispersion-model svg { width: 100%; max-height: 23rem; }
+  .dispersion-model text { fill: currentColor; font-size: 14px; }
+  .dispersion-line { fill: none; stroke-width: 3; }
+  .dispersion-line--undamped { stroke: var(--sl-color-gray-3); stroke-dasharray: 8 5; }
+  .dispersion-line--damped { stroke: var(--sl-color-text-accent); }
+  .dispersion-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; padding: 0; list-style: none; }
+  .dispersion-key { display: inline-block; width: 1.8rem; margin-right: 0.35rem; border-top: 3px solid currentColor; vertical-align: middle; }
+  .dispersion-key--undamped { color: var(--sl-color-gray-3); border-top-style: dashed; }
+  .dispersion-key--damped { color: var(--sl-color-text-accent); }
+</style>
