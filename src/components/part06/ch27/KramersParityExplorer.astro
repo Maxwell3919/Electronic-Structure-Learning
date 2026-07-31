@@ -1,0 +1,146 @@
+---
+import { helicalEdgeSpectrum } from '../../../data/part06/ch27TeachingModels.mjs';
+const initialPairs = 1;
+const initialMixing = 0.35;
+const velocity = 0.8;
+const samples = 81;
+const coordinates = Array.from({ length: samples }, (_, index) => {
+  const k = -Math.PI + (2 * Math.PI * index) / (samples - 1);
+  const spectrum = helicalEdgeSpectrum(k, initialPairs, initialMixing, velocity);
+  return { x: 70 + (300 * index) / (samples - 1), energies: spectrum.energies };
+});
+const paths = [0, 1, 2, 3].map((band) => coordinates
+  .filter(({ energies }) => band < energies.length)
+  .map(({ x, energies }) => `${x},${180 - 54 * energies[band]}`)
+  .join(' '));
+---
+
+<figure class="chapter-visual kramers-parity" data-kramers-parity>
+  <figcaption>
+    <strong>原创交互模型：odd/even Kramers-pair edge connectivity</strong>
+    <span lang="en">Original interactive model: odd/even Kramers-pair edge connectivity</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>helical pair 数 | number of helical pairs</span>
+      <select data-kp-pairs>
+        <option value="1" selected>1 · odd</option>
+        <option value="2">2 · even</option>
+      </select>
+    </label>
+    <label>
+      <span>TR-preserving pair mixing m | mixing</span>
+      <input type="range" min="0" max="0.8" step="0.02" value={initialMixing} data-kp-mixing />
+      <output data-kp-mixing-out>{initialMixing.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 360" role="img" aria-labelledby="kp-title kp-desc">
+    <title id="kp-title">Odd and even helical edge-pair connectivity</title>
+    <desc id="kp-desc">The left panel shows an edge spectrum between two projected time-reversal-invariant momenta. A single Kramers pair remains gapless, whereas two pairs can be gapped by a time-reversal-symmetric interpair coupling.</desc>
+
+    <g aria-label="edge spectrum">
+      <line x1="70" y1="180" x2="370" y2="180" class="kp-axis" />
+      <line x1="70" y1="45" x2="70" y2="315" class="kp-axis" />
+      <line x1="220" y1="45" x2="220" y2="315" class="kp-trim" />
+      <text x="56" y="335">−π</text><text x="211" y="335">0</text><text x="360" y="335">π</text>
+      <text x="82" y="62">edge energy</text>
+      {paths.map((points, index) => (
+        <polyline points={points} class:list={['kp-band', index > 1 && 'kp-band--hidden']} data-kp-band={index} />
+      ))}
+      <circle cx="220" cy="180" r="6" class="kp-kramers" data-kp-kramers />
+    </g>
+
+    <g aria-label="partner connectivity diagram">
+      <text x="445" y="62">projected TRIM partner map</text>
+      <circle cx="485" cy="112" r="9" class="kp-node" />
+      <circle cx="665" cy="112" r="9" class="kp-node" />
+      <circle cx="485" cy="250" r="9" class="kp-node" />
+      <circle cx="665" cy="250" r="9" class="kp-node" />
+      <path d="M494 112 C545 112 605 250 656 250" class="kp-link" data-kp-link-a />
+      <path d="M494 250 C545 250 605 112 656 112" class="kp-link" data-kp-link-b />
+      <text x="455" y="92">Kramers pair at Λ̄₁</text>
+      <text x="625" y="92">at Λ̄₂</text>
+      <text x="478" y="290">odd partner switching cannot be removed alone</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-kp-gap>TRIM edge gap = 0.00</span>
+    <span data-kp-z2>edge parity ν = 1</span>
+    <strong data-kp-status>One Kramers pair: a constant TR-preserving single-pair mass is forbidden.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> 初始图显示一个 helical Kramers pair。两支在 projected TRIM 相交；mixing 控件对单 pair 不产生 gap，因为单 pair 的常数反对称质量项会破坏 spinful time reversal。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>单 pair 取 <code>H=v k s_z</code>。<code>Θ=i s_y K</code> 使所有与 <code>s_z</code> 反对易的单 pair 常数 Pauli mass 在 time reversal 下变号。两个 pair 使用额外 pair Pauli matrix τ，可加入 <code>m s_x τ_y</code>；该项反对易于动能且在 Θ 下保持不变。</p>
+    <p lang="en"><strong>Model:</strong> one pair uses <code>H=v k s_z</code>. With <code>Θ=i s_y K</code>, every constant single-pair Pauli mass that anticommutes with <code>s_z</code> changes sign under time reversal. Two pairs add a pair-space Pauli matrix τ and admit <code>m s_x τ_y</code>, which anticommutes with the kinetic term and is time-reversal even.</p>
+    <p><strong>验收：</strong>one-pair 模式中任意 mixing 值都保持 projected TRIM 处 gap 为零；two-pair 模式中 gap 为 <code>2m</code>，且两组 Kramers partners 可重新连接为不穿越 gap 的 even 类。</p>
+    <p lang="en"><strong>Acceptance:</strong> in one-pair mode the projected-TRIM gap stays zero for every displayed mixing value. In two-pair mode the gap is <code>2m</code>, and the two Kramers pairs can reconnect into an even class without traversing the gap.</p>
+    <p><strong>边界：</strong>该连续 edge model 只证明 odd/even coupling algebra。它不提供具体 lattice termination、bulk invariant 或材料 edge localization。真实 bulk–boundary 判断仍需 full-BZ occupied manifold 与指定边界谱。</p>
+    <p lang="en"><strong>Boundary:</strong> this continuum edge model proves only the odd/even coupling algebra. It does not supply a lattice termination, bulk invariant, or material edge localization. A real bulk–boundary claim still requires the full-Brillouin-zone occupied manifold and a stated boundary spectrum.</p>
+  </div>
+</figure>
+
+<script>
+  import { helicalEdgeSpectrum } from '../../../data/part06/ch27TeachingModels.mjs';
+  document.querySelectorAll('[data-kramers-parity]').forEach((root) => {
+    const pairsInput = root.querySelector('[data-kp-pairs]');
+    const mixingInput = root.querySelector('[data-kp-mixing]');
+    if (!(pairsInput instanceof HTMLSelectElement) || !(mixingInput instanceof HTMLInputElement)) return;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLElement || element instanceof SVGTextElement) element.textContent = value;
+    };
+    const update = () => {
+      const pairs = Number(pairsInput.value);
+      const mixing = Number(mixingInput.value);
+      const sampleCount = 81;
+      const bandPoints = [[], [], [], []];
+      for (let index = 0; index < sampleCount; index += 1) {
+        const k = -Math.PI + (2 * Math.PI * index) / (sampleCount - 1);
+        const spectrum = helicalEdgeSpectrum(k, pairs, mixing, 0.8);
+        spectrum.energies.forEach((energy, band) => {
+          const offset = pairs === 2 ? (band % 2 === 0 ? -1.5 : 1.5) : 0;
+          bandPoints[band].push(`${70 + (300 * index) / (sampleCount - 1) + offset},${180 - 54 * energy}`);
+        });
+      }
+      root.querySelectorAll('[data-kp-band]').forEach((element) => {
+        if (!(element instanceof SVGPolylineElement)) return;
+        const band = Number(element.dataset.kpBand);
+        element.setAttribute('points', bandPoints[band].join(' '));
+        element.classList.toggle('kp-band--hidden', band >= (pairs === 1 ? 2 : 4));
+      });
+      mixingInput.disabled = pairs === 1;
+      setText('[data-kp-mixing-out]', mixing.toFixed(2));
+      const atTrim = helicalEdgeSpectrum(0, pairs, mixing, 0.8);
+      setText('[data-kp-gap]', `TRIM edge gap = ${atTrim.directGapAtTrim.toFixed(2)}`);
+      setText('[data-kp-z2]', `edge parity ν = ${atTrim.z2Parity}`);
+      setText('[data-kp-status]', pairs === 1
+        ? 'One Kramers pair: a constant TR-preserving single-pair mass is forbidden.'
+        : mixing === 0
+          ? 'Two uncoupled pairs: the crossing is even and can be removed by allowed mixing.'
+          : 'Two Kramers pairs: TR-preserving interpair mixing opens an edge gap.');
+      root.querySelectorAll('[data-kp-link-a],[data-kp-link-b]').forEach((link) => {
+        if (link instanceof SVGPathElement) link.classList.toggle('kp-link--even', pairs === 2);
+      });
+    };
+    [pairsInput, mixingInput].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .kramers-parity svg { width: 100%; max-height: 27rem; }
+  .kramers-parity text { fill: currentColor; font-size: 13px; }
+  .kp-axis { stroke: var(--sl-color-gray-3); stroke-width: 1.5; }
+  .kp-trim { stroke: var(--sl-color-gray-5); stroke-dasharray: 5 5; }
+  .kp-band { fill: none; stroke: var(--sl-color-text-accent); stroke-width: 3; }
+  .kp-band:nth-of-type(even) { stroke: var(--sl-color-accent-high); }
+  .kp-band--hidden { display: none; }
+  .kp-kramers, .kp-node { fill: var(--sl-color-accent-high); }
+  .kp-link { fill: none; stroke: var(--sl-color-text-accent); stroke-width: 3; }
+  .kp-link--even { stroke-dasharray: 6 4; opacity: 0.65; }
+</style>
