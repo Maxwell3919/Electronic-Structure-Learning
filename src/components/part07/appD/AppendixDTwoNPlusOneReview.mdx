@@ -133,20 +133,20 @@ $$
 
 <BilingualCallout titleZh="定理的适用边界" titleEn="Scope boundary of the theorem" kind="boundary">
   <div class="bilingual-section__zh">
-
-- perturbation series 可能只有渐近意义，`2n+1` 不保证收敛半径。
-- 简并、metallic occupations、moving basis 和 nonorthogonal constraints 需要相应推广。
-- force、response、lifetime 或 spectrum 若不是所用 stationary energy 的导数，不能自动继承相同阶次。
-- first-order response residual、SCF residual、basis error 和 numerical quadrature error 是不同误差源。
-
+    <ul>
+      <li>perturbation series 可能只有渐近意义，<code>2n+1</code> 不保证收敛半径。</li>
+      <li>简并、metallic occupations、moving basis 和 nonorthogonal constraints 需要相应推广。</li>
+      <li>force、response、lifetime 或 spectrum 若不是所用 stationary energy 的导数，不能自动继承相同阶次。</li>
+      <li>first-order response residual、SCF residual、basis error 和 numerical quadrature error 是不同误差源。</li>
+    </ul>
   </div>
   <div class="bilingual-section__en" lang="en">
-
-- A perturbation series may be only asymptotic; `2n+1` does not establish a radius of convergence.
-- Degeneracy, metallic occupations, moving bases, and nonorthogonal constraints require corresponding generalizations.
-- Forces, responses, lifetimes, or spectra that are not derivatives of the stationary energy in use do not automatically inherit the same order result.
-- First-order response residual, SCF residual, basis error, and numerical quadrature error are distinct error sources.
-
+    <ul>
+      <li>A perturbation series may be only asymptotic; <code>2n+1</code> does not establish a radius of convergence.</li>
+      <li>Degeneracy, metallic occupations, moving bases, and nonorthogonal constraints require corresponding generalizations.</li>
+      <li>Forces, responses, lifetimes, or spectra that are not derivatives of the stationary energy in use do not automatically inherit the same order result.</li>
+      <li>First-order response residual, SCF residual, basis error, and numerical quadrature error are distinct error sources.</li>
+    </ul>
   </div>
 </BilingualCallout>
 
@@ -156,86 +156,86 @@ $$
 
 <BilingualSection titleZh="与正文和其他附录的连接" titleEn="Connections to chapters and other appendices" eyebrow="【推断连接 | Cross-reference inference】">
   <div class="bilingual-section__zh">
-
-- **Chapter 7：**$\chi^0$ 与 kernel 的符号和 conditioning 用于解释 SCF 线性化，但 SCF density residual 不是 eigensolver residual。
-- **Chapter 20：**Sternheimer DFPT、variational second-order energy、phonon force constants 和 EPC 均依赖 D.1–D.3 与 D.6。
-- **Chapter 21：**Kubo–Greenwood、causal optical response、TDDFT kernel 和 spectra 依赖 D.4。
-- **Appendix E：**介电函数是 response formalism 的 electromagnetic specialization。
-- **Appendices L–M：**Krylov、Lanczos、Davidson、DIIS 和 iterative linear solve 是实现 state sums、resolvents 与 response equations 的算法层。
-
+    <ul>
+      <li><strong>Chapter 7：</strong>$\chi^0$ 与 kernel 的符号和 conditioning 用于解释 SCF 线性化，但 SCF density residual 不是 eigensolver residual。</li>
+      <li><strong>Chapter 20：</strong>Sternheimer DFPT、variational second-order energy、phonon force constants 和 EPC 均依赖 D.1–D.3 与 D.6。</li>
+      <li><strong>Chapter 21：</strong>Kubo–Greenwood、causal optical response、TDDFT kernel 和 spectra 依赖 D.4。</li>
+      <li><strong>Appendix E：</strong>介电函数是 response formalism 的 electromagnetic specialization。</li>
+      <li><strong>Appendices L–M：</strong>Krylov、Lanczos、Davidson、DIIS 和 iterative linear solve 是实现 state sums、resolvents 与 response equations 的算法层。</li>
+    </ul>
   </div>
   <div class="bilingual-section__en" lang="en">
-
-- **Chapter 7:** signs and conditioning of $\chi^0$ and the kernel help analyze linearized SCF, but an SCF density residual is not an eigensolver residual.
-- **Chapter 20:** Sternheimer DFPT, variational second-order energy, phonon force constants, and EPC rely on D.1–D.3 and D.6.
-- **Chapter 21:** Kubo-Greenwood expressions, causal optical response, TDDFT kernels, and spectra rely on D.4.
-- **Appendix E:** the dielectric function is an electromagnetic specialization of the response formalism.
-- **Appendices L–M:** Krylov, Lanczos, Davidson, DIIS, and iterative linear solves provide algorithmic implementations for state sums, resolvents, and response equations.
-
+    <ul>
+      <li><strong>Chapter 7:</strong> signs and conditioning of $\chi^0$ and the kernel help analyze linearized SCF, but an SCF density residual is not an eigensolver residual.</li>
+      <li><strong>Chapter 20:</strong> Sternheimer DFPT, variational second-order energy, phonon force constants, and EPC rely on D.1–D.3 and D.6.</li>
+      <li><strong>Chapter 21:</strong> Kubo–Greenwood expressions, causal optical response, TDDFT kernels, and spectra rely on D.4.</li>
+      <li><strong>Appendix E:</strong> the dielectric function is an electromagnetic specialization of the response formalism.</li>
+      <li><strong>Appendices L–M:</strong> Krylov, Lanczos, Davidson, DIIS, and iterative linear solves provide algorithmic implementations for state sums, resolvents, and response equations.</li>
+    </ul>
   </div>
 </BilingualSection>
 
 <BilingualSection titleZh="会改变结论的误判" titleEn="Misjudgments that change the conclusion" eyebrow="【补充说明 | Supplemental clarification】">
   <div class="bilingual-section__zh">
-
-1. 把 state-sum denominator 中的小 gap 用任意 $\eta$ 替代，并称结果已处理简并。
-2. 把 $\chi^0=\delta n/\delta V_{\mathrm{eff}}$ 当成对外场的完整 $\chi$。
-3. 把 RPA 称为完全无相互作用，忽略 Coulomb feedback。
-4. 在 matrix kernel 中交换 $(1-\chi^0K)^{-1}$ 与 $\chi^0$ 的次序而不检查 index convention。
-5. 把数值 broadening 当成真实 lifetime。
-6. 用有限频率窗口直接执行 KK transform，却不处理 tail 和 subtraction。
-7. 把 Im$\chi^0$ 当成裸 JDOS，忽略 matrix elements 和 occupations。
-8. 把 Green-function pole、DOS peak、optical peak 和 quasiparticle 视为同一证据对象。
-9. 认为 contour integration 不需要收敛或在 metal 中与 insulator 同样容易。
-10. 把 `2n+1` 理解为高阶 wavefunction correction 等于零。
-11. 用一个总能变化阈值同时声明 response、spectrum、sum rule 和 target observable 收敛。
-
+    <ol>
+      <li>把 state-sum denominator 中的小 gap 用任意 $\eta$ 替代，并称结果已处理简并。</li>
+      <li>把 $\chi^0=\delta n/\delta V_{\mathrm{eff}}$ 当成对外场的完整 $\chi$。</li>
+      <li>把 RPA 称为完全无相互作用，忽略 Coulomb feedback。</li>
+      <li>在 matrix kernel 中交换 $(1-\chi^0K)^{-1}$ 与 $\chi^0$ 的次序而不检查 index convention。</li>
+      <li>把数值 broadening 当成真实 lifetime。</li>
+      <li>用有限频率窗口直接执行 KK transform，却不处理 tail 和 subtraction。</li>
+      <li>把 Im$\chi^0$ 当成裸 JDOS，忽略 matrix elements 和 occupations。</li>
+      <li>把 Green-function pole、DOS peak、optical peak 和 quasiparticle 视为同一证据对象。</li>
+      <li>认为 contour integration 不需要收敛或在 metal 中与 insulator 同样容易。</li>
+      <li>把 <code>2n+1</code> 理解为高阶 wavefunction correction 等于零。</li>
+      <li>用一个总能变化阈值同时声明 response、spectrum、sum rule 和 target observable 收敛。</li>
+    </ol>
   </div>
   <div class="bilingual-section__en" lang="en">
-
-1. Replacing a small state-sum denominator by an arbitrary $\eta$ and claiming that degeneracy has been treated.
-2. Identifying $\chi^0=\delta n/\delta V_{\mathrm{eff}}$ with the complete response $\chi$ to an external field.
-3. Calling RPA fully noninteracting and ignoring Coulomb feedback.
-4. Reordering $(1-\chi^0K)^{-1}$ and $\chi^0$ in a matrix kernel without checking index conventions.
-5. Interpreting numerical broadening as a physical lifetime.
-6. Applying a KK transform to a finite frequency window without tail or subtraction treatment.
-7. Treating Im$\chi^0$ as a bare JDOS and ignoring matrix elements and occupations.
-8. Treating a Green-function pole, DOS peak, optical peak, and quasiparticle as the same evidence object.
-9. Assuming contour integration needs no convergence study or is equally conditioned in metals and insulators.
-10. Reading `2n+1` as a statement that higher-order wavefunction corrections are zero.
-11. Using one total-energy-change threshold to declare response, spectrum, sum-rule, and target-observable convergence simultaneously.
-
+    <ol>
+      <li>Replacing a small state-sum denominator by an arbitrary $\eta$ and claiming that degeneracy has been treated.</li>
+      <li>Identifying $\chi^0=\delta n/\delta V_{\mathrm{eff}}$ with the complete response $\chi$ to an external field.</li>
+      <li>Calling RPA fully noninteracting and ignoring Coulomb feedback.</li>
+      <li>Reordering $(1-\chi^0K)^{-1}$ and $\chi^0$ in a matrix kernel without checking index conventions.</li>
+      <li>Interpreting numerical broadening as a physical lifetime.</li>
+      <li>Applying a KK transform to a finite frequency window without tail or subtraction treatment.</li>
+      <li>Treating Im$\chi^0$ as a bare JDOS and ignoring matrix elements and occupations.</li>
+      <li>Treating a Green-function pole, DOS peak, optical peak, and quasiparticle as the same evidence object.</li>
+      <li>Assuming contour integration needs no convergence study or is equally conditioned in metals and insulators.</li>
+      <li>Reading <code>2n+1</code> as a statement that higher-order wavefunction corrections are zero.</li>
+      <li>Using one total-energy-change threshold to declare response, spectrum, sum-rule, and target-observable convergence simultaneously.</li>
+    </ol>
   </div>
 </BilingualSection>
 
 <BilingualSection titleZh="原创练习" titleEn="Original exercises" eyebrow="【原创教学内容 | Original teaching content】">
   <div class="bilingual-section__zh">
-
-1. **两能级微扰。** 对 $H_0=\operatorname{diag}(0,\Delta)$ 和 off-diagonal perturbation $v$，求基态一阶态修正和二阶能量，并与精确本征值的小 $v/\Delta$ 展开比较。
-2. **occupied–occupied 相消。** 对两个占据正交轨道证明 Hermitian one-body observable 中 $(i,j)$ 与 $(j,i)$ 的一阶项相消，并列出有限温度下为何需要 occupation difference。
-3. **Sternheimer 等价性。** 构造一个四维 Hermitian matrix，分别用 empty-state sum 与 projected linear solve 求一阶态，比较 residual 和 gauge component。
-4. **标量 Dyson。** 推导 $\chi=\chi^0/(1-\chi^0K)$，分析 denominator 接近零时对 input uncertainty 的 amplification。
-5. **matrix ordering。** 给出两个不对易 $2\times2$ matrix $\chi^0,K$，验证 $(1-\chi^0K)^{-1}\chi^0=\chi^0(1-K\chi^0)^{-1}$，但错误的任意换序一般不成立。
-6. **KK 数值实验。** 对 damped oscillator 在逐渐扩大的频率窗口上执行 principal-value quadrature，记录截断误差与 resonance 附近的 grid sensitivity。
-7. **spectral sum。** 验证三个 Lorentzian poles 的谱权重积分，并量化有限窗口和展宽对误差的影响。
-8. **contour conditioning。** 对一个有 gap 和一个跨 Fermi level 的 finite spectrum 设计 contour，比较最近 pole 距离与 quadrature point 数。
-9. **2n+1 标量模型。** 从 stationary condition 推导 $x_1,x_2$，显式证明三阶能量中的 $x_2$ 项相消；再加入一个非驻值 trial $x_1+\delta$，测量误差阶次。
-10. **证据路由。** 给出“DOS 峰、Im$\epsilon$ 峰、loss function 峰和 spectral-function pole”四个输出，为每个输出列出额外需要的 operator、kernel、boundary 和 convergence checks。
-
+    <ol>
+      <li><strong>两能级微扰。</strong> 对 $H_0=\operatorname{diag}(0,\Delta)$ 和 off-diagonal perturbation $v$，求基态一阶态修正和二阶能量，并与精确本征值的小 $v/\Delta$ 展开比较。</li>
+      <li><strong>occupied–occupied 相消。</strong> 对两个占据正交轨道证明 Hermitian one-body observable 中 $(i,j)$ 与 $(j,i)$ 的一阶项相消，并列出有限温度下为何需要 occupation difference。</li>
+      <li><strong>Sternheimer 等价性。</strong> 构造一个四维 Hermitian matrix，分别用 empty-state sum 与 projected linear solve 求一阶态，比较 residual 和 gauge component。</li>
+      <li><strong>标量 Dyson。</strong> 推导 $\chi=\chi^0/(1-\chi^0K)$，分析 denominator 接近零时对 input uncertainty 的 amplification。</li>
+      <li><strong>matrix ordering。</strong> 给出两个不对易 $2\times2$ matrix $\chi^0,K$，验证 $(1-\chi^0K)^{-1}\chi^0=\chi^0(1-K\chi^0)^{-1}$，但错误的任意换序一般不成立。</li>
+      <li><strong>KK 数值实验。</strong> 对 damped oscillator 在逐渐扩大的频率窗口上执行 principal-value quadrature，记录截断误差与 resonance 附近的 grid sensitivity。</li>
+      <li><strong>spectral sum。</strong> 验证三个 Lorentzian poles 的谱权重积分，并量化有限窗口和展宽对误差的影响。</li>
+      <li><strong>contour conditioning。</strong> 对一个有 gap 和一个跨 Fermi level 的 finite spectrum 设计 contour，比较最近 pole 距离与 quadrature point 数。</li>
+      <li><strong>2n+1 标量模型。</strong> 从 stationary condition 推导 $x_1,x_2$，显式证明三阶能量中的 $x_2$ 项相消；再加入一个非驻值 trial $x_1+\delta$，测量误差阶次。</li>
+      <li><strong>证据路由。</strong> 给出“DOS 峰、Im$\epsilon$ 峰、loss function 峰和 spectral-function pole”四个输出，为每个输出列出额外需要的 operator、kernel、boundary 和 convergence checks。</li>
+    </ol>
   </div>
   <div class="bilingual-section__en" lang="en">
-
-1. **Two-level perturbation.** For $H_0=\operatorname{diag}(0,\Delta)$ and an off-diagonal perturbation $v$, derive the ground-state first-order state and second-order energy and compare with the exact eigenvalue expansion in $v/\Delta$.
-2. **Occupied-occupied cancellation.** For two occupied orthonormal orbitals, prove cancellation of the $(i,j)$ and $(j,i)$ first-order terms for a Hermitian one-body observable, and explain why finite temperature requires occupation differences.
-3. **Sternheimer equivalence.** Construct a four-dimensional Hermitian matrix and compute the first-order state by both an empty-state sum and a projected linear solve, comparing residual and gauge component.
-4. **Scalar Dyson equation.** Derive $\chi=\chi^0/(1-\chi^0K)$ and analyze amplification of input uncertainty near a zero denominator.
-5. **Matrix ordering.** Choose noncommuting $2\times2$ matrices $\chi^0,K$ and verify $(1-\chi^0K)^{-1}\chi^0=\chi^0(1-K\chi^0)^{-1}$ while arbitrary reordering fails.
-6. **Numerical KK experiment.** Apply principal-value quadrature to a damped oscillator over increasing frequency windows and record truncation error and grid sensitivity near resonance.
-7. **Spectral sum.** Verify the integrated weight of three Lorentzian poles and quantify errors from a finite window and broadening.
-8. **Contour conditioning.** Design contours for a finite gapped spectrum and a spectrum crossing the Fermi level; compare nearest-pole distance and required quadrature points.
-9. **Scalar 2n+1 model.** Derive $x_1,x_2$ from stationarity and prove explicitly that $x_2$ cancels from the third-order energy; then perturb $x_1$ by $\delta$ and measure the error order.
-10. **Evidence routing.** For a DOS peak, Im$\epsilon$ peak, loss-function peak, and spectral-function pole, list the additional operator, kernel, boundary, and convergence checks needed for interpretation.
-
+    <ol>
+      <li><strong>Two-level perturbation.</strong> For $H_0=\operatorname{diag}(0,\Delta)$ and an off-diagonal perturbation $v$, derive the ground-state first-order state and second-order energy and compare with the exact eigenvalue expansion in $v/\Delta$.</li>
+      <li><strong>Occupied-occupied cancellation.</strong> For two occupied orthonormal orbitals, prove cancellation of the $(i,j)$ and $(j,i)$ first-order terms for a Hermitian one-body observable, and explain why finite temperature requires occupation differences.</li>
+      <li><strong>Sternheimer equivalence.</strong> Construct a four-dimensional Hermitian matrix and compute the first-order state by both an empty-state sum and a projected linear solve, comparing residual and gauge component.</li>
+      <li><strong>Scalar Dyson equation.</strong> Derive $\chi=\chi^0/(1-\chi^0K)$ and analyze amplification of input uncertainty near a zero denominator.</li>
+      <li><strong>Matrix ordering.</strong> Choose noncommuting $2\times2$ matrices $\chi^0,K$ and verify $(1-\chi^0K)^{-1}\chi^0=\chi^0(1-K\chi^0)^{-1}$ while arbitrary reordering fails.</li>
+      <li><strong>Numerical KK experiment.</strong> Apply principal-value quadrature to a damped oscillator over increasing frequency windows and record truncation error and grid sensitivity near resonance.</li>
+      <li><strong>Spectral sum.</strong> Verify the integrated weight of three Lorentzian poles and quantify errors from a finite window and broadening.</li>
+      <li><strong>Contour conditioning.</strong> Design contours for a finite gapped spectrum and a spectrum crossing the Fermi level; compare nearest-pole distance and required quadrature points.</li>
+      <li><strong>Scalar 2n+1 model.</strong> Derive $x_1,x_2$ from stationarity and prove explicitly that $x_2$ cancels from the third-order energy; then perturb $x_1$ by $\delta$ and measure the error order.</li>
+      <li><strong>Evidence routing.</strong> For a DOS peak, Im$\epsilon$ peak, loss-function peak, and spectral-function pole, list the additional operator, kernel, boundary, and convergence checks needed for interpretation.</li>
+    </ol>
   </div>
 </BilingualSection>
 
@@ -255,7 +255,7 @@ $$
 
 **Primary locator:** Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Appendix D, printed pp. 590–599, sections D.1–D.6, Eqs. D.1–D.36. Source exercises are not reproduced.
 
-**Source levels:** the book directly supports the structure of state perturbation, static and dynamic response, self-consistent kernels, the oscillator, KK relations, Kubo-Greenwood expressions, Green functions, contour quantities, and `2n+1`. Projector/Sternheimer connections, matrix-ordering warnings, nonorthogonal metrics, finite-window KK analysis, numerical acceptance criteria, and website exercises are supplemental derivations or original teaching content.
+**Source levels:** the book directly supports the structure of state perturbation, static and dynamic response, self-consistent kernels, the oscillator, KK relations, Kubo–Greenwood expressions, Green functions, contour quantities, and `2n+1`. Projector/Sternheimer connections, matrix-ordering warnings, nonorthogonal metrics, finite-window KK analysis, numerical acceptance criteria, and website exercises are supplemental derivations or original teaching content.
 
 **Validation boundary:** deterministic models check only the declared scalar Dyson equation, causal oscillator, finite-pole Green function, spectral weight, and scalar `2n+1` cancellation. They do not independently validate general many-body response, production DFPT/TDDFT, analytic continuation, or a material spectrum.
 
