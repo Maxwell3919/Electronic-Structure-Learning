@@ -1,0 +1,181 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<h2 id="calculation-connection">与实际计算的连接 | Connection to Practical Calculations</h2>
+
+<BilingualSection titleZh="从研究问题到可审计输入" titleEn="From research question to an auditable input" eyebrow="Workflow">
+  <div className="bilingual-section__zh">
+
+表面/界面计算的第一步不是选择真空厚度，而是定义 observable 和边界：单一表面的功函数、两个终止的表面能和、半无限表面谱、应变相干界面带阶、带偏压界面、孤立单层还是周期堆叠。不同问题对应不同超胞、电荷、场、化学势和参考。
+
+一个可复现工作流可按以下顺序记录：
+
+1. **结构身份**：体相、晶面、终止、重构、registry、覆盖度、缺陷和化学计量；
+2. **边界模型**：对称/非对称 slab、界面周期、固定层、真空、dipole/Coulomb truncation、电荷与场；
+3. **电子设置**：赝势/全电子、功能、SOC、磁性、cutoff/基组、smearing、k 网格；
+4. **结构弛豫**：允许的自由度、力/应力阈值、是否保持基底应变；
+5. **参考构造**：匹配应变态、平均势、core/Wannier reference、真空平台；
+6. **目标量收敛**：厚度、真空、面内晶胞、k 网格、展宽、投影和 correction；
+7. **物理指认**：局域化、投影体谱、lineup 分解、缺陷机制和方法适用性；
+8. **独立对照**：另一终止/厚度/方法、半无限 Green 函数、不同代码或实验 observable。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The first choice in a surface/interface calculation is not the vacuum thickness but the observable and boundary: a one-sided work function, the sum of two termination energies, a semi-infinite surface spectrum, a coherent strained-interface offset, a biased junction, an isolated monolayer, or a periodic stack. Each requires a different cell, charge, field, chemical-potential, and reference contract.
+
+An auditable workflow records: structure identity; boundary model; electronic settings; relaxation freedoms and thresholds; reference construction; target-observable convergence; physical assignment through localization/projected spectra/lineup/mechanism; and an independent comparison with another thickness, termination, method, semi-infinite Green function, implementation, or experimental observable.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="参数扫描必须围绕目标量" titleEn="Parameter scans must follow the target observable" eyebrow="Convergence design">
+  <div className="bilingual-section__zh">
+
+统一固定参数表不能替代收敛。对功函数，应检查真空平台、两侧差、slab 厚度和 dipole correction；对表面能，应控制 slab/体总能的基组和 k 点一致性、层数振荡和化学势；对表面态，应检查 projected continuum、层权重、两表面劈裂和能量展宽；对带阶，应检查两侧平台、应变体参考和层厚；对二维响应，应把每体积量转换为每面积量并扫描真空/Coulomb truncation。
+
+金属表面 k 网格和 smearing 会共同影响费米面积分。只减小 smearing 而不增加 k 点可能增大噪声；只增加 k 点而保留过大 smearing 可能系统平滑表面态或 DOS。最终验收应针对功函数、表面能、带阶、局域长度或指定光谱峰，而不是只看 SCF 总能差。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A universal fixed parameter table is not convergence. A work function needs vacuum plateaus, side asymmetry, slab thickness, and dipole treatment; a surface energy needs consistent slab/bulk basis and k sampling, layer oscillations, and chemical potentials; a surface state needs projected continua, layer weight, opposite-surface splitting, and energy broadening; an offset needs two bulk-like plateaus, strained references, and thickness; a 2D response needs per-area conversion and vacuum/Coulomb-truncation scans.
+
+Metallic-surface k sampling and smearing jointly control Fermi-surface integration. Reducing smearing without increasing k points may increase noise, while dense k points with excessive smearing may wash out surface states or DOS structure. Acceptance follows the work function, surface energy, offset, decay length, or declared spectral feature rather than the SCF total-energy change alone.
+
+  </div>
+</BilingualSection>
+
+<div className="chapter22-method-table chapter-source-map">
+  <table>
+    <thead><tr><th>计算对象 | Object</th><th>主要输入 | Main inputs</th><th>最低收敛检查 | Minimum convergence</th><th>结论上限 | Claim ceiling</th></tr></thead>
+    <tbody>
+      <tr><td>功函数 | work function</td><td>终止、slab、真空、E_F、dipole</td><td>两侧平台、厚度、真空、k mesh</td><td>指定终止/电荷/方法的电子移出能</td></tr>
+      <tr><td>表面能 | surface energy</td><td>体参考、化学势、对称性、结构</td><td>层数、面积、体/slab 数值一致性</td><td>声明化学势下的相对稳定性</td></tr>
+      <tr><td>表面态 | surface state</td><td>slab/半无限模型、投影体谱、SOC</td><td>层权重、厚度劈裂、投影/展宽</td><td>束缚态或共振；不自动拓扑</td></tr>
+      <tr><td>界面带阶 | band offset</td><td>匹配应变态、lineup、结构/缺陷</td><td>两侧平台、层厚、方法/带隙</td><td>声明界面模型的有向 offset</td></tr>
+      <tr><td>极性补偿 | polar compensation</td><td>层序、缺陷、表面、载流子、电场</td><td>厚度、化学势、电荷/势剖面</td><td>候选机制；需独立实验区分</td></tr>
+      <tr><td>低维 DOS/响应 | low-D DOS/response</td><td>物理维度、归一化、真空/Coulomb</td><td>横向尺寸、k mesh、每长/面积单位</td><td>声明模型和归一化下的 observable</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="evidence-matrix">科学证据矩阵 | Scientific Evidence Matrix</h2>
+
+<div className="chapter22-evidence-table chapter-source-map">
+  <table>
+    <thead><tr><th>主张 | Claim</th><th>所需直接证据 | Direct evidence</th><th>不能由哪些较弱证据推出 | Not established by</th></tr></thead>
+    <tbody>
+      <tr><td>slab 中央体样化</td><td>层分结构、密度和宏观势随层数趋于体参考</td><td>中央一层力小或单次势图</td></tr>
+      <tr><td>功函数可靠</td><td>指定侧真空平台与 E_F，厚度/真空/dipole/k 网格收敛</td><td>体带能量、单点真空势或任意能量零</td></tr>
+      <tr><td>表面束缚态</td><td>投影体能隙、向体内衰减、厚度劈裂消失</td><td>层 PDOS 峰或 slab gap state</td></tr>
+      <tr><td>表面共振</td><td>连续谱重叠、表面谱增强、展宽/半无限谱稳定</td><td>人为 smearing 下的宽峰</td></tr>
+      <tr><td>Tamm 机制</td><td>固定体带下边界势/化学变化控制状态出现</td><td>任何表面态名称</td></tr>
+      <tr><td>Shockley 连接</td><td>体带角色交换/闭隙路径与 projected-gap 边界态</td><td>单点带反转或 Rashba 分裂</td></tr>
+      <tr><td>拓扑边界态</td><td>完整体不变量、对称性、体隙和边界谱连接</td><td>表面局域、SOC、线性色散或 band inversion 单独</td></tr>
+      <tr><td>界面带阶可靠</td><td>应变态 band-edge reference + 自洽 lineup + 层厚收敛</td><td>孤立层真空对齐或界面 PDOS 边</td></tr>
+      <tr><td>极性电子重构主导</td><td>排除/量化缺陷、互扩散、表面与晶格极化，载流子/势证据一致</td><td>形式半电子计数或界面金属化</td></tr>
+      <tr><td>二维内禀介电/极化率</td><td>每面积定义、真空/Coulomb 边界收敛</td><td>任意 L_z 下的三维介电常数</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<BilingualCallout title="会改变结论的主要未知 | Unknowns that can change the conclusion" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+
+- 真实终止、重构、缺陷和化学势是否与模型相同；
+- 表面/界面是否带电或处在外场、掺杂和空间电荷区；
+- bulk gap/quasiparticle correction 是否改变 projected continuum；
+- slab 中两个表面或两个界面是否仍耦合；
+- 低维 Coulomb/归一化是否与物理边界一致；
+- 实验比较的是 PES、STS、optics、transport 还是结构热力学。
+
+    </div>
+    <div lang="en">
+
+- whether the real termination, reconstruction, defects, and chemical potentials match the model;
+- whether the surface/interface is charged or under field, doping, and space charge;
+- whether gap/quasiparticle corrections change the projected continuum;
+- whether opposite surfaces or interfaces still couple;
+- whether low-dimensional Coulomb and normalization match the physical boundary;
+- whether the experiment probes PES, STS, optics, transport, or structural thermodynamics.
+
+    </div>
+  </div>
+</BilingualCallout>
+
+<h2 id="common-misjudgments">常见误判 | Consequential Misjudgments</h2>
+
+<div className="chapter22-misjudgments">
+  <ol>
+    <li><strong>“真空足够大，所以 slab 已收敛。”</strong> 真空只控制镜像间隔；slab 中央体样化和两表面耦合需独立检查。</li>
+    <li><strong>“一条带在 bulk gap 里，所以是表面态。”</strong> 需要同一 k_parallel 的 projected bulk gap、局域化和厚度证据。</li>
+    <li><strong>“表面态有 Rashba 分裂，所以是拓扑态。”</strong> 反演破缺与 SOC 可产生普通 Rashba 表面态；拓扑需要体不变量和边界连接。</li>
+    <li><strong>“Bader 转移很小，所以没有界面偶极/杂化。”</strong> 净分区电荷可小，但连续电荷重排、Pauli pushback 和杂化仍可产生势阶。</li>
+    <li><strong>“孤立层真空带边直接给出异质结带阶。”</strong> 它只给弱耦合预筛选；显式界面偶极、应变和杂化可改写对齐。</li>
+    <li><strong>“界面金属化证明 polar catastrophe。”</strong> 缺陷、互扩散、表面或电极也可供载流子。</li>
+    <li><strong>“二维介电常数随真空变化只是数值误差。”</strong> 每体积定义本来就依赖 L_z；应转换为面极化率并另查镜像误差。</li>
+    <li><strong>“SCF/结构收敛证明表面能或 offset 收敛。”</strong> 目标差值对层数、k 网格、参考和方法有独立收敛门。</li>
+  </ol>
+</div>
+
+<h2 id="exercises">原创练习 | Original Exercises</h2>
+
+<div className="chapter22-exercises">
+  <ol>
+    <li><strong>偶极与功函数。</strong> 对一个中性平面平均电荷重排 $\bar\rho(z)$，从一维 Poisson 方程推导两侧势阶。说明改变原点为何不改变中性分布的偶极矩，并指出带电 slab 时哪个步骤失效。</li>
+    <li><strong>对称与非对称 slab。</strong> 给出两个终止不同的 slab 总能，证明只能得到 $\gamma_1+\gamma_2$。设计至少两种额外计算以分离单侧表面能，并写出化学势约束。</li>
+    <li><strong>Tamm 阈值。</strong> 从最近邻半无限链边界方程推导 $E=\Delta+t^2/\Delta$ 和 $|\Delta|>|t|$。检查 $\Delta\to\pm|t|$ 时局域长度的极限。</li>
+    <li><strong>共振判别。</strong> 构造一个随 smearing、slab 厚度和表面投影改变的假想谱峰表。给出判定物理共振、有限尺寸子带和人为展宽的最低比较。</li>
+    <li><strong>Rashba convention。</strong> 对 $H_R=\alpha_R(\hat z\times\mathbf k)\cdot\boldsymbol\sigma$ 求两支能量和自旋期望，验证时间反演关系，并解释为何这不计算任何拓扑不变量。</li>
+    <li><strong>带阶分解。</strong> 给定 A/B 的 $E_v-\bar V$、$E_c-\bar V$、应变项和界面 lineup，计算有向价带/导带 offset。将材料标签交换并验证符号变化。</li>
+    <li><strong>极性层序。</strong> 对交替 $\pm\sigma$ 平面逐层积分场和势，证明未补偿时双层平均势线性变化，$-\sigma/2$ 补偿时斜率消失。列出三种不等价的真实补偿机制。</li>
+    <li><strong>二维归一化。</strong> 两个真空高度不同的单层超胞输出 $\epsilon^{3D}$。转换为 $\alpha^{2D}$，设计判据区分正确的 $1/L_z$ 稀释与残余镜像相互作用。</li>
+    <li><strong>DOS 极限。</strong> 从 d 维 k 空间球体积推导 $g_d(E)$，检查单位，并说明有限展宽为何不能被直接解释为载流子寿命。</li>
+    <li><strong>证据分级。</strong> 对“层 PDOS 有费米峰”“slab band 有线性色散”“Bader 转移 0.05e”“Gamma 点无虚频”四条记录，逐条写出能支持的最强结论以及还缺少的证据。</li>
+  </ol>
+</div>
+
+<h2 id="sources-and-boundaries">来源与边界 | Sources and Boundaries</h2>
+
+<BilingualSection titleZh="来源层级" titleEn="Source levels" eyebrow="Source audit">
+  <div className="bilingual-section__zh">
+
+【Martin 原书】章节顺序、历史例子和主要物理边界来自 Martin Chapter 22，印刷页 465–478。本站只保留章节标题和页码定位。  
+【实践补充】Sholl–Steckel Chapter 4 支持 slab、真空、k 点、表面弛豫/能、重构、吸附和覆盖度的数值语境。  
+【补充推导】平面/宏观平均、偶极势阶、表面 Green 函数、Tamm 解析模型、带阶分解、极性平面模型、二维极化率和维度 DOS 在本站逐步重建。  
+【原创教学模型】五个交互模型是确定性低维模型，不是任何材料的 DFT/DFPT/TDDFT 数据。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+【Martin source】The order, historical examples, and principal physical boundaries follow Martin Chapter 22, printed pp. 465–478; only titles and page locators are retained.  
+【Practical supplement】Sholl–Steckel Chapter 4 supplies numerical context for slabs, vacuum, k points, relaxation/energy, reconstruction, adsorption, and coverage.  
+【Supplemental derivation】Planar/macroscopic averaging, dipole steps, surface Green functions, the analytic Tamm model, offset decomposition, polar planes, 2D polarizability, and dimensional DOS are rederived here.  
+【Original teaching models】The five interactive models are deterministic lower-dimensional models, not DFT/DFPT/TDDFT data for any material.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="本章不能推出的更强结论 | Stronger conclusions not supported by this chapter alone" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+
+本章的公式和教学模型不能证明某真实表面热力学稳定、某 slab band 是拓扑态、某界面由唯一缺陷机制供载流子、某异质结必为特定带阶、某低维材料具有收敛的准粒子/光学谱、EPC、磁性或超导。每项都需要其对应结构、全 BZ、响应、收敛和实验/独立方法证据。
+
+    </div>
+    <div lang="en">
+
+The formulas and teaching models do not prove that a real surface is thermodynamically stable, a slab band is topological, one defect mechanism uniquely supplies interface carriers, a heterostructure has a fixed alignment, or a lower-dimensional material has converged quasiparticle/optical spectra, EPC, magnetism, or superconductivity. Each requires its own structural, full-BZ, response, convergence, and experimental or independent-method evidence.
+
+    </div>
+  </div>
+</BilingualCallout>
+
+<style>
+  .chapter22-method-table table,
+  .chapter22-evidence-table table { min-width: 58rem; }
+  .chapter22-misjudgments li,
+  .chapter22-exercises li { margin-block: 0.65rem; }
+</style>
