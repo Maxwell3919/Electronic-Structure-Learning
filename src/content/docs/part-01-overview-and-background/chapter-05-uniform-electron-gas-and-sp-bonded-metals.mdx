@@ -1,20 +1,18 @@
 ---
-title: "Chapter 5 · Uniform Electron Gas and sp-Bonded Metals"
-description: "Martin Chapter 5 的目录级阅读骨架；正文待填充。"
+title: "Chapter 5 · Uniform Electron Gas and sp-Bonded Metals | 均匀电子气与 sp 成键金属"
+description: "以均匀电子气为解析 reference，建立 density scaling、Fermi statistics、Hartree–Fock failure、exchange/correlation holes、simple-metal binding 与 Lindhard screening。"
 sidebar:
   order: 5
   label: "Chapter 5 · Uniform Electron Gas and sp-Bonded Metals"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter05Body from '../../../components/chapter05/Chapter05Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[0].units[4].label}
-  sourcePage={catalog.parts[0].units[4].page}
-  sections={catalog.parts[0].units[4].sections}
-  exercisesPage={catalog.parts[0].units[4].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 5, printed pages 109–126; sections 5.1–5.5. Source exercises begin on printed page 126 and are not reproduced."
+  status="review"
 />
+
+<Chapter05Body />

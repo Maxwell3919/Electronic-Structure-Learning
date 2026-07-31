@@ -1,0 +1,76 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reading-orientation" class="chapter-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章解决的问题" titleEn="What this chapter solves" eyebrow="Chapter 15">
+  <div class="bilingual-section__zh">
+    <p>Chapter 14 把局域轨道写成有限 Hamiltonian/overlap 模型；Chapter 15 要求这些矩阵元来自明确的 basis functions、Kohn–Sham potential 和 density，并在自洽循环中更新。计算对象不再只是参数化 bands，而是</p>
+    <p><strong>basis → H/S → generalized eigenvectors → density matrix → real-space density/potential → H/S</strong>。</p>
+    <p>局域性使矩阵构造、真空体系和原子附近描述更经济；代价是 basis 不再具有平面波 cutoff 那样单一且系统的完备序列。basis 选择、confinement、diffuse/polarization functions、linear dependence 和 derivative consistency 都成为独立误差源。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Chapter 14 represented localized orbitals by finite Hamiltonian and overlap models. Chapter 15 requires those matrix elements to come from declared basis functions, a Kohn–Sham potential, and a density, and to be updated self-consistently. The computational object is no longer only a parameterized band model, but</p>
+    <p><strong>basis → H/S → generalized eigenvectors → density matrix → real-space density/potential → H/S</strong>.</p>
+    <p>Locality can make matrix construction, vacuum-containing systems, and near-atom resolution efficient. The price is that basis convergence is no longer governed by one plane-wave-like cutoff. Basis selection, confinement, diffuse and polarization functions, linear dependence, and derivative consistency become separate error sources.</p>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="前置知识与章节连接" titleEn="Prerequisites and chapter connections">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>Chapter 7：Kohn–Sham variational problem、occupations、density 和 self-consistency；</li>
+      <li>Chapter 11：pseudopotential projectors、ultrasoft/PAW operator structure；</li>
+      <li>Chapter 14：localized Bloch sums、$Hc=\varepsilon Sc$、Slater–Koster 和 transferability；</li>
+      <li>Appendix F/G/N：Coulomb decomposition、stress 和 two-centre rotations；</li>
+      <li>Chapter 18：随后利用 density-matrix locality 构造 O(N) 方法。</li>
+    </ul>
+    <p>本章不把 Gaussian/numerical orbital 写成软件清单。每种表示都按函数空间、basis construction、integral path、matrix structure、derivative terms 和 convergence evidence 比较。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>Chapter 7: the Kohn–Sham variational problem, occupations, density, and self-consistency;</li>
+      <li>Chapter 11: pseudopotential projectors and ultrasoft/PAW operator structure;</li>
+      <li>Chapter 14: localized Bloch sums, $Hc=\varepsilon Sc$, Slater–Koster construction, and transferability;</li>
+      <li>Appendices F, G, and N: Coulomb decomposition, stress, and two-centre rotations;</li>
+      <li>Chapter 18: later use of density-matrix locality for O(N) methods.</li>
+    </ul>
+    <p>The chapter is not a software catalogue. Gaussian and numerical orbitals are compared through function spaces, basis construction, integral paths, matrix structure, derivative terms, and convergence evidence.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="必须分开的对象" titleEn="Objects that must remain distinct" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>连续 wavefunction $\psi_i(\mathbf r)$ 与 finite coefficient vector $C_{\mu i}$；</li>
+      <li>overlap metric $S$ 与 density matrix $P$；</li>
+      <li>coefficient-space trace $\mathrm{Tr}(PS)$ 与普通 $\mathrm{Tr}(P)$；</li>
+      <li>basis-set incompleteness、grid/integral error、SCF residual 和 target-observable error；</li>
+      <li>Hellmann–Feynman-like explicit derivative 与 moving-basis/overlap derivative；</li>
+      <li>Green function、local DOS 和 broadening/termination artifacts；</li>
+      <li>finite support 带来的 sparsity 与整个算法的 linear scaling。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>the continuous wavefunction $\psi_i(\mathbf r)$ and finite coefficient vector $C_{\mu i}$;</li>
+      <li>the overlap metric $S$ and density matrix $P$;</li>
+      <li>the coefficient-space electron count $\mathrm{Tr}(PS)$ and the ordinary trace $\mathrm{Tr}(P)$;</li>
+      <li>basis incompleteness, grid or integral error, SCF residual, and target-observable error;</li>
+      <li>Hellmann–Feynman-like explicit derivatives and moving-basis or overlap derivatives;</li>
+      <li>Green functions, local DOS, and broadening or termination artifacts;</li>
+      <li>sparsity from finite support and linear scaling of the full algorithm.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="学完后的最低能力" titleEn="Minimum outcomes">
+  <div class="bilingual-section__zh">
+    <p>完成本章后，应能推导非正交局域基的 generalized eigenproblem、density matrix 和 electron-count trace；解释 Gaussian product theorem 为什么降低 integral cost；比较 Gaussian 与 numerical orbitals 的 completeness/confinement 误差；推导 moving-basis force 中的 overlap/Pulay contribution；写出 nonorthogonal Green function 和 recursion continued fraction；并设计 basis、grid、SCF、force/stress 和目标 observable 的分离收敛测试。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>After the chapter, a reader should be able to derive the nonorthogonal generalized eigenproblem, density matrix, and electron-count trace; explain why the Gaussian product theorem reduces integral cost; compare completeness and confinement errors of Gaussian and numerical orbitals; derive the overlap or Pulay contribution in a moving basis; write a nonorthogonal Green function and recursion continued fraction; and design separate convergence tests for basis, grid, SCF, forces or stress, and the target observable.</p>
+  </div>
+</BilingualSection>

@@ -1,0 +1,103 @@
+import BilingualSection from '../../BilingualSection.astro';
+
+<span id="practice-and-sources" className="chapter21-anchor" aria-hidden="true"></span>
+
+## 与实际计算的连接 | Connection to Practical Calculations
+
+<BilingualSection titleZh="从基态到可比较光谱的分层工作流" titleEn="A layered workflow from ground state to a comparable spectrum" eyebrow="Workflow">
+  <div className="bilingual-section__zh">
+
+1. **固定体系身份。** 记录结构、相、charge、spin、SOC、温度/固定核近似、边界条件、赝势或全电子处理。
+2. **固定基态起点。** 声明 KS/GKS 泛函、hybrid/range-separation 参数、occupation、$k$ 网格、基组/网格和收敛阈值。
+3. **定义目标 observable。** 区分有限体系 dipole/polarizability、周期 current/conductivity、dielectric matrix、macroscopic $\epsilon_M$、loss function 或特定散射 response。
+4. **固定 response approximation。** 标记 independent particle、RPA/local-field、adiabatic TDDFT、hybrid/orbital-dependent kernel、frequency-dependent kernel 或其他 many-body 路线。
+5. **选择数值路线。** 显式 transition/Casida、frequency-domain Sternheimer/Liouville 或 real-time propagation；不要把程序名称当作理论定义。
+6. **收敛目标谱。** 分别改变基组/盒子、$k$ 点、空带/response space、$G$ cutoff、频率网格、$\eta$、时间步、总时间和窗口。
+7. **检查约束。** 验证 gauge/nonlocal matrix elements、sum rule、低频与高频极限、对称性、因果性、正谱权和偏振关系。
+8. **分层解释。** 把 starting gap、quasiparticle gap、continuum edge、neutral pole、optical onset、binding 和 linewidth 分开。
+9. **比较实验。** 声明温度、声子辅助、零点重整化、缺陷、环境 screening、样品取向和仪器分辨率。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+1. **Fix the system identity.** Record structure, phase, charge, spin, SOC, temperature/fixed-nuclei approximation, boundary conditions, and pseudopotential or all-electron treatment.
+2. **Fix the ground-state starting point.** State the KS/GKS functional, hybrid/range-separation parameters, occupations, $k$ mesh, basis/grid, and convergence thresholds.
+3. **Define the target observable.** Distinguish finite-system dipole/polarizability, periodic current/conductivity, dielectric matrix, macroscopic $\epsilon_M$, loss function, or a specified scattering response.
+4. **Fix the response approximation.** Label independent particle, RPA/local field, adiabatic TDDFT, hybrid/orbital-dependent kernel, frequency-dependent kernel, or another many-body route.
+5. **Choose the numerical route.** Use an explicit transition/Casida, frequency-domain Sternheimer/Liouville, or real-time propagation formulation; a program name is not a theory definition.
+6. **Converge the target spectrum.** Vary basis/box, $k$ mesh, empty/response space, $G$ cutoff, frequency grid, $\eta$, time step, total time, and window separately.
+7. **Check constraints.** Validate gauge/nonlocal matrix elements, sum rules, low- and high-frequency limits, symmetry, causality, positive spectral weight, and polarization relations.
+8. **Interpret in layers.** Keep the starting gap, quasiparticle gap, continuum edge, neutral pole, optical onset, binding, and linewidth distinct.
+9. **Compare with experiment.** State temperature, phonon assistance, zero-point renormalization, defects, environmental screening, sample orientation, and instrumental resolution.
+
+  </div>
+</BilingualSection>
+
+<div className="chapter21-evidence-table">
+
+| 主张 | 最低直接证据 | 最低收敛/适用性检查 | 较弱证据不能推出 |
+|---|---|---|---|
+| 独立粒子吸收 onset | 收敛的 transition energies 与对应偏振矩阵元 | $k$ 网格、空带、矩阵元、broadening | band gap 或 DOS onset |
+| TDDFT neutral excitation | response pole 与非零目标通道谱权 | starting point、kernel、transition/response space、TDA | 单个 KS difference |
+| 实时间线性谱 | 不同弱场幅归一后重合的 dipole/current response | $\Delta t$、$T$、window、box/boundary、propagator | norm 守恒或轨迹平滑 |
+| 局域场已收敛 | 完整 dielectric matrix 求逆后的宏观量 | $G$ cutoff、$q/k$、频率和 inversion convention | 仅使用 $\epsilon_{00}$ |
+| f-sum rule 满足 | 声明归一化下的积分谱权接近正确电子数 | 高频范围、basis、matrix element、nonlocal correction | 少数低能峰正确 |
+| bound exciton | 明确 continuum edge 以下的收敛 neutral pole及谱权 | 起始 QP edge、$k$ 网格、kernel 长程结构、screening | optical onset 低于 KS gap |
+| 物理 lifetime | 与 many-body/散射机制对应的 self-energy 或 kernel imaginary part | 温度、声子/缺陷、能量与网格收敛 | 人工 $\eta$ 或有限 $T$ 峰宽 |
+| double excitation | 方法空间或动态 kernel 支持额外多体 pole | singles/doubles 混合、频率依赖、benchmark | 缩小 broadening 后出现肩峰 |
+| 与实验定量一致 | 同一 observable、方向、单位和环境下的误差分析 | 结构、温度、screening、仪器、样品条件 | 单峰位置偶然接近 |
+
+</div>
+
+## 常见误判 | Common Misjudgments
+
+<BilingualSection titleZh="会改变物理结论的混淆" titleEn="Confusions that change the physical conclusion" eyebrow="Review">
+  <div className="bilingual-section__zh">
+    <ul>
+      <li><strong>把 Kohn–Sham gap 当作 optical gap：</strong>前者是辅助单粒子起点，后者是带矩阵元的中性响应 onset。</li>
+      <li><strong>把 joint DOS 当作吸收谱：</strong>缺少偏振和矩阵元权重。</li>
+      <li><strong>把 ALDA 写成“完整 TDDFT”：</strong>它删除记忆且通常缺少长期程 crystal-exciton kernel。</li>
+      <li><strong>把 kernel correction 当作 scissor operator：</strong>kernel 可混合跃迁和重分配谱权，不是统一平移。</li>
+      <li><strong>把数值 $\eta$ 当作寿命：</strong>retarded regularization 或绘图展宽不自动代表散射。</li>
+      <li><strong>把 norm 守恒当作传播收敛：</strong>过大时间步仍会造成相位和峰位误差。</li>
+      <li><strong>把零填充当作更高分辨率：</strong>频率网格更密不改变 $2\pi/T$ 信息极限。</li>
+      <li><strong>先取介电 head 再求倒数：</strong>这会丢失 local-field coupling。</li>
+      <li><strong>用 KS gap 减 optical onset 得到实验 binding：</strong>continuum edge 未必是 quasiparticle gap。</li>
+      <li><strong>把一个模型 bound pole 当作材料激子：</strong>还缺真实 $k$ 空间、screening、kernel、起始 gap 与收敛。</li>
+    </ul>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>Equating a Kohn–Sham gap with an optical gap:</strong> the former is an auxiliary single-particle starting point; the latter is a matrix-element-weighted neutral-response onset.</li>
+      <li><strong>Equating a joint DOS with absorption:</strong> polarization and transition-matrix-element weights are missing.</li>
+      <li><strong>Calling ALDA “complete TDDFT”:</strong> it removes memory and usually lacks the long-range crystal-exciton kernel.</li>
+      <li><strong>Treating a kernel correction as a scissor operator:</strong> a kernel mixes transitions and redistributes spectral weight rather than shifting every line uniformly.</li>
+      <li><strong>Interpreting numerical $\eta$ as a lifetime:</strong> retarded regularization or plotting broadening does not automatically represent scattering.</li>
+      <li><strong>Using norm conservation as propagation convergence:</strong> an excessive time step still produces phase and peak-position errors.</li>
+      <li><strong>Treating zero padding as higher resolution:</strong> a denser frequency grid does not change the $2\pi/T$ information limit.</li>
+      <li><strong>Inverting the dielectric head alone:</strong> this discards local-field coupling.</li>
+      <li><strong>Subtracting an optical onset from a KS gap to obtain experimental binding:</strong> the continuum edge may not be the quasiparticle gap.</li>
+      <li><strong>Calling one model bound pole a material exciton:</strong> the real $k$ space, screening, kernel, starting gap, and convergence are still missing.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+## 原创练习 | Original Exercises
+
+1. **三类能隙。** 对给定 $E_g^{\mathrm{KS}}$、$E_g^{\mathrm{QP}}$ 和第一 bright neutral pole，写出哪些差值可称为 model binding，哪些可与实验 binding 比较，并说明 dark state 的影响。
+2. **两能级因果响应。** 从 $\alpha(\omega)=2\Omega d^2/[\Omega^2-(\omega+i\eta)^2]$ 推导实部、虚部、静态极限和正频吸收符号；验证对 $d^2$ 的线性缩放。
+3. **跃迁耦合。** 对 $2\times2$ transition Hamiltonian 求解析本征值和 mixing angle，证明正交旋转保持总偶极强度，并构造一个完全 dark 组合。
+4. **Dyson 响应。** 对标量 $\chi_0=A/(\omega-\Delta+i\eta)$ 与静态 kernel $K$ 求 interacting pole，比较正、负 $K$ 对峰位的影响并说明为何这不是统一 scissor shift。
+5. **Sternheimer 等价性。** 在三能级模型中对给定频率显式求 empty-state sum，再求投影线性方程，比较正/负频分量和 $\eta$ 依赖。
+6. **传播幺正性。** 推导 Cayley factor 模为 1；计算二阶 Taylor factor 重复 $N$ 步后的 norm，并确定给定误差阈值下允许的 $E\Delta t$。
+7. **有限时间分辨率。** 对两个间距 $\Delta\Omega$ 的正弦信号，估计分辨它们所需的最小 $T$；比较 rectangular、exponential 和其他窗口对 ringing 与峰宽的影响。
+8. **局域场。** 对一般对称 $2\times2$ 介电矩阵求逆，证明 $\epsilon_M=a-b^2/d$，并判断何时 $1/a$ 与 $(\epsilon^{-1})_{00}$ 的误差超过 10%。
+9. **有效激子。** 对 rank-one 吸引 kernel 用 variational principle 证明最低中性本征值随吸引强度不升高；说明为何相对于 KS edge 的 bound pole 仍不是实验 binding。
+10. **证据审查。** 审查“PBE band gap 1.2 eV、ALDA 第一峰 1.0 eV、展宽 0.1 eV，因此激子 binding 为 0.2 eV、寿命约 6.6 fs”这一结论，逐项列出缺失定义、证据和收敛检查。
+
+## 来源、原创内容与边界 | Sources, Original Material, and Boundaries
+
+- 【Martin 原书 | Martin source】Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Chapter 21, printed pp. 446–464, §§21.1–21.9。Chapter 7、Chapter 9、Chapter 20 与 Appendices D、E 只提供本章明确标出的静态起点、response、dielectric 和 field 接口。
+- 【原创教学模型 | Original teaching models】因果两能级极化率、二跃迁 kernel 混合、有限时间频谱、rank-one 有效激子与 $2\times2$ dielectric local-field 模型均为本站确定性教学模型。它们验证代数趋势、数值离散和交互行为，不代表真实分子、晶体、TDDFT 软件、GW/BSE 或实验数据。
+- 【方法边界 | Method boundary】GW/BSE、多参考激发、强场非线性、电子—离子非绝热动力学和 phonon-assisted absorption 仅用于说明适用范围，不在本章实现或验证。
+- 【未知/待验证】真实学习者测试、完整浏览器/辅助技术矩阵、现实材料参数敏感性和生产 TDDFT/GW/BSE 对照不在当前章节验证范围。只有实际完成的 GitHub Actions、Pages 与 live smoke run 才能记录为通过。

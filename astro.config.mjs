@@ -34,6 +34,7 @@ export default defineConfig({
         './src/styles/custom.css',
         './src/styles/chapter02.css',
         './src/styles/chapter04.css',
+        './src/styles/chapter05.css',
       ],
       sidebar: [
         { label: '开始', items: ['start-here', 'reading-system', 'book-map'] },

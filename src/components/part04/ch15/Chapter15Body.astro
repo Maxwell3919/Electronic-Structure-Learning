@@ -1,0 +1,60 @@
+---
+import Chapter15Contents from './Chapter15Contents.astro';
+import Chapter15SourceMap from './Chapter15SourceMap.astro';
+import Chapter15Orientation from './Chapter15Orientation.mdx';
+import Chapter15BasisAndGaussians from './Chapter15BasisAndGaussians.mdx';
+import Chapter15NumericalOrbitals from './Chapter15NumericalOrbitals.mdx';
+import Chapter15EnergyForces from './Chapter15EnergyForces.mdx';
+import Chapter15GreenMixed from './Chapter15GreenMixed.mdx';
+import Chapter15Review from './Chapter15Review.mdx';
+---
+
+<div class="chapter15-root">
+  <Chapter15Contents />
+  <Chapter15Orientation />
+  <Chapter15SourceMap />
+  <Chapter15BasisAndGaussians />
+  <Chapter15NumericalOrbitals />
+  <Chapter15EnergyForces />
+  <Chapter15GreenMixed />
+  <Chapter15Review />
+</div>
+
+<style is:global>
+  .chapter15-root,
+  .chapter15-root > *,
+  .chapter15-root .bilingual-section,
+  .chapter15-root .bilingual-section__grid,
+  .chapter15-root .bilingual-section__zh,
+  .chapter15-root .bilingual-section__en,
+  .chapter15-root .derivation-block,
+  .chapter15-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter15-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter15-root .chapter-source-map,
+  .chapter15-root .katex-display,
+  .chapter15-root pre,
+  .chapter15-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter15-root p,
+  .chapter15-root li,
+  .chapter15-root th,
+  .chapter15-root td {
+    overflow-wrap: anywhere;
+  }
+</style>
