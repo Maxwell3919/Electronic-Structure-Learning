@@ -1,0 +1,53 @@
+import BilingualSection from '../BilingualSection.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+import FermiOccupationExplorer from '../FermiOccupationExplorer.astro';
+
+<BilingualSection titleZh="热平衡占据与化学势" titleEn="Thermal occupations and the chemical potential">
+  <div class="bilingual-section__zh">
+
+单粒子方程给出可用态和能量；体系还需要占据数。对与粒子和能量热库平衡的费米子，平均占据为
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The one-particle equation supplies available states and energies; the system also requires occupation numbers. For fermions in equilibrium with particle and energy reservoirs, the mean occupation is
+
+  </div>
+</BilingualSection>
+
+$$
+f_i=\frac{1}{\exp[\beta(\varepsilon_i-\mu)]+1},
+\qquad \beta=\frac{1}{k_{\mathrm B}T}.
+$$
+
+<DerivationBlock
+  title="补充推导：单个费米能级的 grand-canonical 配分函数"
+  assumptions={[
+    '能级 i 的允许占据只有 n_i=0 或 1；',
+    '能级与温度 T、化学势 μ 的热库达到平衡；',
+    '推导分配既定能级的占据，不决定 ε_i 本身。',
+  ]}
+>
+
+单个能级的 grand-canonical 权重是 $\exp[-\beta n_i(\varepsilon_i-\mu)]$。因此
+
+$$
+\mathcal Z_i=\sum_{n_i=0}^{1}e^{-\beta n_i(\varepsilon_i-\mu)}
+=1+e^{-\beta(\varepsilon_i-\mu)}.
+$$
+
+平均占据按定义为
+
+$$
+\langle n_i\rangle=
+\frac{\sum_{n_i=0}^{1}n_i e^{-\beta n_i(\varepsilon_i-\mu)}}{\mathcal Z_i}
+=\frac{e^{-\beta(\varepsilon_i-\mu)}}{1+e^{-\beta(\varepsilon_i-\mu)}}.
+$$
+
+分子分母同乘 $e^{\beta(\varepsilon_i-\mu)}$，便得到 Fermi–Dirac 形式。三个直接检查是：$\varepsilon_i=\mu$ 时 $f_i=1/2$；$T\to0^+$ 时分布趋于阶跃；$\varepsilon_i-\mu\gg k_{\mathrm B}T$ 时恢复稀疏占据的 Boltzmann 极限。
+
+<p lang="en">Only occupations zero and one are allowed for a single fermionic level. Summing their grand-canonical weights gives the partition function, and evaluating the occupation average yields the Fermi–Dirac formula. The checks $f(\mu)=1/2$, the zero-temperature step, and the dilute Boltzmann limit follow directly. The derivation assigns occupations to prescribed levels and does not compute those levels.</p>
+
+</DerivationBlock>
+
+<FermiOccupationExplorer />
