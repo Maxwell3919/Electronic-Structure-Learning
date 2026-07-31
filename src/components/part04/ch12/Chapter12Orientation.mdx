@@ -1,0 +1,62 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reading-orientation" class="chapter-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章解决的判断问题" titleEn="The judgment problem addressed here" eyebrow="Orientation">
+  <div class="bilingual-section__zh">
+
+连续的独立粒子方程定义在无限维函数空间中，计算机却只能保存有限个数。Chapter 12 研究这一步如何发生：选择周期边界条件后，波函数可在平面波中展开；选择实空间网格后，微分算符可由有限 stencil、单元基函数或多分辨率函数表示。两条路线处理的是同一个连续方程，但截断参数、矩阵结构和误差传播不同。
+
+本章的目标不是给出一套完整的自洽 DFT 输入流程。读完后，应能从一个平面波或网格计算中辨认连续 Hamiltonian、有限矩阵、基组截断、网格分辨率和求解误差，并说明这些量为什么不能与赝势误差、交换关联泛函误差或科学结论混为一谈。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A continuous independent-particle equation is defined in an infinite-dimensional function space, whereas a computer can retain only finitely many numbers. Chapter 12 examines how that reduction is made. With periodic boundary conditions, a wavefunction can be expanded in plane waves. On a real-space grid, differential operators can be represented by finite stencils, element-local basis functions, or multiresolution functions. Both routes address the same continuous equation, but their truncation parameters, matrix structures, and error propagation differ.
+
+The aim is not to prescribe a complete self-consistent DFT input workflow. By the end, the reader should be able to identify the continuous Hamiltonian, finite matrix, basis cutoff, grid resolution, and solver error in a plane-wave or grid calculation, and explain why these must remain distinct from pseudopotential error, exchange-correlation functional error, and scientific interpretation.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="前置知识和章节边界" titleEn="Prerequisites and chapter boundary" kind="boundary">
+  <div class="bilingual-section__zh">
+
+前置知识是定态 Schrödinger 方程、晶格平移、复指数 Fourier 级数和线性代数中的 Hermitian 本征值问题。Chapter 4 已从平移对称性建立 Bloch 定理；本章给出 Fourier 表示下的另一条推导。Chapter 11 讨论赝势的构造和可转移性；本章只使用局域或非局域势作为 Hamiltonian 的给定部分。Chapter 13 才把这些表示嵌入第一性原理自洽循环。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The prerequisites are the stationary Schrödinger equation, lattice translations, complex Fourier series, and Hermitian eigenvalue problems. Chapter 4 derived Bloch's theorem from translation symmetry; this chapter supplies an alternative Fourier-space derivation. Chapter 11 treats pseudopotential construction and transferability; here a local or nonlocal potential is taken as a specified part of the Hamiltonian. Chapter 13 then places these representations inside an ab initio self-consistent cycle.
+
+  </div>
+</BilingualCallout>
+
+### 数学对象、计算对象与符号 | Mathematical and computational objects
+
+<div class="chapter-terms">
+  <div><dt>连续算符 | Continuous operator</dt><dd><code>Ĥ</code> acts on a stated function space and obeys stated boundary conditions.</dd></div>
+  <div><dt>有限矩阵 | Finite matrix</dt><dd><code>H<sub>GG′</sub>(k)</code> results only after a basis and cutoff have been chosen.</dd></div>
+  <div><dt>基函数 | Basis function</dt><dd><code>Ω<sup>−1/2</sup>e<sup>i(k+G)·r</sup></code> or a localized grid/element function; it is not an eigenstate by definition.</dd></div>
+  <div><dt>展开系数 | Expansion coefficient</dt><dd><code>c<sub>n k</sub>(G)</code> is a coordinate of a state in the selected basis.</dd></div>
+  <div><dt>截断误差 | Truncation error</dt><dd>The difference caused by omitting basis functions or high-frequency components.</dd></div>
+  <div><dt>离散误差 | Discretization error</dt><dd>The difference between a differential operator and its grid/element representation.</dd></div>
+  <div><dt>残差 | Residual</dt><dd><code>r = Hc − εc</code> measures an approximate eigenpair for the finite problem.</dd></div>
+  <div><dt>目标量 | Target observable</dt><dd>Total energy, force, band gap, density, or another declared output requiring its own convergence test.</dd></div>
+</div>
+
+<BilingualCallout titleZh="单位约定" titleEn="Unit convention" kind="derivation">
+  <div class="bilingual-section__zh">
+
+除非另行说明，推导采用 Hartree 原子单位，令 $\hbar=m_e=e=4\pi\epsilon_0=1$，因此自由电子动能为 $|\mathbf k+\mathbf G|^2/2$。可视化使用无量纲变量，以避免把教学曲线误认成具体材料结果。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Unless stated otherwise, derivations use Hartree atomic units, $\hbar=m_e=e=4\pi\epsilon_0=1$, so the free-electron kinetic energy is $|\mathbf k+\mathbf G|^2/2$. The visualizations use dimensionless variables to prevent the teaching curves from being mistaken for results of a particular material.
+
+  </div>
+</BilingualCallout>
