@@ -9,85 +9,45 @@ const componentId = 'ch21-two-level-polarizability';
 const width = 780;
 const height = 360;
 const pad = { left: 64, right: 28, top: 30, bottom: 56 };
-const defaults = {
-  transitionEnergy: 4,
-  strength: 1,
-  damping: 0.3,
-  frequency: 3.5,
-  maxFrequency: 10,
-};
-const spectrum = sampleTwoLevelSpectrum({
-  transitionEnergy: defaults.transitionEnergy,
-  strength: defaults.strength,
-  damping: defaults.damping,
-  maxFrequency: defaults.maxFrequency,
-  points: 501,
-});
-const maxMagnitude = Math.max(
-  ...spectrum.flatMap((point) => [Math.abs(point.real), Math.abs(point.imag)]),
-) * 1.08;
-const xScale = (frequency) => pad.left
-  + frequency / defaults.maxFrequency * (width - pad.left - pad.right);
-const yScale = (value) => pad.top
-  + (0.5 - value / (2 * maxMagnitude)) * (height - pad.top - pad.bottom);
-const realPoints = spectrum
-  .map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point.real).toFixed(2)}`)
-  .join(' ');
-const imaginaryPoints = spectrum
-  .map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point.imaginary).toFixed(2)}`)
-  .join(' ');
-const selected = twoLevelPolarizability({
-  frequency: defaults.frequency,
-  transitionEnergy: defaults.transitionEnergy,
-  strength: defaults.strength,
-  damping: defaults.damping,
-});
+const defaults = { transitionEnergy: 4, strength: 1, damping: 0.3, frequency: 3.5, maxFrequency: 10 };
+const spectrum = sampleTwoLevelSpectrum({ ...defaults, points: 501 });
+const maxMagnitude = Math.max(...spectrum.flatMap((point) => [Math.abs(point.real), Math.abs(point.imaginary)])) * 1.08;
+const xScale = (frequency) => pad.left + frequency / defaults.maxFrequency * (width - pad.left - pad.right);
+const yScale = (value) => pad.top + (0.5 - value / (2 * maxMagnitude)) * (height - pad.top - pad.bottom);
+const pathPoints = (key) => spectrum.map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point[key]).toFixed(2)}`).join(' ');
+const selected = twoLevelPolarizability(defaults);
 const maximum = locateSpectrumMaximum(spectrum, 'imaginary');
 ---
 
 <figure class="chapter-visual two-level-response" id={componentId}>
   <figcaption>
     <strong>因果两能级极化率 | Causal two-level polarizability</strong>
-    <span>原创教学模型：调节跃迁能量、矩阵元权重、展宽和探测频率，比较色散实部与吸收虚部。</span>
-    <span lang="en">Original teaching model: vary the transition energy, matrix-element weight, broadening, and probe frequency to compare the dispersive real part with the absorptive imaginary part.</span>
+    <span>原创模型：比较色散实部、吸收虚部、矩阵元权重和数值展宽。</span>
+    <span lang="en">Original model: compare the dispersive real part, absorptive imaginary part, matrix-element weight, and numerical broadening.</span>
   </figcaption>
 
   <div class="chapter-visual__controls">
-    <label>
-      跃迁能量 Ω | transition energy
-      <input data-transition type="range" min="1" max="8" step="0.1" value={defaults.transitionEnergy} />
-    </label>
-    <label>
-      权重 d² | matrix-element weight
-      <input data-strength type="range" min="0.2" max="2" step="0.05" value={defaults.strength} />
-    </label>
-    <label>
-      展宽 η | broadening
-      <input data-damping type="range" min="0.05" max="1" step="0.05" value={defaults.damping} />
-    </label>
-    <label>
-      探测频率 ω | probe frequency
-      <input data-frequency type="range" min="0" max={defaults.maxFrequency} step="0.05" value={defaults.frequency} />
-    </label>
+    <label>跃迁能量 Ω <input data-transition type="range" min="1" max="8" step="0.1" value={defaults.transitionEnergy} /></label>
+    <label>权重 d² <input data-strength type="range" min="0.2" max="2" step="0.05" value={defaults.strength} /></label>
+    <label>展宽 η <input data-damping type="range" min="0.05" max="1" step="0.05" value={defaults.damping} /></label>
+    <label>探测频率 ω <input data-frequency type="range" min="0" max={defaults.maxFrequency} step="0.05" value={defaults.frequency} /></label>
   </div>
 
   <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
     <title id={`${componentId}-title`}>两能级 retarded 极化率的实部和虚部</title>
-    <desc id={`${componentId}-desc`}>横轴为正频率。实部在共振附近改变符号，虚部保持非负并形成吸收峰。竖线标出当前探测频率。</desc>
+    <desc id={`${componentId}-desc`}>横轴为正频率。实部在共振附近改变符号，虚部保持非负并形成吸收峰。</desc>
     <line class="axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
     <line class="axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
     <line class="zero-line" data-zero x1={pad.left} x2={width - pad.right} y1={yScale(0)} y2={yScale(0)} />
-    <polyline class="response-curve response-curve--real" data-real points={realPoints} />
-    <polyline class="response-curve response-curve--imaginary" data-imaginary points={imaginaryPoints} />
+    <polyline class="response-curve response-curve--real" data-real points={pathPoints('real')} />
+    <polyline class="response-curve response-curve--imaginary" data-imaginary points={pathPoints('imaginary')} />
     <line class="selection-line" data-selection x1={xScale(defaults.frequency)} x2={xScale(defaults.frequency)} y1={pad.top} y2={height - pad.bottom} />
     <circle class="selection-marker selection-marker--real" data-real-marker cx={xScale(defaults.frequency)} cy={yScale(selected.real)} r="5" />
     <circle class="selection-marker selection-marker--imaginary" data-imaginary-marker cx={xScale(defaults.frequency)} cy={yScale(selected.imaginary)} r="5" />
     <text x={pad.left} y={height - 24} text-anchor="middle">0</text>
     <text x={width - pad.right} y={height - 24} text-anchor="middle">10</text>
-    <text x={(width + pad.left - pad.right) / 2} y={height - 6} text-anchor="middle">frequency ω (model units)</text>
-    <text transform={`translate(18 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">polarizability α(ω)</text>
-    <text class="curve-label" x={width - 190} y={pad.top + 24}>Re α / 色散</text>
-    <text class="curve-label" x={width - 190} y={pad.top + 46}>Im α / 吸收</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 6} text-anchor="middle">frequency ω</text>
+    <text transform={`translate(18 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">polarizability α</text>
   </svg>
 
   <div class="chapter-visual__readout" aria-live="polite">
@@ -101,191 +61,76 @@ const maximum = locateSpectrumMaximum(spectrum, 'imaginary');
   </div>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>采用 $e^{-i\omega t}$ convention，$\alpha(\omega)=2\Omega d^2/[\Omega^2-(\omega+i\eta)^2]$，只含一个中性跃迁，不含自洽 Hartree–XC kernel。</p>
-    <p><strong>验收：</strong>$\omega&gt;0$、$\eta&gt;0$ 时 $\mathrm{Im}\,\alpha\ge 0$；把 $d^2$ 乘因子 $c$ 时实部、虚部和吸收均乘 $c$；减小 $\eta$ 使峰变窄变高但不改变声明的跃迁能量；静态无阻尼极限为 $2d^2/\Omega$。</p>
-    <p><strong>边界：</strong>该图没有多跃迁、选择定则、局域场、电子—空穴 kernel、quasiparticle correction 或物理寿命。输入的 $\eta$ 是 retarded/numerical broadening，不是实验线宽预测。</p>
+    <p><strong>模型：</strong>采用 exp(−iωt) convention，α(ω)=2Ωd²/[Ω²−(ω+iη)²]；只含一个中性跃迁，不含自洽 Hartree–XC kernel。</p>
+    <p><strong>验收：</strong>正频率与正 η 下 Im α 非负；d² 乘因子 c 时实部、虚部和吸收均乘 c；减小 η 使峰变窄变高；无阻尼静态极限为 2d²/Ω。</p>
+    <p><strong>边界：</strong>η 是 retarded/numerical broadening，不是实验线宽预测；模型不含多跃迁、局域场、电子—空穴 kernel 或物理寿命。</p>
   </div>
 
-  <noscript>
-    <p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 Ω=4、d²=1、η=0.3 的实部/虚部曲线和 ω=3.5 的读数仍可见；控件不更新。</p>
-  </noscript>
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认曲线与读数仍可见；控件不更新。</p></noscript>
 </figure>
 
 <script>
-  import {
-    locateSpectrumMaximum,
-    sampleTwoLevelSpectrum,
-    twoLevelPolarizability,
-  } from '../../../data/part05/ch21ResponseModels.mjs';
-
+  import { locateSpectrumMaximum, sampleTwoLevelSpectrum, twoLevelPolarizability } from '../../../data/part05/ch21ResponseModels.mjs';
   const root = document.getElementById('ch21-two-level-polarizability');
   if (root) {
-    const transitionInput = root.querySelector('[data-transition]');
-    const strengthInput = root.querySelector('[data-strength]');
-    const dampingInput = root.querySelector('[data-damping]');
-    const frequencyInput = root.querySelector('[data-frequency]');
+    const inputs = {
+      transition: root.querySelector('[data-transition]'),
+      strength: root.querySelector('[data-strength]'),
+      damping: root.querySelector('[data-damping]'),
+      frequency: root.querySelector('[data-frequency]'),
+    };
     const realCurve = root.querySelector('[data-real]');
     const imaginaryCurve = root.querySelector('[data-imaginary]');
     const zeroLine = root.querySelector('[data-zero]');
     const selectionLine = root.querySelector('[data-selection]');
     const realMarker = root.querySelector('[data-real-marker]');
     const imaginaryMarker = root.querySelector('[data-imaginary-marker]');
-    const transitionOutput = root.querySelector('[data-transition-output]');
-    const strengthOutput = root.querySelector('[data-strength-output]');
-    const dampingOutput = root.querySelector('[data-damping-output]');
-    const frequencyOutput = root.querySelector('[data-frequency-output]');
-    const realOutput = root.querySelector('[data-real-output]');
-    const imaginaryOutput = root.querySelector('[data-imaginary-output]');
-    const peakOutput = root.querySelector('[data-peak-output]');
-
-    if (
-      transitionInput instanceof HTMLInputElement
-      && strengthInput instanceof HTMLInputElement
-      && dampingInput instanceof HTMLInputElement
-      && frequencyInput instanceof HTMLInputElement
-      && realCurve instanceof SVGPolylineElement
-      && imaginaryCurve instanceof SVGPolylineElement
-      && zeroLine instanceof SVGLineElement
-      && selectionLine instanceof SVGLineElement
-      && realMarker instanceof SVGCircleElement
-      && imaginaryMarker instanceof SVGCircleElement
-      && transitionOutput instanceof HTMLOutputElement
-      && strengthOutput instanceof HTMLOutputElement
-      && dampingOutput instanceof HTMLOutputElement
-      && frequencyOutput instanceof HTMLOutputElement
-      && realOutput instanceof HTMLOutputElement
-      && imaginaryOutput instanceof HTMLOutputElement
-      && peakOutput instanceof HTMLOutputElement
-    ) {
-      const width = 780;
-      const height = 360;
-      const pad = { left: 64, right: 28, top: 30, bottom: 56 };
-      const maxFrequency = 10;
-      const xScale = (frequency) => pad.left
-        + frequency / maxFrequency * (width - pad.left - pad.right);
-
+    const outputs = {
+      transition: root.querySelector('[data-transition-output]'), strength: root.querySelector('[data-strength-output]'),
+      damping: root.querySelector('[data-damping-output]'), frequency: root.querySelector('[data-frequency-output]'),
+      real: root.querySelector('[data-real-output]'), imaginary: root.querySelector('[data-imaginary-output]'), peak: root.querySelector('[data-peak-output]'),
+    };
+    if (Object.values(inputs).every((item) => item instanceof HTMLInputElement)
+      && realCurve instanceof SVGPolylineElement && imaginaryCurve instanceof SVGPolylineElement
+      && zeroLine instanceof SVGLineElement && selectionLine instanceof SVGLineElement
+      && realMarker instanceof SVGCircleElement && imaginaryMarker instanceof SVGCircleElement
+      && Object.values(outputs).every((item) => item instanceof HTMLOutputElement)) {
+      const width = 780; const height = 360; const pad = { left: 64, right: 28, top: 30, bottom: 56 }; const maxFrequency = 10;
+      const xScale = (frequency) => pad.left + frequency / maxFrequency * (width - pad.left - pad.right);
       const update = () => {
-        const transitionEnergy = Number(transitionInput.value);
-        const strength = Number(strengthInput.value);
-        const damping = Number(dampingInput.value);
-        const frequency = Number(frequencyInput.value);
-        const spectrum = sampleTwoLevelSpectrum({
-          transitionEnergy,
-          strength,
-          damping,
-          maxFrequency,
-          points: 501,
-        });
-        const maxMagnitude = Math.max(
-          ...spectrum.flatMap((point) => [Math.abs(point.real), Math.abs(point.imaginary)]),
-          1e-12,
-        ) * 1.08;
-        const yScale = (value) => pad.top
-          + (0.5 - value / (2 * maxMagnitude)) * (height - pad.top - pad.bottom);
-        const selected = twoLevelPolarizability({
-          frequency,
-          transitionEnergy,
-          strength,
-          damping,
-        });
-        const maximum = locateSpectrumMaximum(spectrum, 'imaginary');
+        const transitionEnergy = Number(inputs.transition.value); const strength = Number(inputs.strength.value);
+        const damping = Number(inputs.damping.value); const frequency = Number(inputs.frequency.value);
+        const spectrum = sampleTwoLevelSpectrum({ transitionEnergy, strength, damping, maxFrequency, points: 501 });
+        const maxMagnitude = Math.max(...spectrum.flatMap((point) => [Math.abs(point.real), Math.abs(point.imaginary)]), 1e-12) * 1.08;
+        const yScale = (value) => pad.top + (0.5 - value / (2 * maxMagnitude)) * (height - pad.top - pad.bottom);
+        const selected = twoLevelPolarizability({ frequency, transitionEnergy, strength, damping });
         const x = xScale(frequency);
-
-        realCurve.setAttribute('points', spectrum
-          .map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point.real).toFixed(2)}`)
-          .join(' '));
-        imaginaryCurve.setAttribute('points', spectrum
-          .map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point.imaginary).toFixed(2)}`)
-          .join(' '));
-        zeroLine.setAttribute('y1', String(yScale(0)));
-        zeroLine.setAttribute('y2', String(yScale(0)));
-        selectionLine.setAttribute('x1', String(x));
-        selectionLine.setAttribute('x2', String(x));
-        realMarker.setAttribute('cx', String(x));
-        realMarker.setAttribute('cy', String(yScale(selected.real)));
-        imaginaryMarker.setAttribute('cx', String(x));
-        imaginaryMarker.setAttribute('cy', String(yScale(selected.imaginary)));
-        transitionOutput.value = transitionEnergy.toFixed(1);
-        strengthOutput.value = strength.toFixed(2);
-        dampingOutput.value = damping.toFixed(2);
-        frequencyOutput.value = frequency.toFixed(2);
-        realOutput.value = selected.real.toFixed(4);
-        imaginaryOutput.value = selected.imaginary.toFixed(4);
-        peakOutput.value = maximum.frequency.toFixed(2);
+        realCurve.setAttribute('points', spectrum.map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point.real).toFixed(2)}`).join(' '));
+        imaginaryCurve.setAttribute('points', spectrum.map((point) => `${xScale(point.frequency).toFixed(2)},${yScale(point.imaginary).toFixed(2)}`).join(' '));
+        zeroLine.setAttribute('y1', String(yScale(0))); zeroLine.setAttribute('y2', String(yScale(0)));
+        selectionLine.setAttribute('x1', String(x)); selectionLine.setAttribute('x2', String(x));
+        realMarker.setAttribute('cx', String(x)); realMarker.setAttribute('cy', String(yScale(selected.real)));
+        imaginaryMarker.setAttribute('cx', String(x)); imaginaryMarker.setAttribute('cy', String(yScale(selected.imaginary)));
+        outputs.transition.value = transitionEnergy.toFixed(1); outputs.strength.value = strength.toFixed(2); outputs.damping.value = damping.toFixed(2);
+        outputs.frequency.value = frequency.toFixed(2); outputs.real.value = selected.real.toFixed(4); outputs.imaginary.value = selected.imaginary.toFixed(4);
+        outputs.peak.value = locateSpectrumMaximum(spectrum, 'imaginary').frequency.toFixed(2);
       };
-
-      transitionInput.addEventListener('input', update);
-      strengthInput.addEventListener('input', update);
-      dampingInput.addEventListener('input', update);
-      frequencyInput.addEventListener('input', update);
-      update();
+      Object.values(inputs).forEach((input) => input.addEventListener('input', update)); update();
     }
   }
 </script>
 
 <style>
-  .two-level-response {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    margin-inline: 0;
-    overflow-x: auto;
-  }
-
-  .two-level-response svg {
-    display: block;
-    width: 100%;
-    min-width: 36rem;
-    height: auto;
-  }
-
-  .axis {
-    stroke: currentColor;
-    stroke-width: 1.4;
-  }
-
-  .zero-line {
-    stroke: var(--sl-color-gray-4);
-    stroke-dasharray: 4 4;
-  }
-
-  .response-curve {
-    fill: none;
-    stroke-width: 2.5;
-  }
-
-  .response-curve--real {
-    stroke: currentColor;
-  }
-
-  .response-curve--imaginary {
-    stroke: var(--sl-color-accent-high);
-  }
-
-  .selection-line {
-    stroke: currentColor;
-    stroke-dasharray: 6 4;
-  }
-
-  .selection-marker {
-    stroke: var(--sl-color-gray-7);
-    stroke-width: 2;
-  }
-
-  .selection-marker--real {
-    fill: currentColor;
-  }
-
-  .selection-marker--imaginary {
-    fill: var(--sl-color-accent-high);
-  }
-
-  text {
-    fill: currentColor;
-    font-size: 14px;
-  }
-
-  .curve-label {
-    font-weight: 600;
-  }
+  .two-level-response { width: 100%; min-width: 0; max-width: 100%; margin-inline: 0; overflow-x: auto; }
+  .two-level-response svg { display: block; width: 100%; min-width: 36rem; height: auto; }
+  .axis { stroke: currentColor; stroke-width: 1.4; }
+  .zero-line { stroke: var(--sl-color-gray-4); stroke-dasharray: 4 4; }
+  .response-curve { fill: none; stroke-width: 2.5; }
+  .response-curve--real { stroke: currentColor; }
+  .response-curve--imaginary { stroke: var(--sl-color-accent-high); }
+  .selection-line { stroke: currentColor; stroke-dasharray: 6 4; }
+  .selection-marker { stroke: var(--sl-color-gray-7); stroke-width: 2; }
+  .selection-marker--real { fill: currentColor; }
+  .selection-marker--imaginary { fill: var(--sl-color-accent-high); }
+  text { fill: currentColor; font-size: 14px; }
 </style>
