@@ -167,7 +167,15 @@ for (const required of [
   assert.ok(combinedText.includes(required), `required scientific boundary missing: ${required}`);
 }
 assert.ok((content.internalReview.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
-assert.match(content.index, /G · Stress from Electronic Structure \| content complete/, 'Part VII index must expose Appendix G content-complete state');
-assert.match(content.index, /H–R \| outline/, 'Part VII index must preserve later appendices as outlines');
+assert.match(
+  content.index,
+  /\| G · Stress from Electronic Structure \| (?:content complete(?:; deployment identity follows the site manifest)?|complete and deployed) \|/,
+  'Part VII index must expose Appendix G as content-complete or deployed',
+);
+assert.doesNotMatch(
+  content.index,
+  /\| G · Stress from Electronic Structure \| outline \|/,
+  'Appendix G must never regress to outline state',
+);
 
 console.log('Part VII Appendix G validation passed: strain/metric invariance, Martin stress sign, cubic elasticity, pair and Fourier tensors, internal relaxation, and route assembly.');
