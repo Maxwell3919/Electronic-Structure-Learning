@@ -44,6 +44,28 @@ export const diagonalPreconditioner = ({ wavevector, screeningWavevector }) => {
   return wavevector ** 2 / denominator;
 };
 
+export const pawTeachingProfile = ({ radius, augmentationRadius = 1.6, amplitude = 0.7 }) => {
+  if (!Number.isFinite(radius) || radius < 0) {
+    throw new RangeError('radius must be finite and nonnegative');
+  }
+  if (!Number.isFinite(augmentationRadius) || augmentationRadius <= 0) {
+    throw new RangeError('augmentationRadius must be positive');
+  }
+  if (!Number.isFinite(amplitude)) {
+    throw new TypeError('amplitude must be finite');
+  }
+  const smooth = radius * Math.exp(-0.7 * radius);
+  const reduced = radius / augmentationRadius;
+  const window = reduced < 1 ? (1 - reduced) ** 2 : 0;
+  const correction = amplitude * window * Math.exp(-1.8 * radius) * Math.cos(4 * radius);
+  return {
+    smooth,
+    correction,
+    reconstructed: smooth + correction,
+    outsideAugmentation: radius >= augmentationRadius,
+  };
+};
+
 export const periodicImageTeachingError = ({ cellLength, decayLength = 2 }) => {
   if (!Number.isFinite(cellLength) || cellLength <= 0) {
     throw new RangeError('cellLength must be positive');
