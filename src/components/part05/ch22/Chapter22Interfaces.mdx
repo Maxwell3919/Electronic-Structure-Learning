@@ -1,0 +1,251 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import InterfaceLineupExplorer from './InterfaceLineupExplorer.astro';
+import PolarDiscontinuityExplorer from './PolarDiscontinuityExplorer.astro';
+
+<span id="section-22-6" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.6 界面：半导体 | Interfaces: Semiconductors
+
+<BilingualSection titleZh="原子级相干界面仍包含三个问题" titleEn="An atomically coherent interface still contains three problems" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+同价半导体可在保持四配位的情况下形成接近理想的非极性界面，但“缺陷少”不等于“问题只剩能带拼接”。至少需要同时处理：
+
+1. **应变状态**：外延层的面内晶格常由基底固定，体带边因静水和剪切/单轴应变移动或分裂；
+2. **局域界面偶极**：化学键和电荷重排改变两侧体样平均势的相对平台；
+3. **方法依赖的体带边**：半局域、hybrid、GW 和 SOC 对价带、导带和带隙的修正不同。
+
+因此带阶应由匹配结构和 reference 的组合计算得到，而不是把两个孤立材料的 band plot 用各自费米能或任意零点重叠。对绝缘异质结，价带阶与导带阶还必须分别报告；一个正确的 valence-band offset 不保证 conduction-band offset 正确，因为后者强烈依赖带隙误差。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Isovalent semiconductors can form nearly ideal nonpolar interfaces while preserving fourfold coordination, but “few defects” does not reduce the problem to pasting two band plots together. At least three ingredients remain:
+
+1. **Strain state**: an epitaxial layer usually inherits the substrate’s in-plane lattice, moving and splitting bulk band edges through hydrostatic and shear/uniaxial strain;
+2. **Local interface dipole**: bonding and charge rearrangement shift the relative bulk-like averaged-potential plateaus;
+3. **Method-dependent bulk edges**: semilocal, hybrid, GW, and SOC corrections affect valence, conduction, and gap differently.
+
+Offsets must therefore combine matched structures and references rather than overlaying isolated band plots using separate Fermi levels or arbitrary zeros. Valence and conduction offsets must be reported separately; a reliable valence offset does not guarantee a reliable conduction offset because the latter is often much more gap sensitive.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="界面带阶的体项与 lineup 分解 | Bulk and lineup decomposition of a band offset"
+  assumptions={[
+    'A、B 体计算使用界面中的应变状态和同一理论层级；',
+    '界面超胞两侧存在可识别的体样平均势平台；',
+    '界面局域且没有未处理的宏观电场或空间电荷区。',
+  ]}
+>
+
+令 $E_v^A$、$E_v^B$ 为两种应变态材料的价带顶，$\bar V^A$、$\bar V^B$ 为各自体计算中的平均参考势。界面计算给出远离界面的平台差
+
+$$
+\Delta V_{B-A}
+=
+\bar V^{B,\mathrm{int}}-\bar V^{A,\mathrm{int}}.
+$$
+
+有向价带阶（B 减 A）为
+
+$$
+\boxed{
+\Delta E_v^{B-A}
+=
+\left(E_v^B-\bar V^B\right)
+-
+\left(E_v^A-\bar V^A\right)
++
+\Delta V_{B-A}.
+}
+$$
+
+导带阶同理：
+
+$$
+\Delta E_c^{B-A}
+=
+\left(E_c^B-\bar V^B\right)
+-
+\left(E_c^A-\bar V^A\right)
++
+\Delta V_{B-A}.
+$$
+
+若先用未应变体带边，再显式加 deformation-potential 项，必须与直接应变态体计算等价到声明的近似阶。lineup 常由半局域界面计算较稳健地给出，而更高层方法主要修正体带边；但“lineup 对方法不变”是需要检查的近似，不是严格定理。若两侧没有平台、有内建场、自由载流子或极性层序，上式需改为局域带边/宏观电势的空间依赖问题。
+
+The offset is the difference of bulk band edges relative to their own bulk averaged potentials plus the self-consistent interface lineup. Strain must be included either directly or through a declared deformation-potential correction. A method-independent lineup is an approximation to test, not a theorem; macroscopic fields or space charge invalidate a simple two-plateau formula.
+
+</DerivationBlock>
+
+<InterfaceLineupExplorer />
+
+<BilingualSection titleZh="应变、简并劈裂与能带类型" titleEn="Strain, degeneracy splitting, and alignment type" eyebrow="Interpretation boundary">
+  <div className="bilingual-section__zh">
+
+外延应变既改变平均带边，也可分裂原本简并的价带或导带。仅报告一个 scalar “VBM” 会隐藏其轨道、方向和 SOC 组成。界面分类 Type I/II/III 取决于所有相关带边的有向关系，还可能受量子限域、层厚和电场改变。对金属化超胞，若带边已不再形成绝缘子参考，继续用未接触单层的 Type-I/II/III 标签需要明确只是预接触或局域投影描述。
+
+层分 PDOS 可帮助定位态来自哪一侧，但其峰边受 smearing、投影半径、基组和有限层数影响。真正的 offset 最好由体参考 + lineup 构造，并用深层 core level、平均势或局域 Wannier/轨道参考进行交叉检查。core-level alignment 也需要确认化学位移和 final-state/准粒子效应是否可忽略。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Epitaxial strain moves average band edges and can split initially degenerate valence or conduction manifolds. A single scalar “VBM” may hide orbital, directional, and SOC character. Type-I/II/III classification depends on every relevant directed edge and may change with confinement, layer thickness, and field. Once the explicit supercell becomes metallic and no insulating edge reference survives, labels inherited from isolated constituents must be declared as pre-contact or local-projection descriptions.
+
+Layer-resolved PDOS helps locate states, but apparent edges depend on smearing, projection radius, basis, and finite thickness. A robust offset uses bulk references plus lineup and cross-checks with deep core levels, averaged potentials, or localized orbital/Wannier references. Core-level alignment itself requires a boundary on chemical shifts and final-state or quasiparticle effects.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="界面带阶的最低复现记录 | Minimum reproducibility record for an interface offset" tone="note">
+  <div className="bilingual-callout__grid">
+    <div>
+
+- 界面取向、终止、化学计量、registry 和超胞匹配；
+- 面内应变与法向弛豫，是否保持极性/非极性；
+- 两侧体层数和平台判据；
+- $\bar V$ 或 core/Wannier reference 的定义；
+- SOC、磁性、功能、准粒子/带隙修正；
+- valence 和 conduction offset 的有向 convention；
+- slab/界面厚度、k 网格、cutoff、smearing 与电场边界收敛。
+
+    </div>
+    <div lang="en">
+
+- interface orientation, termination, stoichiometry, registry, and supercell match;
+- in-plane strain and normal relaxation, including polar/nonpolar character;
+- bulk-like thickness and plateau criterion on both sides;
+- definition of the averaged-potential, core, or Wannier reference;
+- SOC, magnetism, functional, quasiparticle, and gap correction;
+- directed convention for valence and conduction offsets;
+- convergence of thickness, k mesh, cutoff, smearing, and electrical boundary.
+
+    </div>
+  </div>
+</BilingualCallout>
+
+<span id="section-22-7" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.7 界面：氧化物 | Interfaces: Oxides
+
+<BilingualSection titleZh="绝缘体—绝缘体界面为何可以导电" titleEn="Why an insulator–insulator interface can conduct" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+STO/LAO 等氧化物界面把结构、形式价态、缺陷、强关联、晶格极化和量子限域耦合在一起。沿 (001) 方向，SrO/TiO₂ 层可按形式电荷视为中性，而 LaO/AlO₂ 层形成交替正负平面。若把理想离子层无限堆叠且不允许补偿，电场在每个双层具有同一宏观平均，电子势能随厚度线性增长，即“极性灾难”模型。
+
+系统必须通过某种方式降低宏观电势：电子从表面/另一界面转移；氧空位、阳离子互扩散或非化学计量产生带电缺陷；晶格极化改变局域场；表面吸附/电极提供电荷；薄膜有限厚度暂时承受剩余场。理想形式计数可推出无缺陷、厚层极限所需的补偿量，但不能唯一确定实验样品中的载流子来源或浓度。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Oxide interfaces such as STO/LAO couple structure, formal valence, defects, strong correlation, lattice polarization, and quantum confinement. Along (001), SrO/TiO₂ layers may be formally neutral, whereas LaO/AlO₂ layers alternate positive and negative. If ideal ionic planes are stacked indefinitely without compensation, each bilayer retains the same macroscopic average field and the electron potential energy grows linearly with thickness—the polar-catastrophe model.
+
+The system must reduce this buildup through electronic transfer from a surface or second interface, charged defects such as oxygen vacancies or cation intermixing, lattice polarization, adsorbates/electrodes, or finite-thickness residual fields. Ideal formal counting constrains the compensation of a thick defect-free limit, but it does not uniquely identify the carrier source or concentration in an experiment.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="交替带电平面的场与半补偿极限 | Field of alternating charged planes and the half-compensation limit"
+  assumptions={[
+    '每层视为无限均匀带电平面；',
+    '相邻层间距相同，介电常数取标量；',
+    '只讨论经典宏观静电，不包含带宽、缺陷形成能或晶格极化。',
+  ]}
+>
+
+跨过面电荷 $\sigma_j$，法向电场跳变
+
+$$
+E_{j+1}-E_j=\frac{\sigma_j}{\epsilon}
+$$
+
+（SI 中为 $\sigma_j/(\epsilon_0\epsilon_r)$）。层间势差为
+
+$$
+V_{j+1}-V_j=-E_{j+1}d.
+$$
+
+对交替 $+\sigma,-\sigma$ 平面且界面前场为零，场在 $0$ 与 $\sigma/\epsilon$ 之间交替；每两个层间距的净势变化为
+
+$$
+\Delta V_{\mathrm{bilayer}}
+=-\frac{\sigma d}{\epsilon},
+$$
+
+故厚度增加时势线性发散。若在界面加入 $-\sigma/2$，场改为 $-\sigma/(2\epsilon)$ 与 $+\sigma/(2\epsilon)$ 交替，每个双层的平均势变化为零。于是“半电子/胞”是理想平面模型消除宏观斜率的结果。
+
+该推导不等于真实电子密度必须精确为半电子：有限厚度、离子位移、非线性介电、缺陷、表面、多个界面和能带填充都会改变自洽分布。形式极化语言还能把同一问题写成界面束缚电荷差；branch choice 和极化量子留给 Chapter 24。
+
+Alternating charged sheets generate a constant bilayer-averaged field and a linearly growing potential. An ideal compensating sheet of minus one-half the layer charge makes the fields alternate symmetrically and removes the bilayer-averaged slope. This electrostatic limit does not uniquely fix the real self-consistent carrier density or mechanism.
+
+</DerivationBlock>
+
+<PolarDiscontinuityExplorer />
+
+<BilingualSection titleZh="区分补偿机制需要什么证据" titleEn="Evidence required to distinguish compensation mechanisms" eyebrow="Mechanism identification">
+  <div className="bilingual-section__zh">
+
+“界面金属化”只说明费米能附近存在占据态，不说明电子来自理想极性重构、氧空位、互扩散还是表面。区分机制至少需要组合：元素/缺陷敏感结构表征；厚度和氧分压依赖；载流子面密度与迁移率；空间分辨价态/电荷；宏观势或 core-level 弯曲；缺陷形成能及化学势；不同补偿模型的总能和谱；必要时磁性、超导或输运的独立测量。
+
+DFT 超胞中加入一个氧空位并得到金属态，只证明该特定缺陷模型可以供电子；未比较缺陷形成、浓度、位置、竞争缺陷和实验条件时，不能证明真实样品由它主导。相反，理想无缺陷超胞产生 $0.5e$ 也不证明实验载流子达到该值。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+“Interface metallization” establishes occupied states near the Fermi level, not whether electrons originate from an ideal polar reconstruction, oxygen vacancies, intermixing, or a surface. Mechanism discrimination combines defect-sensitive structure, thickness and oxygen-pressure dependence, sheet density and mobility, spatially resolved valence/charge, electrostatic or core-level bending, defect formation energies and chemical potentials, total energies and spectra of competing compensation models, and independent magnetic, superconducting, or transport evidence where relevant.
+
+A metallic oxygen-vacancy supercell only shows that the declared defect model can donate electrons. Without formation energies, concentration, site competition, and experimental conditions it does not establish dominance in a real sample. Conversely, an ideal defect-free supercell with $0.5e$ compensation does not prove that the experimental carrier density reaches that value.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="STO 的轨道子带、限域和 Rashba" titleEn="STO orbital subbands, confinement, and Rashba coupling" eyebrow="Orbital interpretation">
+  <div className="bilingual-section__zh">
+
+STO 导带底主要来自 Ti $t_{2g}$ 轨道，可用 $d_{xy}$、$d_{xz}$、$d_{yz}$ 描述。界面平行方向中，$d_{xy}$ 在 x、y 都有较强跃迁，形成较各向同性的宽带；$d_{xz}$ 和 $d_{yz}$ 分别在一个方向宽、另一个方向窄。法向限域、晶场和结构畸变可使 $d_{xy}$ 与 $d_{xz/yz}$ 子带相对移动。SOC 和界面反演破缺在交叉处产生 avoided crossings 和 Rashba 型自旋纹理。
+
+从层分带图看到三组轨道不能自动得到二维电子气的真实面密度、迁移率或输运通道。需要费米面、占据积分、散射和多带输运；强 SOC 混合区的“轨道标签”也只是连续演化的投影权重，而非严格量子数。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The STO conduction edge is mainly Ti $t_{2g}$, described as $d_{xy}$, $d_{xz}$, and $d_{yz}$. In the interface plane, $d_{xy}$ has strong hopping in both x and y and forms a relatively isotropic broad band; $d_{xz}$ and $d_{yz}$ are broad in one direction and narrow in the other. Normal confinement, crystal fields, and structural distortion shift the relative subbands. SOC and broken interface inversion create avoided crossings and Rashba-like spin textures.
+
+Three orbital-projected band groups do not by themselves determine the real two-dimensional carrier density, mobility, or transport channels. Fermi surfaces, occupation integrals, scattering, and multiband transport are required. In strongly mixed SOC regions an orbital label is a continuously varying projection weight rather than an exact quantum number.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="氧化物界面的主张阶梯 | Claim ladder for oxide interfaces" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+
+1. 理想形式层序存在极性不连续。  
+2. 某超胞模型出现宏观势或电子补偿。  
+3. 某缺陷/互扩散模型在给定化学势下稳定。  
+4. 计算载流子空间/轨道分布与实验一致。  
+5. 具体补偿机制得到多种独立证据支持。  
+6. 磁性、超导或其他低温现象另有收敛计算和实验支持。
+
+前一项不能自动推出后一项。
+
+    </div>
+    <div lang="en">
+
+1. The ideal formal layer sequence contains a polar discontinuity.  
+2. A declared supercell develops electrostatic or electronic compensation.  
+3. A defect/intermixing model is stable at specified chemical potentials.  
+4. Calculated spatial/orbital carrier distributions agree with experiment.  
+5. A specific compensation mechanism is supported by multiple independent probes.  
+6. Magnetism, superconductivity, or other low-temperature phenomena require separate converged calculations and experiments.
+
+No earlier rung automatically establishes the next.
+
+    </div>
+  </div>
+</BilingualCallout>
