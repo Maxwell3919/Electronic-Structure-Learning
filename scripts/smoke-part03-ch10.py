@@ -135,6 +135,21 @@ def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
         pass
 
 
+def horizontal_overflow_px(driver: webdriver.Chrome) -> float:
+    return float(
+        driver.execute_script(
+            "return document.documentElement.scrollWidth - window.innerWidth;"
+        )
+    )
+
+
+def assert_no_horizontal_overflow(driver: webdriver.Chrome, context: str) -> float:
+    overflow = horizontal_overflow_px(driver)
+    if overflow > 2:
+        fail(f"{context} has horizontal page overflow of {overflow}px")
+    return overflow
+
+
 def assert_soc_unit_convention(driver: webdriver.Chrome, context: str) -> tuple[WebElement, WebElement]:
     audits = driver.find_elements(By.CSS_SELECTOR, "[data-spin-orbit-unit-convention]")
     if len(audits) != 1:
@@ -184,6 +199,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail(f"Unexpected Chapter 10 page title: {driver.title}")
         if grid_column_count(driver, ".bilingual-section__grid") != 2:
             fail("Chapter 10 desktop bilingual layout is not two columns")
+        desktop_overflow = assert_no_horizontal_overflow(driver, "Chapter 10 desktop page")
 
         katex_count = len(driver.find_elements(By.CSS_SELECTOR, ".katex"))
         if katex_count < 35:
@@ -264,6 +280,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "title": driver.title,
             "katex_count": katex_count,
             "contents_links": len(contents_links),
+            "horizontal_overflow_px": desktop_overflow,
             "visuals": len(visuals),
             "visualization_contracts": len(contracts),
             "spin_orbit_unit_convention": {
@@ -293,12 +310,14 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
             narrow_audit,
         )
+        narrow_overflow = assert_no_horizontal_overflow(driver, "Chapter 10 narrow page")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-narrow.png"))
         driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-narrow.png"))
         report["narrow"] = {
             "viewport": [390, 844],
             "bilingual_columns": 1,
+            "horizontal_overflow_px": narrow_overflow,
             "spin_orbit_unit_convention": True,
         }
     except Exception:
@@ -327,10 +346,12 @@ def no_javascript_smoke(report: dict) -> None:
             "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
             no_js_audit,
         )
+        no_js_overflow = assert_no_horizontal_overflow(driver, "Chapter 10 no-JavaScript page")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-no-javascript.png"))
         driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-no-javascript.png"))
         report["no_javascript"] = {
+            "horizontal_overflow_px": no_js_overflow,
             "visualization_contracts": len(contracts),
             "static_svg_count": len(static_svgs),
             "spin_orbit_unit_convention": True,
