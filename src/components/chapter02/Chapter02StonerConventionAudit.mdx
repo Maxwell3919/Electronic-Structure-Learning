@@ -9,7 +9,7 @@ import BilingualCallout from '../BilingualCallout.astro';
 >
   <div class="bilingual-section__zh">
 
-Martin 在式 (2.2) 前把自旋相关势写进 Hamiltonian 的项记为 $m(\mathbf r)V_m(\mathbf r)$，因此定义
+Martin 在式 (2.2) 前把自旋相关势记为 $V_m$，并写出
 
 $$
 m(\mathbf r)=-\frac{\delta E}{\delta V_m(\mathbf r)},
@@ -18,29 +18,37 @@ m(\mathbf r)=-\frac{\delta E}{\delta V_m(\mathbf r)},
 =-\frac{\delta m(\mathbf r)}{\delta V_m(\mathbf r')}.
 $$
 
-在这个符号下，促进正磁化的共轭外场应定义为 $h\equiv -V_m$。若在线性、局域的 Stoner 教学模型中写
+同一节在式 (2.3) 前又写 $V_m=V_m^{\mathrm{ext}}+I m$，并给出
+
+$$
+\chi=\frac{N(0)}{1-I N(0)}.
+$$
+
+而 Appendix D 的式 (D.11) 对扰动 $\delta\hat H=V_m^{\mathrm{ext}}m$ 采用 $\chi=\delta m/\delta V_m^{\mathrm{ext}}$。这些式子若把所有 $V_m$ 和 $I$ 都视为完全相同的带符号变量，就不能直接串成一条推导；它们反映了未显式写出的共轭场符号切换，或等价的 kernel 符号重定义。这里不擅自断定作者意图，也不把它宣布为已确认勘误。
+
+本站后续推导改用单独声明的“促进正磁化”的源场 $h$，并把正的 Stoner 参数 $I$ 定义为增强该响应的 kernel：
 
 $$
 m=\chi_0 h_{\mathrm{eff}},
 \qquad
-h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m,
+h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m.
 $$
 
-则
+于是
 
 $$
-\chi\equiv\frac{m}{h_{\mathrm{ext}}}
+\chi_h\equiv\frac{m}{h_{\mathrm{ext}}}
 =\frac{\chi_0}{1-I\chi_0}.
 $$
 
-采用 Martin 在式 (2.3) 附近的简化归一化 $\chi_0=N(0)$，便得到 $\chi=N(0)/[1-I N(0)]$。这里的 $N(0)$、$I$ 与 $\chi$ 已吸收所选自旋计数、磁矩和单位因子。其他资料可能使用单自旋或双自旋 DOS，并显式保留 $\mu_B^2$；此时 $I$ 也必须相应重定义。只有在同一约定内，$I N(0)=1$ 的不稳定判据才可直接比较。
+若要与式 (2.2) 的变量对应，可以取 $h=-V_m$；但此时 kernel 也必须同步变换，$I_h=-I_{V_m}$。不能只翻转外场而继续沿用同一个带符号 $I$。采用 Martin 在式 (2.3) 附近的简化归一化 $\chi_0=N(0)$，便得到 Stoner 形式。这里的 $N(0)$、$I$ 与 $\chi$ 已吸收所选自旋计数、磁矩和单位因子；其他资料可能使用单自旋或双自旋 DOS，并显式保留 $\mu_B^2$。只有同时变换 DOS、$I$ 和磁场单位后，$I N(0)=1$ 的判据才可比较。
 
-不能一边沿用式 (2.2) 的 $m=-\delta E/\delta V_m$，一边未经说明写成 $m=\chi_0V_m$。后者实际上把 $V_m$ 重新当成了促进正磁化的场 $h$。这一审计不改变 Stoner 平均场结论，只明确中间变量的符号和归一化。
+这一审计不改变 Stoner 平均场的物理结论：正反馈使顺磁响应增强，分母趋近零表示该参考态的平均场失稳。它只禁止混用未声明的场符号、kernel 符号和 DOS 归一化。
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
-Immediately before Eq. (2.2), Martin writes the spin-dependent contribution to the Hamiltonian as $m(\mathbf r)V_m(\mathbf r)$ and therefore defines
+Immediately before Eq. (2.2), Martin denotes the spin-dependent potential by $V_m$ and writes
 
 $$
 m(\mathbf r)=-\frac{\delta E}{\delta V_m(\mathbf r)},
@@ -49,24 +57,32 @@ m(\mathbf r)=-\frac{\delta E}{\delta V_m(\mathbf r)},
 =-\frac{\delta m(\mathbf r)}{\delta V_m(\mathbf r')}.
 $$
 
-With this sign convention, the conjugate field that favours positive magnetization is $h\equiv -V_m$. A local linear Stoner teaching model can then be written consistently as
+The same section then writes $V_m=V_m^{\mathrm{ext}}+I m$ immediately before Eq. (2.3) and gives
+
+$$
+\chi=\frac{N(0)}{1-I N(0)}.
+$$
+
+Appendix D, Eq. (D.11), instead uses $\chi=\delta m/\delta V_m^{\mathrm{ext}}$ for the perturbation $\delta\hat H=V_m^{\mathrm{ext}}m$. These relations cannot be chained while treating every occurrence of $V_m$ and $I$ as the same signed variables. They expose an unstated change of conjugate-field sign, or an equivalent redefinition of the kernel sign. The site records this as a source-convention ambiguity without claiming knowledge of the intended correction or declaring a confirmed erratum.
+
+The derivation below therefore introduces a separately declared magnetizing source $h$, defined to favour positive magnetization, and a positive Stoner parameter $I$ defined as the kernel that enhances that response:
 
 $$
 m=\chi_0 h_{\mathrm{eff}},
 \qquad
-h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m,
+h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m.
 $$
 
-which gives
+It follows that
 
 $$
-\chi\equiv\frac{m}{h_{\mathrm{ext}}}
+\chi_h\equiv\frac{m}{h_{\mathrm{ext}}}
 =\frac{\chi_0}{1-I\chi_0}.
 $$
 
-Using Martin's simplified normalization near Eq. (2.3), $\chi_0=N(0)$, yields $\chi=N(0)/[1-I N(0)]$. Here $N(0)$, $I$, and $\chi$ absorb the chosen spin counting, magnetic-moment factors, and units. Other conventions use a per-spin or two-spin DOS and may retain factors such as $\mu_B^2$ explicitly; $I$ must then be transformed consistently. The instability criterion $I N(0)=1$ is directly comparable only within one matched convention.
+To map this notation to Eq. (2.2), one may set $h=-V_m$, but the kernel must then transform as well: $I_h=-I_{V_m}$. Flipping only the source field while retaining the same signed $I$ is inconsistent. Using Martin's simplified normalization near Eq. (2.3), $\chi_0=N(0)$, gives the Stoner form. Here $N(0)$, $I$, and $\chi$ absorb the chosen spin counting, magnetic-moment factors, and units. Other conventions use a per-spin or two-spin DOS and may retain factors such as $\mu_B^2$ explicitly. The criterion $I N(0)=1$ is comparable only after the DOS, $I$, and field units have been transformed consistently.
 
-It is inconsistent to retain Eq. (2.2), $m=-\delta E/\delta V_m$, while silently writing $m=\chi_0V_m$. The latter has implicitly renamed the positive-magnetization field $h$ as $V_m$. This audit leaves the Stoner mean-field conclusion unchanged and makes the intermediate sign and normalization explicit.
+This audit does not alter the Stoner mean-field conclusion: positive feedback enhances the paramagnetic response, and a vanishing denominator signals a mean-field instability of the reference state. It only prohibits mixing undeclared source-field signs, kernel signs, and DOS normalizations.
 
   </div>
 </BilingualCallout>
