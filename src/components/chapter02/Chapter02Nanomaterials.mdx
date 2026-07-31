@@ -1,0 +1,76 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="section-2-13">2.13 纳米材料：分子与凝聚态之间 | Nanomaterials: Between Molecules and Condensed Matter</h2>
+
+<BilingualSection titleZh="尺寸成为新的控制变量" titleEn="Size becomes an additional control variable" eyebrow="【Martin 原书 | Martin source】 §2.13 · pp. 48–50">
+  <div class="bilingual-section__zh">
+
+纳米团簇既具有分子的离散能级和有限原子数，又能像凝聚态体系一样形成随尺寸变化的结构序列。有限尺寸量子化使能级间隔、带隙和光学跃迁随粒径改变；高表面原子比例使重构、终止、缺陷和环境成为主导因素。因而不能把纳米颗粒简单视作缩小的体相晶胞。
+
+实验常难以直接确定小团簇的原子结构，理论需要在多个低能异构体之间排序。Martin 以 Si$_n$ 团簇为例说明高对称和低对称结构可以非常接近，而不同理论近似可能改变排序。可靠结论需要全局结构搜索、零点与有限温度效应、多个电荷/自旋态以及与光谱或散射实验的联合比较。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Nanoclusters have the discrete levels and finite atom count of molecules while forming size-dependent structural sequences like condensed matter. Finite-size quantization changes level spacings, gaps, and optical transitions with particle size. A large fraction of surface atoms makes reconstruction, termination, defects, and environment dominant. A nanoparticle therefore cannot be treated simply as a scaled-down bulk unit cell.
+
+Experiments often cannot determine the atomic structure of a small cluster directly, so theory must rank multiple low-energy isomers. Martin uses Si$_n$ clusters to show that high- and low-symmetry structures may compete closely and that different theoretical approximations can change their ordering. A reliable conclusion requires global structural search, zero-point and finite-temperature effects, multiple charge and spin states, and joint comparison with spectroscopy or scattering.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="量子限域与表面终止" titleEn="Quantum confinement and surface termination">
+  <div class="bilingual-section__zh">
+
+当电子或空穴的特征长度与颗粒尺寸可比时，允许波矢离散化，能级间隔通常增大。半导体纳米结构由此可以获得比体相更大的有效带隙；尺寸、形状和表面破坏体相选择定则，也可能增强原本很弱的发光。这个图像只有在内部仍保留近体相区域、表面悬挂键被适当终止且激子/介电限域得到处理时才成立。
+
+未钝化表面可在带隙内产生局域态，完全改变最低激发。氢、氧或配体终止不仅“删除悬挂键”，也引入界面偶极、应变和化学杂化。计算带隙随尺寸变化时，必须固定并报告终止化学、结构弛豫、电荷态、温度和激发方法。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+When the characteristic length of an electron or hole becomes comparable to the particle size, allowed wavevectors become discrete and level spacings generally increase. Semiconductor nanostructures can therefore have larger effective gaps than the bulk. Size, shape, and surface break bulk selection rules and may strengthen otherwise weak emission. This picture applies only when a bulk-like interior remains, dangling bonds are appropriately terminated, and excitonic and dielectric confinement are treated.
+
+An unterminated surface can create localized in-gap states that completely change the lowest excitation. Hydrogen, oxygen, or ligand termination does more than remove dangling bonds: it introduces interface dipoles, strain, and chemical hybridization. A calculation of gap versus size must hold termination chemistry, structural relaxation, charge state, temperature, and excitation method under explicit control.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="碳纳米结构与维度/拓扑的交叉" titleEn="Carbon nanostructures at the intersection of dimensionality and topology">
+  <div class="bilingual-section__zh">
+
+富勒烯、纳米管、石墨烯和石墨烯纳米带展示了相同 $sp^2$ 碳网络如何通过曲率、边界和尺寸形成不同电子结构。纳米管可由石墨烯布里渊区的卷绕量子化作为起点理解，但小半径曲率会混合 $\sigma$ 与 $\pi$ 轨道。纳米带的宽度、边缘终止和重复图案决定能隙、边缘态和可能的拓扑端态。
+
+这里的简化映射提供解释，不替代显式计算。曲率、边缘重构、基底、缺陷、自旋极化和电子关联都可能改变结果。观察到端部局域态也不能单独证明拓扑；需要体/无限带模型的指标、能隙、保护对称性和端态连接关系。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Fullerenes, nanotubes, graphene, and graphene nanoribbons show how the same $sp^2$ carbon network produces different electronic structures through curvature, boundaries, and size. Nanotubes can be understood initially by quantizing graphene wavevectors around the rolled circumference, but small-radius curvature mixes $\sigma$ and $\pi$ orbitals. Nanoribbon width, edge termination, and repeated pattern determine gaps, edge states, and possible topological end states.
+
+These simplified mappings provide interpretation rather than replacing explicit calculations. Curvature, edge reconstruction, substrate, defects, spin polarization, and electron correlation can all change the result. An observed end-localized state does not by itself prove topology; a bulk or infinite-band invariant, a gap, protecting symmetry, and state connectivity are also required.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="尺寸序列计算的验证要求" titleEn="Validation requirements for a size series" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>每个尺寸都进行足够广的异构体搜索，而非从上一尺寸机械加原子；</li>
+      <li>统一处理终止、总电荷、自旋多重度、真空与边界条件；</li>
+      <li>区分单粒子/Kohn–Sham gap、基本 gap、光学 gap 与发光峰；</li>
+      <li>对低能异构体计算统计权重，避免用一个零温最低结构解释高温实验；</li>
+      <li>用可观测量（光谱、离化势、电子亲和能、散射特征）验证结构排序。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>perform a sufficiently broad isomer search at each size rather than adding atoms mechanically to the previous minimum;</li>
+      <li>treat termination, total charge, spin multiplicity, vacuum, and boundary conditions consistently;</li>
+      <li>separate a one-particle or Kohn–Sham gap from the fundamental gap, optical gap, and emission peak;</li>
+      <li>include statistical weights of low-energy isomers when interpreting finite-temperature experiments;</li>
+      <li>validate structural ranking against observables such as spectra, ionization energies, electron affinities, or scattering signatures.</li>
+    </ul>
+  </div>
+</BilingualCallout>
