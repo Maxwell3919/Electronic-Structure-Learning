@@ -70,6 +70,15 @@ for (const tolerance of [1e-4, 1e-6, 1e-8]) {
   close((q1 ** 2 / 2) / (q2 ** 2 / 2), 4, 1e-12, 'Kinetic-energy proxy scaling');
 }
 
+// The logarithmic tail axis must use the conventional orientation: the largest
+// tail (log10 T = 0) is at the top, and smaller tails descend toward -12.
+const hardnessSvgY = (tail) => 35 + (-Math.log10(Math.max(tail, 1e-12)) / 12) * 245;
+close(hardnessSvgY(1), 35, 1e-13, 'Hardness axis top at log10 tail = 0');
+close(hardnessSvgY(1e-6), 157.5, 1e-13, 'Hardness axis midpoint at log10 tail = -6');
+close(hardnessSvgY(1e-12), 280, 1e-13, 'Hardness axis bottom at log10 tail = -12');
+assert.ok(hardnessSvgY(1) < hardnessSvgY(1e-6), 'Smaller Fourier tails must plot lower on the SVG axis');
+assert.ok(hardnessSvgY(1e-6) < hardnessSvgY(1e-12), 'The log-tail axis must remain monotone');
+
 // Generalized-overlap charge accounting teaching identity.
 for (const [smooth, correction] of [[0.82, 0.18], [1.1, -0.1], [0.6, 0.4]]) {
   close(augmentationNorm(smooth, correction), 1, 1e-14, 'Augmented norm');
@@ -120,4 +129,18 @@ for (const filename of componentFiles) {
   assert.match(content, /Boundary:|边界：/, `${filename} lacks a boundary contract`);
 }
 
-console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, hardness, augmentation, projector algebra, route, source map, and visualization contracts.');
+const hardnessComponent = await readFile(
+  new URL('../src/components/part03/ch11/HardnessExplorer.astro', import.meta.url),
+  'utf8',
+);
+const axisMappingPattern = /const y = \(tail\) => 35 \+ \(-Math\.log10\(Math\.max\(tail, 1e-12\)\) \/ 12\) \* 245;/g;
+assert.equal(
+  [...hardnessComponent.matchAll(axisMappingPattern)].length,
+  2,
+  'Hardness explorer must use the accepted log-tail axis mapping in both static and interactive rendering',
+);
+for (const label of ['>0</text>', '>−6</text>', '>−12</text>']) {
+  assert.ok(hardnessComponent.includes(label), `Hardness explorer is missing the ${label} axis tick`);
+}
+
+console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, hardness axis, augmentation, projector algebra, route, source map, and visualization contracts.');

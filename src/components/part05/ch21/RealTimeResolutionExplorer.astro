@@ -1,0 +1,121 @@
+---
+import { estimateAngularFrequencyResolution, finiteTimeSpectrum, propagateScalarMode, sampleDampedSignal } from '../../../data/part05/ch21TimePropagationModels.mjs';
+
+const componentId = 'ch21-real-time-resolution';
+const width = 820;
+const height = 410;
+const defaults = { totalTime: 40, timeStep: 0.05, separation: 0.5, windowDamping: 0.04, maxFrequency: 8 };
+const signal = sampleDampedSignal({ modes: [{ frequency: 4, amplitude: 1 }, { frequency: 4.5, amplitude: 0.8 }], timeStep: defaults.timeStep, totalTime: defaults.totalTime });
+const spectrum = finiteTimeSpectrum({ signal, windowDamping: defaults.windowDamping, maxFrequency: defaults.maxFrequency, points: 321 });
+const signalBox = { left: 54, right: 388, top: 36, bottom: 330 };
+const spectrumBox = { left: 462, right: 796, top: 36, bottom: 330 };
+const signalMax = Math.max(...signal.map((point) => Math.abs(point.value)), 1e-12) * 1.08;
+const spectrumMax = Math.max(...spectrum.map((point) => point.magnitude), 1e-12) * 1.08;
+const signalX = (time) => signalBox.left + time / defaults.totalTime * (signalBox.right - signalBox.left);
+const signalY = (value) => signalBox.top + (0.5 - value / (2 * signalMax)) * (signalBox.bottom - signalBox.top);
+const spectrumX = (frequency) => spectrumBox.left + frequency / defaults.maxFrequency * (spectrumBox.right - spectrumBox.left);
+const spectrumY = (magnitude) => spectrumBox.bottom - magnitude / spectrumMax * (spectrumBox.bottom - spectrumBox.top);
+const signalPoints = signal.map((point) => `${signalX(point.time).toFixed(2)},${signalY(point.value).toFixed(2)}`).join(' ');
+const spectrumPoints = spectrum.map((point) => `${spectrumX(point.frequency).toFixed(2)},${spectrumY(point.magnitude).toFixed(2)}`).join(' ');
+const cayley = propagateScalarMode({ energy: 5, timeStep: 0.15, steps: 200, method: 'cayley' });
+const taylor = propagateScalarMode({ energy: 5, timeStep: 0.15, steps: 200, method: 'taylor2' });
+---
+
+<figure class="chapter-visual real-time-resolution" id={componentId}>
+  <figcaption>
+    <strong>有限时间传播与频谱分辨率 | Finite-time propagation and spectral resolution</strong>
+    <span>原创双频信号模型：显示总时间、窗口衰减与模间距如何决定可分辨峰。</span>
+    <span lang="en">Original two-frequency signal model: show how total time, window damping, and mode separation determine resolvable peaks.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>总传播时间 T <input data-total-time type="range" min="15" max="90" step="1" value={defaults.totalTime} /></label>
+    <label>模间距 ΔΩ <input data-separation type="range" min="0.1" max="1.2" step="0.05" value={defaults.separation} /></label>
+    <label>窗口衰减 γ <input data-window type="range" min="0" max="0.2" step="0.01" value={defaults.windowDamping} /></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>有限时间双频信号及其 Fourier 谱</title>
+    <desc id={`${componentId}-desc`}>左图为时间信号，右图为非负 Fourier 幅值。延长传播时间改善角频率分辨率。</desc>
+    <line class="axis" x1={signalBox.left} y1={signalBox.bottom} x2={signalBox.right} y2={signalBox.bottom} />
+    <line class="axis" x1={signalBox.left} y1={signalBox.top} x2={signalBox.left} y2={signalBox.bottom} />
+    <line class="zero-line" data-signal-zero x1={signalBox.left} x2={signalBox.right} y1={signalY(0)} y2={signalY(0)} />
+    <polyline class="signal-curve" data-signal points={signalPoints} />
+    <line class="axis" x1={spectrumBox.left} y1={spectrumBox.bottom} x2={spectrumBox.right} y2={spectrumBox.bottom} />
+    <line class="axis" x1={spectrumBox.left} y1={spectrumBox.top} x2={spectrumBox.left} y2={spectrumBox.bottom} />
+    <polyline class="spectrum-curve" data-spectrum points={spectrumPoints} />
+    <line class="mode-guide" data-mode-one x1={spectrumX(4)} x2={spectrumX(4)} y1={spectrumBox.top} y2={spectrumBox.bottom} />
+    <line class="mode-guide" data-mode-two x1={spectrumX(4.5)} x2={spectrumX(4.5)} y1={spectrumBox.top} y2={spectrumBox.bottom} />
+    <text x={(signalBox.left + signalBox.right) / 2} y="20" text-anchor="middle">time signal j(t)</text>
+    <text x={(spectrumBox.left + spectrumBox.right) / 2} y="20" text-anchor="middle">finite-time spectrum</text>
+    <text x={signalBox.left} y="354" text-anchor="middle">0</text>
+    <text data-time-axis x={signalBox.right} y="354" text-anchor="middle">{defaults.totalTime}</text>
+    <text x={(signalBox.left + signalBox.right) / 2} y="382" text-anchor="middle">time</text>
+    <text x={spectrumBox.left} y="354" text-anchor="middle">0</text>
+    <text x={spectrumBox.right} y="354" text-anchor="middle">8</text>
+    <text x={(spectrumBox.left + spectrumBox.right) / 2} y="382" text-anchor="middle">angular frequency ω</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>T = <output data-total-time-output>{defaults.totalTime.toFixed(0)}</output></span>
+    <span>ΔΩ = <output data-separation-output>{defaults.separation.toFixed(2)}</output></span>
+    <span>γ = <output data-window-output>{defaults.windowDamping.toFixed(2)}</output></span>
+    <span>2π/T ≈ <output data-resolution-output>{estimateAngularFrequencyResolution(defaults.totalTime).toFixed(3)}</output></span>
+    <span>Cayley norm² = <output data-cayley-output>{cayley.normSquared.toFixed(12)}</output></span>
+    <span>Taylor-2 norm² = <output data-taylor-output>{taylor.normSquared.toExponential(3)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>j(t)=sin(4t)+0.8 sin[(4+ΔΩ)t]，采样步长 0.05；在零到 T 的窗口内乘 exp(−γt) 后做 trapezoidal Fourier transform。</p>
+    <p><strong>验收：</strong>特征角频率分辨率按 2π/T 缩放；延长 T 可分开近邻峰；增大 γ 抑制 ringing 并展宽峰；Cayley factor 模严格为 1，截断 Taylor 重复传播产生 norm drift。</p>
+    <p><strong>边界：</strong>峰宽主要来自有限时间和人工窗口，不代表物理寿命；信号不是自洽 TDKS 轨迹。</p>
+  </div>
+
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认时间信号、频谱、分辨率与幺正性读数仍可见；控件不更新。</p></noscript>
+</figure>
+
+<script>
+  import { estimateAngularFrequencyResolution, finiteTimeSpectrum, propagateScalarMode, sampleDampedSignal } from '../../../data/part05/ch21TimePropagationModels.mjs';
+  const root = document.getElementById('ch21-real-time-resolution');
+  if (root) {
+    const totalTimeInput = root.querySelector('[data-total-time]'); const separationInput = root.querySelector('[data-separation]'); const windowInput = root.querySelector('[data-window]');
+    const signalCurve = root.querySelector('[data-signal]'); const spectrumCurve = root.querySelector('[data-spectrum]'); const signalZero = root.querySelector('[data-signal-zero]');
+    const modeOne = root.querySelector('[data-mode-one]'); const modeTwo = root.querySelector('[data-mode-two]'); const timeAxis = root.querySelector('[data-time-axis]');
+    const totalTimeOutput = root.querySelector('[data-total-time-output]'); const separationOutput = root.querySelector('[data-separation-output]'); const windowOutput = root.querySelector('[data-window-output]');
+    const resolutionOutput = root.querySelector('[data-resolution-output]'); const cayleyOutput = root.querySelector('[data-cayley-output]'); const taylorOutput = root.querySelector('[data-taylor-output]');
+    if (totalTimeInput instanceof HTMLInputElement && separationInput instanceof HTMLInputElement && windowInput instanceof HTMLInputElement
+      && signalCurve instanceof SVGPolylineElement && spectrumCurve instanceof SVGPolylineElement && signalZero instanceof SVGLineElement
+      && modeOne instanceof SVGLineElement && modeTwo instanceof SVGLineElement && timeAxis instanceof SVGTextElement
+      && totalTimeOutput instanceof HTMLOutputElement && separationOutput instanceof HTMLOutputElement && windowOutput instanceof HTMLOutputElement
+      && resolutionOutput instanceof HTMLOutputElement && cayleyOutput instanceof HTMLOutputElement && taylorOutput instanceof HTMLOutputElement) {
+      const signalBox = { left: 54, right: 388, top: 36, bottom: 330 }; const spectrumBox = { left: 462, right: 796, top: 36, bottom: 330 }; const timeStep = 0.05; const maxFrequency = 8;
+      const spectrumX = (frequency) => spectrumBox.left + frequency / maxFrequency * (spectrumBox.right - spectrumBox.left);
+      const update = () => {
+        const totalTime = Number(totalTimeInput.value); const separation = Number(separationInput.value); const windowDamping = Number(windowInput.value);
+        const signal = sampleDampedSignal({ modes: [{ frequency: 4, amplitude: 1 }, { frequency: 4 + separation, amplitude: 0.8 }], timeStep, totalTime });
+        const spectrum = finiteTimeSpectrum({ signal, windowDamping, maxFrequency, points: 321 });
+        const signalMax = Math.max(...signal.map((point) => Math.abs(point.value)), 1e-12) * 1.08; const spectrumMax = Math.max(...spectrum.map((point) => point.magnitude), 1e-12) * 1.08;
+        const signalX = (time) => signalBox.left + time / totalTime * (signalBox.right - signalBox.left); const signalY = (value) => signalBox.top + (0.5 - value / (2 * signalMax)) * (signalBox.bottom - signalBox.top);
+        const spectrumY = (magnitude) => spectrumBox.bottom - magnitude / spectrumMax * (spectrumBox.bottom - spectrumBox.top);
+        signalCurve.setAttribute('points', signal.map((point) => `${signalX(point.time).toFixed(2)},${signalY(point.value).toFixed(2)}`).join(' '));
+        spectrumCurve.setAttribute('points', spectrum.map((point) => `${spectrumX(point.frequency).toFixed(2)},${spectrumY(point.magnitude).toFixed(2)}`).join(' '));
+        signalZero.setAttribute('y1', String(signalY(0))); signalZero.setAttribute('y2', String(signalY(0)));
+        modeOne.setAttribute('x1', String(spectrumX(4))); modeOne.setAttribute('x2', String(spectrumX(4))); modeTwo.setAttribute('x1', String(spectrumX(4 + separation))); modeTwo.setAttribute('x2', String(spectrumX(4 + separation)));
+        timeAxis.textContent = totalTime.toFixed(0); totalTimeOutput.value = totalTime.toFixed(0); separationOutput.value = separation.toFixed(2); windowOutput.value = windowDamping.toFixed(2); resolutionOutput.value = estimateAngularFrequencyResolution(totalTime).toFixed(3);
+        cayleyOutput.value = propagateScalarMode({ energy: 5, timeStep: 0.15, steps: 200, method: 'cayley' }).normSquared.toFixed(12);
+        taylorOutput.value = propagateScalarMode({ energy: 5, timeStep: 0.15, steps: 200, method: 'taylor2' }).normSquared.toExponential(3);
+      };
+      [totalTimeInput, separationInput, windowInput].forEach((input) => input.addEventListener('input', update)); update();
+    }
+  }
+</script>
+
+<style>
+  .real-time-resolution { width: 100%; min-width: 0; max-width: 100%; margin-inline: 0; overflow-x: auto; }
+  .real-time-resolution svg { display: block; width: 100%; min-width: 40rem; height: auto; }
+  .axis { stroke: currentColor; stroke-width: 1.3; }
+  .zero-line, .mode-guide { stroke: var(--sl-color-gray-4); stroke-dasharray: 4 4; }
+  .signal-curve, .spectrum-curve { fill: none; stroke-width: 2.2; }
+  .signal-curve { stroke: currentColor; } .spectrum-curve { stroke: var(--sl-color-accent-high); }
+  text { fill: currentColor; font-size: 14px; }
+</style>
