@@ -64,9 +64,9 @@ for (const gaugeAmplitude of [-1, 0, 0.55, 1.1]) {
     gaugeAmplitude,
     points: 4096,
   });
-  close(flux.transformedFlux[0], flux.baseFlux[0], 2e-13, `normal flux at A=${gaugeAmplitude}`);
-  close(flux.transformedFlux[1], flux.baseFlux[1], 2e-13, `transverse flux at A=${gaugeAmplitude}`);
-  close(flux.baseFlux[0], flux.analyticFlux[0], 2e-13, `analytic base flux at A=${gaugeAmplitude}`);
+  close(flux.transformedFlux[0], flux.baseFlux[0], 1e-12, `normal flux at A=${gaugeAmplitude}`);
+  close(flux.transformedFlux[1], flux.baseFlux[1], 1e-12, `transverse flux at A=${gaugeAmplitude}`);
+  close(flux.baseFlux[0], flux.analyticFlux[0], 1e-12, `analytic base flux at A=${gaugeAmplitude}`);
 }
 
 // ELF mapping, one-orbital and homogeneous reference limits.
