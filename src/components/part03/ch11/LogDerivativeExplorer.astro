@@ -31,8 +31,8 @@ const defaultTarget = logDerivativeS(defaultEnergy, defaultStrongDepth, defaultR
 <figure class="chapter-visual log-derivative-explorer" data-log-derivative>
   <figcaption>
     <strong>原创方势阱模型：同一参考能量上的散射匹配 | Original square-well model: scattering match at one reference energy</strong>
-    <span>比较一个深势阱与较弱势阱在边界处的 s 通道对数导数。弱势阱深度由根搜索确定，使两者在 E₀ 处相同。</span>
-    <span lang="en">A deep and a weaker spherical well are compared through the s-channel logarithmic derivative at the boundary. The weak-well depth is found by root search so both agree at E₀.</span>
+    <span>比较一个深势阱与第一散射分支上的较弱势阱在边界处的 s 通道对数导数。控件范围限制在存在唯一正深度弱势阱解的区域。</span>
+    <span lang="en">A deep well is compared with a weaker well on the first scattering branch through the s-channel boundary logarithmic derivative. The controls are restricted to the domain in which a unique positive-depth weak-well solution exists.</span>
   </figcaption>
 
   <div class="chapter-visual__controls">
@@ -42,7 +42,7 @@ const defaultTarget = logDerivativeS(defaultEnergy, defaultStrongDepth, defaultR
     </label>
     <label>
       <span>深势阱深度 | Strong-well depth: <output data-depth-output>12.0</output> Ha</span>
-      <input data-depth type="range" min="8" max="14" step="0.2" value="12" aria-label="Strong spherical well depth in Hartree" />
+      <input data-depth type="range" min="10.5" max="14" step="0.1" value="12" aria-label="Strong spherical well depth in Hartree" />
     </label>
   </div>
 
@@ -69,16 +69,16 @@ const defaultTarget = logDerivativeS(defaultEnergy, defaultStrongDepth, defaultR
   </p>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>半径 r_c=1 Bohr 的球形方势阱。l=0 时 <code>D₀=q r_c cot(q r_c)-1</code>，其中 <code>q=sqrt[2(E+V₀)]</code>。曲线在极点附近截断。</p>
-    <p lang="en"><strong>Model:</strong> a spherical square well of radius r_c=1 Bohr. For l=0, <code>D₀=q r_c cot(q r_c)-1</code> with <code>q=sqrt[2(E+V₀)]</code>. Curves are clipped near poles.</p>
-    <p><strong>验收：</strong>参考能量处两条对数导数的绝对差必须小于 10^-8；离开参考能量后允许分离。</p>
-    <p lang="en"><strong>Acceptance:</strong> the absolute logarithmic-derivative difference at the reference energy must be below 10^-8; the curves may separate away from the reference.</p>
-    <p><strong>边界：</strong>单能量匹配只说明该能量和通道的外区散射等效，不证明跨能量、跨 l 或化学环境的 transferability。</p>
-    <p lang="en"><strong>Boundary:</strong> a one-energy match establishes exterior scattering equivalence only for that channel and energy; it does not prove transferability across energies, angular momenta, or chemical environments.</p>
+    <p><strong>模型：</strong>半径 r_c=1 Bohr 的球形方势阱。l=0 时 <code>D₀=q r_c cot(q r_c)-1</code>，其中 <code>q=sqrt[2(E+V₀)]</code>。弱势阱根只在 <code>0&lt;q r_c&lt;π</code> 的第一分支上求解。</p>
+    <p lang="en"><strong>Model:</strong> a spherical square well of radius r_c=1 Bohr. For l=0, <code>D₀=q r_c cot(q r_c)-1</code> with <code>q=sqrt[2(E+V₀)]</code>. The weak-well root is solved only on the first branch <code>0&lt;q r_c&lt;π</code>.</p>
+    <p><strong>验收：</strong>参考能量处两条对数导数的绝对差必须小于 10^-8；弱势阱深度必须为正并小于深势阱；离开参考能量后允许分离。</p>
+    <p lang="en"><strong>Acceptance:</strong> the absolute logarithmic-derivative difference at the reference energy must be below 10^-8; the weak depth must be positive and smaller than the strong depth; the curves may separate away from the reference.</p>
+    <p><strong>边界：</strong>单能量、单通道、单分支匹配只说明该参考点的外区散射等效，不证明跨能量、跨 l 或化学环境的 transferability。</p>
+    <p lang="en"><strong>Boundary:</strong> a one-energy, one-channel, one-branch match establishes exterior scattering equivalence only at that reference point; it does not prove transferability across energies, angular momenta, or chemical environments.</p>
   </div>
 
   <noscript>
-    <p>无 JavaScript 时显示默认参考能量和解析匹配曲线；极点裁剪及适用边界仍可见。</p>
+    <p>无 JavaScript 时显示默认参考能量和解析匹配曲线；第一分支条件、极点裁剪及适用边界仍可见。</p>
   </noscript>
 </figure>
 
@@ -89,38 +89,34 @@ const defaultTarget = logDerivativeS(defaultEnergy, defaultStrongDepth, defaultR
     if (Math.abs(Math.sin(qr)) < 1e-10) return Number.NaN;
     return qr * Math.cos(qr) / Math.sin(qr) - 1;
   };
+
   const matchedDepth = (energy, strongDepth, rc = 1) => {
     const target = logDerivative(energy, strongDepth, rc);
-    const strongQ = Math.sqrt(2 * (energy + strongDepth));
-    let best = null;
-    let previousQ = 0.05;
-    let previousValue = previousQ * rc / Math.tan(previousQ * rc) - 1 - target;
-    const maxQ = Math.max(0.1, strongQ - Math.PI / rc * 0.6);
-    for (let index = 1; index <= 20000; index += 1) {
-      const q = 0.05 + (maxQ - 0.05) * index / 20000;
-      if (Math.abs(Math.sin(q * rc)) < 1e-4) {
-        previousQ = q;
-        previousValue = Number.NaN;
-        continue;
-      }
-      const value = q * rc / Math.tan(q * rc) - 1 - target;
-      if (Number.isFinite(previousValue) && value * previousValue < 0) {
-        let lower = previousQ;
-        let upper = q;
-        for (let iteration = 0; iteration < 70; iteration += 1) {
-          const middle = 0.5 * (lower + upper);
-          const middleValue = middle * rc / Math.tan(middle * rc) - 1 - target;
-          const lowerValue = lower * rc / Math.tan(lower * rc) - 1 - target;
-          if (middleValue * lowerValue <= 0) upper = middle;
-          else lower = middle;
-        }
-        const root = 0.5 * (lower + upper);
-        if (Math.abs(root - strongQ) > 0.2) best = root;
-      }
-      previousQ = q;
-      previousValue = value;
+    if (!Number.isFinite(target) || target >= 0) return Number.NaN;
+
+    const equation = (q) => q * rc / Math.tan(q * rc) - 1 - target;
+    let lower = 1e-8 / rc;
+    let upper = (Math.PI - 1e-8) / rc;
+    let lowerValue = equation(lower);
+    const upperValue = equation(upper);
+    if (!Number.isFinite(lowerValue) || !Number.isFinite(upperValue) || lowerValue * upperValue > 0) {
+      return Number.NaN;
     }
-    return best === null ? strongDepth : best ** 2 / 2 - energy;
+
+    for (let iteration = 0; iteration < 100; iteration += 1) {
+      const middle = 0.5 * (lower + upper);
+      const middleValue = equation(middle);
+      if (lowerValue * middleValue <= 0) {
+        upper = middle;
+      } else {
+        lower = middle;
+        lowerValue = middleValue;
+      }
+    }
+
+    const root = 0.5 * (lower + upper);
+    const depth = root ** 2 / 2 - energy;
+    return depth > 0 && depth < strongDepth ? depth : Number.NaN;
   };
 
   document.querySelectorAll('[data-log-derivative]').forEach((root) => {
