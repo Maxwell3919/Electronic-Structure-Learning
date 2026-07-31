@@ -2,94 +2,72 @@
 
 面向电子结构与密度泛函理论学习的结构化、可视化网站。
 
-本项目不是把教材 PDF 搬到网页，而是把原创教材式解释、可检查的公式推导、交互教学模型、真实 DFT 派生数据、数值边界和练习连接成连续的学习系统。
-
-Martin 第 2 版提供电子结构理论主干，Sholl–Steckel 提供实践与数值方法补充。教材和论文是外部阅读来源；仓库不保存 PDF、扫描页、原图或大段转录。
-
-## 当前状态
-
-- Astro + Starlight + MDX + KaTeX 工程基线已建立；
-- Part I / Chapter 1 目前只有阅读骨架，不是完整教材正文；
-- 首个交互实验是“SCF 固定点与线性 mixing”；
-- SCF 页面使用原创单标量仿射模型，不代表真实材料或具体 DFT 程序；
-- GitHub Pages 公网部署已配置，目标地址为：
-  `https://maxwell3919.github.io/Electronic-Structure-Learning/`。
-
-## 技术栈
-
-- Astro + Starlight：静态教材网站与导航；
-- MDX + KaTeX：正文、公式和局部组件；
-- Astro/TypeScript/ES modules：交互组件与共享数学内核；
-- JSON Schema：可视化规格和 DFT 派生数据契约；
-- GitHub Actions：锁定依赖、确定性模型检查、静态构建与 GitHub Pages 部署。
-
-## 主要结构
+公开站点：
 
 ```text
-.
-├── AGENTS.md
-├── docs/
-│   ├── architecture.md
-│   ├── content-contract.md
-│   ├── source-and-copyright-policy.md
-│   └── visualization-and-data-contract.md
-├── schemas/
-│   ├── derived-dft-data.schema.json
-│   └── visualization-spec.schema.json
-├── scripts/
-│   └── validate-scf-model.mjs
-├── templates/
-│   └── chapter-template.mdx
-├── src/
-│   ├── components/
-│   │   ├── DerivationBlock.astro
-│   │   ├── SCFIterationVisualizer.astro
-│   │   ├── SourceNote.astro
-│   │   └── VisualizationPlaceholder.astro
-│   ├── content/docs/
-│   │   ├── labs/scf-fixed-point-and-mixing.mdx
-│   │   └── part-01-overview-and-background/
-│   ├── lib/scfToyModel.mjs
-│   └── styles/custom.css
-└── .github/workflows/
-    ├── ci.yml
-    └── deploy.yml
+https://maxwell3919.github.io/Electronic-Structure-Learning/
 ```
 
-## 本地运行
+本项目不搬运教材正文，而是把原创解释、可检查推导、交互教学模型、轻量 DFT 派生数据、数值边界和练习组织为连续学习系统。
+
+## 当前框架
+
+主理论线以 Richard M. Martin 的 *Electronic Structure: Basic Theory and Practical Methods*, 2nd edition 为结构来源：
+
+- 7 个 Part；
+- 28 个编号章节；
+- Appendix A–R，共 18 个附录；
+- 46 个章节/附录页面；
+- 315 个目录级分节定位。
+
+实践交叉参考以 Sholl–Steckel 的 *Density Functional Theory: A Practical Introduction* 为结构来源：
+
+- 10 个实践章节页面；
+- 93 个目录级分节/小节定位。
+
+所有这些页面当前均为 `outline`：只含标题、页码、结构导航和后续内容插槽，不含教材正文、教材图表、习题原文或答案。
+
+## 结构权威
+
+```text
+src/data/martin/index.mjs
+src/data/shollSteckelStructure.mjs
+```
+
+页面从上述目录读取结构信息，避免在 56 个单元页面中重复维护分节列表。
+
+主要内容目录：
+
+```text
+src/content/docs/
+├── book-map.mdx
+├── part-01-overview-and-background/
+├── part-02-density-functional-theory/
+├── part-03-important-preliminaries-on-atoms/
+├── part-04-determination-of-electronic-structure/
+├── part-05-properties-of-matter/
+├── part-06-electronic-structure-and-topology/
+├── part-07-appendices/
+├── practice-sholl-steckel/
+└── labs/
+```
+
+## 本地验证
 
 要求 Node.js 22.12 或更高版本。
 
 ```bash
 npm ci --no-audit --no-fund
-npm run dev
-```
-
-完整检查：
-
-```bash
 npm run check
 ```
 
-该命令依次执行：
+`npm run check` 依次执行：
 
-1. `scripts/validate-scf-model.mjs` 的五个确定性模型检查；
-2. Astro 静态构建。
+1. 完整框架计数、文件、slug 和页码一致性验证；
+2. SCF 教学模型的五个确定性情形；
+3. Astro 静态构建。
 
-## GitHub Pages 部署
-
-`main` 更新后，`.github/workflows/deploy.yml` 会执行验证、构建并发布 `dist/`。项目站点使用：
-
-```text
-site = https://maxwell3919.github.io
-base = /Electronic-Structure-Learning
-```
-
-GitHub Pages 必须在仓库设置中使用 **GitHub Actions** 作为发布源。首次启用后，后续合并到 `main` 的内容会自动重新部署。
-
-## 验证边界
-
-`npm run check` 通过只能说明：共享 SCF 数学内核满足已声明的五个仿射模型情形，并且网站可以在声明的 Node 环境完成静态构建。它不能证明真实 Kohn–Sham SCF、任何具体 mixing 实现、DFT 参数收敛或材料科学结论正确。
+框架验证通过只说明导航骨架与目录数据一致，不证明未来正文、公式、可视化或科学结论正确。
 
 ## 维护入口
 
@@ -98,7 +76,8 @@ GitHub Pages 必须在仓库设置中使用 **GitHub Actions** 作为发布源�
 1. [`AGENTS.md`](AGENTS.md)
 2. [`docs/architecture.md`](docs/architecture.md)
 3. [`docs/content-contract.md`](docs/content-contract.md)
-4. [`docs/visualization-and-data-contract.md`](docs/visualization-and-data-contract.md)
-5. [`docs/source-and-copyright-policy.md`](docs/source-and-copyright-policy.md)
+4. [`docs/framework-map.md`](docs/framework-map.md)
+5. [`docs/visualization-and-data-contract.md`](docs/visualization-and-data-contract.md)
+6. [`docs/source-and-copyright-policy.md`](docs/source-and-copyright-policy.md)
 
-所有持续性修改使用短期分支和 PR。自定义域名、仓库可见性变化和服务端后端仍属于单独决策。
+所有持续性修改使用短期分支和 PR。仓库与 Pages 均为公开状态，任何提交必须满足公开发布与版权边界。

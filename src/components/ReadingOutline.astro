@@ -1,0 +1,110 @@
+---
+interface OutlineSection {
+  id: string;
+  title: string;
+  page: number;
+}
+
+interface OutlineMeta {
+  title: string;
+  page: number;
+}
+
+interface Props {
+  sourceTitle: string;
+  sourceAuthor: string;
+  sourceRole: string;
+  unitLabel: string;
+  sourcePage: number;
+  sections: OutlineSection[];
+  exercisesPage?: number | null;
+  meta?: OutlineMeta[];
+}
+
+const {
+  sourceTitle,
+  sourceAuthor,
+  sourceRole,
+  unitLabel,
+  sourcePage,
+  sections,
+  exercisesPage = null,
+  meta = [],
+} = Astro.props;
+---
+
+<section class="reading-outline">
+  <header class="reading-outline__header">
+    <div>
+      <p class="reading-outline__eyebrow">{sourceRole}</p>
+      <h2>结构状态</h2>
+    </div>
+    <span class="reading-outline__status">outline · 正文待填充</span>
+  </header>
+
+  <dl class="reading-outline__metadata">
+    <dt>来源</dt>
+    <dd>{sourceAuthor}, <cite>{sourceTitle}</cite></dd>
+    <dt>单元</dt>
+    <dd>{unitLabel}</dd>
+    <dt>起始页</dt>
+    <dd>印刷页 {sourcePage}</dd>
+  </dl>
+
+  <p>
+    本页当前只保留目录级定位、页码与后续内容插槽，不包含教材正文、教材图表、习题原文或答案。
+  </p>
+
+  <h2>目录级分节</h2>
+
+  {sections.length > 0 ? (
+    <div class="reading-outline__table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">节</th>
+            <th scope="col">标题</th>
+            <th scope="col">印刷页</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sections.map((section) => (
+            <tr>
+              <td><code>{section.id}</code></td>
+              <td>{section.title}</td>
+              <td>{section.page}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <p>原书目录未为本单元列出下一级分节；正文框架仍保留统一内容插槽。</p>
+  )}
+
+  {exercisesPage && (
+    <p class="reading-outline__supplement">
+      原书目录标出的 Exercises 起始页：{exercisesPage}。网站不会转录习题原文。
+    </p>
+  )}
+
+  {meta.length > 0 && (
+    <>
+      <h2>实践教材附加入口</h2>
+      <ul>
+        {meta.map((item) => <li>{item.title}：印刷页 {item.page}</li>)}
+      </ul>
+    </>
+  )}
+
+  <h2>后续内容插槽</h2>
+
+  <ol class="reading-outline__slots">
+    <li>本单元阅读定位与前置知识；</li>
+    <li>物理对象、符号、单位与边界条件；</li>
+    <li>公式推导：定义、严格关系、近似与数值离散分开记录；</li>
+    <li>原创示意图或交互模型及其验收标准；</li>
+    <li>真实 DFT 派生数据示例、provenance 与收敛边界；</li>
+    <li>练习、复盘问题与常见误判。</li>
+  </ol>
+</section>

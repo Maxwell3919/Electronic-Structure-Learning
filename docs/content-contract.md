@@ -1,117 +1,62 @@
 # Content Contract
 
-本契约约束正式学习页面的最低结构。它不是要求每页机械使用相同小标题，而是保证读者能够判断内容从哪里来、公式依赖什么、交互展示什么，以及结论能支持到哪里。
+## 1. Page states
 
-## 1. 页面状态
+- `outline`: structure, source locator and empty content slots only;
+- `draft`: original body exists but one or more source, derivation, visualization or boundary checks remain incomplete;
+- `review`: the minimum information structure is present and awaits independent review or learner testing;
+- `validated`: explicitly listed checks were actually executed and passed.
 
-页面 frontmatter 或来源组件使用以下状态之一：
+A status applies only to its declared object. It does not automatically validate the source, physical model or scientific conclusion.
 
-- `outline`：只有阅读定位和结构，不视为完整内容；
-- `draft`：已有正文，但尚未完成来源、公式、交互或边界审查；
-- `review`：内容已具备最低结构，等待独立审查或学习者测试；
-- `validated`：明确列出的验证项目已实际执行并通过。
+## 2. Framework-generated outline pages
 
-`validated` 只覆盖页面中声明的验证对象，不自动证明教材来源、物理模型或科学结论正确。
+The complete framework contains 46 Martin chapter/appendix pages and 10 Sholl–Steckel practical-reference pages.
 
-## 2. 最低内容要素
+An outline page may contain only:
 
-正式页面应以自然连续的教材表达覆盖以下要素：
+- bibliographic identity;
+- chapter/appendix number and title;
+- printed start page;
+- directory-listed section titles and page locators;
+- generic slots for future original content.
 
-### 学习定位
+It must not contain copied textbook prose, scans, figures, exercise text or answers.
 
-说明本节要解决的问题、与前后章节的关系，以及完成后应能做出的判断。
+The machine-readable catalogs are:
 
-### 来源定位
-
-至少给出书目或论文、章节/节和页码或稳定标识。来源定位不等于复制正文，也不把作者解释升级为独立事实。
-
-### 物理对象与概念
-
-明确体系、自由度、边界条件、可观察量和符号。避免在未定义时混用波函数、密度、轨道、能带、态密度或总能。
-
-### 公式与推导
-
-区分：
-
-- 定义；
-- 严格关系；
-- 物理假设；
-- 近似；
-- 数值离散；
-- 由前述内容得到的推断。
-
-推导省略步骤时，应说明省略的数学工具或前置知识，而不是用“显然”覆盖关键连接。
-
-### 可视化规格
-
-每个交互或图形在实现前先固定：
-
-- 模型或数据来源；
-- 可调输入及允许范围；
-- 输出 observable、单位和参考；
-- 默认状态；
-- 至少一个可重复验收标准；
-- 不能支持的更强结论。
-
-### 数值实现与收敛
-
-根据内容分别讨论：
-
-- 程序是否正常结束；
-- 自洽或结构优化是否达到设定阈值；
-- 目标 observable 是否对截断能、k/q 网格、超胞、展宽等参数收敛；
-- 方法本身是否适用于目标体系；
-- 结果是否达到科学接受标准。
-
-前一项通过不自动推出后一项通过。
-
-### 练习与复盘
-
-练习应要求解释、比较、检查或复现，而不只是代公式。答案必须标出必要前提和常见误判。
-
-## 3. 来源与证据语言
-
-证据状态影响判断时，可使用：
-
-- `【来源记录】`：来源直接报告的内容；
-- `【来源主张】`：来源提出的解释或结论；
-- `【推断连接】`：网站作者依据现有内容作出的连接；
-- `【假设补全】`：为继续说明而临时采用的前提；
-- `【未知/待验证】`：证据不足；
-- `【已独立验证】`：存在足够独立性，并按预先声明标准完成的验证。
-
-不要求对常识机械贴标签，但不得将来源主张或教学演示写成已独立验证。
-
-## 4. 章节模板示意
-
-```mdx
----
-title: "章节标题"
-description: "本节解决的问题"
----
-
-<SourceNote source="..." locator="..." status="draft" />
-
-## 学习定位
-
-连续正文……
-
-<DerivationBlock title="..." assumptions={[...]}> 
-  推导与解释……
-</DerivationBlock>
-
-<VisualizationPlaceholder
-  title="..."
-  model="..."
-  controls={[...]}
-  observables={[...]}
-  validation={[...]}
-  boundary="..."
-/>
-
-## 数值与适用边界
-
-连续正文……
+```text
+src/data/martin/index.mjs
+src/data/shollSteckelStructure.mjs
 ```
 
-模板只约束信息完整性，不要求页面被大量小标题切碎。
+Changes to unit count, numbering, title, source page or slug must update the catalog and pass `npm run validate:framework`.
+
+## 3. Minimum elements for substantive pages
+
+When an outline is expanded, the resulting page must cover, in continuous readable prose where appropriate:
+
+- learning question and prerequisites;
+- source locator;
+- physical objects, symbols, units and boundary conditions;
+- definitions, exact relations, assumptions, approximations and numerical discretization;
+- visualization/data specification and repeatable acceptance criteria;
+- program completion, self-consistency, target-observable convergence, method applicability and scientific acceptance as separate gates;
+- exercises or reflection tasks that require explanation, comparison, checking or reproduction.
+
+## 4. Evidence language
+
+Use evidence labels when they affect a decision:
+
+- `【来源记录】`
+- `【来源主张】`
+- `【推断连接】`
+- `【假设补全】`
+- `【未知/待验证】`
+- `【已独立验证】`
+
+Do not describe a source claim or a teaching model as independent validation.
+
+## 5. Writing form
+
+The information requirements above do not require mechanical repetition of many short headings. A finished chapter should read as a coherent textbook unit, while still making source, assumptions, numerical conditions and evidence boundaries easy to locate.

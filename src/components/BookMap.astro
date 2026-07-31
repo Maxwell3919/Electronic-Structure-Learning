@@ -1,0 +1,79 @@
+---
+interface OutlineSection {
+  id: string;
+  title: string;
+  page: number;
+}
+
+interface Unit {
+  id: string;
+  label: string;
+  slug: string;
+  page: number;
+  sections: OutlineSection[];
+}
+
+interface Part {
+  number: number;
+  roman: string;
+  label: string;
+  titleZh: string;
+  slug: string;
+  units: Unit[];
+}
+
+interface PracticeCatalog {
+  slug: string;
+  label: string;
+  chapters: Unit[];
+}
+
+interface Props {
+  parts: Part[];
+  practice: PracticeCatalog;
+}
+
+const { parts, practice } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<section class="book-map">
+  <p>
+    Martin 主线包含 {parts.length} 个 Part、{parts.reduce((sum, part) => sum + part.units.length, 0)} 个章节/附录单元。
+    Sholl–Steckel 实践交叉参考包含 {practice.chapters.length} 章。
+  </p>
+
+  {parts.map((part) => (
+    <section class="book-map__part">
+      <h2>
+        <a href={`${base}${part.slug}/`}>{part.label}</a>
+      </h2>
+      <p>{part.titleZh} · {part.units.length} 个单元</p>
+      <ol>
+        {part.units.map((unit) => (
+          <li>
+            <a href={`${base}${part.slug}/${unit.slug}/`}>{unit.label}</a>
+            <span> · p. {unit.page}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  <section class="book-map__part">
+    <h2>
+      <a href={`${base}${practice.slug}/`}>{practice.label}</a>
+    </h2>
+    <p>辅助实践教材导航，不替代 Martin 理论主线。</p>
+    <ol>
+      {practice.chapters.map((chapter) => (
+        <li>
+          <a href={`${base}${practice.slug}/${chapter.slug}/`}>{chapter.label}</a>
+          <span> · p. {chapter.page}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+</section>
