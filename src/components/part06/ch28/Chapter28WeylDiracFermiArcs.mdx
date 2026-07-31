@@ -1,0 +1,366 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import DiracWeylTransitionExplorer from './DiracWeylTransitionExplorer.astro';
+import FermiArcSliceExplorer from './FermiArcSliceExplorer.astro';
+
+<span id="sec-28-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 28.4 Weyl 与 Dirac semimetals | Weyl and Dirac Semimetals
+
+<BilingualSection titleZh="从 gapped topological phase 转向受控 bulk nodes" titleEn="From a gapped topological phase to controlled bulk nodes" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+topological insulator 的 bulk 在目标能量处有 gap，拓扑信息存储在完整 occupied manifold 中。Weyl 或 Dirac semimetal 的 bulk gap 则在离散 momentum points 闭合。节点不是数值缺陷：它由维度、对称性和 topological charge 稳定，并决定邻近二维 momentum slices 的 Chern number 如何改变。
+
+最一般的 spinless/two-band Hermitian Hamiltonian 可写为
+
+$$
+H(\mathbf k)=h_0(\mathbf k)I+
+\sum_{i=x,y,z}h_i(\mathbf k)\sigma_i.
+$$
+
+本征值为
+
+$$
+E_\pm(\mathbf k)=h_0(\mathbf k)\pm|\mathbf h(\mathbf k)|.
+$$
+
+两带 degeneracy 要求 $h_x=h_y=h_z=0$。这三个独立实条件解释了为何 generic isolated crossings 在三维是稳定点，而在二维通常需要额外 symmetry 或 fine tuning。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A topological insulator has a bulk gap at the target energy, with topology stored in the complete occupied manifold. A Weyl or Dirac semimetal instead has a bulk gap that closes at isolated momentum points. Such a node is not a numerical defect: dimensionality, symmetry, and topological charge stabilize it, and it controls how the Chern number of nearby two-dimensional momentum slices changes.
+
+The most general spinless two-band Hermitian Hamiltonian can be written
+
+$$
+H(\mathbf k)=h_0(\mathbf k)I+
+\sum_{i=x,y,z}h_i(\mathbf k)\sigma_i.
+$$
+
+Its eigenvalues are
+
+$$
+E_\pm(\mathbf k)=h_0(\mathbf k)\pm|\mathbf h(\mathbf k)|.
+$$
+
+A two-band degeneracy requires $h_x=h_y=h_z=0$. These three independent real conditions explain why generic isolated crossings are stable points in three dimensions, while in two dimensions they usually require additional symmetry or fine tuning.
+
+  </div>
+</BilingualSection>
+
+<span id="codimension" class="chapter-anchor" aria-hidden="true"></span>
+
+<DerivationBlock
+  title="codimension-three 计数与节点维数 | Codimension-three counting and the dimension of a node"
+  assumptions={[
+    '考察两条非简并 bands 的局部 2×2 effective Hamiltonian；',
+    '没有 symmetry 强制某个 hi 恒为零；',
+    'Jacobian 对 momentum perturbations 具有满秩。',
+  ]}
+>
+
+在 $d$ 维 momentum space 中，闭隙由三个方程
+
+$$
+h_x(\mathbf k)=h_y(\mathbf k)=h_z(\mathbf k)=0
+$$
+
+定义。generic solution set 的维数为
+
+$$
+\dim(\text{node set})=d-3.
+$$
+
+- $d=2$ 时，维数为 $-1$，表示 generic solution 不存在；需要调参数或 symmetry。
+- $d=3$ 时，维数为 $0$，得到 isolated Weyl points。
+- $d>3$ 时，可出现更高维 nodal manifolds。
+
+若 mirror、PT、chiral 等 symmetry 使一个或多个 $h_i$ 在某个 submanifold 上恒为零，codimension 会降低，三维中可形成 nodal line 或 nodal surface。这些对象不属于本节 generic Weyl point 的同一分类，必须单独声明保护 symmetry。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="高对称线 crossing 不能完成 node search" titleEn="A high-symmetry-line crossing does not complete a node search" kind="boundary">
+  <div class="bilingual-section__zh">
+
+沿一条高对称线看到两条 bands 相交，只说明该一维路径上的能量差为零。它没有检查离开路径后第三个 momentum 方向的 gap、是否存在 avoided crossing、其他 symmetry-related nodes、Fermi-level pockets 或 additional bands。Weyl/Dirac claim 需要三维 full-BZ search 与节点邻域的局部 Hamiltonian/charge 验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A crossing along one high-symmetry line establishes only that the energy difference vanishes on that one-dimensional path. It does not test the gap in the transverse momentum directions, a possible avoided crossing, other symmetry-related nodes, Fermi-level pockets, or additional bands. A Weyl or Dirac claim requires a three-dimensional full-BZ search and a local Hamiltonian or topological-charge test around each node.
+
+  </div>
+</BilingualCallout>
+
+<span id="weyl-charge" class="chapter-anchor" aria-hidden="true"></span>
+
+<BilingualSection titleZh="Weyl point 是 Berry-curvature monopole" titleEn="A Weyl point is a Berry-curvature monopole" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+在 isolated node $\mathbf k_W$ 附近令 $\mathbf p=\mathbf k-\mathbf k_W$。若线性化 Jacobian 可逆，
+
+$$
+H_W(\mathbf p)=
+\sum_{i,j}v_{ij}p_j\sigma_i.
+$$
+
+经坐标与 Pauli 轴变换可化为 isotropic form
+
+$$
+H_W=\chi v\,\mathbf p\cdot\boldsymbol\sigma,
+\qquad \chi=\pm1.
+$$
+
+$\chi$ 是 chirality；一般情况下由 $\operatorname{sgn}\det v_{ij}$ 给出，并随 momentum orientation/Pauli convention 改变符号。对包围节点的小球 $S^2$，occupied band 的 Berry curvature flux 为
+
+$$
+C_W=\frac{1}{2\pi}\oint_{S^2}
+\boldsymbol\Omega_-(\mathbf k)\cdot d\mathbf S
+=\pm1.
+$$
+
+这个 integer charge 使单个 Weyl node 不能由小 perturbation 开隙；它只能与 opposite charge node 相遇并 annihilate，或在 symmetry change 时重组。周期 BZ 是 compact manifold，全部 Weyl charges 的总和必须为零，因此节点至少成 opposite-charge 配对出现。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Near an isolated node $\mathbf k_W$, define $\mathbf p=\mathbf k-\mathbf k_W$. If the linearized Jacobian is invertible,
+
+$$
+H_W(\mathbf p)=
+\sum_{i,j}v_{ij}p_j\sigma_i.
+$$
+
+Coordinate and Pauli-axis transformations reduce this to the isotropic form
+
+$$
+H_W=\chi v\,\mathbf p\cdot\boldsymbol\sigma,
+\qquad \chi=\pm1.
+$$
+
+$\chi$ is the chirality. In the general linear model it is given by $\operatorname{sgn}\det v_{ij}$ and changes sign with momentum orientation or Pauli conventions. For a small sphere $S^2$ surrounding the node, the Berry-curvature flux of the occupied band is
+
+$$
+C_W=\frac{1}{2\pi}\oint_{S^2}
+\boldsymbol\Omega_-(\mathbf k)\cdot d\mathbf S
+=\pm1.
+$$
+
+This integer charge prevents a single Weyl node from being gapped by a small perturbation. It can disappear only by meeting a node of opposite charge or by reorganizing when the symmetry class changes. The periodic BZ is compact, so all Weyl charges must sum to zero; opposite-charge pairing is unavoidable.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="线性 Weyl Hamiltonian 的球面 mapping degree | Sphere mapping degree of the linear Weyl Hamiltonian"
+  assumptions={[
+    '节点位于 p=0；',
+    '闭合积分球面不包围其他 degeneracy；',
+    'occupied/lower band 与球面 orientation convention 已声明。',
+  ]}
+>
+
+对
+
+$$
+H=\chi v\,\mathbf p\cdot\boldsymbol\sigma
+$$
+
+定义单位向量 $\hat{\mathbf d}(\mathbf p)=\chi\hat{\mathbf p}$。lower-band Berry curvature 可写为
+
+$$
+\Omega_{-,i}
+=-\frac14\epsilon_{ijk}
+\hat{\mathbf d}\cdot
+(\partial_{p_j}\hat{\mathbf d}\times\partial_{p_k}\hat{\mathbf d}).
+$$
+
+当 momentum sphere 绕节点一次时，$\hat{\mathbf d}$ sphere 也绕 Bloch sphere 一次；orientation 由 $\chi$ 决定。因此 flux integral 是单位 mapping degree，模为 1。changing band label、sphere orientation 或 Pauli convention 会翻转符号，但不改变节点具有非零 integer charge 的事实。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Dirac node 是两个重合的 opposite-chirality Weyl sectors" titleEn="A Dirac node is two coincident Weyl sectors of opposite chirality" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+spinful inversion 与 time reversal 同时存在时，一般 momentum 的 bands 至少形成 PT-related doublets。两个 such doublets 的交叉可产生四重 bulk Dirac node。它可视为两个 opposite-chirality Weyl nodes 重合，因此净 Berry monopole charge 为零；若没有额外 crystal symmetry，允许的 intersector mass 通常可将其开隙。
+
+Dirac semimetal 因而比 Weyl semimetal 需要更强的 symmetry protection。保持保护 crystal symmetry 时，node 可稳定；破坏该 symmetry 可开 gap。破坏 inversion 或 time reversal 则可解除重合并把一个 Dirac node 分裂为若干 Weyl nodes，具体 multiplicity 由剩余 symmetry 决定。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+When spinful inversion and time reversal are both present, bands at a generic momentum form PT-related doublets. A crossing of two such doublets can produce a fourfold bulk Dirac node. It can be viewed as two coincident Weyl nodes of opposite chirality, so its net Berry-monopole charge is zero. Without an additional crystal symmetry, an allowed intersector mass generally gaps it.
+
+A Dirac semimetal therefore requires stronger symmetry protection than a Weyl semimetal. The node can remain stable while the protecting crystal symmetry is preserved and gap when it is broken. Breaking inversion or time reversal can instead separate the coincident sectors into Weyl nodes, with the multiplicity fixed by the remaining symmetries.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Martin 的 mass–field model：gapped → critical → Weyl pair | Martin's mass–field model: gapped → critical → Weyl pair"
+  assumptions={[
+    'continuum four-band model H=v τx(σ·k)+m τz+b σz；',
+    'm,b≥0，b 项破坏 time reversal；',
+    '节点搜索先沿 field 方向 kz，随后检查 transverse linear dispersion。',
+  ]}
+>
+
+四条能带可整理为
+
+$$
+E_{s,t}(\mathbf k)=
+s\sqrt{v^2(k_x^2+k_y^2)+
+\left(\sqrt{m^2+v^2k_z^2}+t b\right)^2},
+\qquad s,t=\pm1.
+$$
+
+最低 positive branch 闭合要求 $k_x=k_y=0$ 且
+
+$$
+\sqrt{m^2+v^2k_z^2}=b.
+$$
+
+于是：
+
+$$
+\begin{cases}
+b<m: & E_{\rm gap}=2(m-b),\\
+b=m: & k_z=0\text{ 处临界闭隙},\\
+b>m: & k_z=\pm\sqrt{b^2-m^2}/v.
+\end{cases}
+$$
+
+在两个解附近展开得到 opposite-chirality Weyl Hamiltonians。连续模型只描述该局部机制；真实 lattice BZ 中还必须寻找所有 symmetry-related nodes 并验证 total chirality cancellation。
+
+</DerivationBlock>
+
+<DiracWeylTransitionExplorer />
+
+<span id="sec-28-5" class="chapter-anchor" aria-hidden="true"></span>
+
+## 28.5 Fermi arcs | Fermi Arcs
+
+<BilingualSection titleZh="把 Weyl semimetal 看作一族二维 Chern insulators" titleEn="Viewing a Weyl semimetal as a family of two-dimensional Chern insulators" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+设一对 Weyl nodes 位于 $(0,0,\pm k_0)$。固定 $k_z$ 后，剩余 $(k_x,k_y)$ 构成二维 Hamiltonian。只要该 slice 不经过节点，它就是 gapped two-dimensional system，可定义 occupied-band Chern number $C(k_z)$。跨过 chirality $\chi$ 的 Weyl node 时，slice Chern number 改变 $\chi$：
+
+$$
+C(k_z^+)-C(k_z^-)=\chi.
+$$
+
+在最简 convention 中，$|k_z|<k_0$ 的 slices 有 $C=1$，外侧 slices 有 $C=0$。若选择一个使两个 Weyl nodes 投影到不同 surface momenta 的表面，每个 $C=1$ slice 都贡献一条 chiral edge branch。把这些 branches 随 $k_z$ 连续拼接，固定 energy 下得到连接两个 projected nodes 的 open surface contour：Fermi arc。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Suppose a pair of Weyl nodes lies at $(0,0,\pm k_0)$. At fixed $k_z$, the remaining $(k_x,k_y)$ coordinates define a two-dimensional Hamiltonian. Every slice not passing through a node is gapped and has an occupied-band Chern number $C(k_z)$. Crossing a Weyl node of chirality $\chi$ changes the slice Chern number by
+
+$$
+C(k_z^+)-C(k_z^-)=\chi.
+$$
+
+In the simplest convention, slices with $|k_z|<k_0$ have $C=1$, while the outer slices have $C=0$. Choose a surface on which the two Weyl nodes project to distinct momenta. Each $C=1$ slice contributes one chiral edge branch. Joining these branches continuously in $k_z$ produces, at fixed energy, an open surface contour connecting the two projected nodes: a Fermi arc.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="为什么 arc 可以开放而孤立二维 Fermi contour 不可以 | Why the arc can be open although an isolated 2D Fermi contour cannot"
+  assumptions={[
+    'surface spectrum 与 projected three-dimensional bulk continuum 同时考虑；',
+    'chemical potential 位于节点附近；',
+    '所选表面将 opposite-chirality nodes 投影到不同点。',
+  ]}
+>
+
+孤立二维 periodic band 的 constant-energy contour 必须在二维 BZ 中闭合，或通过 BZ periodicity 等价闭合。Fermi arc 不是孤立二维 band 的完整 contour：在 projected Weyl node 处，固定 $k_z$ 的二维 bulk gap 闭合，surface state 的 localization length 发散并并入 bulk continuum。因此 surface-only 可见部分在两个 node projections 处终止，而三维 bulk states 完成整个谱的连续性。
+
+有限 slab 有上下两个表面。两个表面通常携带互补 arcs；把 surface localization 忽略后，完整 slab constant-energy spectrum 仍满足 lattice periodicity 和闭合要求。arc 的“开放”因此是 surface-resolved projection 的性质，不违反二维 lattice band counting。
+
+</DerivationBlock>
+
+<FermiArcSliceExplorer />
+
+<BilingualCallout titleZh="Fermi arc 的可核验边界" titleEn="Verification boundary for a Fermi arc" kind="boundary">
+  <div class="bilingual-section__zh">
+
+可信 Fermi-arc claim 需要：已验证的 bulk Weyl nodes 与 chirality；明确 surface Miller index/termination；surface Green function 或充分厚 slab；surface spectral weight/localization；chemical potential 与 energy broadening；以及 arc endpoints 与 projected bulk nodes 的一致性。trivial surface resonance、closed pocket 被 bulk continuum 遮挡后的残段、或 matrix-element suppression 都可能产生“像 arc”的图形。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A credible Fermi-arc claim requires verified bulk Weyl nodes and chiralities, a specified surface Miller index and termination, a surface Green function or sufficiently thick slab, surface spectral weight or localization, the chemical potential and energy broadening, and consistency between arc endpoints and the projected bulk nodes. A trivial surface resonance, a closed pocket partly hidden by projected bulk continuum, or matrix-element suppression can all produce an arc-like image.
+
+  </div>
+</BilingualCallout>
+
+<span id="review-and-practice" class="chapter-anchor" aria-hidden="true"></span>
+
+## 复核、原创练习与来源 | Review, original practice, and sources
+
+<BilingualSection titleZh="本章判断链复核" titleEn="Review of the chapter's judgment chain" eyebrow="【复核 | Review】">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li><strong>三维绝缘体：</strong>先验证 full-BZ bulk gap，再计算完整 occupied manifold 的 $(\nu_0;\nu_1\nu_2\nu_3)$。</li>
+      <li><strong>weak/strong：</strong>weak phase 是 translation-sensitive layered class；strong phase 的理想 TR-preserving surface 具有 odd connectivity modulo 2。</li>
+      <li><strong>surface/bulk Dirac：</strong>surface cone 位于 insulating bulk 的 boundary；bulk Dirac node 是四重 bulk crossing。</li>
+      <li><strong>Weyl：</strong>generic two-band node 在三维 codimension 为三；闭合小球上的 Chern charge 非零。</li>
+      <li><strong>Fermi arc：</strong>是 nonzero-Chern momentum slices 的 chiral boundaries 随第三个 momentum 拼接后的 surface-resolved open contour。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>Three-dimensional insulator:</strong> first verify a full-BZ bulk gap, then compute $(\nu_0;\nu_1\nu_2\nu_3)$ from the complete occupied manifold.</li>
+      <li><strong>Weak versus strong:</strong> a weak phase is a translation-sensitive layered class; an ideal time-reversal-preserving surface of a strong phase has odd connectivity modulo two.</li>
+      <li><strong>Surface versus bulk Dirac:</strong> a surface cone is a boundary of an insulating bulk; a bulk Dirac node is a fourfold bulk crossing.</li>
+      <li><strong>Weyl:</strong> a generic two-band node has codimension three in three dimensions and nonzero Chern charge on a small enclosing sphere.</li>
+      <li><strong>Fermi arc:</strong> it is the surface-resolved open contour obtained by joining the chiral boundaries of nonzero-Chern momentum slices.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="原创练习" titleEn="Original exercises" kind="practice">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>构造八个 $\delta_{n_1n_2n_3}$，分别得到 trivial、weak $(0;001)$ 与 strong $(1;000)$；说明最少需要翻转几个 parity products。</li>
+      <li>对 lattice Dirac mass $M=m+B\sum_i(1-\cos k_i)$，列出八个 TRIM masses，并找出随 $m/B$ 改变的所有 gap-closing values。</li>
+      <li>从 $m(z)$ domain wall 方程求表面态衰减长度，并比较 bulk mass 接近零时的行为。</li>
+      <li>证明 generic $2\times2$ Hermitian crossing 在三维是 isolated point；再给出一个 mirror symmetry 将条件数降为二并形成 nodal line 的例子。</li>
+      <li>从 Martin mass–field spectrum 推导 $b>m$ 时的 Weyl-node separation，并检查接近 $b=m$ 时的 scaling。</li>
+      <li>对 anisotropic Weyl Hamiltonian $H=\sum_{ij}v_{ij}p_j\sigma_i$，说明 chirality 与 $\det v$ 的关系。</li>
+      <li>设 slice Chern number 在 $-k_0<k_z<k_0$ 为 1，写出一个 chiral surface dispersion 并画出三个不同 energies 的 arcs。</li>
+      <li>设计一份 first-principles Weyl-node evidence manifest，明确 full-BZ search、closed-surface flux、surface termination 和 convergence 字段。</li>
+      <li>解释为何薄膜 surface gap 随 thickness 衰减支持 hybridization interpretation，而不自动证明 time-reversal-breaking mass。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Construct eight $\delta_{n_1n_2n_3}$ values for a trivial phase, a weak $(0;001)$ phase, and a strong $(1;000)$ phase. Determine the minimum number of parity-product flips in each case.</li>
+      <li>For $M=m+B\sum_i(1-\cos k_i)$, list the eight TRIM masses and find every gap-closing value as $m/B$ changes.</li>
+      <li>Solve for the decay length of a surface state at a mass domain wall and examine its behaviour as the bulk mass approaches zero.</li>
+      <li>Prove that a generic $2\times2$ Hermitian crossing is an isolated point in three dimensions, then give a mirror-symmetric example in which the number of independent conditions drops to two and a nodal line appears.</li>
+      <li>Derive the Weyl-node separation for $b>m$ from Martin's mass–field spectrum and determine its scaling near $b=m$.</li>
+      <li>For $H=\sum_{ij}v_{ij}p_j\sigma_i$, explain the relation between chirality and $\det v$.</li>
+      <li>Let the slice Chern number equal one for $-k_0<k_z<k_0$. Write a chiral surface dispersion and draw the arcs at three energies.</li>
+      <li>Design a first-principles Weyl-node evidence manifest with explicit fields for a full-BZ search, closed-surface flux, surface termination, and convergence.</li>
+      <li>Explain why a surface gap that decays with film thickness supports a hybridization interpretation but does not by itself prove a time-reversal-breaking mass.</li>
+    </ol>
+  </div>
+</BilingualCallout>
+
+<BilingualCallout titleZh="版权与来源边界" titleEn="Copyright and source boundary" kind="source">
+  <div class="bilingual-section__zh">
+
+【版权边界】本站使用 Martin Chapter 28 的章节身份、目录标题和印刷页码定位，并依据其概念顺序独立组织教学内容。上文推导、图示、数值模型和练习均为原创表达，不转录教材图、图注、习题或答案。材料与实验连接只保留来源支持的概念层级；未提供原始数据时不声明独立复现。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+【Copyright boundary】The site uses the identity, directory titles, and printed-page locators of Martin Chapter 28 and independently organizes teaching material in its conceptual order. The derivations, diagrams, numerical models, and exercises above are original expressions; textbook figures, captions, exercises, and answers are not reproduced. Material and experimental connections remain at the level supported by the source, and no independent reproduction is claimed without raw data.
+
+  </div>
+</BilingualCallout>
