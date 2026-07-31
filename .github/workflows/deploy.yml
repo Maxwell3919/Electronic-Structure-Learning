@@ -64,7 +64,7 @@ jobs:
     name: Live Pages browser smoke
     needs: deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       PAGES_URL: ${{ needs.deploy.outputs.page_url }}
       DEPLOYED_SHA: ${{ github.sha }}
@@ -97,6 +97,7 @@ jobs:
         run: |
           .venv-pages-smoke/bin/python scripts/smoke-pages.py
           .venv-pages-smoke/bin/python scripts/smoke-part02-ch06.py
+          .venv-pages-smoke/bin/python scripts/smoke-pages-ch19.py
           .venv-pages-smoke/bin/python scripts/smoke-part04-ch12.py
 
       - name: Upload browser-smoke evidence
