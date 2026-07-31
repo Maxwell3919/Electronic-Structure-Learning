@@ -1,8 +1,10 @@
 # Part III Chapter 11 execution plan · Pseudopotentials
 
-Status: active Chapter 11 writing baseline
+Status: content-complete; validation and deployment in progress
 
-Website baseline: `77a2a095e9604be563cc7b04e7b5ff53fd32ea43`
+Initial website baseline: `77a2a095e9604be563cc7b04e7b5ff53fd32ea43`
+
+Latest synchronized `main` baseline before current validation: `b727dd47cdc33285da61d5d4cdb2e3655536e274`
 
 Primary source: Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Chapter 11, printed pages 230–255; source exercises begin on page 256.
 
@@ -70,24 +72,22 @@ Every derivation identifies atomic units, radial measure, reference state, match
 2. `LogDerivativeExplorer`: declared square-well teaching model; energy-dependent logarithmic derivatives and reference-energy matching.
 3. `HardnessExplorer`: smooth-core length scale versus normalized Fourier-tail proxy; qualitative cutoff-cost relation only.
 4. `ProjectorFlowDiagram`: semilocal channels, local component, projectors and nonlocal action, with semantic fallback.
-5. `UltrasoftDensityDiagram`: smooth valence density plus augmentation contribution and generalized overlap.
-6. `PAWTransformationDiagram`: auxiliary state, pseudo/all-electron partial-wave difference and reconstructed state.
-7. `PseudopotentialValidationMatrix`: provenance, atomic, molecular, crystalline, cutoff, force/stress/phonon, ghost-state and relativistic/XC compatibility gates.
+5. `AugmentationComparisonDiagram`: smooth auxiliary density, augmentation contribution, reconstructed density and PAW transformation boundary.
 
 Interactive controls must be keyboard operable and retain analytic/static fallbacks without JavaScript. Deterministic checks validate only the declared teaching models.
 
 ## 5. Execution batches
 
-- Batch A: source map, reading orientation, notation, §§11.1–11.3, scattering/OPW derivations and first two visualizations.
-- Batch B: §§11.4–11.7, norm-response derivation, generation, unscreening, nonlinear core correction, transferability and hardness.
-- Batch C: §§11.8–11.10, separable projectors, ghost states, multiple-projector and reciprocal-space optimization boundaries.
-- Batch D: §§11.11–11.13, ultrasoft and PAW derivations, validation matrix, original exercises, deterministic validator, CI and exact-SHA Pages smoke.
+- [x] Batch A: source map, reading orientation, notation, §§11.1–11.3, scattering/OPW derivations and first two visualizations.
+- [x] Batch B: §§11.4–11.7, norm-response derivation, generation, unscreening, nonlinear core correction, transferability and hardness.
+- [x] Batch C: §§11.8–11.10, separable projectors, ghost states, multiple-projector and reciprocal-space optimization boundaries.
+- [x] Batch D: §§11.11–11.13, ultrasoft and PAW derivations, validation matrix, original exercises, deterministic validator and exact-SHA Pages smoke implementation.
 
 Only Chapter 11 is active in Part III. Chapter 10 body is read-only except for a separately justified regression fix.
 
 ## 6. Parallel-work isolation
 
-At this baseline, open work exists in Part I Chapter 2, Part V Chapter 20 and Part VII Appendix A. Chapter 11 substantive code stays under:
+During Chapter 11 work, accepted changes from Part II Chapter 8, Part VII Appendix A and Part I Chapter 3 entered `main`. They were brought into the Chapter 11 branch through explicit non-force synchronization PRs. Chapter 11 substantive code remains under:
 
 ```text
 src/components/part03/ch11/
@@ -97,7 +97,7 @@ scripts/smoke-part03-ch11.py
 src/content/docs/part-03-important-preliminaries-on-atoms/
 ```
 
-Shared `package.json` and GitHub workflows are edited only after rereading current `main`, and only by additive registration that preserves every merged validator and browser smoke. No dependency or lockfile change is planned.
+Shared `package.json` and GitHub workflows contain additive Chapter 11 registrations while preserving every synchronized validator and browser smoke. No dependency, lockfile, Astro configuration or shared CSS change is included.
 
 ## 7. Scientific acceptance boundaries
 
@@ -117,3 +117,12 @@ npm run check
 ```
 
 The final Chapter 11 PR additionally requires a dedicated exact-SHA Pages test of the Part III index and Chapter 11 route, desktop/narrow bilingual layout, KaTeX, source map, keyboard interactions, no-JavaScript fallbacks and GitHub Pages base path.
+
+## 9. Current validation state
+
+- All Chapter 11 source sections 11.1–11.13 have corresponding bilingual content.
+- Five original visualizations and their declared acceptance boundaries are present.
+- The Chapter 11 deterministic validator and Pages smoke script are registered in the shared validation chain.
+- The first integrated CI run reached the Chapter 11 model and exposed a JavaScript exponent-precedence error after all previously merged validators passed.
+- The data-model and browser-side expressions were parenthesized through isolated fixes; the next full CI result remains the active completion gate.
+- Talos worktree, filesystem and mirror alignment were not checked through a host-live tool and remain unknown.
