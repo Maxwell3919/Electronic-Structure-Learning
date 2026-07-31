@@ -1,0 +1,181 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reference-orientation"></span>
+
+## 使用定位 | Reference Orientation
+
+<BilingualSection titleZh="本附录解决什么问题" titleEn="What this Appendix resolves" eyebrow="【Martin 原书 + 补充组织 | Martin source + supplemental organization】">
+  <div class="bilingual-section__zh">
+
+Appendix B 是 Part II 的公式参考层。它回答四类具体问题：LSDA 的输入变量究竟是什么；均匀电子气的每电子交换—关联能如何变成空间积分；自旋极化如何进入局域表达；PBE 如何用无量纲密度梯度构造满足指定约束的 GGA。
+
+正文 Chapter 8 负责解释交换—关联空穴、局域近似为何可能有效、GGA 的物理动机及经验表现。本附录集中保存参数、单位、极限、普通导数与泛函导数之间的连接。读者应能据此检查一个实现是否使用了相同的自旋、密度、梯度和能量约定，而不能仅凭“PBE”或“LSDA”名称判断两个程序完全等价。
+
+前置知识是 Chapter 5 的均匀电子气、Chapter 7 的 Kohn–Sham 势和 Appendix A 的泛函变分。这里不讨论混合泛函、meta-GGA、DFT+U、非局域色散或轨道依赖泛函；这些属于 Chapter 9 或更专门的来源。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Appendix B is the formula-reference layer for Part II. It resolves four concrete questions: what variables enter LSDA; how a uniform-electron-gas energy per particle becomes a spatial integral; how spin polarization enters the local expression; and how PBE uses dimensionless density gradients to construct a constrained GGA.
+
+Chapter 8 carries the physical narrative of the exchange-correlation hole, the rationale for local approximations, the motivation for GGA, and empirical performance. This Appendix retains parameters, units, limiting cases, and the connection between ordinary and functional derivatives. It should allow a reader to check whether two implementations use the same spin, density, gradient, and energy conventions. A shared label such as “PBE” or “LSDA” is not sufficient by itself.
+
+Prerequisites are the uniform electron gas of Chapter 5, the Kohn–Sham potential of Chapter 7, and the variational calculus of Appendix A. Hybrid functionals, meta-GGAs, DFT+U, nonlocal dispersion, and orbital-dependent functionals are outside the present boundary and belong to Chapter 9 or specialized sources.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="阅读后应能完成的检查" titleEn="Checks enabled by this Appendix" kind="check">
+  <div class="bilingual-section__zh">
+
+1. 从 $n_\uparrow,n_\downarrow$ 计算 $n$、磁化密度 $m$、相对自旋极化 $\zeta$ 和 $r_s$。
+2. 检查 LSDA 能量密度、每电子能量和势之间是否混用了不同归一化。
+3. 验证交换约化梯度 $s$ 和相关约化梯度 $t$ 是否无量纲，并识别所用波矢约定。
+4. 验证 PBE 交换增强因子满足 $F_x(0)=1$、小 $s$ 二次展开和大 $s$ 有界极限。
+5. 区分泛函的解析形式、离散实现、数值导数、SCF 收敛和目标物理量准确性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+1. Compute $n$, magnetization density $m$, relative spin polarization $\zeta$, and $r_s$ from $n_\uparrow,n_\downarrow$.
+2. Detect inconsistent normalization among an LSDA energy density, energy per electron, and potential.
+3. Verify that exchange and correlation reduced gradients $s$ and $t$ are dimensionless and identify the wave-vector convention used.
+4. Check that the PBE exchange enhancement satisfies $F_x(0)=1$, its small-$s$ quadratic expansion, and its bounded large-$s$ limit.
+5. Keep the analytic functional, discrete implementation, numerical derivative, SCF convergence, and accuracy of a target observable as separate questions.
+
+  </div>
+</BilingualCallout>
+
+<span id="objects-and-conventions"></span>
+
+## 数学对象、物理对象与约定 | Mathematical and Physical Objects
+
+<BilingualSection titleZh="密度、自旋与局域尺度" titleEn="Density, spin, and local scales" eyebrow="【定义 | Definitions】">
+  <div class="bilingual-section__zh">
+
+在共线自旋表述中，基本局域变量为 $n_\uparrow(\mathbf r)$ 和 $n_\downarrow(\mathbf r)$，单位均为长度的负三次方。定义
+
+$$
+n=n_\uparrow+n_\downarrow,\qquad
+m=n_\uparrow-n_\downarrow,\qquad
+\zeta=\frac{m}{n},\quad -1\leq\zeta\leq1.
+$$
+
+$n=0$ 的点不能直接计算 $\zeta$；数值实现必须给出低密度处理规则。Wigner–Seitz 密度参数由
+
+$$
+\frac{4\pi}{3}(r_s a_0)^3 n=1
+$$
+
+定义，因此 $r_s$ 无量纲。采用原子单位时 $a_0=1$，且密度以 $a_0^{-3}$ 表示。总密度对应的 Fermi 波矢为
+
+$$
+k_F=(3\pi^2n)^{1/3}.
+$$
+
+这些量是局域参考电子气的标签，不意味着实际体系在该点附近真的均匀。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a collinear spin treatment, the local primitive variables are $n_\uparrow(\mathbf r)$ and $n_\downarrow(\mathbf r)$, each with dimensions of inverse volume. Define
+
+$$
+n=n_\uparrow+n_\downarrow,\qquad
+m=n_\uparrow-n_\downarrow,\qquad
+\zeta=\frac{m}{n},\quad -1\leq\zeta\leq1.
+$$
+
+The polarization $\zeta$ is undefined at a point where $n=0$; a numerical implementation therefore needs an explicit low-density rule. The Wigner–Seitz density parameter is defined by
+
+$$
+\frac{4\pi}{3}(r_s a_0)^3 n=1,
+$$
+
+so $r_s$ is dimensionless. In atomic units $a_0=1$ and density is expressed in $a_0^{-3}$. The Fermi wave vector associated with the total density is
+
+$$
+k_F=(3\pi^2n)^{1/3}.
+$$
+
+These quantities label a local reference electron gas; they do not assert that the real system is uniform near that point.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="LSDA 与 GGA 的输入层级" titleEn="Input hierarchy of LSDA and GGA" eyebrow="【定义与近似 | Definition and approximation】">
+  <div class="bilingual-section__zh">
+
+LSDA 采用局域映射
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}[n_\uparrow,n_\downarrow]
+=\int d^3r\,n(\mathbf r)\,
+\varepsilon_{\mathrm{xc}}^{\mathrm{hom}}
+\big(r_s(\mathbf r),\zeta(\mathbf r)\big).
+$$
+
+右侧的 $\varepsilon_{\mathrm{xc}}^{\mathrm{hom}}$ 是均匀电子气的每电子能量；乘以 $n$ 后成为每体积能量密度，再对空间积分得到能量。LSDA 的“局域”指每一点只读取该点的自旋密度，不表示最终 Kohn–Sham 方程没有全局耦合：Hartree 项、轨道正交和自洽过程仍连接整个体系。
+
+半局域 GGA 还读取一阶空间导数。一般写作
+
+$$
+E_{\mathrm{xc}}^{\mathrm{GGA}}
+=\int d^3r\,f\big(n_\uparrow,n_\downarrow,
+\nabla n_\uparrow,\nabla n_\downarrow\big).
+$$
+
+具体构造通常改用无量纲组合，例如交换约化梯度
+
+$$
+s=\frac{|\nabla n|}{2k_F n}.
+$$
+
+因为 $|\nabla n|$ 和 $k_Fn$ 的量纲均为长度的负四次方，$s$ 无量纲。GGA 是泛函输入层级的扩展，不自动规定更高准确性，也不等于对密度作数值平滑。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+LSDA uses the local map
+
+$$
+E_{\mathrm{xc}}^{\mathrm{LSDA}}[n_\uparrow,n_\downarrow]
+=\int d^3r\,n(\mathbf r)\,
+\varepsilon_{\mathrm{xc}}^{\mathrm{hom}}
+\big(r_s(\mathbf r),\zeta(\mathbf r)\big).
+$$
+
+Here $\varepsilon_{\mathrm{xc}}^{\mathrm{hom}}$ is an energy per electron of the uniform electron gas. Multiplication by $n$ gives an energy per volume, and spatial integration gives an energy. “Local” means that each point samples only the spin densities at that point. It does not make the final Kohn–Sham problem globally uncoupled: the Hartree term, orbital orthogonality, and self-consistency still connect the whole system.
+
+A semilocal GGA also samples first spatial derivatives and may be written generically as
+
+$$
+E_{\mathrm{xc}}^{\mathrm{GGA}}
+=\int d^3r\,f\big(n_\uparrow,n_\downarrow,
+\nabla n_\uparrow,\nabla n_\downarrow\big).
+$$
+
+Practical constructions normally use dimensionless combinations, such as the exchange reduced gradient
+
+$$
+s=\frac{|\nabla n|}{2k_F n}.
+$$
+
+Both $|\nabla n|$ and $k_Fn$ have dimensions of inverse length to the fourth power, so $s$ is dimensionless. GGA extends the information supplied to the functional; it neither guarantees higher accuracy nor denotes numerical smoothing of the density.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="统一单位与符号" titleEn="Units and notation used throughout" kind="note">
+  <div class="bilingual-section__zh">
+
+除电磁量另行说明外，本附录的显式电子气公式使用 Hartree 原子单位：$e=m_e=\hbar=4\pi\epsilon_0=a_0=1$。能量以 Hartree 表示，密度以 $a_0^{-3}$ 表示。若保留 $e^2/a_0$，它表示能量尺度而不是额外无量纲因子。$\varepsilon_{\mathrm{xc}}$ 表示每电子能量；$e_{\mathrm{xc}}=n\varepsilon_{\mathrm{xc}}$ 表示每体积能量密度；$v_{\mathrm{xc},\sigma}=\delta E_{\mathrm{xc}}/\delta n_\sigma$ 表示势。三者不能互换。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Unless stated otherwise for an electromagnetic quantity, explicit electron-gas formulas use Hartree atomic units: $e=m_e=\hbar=4\pi\epsilon_0=a_0=1$. Energy is in Hartree and density in $a_0^{-3}$. When $e^2/a_0$ is retained, it denotes an energy scale rather than an additional dimensionless factor. The symbol $\varepsilon_{\mathrm{xc}}$ denotes energy per electron, $e_{\mathrm{xc}}=n\varepsilon_{\mathrm{xc}}$ energy per volume, and $v_{\mathrm{xc},\sigma}=\delta E_{\mathrm{xc}}/\delta n_\sigma$ a potential. They are not interchangeable.
+
+  </div>
+</BilingualCallout>

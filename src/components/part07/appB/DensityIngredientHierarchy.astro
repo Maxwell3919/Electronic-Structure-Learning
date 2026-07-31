@@ -1,0 +1,126 @@
+<figure class="chapter-visual ingredient-hierarchy">
+  <figcaption>
+    <strong>原创示意图：LSDA 与 GGA 使用的信息层级</strong>
+    <span lang="en">Original diagram: information supplied to LSDA and GGA</span>
+  </figcaption>
+
+  <svg viewBox="0 0 760 330" role="img" aria-labelledby="ingredient-title ingredient-desc">
+    <title id="ingredient-title">Information hierarchy for LSDA and GGA functionals</title>
+    <desc id="ingredient-desc">
+      LSDA receives the local spin-up and spin-down densities at one position. GGA receives the same local densities together with density gradients. Neither input list includes nonlocal density information or an orbital dependence.
+    </desc>
+    <defs>
+      <marker id="ingredient-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 z" class="ingredient-hierarchy__arrowhead" />
+      </marker>
+    </defs>
+
+    <g transform="translate(38 34)">
+      <rect x="0" y="0" width="205" height="88" rx="12" class="ingredient-hierarchy__box" />
+      <text x="102" y="31" text-anchor="middle">local spin densities</text>
+      <text x="102" y="57" text-anchor="middle">n↑(r), n↓(r)</text>
+      <text x="102" y="79" text-anchor="middle">局域自旋密度</text>
+    </g>
+
+    <line x1="255" y1="78" x2="345" y2="78" marker-end="url(#ingredient-arrow)" class="ingredient-hierarchy__arrow" />
+
+    <g transform="translate(360 34)">
+      <rect x="0" y="0" width="205" height="88" rx="12" class="ingredient-hierarchy__box ingredient-hierarchy__box--accent" />
+      <text x="102" y="32" text-anchor="middle">LSDA energy density</text>
+      <text x="102" y="58" text-anchor="middle">εxc(n↑, n↓)</text>
+      <text x="102" y="79" text-anchor="middle">均匀电子气局域取样</text>
+    </g>
+
+    <g transform="translate(38 190)">
+      <rect x="0" y="0" width="250" height="100" rx="12" class="ingredient-hierarchy__box" />
+      <text x="125" y="28" text-anchor="middle">local densities + gradients</text>
+      <text x="125" y="55" text-anchor="middle">n↑, n↓, ∇n↑, ∇n↓</text>
+      <text x="125" y="79" text-anchor="middle">或等价无量纲组合 s, t, ζ</text>
+    </g>
+
+    <line x1="300" y1="240" x2="390" y2="240" marker-end="url(#ingredient-arrow)" class="ingredient-hierarchy__arrow" />
+
+    <g transform="translate(405 190)">
+      <rect x="0" y="0" width="250" height="100" rx="12" class="ingredient-hierarchy__box ingredient-hierarchy__box--accent" />
+      <text x="125" y="29" text-anchor="middle">GGA energy density</text>
+      <text x="125" y="55" text-anchor="middle">εxc(nσ, ∇nσ)</text>
+      <text x="125" y="79" text-anchor="middle">半局域：同一点的密度与梯度</text>
+    </g>
+
+    <text x="380" y="316" text-anchor="middle">nonlocal density, orbitals, τ, and response variables are outside this input level</text>
+  </svg>
+
+  <dl class="ingredient-hierarchy__fallback">
+    <div>
+      <dt>LSDA</dt>
+      <dd>在每个位置只读取 <code>n↑(r)</code> 与 <code>n↓(r)</code>，并套用均匀电子气的交换—关联能量密度。</dd>
+    </div>
+    <div>
+      <dt>GGA</dt>
+      <dd>在同一位置加入密度梯度，通常重写成 <code>s</code>、<code>t</code> 和 <code>ζ</code> 等无量纲变量。</dd>
+    </div>
+    <div>
+      <dt>边界 | Boundary</dt>
+      <dd>“使用更多局域信息”不等于包含真正的长程非局域相关，也不等于自动提高任一具体 observable 的精度。</dd>
+    </div>
+  </dl>
+
+  <div class="chapter-visual__contract">
+    <p><strong>学习目的：</strong>区分 LSDA/GGA 的输入变量层级，避免把泛函名称当作材料精度结论。</p>
+    <p lang="en"><strong>Learning purpose:</strong> distinguish the input level of LSDA and GGA without turning a functional label into a material-accuracy claim.</p>
+    <p><strong>验收：</strong>图与语义列表必须同时指出 LSDA 的局域自旋密度输入、GGA 的梯度输入，以及未包含的非局域/轨道变量。</p>
+    <p lang="en"><strong>Acceptance:</strong> both the diagram and semantic fallback identify local spin densities, gradient inputs, and the variables absent from this semilocal level.</p>
+    <p><strong>边界：</strong>图示是输入结构，不表示任一泛函的数值误差、势的光滑性或特定材料表现。</p>
+    <p lang="en"><strong>Boundary:</strong> this diagram describes inputs, not numerical errors, potential smoothness, or material-specific performance.</p>
+  </div>
+</figure>
+
+<style>
+  .ingredient-hierarchy {
+    overflow-x: auto;
+  }
+
+  .ingredient-hierarchy svg {
+    width: 100%;
+    min-width: 40rem;
+  }
+
+  .ingredient-hierarchy text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .ingredient-hierarchy__box {
+    fill: var(--sl-color-gray-6);
+    stroke: var(--sl-color-gray-4);
+    stroke-width: 2;
+  }
+
+  .ingredient-hierarchy__box--accent {
+    stroke: var(--sl-color-accent-high);
+  }
+
+  .ingredient-hierarchy__arrow {
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .ingredient-hierarchy__arrowhead {
+    fill: currentColor;
+  }
+
+  .ingredient-hierarchy__fallback {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.8rem;
+  }
+
+  .ingredient-hierarchy__fallback > div {
+    border-left: 0.2rem solid var(--sl-color-accent);
+    padding-left: 0.8rem;
+  }
+
+  .ingredient-hierarchy__fallback dd {
+    margin: 0.3rem 0 0;
+  }
+</style>

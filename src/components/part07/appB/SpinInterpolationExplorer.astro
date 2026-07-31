@@ -1,0 +1,132 @@
+---
+import { spinExchangeFactor } from '../../../data/part07/lsdaGgaModel.mjs';
+
+const fallbackValues = [-1, -0.5, 0, 0.5, 1].map((zeta) => ({
+  zeta,
+  factor: spinExchangeFactor(zeta),
+}));
+---
+
+<figure class="chapter-visual spin-explorer" data-spin-explorer>
+  <figcaption>
+    <strong>原创交互模型：交换能的自旋缩放因子</strong>
+    <span lang="en">Original interactive model: spin-scaling factor for exchange</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>自旋极化 ζ | Spin polarization ζ</span>
+      <input type="range" min="-1" max="1" step="0.01" value="0" data-spin-zeta />
+      <output data-spin-zeta-output>0.00</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 640 290" role="img" aria-labelledby="spin-title spin-desc">
+    <title id="spin-title">Exchange spin-scaling factor as a function of polarization</title>
+    <desc id="spin-desc">
+      The curve is symmetric in the spin polarization zeta, equals one at zero polarization, and reaches two to the one-third power at full polarization.
+    </desc>
+    <line x1="58" y1="246" x2="582" y2="246" class="plot-axis" />
+    <line x1="58" y1="40" x2="58" y2="246" class="plot-axis" />
+    <path
+      d="M 58 76 C 180 136, 242 202, 320 214 C 398 202, 460 136, 582 76"
+      class="plot-curve"
+    />
+    <line x1="320" y1="40" x2="320" y2="246" class="plot-guide" />
+    <circle cx="320" cy="214" r="6" class="spin-explorer__marker" data-spin-marker />
+    <text x="58" y="270" text-anchor="middle">−1</text>
+    <text x="320" y="270" text-anchor="middle">0</text>
+    <text x="582" y="270" text-anchor="middle">1</text>
+    <text x="22" y="48">fₓ(ζ)</text>
+    <text x="60" y="226">1</text>
+    <text x="62" y="68">2¹ᐟ³</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>交换自旋因子 | Exchange spin factor:</span>
+    <strong data-spin-factor>fₓ(ζ) = 1.000000</strong>
+    <span>相对未极化交换能量密度：</span>
+    <strong data-spin-percent>100.00%</strong>
+  </div>
+
+  <div class="spin-explorer__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>ζ</th><th>fₓ(ζ)</th></tr></thead>
+      <tbody>
+        {fallbackValues.map((row) => (
+          <tr><td>{row.zeta.toFixed(2)}</td><td>{row.factor.toFixed(8)}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>fₓ(ζ)=[(1+ζ)^(4/3)+(1−ζ)^(4/3)]/2</code>，<code>ζ=(n↑−n↓)/n</code>，<code>ζ∈[−1,1]</code>。</p>
+    <p lang="en"><strong>Model:</strong> <code>fₓ(ζ)=[(1+ζ)^(4/3)+(1−ζ)^(4/3)]/2</code>, with <code>ζ=(n↑−n↓)/n</code> and <code>ζ∈[−1,1]</code>.</p>
+    <p><strong>解析验收：</strong><code>fₓ(0)=1</code>，<code>fₓ(±1)=2^(1/3)</code>，并且函数关于 <code>ζ=0</code> 对称。</p>
+    <p lang="en"><strong>Analytic acceptance:</strong> <code>fₓ(0)=1</code>, <code>fₓ(±1)=2^(1/3)</code>, and the function is even in <code>ζ</code>.</p>
+    <p><strong>边界：</strong>该关系是交换的精确自旋缩放结构；相关能的自旋插值需要单独参数化，不能直接复用同一曲线作为严格结果。</p>
+    <p lang="en"><strong>Boundary:</strong> this is the exact spin scaling for exchange. Correlation requires its own interpolation and cannot be identified with the same curve as an exact result.</p>
+  </div>
+</figure>
+
+<script>
+  import { spinExchangeFactor } from '../../../data/part07/lsdaGgaModel.mjs';
+
+  document.querySelectorAll('[data-spin-explorer]').forEach((root) => {
+    const input = root.querySelector('[data-spin-zeta]');
+    const zetaOutput = root.querySelector('[data-spin-zeta-output]');
+    const factorOutput = root.querySelector('[data-spin-factor]');
+    const percentOutput = root.querySelector('[data-spin-percent]');
+    const marker = root.querySelector('[data-spin-marker]');
+    if (!(input instanceof HTMLInputElement) || !(marker instanceof SVGCircleElement)) return;
+
+    const update = () => {
+      const zeta = Number(input.value);
+      if (!Number.isFinite(zeta)) return;
+      const factor = spinExchangeFactor(zeta);
+      const x = 58 + 262 * (zeta + 1);
+      const y = 214 - (factor - 1) * (138 / (2 ** (1 / 3) - 1));
+      marker.setAttribute('cx', x.toFixed(2));
+      marker.setAttribute('cy', y.toFixed(2));
+      if (zetaOutput instanceof HTMLOutputElement) zetaOutput.value = zeta.toFixed(2);
+      if (factorOutput instanceof HTMLElement) factorOutput.textContent = `fₓ(ζ) = ${factor.toFixed(6)}`;
+      if (percentOutput instanceof HTMLElement) percentOutput.textContent = `${(100 * factor).toFixed(2)}%`;
+    };
+
+    input.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .spin-explorer {
+    overflow-x: auto;
+  }
+
+  .spin-explorer svg {
+    width: 100%;
+    min-width: 34rem;
+  }
+
+  .spin-explorer text {
+    fill: currentColor;
+    font-size: 13px;
+  }
+
+  .spin-explorer__marker {
+    fill: var(--sl-color-accent-high);
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  .spin-explorer__fallback {
+    max-width: 25rem;
+    margin-top: 0.8rem;
+  }
+
+  .spin-explorer__fallback table {
+    width: 100%;
+  }
+</style>
