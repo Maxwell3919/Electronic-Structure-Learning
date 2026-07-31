@@ -65,9 +65,9 @@ const defaultPath = defaultPoints.map((point, index) => `${index === 0 ? 'M' : '
     <label>
       <span>显示量 | Observable</span>
       <select data-observable aria-label="Radial observable">
-        <option value="R">$R_{nl}(r)$</option>
-        <option value="u">$u_{nl}(r)=rR_{nl}(r)$</option>
-        <option value="P" selected>$P_{nl}(r)=|u_{nl}(r)|^2$</option>
+        <option value="R">R_nl(r)</option>
+        <option value="u">u_nl(r) = r R_nl(r)</option>
+        <option value="P" selected>P_nl(r) = |u_nl(r)|²</option>
       </select>
     </label>
   </div>
@@ -81,13 +81,13 @@ const defaultPath = defaultPoints.map((point, index) => `${index === 0 ? 'M' : '
     <path data-curve class="hydrogenic-radial__curve" d={defaultPath} />
     <text x="397" y="330" text-anchor="middle">$r$ (Bohr)</text>
     <text data-y-label x="16" y="165" transform="rotate(-90 16 165)" text-anchor="middle">$P$ (Bohr⁻¹)</text>
-    <text data-r-max x="726" y="310" text-anchor="end">$r_{max}=80$</text>
+    <text data-r-max x="726" y="310" text-anchor="end">r_max = 80</text>
   </svg>
 
   <p class="chapter-visual__readout" aria-live="polite">
     <span>态：<strong data-state-readout>2s</strong></span>
     <span>径向节点：<strong data-nodes>1</strong></span>
-    <span>数值归一化 $\int_0^{r_{max}}|u|^2dr=$ <strong data-norm>1.000000</strong></span>
+    <span>数值归一化 ∫ |u(r)|² dr = <strong data-norm>1.000000</strong></span>
     <span>解析能量：<strong data-energy>-0.125000</strong> Ha</span>
   </p>
 
@@ -99,7 +99,7 @@ const defaultPath = defaultPoints.map((point, index) => `${index === 0 ? 'M' : '
   </div>
 
   <noscript>
-    <p>无 JavaScript 时显示默认 2s 径向概率；解析定义、节点规则和归一化验收仍完整保留。</p>
+    <p>无 JavaScript 时，控件不会更新图形；解析定义、节点规则和归一化验收仍完整保留。</p>
   </noscript>
 </figure>
 
