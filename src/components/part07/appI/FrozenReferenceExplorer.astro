@@ -1,0 +1,125 @@
+---
+import { alternativeForceDefaults, frozenReferenceDifference } from '../../../data/part07/alternativeForceModel.mjs';
+
+const defaults = alternativeForceDefaults.frozenReference;
+const width = 720; const height = 330; const left = 62; const right = 680; const top = 42; const bottom = 250;
+const lambdas = Array.from({ length: 121 }, (_, index) => -0.5 + index / 120);
+const frozen = lambdas.map((lambda) => frozenReferenceDifference({ ...defaults, lambda }).frozenDifference);
+const relaxed = lambdas.map((lambda) => frozenReferenceDifference({ ...defaults, lambda }).relaxedDifference);
+const values = [...frozen, ...relaxed]; const min = Math.min(...values); const max = Math.max(...values); const span = Math.max(max - min, 1e-9);
+const xMap = (value) => left + (right - left) * (value + 0.5);
+const yMap = (value) => bottom - (bottom - top) * (value - min) / span;
+const pathFor = (array) => array.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(lambdas[index]).toFixed(2)} ${yMap(value).toFixed(2)}`).join(' ');
+const initial = frozenReferenceDifference(defaults);
+const fallback = [-0.35, -0.15, 0.15, 0.35].map((lambda) => ({ lambda, ...frozenReferenceDifference({ ...defaults, lambda }) }));
+---
+
+<figure class="chapter-visual frozen-reference" data-frozen-reference>
+  <figcaption>
+    <strong>原创交互模型：同一参考态下的冻结差分与弛豫差分</strong>
+    <span lang="en">Original interactive model: frozen-reference and relaxed differences from the same stationary state</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls frozen-reference__controls">
+    <label>
+      <span>perturbation λ | 扰动</span>
+      <input type="range" min="-0.45" max="0.45" step="0.01" value={defaults.lambda} data-i-frozen-lambda />
+      <output data-i-frozen-lambda-output>{defaults.lambda.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>response stiffness K | 响应刚度</span>
+      <input type="range" min="1.5" max="8" step="0.25" value={defaults.stiffness} data-i-frozen-stiffness />
+      <output data-i-frozen-stiffness-output>{defaults.stiffness.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="frozen-reference-title frozen-reference-desc">
+    <title id="frozen-reference-title">Frozen and relaxed energy differences versus perturbation strength</title>
+    <desc id="frozen-reference-desc">The two curves share the same tangent at zero perturbation, while density relaxation lowers the energy at second order.</desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={xMap(0)} y1={top} x2={xMap(0)} y2={bottom} class="plot-guide" />
+    <path d={pathFor(frozen)} class="frozen-reference__frozen" data-i-frozen-path />
+    <path d={pathFor(relaxed)} class="plot-curve" data-i-relaxed-path />
+    <circle cx={xMap(defaults.lambda)} cy={yMap(initial.frozenDifference)} r="5" class="frozen-reference__frozen-marker" data-i-frozen-marker />
+    <circle cx={xMap(defaults.lambda)} cy={yMap(initial.relaxedDifference)} r="5" class="frozen-reference__relaxed-marker" data-i-relaxed-marker />
+    <text x={right} y="285" text-anchor="end">λ</text>
+    <text x="14" y="54">ΔE</text>
+    <text x={right - 175} y="58">frozen reference</text>
+    <text x={right - 175} y="80" class="frozen-reference__relaxed-label">relaxed minimum</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>frozen ΔE</span><strong data-i-frozen-delta>{initial.frozenDifference.toFixed(7)}</strong>
+    <span>relaxed ΔE</span><strong data-i-relaxed-delta>{initial.relaxedDifference.toFixed(7)}</strong>
+    <span>density response n*(λ)</span><strong data-i-relaxed-density>{initial.relaxedDensity.toFixed(7)}</strong>
+    <span>relaxation correction</span><strong data-i-relaxation-correction>{initial.relaxationCorrection.toExponential(3)}</strong>
+  </div>
+
+  <div class="frozen-reference__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>λ</th><th>frozen ΔE</th><th>relaxed ΔE</th><th>difference</th></tr></thead>
+      <tbody>{fallback.map((row) => <tr><td>{row.lambda.toFixed(2)}</td><td>{row.frozenDifference.toFixed(6)}</td><td>{row.relaxedDifference.toFixed(6)}</td><td>{row.relaxationCorrection.toExponential(2)}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>E(n,λ)=K(n−n₀)²/2+λqn</code>。frozen path 固定 <code>n=n₀</code>；relaxed path 使用 <code>n*(λ)=n₀−λq/K</code>。</p>
+    <p lang="en"><strong>Model:</strong> <code>E(n,λ)=K(n−n₀)²/2+λqn</code>. The frozen path keeps <code>n=n₀</code>; the relaxed path uses <code>n*(λ)=n₀−λq/K</code>.</p>
+    <p><strong>验收：</strong>两者在 λ=0 的 derivative 都是 <code>qn₀</code>；弛豫修正为 <code>−(λq)²/(2K)</code>，严格从二阶开始。</p>
+    <p lang="en"><strong>Acceptance:</strong> both derivatives at λ=0 equal <code>qn₀</code>; the relaxation correction is <code>−(λq)²/(2K)</code> and begins strictly at second order.</p>
+    <p><strong>边界：</strong>“同一参考势/密度”是 first-order estimate，不是两个独立 SCF 总能的替代品。大扰动、level crossing、occupation change 或非驻定参考会破坏该误差阶。</p>
+    <p lang="en"><strong>Boundary:</strong> a common reference potential or density gives a first-order estimate, not a replacement for two independent self-consistent total energies. Large perturbations, level crossings, occupation changes, or a nonstationary reference invalidate the error order.</p>
+  </div>
+</figure>
+
+<script>
+  import { alternativeForceDefaults, frozenReferenceDifference } from '../../../data/part07/alternativeForceModel.mjs';
+  document.querySelectorAll('[data-frozen-reference]').forEach((root) => {
+    const lambdaInput = root.querySelector('[data-i-frozen-lambda]');
+    const stiffnessInput = root.querySelector('[data-i-frozen-stiffness]');
+    if (!(lambdaInput instanceof HTMLInputElement) || !(stiffnessInput instanceof HTMLInputElement)) return;
+    const lambdaOut = root.querySelector('[data-i-frozen-lambda-output]'); const stiffnessOut = root.querySelector('[data-i-frozen-stiffness-output]');
+    const frozenPath = root.querySelector('[data-i-frozen-path]'); const relaxedPath = root.querySelector('[data-i-relaxed-path]');
+    const frozenMarker = root.querySelector('[data-i-frozen-marker]'); const relaxedMarker = root.querySelector('[data-i-relaxed-marker]');
+    const outputs = {
+      frozen: root.querySelector('[data-i-frozen-delta]'), relaxed: root.querySelector('[data-i-relaxed-delta]'),
+      density: root.querySelector('[data-i-relaxed-density]'), correction: root.querySelector('[data-i-relaxation-correction]'),
+    };
+    const left = 62; const right = 680; const top = 42; const bottom = 250;
+    const lambdas = Array.from({ length: 121 }, (_, index) => -0.5 + index / 120);
+    const xMap = (value) => left + (right - left) * (value + 0.5);
+    const update = () => {
+      const lambda = Number(lambdaInput.value); const stiffness = Number(stiffnessInput.value);
+      const frozen = lambdas.map((value) => frozenReferenceDifference({ ...alternativeForceDefaults.frozenReference, stiffness, lambda: value }).frozenDifference);
+      const relaxed = lambdas.map((value) => frozenReferenceDifference({ ...alternativeForceDefaults.frozenReference, stiffness, lambda: value }).relaxedDifference);
+      const all = [...frozen, ...relaxed]; const min = Math.min(...all); const max = Math.max(...all); const span = Math.max(max - min, 1e-9);
+      const yMap = (value) => bottom - (bottom - top) * (value - min) / span;
+      const makePath = (array) => array.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(lambdas[index]).toFixed(2)} ${yMap(value).toFixed(2)}`).join(' ');
+      if (frozenPath instanceof SVGPathElement) frozenPath.setAttribute('d', makePath(frozen));
+      if (relaxedPath instanceof SVGPathElement) relaxedPath.setAttribute('d', makePath(relaxed));
+      const result = frozenReferenceDifference({ ...alternativeForceDefaults.frozenReference, stiffness, lambda });
+      if (frozenMarker instanceof SVGCircleElement) { frozenMarker.setAttribute('cx', xMap(lambda).toFixed(2)); frozenMarker.setAttribute('cy', yMap(result.frozenDifference).toFixed(2)); }
+      if (relaxedMarker instanceof SVGCircleElement) { relaxedMarker.setAttribute('cx', xMap(lambda).toFixed(2)); relaxedMarker.setAttribute('cy', yMap(result.relaxedDifference).toFixed(2)); }
+      if (lambdaOut instanceof HTMLOutputElement) lambdaOut.value = lambda.toFixed(2);
+      if (stiffnessOut instanceof HTMLOutputElement) stiffnessOut.value = stiffness.toFixed(2);
+      if (outputs.frozen instanceof HTMLElement) outputs.frozen.textContent = result.frozenDifference.toFixed(7);
+      if (outputs.relaxed instanceof HTMLElement) outputs.relaxed.textContent = result.relaxedDifference.toFixed(7);
+      if (outputs.density instanceof HTMLElement) outputs.density.textContent = result.relaxedDensity.toFixed(7);
+      if (outputs.correction instanceof HTMLElement) outputs.correction.textContent = result.relaxationCorrection.toExponential(3);
+    };
+    lambdaInput.addEventListener('input', update); stiffnessInput.addEventListener('input', update); update();
+  });
+</script>
+
+<style>
+  .frozen-reference { overflow-x: auto; }
+  .frozen-reference svg { width: 100%; min-width: 42rem; }
+  .frozen-reference text { fill: currentColor; font-size: 13px; }
+  .frozen-reference__frozen { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-dasharray: 7 4; }
+  .frozen-reference__frozen-marker { fill: currentColor; }
+  .frozen-reference__relaxed-marker { fill: var(--sl-color-accent-high); }
+  .frozen-reference__relaxed-label { fill: var(--sl-color-accent-high); }
+  .frozen-reference__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.8rem; }
+  .frozen-reference__controls label { display: grid; gap: 0.35rem; }
+</style>

@@ -1,20 +1,22 @@
 ---
 title: "Appendix I · Alternative Force Expressions"
-description: "Martin Appendix I 的目录级阅读骨架；正文待填充。"
+description: "变分路径自由、冻结参考能量差、压力积分、闭合曲面力和 APW/LAPW boundary force 的双语参考。"
 sidebar:
   order: 9
   label: "Appendix I · Alternative Force Expressions"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
+import AppendixIBody from '../../../components/part07/appI/AppendixIBody.astro';
+import SourceNote from '../../../components/SourceNote.astro';
 import catalog from '../../../data/martin/index.mjs';
 
-<ReadingOutline
+<SourceNote
   sourceTitle={catalog.source.title}
   sourceAuthor={catalog.source.author}
   sourceRole={catalog.source.role}
   unitLabel={catalog.parts[6].units[8].label}
   sourcePage={catalog.parts[6].units[8].page}
-  sections={catalog.parts[6].units[8].sections}
-  exercisesPage={catalog.parts[6].units[8].exercisesPage ?? null}
+  status="appendix-content-complete"
 />
+
+<AppendixIBody />

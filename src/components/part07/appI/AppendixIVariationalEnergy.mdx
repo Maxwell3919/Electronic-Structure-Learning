@@ -1,0 +1,198 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import FrozenReferenceExplorer from './FrozenReferenceExplorer.astro';
+
+<span id="section-i-1"></span>
+
+## I.1 变分自由与力 | Variational Freedom and Forces
+
+<BilingualSection titleZh="通常路径与 generalized-force path" titleEn="The usual path and a generalized-force path" eyebrow="【Martin I.1–I.2 | Martin I.1–I.2】">
+  <div class="bilingual-section__zh">
+
+通常的 force theorem 把核坐标 $R_I$ 当作外部参数，并在求显式导数时固定驻定电子态。对电子自由度集合 $x$，
+
+$$
+F_{I\alpha}
+=-\frac{dE[x(R),R]}{dR_{I\alpha}}
+=-\left.\frac{\partial E}{\partial R_{I\alpha}}\right|_x
+$$
+
+只在 constrained variational residual 消失时成立。更一般地，可以让 $x$ 沿任意可微路径 $x(R)$ 变化；驻定点仍使 $\langle\delta E/\delta x,dx/dR\rangle$ 在一阶消失。这就是 Martin Eq. I.2 的内容层：force 由显式参数依赖决定，而电子路径可以为计算方便重新选择。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The usual force theorem treats a nuclear coordinate $R_I$ as an external parameter and holds the stationary electronic state fixed while taking the explicit derivative. For electronic variables $x$,
+
+$$
+F_{I\alpha}
+=-\frac{dE[x(R),R]}{dR_{I\alpha}}
+=-\left.\frac{\partial E}{\partial R_{I\alpha}}\right|_x
+$$
+
+holds only when the constrained variational residual vanishes. More generally, $x$ may follow any differentiable path $x(R)$. Stationarity still removes $\langle\delta E/\delta x,dx/dR\rangle$ to first order. This is the content of Martin Eq. I.2: the force is controlled by the explicit parameter dependence while the electronic path can be chosen for computational convenience.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="刚性区域 A、外部区域 B 与跨界项 C" titleEn="Rigid region A, exterior region B, and crossing terms C" eyebrow="【Martin Figure I.1 concept, original construction | Concept of Martin Figure I.1, original construction】">
+  <div class="bilingual-section__zh">
+
+围绕原子 $I$ 选取一个区域 $A$，使 nucleus、deep core 与选定 local charge/potential 随原子刚性平移；其余空间记为 $B$。总能可以按相互作用支持区域重排为
+
+$$
+E=E_A+E_B+E_{AB},
+$$
+
+其中 $E_A$ 只含完全位于 $A$ 内的内部项，$E_B$ 只含完全位于 $B$ 内的项，$E_{AB}$ 收集跨 boundary 的 kinetic、electrostatic、nonlocal、XC 或 basis-coupling contributions。
+
+若 $A$ 内部对象在坐标变换下严格刚性，$E_A$ 在平移中不变；$E_B$ 没有显式依赖于该原子位移；于是 force 来自 $E_{AB}$ 的导数。这里不是把 core–core 或 core–electron energy 删除，而是证明其内部平移不贡献一阶变化，再把真正穿过 boundary 的项显式保留。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Choose a region $A$ around atom $I$ so that the nucleus, deep core, and selected local charge or potential translate rigidly with the atom; call the remaining space $B$. The total energy can be rearranged by interaction support as
+
+$$
+E=E_A+E_B+E_{AB},
+$$
+
+where $E_A$ contains terms wholly inside $A$, $E_B$ contains terms wholly inside $B$, and $E_{AB}$ collects kinetic, electrostatic, nonlocal, XC, or basis-coupling contributions crossing the boundary.
+
+If the objects inside $A$ are strictly rigid under the coordinate transformation, $E_A$ is unchanged by translation. $E_B$ has no explicit dependence on that atomic displacement. The force therefore comes from the derivative of $E_{AB}$. Core-core and core-electron energies have not been deleted; their internal translation is shown not to contribute at first order, while the genuinely boundary-crossing terms remain explicit.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Coulomb potential 的选择是一种 bookkeeping gauge" titleEn="The Coulomb-potential choice is a bookkeeping gauge" eyebrow="【Martin Eqs. I.3–I.5 | Martin Eqs. I.3–I.5】">
+  <div class="bilingual-section__zh">
+
+Martin 通过在区域 $A$ 内选择一个随原子共移的 Coulomb potential，并在 $B$ 中保持原有参考，把内部 electron–ion 与 ion–ion 项重新组合。一般结构可写为
+
+$$
+\Delta E
+=\Delta E_{\mathrm{band/reference}}
++\Delta E_{\mathrm{crossing}}
++O(\Delta R^2).
+$$
+
+第一项可由同一参考 Hamiltonian/potential 中的 occupied eigenvalue sum 或 expectation values 组织；第二项补偿跨 $A/B$ boundary 的 electrostatic 与 nonlocal couplings。potential zero、pseudocharge、self energy 和 neutralizing background 必须与 Appendix F 的 convention 一致，否则“内部 cancellation”会留下常数或长程误差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin chooses a Coulomb potential inside region $A$ that co-moves with the atom while retaining the exterior reference in $B$, thereby rearranging internal electron-ion and ion-ion terms. The general structure is
+
+$$
+\Delta E
+=\Delta E_{\mathrm{band/reference}}
++\Delta E_{\mathrm{crossing}}
++O(\Delta R^2).
+$$
+
+The first term can be organized from occupied eigenvalue sums or expectation values in the same reference Hamiltonian or potential. The second compensates electrostatic and nonlocal couplings crossing the $A/B$ boundary. The potential zero, pseudocharge, self energy, and neutralizing background must match the conventions of Appendix F; otherwise the claimed internal cancellation leaves a constant or long-range error.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="Rigid region 不是任意截断球" titleEn="A rigid region is not an arbitrary cutoff sphere" kind="warning">
+  <div class="bilingual-section__zh">
+    <p>区域必须与 coordinate transformation、core representation 和 boundary terms 配套。若 density 在边界不连续、basis functions 穿过边界却未求导、nonlocal projector 被一半截断，或 core 本身随环境极化，则 $E_A$ 不再严格不变，遗漏项会作为 Pulay-like 或 boundary force 出现。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>The region must be paired with the coordinate transformation, core representation, and boundary terms. If the density is discontinuous at the boundary, basis functions cross it without being differentiated, a nonlocal projector is truncated, or the core polarizes with the environment, $E_A$ is no longer strictly invariant and the missing terms appear as Pulay-like or boundary forces.</p>
+  </div>
+</BilingualCallout>
+
+<span id="section-i-2"></span>
+
+## I.2 能量差 | Energy Differences
+
+<BilingualSection titleZh="同一参考势下的 occupied eigenvalue sum" titleEn="Occupied eigenvalue sums in one reference potential" eyebrow="【Martin Eqs. I.6–I.7 | Martin Eqs. I.6–I.7】">
+  <div class="bilingual-section__zh">
+
+考虑两个相近外部构型 $\lambda_0$ 与 $\lambda_0+\Delta\lambda$。在同一个驻定参考 Hamiltonian $\hat H_0$ 中，external perturbation 为 $\Delta\hat V$。一阶能量差为
+
+$$
+\Delta E^{(1)}
+=\sum_i f_i\langle\psi_i^0|\Delta\hat V|\psi_i^0\rangle
++\Delta E_{\mathrm{explicit,ion/ref}}.
+$$
+
+若在同一 reference potential 中对两个几何求 expectation/eigenvalue-like quantities，差值可组织为 occupied eigenvalue sum 加显式离子/reference corrections。关键约束是“同一参考”：若每个构型都使用不同 self-consistent potential，double-counting terms、potential zero 和 occupations 都变化，不能只减 eigenvalue sums。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Consider nearby external configurations $\lambda_0$ and $\lambda_0+\Delta\lambda$. In the same stationary reference Hamiltonian $\hat H_0$, let the external perturbation be $\Delta\hat V$. The first-order energy difference is
+
+$$
+\Delta E^{(1)}
+=\sum_i f_i\langle\psi_i^0|\Delta\hat V|\psi_i^0\rangle
++\Delta E_{\mathrm{explicit,ion/ref}}.
+$$
+
+If expectation or eigenvalue-like quantities for the two geometries are evaluated in the same reference potential, the difference can be organized as an occupied eigenvalue sum plus explicit ionic and reference corrections. The phrase “same reference” is essential. If each configuration uses a different self-consistent potential, the double-counting terms, potential zero, and occupations all change, so eigenvalue sums alone cannot be subtracted.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="为什么 frozen difference 只错在二阶" titleEn="Why a frozen difference errs only at second order" eyebrow="【独立变分推导 | Independent variational derivation】">
+  <div class="bilingual-section__zh">
+
+设驻定电子变量对扰动线性响应为
+
+$$
+x_*(\lambda)=x_0+\lambda x^{(1)}+O(\lambda^2).
+$$
+
+把总能在 $(x_0,0)$ 展开：
+
+$$
+E[x,\lambda]
+=E_0+\lambda E_\lambda
++\frac12\lambda^2E_{\lambda\lambda}
++\lambda\langle E_{x\lambda},\delta x\rangle
++\frac12\langle\delta x,E_{xx}\delta x\rangle+\cdots.
+$$
+
+因为 $E_x=0$，固定 $x=x_0$ 与使用 $x_*(\lambda)$ 的 linear term 都是 $\lambda E_\lambda$。relaxation energy 从 $O(\lambda^2)$ 开始。若 Hessian singular、state crossing、occupation change 或约束 manifold 改变，普通 Taylor error order 可能失效。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Let the stationary electronic variables respond linearly as
+
+$$
+x_*(\lambda)=x_0+\lambda x^{(1)}+O(\lambda^2).
+$$
+
+Expand the total energy about $(x_0,0)$:
+
+$$
+E[x,\lambda]
+=E_0+\lambda E_\lambda
++\frac12\lambda^2E_{\lambda\lambda}
++\lambda\langle E_{x\lambda},\delta x\rangle
++\frac12\langle\delta x,E_{xx}\delta x\rangle+\cdots.
+$$
+
+Because $E_x=0$, both the frozen path $x=x_0$ and the relaxed path $x_*(\lambda)$ have the same linear term $\lambda E_\lambda$. Relaxation energy begins at $O(\lambda^2)$. If the Hessian is singular, a state crosses, occupations change, or the constraint manifold changes, the ordinary Taylor error order can fail.
+
+  </div>
+</BilingualSection>
+
+<FrozenReferenceExplorer />
+
+<BilingualSection titleZh="何时 energy-difference shortcut 有用" titleEn="When the energy-difference shortcut is useful" eyebrow="【使用边界 | Usage boundary】">
+  <div class="bilingual-section__zh">
+
+该方法适合：小 displacement 的 force estimate；同一 potential 上的 frozen-phonon linear term；screening/response 前的 bare perturbation；以及需要避免重复 SCF 的预筛。它不适合直接给出大结构变化、不同 charge state、金属 occupation 重排、相变或不同 functional/pseudopotential 的能量排序。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The method is useful for a small-displacement force estimate, a frozen-phonon linear term in the same potential, a bare perturbation before screening or response, and prescreening intended to avoid repeated SCF cycles. It is not a direct energy ranking for large structural changes, different charge states, metallic occupation rearrangements, phase transitions, or different functionals and pseudopotentials.
+
+  </div>
+</BilingualSection>
