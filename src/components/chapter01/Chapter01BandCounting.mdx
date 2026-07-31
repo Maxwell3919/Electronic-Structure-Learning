@@ -1,0 +1,30 @@
+import BilingualSection from '../BilingualSection.astro';
+import BandFillingExplorer from '../BandFillingExplorer.astro';
+
+<BilingualSection titleZh="周期势、Bloch 态与能带填充" titleEn="Periodic potentials, Bloch states, and band filling">
+  <div class="bilingual-section__zh">
+
+完美晶体中的单粒子态可以按晶体动量 $\mathbf{k}$ 标记，并写成平面波相位与晶格周期函数的乘积。周期势不要求电子在每个原子间反复停止；Bloch 态本身是理想晶格的定态。实际电阻需要缺陷、无序、声子或其他散射机制。
+
+含 $N_c$ 个原胞的有限晶体在周期边界条件下有 $N_c$ 个互不等价的 $\mathbf{k}$ 点。因此每条能带、每种自旋包含 $N_c$ 个态，即每原胞每自旋一个态。若两种自旋简并，一条完整能带可容纳每原胞两个电子。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+One-particle states in a perfect crystal can be labelled by crystal momentum $\mathbf{k}$ and written as a plane-wave phase times a lattice-periodic function. A periodic potential does not make an electron stop at each atom; Bloch states are stationary states of the ideal lattice. Resistance requires defects, disorder, phonons, or other scattering processes.
+
+A finite crystal with $N_c$ primitive cells has $N_c$ inequivalent $\mathbf{k}$ points under periodic boundary conditions. Each band therefore contains $N_c$ states per spin, or one state per cell per spin. With twofold spin degeneracy, a complete band holds two electrons per cell.
+
+  </div>
+</BilingualSection>
+
+$$
+\psi_{n\mathbf{k}}(\mathbf r+N_j\mathbf a_j)
+=e^{i\mathbf{k}\cdot N_j\mathbf a_j}\psi_{n\mathbf{k}}(\mathbf r),
+\qquad
+e^{i\mathbf{k}\cdot N_j\mathbf a_j}=1.
+$$
+
+周期条件给出 $\mathbf{k}\cdot\mathbf a_j=2\pi m_j/N_j$。每个方向有 $N_j$ 个互不等价整数，组合数 $N_1N_2\cdots N_d$ 恰好等于原胞总数。自旋、谷或其他内部简并必须另行计数。
+
+<BandFillingExplorer />
