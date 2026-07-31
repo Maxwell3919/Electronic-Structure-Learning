@@ -1,0 +1,81 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[6];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-g-contents-title">
+  <h2 id="appendix-g-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、符号与约定 | Objects, symbols, and conventions</a></li>
+    <li><a href="#section-g-1">G.1 宏观应力与应变 | Macroscopic stress and strain</a></li>
+    <li><a href="#section-g-2">G.2 两体成对力的应力 | Stress from two-body pair-wise forces</a></li>
+    <li><a href="#section-g-3">G.3 Fourier 分量表达式 | Expressions in Fourier components</a></li>
+    <li><a href="#section-g-4">G.4 内应变 | Internal strain</a></li>
+    <li><a href="#review">交叉引用、误判、练习与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-g-source-title">
+  <h2 id="appendix-g-source-title">来源地图 | Source map</h2>
+  <p>
+    下表记录 Martin Appendix G 的原节标题和印刷页定位。网站正文、推导、图形、数值模型与练习均为原创，不转录教材正文、原图、进一步阅读段落或练习。
+  </p>
+  <p lang="en">
+    The table records the section titles and printed-page locators of Martin Appendix G. Website exposition, derivations, diagrams, numerical models, and exercises are original and do not reproduce the textbook body, source figure, further-reading prose, or exercises.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>
+            {section.id === 'G.1'
+              ? '位移梯度、对称应变、metric、应力符号、压力、弹性常数与平衡变量'
+              : section.id === 'G.2'
+                ? '中心两体相互作用的 generalized virial、pair-force contribution 与对称 stress tensor'
+                : section.id === 'G.3'
+                  ? 'reciprocal scaling、Hartree、kinetic、Ewald stress 与表示依赖边界'
+                  : 'clamped-ion/relaxed-ion 区分、零力条件、internal-strain tensor 与 diatomic-chain benchmark'}
+          </td>
+          <td>substantive draft</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Exercises, printed p. {appendix.exercisesPage}</td>
+        <td>Source exercises not reproduced</td>
+        <td>原创应变、能量导数、virial、Fourier tensor 与内应变练习 | Original strain, energy-derivative, virial, Fourier-tensor, and internal-strain exercises</td>
+        <td>original replacement</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 { margin-top: 0; }
+  .appendix-contents ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
+  .appendix-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol { columns: 1; }
+  }
+</style>

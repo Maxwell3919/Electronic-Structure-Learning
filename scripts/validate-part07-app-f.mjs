@@ -226,7 +226,15 @@ for (const required of [
   assert.ok(combinedText.includes(required), `required scientific boundary missing: ${required}`);
 }
 assert.ok((content.review.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
-assert.match(content.index, /F · Coulomb Interactions in Extended Systems \| content complete/, 'Part VII index must expose Appendix F content-complete state');
-assert.match(content.index, /G–R \| outline/, 'Part VII index must preserve later appendices as outlines');
+assert.match(
+  content.index,
+  /\| F · Coulomb Interactions in Extended Systems \| (?:content complete(?:; deployment identity follows the site manifest)?|complete and deployed) \|/,
+  'Part VII index must expose Appendix F as content-complete or deployed',
+);
+assert.doesNotMatch(
+  content.index,
+  /\| F · Coulomb Interactions in Extended Systems \| outline \|/,
+  'Appendix F must never regress to outline state',
+);
 
 console.log('Part VII Appendix F validation passed: Ewald split and alpha invariance, background/G=0 behavior, Gaussian limits, dipole/image scaling, and route assembly.');
