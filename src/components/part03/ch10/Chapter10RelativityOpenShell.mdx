@@ -1,0 +1,255 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import SpinOrbitExplorer from './SpinOrbitExplorer.astro';
+
+<span id="section-10-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 10.3 自旋—轨道相互作用 | Spin–Orbit Interaction
+
+<BilingualSection titleZh="相对论修正的层级" titleEn="Levels of relativistic treatment" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+重元素核附近的电子速度较高，非相对论 Schrödinger 方程不足。Dirac 方程的低速展开产生标量相对论修正和自旋—轨道项。标量相对论处理改变径向方程和能级，却不显式分裂 $j=l\pm1/2$；完全相对论原子计算保留自旋角变量和相应的 $j$ 通道。
+
+对球对称势，常见的 Pauli 形式可写为
+
+$$
+\hat H_{\mathrm{SO}}
+=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dV}{dr}\,\mathbf L\cdot\mathbf S
+$$
+
+（SI 单位中还需保留 $\hbar$ 与电荷约定）。Martin 以等价的动量—势梯度形式写出该项，并把完整来源定位到 Appendix O。核附近的 $dV/dr$ 很大，因此 SOC 即使相对总能较小，也可定性改变简并、能隙与拓扑分类。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electrons near a heavy nucleus can move sufficiently rapidly that the nonrelativistic Schrödinger equation is inadequate. A low-velocity reduction of the Dirac equation produces scalar-relativistic corrections and a spin–orbit term. A scalar-relativistic treatment changes radial equations and energies but does not explicitly split the $j=l\pm1/2$ manifolds; a fully relativistic atomic calculation retains spin-angular variables and the corresponding $j$ channels.
+
+For a spherical potential, a common Pauli form is
+
+$$
+\hat H_{\mathrm{SO}}
+=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dV}{dr}\,\mathbf L\cdot\mathbf S
+$$
+
+(with the appropriate $\hbar$ and charge conventions in SI units). Martin gives the equivalent momentum–potential-gradient form and locates the full derivation in Appendix O. Because $dV/dr$ is large near the nucleus, spin–orbit coupling can qualitatively change degeneracies, gaps, and topological classifications even when it is small compared with the total energy.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="严格角动量关系 | Exact angular-momentum relation: L·S 本征值"
+  assumptions={[
+    '单电子自旋 s=1/2 | One-electron spin s=1/2.',
+    '总角动量 J=L+S，且状态由 j,l,s 同时标记 | J=L+S and the state is labelled by j,l,s.',
+  ]}
+>
+
+由
+
+$$
+\mathbf J^2=(\mathbf L+\mathbf S)^2
+=\mathbf L^2+\mathbf S^2+2\mathbf L\cdot\mathbf S
+$$
+
+得到
+
+$$
+\mathbf L\cdot\mathbf S
+=\frac12\left(\mathbf J^2-\mathbf L^2-\mathbf S^2\right).
+$$
+
+在 $|j,l,s,m_j\rangle$ 上，除去公共的 $\hbar^2$ 因子，期望值为
+
+$$
+\langle\mathbf L\cdot\mathbf S\rangle
+=\frac12\left[j(j+1)-l(l+1)-s(s+1)\right].
+$$
+
+对 $s=1/2$：
+
+$$
+\begin{aligned}
+j=l+\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=\frac{l}{2},\\
+j=l-\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=-\frac{l+1}{2}.
+\end{aligned}
+$$
+
+第二支只在 $l>0$ 时存在。若径向平均把 SOC 写成 ξ_nl L·S，两支能量差为
+
+$$
+\Delta_{\mathrm{SO}}=\xi_{nl}\frac{2l+1}{2}.
+$$
+
+这一步只处理角动量代数；ξ_nl 必须由径向势和波函数或完整相对论方程决定。
+
+<p lang="en">From $\mathbf J^2=(\mathbf L+\mathbf S)^2$ one obtains</p>
+
+$$
+\mathbf L\cdot\mathbf S
+=\frac12\left(\mathbf J^2-\mathbf L^2-\mathbf S^2\right),
+$$
+
+<p lang="en">and hence, for $s=1/2$,</p>
+
+$$
+\begin{aligned}
+j=l+\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=\frac{l}{2},\\
+j=l-\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=-\frac{l+1}{2}.
+\end{aligned}
+$$
+
+<p lang="en">The lower-$j$ branch exists only for $l>0$. If the radial average is represented by ξ_nl L·S, the splitting is Δ_SO = ξ_nl(2l+1)/2. The angular algebra does not determine ξ_nl; that coefficient must come from the radial potential and wavefunction or from the full relativistic equation.</p>
+
+</DerivationBlock>
+
+<SpinOrbitExplorer />
+
+<BilingualCallout titleZh="相对论文件标签不能替代方法核对" titleEn="A relativistic file label does not replace a method check" kind="boundary">
+  <div class="bilingual-section__zh">
+
+“scalar-relativistic”通常表示包含标量修正但不含显式 SOC 分裂；“fully relativistic”通常表示生成了可描述 $j$ 分裂的通道。具体含义取决于程序和文件格式。后续固体计算是否真正包含 SOC，还取决于 Hamiltonian、赝势/PAW 数据、非共线设置和程序实现，不能只由文件名判断。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+“Scalar-relativistic” usually denotes scalar corrections without explicit spin–orbit splitting, whereas “fully relativistic” usually denotes channels capable of representing the $j$ splitting. The exact meaning is code- and format-dependent. Whether a subsequent solid-state calculation actually contains spin–orbit coupling also depends on the Hamiltonian, pseudopotential or PAW data, noncollinear settings, and implementation; a filename is insufficient evidence.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-10-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 10.4 开壳层原子：非球对称势 | Open-Shell Atoms: Nonspherical Potentials
+
+<BilingualSection titleZh="球对称外势不保证球对称有效势" titleEn="A spherical external potential does not guarantee a spherical effective potential" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+开壳层表示某个自旋或磁量子数子空间没有完全填满。核势仍为球对称，但指定占据后的密度一般依赖角度，Hartree 与交换关联项随之失去球对称。真实原子态按总角动量与多重态分类，单个 Slater determinant 常不足以表示确定的 $L$、$S$ 或 $J$ 态。
+
+Martin 区分三种常见层级：restricted 处理把非球对称和自旋差异平均掉；spin-unrestricted 保留自旋依赖但继续使用球对称空间势；fully unrestricted 允许角向依赖，并通常只能保留选定轴上的 $m_l$ 与 $m_s$。这些是不同的物理约束，不应只当作不同的 SCF 开关。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An open shell has an incompletely occupied spin or magnetic-sublevel space. The nuclear potential remains spherical, but the density associated with a specified occupation is generally angle dependent, so the Hartree and exchange-correlation terms lose spherical symmetry. Exact atomic states are classified by total angular momentum and multiplets, and a single Slater determinant is often insufficient to represent a state of definite $L$, $S$, or $J$.
+
+Martin distinguishes three common levels. A restricted treatment averages away nonspherical and spin differences. A spin-unrestricted treatment retains spin dependence while keeping the spatial potential spherical. A fully unrestricted treatment permits angular dependence and commonly preserves only the projections $m_l$ and $m_s$ along a chosen axis. These are different physical constraints, not merely alternative SCF switches.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="严格展开 | Exact expansion: Coulomb 核的角向分解"
+  assumptions={[
+    '两点位置分别为 r₁,Ω₁ 与 r₂,Ω₂ | The two positions are r₁,Ω₁ and r₂,Ω₂.',
+    '采用归一化复球谐函数 | Normalized complex spherical harmonics are used.',
+  ]}
+>
+
+Coulomb 核可作多极展开
+
+$$
+\frac{1}{|\mathbf r_1-\mathbf r_2|}
+=4\pi\sum_{k=0}^{\infty}\sum_{q=-k}^{k}
+\frac{1}{2k+1}
+\frac{r_<^k}{r_>^{k+1}}
+Y_{kq}^*(\Omega_1)Y_{kq}(\Omega_2),
+$$
+
+其中 $r_<=\min(r_1,r_2)$，$r_>=\max(r_1,r_2)$。将原子轨道 R_nl(r)Y_lm(Ω) 代入二电子矩阵元后，角积分化为 Gaunt 系数或 Clebsch–Gordan 系数，径向部分化为有限组 Slater 型积分
+
+$$
+R^k(ab;cd)=\int_0^\infty\!dr_1\int_0^\infty\!dr_2\,
+ u_a(r_1)u_c(r_1)
+ \frac{r_<^k}{r_>^{k+1}}
+ u_b(r_2)u_d(r_2).
+$$
+
+角动量三角条件和宇称条件使可贡献的 $k$ 有限。这个分解解释了为什么原子 Hartree–Fock 的非球对称问题仍可归结为径向积分与角动量系数，但它不意味着 Kohn–Sham 的非线性交换关联势也具有同样有限的角向截断。
+
+<p lang="en">The Coulomb kernel has the multipole expansion</p>
+
+$$
+\frac{1}{|\mathbf r_1-\mathbf r_2|}
+=4\pi\sum_{kq}\frac{1}{2k+1}
+\frac{r_<^k}{r_>^{k+1}}
+Y_{kq}^*(\Omega_1)Y_{kq}(\Omega_2).
+$$
+
+<p lang="en">Substitution of atom-centred orbitals reduces the angular integrals to Gaunt or Clebsch–Gordan coefficients and the radial dependence to a finite set of Slater-type integrals</p>
+
+$$
+R^k(ab;cd)=\int dr_1dr_2\,
+ u_a(r_1)u_c(r_1)
+ \frac{r_<^k}{r_>^{k+1}}
+ u_b(r_2)u_d(r_2).
+$$
+
+<p lang="en">Triangle and parity selection rules restrict the contributing $k$ values. This is why nonspherical atomic Hartree–Fock can still be organized through radial integrals and angular coefficients. It does not imply an equally finite angular expansion for a nonlinear Kohn–Sham exchange-correlation potential.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="球平均的明确代价" titleEn="The explicit cost of spherical averaging" kind="boundary">
+  <div class="bilingual-section__zh">
+
+对一个未满 $l$ 壳层，把电子均匀分配到所有 $m$ 可恢复球对称密度，便于生成径向参考态。该处理保留总占据和球平均径向尺度，却删除轨道极化、方向性多极矩、部分多重态能量差以及与晶场相互作用所需的信息。若原子参考态用于赝势生成，球平均是一项构造选择，不是对所有化学环境都严格的原子基态描述。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Uniformly distributing an incomplete $l$ shell over all $m$ values restores a spherical density and simplifies the construction of a radial reference state. It preserves the total population and the spherically averaged radial scale, but removes orbital polarization, directional multipoles, some multiplet splittings, and information required for coupling to a crystal field. When used in pseudopotential generation, spherical averaging is a construction choice rather than an exact atomic ground-state description for every chemical environment.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-10-5" class="chapter-anchor" aria-hidden="true"></span>
+
+## 10.5 过渡元素原子态 | Atomic States of Transition Elements
+
+<BilingualSection titleZh="相近能量不表示相近空间范围" titleEn="Similar energies do not imply similar spatial extent" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+过渡元素中的 $(n-1)d$ 与 $ns$ 状态常接近简并，但径向形状差异很大。$s$ 态没有离心屏障并可向外延伸；$d$ 态更局域，峰值可能与能量低得多的 semicore $s$、$p$ 壳层处于相近半径。空间重叠决定芯—价交换关联、赝势价电子选择和所需平面波分辨率，不能由本征值次序单独判断。
+
+Martin 以 3d 过渡系列的 $d\rightarrow s$ promotion energy 说明泛函依赖。相关能量应由两个自洽电子构型的总能差定义，例如
+
+$$
+\Delta E_{d\to s}
+=E_{\mathrm{tot}}[3d^{n-1}4s^1]
+-E_{\mathrm{tot}}[3d^{n}4s^0],
+$$
+
+实际构型指数需按元素和比较目的指定。轨道本征值差不包含构型改变后的完整弛豫与双计数修正，因此不能替代该总能差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The $(n-1)d$ and $ns$ states of a transition element can be nearly degenerate while having very different radial shapes. An $s$ state has no centrifugal barrier and can extend far outward; a $d$ state is more localized and may peak at radii comparable with much more deeply bound semicore $s$ and $p$ shells. Spatial overlap controls core–valence exchange-correlation, the choice of valence states in a pseudopotential, and the spatial resolution required by a basis. It cannot be inferred from eigenvalue order alone.
+
+Martin uses $d\rightarrow s$ promotion energies across the 3d series to illustrate functional dependence. The relevant quantity is a total-energy difference between two self-consistent configurations, for example
+
+$$
+\Delta E_{d\to s}
+=E_{\mathrm{tot}}[3d^{n-1}4s^1]
+-E_{\mathrm{tot}}[3d^{n}4s^0],
+$$
+
+with the actual exponents specified for the element and comparison. An orbital-eigenvalue difference omits the complete relaxation and double-counting changes associated with the new configuration and cannot replace the total-energy difference.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="从原子到固体的推断边界" titleEn="Boundary of inference from atoms to solids" kind="boundary">
+  <div class="bilingual-section__zh">
+
+原子中的局域 $d/f$ 与延展 $s/p$ 轨道差异可以解释为什么不同轨道对自相互作用、非局域交换或 Hubbard 型修正的敏感性不同。它只能提供机制线索。固体中的晶场、杂化、带形成、屏蔽和局域轨道定义会改变相对能量；原子 promotion energy 与真实带位、磁序或 Hubbard $U$ 之间没有无需验证的等号。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The contrast between localized atomic $d/f$ orbitals and extended $s/p$ orbitals helps explain their different sensitivity to self-interaction, nonlocal exchange, or Hubbard-type corrections. It supplies a mechanistic clue only. Crystal fields, hybridization, band formation, screening, and the definition of localized orbitals change the relative energies in a solid. An atomic promotion energy is not automatically equal to a band offset, magnetic ordering energy, or Hubbard $U$ in a material.
+
+  </div>
+</BilingualCallout>

@@ -1,20 +1,30 @@
 ---
-title: "Chapter 10 · Electronic Structure of Atoms"
-description: "Martin Chapter 10 的目录级阅读骨架；正文待填充。"
+title: "Chapter 10 · Electronic Structure of Atoms | 原子的电子结构"
+description: "从中心势中的径向方程、自洽原子、相对论与开壳层，到 Delta-SCF 和原子球近似。"
 sidebar:
   order: 1
   label: "Chapter 10 · Electronic Structure of Atoms"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter10Contents from '../../../components/part03/ch10/Chapter10Contents.astro';
+import Chapter10Orientation from '../../../components/part03/ch10/Chapter10Orientation.mdx';
+import Chapter10Radial from '../../../components/part03/ch10/Chapter10Radial.mdx';
+import Chapter10SphericalAtom from '../../../components/part03/ch10/Chapter10SphericalAtom.mdx';
+import Chapter10RelativityOpenShell from '../../../components/part03/ch10/Chapter10RelativityOpenShell.mdx';
+import Chapter10EnergeticsASA from '../../../components/part03/ch10/Chapter10EnergeticsASA.mdx';
+import Chapter10Review from '../../../components/part03/ch10/Chapter10Review.mdx';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[2].units[0].label}
-  sourcePage={catalog.parts[2].units[0].page}
-  sections={catalog.parts[2].units[0].sections}
-  exercisesPage={catalog.parts[2].units[0].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 10, printed pages 215–227; sections 10.1–10.7. Appendices K, L, and O are used where they close mathematical dependencies."
+  status="chapter-complete"
 />
+
+<Chapter10Contents />
+<Chapter10Orientation />
+<Chapter10Radial />
+<Chapter10SphericalAtom />
+<Chapter10RelativityOpenShell />
+<Chapter10EnergeticsASA />
+<Chapter10Review />
