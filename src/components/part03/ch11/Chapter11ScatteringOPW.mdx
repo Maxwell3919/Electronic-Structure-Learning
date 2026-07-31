@@ -1,0 +1,305 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import PseudoWaveMatchingExplorer from './PseudoWaveMatchingExplorer.astro';
+import LogDerivativeExplorer from './LogDerivativeExplorer.astro';
+
+<span id="section-11-1" class="chapter-11-anchor" aria-hidden="true"></span>
+
+## 11.1 散射振幅与赝势 | Scattering Amplitudes and Pseudopotentials
+
+<BilingualSection titleZh="低能价态需要保留什么" titleEn="What must be preserved for low-energy valence states" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+局域球形势对核区外波函数的影响可以压缩为各角动量通道的相移。强吸引势在核附近产生快速振荡和若干节点；这些节点反映更低能束缚态以及正交约束。对给定能量和 $l$，另一个较弱、甚至没有对应芯束缚态的势，可以在核外产生相同的相移。赝势的第一层目标正是保留这个外区低能散射信息，而不再显式解析紧束缚芯态。
+
+相移等效具有明确范围。一个能量上的相移相同，只固定该能量、该角动量以及指定核外势中的解；它不自动固定相移的能量导数、其他 $l$ 通道、总能、力或不同自洽环境下的结果。后面的范数守恒条件将把等效性扩展到参考能量附近的一阶响应。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a localized spherical potential, its influence on the wavefunction outside the core can be compressed into a phase shift for each angular-momentum channel. A strongly attractive potential produces rapid core oscillations and several nodes, reflecting lower bound states and orthogonality constraints. At a specified energy and $l$, a weaker potential—even one without the corresponding core bound states—can produce the same exterior phase shift. The first layer of a pseudopotential construction is therefore to retain this low-energy exterior scattering information without resolving tightly bound core states explicitly.
+
+Phase-shift equivalence has a precise scope. Equality at one energy fixes the solution only for that energy, angular momentum, and declared exterior potential. It does not automatically fix the energy derivative of the phase shift, other $l$ channels, total energies, forces, or results in a different self-consistent environment. Norm conservation will later extend the agreement to first order around a reference energy.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: 部分波展开与散射振幅"
+  assumptions={[
+    '三维非相对论单电子散射，Hartree 原子单位 | Three-dimensional nonrelativistic one-electron scattering in Hartree atomic units.',
+    '势在半径 a 外为零或与比较问题完全相同 | Outside radius a the potential vanishes or is identical in the two compared problems.',
+    '入射波矢沿 z 轴，波数 k=sqrt(2E) | The incident wavevector is along z and k=sqrt(2E).',
+  ]}
+>
+
+平面波首先展开为 Legendre 部分波。该恒等式只使用球坐标中的完备性：
+
+$$
+e^{ikz}=e^{ikr\cos\theta}
+=\sum_{l=0}^{\infty}i^l(2l+1)j_l(kr)P_l(\cos\theta).
+$$
+
+球形势不混合不同 $l$。在势的作用区域之外，每个径向解是规则与不规则球 Bessel 函数的线性组合：
+
+$$
+R_l(r)=A_l\left[\cos\delta_l\,j_l(kr)-\sin\delta_l\,n_l(kr)\right].
+$$
+
+利用大 $r$ 渐近形式，约化径向函数 $u_l=rR_l$ 可写成
+
+$$
+u_l(r)\xrightarrow[r\to\infty]{}
+\frac{A_l}{k}\sin\left(kr-\frac{l\pi}{2}+\delta_l\right).
+$$
+
+这里 $\delta_l(E)$ 是该通道相对于自由波的相移。总波函数的远区定义为入射平面波加出射球面波：
+
+$$
+\psi(\mathbf r)\xrightarrow[r\to\infty]{}
+e^{ikz}+f(\theta)\frac{e^{ikr}}{r}.
+$$
+
+把每个部分波中出射分量与该定义逐项比较，可得
+
+$$
+f(\theta)=\frac{1}{k}\sum_{l=0}^{\infty}
+(2l+1)e^{i\delta_l}\sin\delta_l\,P_l(\cos\theta).
+$$
+
+角积分使用 Legendre 正交关系，于是总截面为
+
+$$
+\sigma_{\mathrm{tot}}
+=\int |f(\theta)|^2d\Omega
+=\frac{4\pi}{k^2}\sum_{l=0}^{\infty}(2l+1)\sin^2\delta_l.
+$$
+
+维度检查：$k^{-1}$ 是长度，因此 $f$ 是长度，$\sigma$ 是面积。若 $\delta_l$ 改变整数倍 $\pi$，外区解只改变整体符号约定，$\sin^2\delta_l$ 和散射截面不变。该式不能推出两个势的芯区波函数、束缚态数目或总能相同。
+
+<p lang="en">A plane wave is expanded into Legendre partial waves. Spherical symmetry keeps each $l$ independent. Outside the potential, the radial solution is a linear combination of regular and irregular spherical Bessel functions. Comparing its outgoing asymptote with the definition of a scattering amplitude gives the partial-wave expression above; Legendre orthogonality then yields the total cross section. Dimensional analysis gives length for $f$ and area for $\sigma$. Equal phase shifts modulo $\pi$ preserve exterior scattering, but do not imply equal core wavefunctions, bound-state spectra, or total energies.</p>
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: 对数导数为何固定外区相移"
+  assumptions={[
+    '在匹配半径 r_c 外，两问题具有同一个径向势 | Both problems have the same radial potential outside r_c.',
+    '在相同 E、l 下比较非零边界解 | Nonzero boundary solutions are compared at the same E and l.',
+  ]}
+>
+
+定义维数为一的径向对数导数
+
+$$
+D_l(E,r)=r\frac{R_l'(E,r)}{R_l(E,r)}
+=r\frac{u_l'(E,r)}{u_l(E,r)}-1.
+$$
+
+径向 Schrödinger 方程是二阶常微分方程。在固定 $E$ 和 $l$ 下，给定 $u_l(r_c)$ 与 $u_l'(r_c)$ 后，外区解唯一。由于线性方程允许任意整体倍数，只需给定两者的比值，也就是 $D_l(E,r_c)$，便能确定归一化以外的外区解。
+
+在自由外区，写成
+
+$$
+u_l(r)=A_l\left[
+\cos\delta_l\,krj_l(kr)-
+\sin\delta_l\,krn_l(kr)
+\right].
+$$
+
+把 $r=r_c$ 时的函数和导数代入 $D_l$，得到只含 $E,l,r_c$ 与 $\tan\delta_l$ 的分式关系。对给定外区势，这个关系可反解 $\delta_l$。因此两个核区势若在相同能量具有相同 $D_l(E,r_c)$，便产生相同的核外相移和散射解。
+
+<p lang="en">The radial Schrödinger equation is a second-order linear ODE. At fixed $E$ and $l$, the exterior solution is uniquely determined by its value and derivative at $r_c$. Overall normalization is irrelevant to scattering, so their ratio—the logarithmic derivative—suffices. Inserting the free exterior combination of spherical Bessel and Neumann functions makes $D_l(E,r_c)$ a fractional function of $\tan\delta_l$. Equal logarithmic derivatives therefore imply equal exterior phase shifts at that energy.</p>
+
+</DerivationBlock>
+
+<LogDerivativeExplorer />
+
+<BilingualCallout titleZh="相移相同不等于势相同" titleEn="Equal phase shifts do not mean equal potentials" kind="boundary">
+  <div class="bilingual-section__zh">
+    <p>逆散射信息在有限能量和有限 $l$ 范围内并不唯一。赝势正是利用这种非唯一性，把核区强势和节点结构换成更平滑的表示。选择自由度必须受核外匹配、响应、对称性和可迁移性测试约束。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Inverse-scattering information over a finite energy and angular-momentum range is not unique. Pseudopotential construction exploits this freedom to replace a strong core potential and nodal structure by a smoother representation. That freedom must be constrained by exterior matching, response, symmetry, and transferability tests.</p>
+  </div>
+</BilingualCallout>
+
+<span id="section-11-2" class="chapter-11-anchor" aria-hidden="true"></span>
+
+## 11.2 正交化平面波与赝势 | Orthogonalized Plane Waves and Pseudopotentials
+
+<BilingualSection titleZh="把芯态正交性写进基函数" titleEn="Building core orthogonality into the basis" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+OPW 方法从一个平滑函数出发，减去它在一组局域芯函数上的投影。若局域函数选为真实原子芯轨道，所得基函数与芯子空间严格正交。完整价态可以表示为平滑部分加局域芯形修正；平滑部分通常无对应的径向节点，因而更适合少量平面波。
+
+这一变换没有删除物理信息。只要保留变换和芯函数，完整价态可以由平滑部分重构。代价是平滑函数之间一般不再普通正交，方程成为广义本征值问题；同时，原始局域势被改写成依赖投影、通道和价态能量的非局域算符。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The OPW method starts from a smooth function and subtracts its projection onto a set of localized core functions. When those localized functions are chosen as actual atomic core orbitals, the resulting basis is exactly orthogonal to the core subspace. A full valence state is represented as a smooth component plus localized core-shaped corrections; the smooth component usually lacks the corresponding radial nodes and can be represented with fewer plane waves.
+
+The transformation does not discard physical information. If the transformation and core functions are retained, the full valence state can be reconstructed from the smooth component. The price is that the smooth functions are not generally orthonormal under the ordinary inner product, leading to a generalized eigenproblem, while the original local potential becomes a projected, channel- and energy-dependent nonlocal operator.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: OPW 投影与有效排斥"
+  assumptions={[
+    '芯轨道形成正交集合 | The core orbitals form an orthonormal set.',
+    '同一单粒子 Hamiltonian 产生芯态与价态 | Core and valence states refer to the same one-particle Hamiltonian.',
+    '暂不讨论自洽势随环境改变 | Changes of the self-consistent potential with environment are deferred.',
+  ]}
+>
+
+令 $\hat P_c$ 是占据芯子空间的投影算符：
+
+$$
+\hat P_c=\sum_c|\phi_c\rangle\langle\phi_c|,
+\qquad
+\hat Q_c=1-\hat P_c.
+$$
+
+由平面波 $|\mathbf q\rangle$ 构造 OPW：
+
+$$
+|\chi_{\mathbf q}^{\mathrm{OPW}}\rangle
+=\hat Q_c|\mathbf q\rangle
+=|\mathbf q\rangle-
+\sum_c|\phi_c\rangle\langle\phi_c|\mathbf q\rangle.
+$$
+
+直接左乘 $\langle\phi_d|$，并使用 $\langle\phi_d|\phi_c\rangle=\delta_{dc}$：
+
+$$
+\langle\phi_d|\chi_{\mathbf q}^{\mathrm{OPW}}\rangle
+=\langle\phi_d|\mathbf q\rangle-
+\sum_c\delta_{dc}\langle\phi_c|\mathbf q\rangle=0.
+$$
+
+其普通范数为
+
+$$
+\langle\chi_{\mathbf q}^{\mathrm{OPW}}|
+\chi_{\mathbf q}^{\mathrm{OPW}}\rangle
+=1-\sum_c|\langle\phi_c|\mathbf q\rangle|^2,
+$$
+
+通常小于 1，说明 OPW 集不具有普通单位重叠矩阵。
+
+把完整价态写为平滑部分与芯修正的和：
+
+$$
+|\psi_v\rangle
+=|\widetilde\psi_v\rangle+
+\sum_c B_{vc}|\phi_c\rangle.
+$$
+
+完整态满足 $\hat H|\psi_v\rangle=\varepsilon_v|\psi_v\rangle$，芯态满足 $\hat H|\phi_c\rangle=\varepsilon_c|\phi_c\rangle$。消去系数并把方程投影到平滑空间，可得到形式上的有效方程
+
+$$
+\left(\hat H+\hat V_R(\varepsilon_v)\right)
+|\widetilde\psi_v\rangle
+=\varepsilon_v|\widetilde\psi_v\rangle,
+$$
+
+其中投影排斥项可写成
+
+$$
+\hat V_R(\varepsilon_v)
+=\sum_c(\varepsilon_v-\varepsilon_c)
+|\phi_c\rangle\langle\phi_c|.
+$$
+
+对任意试函数 $|x\rangle$，若价态能量高于芯态能量，
+
+$$
+\langle x|\hat V_R|x\rangle
+=\sum_c(\varepsilon_v-\varepsilon_c)
+|\langle\phi_c|x\rangle|^2\ge0.
+$$
+
+因此该项在芯子空间方向表现为排斥，并可部分抵消强核吸引。它是非局域的，因为作用结果取决于函数与整个芯轨道的内积；它还显含 $\varepsilon_v$。这一步解释了赝势为何可能比裸 Coulomb 势弱，却没有直接给出可迁移、能量无关的现代离子赝势。
+
+<p lang="en">The core projector is removed from a plane wave to form an OPW, making core orthogonality exact. The ordinary norm is below unity because a component has been projected away. Rewriting the full valence state as a smooth state plus core corrections and eliminating the core coefficients produces a projected repulsive operator proportional to the positive valence–core energy differences. The operator is nonlocal and explicitly energy dependent; this explains cancellation of strong nuclear attraction but does not yet provide a transferable modern ionic pseudopotential.</p>
+
+</DerivationBlock>
+
+<PseudoWaveMatchingExplorer />
+
+<BilingualSection titleZh="OPW、NCPP、USPP 与 PAW 的连续关系" titleEn="The continuity from OPW to NCPP, USPP, and PAW">
+  <div class="bilingual-section__zh">
+
+OPW 保留平滑分量与局域修正的显式分解。NCPP 选择一个已经归一化的赝波函数，使其在核外等于全电子价态，并让常规 Kohn–Sham 正交关系恢复。USPP 再次放松普通范数，把缺失电荷写入重叠算符和增广电荷。PAW 则保留显式线性变换，使辅助平滑态可重构为数据集定义范围内的全电子态。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+OPW retains an explicit split between a smooth component and localized corrections. A norm-conserving construction chooses an already normalized pseudo-wavefunction that equals the all-electron valence state outside the core and restores ordinary Kohn–Sham orthonormality. Ultrasoft construction relaxes the ordinary norm again and records the missing charge in an overlap operator and augmentation functions. PAW retains an explicit linear transformation that reconstructs an all-electron state, within the scope of its data set, from an auxiliary smooth state.
+
+  </div>
+</BilingualSection>
+
+<span id="section-11-3" class="chapter-11-anchor" aria-hidden="true"></span>
+
+## 11.3 模型离子势 | Model Ion Potentials
+
+<BilingualSection titleZh="局域模型与角动量依赖" titleEn="Local models and angular-momentum dependence" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+早期模型势利用散射等效和 OPW cancellation 的物理图像，在芯半径内把强 Coulomb 势换成空芯、方势阱或其他弱势；芯外恢复离子长程 Coulomb 尾。不同 $l$ 通道穿透芯区的方式不同，因此同一元素通常需要角动量依赖的 $V_l(r)$。这类算符在径向坐标上是乘法势，在角变量上通过 $l,m$ 投影选择通道，因而称为半局域。
+
+经验总赝势可直接拟合固体能带，适合压缩特定体系的低能信息，但其环境和方法边界由拟合集决定。ab initio 离子赝势则从原子全电子参考态生成，不用分子或固体实验数据调参；“ab initio”描述来源，不等于在任意环境中已验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Early model potentials used scattering equivalence and the OPW cancellation picture to replace the strong Coulomb core by an empty core, square well, or another weak form, while restoring the ionic Coulomb tail outside the core radius. Different angular-momentum channels penetrate the core differently, so an element generally requires channel-dependent $V_l(r)$. Such an operator multiplies radially but selects channels through angular $l,m$ projectors and is therefore called semilocal.
+
+An empirical total pseudopotential can be fitted directly to solid-state bands, efficiently compressing low-energy information for a particular target, but its environmental and methodological range is defined by the fit. An ab initio ionic pseudopotential is generated from an all-electron atomic reference without fitting molecular or solid experimental data. “Ab initio” describes provenance; it does not mean validated in every environment.
+
+  </div>
+</BilingualSection>
+
+半局域算符写成
+
+$$
+\hat V_{\mathrm{SL}}
+=\sum_{l=0}^{\infty}\sum_{m=-l}^{l}
+|Y_{lm}\rangle V_l(r)\langle Y_{lm}|.
+$$
+
+对任意波函数
+
+$$
+\psi(\mathbf r)=\sum_{lm}R_{lm}(r)Y_{lm}(\Omega),
+$$
+
+其作用是
+
+$$
+\hat V_{\mathrm{SL}}\psi
+=\sum_{lm}V_l(r)R_{lm}(r)Y_{lm}(\Omega).
+$$
+
+径向乘法与角投影共同存在，所以它既不是纯局域 $V(r)$，也尚未是后面有限秩投影子形式的 fully nonlocal operator。
+
+<BilingualCallout titleZh="本节不能支持的结论" titleEn="What this section cannot establish" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>一个模型势重现某条能带，不证明它重现总能、力、声子或不同结构。</li>
+      <li>芯内势更平滑，不证明核外散射响应或不同组态更准确。</li>
+      <li>$l$ 依赖是算符结构，不是 SOC；fully relativistic 数据还需 $j=l\pm1/2$ 通道。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>Reproducing one band structure does not establish total energies, forces, phonons, or other structures.</li>
+      <li>A smoother core potential does not by itself establish better exterior scattering response or configuration transferability.</li>
+      <li>Channel dependence in $l$ is operator structure, not spin–orbit coupling; fully relativistic data require $j=l\pm1/2$ channels.</li>
+    </ul>
+  </div>
+</BilingualCallout>
