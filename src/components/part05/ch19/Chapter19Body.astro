@@ -7,9 +7,51 @@ import Chapter19CPMD from './Chapter19CPMD.mdx';
 import Chapter19Closing from './Chapter19Closing.mdx';
 ---
 
-<Chapter19OrientationAndTerms />
-<Chapter19SourceMap />
-<Chapter19Forces />
-<Chapter19BOMD />
-<Chapter19CPMD />
-<Chapter19Closing />
+<div class="chapter19-root">
+  <Chapter19OrientationAndTerms />
+  <Chapter19SourceMap />
+  <Chapter19Forces />
+  <Chapter19BOMD />
+  <Chapter19CPMD />
+  <Chapter19Closing />
+</div>
+
+<style is:global>
+  .chapter19-root,
+  .chapter19-root > *,
+  .chapter19-root .bilingual-section,
+  .chapter19-root .bilingual-section__grid,
+  .chapter19-root .bilingual-section__zh,
+  .chapter19-root .bilingual-section__en,
+  .chapter19-root .derivation-block,
+  .chapter19-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter19-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter19-root .chapter-source-map,
+  .chapter19-root .chapter19-symbol-table,
+  .chapter19-root .chapter19-evidence-table,
+  .chapter19-root .katex-display,
+  .chapter19-root pre {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter19-root p,
+  .chapter19-root li,
+  .chapter19-root th,
+  .chapter19-root td {
+    overflow-wrap: anywhere;
+  }
+</style>
