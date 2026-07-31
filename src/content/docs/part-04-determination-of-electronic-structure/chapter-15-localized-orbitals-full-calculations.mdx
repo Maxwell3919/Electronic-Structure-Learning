@@ -1,20 +1,18 @@
 ---
-title: "Chapter 15 · Localized Orbitals: Full Calculations"
-description: "Martin Chapter 15 的目录级阅读骨架；正文待填充。"
+title: "Chapter 15 · Localized Orbitals: Full Calculations | 局域轨道全计算"
+description: "从非正交 Kohn–Sham 矩阵、density matrix 与 Gaussian/numerical orbitals，进入 Pulay 导数、Green function、recursion 与 mixed basis。"
 sidebar:
   order: 4
   label: "Chapter 15 · Localized Orbitals: Full Calculations"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter15Body from '../../../components/part04/ch15/Chapter15Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[3].units[3].label}
-  sourcePage={catalog.parts[3].units[3].page}
-  sections={catalog.parts[3].units[3].sections}
-  exercisesPage={catalog.parts[3].units[3].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 15, printed pp. 320–330; sections 15.1–15.8. Exercises begin p. 331 and are not reproduced."
+  status="draft"
 />
+
+<Chapter15Body />

@@ -1,0 +1,257 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import PulayForceExplorer from './PulayForceExplorer.astro';
+
+<span id="section-15-5" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.5 局域轨道：总能、力与应力 | Localized Orbitals: Total Energy, Force, and Stress
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 327–329 用 density matrix 表示 eigenvalue sum 与 density，并以 neutral-atom Coulomb decomposition 组织 total energy，随后讨论 position-dependent local orbitals 导致的 Pulay corrections。下面用 matrix differential 补足 energy-weighted density matrix、overlap derivative 与 force/stress evidence gates。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 327–329 express the eigenvalue sum and density through a density matrix, organize total energy with a neutral-atom Coulomb decomposition, and discuss Pulay corrections caused by position-dependent local orbitals. The matrix differential below adds the energy-weighted density matrix, overlap derivatives, and force or stress evidence gates.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="density matrix 形式的 band/eigenvalue sum" titleEn="Band or eigenvalue sum in density-matrix form">
+  <div class="bilingual-section__zh">
+    <p>对 $S$-orthonormal eigenvectors $C^\dagger SC=I$，定义</p>
+
+$$
+P=C f C^\dagger,
+\qquad
+W=C f\varepsilon C^\dagger,
+$$
+
+    <p>其中 $f$ 与 $\varepsilon$ 在 eigenstate index 上 diagonal。则</p>
+
+$$
+E_s=\sum_i f_i\varepsilon_i
+=\operatorname{Tr}(PH),
+$$
+
+$$
+N=\operatorname{Tr}(PS).
+$$
+
+    <p>$P$ 是 density matrix，$W$ 是 energy-weighted density matrix。二者在 force derivative 中扮演不同角色。只保存 $P$ 而忽略 $W$，无法一般地重建 moving nonorthogonal basis 的 overlap derivative。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For $S$-orthonormal eigenvectors $C^\dagger SC=I$, define</p>
+
+$$
+P=C f C^\dagger,
+\qquad
+W=C f\varepsilon C^\dagger,
+$$
+
+    <p>where $f$ and $\varepsilon$ are diagonal in the eigenstate index. Then</p>
+
+$$
+E_s=\sum_i f_i\varepsilon_i
+=\operatorname{Tr}(PH),
+$$
+
+$$
+N=\operatorname{Tr}(PS).
+$$
+
+    <p>$P$ is the density matrix and $W$ the energy-weighted density matrix. They play different roles in force derivatives. Retaining $P$ while discarding $W$ is generally insufficient for the overlap derivative of a moving nonorthogonal basis.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="generalized eigenvalue sum 的 differential | Differential of a generalized eigenvalue sum"
+  assumptions={[
+    'H(R)c_i=ε_iS(R)c_i；',
+    'c_i†Sc_j=δ_ij；',
+    'fixed occupations for the displayed differential；',
+    'degenerate subspaces treated by a differentiable invariant projector。',
+  ]}
+>
+
+对单个 normalized eigenpair，Hellmann–Feynman differentiation of the generalized problem gives
+
+$$
+\frac{d\varepsilon_i}{dR}
+=c_i^\dagger\left(\frac{dH}{dR}-\varepsilon_i\frac{dS}{dR}\right)c_i.
+$$
+
+乘 occupations 并求和：
+
+$$
+\frac{dE_s}{dR}
+=\operatorname{Tr}\left(P\frac{dH}{dR}\right)
+-\operatorname{Tr}\left(W\frac{dS}{dR}\right).
+$$
+
+对应 band-sum force contribution 为
+
+$$
+\boxed{
+F_R^{(s)}
+=-\operatorname{Tr}(P H_R')
++\operatorname{Tr}(W S_R')
+}.
+$$
+
+第一项包含 Hamiltonian matrix 的 explicit position derivative；第二项来自 moving metric。若 basis 与 atom positions 无关，如理想 plane waves，则 $S_R'=0$。对于 atom-centred orbitals，$S_R'$ 一般非零。该 finite-matrix formula 与 real-space Pulay language 是同一 basis-response problem 的两种表示。
+
+若 occupations 随 R 变化，finite-temperature free-energy derivatives、Fermi-level constraint 和 entropy terms 必须一致处理；不能把 fixed-occupation formula 直接用于所有 metallic calculations。
+
+</DerivationBlock>
+
+<PulayForceExplorer />
+
+<BilingualSection titleZh="real-space basis derivative 与 Pulay correction" titleEn="Real-space basis derivatives and Pulay corrections">
+  <div class="bilingual-section__zh">
+    <p>atom-centred function $\chi_\mu(\mathbf r-\mathbf R_I)$ 随核移动：</p>
+
+$$
+\frac{\partial\chi_\mu(\mathbf r-\mathbf R_I)}{\partial\mathbf R_I}
+=-\nabla\chi_\mu(\mathbf r-\mathbf R_I).
+$$
+
+    <p>固定 coefficient-space $P$ 时，density derivative 包含 basis derivatives：</p>
+
+$$
+\frac{\partial n(\mathbf r)}{\partial\mathbf R_I}
+=\sum_{\mu\in I,\nu}P_{\mu\nu}
+\frac{\partial\chi_\mu(\mathbf r)}{\partial\mathbf R_I}
+\chi_\nu^*(\mathbf r)+\mathrm{c.c.}
+$$
+
+    <p>对 density functional $F[n]$，相应 contribution 为</p>
+
+$$
+\frac{\partial F}{\partial\mathbf R_I}
+=\int d^3r\,\frac{\delta F}{\delta n(\mathbf r)}
+\frac{\partial n(\mathbf r)}{\partial\mathbf R_I}.
+$$
+
+    <p>在 complete basis limit，stationarity 可使适当组合的 basis-response terms 消失；finite basis 中不能省略。不同代码可能把同一项分配到 overlap、kinetic/local-potential、projector 或 density-grid derivative 中，比较公式时必须对齐 total derivative，而不是只比单个命名项。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>An atom-centred function $\chi_\mu(\mathbf r-\mathbf R_I)$ moves with its nucleus:</p>
+
+$$
+\frac{\partial\chi_\mu(\mathbf r-\mathbf R_I)}{\partial\mathbf R_I}
+=-\nabla\chi_\mu(\mathbf r-\mathbf R_I).
+$$
+
+    <p>At fixed coefficient-space $P$, the density derivative contains basis derivatives:</p>
+
+$$
+\frac{\partial n(\mathbf r)}{\partial\mathbf R_I}
+=\sum_{\mu\in I,\nu}P_{\mu\nu}
+\frac{\partial\chi_\mu(\mathbf r)}{\partial\mathbf R_I}
+\chi_\nu^*(\mathbf r)+\mathrm{c.c.}
+$$
+
+    <p>For a density functional $F[n]$, the corresponding contribution is</p>
+
+$$
+\frac{\partial F}{\partial\mathbf R_I}
+=\int d^3r\,\frac{\delta F}{\delta n(\mathbf r)}
+\frac{\partial n(\mathbf r)}{\partial\mathbf R_I}.
+$$
+
+    <p>In the complete-basis limit, stationarity can make the appropriate combination of basis-response terms vanish; in a finite basis it cannot be omitted. Different implementations may distribute the same total derivative among overlap, kinetic or local-potential, projector, and density-grid derivatives. Formula comparisons must align the total derivative rather than one named term.</p>
+  </div>
+</BilingualSection>
+
+### Total-energy organization | 总能组织
+
+<BilingualSection titleZh="standard Kohn–Sham 与 neutral-atom decomposition" titleEn="Standard Kohn–Sham and neutral-atom decompositions">
+  <div class="bilingual-section__zh">
+    <p>任一 mathematically equivalent Kohn–Sham total-energy expression 可用于局域基。常见形式以 $\mathrm{Tr}(PH)$ 或 kinetic matrix、Hartree、XC、external/local pseudopotential 与 ion-ion terms 组织，并扣除 eigenvalue sum 中重复计数的 Hartree/XC contributions。</p>
+    <p>对局域基，neutral-atom reference densities 可将长程 ionic/electronic Coulomb pieces 重组为 short-range neutral-atom pair terms、reference constants 与 residual density $\delta n$ 的 electrostatics。这种分解可改善 locality 与 numerical cancellation，但不改变总能定义。若 compensation densities overlap，必须包含该 formalism 要求的 correction；不能因为 individual terms 看起来 short-ranged 就忽略。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Any mathematically equivalent Kohn–Sham total-energy expression can be used with localized orbitals. Common forms organize kinetic or $\mathrm{Tr}(PH)$ terms, Hartree, XC, external or local-pseudopotential, and ion-ion contributions, subtracting Hartree and XC double counting already present in the eigenvalue sum.</p>
+    <p>For a localized basis, neutral-atom reference densities can regroup long-range ionic and electronic Coulomb pieces into short-range neutral-atom pair terms, reference constants, and electrostatics of a residual density $\delta n$. This can improve locality and numerical cancellation without changing the total-energy definition. If compensation densities overlap, the correction required by the formalism must be retained; apparently short-ranged individual terms cannot simply be dropped.</p>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="stress 是 cell derivative，不只是 pair virial" titleEn="Stress is a cell derivative, not only a pair virial">
+  <div class="bilingual-section__zh">
+    <p>对 strain tensor $\epsilon_{\alpha\beta}$，</p>
+
+$$
+\sigma_{\alpha\beta}
+=\frac{1}{\Omega}
+\frac{\partial E}{\partial\epsilon_{\alpha\beta}}
+$$
+
+    <p>的符号 convention 必须声明。cell strain 改变 centres、basis shapes/cutoffs、integration grid、reciprocal sampling、projectors 和 tabulated distances。只对 pair distance 做 virial derivative 一般不足以得到完整 stress。finite-difference cell deformation 是低成本而关键的 regression test。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For strain tensor $\epsilon_{\alpha\beta}$,</p>
+
+$$
+\sigma_{\alpha\beta}
+=\frac{1}{\Omega}
+\frac{\partial E}{\partial\epsilon_{\alpha\beta}}
+$$
+
+    <p>requires a declared sign convention. Cell strain changes centres, basis shapes or cutoffs, integration grids, reciprocal sampling, projectors, and tabulated distances. A pair-distance virial derivative alone is generally insufficient for the full stress. Finite-difference cell deformation is a low-cost and essential regression test.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="force/stress 验证门" titleEn="Force and stress validation gates" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>固定 converged electronic state，比较 analytic force 与多步长 central finite differences；</li>
+      <li>同时收敛 basis、support radius、grid、two-centre interpolation 和 SCF threshold；</li>
+      <li>检查 total force sum、symmetry-related components 与 rigid translation；</li>
+      <li>对 stress 比较 strained-cell energy derivative，并重新收敛 k sampling；</li>
+      <li>在 molecular dynamics 中检查 energy drift，但不把短轨迹稳定等同于 force accuracy。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>At a converged electronic state, compare analytic forces with centred finite differences at several step sizes.</li>
+      <li>Converge basis, support radius, grid, two-centre interpolation, and SCF threshold together.</li>
+      <li>Check total-force sum, symmetry-related components, and rigid translation.</li>
+      <li>For stress, compare with strained-cell energy derivatives and reconverge k sampling.</li>
+      <li>Check energy drift in molecular dynamics without equating a short stable trajectory with force accuracy.</li>
+    </ol>
+  </div>
+</BilingualCallout>
+
+<span id="section-15-6" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.6 数值局域轨道的应用 | Applications of Numerical Local Orbitals
+
+<BilingualSection titleZh="应用优势来自 cost structure，不是 universal accuracy" titleEn="Application advantages come from cost structure, not universal accuracy">
+  <div class="bilingual-section__zh">
+    <p>numerical local orbitals 可用于 all-electron 与 pseudopotential calculations、molecules、solids、surfaces、large vacuum cells、structural relaxation、molecular dynamics 和 time-dependent propagation。其优势通常来自：</p>
+    <ul>
+      <li>basis count 与 atoms/chemical environments 相关，而非与全部 vacuum volume 成正比；</li>
+      <li>finite support 产生 sparse matrix construction；</li>
+      <li>atom-centred radial resolution 可高效处理 core/near-core variation；</li>
+      <li>localized representation 便于 embedding、Green-function 和 Chapter 18 的 locality methods。</li>
+    </ul>
+    <p>这些特性不构成 accuracy ranking。plane waves 可给更直接的 systematic cutoff；all-electron numerical orbitals 需处理核附近 grids；diffuse/weakly bound states 可能需要更大 support；dense eigensolver 仍可主导 large-system cost。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Numerical local orbitals can be used for all-electron and pseudopotential calculations, molecules, solids, surfaces, large vacuum cells, structural relaxation, molecular dynamics, and time-dependent propagation. Their advantages commonly arise because:</p>
+    <ul>
+      <li>basis count follows atoms and chemical environments rather than the entire vacuum volume;</li>
+      <li>finite support makes matrix construction sparse;</li>
+      <li>atom-centred radial resolution handles core and near-core variation efficiently;</li>
+      <li>a localized representation supports embedding, Green-function, and Chapter 18 locality methods.</li>
+    </ul>
+    <p>These features are not an accuracy ranking. Plane waves offer a more direct systematic cutoff; all-electron numerical orbitals require near-nuclear grids; diffuse or weakly bound states may need larger support; and a dense eigensolver can still dominate large-system cost.</p>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="可复现的应用报告" titleEn="A reproducible application report">
+  <div class="bilingual-section__zh">
+    <p>应用报告至少应给出 species-resolved basis specification、radial confinement、ζ/polarization level、core treatment、grid/quadrature、k sampling、smearing、SCF/eigensolver thresholds、force/stress criteria 与 basis/grid convergence。若比较 plane-wave 或另一 localized code，还要对齐 functional、relativity、pseudopotential/frozen core、geometry 和 observable definition。</p>
+    <p>两个代码结果接近只说明该 case 下 observed agreement；它不独立验证二者 basis completeness、force implementation 或 shared approximation。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>An application report should state the species-resolved basis, radial confinement, zeta and polarization level, core treatment, grid or quadrature, k sampling, smearing, SCF and eigensolver thresholds, force or stress criteria, and basis/grid convergence. Comparisons with a plane-wave or another localized code must also align functional, relativity, pseudopotential or frozen-core treatment, geometry, and observable definition.</p>
+    <p>Agreement between two codes records observed agreement for that case; it does not independently validate basis completeness, force implementation, or a shared approximation.</p>
+  </div>
+</BilingualSection>
