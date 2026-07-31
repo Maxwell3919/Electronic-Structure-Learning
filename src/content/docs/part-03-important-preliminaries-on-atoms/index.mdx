@@ -1,6 +1,6 @@
 ---
 title: "Part III · Important Preliminaries on Atoms"
-description: "从全电子原子径向问题进入赝势、ultrasoft 与 PAW 的两章学习线。"
+description: "从全电子原子径向问题进入散射、赝势、ultrasoft 与 PAW 的完整两章学习线。"
 sidebar:
   order: 0
   label: "Part III · Important Preliminaries on Atoms"
@@ -16,31 +16,31 @@ import catalog from '../../../data/martin/index.mjs';
 <BilingualSection titleZh="Part III 的位置" titleEn="Position of Part III" eyebrow="Reading orientation">
   <div class="bilingual-section__zh">
 
-Part II 给出密度泛函与 Kohn–Sham 辅助体系的一般形式。Part III 把这些方程放入原子中心势：Chapter 10 建立全电子径向参考问题、自洽原子、相对论与开壳层处理；Chapter 11 再从散射等价和冻结芯出发，构造适用于分子与固体计算的赝势、ultrasoft 和 PAW 表示。
+Part II 给出密度泛函与 Kohn–Sham 辅助体系的一般形式。Part III 把这些方程放入原子中心势：Chapter 10 建立全电子径向参考问题、自洽原子、相对论与开壳层处理；Chapter 11 从散射等效和冻结芯出发，构造 norm-conserving、ultrasoft 与 PAW 表示，并建立实际数据集和目标 observable 的验证边界。
 
-两章的验证层级不同。一个原子参考态收敛，只说明生成问题的起点可用；赝势还需原子构型、散射、分子/固体、基组截断与目标 observable 的独立测试。
+两章的验证层级不同。一个原子参考态收敛，只说明生成问题的起点可用；赝势还需原子构型、散射、ghost-state、分子/固体、基组截断与目标 observable 的独立测试。PAW 或 ultrasoft 的方法名称也不能替代具体数据集身份。
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
-Part II develops the general density-functional and Kohn–Sham framework. Part III places those equations in an atom-centred setting. Chapter 10 establishes the all-electron radial reference problem, self-consistent atoms, and relativistic and open-shell treatments. Chapter 11 then uses scattering equivalence and the frozen-core approximation to construct pseudopotential, ultrasoft, and PAW representations for molecular and solid-state calculations.
+Part II develops the general density-functional and Kohn–Sham framework. Part III places those equations in an atom-centred setting. Chapter 10 establishes the all-electron radial reference problem, self-consistent atoms, and relativistic and open-shell treatments. Chapter 11 begins from scattering equivalence and the frozen-core approximation, constructs norm-conserving, ultrasoft, and PAW representations, and establishes validation boundaries for real data sets and target observables.
 
-The validation levels differ. Convergence of an atomic reference state establishes only the starting generation problem. A pseudopotential additionally requires atomic-configuration, scattering, molecular or solid-state, basis-cutoff, and target-observable tests.
+The validation levels differ. Convergence of an atomic reference state establishes only the starting generation problem. A pseudopotential additionally requires atomic-configuration, scattering, ghost-state, molecular or solid-state, basis-cutoff, and target-observable tests. A method label such as PAW or ultrasoft also does not replace the identity of the specific data set.
 
   </div>
 </BilingualSection>
 
-<BilingualCallout titleZh="当前内容状态" titleEn="Current content state" kind="source">
+<BilingualCallout titleZh="内容状态" titleEn="Content status" kind="source">
   <div class="bilingual-section__zh">
     <ul>
-      <li><a href="./chapter-10-electronic-structure-of-atoms/">Chapter 10 · Electronic Structure of Atoms</a>：中英文正文、推导、六个原创可视化、练习与验证已填充。</li>
-      <li>Chapter 11 · Pseudopotentials：目录与页码骨架保留，须在 Chapter 10 合并部署后单独编写。</li>
+      <li><a href="./chapter-10-electronic-structure-of-atoms/">Chapter 10 · Electronic Structure of Atoms</a>：中英文正文、径向与原子自洽推导、六个原创可视化、练习与验证已完成。</li>
+      <li><a href="./chapter-11-pseudopotentials/">Chapter 11 · Pseudopotentials</a>：中英文正文、散射/NCPP/USPP/PAW 推导、五个原创可视化、练习和实际验证矩阵已完成。</li>
     </ul>
   </div>
   <div class="bilingual-section__en" lang="en">
     <ul>
-      <li><a href="./chapter-10-electronic-structure-of-atoms/">Chapter 10 · Electronic Structure of Atoms</a>: bilingual exposition, derivations, six original visualizations, exercises, and checks are filled.</li>
-      <li>Chapter 11 · Pseudopotentials: the directory and page-locator outline remains and will be written in a separate branch after Chapter 10 is merged and deployed.</li>
+      <li><a href="./chapter-10-electronic-structure-of-atoms/">Chapter 10 · Electronic Structure of Atoms</a>: bilingual exposition, radial and atomic-SCF derivations, six original visualizations, exercises, and checks are complete.</li>
+      <li><a href="./chapter-11-pseudopotentials/">Chapter 11 · Pseudopotentials</a>: bilingual exposition, scattering/NCPP/USPP/PAW derivations, five original visualizations, exercises, and a practical validation matrix are complete.</li>
     </ul>
   </div>
 </BilingualCallout>

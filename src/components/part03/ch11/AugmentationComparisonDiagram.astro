@@ -1,0 +1,80 @@
+<figure class="chapter-visual augmentation-comparison">
+  <figcaption>
+    <strong>原创静态图：USPP 密度增广与 PAW 波函数重构 | Original static diagram: USPP density augmentation and PAW wavefunction reconstruction</strong>
+    <span>上半部分比较广义重叠与密度增广；下半部分表示 PAW 的辅助态加 one-centre 修正。</span>
+    <span lang="en">The upper panel shows generalized overlap and density augmentation. The lower panel shows a PAW auxiliary state plus one-centre corrections.</span>
+  </figcaption>
+
+  <svg viewBox="0 0 920 570" role="img" aria-labelledby="augmentation-title augmentation-desc">
+    <title id="augmentation-title">Comparison of ultrasoft and PAW augmentation structures</title>
+    <desc id="augmentation-desc">Ultrasoft states use smooth wavefunctions plus overlap and density augmentation. PAW uses a linear transformation from a smooth auxiliary state to an all-electron state using partial waves and projectors.</desc>
+    <defs>
+      <marker id="augmentation-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
+
+    <text x="35" y="42" class="augmentation-comparison__heading">Ultrasoft pseudopotential</text>
+    <rect x="35" y="72" width="190" height="78" rx="10" />
+    <text x="130" y="102" text-anchor="middle">smooth states |ψ̃_n⟩</text>
+    <text x="130" y="125" text-anchor="middle">low Fourier cost</text>
+    <line x1="225" y1="111" x2="300" y2="111" marker-end="url(#augmentation-arrow)" />
+    <rect x="305" y="72" width="255" height="78" rx="10" />
+    <text x="432" y="100" text-anchor="middle">generalized normalization</text>
+    <text x="432" y="124" text-anchor="middle">⟨ψ̃_m|S|ψ̃_n⟩=δ_mn</text>
+    <line x1="560" y1="111" x2="635" y2="111" marker-end="url(#augmentation-arrow)" />
+    <rect x="640" y="72" width="245" height="78" rx="10" />
+    <text x="762" y="100" text-anchor="middle">density reconstruction</text>
+    <text x="762" y="124" text-anchor="middle">n=ñ+Σ ρ_ij Q_ij</text>
+
+    <path d="M 50 230 C 110 185, 170 185, 230 230 S 350 275, 410 230 S 530 185, 590 230" class="augmentation-comparison__smooth" />
+    <path d="M 50 230 C 110 170, 170 290, 230 230 S 350 150, 410 230 S 530 310, 590 230" class="augmentation-comparison__full" />
+    <line x1="640" y1="230" x2="885" y2="230" class="augmentation-comparison__axis" />
+    <path d="M 660 230 C 700 230, 720 175, 760 230 S 820 285, 865 230" class="augmentation-comparison__augmentation" />
+    <text x="320" y="310" text-anchor="middle">smooth orbital product + localized augmentation charge</text>
+    <text x="762" y="310" text-anchor="middle">Q_ij is zero outside the augmentation region</text>
+
+    <line x1="35" y1="350" x2="885" y2="350" class="augmentation-comparison__divider" />
+    <text x="35" y="390" class="augmentation-comparison__heading">Projector augmented wave</text>
+    <rect x="35" y="420" width="190" height="85" rx="10" />
+    <text x="130" y="452" text-anchor="middle">auxiliary |Ψ̃⟩</text>
+    <text x="130" y="477" text-anchor="middle">global smooth state</text>
+    <line x1="225" y1="462" x2="300" y2="462" marker-end="url(#augmentation-arrow)" />
+    <rect x="305" y="420" width="255" height="85" rx="10" />
+    <text x="432" y="448" text-anchor="middle">one-centre correction</text>
+    <text x="432" y="472" text-anchor="middle">Σ_i (|φ_i⟩−|φ̃_i⟩)⟨p̃_i|Ψ̃⟩</text>
+    <line x1="560" y1="462" x2="635" y2="462" marker-end="url(#augmentation-arrow)" />
+    <rect x="640" y="420" width="245" height="85" rx="10" />
+    <text x="762" y="452" text-anchor="middle">reconstructed |Ψ⟩</text>
+    <text x="762" y="477" text-anchor="middle">all-electron within data scope</text>
+  </svg>
+
+  <div class="chapter-visual__contract">
+    <p><strong>验收：</strong>USPP 路径必须同时显示 smooth state、非平凡 overlap 和 augmentation density；PAW 路径必须显示 auxiliary state、AE–pseudo partial-wave difference 与投影系数。</p>
+    <p lang="en"><strong>Acceptance:</strong> the USPP path must include a smooth state, nontrivial overlap, and augmentation density; the PAW path must include an auxiliary state, an AE–pseudo partial-wave difference, and projector coefficients.</p>
+    <p><strong>边界：</strong>示意曲线没有元素、半径、归一化或数值幅度，不表示 USPP 与 PAW 在任何实际体系中给出相同误差。</p>
+    <p lang="en"><strong>Boundary:</strong> the schematic curves have no element, radius, normalization, or numerical amplitude and do not imply equal USPP and PAW errors for any real system.</p>
+  </div>
+
+  <div class="augmentation-comparison__fallback">
+    <h4>Semantic fallback</h4>
+    <ul>
+      <li>USPP: solve for smooth states with a generalized overlap operator; reconstruct density by adding localized augmentation charges.</li>
+      <li>PAW: transform an auxiliary smooth state by adding all-electron minus pseudo partial-wave corrections weighted by projector overlaps.</li>
+    </ul>
+  </div>
+</figure>
+
+<style>
+  .augmentation-comparison svg { width: 100%; min-height: 28rem; }
+  .augmentation-comparison svg rect { fill: var(--sl-color-gray-6); stroke: var(--sl-color-accent-high); stroke-width: 2; }
+  .augmentation-comparison svg text { fill: currentColor; font-size: 14px; }
+  .augmentation-comparison svg marker path { fill: currentColor; }
+  .augmentation-comparison svg line { stroke: currentColor; stroke-width: 2; }
+  .augmentation-comparison__heading { font-size: 18px !important; font-weight: 700; }
+  .augmentation-comparison__smooth { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 3; }
+  .augmentation-comparison__full { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 7 5; }
+  .augmentation-comparison__augmentation { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 3; }
+  .augmentation-comparison__axis,
+  .augmentation-comparison__divider { stroke: var(--sl-color-gray-4) !important; }
+</style>
