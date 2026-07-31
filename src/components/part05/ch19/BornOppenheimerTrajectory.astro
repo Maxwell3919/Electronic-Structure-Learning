@@ -1,0 +1,168 @@
+---
+import { simulateVelocityVerlet } from '../../../data/part05/ch19TeachingModels.mjs';
+
+const componentId = 'ch19-bo-trajectory';
+const width = 760;
+const height = 300;
+const pad = { left: 52, right: 20, top: 22, bottom: 44 };
+const defaultDt = 0.25;
+const omega = 1;
+const periods = 4;
+const totalTime = periods * 2 * Math.PI;
+const defaultSteps = Math.round(totalTime / defaultDt);
+const result = simulateVelocityVerlet({ omega, dt: defaultDt, steps: defaultSteps });
+
+const toPolyline = (points, key) => {
+  const tMax = points.at(-1).time;
+  return points.map((point) => {
+    const x = pad.left + (point.time / tMax) * (width - pad.left - pad.right);
+    const y = pad.top + ((1.35 - point[key]) / 2.7) * (height - pad.top - pad.bottom);
+    return `${x.toFixed(2)},${y.toFixed(2)}`;
+  }).join(' ');
+};
+
+const initialNumeric = toPolyline(result.points, 'position');
+const initialExact = toPolyline(result.points, 'exactPosition');
+---
+
+<figure class="chapter-visual bo-trajectory" id={componentId}>
+  <figcaption>
+    <strong>Born–Oppenheimer 势能面上的离子轨迹 | Ionic trajectory on a Born–Oppenheimer surface</strong>
+    <span>原创教学模型：一维谐振子代表能量面局部曲率，velocity Verlet 代表离散离子传播。</span>
+    <span lang="en">Original teaching model: a one-dimensional harmonic oscillator represents local surface curvature and velocity Verlet represents discrete ionic propagation.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      时间步 $\Delta t$（无量纲）
+      <input data-dt type="range" min="0.05" max="0.8" step="0.05" value={defaultDt} aria-describedby={`${componentId}-dt-help`} />
+      <span id={`${componentId}-dt-help`}>固定 $\omega=1$，显示四个周期。</span>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>精确谐振子轨迹与 velocity Verlet 轨迹对比</title>
+    <desc id={`${componentId}-desc`}>横轴为无量纲时间，纵轴为无量纲位移。实线表示解析结果，带点折线表示数值积分。</desc>
+    <line class="axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <line class="zero" x1={pad.left} y1={(height - pad.bottom + pad.top) / 2} x2={width - pad.right} y2={(height - pad.bottom + pad.top) / 2} />
+    <polyline class="curve curve--exact" data-exact points={initialExact} />
+    <polyline class="curve curve--numeric" data-numeric points={initialNumeric} />
+    <text x={(width + pad.left - pad.right) / 2} y={height - 10} text-anchor="middle">time / 无量纲时间</text>
+    <text transform={`translate(16 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">position / 位移</text>
+    <g class="legend" transform={`translate(${width - 230} 34)`}>
+      <line class="curve curve--exact" x1="0" x2="38" y1="0" y2="0" />
+      <text x="46" y="5">exact / 解析</text>
+      <line class="curve curve--numeric" x1="0" x2="38" y1="25" y2="25" />
+      <text x="46" y="30">velocity Verlet</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>$\Delta t=$ <output data-dt-output>{defaultDt.toFixed(2)}</output></span>
+    <span>$\omega\Delta t=$ <output data-stability>{result.stabilityParameter.toFixed(2)}</output></span>
+    <span>最大位移误差 | max position error: <output data-error>{result.maxPositionError.toExponential(2)}</output></span>
+    <span>最大相对能量偏差 | max relative energy deviation: <output data-energy>{result.maxRelativeEnergyDeviation.toExponential(2)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>$V(x)=\tfrac12\omega^2x^2$，质量、初始振幅和 $\omega$ 均取 1；无热浴、无电子误差、无多体耦合。</p>
+    <p><strong>验收：</strong>在小步长区间比较相同总时间，$\Delta t$ 减半后全局位置误差应接近二阶缩放；当 $\omega\Delta t$ 接近稳定性边界时误差快速增大。</p>
+    <p><strong>边界：</strong>该模型检查积分器实现和步长趋势，不给出真实材料的可用时间步，也不验证 DFT 力。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback：</strong>上图保留默认 $\Delta t=0.25$ 的解析轨迹和 velocity Verlet 轨迹；控件不会更新，但模型、单位、验收条件与边界仍可阅读。</p>
+  </noscript>
+</figure>
+
+<script>
+  import { simulateVelocityVerlet } from '../../../data/part05/ch19TeachingModels.mjs';
+
+  const root = document.getElementById('ch19-bo-trajectory');
+  if (root) {
+    const input = root.querySelector('[data-dt]');
+    const numeric = root.querySelector('[data-numeric]');
+    const exact = root.querySelector('[data-exact]');
+    const dtOutput = root.querySelector('[data-dt-output]');
+    const stabilityOutput = root.querySelector('[data-stability]');
+    const errorOutput = root.querySelector('[data-error]');
+    const energyOutput = root.querySelector('[data-energy]');
+
+    const width = 760;
+    const height = 300;
+    const pad = { left: 52, right: 20, top: 22, bottom: 44 };
+    const totalTime = 8 * Math.PI;
+
+    const toPolyline = (points, key) => {
+      const tMax = points.at(-1).time;
+      return points.map((point) => {
+        const x = pad.left + (point.time / tMax) * (width - pad.left - pad.right);
+        const y = pad.top + ((1.35 - point[key]) / 2.7) * (height - pad.top - pad.bottom);
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      }).join(' ');
+    };
+
+    const update = () => {
+      const dt = Number(input.value);
+      const steps = Math.max(1, Math.round(totalTime / dt));
+      const result = simulateVelocityVerlet({ omega: 1, dt, steps });
+      numeric.setAttribute('points', toPolyline(result.points, 'position'));
+      exact.setAttribute('points', toPolyline(result.points, 'exactPosition'));
+      dtOutput.textContent = dt.toFixed(2);
+      stabilityOutput.textContent = result.stabilityParameter.toFixed(2);
+      errorOutput.textContent = result.maxPositionError.toExponential(2);
+      energyOutput.textContent = result.maxRelativeEnergyDeviation.toExponential(2);
+    };
+
+    input?.addEventListener('input', update);
+    update();
+  }
+</script>
+
+<style>
+  .bo-trajectory svg {
+    width: 100%;
+    height: auto;
+    min-width: 36rem;
+  }
+
+  .bo-trajectory {
+    overflow-x: auto;
+  }
+
+  .axis {
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .zero {
+    stroke: var(--sl-color-gray-4);
+    stroke-dasharray: 5 5;
+  }
+
+  .curve {
+    fill: none;
+    stroke-width: 2.6;
+  }
+
+  .curve--exact {
+    stroke: var(--sl-color-accent-high);
+  }
+
+  .curve--numeric {
+    stroke: currentColor;
+    stroke-dasharray: 5 4;
+  }
+
+  text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  @media (max-width: 50rem) {
+    .bo-trajectory svg {
+      min-width: 32rem;
+    }
+  }
+</style>

@@ -1,20 +1,20 @@
 ---
-title: "Chapter 19 · Quantum Molecular Dynamics (QMD)"
-description: "Martin Chapter 19 的目录级阅读骨架；正文待填充。"
+title: "Chapter 19 · Quantum Molecular Dynamics (QMD) | 量子分子动力学"
+description: "从 Born–Oppenheimer 能量面与电子结构力，推导 BOMD、Car–Parrinello 扩展动力学、平面波表达及有限轨迹的证据边界。"
 sidebar:
   order: 1
   label: "Chapter 19 · Quantum Molecular Dynamics (QMD)"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter19Contents from '../../../components/part05/ch19/Chapter19Contents.astro';
+import Chapter19Body from '../../../components/part05/ch19/Chapter19Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[4].units[0].label}
-  sourcePage={catalog.parts[4].units[0].page}
-  sections={catalog.parts[4].units[0].sections}
-  exercisesPage={catalog.parts[4].units[0].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 19, printed pages 411–424; sections 19.1–19.6. Sholl–Steckel Chapter 9 is used only for the practical cross-reference."
+  status="review"
 />
+
+<Chapter19Contents />
+<Chapter19Body />

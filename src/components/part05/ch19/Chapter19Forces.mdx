@@ -1,0 +1,199 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import ForceDecompositionDiagram from './ForceDecompositionDiagram.astro';
+
+<span id="section-19-1" className="chapter19-anchor" aria-hidden="true"></span>
+
+## 19.1 分子动力学：电子给出的力 | Molecular Dynamics: Forces from the Electrons
+
+<BilingualSection titleZh="Born–Oppenheimer 能量面" titleEn="The Born–Oppenheimer energy surface" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+固定一组核坐标 $\mathbf R\equiv\{\mathbf R_I\}$，对电子自由度求基态，可以定义一个参数化总能 $E_{\mathrm{BO}}(\mathbf R)$。它包含电子基态能、核—核相互作用以及所用赝势或全电子 Hamiltonian 中相应的离子项。将核视为经典点粒子后，第 $I$ 个核的运动由
+
+$$
+M_I\ddot{\mathbf R}_I(t)
+=
+\mathbf F_I(\mathbf R(t))
+=
+-\nabla_{\mathbf R_I}E_{\mathrm{BO}}(\mathbf R(t))
+$$
+
+决定。这个等式的第一部分是经典 Newton 方程，第二部分是保守力的定义。电子问题是否由 Kohn–Sham DFT、Hartree–Fock 或其他近似求解，会改变 $E_{\mathrm{BO}}$ 的近似形式，但不会改变“轨迹沿某个给定能量面的梯度运动”这一数学结构。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For fixed nuclear coordinates $\mathbf R\equiv\{\mathbf R_I\}$, minimization over the electronic degrees of freedom defines a parameterized total energy $E_{\mathrm{BO}}(\mathbf R)$. It contains the electronic ground-state energy, nucleus–nucleus interactions, and the ionic terms appropriate to the chosen all-electron or pseudopotential Hamiltonian. Once the nuclei are treated as classical particles, nucleus $I$ obeys
+
+$$
+M_I\ddot{\mathbf R}_I(t)
+=
+\mathbf F_I(\mathbf R(t))
+=
+-\nabla_{\mathbf R_I}E_{\mathrm{BO}}(\mathbf R(t)).
+$$
+
+The first equality is Newton’s equation; the second defines a conservative force. Solving the electrons with Kohn–Sham DFT, Hartree–Fock, or another approximation changes the approximate surface $E_{\mathrm{BO}}$, but not the mathematical structure of a trajectory driven by gradients of a specified surface.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="这里已经采用的近似" titleEn="Approximations already present" kind="boundary">
+  <div className="bilingual-section__zh">
+    <ul>
+      <li>Born–Oppenheimer/绝热分离：电子在每个核构型处被视为处于选定电子态，通常是基态；</li>
+      <li>经典核：忽略核波函数、零点离域、隧穿和量子统计；</li>
+      <li>电子结构近似：交换—关联泛函、赝势、基组和边界条件决定近似能量面；</li>
+      <li>有限系统：模拟盒、原子数、时间长度和初始条件限制可观测过程。</li>
+    </ul>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ul>
+      <li>Born–Oppenheimer/adiabatic separation: at each geometry the electrons occupy a selected state, usually the ground state;</li>
+      <li>classical nuclei: nuclear wave packets, zero-point delocalization, tunnelling, and quantum statistics are omitted;</li>
+      <li>electronic-structure approximation: the exchange–correlation functional, pseudopotential, basis, and boundary conditions define the approximate surface;</li>
+      <li>finite simulation: cell size, atom count, trajectory length, and initial conditions limit accessible processes.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<DerivationBlock
+  title="Hellmann–Feynman 关系：从归一化本征问题到能量导数 | Hellmann–Feynman relation"
+  assumptions={[
+    'Hamiltonian H(R) 对参数 R 可微；',
+    'psi(R) 是归一化的精确本征态，H psi = E psi；',
+    '暂不考虑简并态内规范选择、有限基组移动和未充分自洽。',
+  ]}
+>
+
+【补充推导 | Supplemental derivation】从期望值
+
+$$
+E(R)=\langle\Psi(R)|\hat H(R)|\Psi(R)\rangle
+$$
+
+出发，对 $R$ 求全导数：
+
+$$
+\frac{dE}{dR}
+=
+\left\langle\frac{\partial\Psi}{\partial R}\middle|\hat H\middle|\Psi\right\rangle
++
+\left\langle\Psi\middle|\frac{\partial\hat H}{\partial R}\middle|\Psi\right\rangle
++
+\left\langle\Psi\middle|\hat H\middle|\frac{\partial\Psi}{\partial R}\right\rangle.
+$$
+
+用本征方程 $\hat H|\Psi\rangle=E|\Psi\rangle$ 以及 Hermiticity，可把第一、第三项写成
+
+$$
+E\left[
+\left\langle\frac{\partial\Psi}{\partial R}\middle|\Psi\right\rangle
++
+\left\langle\Psi\middle|\frac{\partial\Psi}{\partial R}\right\rangle
+\right].
+$$
+
+归一化条件 $\langle\Psi|\Psi\rangle=1$ 的导数正是方括号中的量，因此它等于零。于是
+
+$$
+\boxed{
+\frac{dE}{dR}
+=
+\left\langle\Psi\left|
+\frac{\partial\hat H}{\partial R}
+\right|\Psi\right\rangle
+}
+$$
+
+并有 $F_R=-dE/dR$。消失的是波函数导数对**精确变分定态能量**的贡献；波函数本身并不独立于 $R$。若 $|\Psi\rangle$ 不是本征态或变分定态点，前后两项不能按上述步骤完全消去。
+
+In English: differentiating the normalized expectation value produces two state-derivative terms and one explicit Hamiltonian derivative. The eigenvalue equation converts the state-derivative terms into the derivative of the normalization, which vanishes. The result therefore requires a stationary normalized state; it does not assert that the state is independent of nuclear position.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="在 Kohn–Sham 总能中的含义" titleEn="Meaning within a Kohn–Sham total energy" eyebrow="Force evaluation">
+  <div className="bilingual-section__zh">
+
+在自洽 Kohn–Sham 计算中，能量泛函对允许的轨道或密度变分达到定态。对核坐标求导时，显式坐标依赖来自离子—电子势、离子—离子能，以及非局域赝势或投影算符。局域离子势的主项可写成电子密度与 $\partial V_{\mathrm{ion}}/\partial\mathbf R_I$ 的积分；核—核项给出经典 Coulomb/Ewald 力；非局域算符还要对其投影函数或核中心求导。
+
+因此，“使用 Hellmann–Feynman 力”并不等于只保留一个简单静电项。它表示借助变分定态性避免显式求一阶轨道响应，但 Hamiltonian 的全部显式核坐标依赖仍必须求导。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+In a self-consistent Kohn–Sham calculation, the energy functional is stationary with respect to the allowed orbital or density variations. Nuclear differentiation then acts on explicit coordinate dependence in the electron–ion potential, ion–ion energy, and any nonlocal pseudopotential or projector operators. A local ionic term can be expressed as a density integral involving $\partial V_{\mathrm{ion}}/\partial\mathbf R_I$; the ion–ion term yields the classical Coulomb/Ewald force; and nonlocal operators require derivatives of their projectors or centres.
+
+Thus “using Hellmann–Feynman forces” does not mean retaining only a simple electrostatic term. Stationarity removes the need for an explicit first-order orbital derivative, while every explicit nuclear dependence of the Hamiltonian still has to be differentiated.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="有限、随核移动的基组为何产生 Pulay 项 | Origin of Pulay forces"
+  assumptions={[
+    '轨道在有限基组 phi_mu(R) 中展开；',
+    '基函数或重叠矩阵随核坐标变化；',
+    '系数已经在该有限子空间内达到变分定态。',
+  ]}
+>
+
+【补充推导 | Supplemental derivation】设
+
+$$
+|\psi_n\rangle=\sum_\mu c_{\mu n}|\phi_\mu(\mathbf R)\rangle,
+\qquad
+Hc_n=\varepsilon_n Sc_n,
+$$
+
+其中 $H_{\mu\nu}=\langle\phi_\mu|\hat H|\phi_\nu\rangle$，$S_{\mu\nu}=\langle\phi_\mu|\phi_\nu\rangle$。即使系数 $c_n$ 在该子空间内已优化，矩阵本身仍随 $R$ 变化。对广义本征值求导可得
+
+$$
+\frac{d\varepsilon_n}{dR}
+=
+c_n^\dagger\left(
+\frac{dH}{dR}-\varepsilon_n\frac{dS}{dR}
+\right)c_n,
+$$
+
+其中 $dH/dR$ 既包含 $\partial\hat H/\partial R$，也包含基函数导数；$dS/dR$ 完全来自基组移动。把这些与纯 Hamiltonian 显式导数分开后，剩余的基组导数贡献统称为 Pulay 项。
+
+在固定平面波基组中，基函数不随原子位置移动，常规原子位移 Pulay 力可以消失；但若晶胞变化导致平面波集合随截止能改变，会出现与应力或基组不连续有关的效应。原子轨道、APW/LAPW 增广区或其他随核中心移动的基组通常需要显式 Pulay 修正。
+
+For a finite coordinate-dependent basis, differentiating the generalized eigenproblem yields both $dH/dR$ and the overlap derivative $dS/dR$. The parts arising from basis motion form the Pulay contribution. A fixed plane-wave basis removes the ordinary atomic-displacement Pulay term, but cell changes, cutoff discontinuities, augmentation regions, and moving localized orbitals introduce related basis-response terms.
+
+</DerivationBlock>
+
+<ForceDecompositionDiagram />
+
+<BilingualSection titleZh="未充分自洽带来的力误差" titleEn="Force error from incomplete self-consistency" eyebrow="Numerical stationarity">
+  <div className="bilingual-section__zh">
+
+若当前密度 $n$ 尚未使能量泛函达到定态，能量对电子自由度的残差与电子态随核坐标的变化相乘，会重新进入全导数。力误差一般不能只由“总能变化小”判断，因为能量误差在定态点附近常为残差的二阶量，而力误差可以是一阶量。分子动力学因此通常要求比单点总能更严格且更稳定的电子收敛。
+
+实际检查对象应是力对 SCF 阈值、混合历史、初始波函数和电子最小化策略的稳定性。使用前一步轨道作为初猜可显著降低成本，但若每一步都停在方向相关的残差上，可能形成系统性的力偏差和能量漂移。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+If the current density has not made the energy functional stationary, the residual with respect to the electronic variables multiplies their nuclear-coordinate response and re-enters the total derivative. A small total-energy change is not a sufficient force criterion: near a stationary point, an energy error is often second order in the residual while the force error can remain first order. Molecular dynamics therefore commonly requires tighter and more uniform electronic convergence than a single total-energy evaluation.
+
+The relevant check is the stability of forces with respect to the SCF threshold, mixing history, initial orbitals, and minimization strategy. Reusing orbitals from the previous ionic step saves substantial work, but stopping each step at a direction-dependent residual can create a systematic force bias and energy drift.
+
+  </div>
+</BilingualSection>
+
+<div className="chapter19-equation-note">
+  <strong>量纲检查 | Dimensional check.</strong> $\nabla_{\mathbf R}E$ has dimensions of energy per length, equal to force. In atomic units it may be reported as Hartree/bohr; trajectories and comparisons must convert consistently to the units used for masses and time.
+</div>
+
+<BilingualCallout titleZh="本节能够支持与不能支持的结论" titleEn="What this section can and cannot establish" kind="boundary">
+  <div className="bilingual-section__zh">
+    <p>完成能量—力一致性、基组、SCF 和有限差分对照后，可以支持“所用近似 Hamiltonian 的解析力在声明精度内实现正确”。这仍不能证明交换—关联泛函准确、轨迹采样充分、材料在实验条件下稳定，或动力学过程具有真实速率。</p>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <p>Energy–force consistency, basis, SCF, and finite-difference checks can support the claim that analytic forces for the chosen approximate Hamiltonian are implemented to a declared tolerance. They do not validate the exchange–correlation approximation, sampling adequacy, experimental stability, or a physical reaction rate.</p>
+  </div>
+</BilingualCallout>
