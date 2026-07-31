@@ -1,0 +1,65 @@
+---
+interface OutlineSection {
+  id: string;
+  title: string;
+  page: number;
+}
+
+interface Unit {
+  id: string;
+  label: string;
+  slug: string;
+  page: number;
+  sections: OutlineSection[];
+}
+
+interface Props {
+  sourceTitle: string;
+  sourceRole: string;
+  trackLabel: string;
+  trackSlug: string;
+  units: Unit[];
+  overviewPage?: number | null;
+}
+
+const {
+  sourceTitle,
+  sourceRole,
+  trackLabel,
+  trackSlug,
+  units,
+  overviewPage = null,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<section class="track-overview">
+  <p class="reading-outline__eyebrow">{sourceRole}</p>
+  <p>
+    <cite>{sourceTitle}</cite> · {trackLabel}
+  </p>
+
+  {overviewPage && (
+    <p>原书在印刷页 {overviewPage} 提供本组章节的 Overview。</p>
+  )}
+
+  <p>
+    当前状态：全部导航页面和目录级分节已建立，正文、推导、可视化和练习解析尚未填充。
+  </p>
+
+  <div class="track-overview__grid">
+    {units.map((unit) => (
+      <article class="track-overview__card">
+        <h2>
+          <a href={`${base}${trackSlug}/${unit.slug}/`}>{unit.label}</a>
+        </h2>
+        <p>
+          起始页 {unit.page} · {unit.sections.length} 个目录级分节
+        </p>
+      </article>
+    ))}
+  </div>
+</section>

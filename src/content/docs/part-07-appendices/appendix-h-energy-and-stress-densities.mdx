@@ -1,0 +1,20 @@
+---
+title: "Appendix H · Energy and Stress Densities"
+description: "Martin Appendix H 的目录级阅读骨架；正文待填充。"
+sidebar:
+  order: 8
+  label: "Appendix H · Energy and Stress Densities"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[6].units[7].label}
+  sourcePage={catalog.parts[6].units[7].page}
+  sections={catalog.parts[6].units[7].sections}
+  exercisesPage={catalog.parts[6].units[7].exercisesPage ?? null}
+/>

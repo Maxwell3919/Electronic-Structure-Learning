@@ -1,0 +1,20 @@
+---
+title: "Appendix K · Useful Relations and Formulas"
+description: "Martin Appendix K 的目录级阅读骨架；正文待填充。"
+sidebar:
+  order: 11
+  label: "Appendix K · Useful Relations and Formulas"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[6].units[10].label}
+  sourcePage={catalog.parts[6].units[10].page}
+  sections={catalog.parts[6].units[10].sections}
+  exercisesPage={catalog.parts[6].units[10].exercisesPage ?? null}
+/>

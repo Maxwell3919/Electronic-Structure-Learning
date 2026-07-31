@@ -1,0 +1,16 @@
+---
+title: "完整课程地图"
+description: "Martin 7 Parts / 46 单元与 Sholl–Steckel 10 章实践交叉参考。"
+sidebar:
+  order: 3
+---
+
+import BookMap from '../../components/BookMap.astro';
+import martin from '../../data/martin/index.mjs';
+import practice from '../../data/shollSteckelStructure.mjs';
+
+# 完整课程地图
+
+本页只提供全书结构与来源页码。所有单元当前均为 `outline`，不应被视为已经完成的教材内容。
+
+<BookMap parts={martin.parts} practice={practice} />

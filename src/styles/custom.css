@@ -1,12 +1,13 @@
 @import 'katex/dist/katex.min.css';
 
 :root {
-  --sl-content-width: 52rem;
+  --sl-content-width: 58rem;
 }
 
 .source-note,
 .derivation-block,
-.visualization-placeholder {
+.visualization-placeholder,
+.reading-outline {
   margin-block: 1.25rem;
   border: 1px solid var(--sl-color-gray-5);
   border-radius: 0.6rem;
@@ -16,7 +17,8 @@
 
 .source-note__header,
 .derivation-block__header,
-.visualization-placeholder__header {
+.visualization-placeholder__header,
+.reading-outline__header {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -25,22 +27,89 @@
   margin-bottom: 0.65rem;
 }
 
-.source-note__status {
+.source-note__status,
+.reading-outline__status {
   font-size: 0.8rem;
   color: var(--sl-color-text-accent);
 }
 
+.reading-outline__eyebrow {
+  margin: 0;
+  color: var(--sl-color-text-accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.reading-outline__metadata,
 .visualization-placeholder dl {
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 0.35rem 0.8rem;
-  margin: 0;
+  margin: 0 0 1rem;
 }
 
+.reading-outline__metadata dt,
 .visualization-placeholder dt {
   font-weight: 600;
 }
 
+.reading-outline__metadata dd,
 .visualization-placeholder dd {
   margin: 0;
+}
+
+.reading-outline__table-wrap {
+  overflow-x: auto;
+}
+
+.reading-outline__table-wrap table {
+  min-width: 34rem;
+}
+
+.reading-outline__supplement {
+  padding: 0.75rem;
+  border-left: 0.25rem solid var(--sl-color-accent);
+  background: var(--sl-color-gray-6);
+}
+
+.reading-outline__slots {
+  margin-bottom: 0;
+}
+
+.track-overview__grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: 1.25rem;
+}
+
+.track-overview__card {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.6rem;
+  padding: 0.9rem;
+  background: var(--sl-color-gray-7);
+}
+
+.track-overview__card h2 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.track-overview__card p {
+  margin-bottom: 0;
+  color: var(--sl-color-gray-2);
+  font-size: 0.9rem;
+}
+
+.book-map__part {
+  margin-block: 2rem;
+}
+
+.book-map__part ol {
+  padding-left: 1.4rem;
+}
+
+.book-map__part li {
+  margin-block: 0.28rem;
 }

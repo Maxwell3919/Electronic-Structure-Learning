@@ -1,0 +1,20 @@
+---
+title: "Chapter 1 · What Is Density Functional Theory?"
+description: "Sholl–Steckel Chapter 1 的实践交叉参考骨架；正文待填充。"
+sidebar:
+  order: 1
+  label: "Chapter 1 · What Is Density Functional Theory?"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/shollSteckelStructure.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.authors.join(' and ')}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.chapters[0].label}
+  sourcePage={catalog.chapters[0].page}
+  sections={catalog.chapters[0].sections}
+  meta={catalog.chapters[0].meta}
+/>

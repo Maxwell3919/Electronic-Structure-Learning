@@ -1,23 +1,21 @@
 ---
-title: "Part I · 概览与背景主题"
-description: "建立电子结构问题的历史、尺度、材料性质与基础模型图景。"
+title: "Part I · Overview and Background Topics"
+description: "概览与背景主题的完整目录级阅读骨架。"
 sidebar:
   order: 0
-  label: "Part I · 概览与背景"
+  label: "Part I · Overview and Background Topics"
 ---
 
-import SourceNote from '../../../components/SourceNote.astro';
+import TrackOverview from '../../../components/TrackOverview.astro';
+import catalog from '../../../data/martin/index.mjs';
 
-<SourceNote
-  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
-  locator="Part I · Overview and Background Topics"
-  status="outline"
+# 概览与背景主题
+
+<TrackOverview
+  sourceTitle={catalog.source.title}
+  sourceRole={catalog.source.role}
+  trackLabel={catalog.parts[0].label}
+  trackSlug={catalog.parts[0].slug}
+  units={catalog.parts[0].units}
+  overviewPage={catalog.parts[0].overview?.page ?? null}
 />
-
-Part I 用于建立电子结构问题的整体坐标：量子理论的起点、独立电子图像为何有效、电子关联的困难、DFT 的位置，以及电子结构如何连接材料性质。
-
-## 当前入口
-
-- [Chapter 1 · Introduction](./chapter-01-introduction/)
-
-后续章节将在独立内容映射 PR 中加入，避免本次工程初始化同时产生大量空页面。

@@ -1,0 +1,21 @@
+---
+title: "Part VII · Appendices"
+description: "附录的完整目录级阅读骨架。"
+sidebar:
+  order: 0
+  label: "Part VII · Appendices"
+---
+
+import TrackOverview from '../../../components/TrackOverview.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+# 附录
+
+<TrackOverview
+  sourceTitle={catalog.source.title}
+  sourceRole={catalog.source.role}
+  trackLabel={catalog.parts[6].label}
+  trackSlug={catalog.parts[6].slug}
+  units={catalog.parts[6].units}
+  overviewPage={catalog.parts[6].overview?.page ?? null}
+/>

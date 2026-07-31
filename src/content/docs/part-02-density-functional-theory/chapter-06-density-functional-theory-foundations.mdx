@@ -1,0 +1,20 @@
+---
+title: "Chapter 6 · Density Functional Theory: Foundations"
+description: "Martin Chapter 6 的目录级阅读骨架；正文待填充。"
+sidebar:
+  order: 1
+  label: "Chapter 6 · Density Functional Theory: Foundations"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[1].units[0].label}
+  sourcePage={catalog.parts[1].units[0].page}
+  sections={catalog.parts[1].units[0].sections}
+  exercisesPage={catalog.parts[1].units[0].exercisesPage ?? null}
+/>

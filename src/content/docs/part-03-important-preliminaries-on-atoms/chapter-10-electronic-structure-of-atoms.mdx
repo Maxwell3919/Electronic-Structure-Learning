@@ -1,0 +1,20 @@
+---
+title: "Chapter 10 · Electronic Structure of Atoms"
+description: "Martin Chapter 10 的目录级阅读骨架；正文待填充。"
+sidebar:
+  order: 1
+  label: "Chapter 10 · Electronic Structure of Atoms"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[2].units[0].label}
+  sourcePage={catalog.parts[2].units[0].page}
+  sections={catalog.parts[2].units[0].sections}
+  exercisesPage={catalog.parts[2].units[0].exercisesPage ?? null}
+/>
