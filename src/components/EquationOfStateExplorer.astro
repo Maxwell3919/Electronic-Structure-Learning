@@ -1,0 +1,118 @@
+<figure class="chapter-visual eos-explorer" data-eos-explorer>
+  <figcaption>
+    <strong>原创交互模型：双相状态方程与焓竞争</strong>
+    <span lang="en">Original interactive model: two-phase equations of state and enthalpy competition</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls chapter-visual__controls--three">
+    <label>
+      <span>压力 P | Pressure (model units)</span>
+      <input type="range" min="0" max="0.30" step="0.01" value="0.08" data-eos-pressure />
+      <output data-eos-pressure-output>0.08</output>
+    </label>
+    <label>
+      <span>致密相零压能量差 ΔE₀ | Dense-phase offset</span>
+      <input type="range" min="-0.20" max="0.60" step="0.02" value="0.20" data-eos-offset />
+      <output data-eos-offset-output>0.20</output>
+    </label>
+    <label>
+      <span>致密相平衡体积 V₀,B | Dense-phase volume</span>
+      <input type="range" min="13" max="19" step="0.5" value="16" data-eos-volume />
+      <output data-eos-volume-output>16.0</output>
+    </label>
+  </div>
+
+  <svg class="eos-explorer__plot" viewBox="0 0 680 330" role="img" aria-labelledby="eos-title eos-desc">
+    <title id="eos-title">Two quadratic energy-volume curves</title>
+    <desc id="eos-desc">An open phase and a dense phase are compared at adjustable pressure using minimized enthalpy.</desc>
+    <line x1="70" y1="275" x2="630" y2="275" class="plot-axis" />
+    <line x1="70" y1="35" x2="70" y2="275" class="plot-axis" />
+    <text x="625" y="304" text-anchor="end">V</text>
+    <text x="34" y="45">E</text>
+    <path class="plot-curve eos-explorer__curve-a" data-eos-curve-a d="M 70 230 Q 350 35 630 230" />
+    <path class="plot-curve eos-explorer__curve-b" data-eos-curve-b d="M 70 250 Q 280 70 560 230" />
+    <circle r="7" class="eos-explorer__point-a" data-eos-point-a cx="420" cy="90" />
+    <circle r="7" class="eos-explorer__point-b" data-eos-point-b cx="300" cy="110" />
+    <text x="520" y="90">A: open phase</text>
+    <text x="205" y="130">B: dense phase</text>
+  </svg>
+
+  <div class="chapter-visual__readout eos-explorer__readout" aria-live="polite">
+    <strong data-eos-stable>稳定相 | Stable phase: A</strong>
+    <span data-eos-values>H_A = 1.47; H_B = 1.47</span>
+    <span lang="en" data-eos-explanation>Pressure adds PV and favours the phase with smaller optimized volume.</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>两个正曲率抛物线 $E_i(V)=E_{0,i}+K_i(V-V_{0,i})^2/2$；每个压力下分别最小化 $E_i+PV$。单位为无量纲教学单位。</p>
+    <p lang="en"><strong>Model:</strong> two positive-curvature parabolas $E_i(V)=E_{0,i}+K_i(V-V_{0,i})^2/2$; $E_i+PV$ is minimized separately at each pressure. Units are dimensionless teaching units.</p>
+    <p><strong>验收：</strong>P=0、ΔE₀&gt;0 时 A 稳定；两相零压能量相同且 B 体积更小时，任意正压力应偏向 B。</p>
+    <p lang="en"><strong>Acceptance:</strong> at P=0 with ΔE₀&gt;0, A is stable; with equal zero-pressure energies and smaller B volume, any positive pressure favours B.</p>
+    <p><strong>边界：</strong>该模型没有真实材料数据、有限温度熵、体积依赖曲率、动力学势垒或结构搜索，不能预测实际相变压力。</p>
+    <p lang="en"><strong>Boundary:</strong> the model contains no material data, finite-temperature entropy, volume-dependent curvature, kinetic barrier, or structural search and cannot predict a real transition pressure.</p>
+  </div>
+</figure>
+
+<script>
+  import { compareQuadraticPhases, quadraticPhaseEnergy } from '../lib/chapter02Models.mjs';
+
+  document.querySelectorAll('[data-eos-explorer]').forEach((root) => {
+    const pressureInput = root.querySelector('[data-eos-pressure]');
+    const offsetInput = root.querySelector('[data-eos-offset]');
+    const volumeInput = root.querySelector('[data-eos-volume]');
+    const pressureOutput = root.querySelector('[data-eos-pressure-output]');
+    const offsetOutput = root.querySelector('[data-eos-offset-output]');
+    const volumeOutput = root.querySelector('[data-eos-volume-output]');
+    const curveA = root.querySelector('[data-eos-curve-a]');
+    const curveB = root.querySelector('[data-eos-curve-b]');
+    const pointA = root.querySelector('[data-eos-point-a]');
+    const pointB = root.querySelector('[data-eos-point-b]');
+    const stable = root.querySelector('[data-eos-stable]');
+    const values = root.querySelector('[data-eos-values]');
+    const explanation = root.querySelector('[data-eos-explanation]');
+    if (!(pressureInput instanceof HTMLInputElement) || !(offsetInput instanceof HTMLInputElement) || !(volumeInput instanceof HTMLInputElement)) return;
+    if (!(curveA instanceof SVGPathElement) || !(curveB instanceof SVGPathElement) || !(pointA instanceof SVGCircleElement) || !(pointB instanceof SVGCircleElement)) return;
+
+    const phaseA = { equilibriumVolume: 20, curvature: 0.12, offset: 0 };
+    const xForVolume = (volume) => 70 + (volume - 10) * 28;
++    const update = () => {
++      const pressure = Number(pressureInput.value);
++      const phaseB = {
++        equilibriumVolume: Number(volumeInput.value),
++        curvature: 0.16,
++        offset: Number(offsetInput.value),
++      };
++      const samples = [];
++      for (let index = 0; index <= 100; index += 1) {
++        const volume = 10 + 20 * index / 100;
++        samples.push({ volume, a: quadraticPhaseEnergy(volume, phaseA), b: quadraticPhaseEnergy(volume, phaseB) });
++      }
++      const maxEnergy = Math.max(...samples.flatMap((item) => [item.a, item.b]), 1);
++      const yForEnergy = (energy) => 270 - 215 * energy / maxEnergy;
++      curveA.setAttribute('d', samples.map((item, index) => `${index === 0 ? 'M' : 'L'} ${xForVolume(item.volume).toFixed(2)} ${yForEnergy(item.a).toFixed(2)}`).join(' '));
++      curveB.setAttribute('d', samples.map((item, index) => `${index === 0 ? 'M' : 'L'} ${xForVolume(item.volume).toFixed(2)} ${yForEnergy(item.b).toFixed(2)}`).join(' '));
++
++      const result = compareQuadraticPhases(pressure, phaseA, phaseB);
++      pointA.setAttribute('cx', String(xForVolume(result.phaseA.volume)));
++      pointA.setAttribute('cy', String(yForEnergy(result.phaseA.energy)));
++      pointB.setAttribute('cx', String(xForVolume(result.phaseB.volume)));
++      pointB.setAttribute('cy', String(yForEnergy(result.phaseB.energy)));
++
++      if (pressureOutput instanceof HTMLOutputElement) pressureOutput.value = pressure.toFixed(2);
++      if (offsetOutput instanceof HTMLOutputElement) offsetOutput.value = phaseB.offset.toFixed(2);
++      if (volumeOutput instanceof HTMLOutputElement) volumeOutput.value = phaseB.equilibriumVolume.toFixed(1);
++      if (stable instanceof HTMLElement) stable.textContent = `稳定相 | Stable phase: ${result.stablePhase}`;
++      if (values instanceof HTMLElement) values.textContent = `H_A = ${result.phaseA.enthalpy.toFixed(3)}; H_B = ${result.phaseB.enthalpy.toFixed(3)}; ΔH(B−A) = ${result.enthalpyDifferenceBMinusA.toFixed(3)}`;
++      if (explanation instanceof HTMLElement) explanation.textContent = result.stablePhase === 'coexistence'
++        ? 'The two minimized enthalpies are equal within the teaching-model tolerance.'
++        : result.stablePhase === 'B'
++          ? 'The PV contribution is sufficient to stabilise the denser phase B.'
++          : 'The zero-pressure energy advantage of phase A still exceeds the PV advantage of B.';
++    };
++
++    pressureInput.addEventListener('input', update);
++    offsetInput.addEventListener('input', update);
++    volumeInput.addEventListener('input', update);
++    update();
++  });
++</script>
