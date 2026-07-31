@@ -46,6 +46,7 @@ jobs:
           scripts/smoke-part04-ch12.py
           scripts/smoke-part04-ch13.py
           scripts/smoke-part04-ch14.py
+          scripts/smoke-part04-ch15.py
           scripts/smoke-pages-ch19.py
           scripts/smoke-part05-ch20.py
           scripts/smoke-part05-ch21.py
