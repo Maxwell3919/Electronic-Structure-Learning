@@ -1,0 +1,232 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import PawReconstructionExplorer from './PawReconstructionExplorer.astro';
+
+<span id="section-13-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 13.3 投影缀加波方法 | Projector Augmented Waves (PAW)
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 287–288 将 Chapter 11 的单原子 PAW 变换推广到多原子周期计算，并讨论 smooth、one-center、补偿电荷、总能、力和应力。下面的紧支撑曲线是原创教学模型，不是 PAW dataset。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 287–288 extend the single-atom PAW transformation of Chapter 11 to periodic many-atom calculations and discuss smooth, one-centre, compensation-charge, total-energy, force, and stress terms. The compact-support curves below are an original teaching model, not a PAW dataset.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="主要计算对象仍是平滑函数" titleEn="The primary computational object remains smooth">
+  <div class="bilingual-section__zh">
+
+PAW 以平滑辅助轨道 $|\tilde\psi_n\rangle$ 作为全空间网格和 FFT 上的主要对象，并用线性变换重构全电子价轨道：
+
+$$
+|\psi_n\rangle=\mathcal T|\tilde\psi_n\rangle.
+$$
+
+对不重叠增广区，常用形式为
+
+$$
+\boxed{
+|\psi_n\rangle
+=|\tilde\psi_n\rangle
++\sum_{R,i}
+\left(|\phi_i^R\rangle-|\tilde\phi_i^R\rangle\right)
+\langle\tilde p_i^R|\tilde\psi_n\rangle
+}.
+$$
+
+$R$ 标记原子，$i$ 包含角动量和参考能等 channel；$|\phi_i^R\rangle$ 与 $|\tilde\phi_i^R\rangle$ 分别是全电子和辅助 partial waves，$\langle\tilde p_i^R|$ 是与辅助 partial waves 双正交的 projector。平滑轨道在全空间传播，快速变化只在原子附近以局域修正恢复。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+PAW uses a smooth auxiliary orbital $|\tilde\psi_n\rangle$ as the primary object on the global grid and in FFTs, and reconstructs the all-electron valence orbital through a linear transformation:
+
+$$
+|\psi_n\rangle=\mathcal T|\tilde\psi_n\rangle.
+$$
+
+For non-overlapping augmentation regions, a common form is
+
+$$
+\boxed{
+|\psi_n\rangle
+=|\tilde\psi_n\rangle
++\sum_{R,i}
+\left(|\phi_i^R\rangle-|\tilde\phi_i^R\rangle\right)
+\langle\tilde p_i^R|\tilde\psi_n\rangle
+}.
+$$
+
+$R$ labels atoms and $i$ includes angular-momentum and reference-energy channels. $|\phi_i^R\rangle$ and $|\tilde\phi_i^R\rangle$ are all-electron and auxiliary partial waves, while $\langle\tilde p_i^R|$ is biorthogonal to the auxiliary set. The smooth orbital propagates through all space and rapid variation is restored through local atomic corrections.
+
+  </div>
+</BilingualSection>
+
+<PawReconstructionExplorer />
+
+<DerivationBlock
+  title="算符期望值的 smooth + one-center difference 结构 | Smooth plus one-centre-difference structure of expectation values"
+  assumptions={[
+    '增广区域不重叠；',
+    '局域 partial-wave/projector 集在目标价空间内足够；',
+    '冻结核或核更新方案已作为 dataset 定义的一部分固定。',
+  ]}
+>
+
+对局域或半局域算符 $\hat A$，将 PAW 变换代入期望值，可组织为
+
+$$
+\langle\psi|\hat A|\psi\rangle
+=\langle\tilde\psi|\hat A|\tilde\psi\rangle
++\sum_R\left(A_R^1-\tilde A_R^1\right).
+$$
+
+第一项由全空间平滑函数和均匀网格计算；$A_R^1$ 是原子区内全电子 partial-wave 展开，$\tilde A_R^1$ 是同一区域的辅助 counterpart。差值避免把平滑部分重复计算。
+
+密度和能量采用同一逻辑：
+
+$$
+n(\mathbf r)=\tilde n(\mathbf r)+\sum_R\left[n_R^1(\mathbf r)-\tilde n_R^1(\mathbf r)\right],
+$$
+
+$$
+E=\tilde E+\sum_R\Delta E_R^1,
+\qquad
+\Delta E_R^1\equiv E_R^1-\tilde E_R^1
+$$
+
+（具体符号和 compensation terms 依 dataset/公式约定组织）。总能对 smooth 轨道和 projector occupations 作变分，产生广义 Kohn–Sham 方程以及与 ultrasoft 形式相近的 overlap/augmentation 结构。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="补偿电荷与球外电势" titleEn="Compensation charges and the potential outside a sphere">
+  <div class="bilingual-section__zh">
+
+一中心差密度若保留多极矩，会在球外产生长程 Coulomb 势，使原子区修正彼此耦合并减慢 Fourier 收敛。PAW 在辅助密度中加入 compensation charge，使 $n_R^1-\tilde n_R^1$ 的相关多极矩按构造消失。这样该差密度的静电势在增广区外为零或达到所声明的多极精度，长程部分可由 smooth density 统一处理。
+
+“球外电势消失”是 compensation construction 的性质，不表示真实全电子密度在球外为零；也不表示增广球可以任意增大或重叠。sphere radius、partial-wave 数量、projector 参考能和 frozen-core 近似共同决定 transferability。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If a one-centre difference density retains multipole moments, it creates a long-range Coulomb potential outside the sphere, coupling atomic corrections and slowing Fourier convergence. PAW adds compensation charge to auxiliary densities so that the relevant multipoles of $n_R^1-\tilde n_R^1$ vanish by construction. The electrostatic potential of that difference then vanishes outside the augmentation region, or reaches the declared multipole accuracy, while the smooth density carries the long-range part.
+
+A vanishing outside potential is a property of the compensation construction. It does not mean that the real all-electron density vanishes outside the sphere, nor that spheres may be enlarged or overlapped arbitrarily. Sphere radius, partial-wave count, projector reference energies, and the frozen-core approximation jointly control transferability.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="PAW、赝势和全电子主张" titleEn="PAW, pseudopotential, and all-electron claims" kind="boundary">
+  <div class="bilingual-section__zh">
+
+PAW 保存重构全电子价波函数的信息，并不自动等于“无近似全电子计算”。有限 partial waves、冻结核、有限 cutoff、增广球和数据集生成选择仍是近似。比较 PAW 与 norm-conserving/ultrasoft 结果时，应对齐泛函、相对论处理、价电子集合、结构和 observable 收敛，而不是只比较方法标签。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+PAW retains information for reconstructing all-electron valence functions; this does not make every PAW calculation an approximation-free all-electron calculation. Finite partial waves, frozen cores, finite cutoffs, augmentation regions, and dataset-generation choices remain approximations. Comparisons with norm-conserving or ultrasoft results must align functional, relativistic treatment, valence set, structure, and observable convergence rather than method labels alone.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-13-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 13.4 平面波方法中的 Hybrid 与 Hartree–Fock | Hybrid Functionals and Hartree–Fock in Plane-Wave Methods
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 288–289 说明平面波 exact exchange 的双波矢/占据态结构、Coulomb 奇异项的辅助函数处理，以及变换到局域 Wannier 函数的替代路线。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 288–289 describe the two-wave-vector and occupied-state structure of plane-wave exact exchange, auxiliary-function treatment of the Coulomb singularity, and an alternative transformation to localized Wannier functions.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="非局域交换算符" titleEn="The nonlocal exchange operator">
+  <div class="bilingual-section__zh">
+
+对同自旋占据轨道，Hartree–Fock exchange 作用为
+
+$$
+(\hat V_x^\sigma\psi_{n\mathbf k\sigma})(\mathbf r)
+=-\sum_{m\mathbf q}^{\mathrm{occ}}w_{\mathbf q}f_{m\mathbf q\sigma}
+\psi_{m\mathbf q\sigma}(\mathbf r)
+\int d^3r'\,
+\frac{\psi_{m\mathbf q\sigma}^*(\mathbf r')
+\psi_{n\mathbf k\sigma}(\mathbf r')}{|\mathbf r-\mathbf r'|}.
+$$
+
+输出在 $\mathbf r$ 的值依赖所有 $\mathbf r'$，所以它不是局域乘法势。对每个目标轨道，还需遍历占据态和 k 点；这与一个局域 $V(\mathbf r)$ 对所有轨道共用的路径不同。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For occupied orbitals of the same spin, Hartree–Fock exchange acts as
+
+$$
+(\hat V_x^\sigma\psi_{n\mathbf k\sigma})(\mathbf r)
+=-\sum_{m\mathbf q}^{\mathrm{occ}}w_{\mathbf q}f_{m\mathbf q\sigma}
+\psi_{m\mathbf q\sigma}(\mathbf r)
+\int d^3r'\,
+\frac{\psi_{m\mathbf q\sigma}^*(\mathbf r')
+\psi_{n\mathbf k\sigma}(\mathbf r')}{|\mathbf r-\mathbf r'|}.
+$$
+
+The output at $\mathbf r$ depends on all $\mathbf r'$, so this is not a local multiplicative potential. Every target orbital also couples to occupied states and k points, unlike a local $V(\mathbf r)$ shared by all orbitals.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="为什么 reciprocal-space 中出现 q=0 奇异处理 | Why reciprocal space requires treatment of the q=0 singularity"
+  assumptions={[
+    '使用三维周期 Coulomb kernel 4π/|Q|²；',
+    'Bloch 轨道在有限 k 网格上采样；',
+    '体系、电荷和边界条件与所用 Coulomb prescription 一致。',
+  ]}
+>
+
+轨道乘积
+
+$$
+\rho_{mn}^{\mathbf q\mathbf k}(\mathbf r)
+=\psi_{m\mathbf q}^*(\mathbf r)\psi_{n\mathbf k}(\mathbf r)
+$$
+
+具有波矢差 $\mathbf k-\mathbf q$。Fourier 展开后，交换矩阵元包含
+
+$$
+\frac{4\pi}{|\mathbf k-\mathbf q+\mathbf G|^2}
+\left|\rho_{mn}^{\mathbf q\mathbf k}(\mathbf G)\right|^2.
+$$
+
+当 $\mathbf k=\mathbf q$ 且 $\mathbf G=0$ 时，离散求和遇到 Coulomb 奇异点。连续 Brillouin-zone 积分可能有限，但不能通过简单删除该离散项得到正确积分。辅助函数方法从离散 integrand 中减去具有同一奇异部分且其余部分平滑的函数，对平滑差值数值求和，再把辅助函数的解析积分加回。
+
+短程 screened hybrid 把长程 $1/r$ kernel 分离或衰减，减弱该奇异问题，但仍需处理大量 occupied-pair 操作和 FFT。计算成本取决于 k 点、占据态数、目标态数、plane waves、screening 和并行分解；“hybrid 更慢”必须在这些条件下量化。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="局域化路线" titleEn="The localization route">
+  <div class="bilingual-section__zh">
+
+另一条路线是把占据 Bloch 子空间变换为 Wannier 或其他局域函数。交换积分随后主要发生在空间重叠的轨道对之间，可利用截断、多极算法或稀疏性。该变换不改变占据子空间本身，但局域 gauge 的构造有额外成本，金属、纠缠能带和小带隙体系的局域性更弱。
+
+因此，局域化可以改变算法结构，却不能无条件保证线性标度或更低 wall time。Chapter 18 和 Chapter 23 分别讨论局域性与 Wannier 构造；本节只说明它们如何成为 plane-wave exchange 的计算表示。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A second route transforms the occupied Bloch subspace into Wannier or related localized functions. Exchange integrals then concentrate among spatially overlapping orbital pairs and can exploit truncation, multipole algorithms, or sparsity. The transformation preserves the occupied subspace, but constructing a localized gauge has its own cost, and localization is weaker for metals, entangled bands, and small-gap systems.
+
+Localization changes algorithmic structure but does not guarantee linear scaling or lower wall time without conditions. Chapters 18 and 23 treat locality and Wannier construction; the present section only explains how they provide a computational representation for plane-wave exchange.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="方法改善与性质改善要分开" titleEn="Method improvement and property improvement are separate" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Hybrid functional 常改善某些带隙或局域化误差，不构成对所有性质的单调改进。exact-exchange 分数、range separation、赝势/PAW 数据、k 网格和奇异处理共同定义计算。SCF 收敛也可能因 nonlocal exchange 更困难；比较结果时需分别报告 functional change 和 numerical convergence。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Hybrid functionals often improve selected gaps or localization errors, but they do not monotonically improve every property. Exact-exchange fraction, range separation, pseudopotential/PAW data, k mesh, and singularity treatment jointly define the calculation. Nonlocal exchange can also make SCF convergence harder; a comparison must report the functional change and numerical convergence separately.
+
+  </div>
+</BilingualCallout>

@@ -1,0 +1,60 @@
+---
+import Chapter13Contents from './Chapter13Contents.astro';
+import Chapter13SourceMap from './Chapter13SourceMap.astro';
+import Chapter13Orientation from './Chapter13Orientation.mdx';
+import Chapter13EnergyAndOperators from './Chapter13EnergyAndOperators.mdx';
+import Chapter13SelfConsistency from './Chapter13SelfConsistency.mdx';
+import Chapter13PawAndExchange from './Chapter13PawAndExchange.mdx';
+import Chapter13SupercellsAndApplications from './Chapter13SupercellsAndApplications.mdx';
+import Chapter13Review from './Chapter13Review.mdx';
+---
+
+<div class="chapter13-root">
+  <Chapter13Contents />
+  <Chapter13Orientation />
+  <Chapter13SourceMap />
+  <Chapter13EnergyAndOperators />
+  <Chapter13SelfConsistency />
+  <Chapter13PawAndExchange />
+  <Chapter13SupercellsAndApplications />
+  <Chapter13Review />
+</div>
+
+<style is:global>
+  .chapter13-root,
+  .chapter13-root > *,
+  .chapter13-root .bilingual-section,
+  .chapter13-root .bilingual-section__grid,
+  .chapter13-root .bilingual-section__zh,
+  .chapter13-root .bilingual-section__en,
+  .chapter13-root .derivation-block,
+  .chapter13-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter13-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter13-root .chapter-source-map,
+  .chapter13-root .katex-display,
+  .chapter13-root pre,
+  .chapter13-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter13-root p,
+  .chapter13-root li,
+  .chapter13-root th,
+  .chapter13-root td {
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -1,0 +1,113 @@
+---
+const componentId = 'ch13-plane-wave-scf-flow';
+---
+
+<figure class="chapter-visual scf-flow" id={componentId}>
+  <figcaption>
+    <strong>原创静态图：平面波 Kohn–Sham 自洽计算的数据流</strong>
+    <span lang="en">Original static diagram: data flow in a plane-wave Kohn–Sham self-consistent calculation</span>
+  </figcaption>
+
+  <svg viewBox="0 0 900 500" role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Plane-wave self-consistent data flow</title>
+    <desc id={`${componentId}-desc`}>Input density generates local potentials, an iterative eigensolver applies kinetic, local and nonlocal operators, occupied states generate an output density, and a mixing step forms the next input density.</desc>
+    <defs>
+      <marker id={`${componentId}-arrow`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+      </marker>
+    </defs>
+
+    <g class="scf-flow__node">
+      <rect x="40" y="55" width="180" height="72" rx="10" />
+      <text x="130" y="85" text-anchor="middle">输入密度 n_in(G)</text>
+      <text x="130" y="108" text-anchor="middle" lang="en">input density</text>
+    </g>
+
+    <g class="scf-flow__node">
+      <rect x="300" y="35" width="240" height="112" rx="10" />
+      <text x="420" y="66" text-anchor="middle">局域有效势</text>
+      <text x="420" y="90" text-anchor="middle">V_ext,local + V_H + V_xc</text>
+      <text x="420" y="116" text-anchor="middle" lang="en">real-space multiplication / FFT</text>
+    </g>
+
+    <g class="scf-flow__node">
+      <rect x="640" y="55" width="210" height="72" rx="10" />
+      <text x="745" y="85" text-anchor="middle">非局域投影算符</text>
+      <text x="745" y="108" text-anchor="middle" lang="en">nonlocal projectors</text>
+    </g>
+
+    <g class="scf-flow__node scf-flow__node--primary">
+      <rect x="300" y="205" width="240" height="92" rx="10" />
+      <text x="420" y="238" text-anchor="middle">迭代本征求解器</text>
+      <text x="420" y="263" text-anchor="middle">Hψ = εψ, residual r</text>
+      <text x="420" y="284" text-anchor="middle" lang="en">Davidson / CG / RMM-DIIS family</text>
+    </g>
+
+    <g class="scf-flow__node">
+      <rect x="300" y="365" width="240" height="76" rx="10" />
+      <text x="420" y="397" text-anchor="middle">占据态 → n_out(G)</text>
+      <text x="420" y="421" text-anchor="middle" lang="en">occupied states → output density</text>
+    </g>
+
+    <g class="scf-flow__node">
+      <rect x="40" y="365" width="180" height="76" rx="10" />
+      <text x="130" y="397" text-anchor="middle">混合 / 预条件</text>
+      <text x="130" y="421" text-anchor="middle" lang="en">mixing / preconditioning</text>
+    </g>
+
+    <path class="scf-flow__arrow" d="M220 91 L300 91" marker-end={`url(#${componentId}-arrow)`} />
+    <path class="scf-flow__arrow" d="M420 147 L420 205" marker-end={`url(#${componentId}-arrow)`} />
+    <path class="scf-flow__arrow" d="M745 127 C745 180 585 195 540 230" marker-end={`url(#${componentId}-arrow)`} />
+    <path class="scf-flow__arrow" d="M420 297 L420 365" marker-end={`url(#${componentId}-arrow)`} />
+    <path class="scf-flow__arrow" d="M300 403 L220 403" marker-end={`url(#${componentId}-arrow)`} />
+    <path class="scf-flow__arrow" d="M130 365 C130 285 70 210 105 127" marker-end={`url(#${componentId}-arrow)`} />
+
+    <text class="scf-flow__label" x="555" y="178">T diagonal in G space</text>
+    <text class="scf-flow__label" x="548" y="321">occupations + FFT</text>
+    <text class="scf-flow__label" x="63" y="250">SCF loop</text>
+  </svg>
+
+  <div class="chapter-visual__contract">
+    <p><strong>学习目的：</strong>区分表示变换、有限本征求解和外层自洽迭代。图中每个箭头表示数据依赖，不表示某个具体程序的内存布局。</p>
+    <p lang="en"><strong>Learning purpose:</strong> separate representation transforms, the finite eigenproblem, and the outer self-consistent iteration. Arrows show data dependencies, not the memory layout of a particular code.</p>
+    <p><strong>验收：</strong>闭环必须经过 <code>n_in → V_eff → orbitals → n_out → mixing → n_in</code>；动能在 G 空间对角，局域势通过实空间乘法应用，非局域势保持独立算符路径。</p>
+    <p lang="en"><strong>Acceptance:</strong> the loop must contain <code>n_in → V_eff → orbitals → n_out → mixing → n_in</code>; kinetic energy is diagonal in G space, a local potential is applied by real-space multiplication, and the nonlocal operator remains a separate path.</p>
+    <p><strong>边界：</strong>图未指定 FFT 库、并行分解、eigensolver 细节、PAW/USPP 增广数据或收敛阈值，不能据此判断性能或科学正确性。</p>
+    <p lang="en"><strong>Boundary:</strong> the diagram specifies no FFT library, parallel decomposition, eigensolver implementation, PAW/USPP augmentation data, or convergence tolerance, and therefore supports no performance or scientific-validity claim.</p>
+  </div>
+
+  <noscript><p>该图为纯 SVG；关闭 JavaScript 后数据流、标签和验收边界保持不变。</p></noscript>
+</figure>
+
+<style>
+  .scf-flow svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .scf-flow__node rect {
+    fill: var(--sl-color-gray-6);
+    stroke: var(--sl-color-accent-high);
+    stroke-width: 2;
+  }
+
+  .scf-flow__node--primary rect {
+    fill: var(--sl-color-gray-5);
+  }
+
+  .scf-flow__node text,
+  .scf-flow__label {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .scf-flow__arrow {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+
+  .scf-flow__label {
+    font-size: 12px;
+  }
+</style>
