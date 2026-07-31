@@ -103,6 +103,39 @@ const routePath = new URL('../src/content/docs/part-03-important-preliminaries-o
 const route = await readFile(routePath, 'utf8');
 assert.match(route, /status="chapter-complete"/, 'Chapter 11 route must declare complete content status');
 assert.doesNotMatch(route, /ReadingOutline|正文待填充|outline ·|TODO/i, 'Chapter 11 route retains an outline marker');
+assert.match(
+  route,
+  /NormConservationConventionAudit/,
+  'Chapter 11 route must register the norm-conservation source-convention audit',
+);
+
+const conventionAudit = await readFile(
+  new URL('../src/components/part03/ch11/NormConservationConventionAudit.mdx', import.meta.url),
+  'utf8',
+);
+assert.match(
+  conventionAudit,
+  /data-norm-conservation-convention-audit/,
+  'Norm-conservation convention audit marker is missing',
+);
+for (const equationNumber of ['11.24', '11.25', '11.27', '11.28']) {
+  assert.ok(
+    conventionAudit.includes(equationNumber),
+    `Norm-conservation convention audit must identify Eq. (${equationNumber})`,
+  );
+}
+assert.match(conventionAudit, /=\s*-2/, 'Convention audit must show the Hartree-energy derivative coefficient -2');
+assert.match(conventionAudit, /Rydberg/, 'Convention audit must explain the alternative Rydberg energy scaling');
+assert.match(
+  conventionAudit,
+  /因子不一致|factor inconsistency/,
+  'Convention audit must label the adjacent printed formulas as an unresolved factor inconsistency',
+);
+assert.match(
+  conventionAudit,
+  /不能在同一个[^\n]+混用|cannot be mixed under one definition/,
+  'Convention audit must prohibit mixing coefficients under one energy definition',
+);
 
 const contentsPath = new URL('../src/components/part03/ch11/Chapter11Contents.astro', import.meta.url);
 const contents = await readFile(contentsPath, 'utf8');
@@ -143,4 +176,4 @@ for (const label of ['>0</text>', '>−6</text>', '>−12</text>']) {
   assert.ok(hardnessComponent.includes(label), `Hardness explorer is missing the ${label} axis tick`);
 }
 
-console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, hardness axis, augmentation, projector algebra, route, source map, and visualization contracts.');
+console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, norm-conservation source convention, hardness axis, augmentation, projector algebra, route, source map, and visualization contracts.');
