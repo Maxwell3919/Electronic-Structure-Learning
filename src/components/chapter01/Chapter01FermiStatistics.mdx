@@ -21,22 +21,26 @@ f_i=\frac{1}{\exp[\beta(\varepsilon_i-\mu)]+1},
 $$
 
 <DerivationBlock
-  title="补充推导：单个费米能级的 grand-canonical 配分函数"
+  title="补充推导 | Supplemental derivation: 单个费米能级的 grand-canonical 配分函数"
   assumptions={[
-    '能级 i 的允许占据只有 n_i=0 或 1；',
-    '能级与温度 T、化学势 μ 的热库达到平衡；',
-    '推导分配既定能级的占据，不决定 ε_i 本身。',
+    '能级 i 的允许占据只有 n_i=0 或 1 | The allowed occupations are n_i=0 and n_i=1.',
+    '能级与温度 T、化学势 μ 的热库达到平衡 | The level is equilibrated with reservoirs at T and μ.',
+    '推导分配既定能级的占据，不决定 ε_i 本身 | The derivation assigns occupations and does not determine ε_i.',
   ]}
 >
 
-单个能级的 grand-canonical 权重是 $\exp[-\beta n_i(\varepsilon_i-\mu)]$。因此
+单个能级的 grand-canonical 权重是 $\exp[-\beta n_i(\varepsilon_i-\mu)]$。由于费米能级只允许 $n_i=0$ 或 $1$，配分函数只有两项。
+
+<p lang="en">The grand-canonical weight of one level is $\exp[-\beta n_i(\varepsilon_i-\mu)]$. Because a fermionic level permits only $n_i=0$ or $1$, its partition function contains two terms.</p>
 
 $$
 \mathcal Z_i=\sum_{n_i=0}^{1}e^{-\beta n_i(\varepsilon_i-\mu)}
 =1+e^{-\beta(\varepsilon_i-\mu)}.
 $$
 
-平均占据按定义为
+平均占据按概率加权定义。$n_i=0$ 项对分子没有贡献，$n_i=1$ 项留下指数权重。
+
+<p lang="en">The mean occupation is the probability-weighted average. The $n_i=0$ term contributes nothing to the numerator, while the $n_i=1$ term leaves its exponential weight.</p>
 
 $$
 \langle n_i\rangle=
@@ -44,9 +48,9 @@ $$
 =\frac{e^{-\beta(\varepsilon_i-\mu)}}{1+e^{-\beta(\varepsilon_i-\mu)}}.
 $$
 
-分子分母同乘 $e^{\beta(\varepsilon_i-\mu)}$，便得到 Fermi–Dirac 形式。三个直接检查是：$\varepsilon_i=\mu$ 时 $f_i=1/2$；$T\to0^+$ 时分布趋于阶跃；$\varepsilon_i-\mu\gg k_{\mathrm B}T$ 时恢复稀疏占据的 Boltzmann 极限。
+分子分母同乘 $e^{\beta(\varepsilon_i-\mu)}$，便得到 Fermi–Dirac 形式。三个直接检查是：$\varepsilon_i=\mu$ 时 $f_i=1/2$；$T\to0^+$ 时分布趋于阶跃；$\varepsilon_i-\mu\gg k_{\mathrm B}T$ 时恢复稀疏占据的 Boltzmann 极限。以上推导只分配既定能级的占据，不计算能级本身。
 
-<p lang="en">Only occupations zero and one are allowed for a single fermionic level. Summing their grand-canonical weights gives the partition function, and evaluating the occupation average yields the Fermi–Dirac formula. The checks $f(\mu)=1/2$, the zero-temperature step, and the dilute Boltzmann limit follow directly. The derivation assigns occupations to prescribed levels and does not compute those levels.</p>
+<p lang="en">Multiplying numerator and denominator by $e^{\beta(\varepsilon_i-\mu)}$ gives the Fermi–Dirac form. Three checks follow: $f_i=1/2$ at $\varepsilon_i=\mu$; the distribution approaches a step as $T\to0^+$; and the dilute Boltzmann limit is recovered when $\varepsilon_i-\mu\gg k_{\mathrm B}T$. The derivation assigns occupations to prescribed levels and does not calculate the levels.</p>
 
 </DerivationBlock>
 
