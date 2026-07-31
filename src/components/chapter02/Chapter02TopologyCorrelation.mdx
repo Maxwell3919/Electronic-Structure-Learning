@@ -1,0 +1,91 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="section-2-16">2.16 拓扑绝缘体 | Topological Insulators</h2>
+
+<BilingualSection titleZh="拓扑分类作用于整个占据子空间" titleEn="Topology classifies the full occupied subspace" eyebrow="【Martin 原书 | Martin source】 §2.16 · p. 57">
+  <div class="bilingual-section__zh">
+
+拓扑绝缘体的体相具有能隙，但占据 Bloch 态在整个 Brillouin 区中的全局结构不能在保持能隙和保护对称性的条件下连续变形为普通原子绝缘体。自旋—轨道耦合可以改变能带反转与连接方式；相应离散不变量约束边界态。Berry 相位、Chern 数和时间反演体系的 $\mathbb Z_2$ 指标属于不同对称类别，必须按体系实际对称性选择。
+
+体—边对应说明非平庸体相与适当边界之间存在受保护连接，但实际表面能带还叠加终止、掺杂、重构和普通表面共振。Martin 以 Bi$_2$Se$_3$ 的 ARPES 与理论比较说明表面 Dirac 态；实验样品的费米能可能因掺杂进入体导带，因此“观察到表面态”和“体相绝缘输运”是不同判断。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A topological insulator has a bulk gap, but the global organization of its occupied Bloch states across the Brillouin zone cannot be continuously deformed into that of an ordinary atomic insulator while preserving the gap and protecting symmetry. Spin–orbit coupling can change band inversion and connectivity, and the resulting discrete invariant constrains boundary states. Berry phases, Chern numbers, and the $\mathbb Z_2$ index of a time-reversal-invariant system belong to different symmetry classes and must be chosen according to the actual symmetries.
+
+Bulk–boundary correspondence connects a nontrivial bulk phase to protected boundary connectivity, but a real surface band structure also contains effects of termination, doping, reconstruction, and ordinary surface resonances. Martin uses ARPES and theory for Bi$_2$Se$_3$ to illustrate a surface Dirac state. The experimental Fermi level may enter a bulk conduction band because of doping, so “observing a surface state” and “obtaining insulating bulk transport” are different judgments.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="拓扑认定的最低证据链" titleEn="Minimum evidence chain for a topological assignment" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>结构、磁序和保护对称性明确；</li>
+      <li>含必要相对论效应的体能带在整个 Brillouin 区具有目标能隙；</li>
+      <li>用 Berry 相位、Wilson loop、对称性指标或等价方法计算体不变量；</li>
+      <li>检查数值网格、带缠结、规范选择和能隙闭合附近参数收敛；</li>
+      <li>边界计算或实验显示与体不变量一致的连接，而非仅有局域表面态。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>establish structure, magnetic order, and protecting symmetry;</li>
+      <li>verify the target bulk gap throughout the Brillouin zone with the necessary relativistic effects;</li>
+      <li>calculate a bulk invariant using Berry phases, Wilson loops, symmetry indicators, or an equivalent method;</li>
+      <li>check numerical grids, band entanglement, gauge choices, and parameters near gap closings;</li>
+      <li>show boundary connectivity consistent with the bulk invariant rather than only a localized surface state.</li>
+    </ol>
+  </div>
+</BilingualCallout>
+
+<h2 id="section-2-17">2.17 持续挑战：电子关联 | The Continuing Challenge: Electron Correlation</h2>
+
+<BilingualSection titleZh="离域动能与相互作用之间的竞争" titleEn="Competition between delocalizing kinetic energy and interactions" eyebrow="【Martin 原书 | Martin source】 §2.17 · pp. 57–58">
+  <div class="bilingual-section__zh">
+
+电子离域降低动能并形成能带，相互作用则可能促进局域矩、占据约束和集体有序。两者竞争产生 Mott 金属—绝缘体转变、Kondo 效应、重费米子、高温超导和低维非 Fermi 液体等现象。强关联不是某种元素的固定属性，而取决于带宽、局域相互作用、杂化、轨道简并、填充、维度和温度。
+
+准粒子能带图像在弱到中等相互作用中可以保留，但谱权重小于一、峰宽有限并伴随卫星结构。相互作用更强时，低能自由度可以与独立电子完全不同，例如一维体系中的自旋—电荷分离。此时把所有实验峰强制拟合成 Kohn–Sham 能带会丢失核心物理。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electron delocalization lowers kinetic energy and forms bands, whereas interactions can favour local moments, occupancy constraints, and collective order. Their competition produces Mott metal–insulator transitions, Kondo physics, heavy fermions, high-temperature superconductivity, and low-dimensional non-Fermi-liquid states. Strong correlation is not a fixed property of an element; it depends on bandwidth, local interaction, hybridization, orbital degeneracy, filling, dimensionality, and temperature.
+
+A quasiparticle-band picture can survive weak to moderate interactions, but spectral weight becomes smaller than one, peaks acquire finite widths, and satellite structures appear. With stronger interactions, the low-energy degrees of freedom may differ qualitatively from independent electrons, as in spin–charge separation in one dimension. Forcing every experimental feature into a Kohn–Sham band interpretation then removes the central physics.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="DFT 的成功与证据上限" titleEn="The success and evidence ceiling of DFT">
+  <div class="bilingual-section__zh">
+
+DFT 之所以成为材料计算主力，是因为近似泛函在大量基态结构和响应中以较低成本纳入了足够多的相互作用效应。Kohn–Sham 波函数也常作为 GW、Bethe–Salpeter、DMFT、量子 Monte Carlo 或模型 Hamiltonian 的起点。这个成功不意味着交换—关联泛函已经显式给出真实多体波函数或所有激发。
+
+需要超出常规 DFT 的信号包括：不同磁/轨道初态产生多个近简并解；结果对 $U$、杂化比例或双计数强烈敏感；实验存在巨大质量重整化、卫星峰或温度驱动谱权转移；非磁能带预测金属而实验显示关联绝缘；关键现象由长程涨落或量子临界控制。选择更复杂方法前，应先定义目标 observable 和常规方法失败的可检验证据。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+DFT became the dominant material-computation framework because approximate functionals include enough interaction physics to describe many ground-state structures and responses at moderate cost. Kohn–Sham wavefunctions also provide starting points for GW, Bethe–Salpeter, DMFT, quantum Monte Carlo, and model-Hamiltonian methods. This success does not mean that an exchange–correlation functional explicitly supplies the physical many-body wavefunction or every excitation.
+
+Signals that ordinary DFT may be insufficient include multiple near-degenerate magnetic or orbital solutions; strong sensitivity to $U$, hybrid fraction, or double counting; large experimental mass renormalization, satellites, or temperature-driven spectral-weight transfer; a metallic nonmagnetic band result for an experimentally correlated insulator; and phenomena controlled by long-range fluctuations or quantum criticality. Before choosing a more complex method, define the target observable and the testable evidence that the ordinary approach fails.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="方法复杂度不能替代验证" titleEn="Method complexity does not replace validation" kind="practice">
+  <div class="bilingual-section__zh">
+
+DFT+$U$、hybrid、GW、DMFT 或 QMC 的名称本身不构成更高可信度。每种方法引入不同输入、有限尺寸、统计、解析延拓或双计数误差。需要报告参数来源、收敛对象、比较基准和主张范围。多个方法给出相似结论只有在误差结构具有足够独立性且比较标准预先明确时，才形成更强证据。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The labels DFT+$U$, hybrid, GW, DMFT, or QMC do not themselves confer higher credibility. Each method introduces distinct input choices, finite-size effects, statistical uncertainty, analytic-continuation issues, or double-counting errors. Parameter provenance, convergence targets, comparison benchmarks, and claim scope must be reported. Agreement among methods strengthens evidence only when their error structures are sufficiently independent and the comparison criterion was specified in advance.
+
+  </div>
+</BilingualCallout>
