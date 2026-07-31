@@ -133,6 +133,25 @@ assert.ok(conventionAudit.includes('10.14'), 'Spin-orbit convention audit must i
 assert.match(conventionAudit, /potential energy|电子势能/);
 assert.match(conventionAudit, /energy divided by \$\\hbar\^2\$|能量除以 \$\\hbar\^2\$/);
 assert.match(conventionAudit, /cannot be mixed under one operator definition|不能在同一算符定义下混用/);
+assert.match(conventionAudit, /SpinOrbitMathScroll/);
+assert.equal(
+  [...conventionAudit.matchAll(/<SpinOrbitMathScroll\b/g)].length,
+  6,
+  'The bilingual SOC convention audit must contain six local equation scrollers',
+);
+
+const mathScroll = readFileSync(
+  'src/components/part03/ch10/SpinOrbitMathScroll.astro',
+  'utf8',
+);
+assert.match(mathScroll, /data-soc-math-scroll/);
+assert.match(mathScroll, /role="region"/);
+assert.match(mathScroll, /tabindex="0"/);
+assert.match(mathScroll, /overflow-x:\s*auto/);
+assert.match(mathScroll, /overflow-y:\s*hidden/);
+assert.match(mathScroll, /max-width:\s*100%/);
+assert.match(mathScroll, /width:\s*max-content/);
+assert.match(mathScroll, /min-width:\s*100%/);
 
 const relativity = readFileSync(
   'src/components/part03/ch10/Chapter10RelativityOpenShell.mdx',
@@ -164,4 +183,4 @@ assert.doesNotMatch(
   'Spin-orbit explorer retains the dimensionally ambiguous model caption',
 );
 
-console.log('Part III Chapter 10 deterministic validation passed: radial models, spin-orbit unit convention, Delta-SCF arithmetic, and route registration.');
+console.log('Part III Chapter 10 deterministic validation passed: radial models, spin-orbit unit convention, local equation containment, Delta-SCF arithmetic, and route registration.');
