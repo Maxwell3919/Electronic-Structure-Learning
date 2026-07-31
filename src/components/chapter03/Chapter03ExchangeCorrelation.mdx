@@ -1,0 +1,366 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-3-7">3.7 交换与关联 | Exchange and Correlation</h2>
+
+<BilingualSection titleZh="pair density 是两体相互作用的自然对象" titleEn="Pair density is the natural object for two-body interaction" eyebrow="【Martin 原书 | Martin source】 §3.7 · pp. 74–77">
+  <div class="bilingual-section__zh">
+
+电子—电子相互作用只含粒子对，因此其期望值由 spin-resolved pair density 决定。定义
+
+$$
+P(\mathbf x,\mathbf x')
+=\left\langle
+\sum_{i\ne j}
+\delta(\mathbf x-\mathbf x_i)
+\delta(\mathbf x'-\mathbf x_j)
+\right\rangle,
+$$
+
+其中 $\mathbf x=(\mathbf r,\sigma)$。归一化关系为
+
+$$
+\int d\mathbf x'\,P(\mathbf x,\mathbf x')
+=(N-1)n(\mathbf x).
+$$
+
+电子—电子 Coulomb 能为
+
+$$
+\langle\hat V_{ee}\rangle
+=\frac12\iint
+\frac{P(\mathbf x,\mathbf x')}
+{|\mathbf r-\mathbf r'|}\,d\mathbf x\,d\mathbf x'.
+$$
+
+定义 pair distribution
+
+$$
+g(\mathbf x,\mathbf x')
+=\frac{P(\mathbf x,\mathbf x')}
+{n(\mathbf x)n(\mathbf x')},
+$$
+
+则不相关、可分解的 classical probability 对应 $g=1$。真实费米体系即使 Hamiltonian 无相互作用，也因反对称性具有 $g\ne1$；因此“correlation function”在广义统计意义下包含 exchange，而 electronic-structure 术语常把 exchange 与剩余 Coulomb correlation 分开。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electron–electron interaction contains particle pairs, so its expectation value is determined by the spin-resolved pair density
+
+$$
+P(\mathbf x,\mathbf x')
+=\left\langle
+\sum_{i\ne j}
+\delta(\mathbf x-\mathbf x_i)
+\delta(\mathbf x'-\mathbf x_j)
+\right\rangle,
+$$
+
+where $\mathbf x=(\mathbf r,\sigma)$. It satisfies
+
+$$
+\int d\mathbf x'\,P(\mathbf x,\mathbf x')
+=(N-1)n(\mathbf x),
+$$
+
+and
+
+$$
+\langle\hat V_{ee}\rangle
+=\frac12\iint
+\frac{P(\mathbf x,\mathbf x')}
+{|\mathbf r-\mathbf r'|}\,d\mathbf x\,d\mathbf x'.
+$$
+
+The normalized pair distribution
+
+$$
+g(\mathbf x,\mathbf x')
+=\frac{P(\mathbf x,\mathbf x')}
+{n(\mathbf x)n(\mathbf x')}
+$$
+
+is one for factorized classical probabilities. A fermionic system can have $g\ne1$ even without dynamical interaction because antisymmetry creates exchange correlations. Electronic-structure terminology therefore separates exchange from the remaining Coulomb correlation.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="条件 exchange-correlation hole 与 sum rule | Conditional exchange-correlation hole and sum rule"
+  assumptions={[
+    'n(x)>0 at the reference coordinate;',
+    'fixed particle number N;',
+    'pair density excludes i=j self-pairs.']}
+>
+
+给定一个电子位于 $\mathbf x$，其他电子的条件密度为
+
+$$
+n_{\mathrm{cond}}(\mathbf x'|\mathbf x)
+=\frac{P(\mathbf x,\mathbf x')}{n(\mathbf x)}.
+$$
+
+相对于无条件密度，定义 exchange-correlation hole
+
+$$
+n_{xc}(\mathbf x,\mathbf x')
+=n_{\mathrm{cond}}(\mathbf x'|\mathbf x)-n(\mathbf x').
+$$
+
+积分得
+
+$$
+\int d\mathbf x'\,n_{xc}(\mathbf x,\mathbf x')
+=(N-1)-N=-1.
+$$
+
+因此每个参考电子周围恰好少一个电子的条件概率。hole 可以在某些区域为正，表示从近处移走的概率在远处重新堆积；只有总积分固定为 $-1$。电子—电子能可写为
+
+$$
+\langle V_{ee}\rangle
+=E_H[n]+\frac12\int d\mathbf x\,n(\mathbf x)
+\int d\mathbf x'
+\frac{n_{xc}(\mathbf x,\mathbf x')}
+{|\mathbf r-\mathbf r'|}.
+$$
+
+该式只分解 interaction energy。完整 correlation energy 还包含相关导致的 kinetic-energy change。
+
+<p lang="en">The conditional density integrates to $N-1$, while the unconditional density integrates to $N$, so the conditional exchange-correlation hole integrates exactly to $-1$. The hole representation separates the Hartree interaction from the nonclassical pair correction, but the full correlation energy also contains a kinetic contribution.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="单 determinant 的 exchange hole" titleEn="The exchange hole of one determinant">
+  <div class="bilingual-section__zh">
+
+对一个 Slater determinant，一体 spin-density matrix 为
+
+$$
+\gamma_\sigma(\mathbf r,\mathbf r')
+=\sum_{i\in\mathrm{occ},\sigma}
+\psi_{i\sigma}(\mathbf r)
+\psi_{i\sigma}^*(\mathbf r').
+$$
+
+pair density 分解为
+
+$$
+P_{HF}(\mathbf r\sigma,\mathbf r'\sigma')
+=n_\sigma(\mathbf r)n_{\sigma'}(\mathbf r')
+-\delta_{\sigma\sigma'}
+|\gamma_\sigma(\mathbf r,\mathbf r')|^2.
+$$
+
+于是条件 exchange hole 为
+
+$$
+n_x(\mathbf r\sigma,\mathbf r'\sigma')
+=-\delta_{\sigma\sigma'}
+\frac{|\gamma_\sigma(\mathbf r,\mathbf r')|^2}
+{n_\sigma(\mathbf r)}.
+$$
+
+它只作用于同自旋，处处非正，并满足 $\sum_{\sigma'}\int n_x=-1$。在 $\mathbf r'=\mathbf r$ 且同自旋时，pair probability 为零，体现 Pauli exclusion。exchange energy 是参考电子与其 exchange hole 的 Coulomb 相互作用：
+
+$$
+E_x=\frac12\sum_{\sigma\sigma'}
+\iint d^3r\,d^3r'\,
+\frac{n_\sigma(\mathbf r)n_x(\mathbf r\sigma,\mathbf r'\sigma')}
+{|\mathbf r-\mathbf r'|}.
+$$
+
+由于 $n_x\le0$，Coulomb exchange energy 非正。一个电子体系中 hole 等于 $-n(\mathbf r')$，精确抵消 Hartree self-interaction，即使物理上没有第二个电子可“交换”。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a Slater determinant, the spin-resolved one-body density matrix is
+
+$$
+\gamma_\sigma(\mathbf r,\mathbf r')
+=\sum_{i\in\mathrm{occ},\sigma}
+\psi_{i\sigma}(\mathbf r)
+\psi_{i\sigma}^*(\mathbf r').
+$$
+
+The pair density becomes
+
+$$
+P_{HF}(\mathbf r\sigma,\mathbf r'\sigma')
+=n_\sigma(\mathbf r)n_{\sigma'}(\mathbf r')
+-\delta_{\sigma\sigma'}
+|\gamma_\sigma(\mathbf r,\mathbf r')|^2.
+$$
+
+Thus
+
+$$
+n_x(\mathbf r\sigma,\mathbf r'\sigma')
+=-\delta_{\sigma\sigma'}
+\frac{|\gamma_\sigma(\mathbf r,\mathbf r')|^2}
+{n_\sigma(\mathbf r)}.
+$$
+
+The exchange hole acts only between equal spins, is nonpositive, and integrates to minus one electron. At equal coordinates, same-spin pair probability vanishes. Its Coulomb interaction with the reference electron gives nonpositive exchange energy. In a one-electron system the hole is $-n(\mathbf r')$ and cancels Hartree self-interaction even though there is no second electron to exchange physically.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="correlation hole 重新分布 exchange hole" titleEn="The correlation hole redistributes the exchange hole">
+  <div class="bilingual-section__zh">
+
+把完整 hole 分成
+
+$$
+n_{xc}=n_x+n_c.
+$$
+
+由于 $n_{xc}$ 和 $n_x$ 都积分为 $-1$，correlation hole 满足
+
+$$
+\int d\mathbf x'\,n_c(\mathbf x,\mathbf x')=0.
+$$
+
+它不是额外移走一个电子，而是在空间和自旋通道之间重新分布已有的条件概率。opposite-spin 电子没有 Pauli hole，短程 Coulomb avoidance 通常使其 correlation 更显著；same-spin 电子已经被 exchange hole 分开，但仍存在剩余 correlation。
+
+对 ground state，以最佳单 determinant Hartree–Fock 能量为参考，传统 quantum-chemistry correlation energy 定义为
+
+$$
+E_c^{HF}=E_{\mathrm{exact}}-E_{HF}\le0.
+$$
+
+这里的符号来自 variational principle：扩大波函数空间不能提高 ground-state 最低能量。对激发态能量差，correlation correction 可以正也可以负，因为 ground 和 excited state 的 lowering 不同。DFT correlation 使用保持目标 exact density 的非相互作用参考，和 HF reference density 一般不同；两种 $E_c$ 定义不可静默混用。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Write the full hole as
+
+$$
+n_{xc}=n_x+n_c.
+$$
+
+Since both $n_{xc}$ and $n_x$ integrate to $-1$, the correlation hole satisfies
+
+$$
+\int d\mathbf x'\,n_c(\mathbf x,\mathbf x')=0.
+$$
+
+It does not remove an additional electron; it redistributes conditional probability in space and spin. Opposite-spin electrons lack a Pauli hole and often show strong short-range Coulomb avoidance. Same-spin electrons are already separated by exchange but still retain additional correlation.
+
+With the best single-determinant Hartree–Fock energy as reference, the traditional ground-state correlation energy is
+
+$$
+E_c^{HF}=E_{\mathrm{exact}}-E_{HF}\le0.
+$$
+
+The sign follows from the variational principle. Correlation corrections to excitation energies may have either sign because the ground and excited states are lowered by different amounts. DFT correlation uses a noninteracting reference constrained to the exact target density, generally different from the Hartree–Fock reference density; the two definitions must not be silently mixed.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="density-fixed adiabatic connection 中的 E_xc | $E_{xc}$ in a density-fixed adiabatic connection"
+  assumptions={[
+    'for every λ there exists an external potential giving the same density n;',
+    'the interaction is λVee and the branch remains the ground state;',
+    'Hartree atomic units.']}
+>
+
+定义
+
+$$
+\hat H_\lambda=\hat T+\lambda\hat V_{ee}
++\sum_i v_\lambda(\mathbf r_i),
+$$
+
+并选择 $v_\lambda$ 使所有 $\lambda$ 的 ground-state density 都等于物理密度 $n$。普适泛函
+
+$$
+F_\lambda[n]
+=\min_{\Psi\to n}
+\langle\Psi|\hat T+\lambda\hat V_{ee}|\Psi\rangle
+$$
+
+满足
+
+$$
+\frac{dF_\lambda[n]}{d\lambda}
+=\langle\Psi_\lambda[n]|\hat V_{ee}|\Psi_\lambda[n]\rangle.
+$$
+
+积分得到
+
+$$
+F_1[n]-F_0[n]
+=\int_0^1 d\lambda\,
+\langle\hat V_{ee}\rangle_\lambda.
+$$
+
+由于 $F_0[n]=T_s[n]$，并减去 Hartree 能，
+
+$$
+E_{xc}[n]
+=\int_0^1d\lambda
+\left(\langle\hat V_{ee}\rangle_\lambda-E_H[n]\right).
+$$
+
+用 coupling-constant averaged hole 表示：
+
+$$
+E_{xc}[n]
+=\frac12\int d\mathbf r\,n(\mathbf r)
+\int d\mathbf r'
+\frac{\bar n_{xc}(\mathbf r,\mathbf r')}
+{|\mathbf r-\mathbf r'|},
+$$
+
+$$
+\bar n_{xc}=\int_0^1n_{xc}^{\lambda}\,d\lambda.
+$$
+
+该式把 kinetic correlation 隐含进 $\lambda$ 平均的 pair response，而不是声称 $E_{xc}$ 只有物理 $\lambda=1$ 的势能 hole。
+
+<p lang="en">Holding density fixed while scaling interaction defines the DFT adiabatic connection. The coupling-constant averaged hole incorporates both exchange and correlation, including the kinetic-correlation contribution through the path. Using only the physical $\lambda=1$ pair hole gives the interaction correction, not automatically the full exchange-correlation energy.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="dynamic 与 static correlation" titleEn="Dynamic and static correlation">
+  <div class="bilingual-section__zh">
+
+Dynamic correlation 指电子在一个主 determinant 周围因瞬时 Coulomb avoidance 产生的许多小振幅修正，常可由 perturbative、coupled-cluster 或局域 correlation 方法系统处理。static 或 nondynamic correlation 出现在多个 determinants 近简并时，例如拉伸化学键、过渡金属多重态或 Mott 极限；此时单 determinant reference 本身不稳定，低阶 perturbation 可能发散或产生错误对称性。
+
+“强关联”不是由某个元素标签、DOS 峰或 DFT+$U$ 使用自动定义。需要结合 natural occupations、多个近简并解、谱权重转移、质量重整化、局域矩与实验温度依赖等证据，并明确目标 observable。不同方法对 ground-state energy、spectral function、finite-temperature order 和 real-time dynamics 的能力并不相同。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Dynamic correlation consists of many small-amplitude adjustments around one dominant determinant due to instantaneous Coulomb avoidance and is often accessible to perturbative, coupled-cluster, or local-correlation methods. Static or nondynamic correlation arises when several determinants are near degenerate, as in bond breaking, transition-metal multiplets, or a Mott limit. The one-determinant reference then becomes qualitatively inadequate and low-order perturbation may diverge or select the wrong symmetry.
+
+“Strong correlation” is not defined automatically by an element label, a DOS peak, or use of DFT+$U$. Evidence may include fractional natural occupations, multiple near-degenerate solutions, spectral-weight transfer, mass renormalization, local moments, and temperature dependence, all tied to a stated observable. Methods have different capabilities for ground-state energy, spectral functions, finite-temperature order, and real-time dynamics.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="交换关联主张的最低边界" titleEn="Minimum boundary for exchange-correlation claims" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>明确 pair density、conditional hole、energy difference 使用的归一化和参考态；</li>
+      <li>区分 HF correlation energy 与 DFT same-density correlation；</li>
+      <li>交换 self-interaction cancellation 不证明 correlation 完整；</li>
+      <li>hole sum rule 满足不证明 hole 的空间形状或能量权重准确；</li>
+      <li>多个近似相互一致只有在 reference、参数和误差结构足够独立时才增强证据。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>state normalization and reference for pair density, conditional hole, and energy difference;</li>
+      <li>separate Hartree–Fock correlation energy from DFT same-density correlation;</li>
+      <li>exchange self-interaction cancellation does not establish complete correlation;</li>
+      <li>satisfying a hole sum rule does not validate spatial shape or energy weighting;</li>
+      <li>agreement among approximations strengthens evidence only when references, parameters, and error structures are sufficiently independent.</li>
+    </ul>
+  </div>
+</BilingualCallout>
