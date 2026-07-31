@@ -63,14 +63,17 @@ assert.ok(
 
 const stonerAudit = read('src/components/chapter02/Chapter02StonerConventionAudit.mdx');
 assert.match(stonerAudit, /data-ch2-stoner-convention-audit/);
-for (const equation of ['2.2', '2.3']) {
+for (const equation of ['2.2', '2.3', 'D.11']) {
   assert.ok(stonerAudit.includes(equation), `Stoner audit must identify Eq. (${equation})`);
 }
-assert.ok(stonerAudit.includes('h\\equiv -V_m'), 'Stoner audit must define the positive-magnetization field h = -V_m');
+assert.ok(stonerAudit.includes('h=-V_m'), 'Stoner audit must define the sign map h = -V_m');
+assert.ok(stonerAudit.includes('I_h=-I_{V_m}'), 'Stoner audit must transform the kernel together with the field');
 assert.ok(stonerAudit.includes('m=-\\delta E/\\delta V_m'), 'Stoner audit must retain Martin’s conjugate-potential definition');
-assert.match(stonerAudit, /single-spin or two-spin DOS|单自旋或双自旋 DOS/);
-assert.match(stonerAudit, /cannot be compared|才可直接比较/);
-assert.match(stonerAudit, /does not alter the Stoner mean-field conclusion|不改变 Stoner 平均场结论/);
+assert.match(stonerAudit, /source-convention ambiguity|来源约定审计/);
+assert.match(stonerAudit, /confirmed erratum|已确认勘误/);
+assert.match(stonerAudit, /per-spin or two-spin DOS|单自旋或双自旋 DOS/);
+assert.match(stonerAudit, /comparable only after|才可比较/);
+assert.match(stonerAudit, /does not alter the Stoner mean-field conclusion|不改变 Stoner 平均场/);
 
 const gapExplorer = read('src/components/GapHierarchyExplorer.astro');
 assert.match(gapExplorer, /aria-live="polite" aria-atomic="true"/);
@@ -82,4 +85,4 @@ assert.match(gapExplorer, /零值只是绘图截断/);
 assert.match(gapExplorer, /zero is only a plotting clamp/);
 assert.doesNotMatch(gapExplorer, /lang="en" data-gap-note>/, 'The live status must not remain English-only');
 
-console.log('Chapter 2 validation passed: EOS competition, gap hierarchy, 5 property routes, Stoner field/DOS conventions, and bilingual live-status accessibility checked.');
+console.log('Chapter 2 validation passed: EOS competition, gap hierarchy, 5 property routes, Stoner source-field/DOS conventions, and bilingual live-status accessibility checked.');
