@@ -1,0 +1,39 @@
+---
+const sections = [
+  ['26.1', 'General Formulation for Two Bands', 531, 'Pauli decomposition, eigensystem, projectors, Bloch sphere', 'substantive; deterministic validation passed'],
+  ['26.2', 'Two-Band Models in One-Space Dimension', 533, 'two-site and s–p models, basis mapping', 'substantive; deterministic validation passed'],
+  ['26.3', 'Shockley Transition in the Bulk Band Structure and Surface States', 535, 'bulk transition, finite chain, termination and decay', 'substantive; deterministic validation passed'],
+  ['26.4', 'Winding of the Hamiltonian in One Dimension: Berry Phase and the Shockley Transition', 537, 'symmetry-qualified winding, Zak phase and Wannier center', 'substantive; deterministic validation passed'],
+  ['26.5', 'Winding of the Berry Phase in Two Dimensions: Chern Numbers and Topological Transitions', 539, 'parameter torus, Chern mapping and transition', 'substantive; deterministic validation passed'],
+  ['26.6', 'The Thouless Quantized Particle Pump', 541, 'gapped adiabatic cycle, transported charge and boundary flow', 'substantive; deterministic validation passed'],
+  ['26.7', 'Graphene Nanoribbons and the Two-Site Model', 543, 'multi-band winding and interface/end-state boundary', 'substantive; deterministic validation passed'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-26-source-map-title">
+  <h2 id="chapter-26-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    Martin 第 2 版 Chapter 26 的印刷页范围为 531–544；原书习题从第 545 页开始，本站不转录题目。
+    Chapter 25 提供 Bloch 规范、Berry 几何和证据边界；Chapter 24 提供 polarization/Wannier-center 连接。
+  </p>
+  <div class="table-scroll" tabindex="0" aria-label="Chapter 26 source map table">
+    <table>
+      <thead><tr><th>原节</th><th>Martin 标题</th><th>印刷页</th><th>本站边界</th><th>当前状态</th></tr></thead>
+      <tbody>
+        {sections.map(([id, title, page, scope, status]) => (
+          <tr><td>{id}</td><td lang="en">{title}</td><td>{page}</td><td>{scope}</td><td>{status}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-boundary">
+    【来源边界】目录标题、公式编号和页码仅用于定位。正文、逐步推导、图示、数值内核和练习均为本站原创；不提交教材 PDF、扫描页、原图、图注、习题原文或答案。
+  </p>
+</section>
+
+<style>
+  .chapter-source-map { margin-block: 1.5rem; }
+  .table-scroll { max-width: 100%; overflow-x: auto; }
+  table { min-width: 62rem; }
+  .source-boundary { border-left: 0.25rem solid var(--sl-color-accent); padding: 0.75rem 0.9rem; background: var(--sl-color-gray-7); }
+</style>

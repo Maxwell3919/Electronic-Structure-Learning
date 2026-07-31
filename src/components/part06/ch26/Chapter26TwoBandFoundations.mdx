@@ -1,0 +1,460 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import TwoBandSphereExplorer from './TwoBandSphereExplorer.astro';
+
+<span id="sec-26-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 26.1 两带的一般表述 | General Formulation for Two Bands
+
+<BilingualSection titleZh="任意二阶 Hermitian 矩阵的 Pauli 分解" titleEn="Pauli decomposition of an arbitrary two-by-two Hermitian matrix" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 从最一般的二阶 Hermitian Hamiltonian 出发。取固定正交基底 $\{|1\rangle,|2\rangle\}$，矩阵可写成
+
+$$
+H=
+\begin{pmatrix}
+a & c-i d\\
+c+i d & b
+\end{pmatrix},
+\qquad a,b,c,d\in\mathbb R.
+$$
+
+利用 $I,\sigma_x,\sigma_y,\sigma_z$ 构成的 Hermitian 矩阵基，得到
+
+$$
+H=d_0 I+d_x\sigma_x+d_y\sigma_y+d_z\sigma_z,
+$$
+
+其中
+
+$$
+d_0=\frac{a+b}{2},\qquad
+d_x=c,\qquad
+d_y=d,\qquad
+d_z=\frac{a-b}{2}.
+$$
+
+这个分解把四个实参数拆成一个共同能量平移 $d_0$ 和一个控制本征矢及带间分裂的三维向量 $\mathbf d=(d_x,d_y,d_z)$。若 Hamiltonian 依赖晶体动量或其他参数，则每个参数点对应 $\mathbf d$ 空间中的一点。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin begins with the most general two-by-two Hermitian Hamiltonian. In a fixed orthonormal basis $\{|1\rangle,|2\rangle\}$,
+
+$$
+H=
+\begin{pmatrix}
+a & c-i d\\
+c+i d & b
+\end{pmatrix},
+\qquad a,b,c,d\in\mathbb R.
+$$
+
+Because $I,\sigma_x,\sigma_y,\sigma_z$ form a basis for Hermitian two-by-two matrices,
+
+$$
+H=d_0 I+d_x\sigma_x+d_y\sigma_y+d_z\sigma_z,
+$$
+
+with
+
+$$
+d_0=\frac{a+b}{2},\qquad
+d_x=c,\qquad
+d_y=d,\qquad
+d_z=\frac{a-b}{2}.
+$$
+
+The four real parameters split into a common energy shift $d_0$ and a three-component vector $\mathbf d=(d_x,d_y,d_z)$ that controls the eigenvectors and the band splitting. For a momentum- or parameter-dependent Hamiltonian, every parameter point maps to one point in d space.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="用迹公式直接提取系数 | Extracting the coefficients by traces"
+  assumptions={[
+    'Pauli 矩阵满足 Tr σ_i=0 与 Tr(σ_i σ_j)=2δ_ij；',
+    '基底在整个参数空间中已固定，尚未实施 k-dependent unitary rotation。',
+  ]}
+>
+
+将 $H=d_0I+\sum_i d_i\sigma_i$ 分别乘以 $I$ 和 $\sigma_j$ 后取迹：
+
+$$
+\operatorname{Tr}H=2d_0,
+\qquad
+\operatorname{Tr}(H\sigma_j)=2d_j.
+$$
+
+因此
+
+$$
+\boxed{d_0=\frac12\operatorname{Tr}H},
+\qquad
+\boxed{d_j=\frac12\operatorname{Tr}(H\sigma_j)}.
+$$
+
+该形式对数值模型更稳健：只要给定同一基底中的 $2\times2$ Hermitian 矩阵，就能逐点恢复 $d_0$ 与 $\mathbf d$。若基底随 $\mathbf k$ 改变，$\mathbf d$ 的几何轨迹也会改变，必须同时记录该基底变换。
+
+</DerivationBlock>
+
+<span id="two-band-eigensystem" class="chapter-anchor" aria-hidden="true"></span>
+
+### 两带本征系统与投影算符 | Eigensystem and projectors
+
+<DerivationBlock
+  title="从 Pauli 代数得到本征值 | Eigenvalues from the Pauli algebra"
+  assumptions={[
+    'd0 与 d_i 为实数；',
+    '讨论点满足 |d| 有定义；在 d=0 时另行处理简并。',
+  ]}
+>
+
+Pauli 矩阵满足
+
+$$
+\sigma_i\sigma_j=\delta_{ij}I+i\sum_k\epsilon_{ijk}\sigma_k.
+$$
+
+于是
+
+$$
+(\mathbf d\cdot\boldsymbol\sigma)^2
+=\sum_{ij}d_i d_j\sigma_i\sigma_j
+=\left(\sum_i d_i^2\right)I,
+$$
+
+因为 $d_i d_j$ 关于 $i,j$ 对称，而 $\epsilon_{ijk}$ 反对称。记 $d=|\mathbf d|$，则 $\mathbf d\cdot\boldsymbol\sigma$ 的本征值只能为 $\pm d$，所以
+
+$$
+\boxed{E_\pm=d_0\pm d}.
+$$
+
+直接带隙为
+
+$$
+\boxed{E_+-E_-=2|\mathbf d|}.
+$$
+
+两带在某参数点闭隙当且仅当 $\mathbf d=0$。$d_0$ 不出现在带间差中，因此它只平移两条能带，不改变本征矢、projector 或由它们构造的几何量。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="由单位 d 向量构造 projector" titleEn="Projectors from the unit d vector" eyebrow="Projector form">
+  <div class="bilingual-section__zh">
+
+在有隙点定义 $\hat{\mathbf d}=\mathbf d/|\mathbf d|$。由于 $(\hat{\mathbf d}\cdot\boldsymbol\sigma)^2=I$，对应 $\pm1$ 本征值的投影算符为
+
+$$
+\boxed{P_\pm=\frac12\left(I\pm\hat{\mathbf d}\cdot\boldsymbol\sigma\right)}.
+$$
+
+它们满足 $P_\pm^2=P_\pm$、$P_+P_-=0$、$P_++P_-=I$。对低能带，$P_-$ 完全由 $\hat{\mathbf d}$ 决定；$|\mathbf d|$ 只决定能隙大小。因而在保持 $\mathbf d\neq0$ 的连续形变中，拓扑问题可以转化为 $\hat{\mathbf d}$ 从参数空间到单位球面的映射问题。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At a gapped point define $\hat{\mathbf d}=\mathbf d/|\mathbf d|$. Since $(\hat{\mathbf d}\cdot\boldsymbol\sigma)^2=I$, the projectors onto the $\pm1$ eigenspaces are
+
+$$
+\boxed{P_\pm=\frac12\left(I\pm\hat{\mathbf d}\cdot\boldsymbol\sigma\right)}.
+$$
+
+They satisfy $P_\pm^2=P_\pm$, $P_+P_-=0$, and $P_++P_-=I$. The lower-band projector $P_-$ is fixed entirely by $\hat{\mathbf d}$; the magnitude $|\mathbf d|$ only sets the gap. A continuous deformation that keeps $\mathbf d\neq0$ can therefore be studied as a map from parameter space to the unit sphere.
+
+  </div>
+</BilingualSection>
+
+<TwoBandSphereExplorer />
+
+<span id="bloch-sphere-patches" class="chapter-anchor" aria-hidden="true"></span>
+
+### Bloch sphere 与规范补丁 | Bloch sphere and gauge patches
+
+<BilingualSection titleZh="一个全局光滑本征矢通常需要多个补丁" titleEn="A globally smooth eigenvector generally requires more than one patch" eyebrow="Gauge patches">
+  <div class="bilingual-section__zh">
+
+写
+
+$$
+\hat{\mathbf d}=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta).
+$$
+
+低能带的一个北极补丁本征矢可取为
+
+$$
+|u_-^{N}\rangle=
+\begin{pmatrix}
+-e^{-i\phi}\sin(\theta/2)\\
+\cos(\theta/2)
+\end{pmatrix}.
+$$
+
+它在北极 $\theta=0$ 正常，但在南极 $\theta=\pi$ 含有未定义的 $\phi$。另一南极补丁可取
+
+$$
+|u_-^{S}\rangle=
+\begin{pmatrix}
+-\sin(\theta/2)\\
+e^{i\phi}\cos(\theta/2)
+\end{pmatrix},
+$$
+
+在两补丁重叠区域满足
+
+$$
+|u_-^{S}\rangle=e^{i\phi}|u_-^{N}\rangle.
+$$
+
+projector 在两补丁中完全相同。补丁奇点属于本征矢规范，不是能谱奇点；真正的谱奇点发生在 $|\mathbf d|=0$，此时低带与高带不能再分开定义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Write
+
+$$
+\hat{\mathbf d}=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta).
+$$
+
+A north-patch eigenvector for the lower band is
+
+$$
+|u_-^{N}\rangle=
+\begin{pmatrix}
+-e^{-i\phi}\sin(\theta/2)\\
+\cos(\theta/2)
+\end{pmatrix}.
+$$
+
+It is regular at the north pole $\theta=0$ but contains an undefined $\phi$ at the south pole. A south-patch choice is
+
+$$
+|u_-^{S}\rangle=
+\begin{pmatrix}
+-\sin(\theta/2)\\
+e^{i\phi}\cos(\theta/2)
+\end{pmatrix},
+$$
+
+and on their overlap
+
+$$
+|u_-^{S}\rangle=e^{i\phi}|u_-^{N}\rangle.
+$$
+
+The projector is identical in both patches. A patch singularity is a gauge singularity of the eigenvector, not a spectral singularity. A genuine spectral singularity occurs at $|\mathbf d|=0$, where the lower and upper bands cannot be separated.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="基底旋转与 d 向量旋转" titleEn="Basis rotations and rotations of the d vector" kind="boundary">
+  <div class="bilingual-section__zh">
+
+若使用与参数无关的 $U\in SU(2)$ 变换基底，$H\mapsto UHU^\dagger$。标量项 $d_0$ 不变，$\mathbf d$ 按对应的 $SO(3)$ 旋转变换。本征值和 projector 的物理子空间不变。若 $U$ 依赖 $k$，Berry connection 会额外获得基底联络项；不能只比较旋转前后的裸 $\mathbf d(k)$ 曲线而忽略基底的 $k$ 依赖。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a parameter-independent $U\in SU(2)$, the basis transformation $H\mapsto UHU^\dagger$ leaves $d_0$ unchanged and rotates $\mathbf d$ by the corresponding $SO(3)$ rotation. The eigenvalues and physical projector subspaces are unchanged. If $U$ depends on $k$, the Berry connection acquires an additional basis-connection term; the bare d-space curves cannot be compared while ignoring that momentum dependence.
+
+  </div>
+</BilingualCallout>
+
+<span id="sec-26-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 26.2 一维两带模型 | Two-Band Models in One-Space Dimension
+
+<span id="two-site-model" class="chapter-anchor" aria-hidden="true"></span>
+
+### 两站点模型 | Two-site model
+
+<BilingualSection titleZh="每个晶胞两个基底态" titleEn="Two basis states per unit cell" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+考虑每个晶胞含 $A,B$ 两个基底态的一维链。取晶胞内跃迁 $t_1$、相邻晶胞跃迁 $t_2$，并允许两子格能量差 $2\Delta$。在一个明确的 Bloch convention 下，Hamiltonian 可写成
+
+$$
+H(k)=d_0I+
+\begin{pmatrix}
+\Delta & t_1+t_2e^{-ika}\\
+t_1+t_2e^{ika} & -\Delta
+\end{pmatrix}.
+$$
+
+定义
+
+$$
+q(k)=t_1+t_2e^{-ika},
+$$
+
+则在本站约定中
+
+$$
+\mathbf d(k)=\bigl(t_1+t_2\cos ka,\ t_2\sin ka,\ \Delta\bigr).
+$$
+
+因此
+
+$$
+E_\pm(k)=d_0\pm\sqrt{t_1^2+t_2^2+2t_1t_2\cos ka+\Delta^2}.
+$$
+
+当 $\Delta=0$ 时，$\mathbf d(k)$ 位于赤道平面，$q(k)$ 在复平面画出以 $t_1$ 为圆心、半径 $|t_2|$ 的圆。是否包围原点取决于 $|t_2|$ 与 $|t_1|$ 的比较；但其拓扑解释还需要明确 chiral/inversion 约束、unit-cell convention 和物理终止。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Consider a one-dimensional chain with two basis states, $A$ and $B$, per unit cell. Let $t_1$ be the intracell hopping, $t_2$ the intercell hopping, and allow a sublattice energy difference $2\Delta$. In one explicit Bloch convention,
+
+$$
+H(k)=d_0I+
+\begin{pmatrix}
+\Delta & t_1+t_2e^{-ika}\\
+t_1+t_2e^{ika} & -\Delta
+\end{pmatrix}.
+$$
+
+Defining
+
+$$
+q(k)=t_1+t_2e^{-ika},
+$$
+
+our convention gives
+
+$$
+\mathbf d(k)=\bigl(t_1+t_2\cos ka,\ t_2\sin ka,\ \Delta\bigr).
+$$
+
+Hence
+
+$$
+E_\pm(k)=d_0\pm\sqrt{t_1^2+t_2^2+2t_1t_2\cos ka+\Delta^2}.
+$$
+
+For $\Delta=0$, the d vector lies in the equatorial plane and $q(k)$ traces a circle in the complex plane centred at $t_1$ with radius $|t_2|$. Whether it encloses the origin depends on $|t_2|$ relative to $|t_1|$, but a topological interpretation still requires the chiral or inversion constraint, the unit-cell convention, and the physical termination to be stated.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="两站点模型的最小直接带隙 | Minimum direct gap of the two-site model"
+  assumptions={[
+    't1、t2、Δ 为实数；',
+    'k 遍历完整一维 Brillouin zone；',
+    'a 只改变参数化速度，不改变最小值。',
+  ]}
+>
+
+带隙的一半满足
+
+$$
+\frac{\Delta E(k)}{2}
+=\sqrt{|t_1+t_2e^{ika}|^2+\Delta^2}.
+$$
+
+复数三角不等式给出
+
+$$
+\min_k|t_1+t_2e^{ika}|=\bigl||t_1|-|t_2|\bigr|.
+$$
+
+因此
+
+$$
+\boxed{\Delta E_{\min}=2\sqrt{\bigl(|t_1|-|t_2|\bigr)^2+\Delta^2}}.
+$$
+
+闭隙要求两个条件同时成立：$|t_1|=|t_2|$ 且 $\Delta=0$。非零 $\Delta$ 把 d 曲线抬离赤道平面，避免经过原点；这正是后续 Rice–Mele 泵中绕开瞬时闭隙的关键自由度。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="unit cell 与物理终止必须分开" titleEn="The unit cell and the physical termination are distinct" kind="boundary">
+  <div class="bilingual-section__zh">
+
+把 $B$ 轨道重新归入相邻晶胞会改变 Bloch 基底中的相位因子，从而改变 $q(k)$ 的表面形式、Zak phase 的代表值和“晶胞内/晶胞间”标签。无限体能谱不变。有限链是否切断强键或弱键则是独立的物理边界条件，直接决定 Shockley/SSH 型端态是否出现。后续所有 bulk–boundary 判断都同时记录 Bloch convention 与真实终止。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Reassigning the $B$ orbital to a neighbouring unit cell changes the phase factors in the Bloch basis, and therefore changes the displayed form of $q(k)$, the representative Zak phase, and the labels “intracell” and “intercell.” The infinite-bulk spectrum is unchanged. Whether a finite chain cuts a strong or weak bond is a separate physical boundary condition and directly controls the appearance of Shockley/SSH-type end states. Every later bulk–boundary statement records both the Bloch convention and the actual termination.
+
+  </div>
+</BilingualCallout>
+
+<span id="sp-model" class="chapter-anchor" aria-hidden="true"></span>
+
+### s–p 模型及模型映射 | The s–p model and its mapping
+
+<BilingualSection titleZh="异宇称轨道给出的另一种两带实现" titleEn="A second two-band realization from opposite-parity orbitals" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 还讨论由同一晶胞中的 $s$ 与 $p$ 型轨道构成的一维模型。由于两轨道在反演下宇称相反，最近邻异轨道跃迁对 $k\to-k$ 为奇函数，而同轨道色散为偶函数。一个方便的实参数写法是
+
+$$
+H_{sp}(k)=
+\begin{pmatrix}
+\epsilon_s+2t_s\cos ka & -2i t_{sp}\sin ka\\
+2i t_{sp}\sin ka & \epsilon_p+2t_p\cos ka
+\end{pmatrix}.
+$$
+
+在当前基底顺序中，
+
+$$
+d_0(k)=\frac{\epsilon_s+\epsilon_p}{2}+(t_s+t_p)\cos ka,
+$$
+
+$$
+d_y(k)=2t_{sp}\sin ka,
+\qquad
+d_z(k)=\frac{\epsilon_s-\epsilon_p}{2}+(t_s-t_p)\cos ka,
+$$
+
+而 $d_x=0$。因此 $\mathbf d(k)$ 位于 $y$–$z$ 平面。参数变化可使闭合曲线穿过原点，从而发生两带闭隙和轨道次序交换。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin also considers a one-dimensional model built from $s$- and $p$-like orbitals in the same unit cell. Because the two orbitals have opposite inversion parity, nearest-neighbour interorbital hopping is odd under $k\to-k$, whereas the same-orbital dispersions are even. A convenient real-parameter form is
+
+$$
+H_{sp}(k)=
+\begin{pmatrix}
+\epsilon_s+2t_s\cos ka & -2i t_{sp}\sin ka\\
+2i t_{sp}\sin ka & \epsilon_p+2t_p\cos ka
+\end{pmatrix}.
+$$
+
+In the present basis ordering,
+
+$$
+d_0(k)=\frac{\epsilon_s+\epsilon_p}{2}+(t_s+t_p)\cos ka,
+$$
+
+$$
+d_y(k)=2t_{sp}\sin ka,
+\qquad
+d_z(k)=\frac{\epsilon_s-\epsilon_p}{2}+(t_s-t_p)\cos ka,
+$$
+
+with $d_x=0$. The d curve therefore lies in the $y$–$z$ plane. Parameter changes can force that closed curve through the origin, producing a two-band gap closing and an exchange of orbital character.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="两个模型的数学相似不抹去物理差异" titleEn="Mathematical similarity does not erase physical distinctions" kind="source">
+  <div class="bilingual-section__zh">
+
+two-site 模型与 s–p 模型的 d 曲线可通过固定轴旋转映射到相似平面，因此能共享很多两带几何。然而前者的基底通常表示不同空间位置的子格，后者表示同一晶胞中的不同轨道宇称。边界切割、位置算符、极化原点和允许的对称操作并不自动相同。模型之间的对应必须逐项说明，而不能仅凭相同的 $2\times2$ 能谱宣布物理等价。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The d-space curves of the two-site and s–p models can be mapped into similar planes by a fixed rotation, so they share much of the same two-band geometry. Their physical bases are nevertheless different: the former normally represents sublattices at distinct positions, while the latter represents orbitals of different parity within one unit cell. Boundary cuts, position operators, polarization origins, and allowed symmetry operations are not automatically identical. The model correspondence must be stated component by component; equality of a two-by-two spectrum alone does not establish physical equivalence.
+
+  </div>
+</BilingualCallout>
