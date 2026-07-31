@@ -1,0 +1,196 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import FieldConventionMap from './FieldConventionMap.astro';
+
+<span id="reference-orientation"></span>
+
+## 使用定位 | Reference Orientation
+
+<BilingualSection titleZh="本附录解决什么问题" titleEn="What this Appendix resolves" eyebrow="【Martin 原书 + 补充组织 | Martin source + supplemental organization】">
+  <div class="bilingual-section__zh">
+
+Appendix E 把 Appendix D 的一般响应理论专门化为电磁响应。它回答六类相互连接但不能混为一谈的问题：Maxwell 方程中的 source 如何拆成内部与外部；为什么电导率和介电函数响应的是物质内部总场 $\mathbf E$；为什么 inverse dielectric function 对应外部 source；纵向 scalar-potential response 与横向 current response 在何种条件下可互相连接；光谱权重为何满足 $f$-sum rule；离子位移如何通过 Born effective charge 和宏观电场进入低频介电、LO–TO 与压电响应。
+
+Chapter 21 负责从电子态计算 optical spectra；Chapter 20 负责 phonon、Born charge 和 force constants；Chapter 24 负责 extended-system polarization 的 Berry-phase 定义。本附录保存它们共同依赖的 field/source convention、tensor relation、sum rule 和长波边界。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Appendix E specializes the general response framework of Appendix D to electromagnetic response. It resolves six connected but distinct questions: how Maxwell sources are divided into internal and external parts; why conductivity and dielectric functions respond to the total material field $\mathbf E$; why the inverse dielectric function responds to an external source; when longitudinal scalar-potential response and transverse current response can be related; why spectral weight obeys the $f$-sum rule; and how ionic displacements enter low-frequency dielectric, LO–TO, and piezoelectric response through Born effective charges and macroscopic fields.
+
+Chapter 21 derives optical spectra from electronic states; Chapter 20 treats phonons, Born charges, and force constants; Chapter 24 defines polarization in extended matter through Berry phases. This Appendix retains the field/source conventions, tensor relations, sum rule, and long-wavelength boundaries shared by those chapters.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本附录后应能检查" titleEn="Checks enabled by this Appendix" kind="practice">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>指出一个给定 $\epsilon$、$\epsilon^{-1}$、$\sigma$ 或 $\chi$ 的 source 是总场还是外场。</li>
+      <li>在 Gaussian 与 SI 公式之间转换，而不遗漏 $4\pi$、$\epsilon_0$、体积或时间 convention。</li>
+      <li>区分 longitudinal scalar response、transverse current response 和 $q\to0$ optical limit。</li>
+      <li>验证 $f$-sum 的积分量、单位、高频 tail 和有限窗口误差。</li>
+      <li>从 microscopic dielectric matrix 正确提取 macroscopic $\epsilon_M=1/[\epsilon^{-1}]_{00}$，而不是直接读取 $\epsilon_{00}$。</li>
+      <li>区分 Born effective charge、静态 charge partition、电子介电常数、晶格介电贡献和边界条件。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Identify whether the source of a given $\epsilon$, $\epsilon^{-1}$, $\sigma$, or $\chi$ is the total field or an external field.</li>
+      <li>Translate between Gaussian and SI expressions without losing $4\pi$, $\epsilon_0$, volume, or time-convention factors.</li>
+      <li>Distinguish longitudinal scalar response, transverse current response, and the $q\to0$ optical limit.</li>
+      <li>Check the integrated quantity, units, high-frequency tail, and finite-window error of an $f$-sum.</li>
+      <li>Extract the macroscopic dielectric function as $\epsilon_M=1/[\epsilon^{-1}]_{00}$ rather than reading $\epsilon_{00}$ directly.</li>
+      <li>Distinguish a Born effective charge, a static charge partition, the electronic dielectric constant, the lattice contribution, and the electrical boundary condition.</li>
+    </ol>
+  </div>
+</BilingualCallout>
+
+<FieldConventionMap />
+
+<span id="objects-and-conventions"></span>
+
+## 数学对象、物理对象与统一约定 | Objects, Physical Quantities, and Conventions
+
+<BilingualSection titleZh="Gaussian 电磁单位是原书公式的基础" titleEn="Martin's formulas use Gaussian electromagnetic units" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin Eqs. E.1–E.23 使用 Gaussian 电磁单位：Gauss law 含 $4\pi$，位移场满足 $\mathbf D=\mathbf E+4\pi\mathbf P$，Coulomb kernel 为 $4\pi e^2/q^2$，plasma frequency 为 $\omega_p^2=4\pi nQ^2/m_e$。这里的 $\mathbf E$ 与 $\mathbf D$ 具有相同量纲，介电张量为无量纲。
+
+若改用 SI，基本关系变为 $\mathbf D=\epsilon_0\mathbf E+\mathbf P$，relative dielectric tensor 通过 $\mathbf D=\epsilon_0\boldsymbol\epsilon_r\mathbf E$ 定义，Coulomb kernel 与 conductivity prefactor 均发生变化。网站正文保留 Martin 的 Gaussian 公式；出现 SI crosswalk 时会显式写出，绝不静默替换。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin Eqs. E.1–E.23 use Gaussian electromagnetic units: Gauss's law contains $4\pi$, the displacement field obeys $\mathbf D=\mathbf E+4\pi\mathbf P$, the Coulomb kernel is $4\pi e^2/q^2$, and the plasma frequency is $\omega_p^2=4\pi nQ^2/m_e$. In this convention $\mathbf E$ and $\mathbf D$ have the same dimensions and the dielectric tensor is dimensionless.
+
+In SI, the corresponding relation is $\mathbf D=\epsilon_0\mathbf E+\mathbf P$, the relative dielectric tensor is defined through $\mathbf D=\epsilon_0\boldsymbol\epsilon_r\mathbf E$, and both the Coulomb kernel and conductivity prefactors change. The website retains Martin's Gaussian formulas and labels any SI crosswalk explicitly rather than replacing conventions silently.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="时间 Fourier convention 与 Eq. E.11 的符号" titleEn="Time Fourier convention and the sign of Eq. E.11" eyebrow="【来源记录 + convention audit | Source record + convention audit】">
+  <div class="bilingual-section__zh">
+
+本 Part VII 默认物理场按 $e^{-i\omega t}$ 展开。由 $\partial_t\mathbf P=\mathbf j$ 得
+
+$$
+\mathbf P(\omega)=\frac{i}{\omega}\mathbf j(\omega),
+$$
+
+因此在 Gaussian 单位中
+
+$$
+\boldsymbol\epsilon(\omega)
+=\mathbf 1+\frac{4\pi i}{\omega}\boldsymbol\sigma(\omega),
+$$
+
+与 Martin Eq. E.11 相同。Martin p. 602 的正文同时写有 time dependence $\propto e^{i\omega t}$；若按该字面 convention 与 Eq. E.6 直接代数处理，conductivity prefactor 的符号会反转。网站不静默裁决该文字—公式差异，而是固定 $e^{-i\omega t}$ 并要求所有 $\operatorname{Im}\epsilon$、absorption、loss-function 与 vector-potential 公式按此复核。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Part VII uses physical fields proportional to $e^{-i\omega t}$. From $\partial_t\mathbf P=\mathbf j$,
+
+$$
+\mathbf P(\omega)=\frac{i}{\omega}\mathbf j(\omega),
+$$
+
+so Gaussian units give
+
+$$
+\boldsymbol\epsilon(\omega)
+=\mathbf 1+\frac{4\pi i}{\omega}\boldsymbol\sigma(\omega),
+$$
+
+matching Martin Eq. E.11. The prose on Martin p. 602 also states a time dependence proportional to $e^{i\omega t}$; applying that statement literally together with Eq. E.6 reverses the conductivity prefactor. The website does not silently adjudicate this prose-equation mismatch. It fixes $e^{-i\omega t}$ and rechecks every sign involving $\operatorname{Im}\epsilon$, absorption, the loss function, and the vector potential.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="source、response 与 inverse response" titleEn="Source, response, and inverse response" eyebrow="【定义 | Definitions】">
+  <div class="bilingual-section__zh">
+
+物质关系以总场为 source：
+
+$$
+\mathbf j_{\mathrm{int}}=\boldsymbol\sigma\mathbf E,
+\qquad
+\mathbf D=\boldsymbol\epsilon\mathbf E.
+$$
+
+因此 $oldsymbol\sigma$ 与 $oldsymbol\epsilon-\mathbf1$ 是对总内部场 $\mathbf E$ 的响应。反过来
+
+$$
+\mathbf E=\boldsymbol\epsilon^{-1}\mathbf D,
+$$
+
+所以 $oldsymbol\epsilon^{-1}-\mathbf1$ 是对外部-source field $\mathbf D$ 的响应。microscopic kernels 还含空间或 reciprocal indices，乘法表示 convolution/matrix multiplication；$\epsilon^{-1}_{00}$ 是 inverse matrix 的元素，不等于 $1/\epsilon_{00}$，除非所有 local-field coupling 都消失。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The material relations use the total field as their source:
+
+$$
+\mathbf j_{\mathrm{int}}=\boldsymbol\sigma\mathbf E,
+\qquad
+\mathbf D=\boldsymbol\epsilon\mathbf E.
+$$
+
+Thus $\boldsymbol\sigma$ and $\boldsymbol\epsilon-\mathbf1$ respond to the total internal field $\mathbf E$. Conversely,
+
+$$
+\mathbf E=\boldsymbol\epsilon^{-1}\mathbf D,
+$$
+
+so $\boldsymbol\epsilon^{-1}-\mathbf1$ responds to the external-source field $\mathbf D$. Microscopic kernels also carry spatial or reciprocal indices and products denote convolution or matrix multiplication. The element $\epsilon^{-1}_{00}$ belongs to the inverse matrix and is not generally $1/\epsilon_{00}$ unless every local-field coupling vanishes.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="纵向与横向 projector" titleEn="Longitudinal and transverse projectors" eyebrow="【补充定义 | Supplemental definition】">
+  <div class="bilingual-section__zh">
+
+对非零 wave vector $\mathbf q$，定义
+
+$$
+P^{L}_{\alpha\beta}(\mathbf q)
+=\frac{q_\alpha q_\beta}{q^2},
+\qquad
+P^{T}_{\alpha\beta}(\mathbf q)
+=\delta_{\alpha\beta}-P^{L}_{\alpha\beta}(\mathbf q).
+$$
+
+任意 vector field 分解为 $\mathbf E_L=P^L\mathbf E$ 与 $\mathbf E_T=P^T\mathbf E$。scalar potential 产生 $\mathbf E_L\parallel\mathbf q$；transverse electromagnetic wave 满足 $\mathbf E_T\perp\mathbf q$。在严格 $\mathbf q=0$ 时 projector 不由方向唯一确定，必须指定从哪个方向、哪个 boundary condition 和哪个 $\omega/q$ 路径取极限。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a nonzero wave vector $\mathbf q$, define
+
+$$
+P^{L}_{\alpha\beta}(\mathbf q)
+=\frac{q_\alpha q_\beta}{q^2},
+\qquad
+P^{T}_{\alpha\beta}(\mathbf q)
+=\delta_{\alpha\beta}-P^{L}_{\alpha\beta}(\mathbf q).
+$$
+
+Any vector field decomposes as $\mathbf E_L=P^L\mathbf E$ and $\mathbf E_T=P^T\mathbf E$. A scalar potential generates $\mathbf E_L\parallel\mathbf q$, while a transverse electromagnetic wave has $\mathbf E_T\perp\mathbf q$. At exactly $\mathbf q=0$ the projectors are not uniquely fixed by direction; one must state the approach direction, boundary condition, and path in the $\omega/q$ limit.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="极化与 Born charge 的 normalization" titleEn="Polarization and Born-charge normalization" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Martin Eq. E.5 把 $\mathbf P$ 作为满足 $\nabla\cdot\mathbf P=-Qn_{\mathrm{int}}$ 的 polarization field；其 macroscopic average 仍有 additive/gauge ambiguity。Martin Eq. E.20 印刷为 $Z^*|e|=\partial P/\partial R|_{E_{\mathrm{mac}}}$。若 $P$ 使用“每体积极化”单位，常见代码和文献 convention 为 $Z^*|e|=\Omega\,\partial P/\partial R$。因此读取 Born charge 时必须核对 $P$ 是 cell dipole、polarization density，还是已经吸收了晶胞体积；不能只比较数字。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin Eq. E.5 treats $\mathbf P$ as a polarization field satisfying $\nabla\cdot\mathbf P=-Qn_{\mathrm{int}}$, while its macroscopic average retains an additive or gauge ambiguity. Martin Eq. E.20 is printed as $Z^*|e|=\partial P/\partial R|_{E_{\mathrm{mac}}}$. If $P$ is a polarization density per volume, the common code and literature convention is $Z^*|e|=\Omega\,\partial P/\partial R$. A Born-charge comparison must therefore identify whether $P$ denotes a cell dipole, a polarization density, or a quantity with the cell volume already absorbed; comparing only the numerical value is insufficient.
+
+  </div>
+</BilingualCallout>
