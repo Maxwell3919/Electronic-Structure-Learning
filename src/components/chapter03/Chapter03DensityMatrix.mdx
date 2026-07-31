@@ -1,0 +1,260 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-3-5">3.5 统计力学与密度矩阵 | Statistical Mechanics and the Density Matrix</h2>
+
+<BilingualSection titleZh="密度矩阵统一纯态与热混合态" titleEn="The density matrix unifies pure and thermal mixed states" eyebrow="【Martin 原书 | Martin source】 §3.5 · pp. 68–69">
+  <div class="bilingual-section__zh">
+
+零温基态可以用一个 ket $|\Psi_0\rangle$ 描述；有限温度或经典不确定性需要一组量子态及其概率。密度算符写为
+
+$$
+\hat\rho=\sum_i p_i|\Psi_i\rangle\langle\Psi_i|,
+\qquad p_i\ge0,
+\qquad \sum_i p_i=1.
+$$
+
+它是 Hermitian、正半定且迹为一。任意 observable 的系综平均为
+
+$$
+\langle\hat O\rangle=\operatorname{Tr}(\hat\rho\hat O).
+$$
+
+纯态是特殊情形 $\hat\rho=|\Psi\rangle\langle\Psi|$，满足
+
+$$
+\hat\rho^2=\hat\rho,
+\qquad
+\operatorname{Tr}\hat\rho^2=1.
+$$
+
+一般混合态满足 $\operatorname{Tr}\hat\rho^2<1$。purity 只衡量量子统计混合，不直接等于多体 correlation 或 entanglement；一个强关联纯态仍可有全体系 purity 1，而其子系统约化密度矩阵是混合态。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A zero-temperature ground state can be represented by one ket. Finite temperature or classical uncertainty requires an ensemble of states with probabilities:
+
+$$
+\hat\rho=\sum_i p_i|\Psi_i\rangle\langle\Psi_i|,
+\qquad p_i\ge0,
+\qquad \sum_i p_i=1.
+$$
+
+The density operator is Hermitian, positive semidefinite, and trace one. Any observable has ensemble expectation
+
+$$
+\langle\hat O\rangle=\operatorname{Tr}(\hat\rho\hat O).
+$$
+
+A pure state is the special case $\hat\rho=|\Psi\rangle\langle\Psi|$, satisfying
+
+$$
+\hat\rho^2=\hat\rho,
+\qquad
+\operatorname{Tr}\hat\rho^2=1.
+$$
+
+A general mixed state has $\operatorname{Tr}\hat\rho^2<1$. Purity measures statistical mixing, not directly many-body correlation or entanglement. A strongly correlated total pure state still has total purity one, while a reduced subsystem density matrix may be mixed.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="canonical 密度矩阵来自自由能最小化 | Canonical density matrix from free-energy minimization"
+  assumptions={[
+    '固定 N,V,T 的 canonical ensemble；',
+    '允许所有正半定、迹为一的密度算符；',
+    'Hamiltonian 有定义且 partition function 有限。',
+  ]}
+>
+
+量子 Helmholtz 自由能泛函为
+
+$$
+\mathcal F[\rho]
+=\operatorname{Tr}(\hat\rho\hat H)
++k_BT\operatorname{Tr}(\hat\rho\ln\hat\rho).
+$$
+
+von Neumann 熵为
+
+$$
+S[\rho]=-k_B\operatorname{Tr}(\hat\rho\ln\hat\rho),
+$$
+
+所以 $\mathcal F=U-TS$。加入迹约束乘子 $\alpha$，变分
+
+$$
+\delta\left[
+\mathcal F[\rho]-\alpha(\operatorname{Tr}\rho-1)
+\right]=0.
+$$
+
+使用 $\delta\operatorname{Tr}(\rho\ln\rho)
+=\operatorname{Tr}[(\ln\rho+1)\delta\rho]$，得到
+
+$$
+\hat H+k_BT(\ln\hat\rho+1)-\alpha=0.
+$$
+
+因此
+
+$$
+\hat\rho=Ce^{-\beta\hat H}.
+$$
+
+由 $\operatorname{Tr}\rho=1$ 得
+
+$$
+\boxed{
+\hat\rho=\frac{e^{-\beta\hat H}}{Z}},
+\qquad
+Z=\operatorname{Tr}e^{-\beta\hat H},
+\qquad
+F=-k_BT\ln Z.
+$$
+
+在能量本征基中，$p_i=e^{-\beta E_i}/Z$。$T\to0$ 时，若基态非简并，权重集中到 $|\Psi_0\rangle$；若存在未被微小扰动解除的简并，零温极限可在简并基态子空间形成系综。
+
+<p lang="en">Minimizing $\operatorname{Tr}(\rho H)+k_BT\operatorname{Tr}(\rho\ln\rho)$ under trace normalization yields the Gibbs density operator $e^{-\beta H}/Z$. In the energy basis, its eigenvalues are Boltzmann probabilities. The zero-temperature limit selects the ground-state subspace, not necessarily one unique vector when degeneracy remains.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="grand-canonical 系综允许粒子数涨落" titleEn="The grand-canonical ensemble permits particle-number fluctuations">
+  <div class="bilingual-section__zh">
+
+当体系与粒子库交换电子时，固定的是化学势 $\mu$ 而不是 $N$。grand partition function、grand potential 和密度矩阵为
+
+$$
+\mathcal Z=\operatorname{Tr}
+ e^{-\beta(\hat H-\mu\hat N)},
+\qquad
+\Omega=-k_BT\ln\mathcal Z,
+$$
+
+$$
+\hat\rho_{GC}=\frac{e^{-\beta(\hat H-\mu\hat N)}}{\mathcal Z}.
+$$
+
+这里 trace 遍历所有粒子数扇区。平均粒子数和涨落为
+
+$$
+\langle N\rangle
+=-\left(\frac{\partial\Omega}{\partial\mu}\right)_{T,V},
+\qquad
+\langle(\Delta N)^2\rangle
+=k_BT\left(\frac{\partial\langle N\rangle}{\partial\mu}\right)_{T,V}.
+$$
+
+周期金属计算中的电子 smearing 常借用 grand-canonical Fermi 占据，但总能、自由能和外推到零 smearing 的对象必须区分。对于有限孤立带电体系，改变 $N$ 还会改变长程静电边界，不能只移动 $\mu$ 而忽略充电能与有限尺寸修正。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+When a system exchanges electrons with a reservoir, chemical potential rather than particle number is fixed. The grand partition function, grand potential, and density operator are
+
+$$
+\mathcal Z=\operatorname{Tr}
+ e^{-\beta(\hat H-\mu\hat N)},
+\qquad
+\Omega=-k_BT\ln\mathcal Z,
+$$
+
+$$
+\hat\rho_{GC}=\frac{e^{-\beta(\hat H-\mu\hat N)}}{\mathcal Z}.
+$$
+
+The trace runs over all particle-number sectors. Mean particle number and fluctuations satisfy
+
+$$
+\langle N\rangle
+=-\left(\frac{\partial\Omega}{\partial\mu}\right)_{T,V},
+\qquad
+\langle(\Delta N)^2\rangle
+=k_BT\left(\frac{\partial\langle N\rangle}{\partial\mu}\right)_{T,V}.
+$$
+
+Electronic smearing in periodic metallic calculations often uses grand-canonical Fermi occupations, but total energy, free energy, and zero-smearing extrapolation must be distinguished. For finite isolated charged systems, changing $N$ also changes long-range electrostatic boundary conditions; charging and finite-size corrections cannot be replaced by shifting $\mu$ alone.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="一体约化密度矩阵" titleEn="The one-body reduced density matrix">
+  <div class="bilingual-section__zh">
+
+全多体密度矩阵定义在指数增长的 Fock/Hilbert 空间。许多一体 observable 只需要一体约化密度矩阵
+
+$$
+\gamma(\mathbf x,\mathbf x')
+=\langle\hat\psi^\dagger(\mathbf x')
+\hat\psi(\mathbf x)\rangle.
+$$
+
+对固定 $N$，其 trace 为
+
+$$
+\int d\mathbf x\,\gamma(\mathbf x,\mathbf x)=N,
+$$
+
+对角线自旋求和给出电子密度。将 $\gamma$ 对角化得到 natural orbitals 与 occupation numbers：
+
+$$
+\gamma(\mathbf x,\mathbf x')
+=\sum_p n_p\varphi_p(\mathbf x)\varphi_p^*(\mathbf x'),
+\qquad 0\le n_p\le1.
+$$
+
+单个 Slater determinant 的占据为 0 或 1；相互作用相关态通常出现 fractional natural occupations。有限温度也会产生 fractional occupations，因此仅观察分数占据不能区分热混合与量子关联。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The full many-body density matrix lives in an exponentially large Hilbert or Fock space. Many one-body observables require only the one-body reduced density matrix
+
+$$
+\gamma(\mathbf x,\mathbf x')
+=\langle\hat\psi^\dagger(\mathbf x')
+\hat\psi(\mathbf x)\rangle.
+$$
+
+For fixed $N$,
+
+$$
+\int d\mathbf x\,\gamma(\mathbf x,\mathbf x)=N,
+$$
+
+and the spin-summed diagonal gives the electron density. Diagonalizing $\gamma$ yields natural orbitals and occupations:
+
+$$
+\gamma(\mathbf x,\mathbf x')
+=\sum_p n_p\varphi_p(\mathbf x)\varphi_p^*(\mathbf x'),
+\qquad 0\le n_p\le1.
+$$
+
+A single Slater determinant has occupations zero or one. Interacting correlated states generally have fractional natural occupations. Finite temperature also generates fractional occupations, so fractional occupation alone does not distinguish thermal mixing from quantum correlation.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="密度矩阵计算的常见混淆" titleEn="Common density-matrix confusions" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>$n(\mathbf r)$ 是一体密度，不是统计密度算符 $\hat\rho$；</li>
+      <li>Kohn–Sham occupation matrix 不是自动等于真实多体一体约化密度矩阵；</li>
+      <li>smearing entropy 可能是数值 regularization，而非目标物理温度的真实熵；</li>
+      <li>purity、entanglement entropy、thermodynamic entropy 和 correlation energy 是不同量；</li>
+      <li>canonical 与 grand-canonical 在有限体系中可有显著差异，不能无条件替换。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>$n(\mathbf r)$ is a one-body density, not the statistical density operator $\hat\rho$;</li>
+      <li>a Kohn–Sham occupation matrix is not automatically the physical many-body one-body reduced density matrix;</li>
+      <li>smearing entropy may be numerical regularization rather than thermodynamic entropy at the target temperature;</li>
+      <li>purity, entanglement entropy, thermodynamic entropy, and correlation energy are distinct quantities;</li>
+      <li>canonical and grand-canonical ensembles can differ significantly in finite systems.</li>
+    </ul>
+  </div>
+</BilingualCallout>

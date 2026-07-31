@@ -1,0 +1,106 @@
+<figure class="chapter-visual ch03-hole" data-ch03-hole>
+  <figcaption>
+    <strong>原创交互模型：exchange 与 correlation hole 的 sum rule</strong>
+    <span lang="en">Original interactive model: exchange- and correlation-hole sum rules</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>exchange 宽度 σx | Exchange width</span>
+      <input type="range" min="0.60" max="1.60" step="0.05" value="1.00" data-ch03-hole-width />
+      <output data-ch03-hole-width-output>1.00</output>
+    </label>
+    <label>
+      <span>correlation 重排幅度 a | Correlation amplitude</span>
+      <input type="range" min="0" max="0.80" step="0.05" value="0.35" data-ch03-hole-amplitude />
+      <output data-ch03-hole-amplitude-output>0.35</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 720 360" role="img" aria-labelledby="ch03-hole-title ch03-hole-desc">
+    <title id="ch03-hole-title">One-dimensional model exchange and correlation holes</title>
+    <desc id="ch03-hole-desc">The exchange curve integrates to minus one, the correlation curve integrates to zero, and their sum integrates to minus one.</desc>
+    <line x1="70" y1="175" x2="660" y2="175" class="plot-axis" />
+    <line x1="365" y1="40" x2="365" y2="310" class="plot-guide" />
+    <text x="650" y="205">x′−x</text>
+    <text x="22" y="48">hole</text>
+    <path d="M 70 175 C 250 175 315 220 365 300 C 415 220 480 175 660 175" class="ch03-hole__exchange" data-ch03-hole-exchange />
+    <path d="M 70 175 C 230 168 315 160 365 220 C 415 160 500 168 660 175" class="ch03-hole__correlation" data-ch03-hole-correlation />
+    <path d="M 70 175 C 250 170 315 225 365 310 C 415 225 480 170 660 175" class="plot-curve ch03-hole__xc" data-ch03-hole-xc />
+    <g class="ch03-hole__legend">
+      <text x="82" y="65">exchange: −1</text>
+      <text x="82" y="88">correlation: 0</text>
+      <text x="82" y="111">exchange-correlation: −1</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <strong data-ch03-hole-integrals>analytic integrals: Ix = −1; Ic = 0; Ixc = −1</strong>
+    <span data-ch03-hole-origin>at x′−x=0: nx = −0.399; nc = −0.176; nxc = −0.575</span>
+    <span data-ch03-hole-interpretation>Correlation deepens the short-range depletion and returns the same probability in a broader positive tail.</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>nx 是归一化负 Gaussian；nc=a(Gbroad−Gnarrow)，所以 ∫nx=−1、∫nc=0、∫nxc=−1。</p>
+    <p lang="en"><strong>Model:</strong> nx is a normalized negative Gaussian and nc=a(Gbroad−Gnarrow), giving ∫nx=−1, ∫nc=0, and ∫nxc=−1.</p>
+    <p><strong>验收：</strong>改变 a 只能重新分布 hole，不能改变 correlation 或 total hole 的积分；a=0 时 nxc=nx。</p>
+    <p lang="en"><strong>Acceptance:</strong> changing a redistributes the hole without changing the correlation or total integral; at a=0, nxc=nx.</p>
+    <p><strong>边界：</strong>一维 Gaussian 不是真实 Coulomb pair density；模型无 spin、cusp、晶格周期性、金属长程尾部或 coupling-constant average。</p>
+    <p lang="en"><strong>Boundary:</strong> the one-dimensional Gaussian is not a real Coulomb pair density. Spin, the Coulomb cusp, periodicity, metallic long-range tails, and coupling-constant averaging are omitted.</p>
+  </div>
+</figure>
+
+<script>
+  import {
+    exchangeCorrelationHole,
+    holeAnalyticIntegrals,
+    sampleHole,
+  } from '../lib/chapter03Models.mjs';
+
+  document.querySelectorAll('[data-ch03-hole]').forEach((root) => {
+    const widthInput = root.querySelector('[data-ch03-hole-width]');
+    const amplitudeInput = root.querySelector('[data-ch03-hole-amplitude]');
+    const widthOutput = root.querySelector('[data-ch03-hole-width-output]');
+    const amplitudeOutput = root.querySelector('[data-ch03-hole-amplitude-output]');
+    const exchangePath = root.querySelector('[data-ch03-hole-exchange]');
+    const correlationPath = root.querySelector('[data-ch03-hole-correlation]');
+    const xcPath = root.querySelector('[data-ch03-hole-xc]');
+    const integrals = root.querySelector('[data-ch03-hole-integrals]');
+    const origin = root.querySelector('[data-ch03-hole-origin]');
+    const interpretation = root.querySelector('[data-ch03-hole-interpretation]');
+    if (!(widthInput instanceof HTMLInputElement) || !(amplitudeInput instanceof HTMLInputElement)) return;
+    if (!(exchangePath instanceof SVGPathElement) || !(correlationPath instanceof SVGPathElement) || !(xcPath instanceof SVGPathElement)) return;
+
+    const xMap = (x) => 70 + (x + 6) / 12 * 590;
+    const yMap = (value) => 175 - value * 205;
+    const pathFor = (samples, key) => samples.map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.x).toFixed(2)} ${yMap(point[key]).toFixed(2)}`).join(' ');
+
+    const update = () => {
+      const exchangeWidth = Number(widthInput.value);
+      const correlationAmplitude = Number(amplitudeInput.value);
+      const options = {
+        exchangeWidth,
+        correlationAmplitude,
+        correlationNarrowWidth: 0.55,
+        correlationBroadWidth: 1.8,
+      };
+      const samples = sampleHole(options, { minimum: -6, maximum: 6, count: 241 });
+      exchangePath.setAttribute('d', pathFor(samples, 'exchange'));
+      correlationPath.setAttribute('d', pathFor(samples, 'correlation'));
+      xcPath.setAttribute('d', pathFor(samples, 'exchangeCorrelation'));
+      const central = exchangeCorrelationHole(0, options);
+      const exact = holeAnalyticIntegrals();
+      if (widthOutput instanceof HTMLOutputElement) widthOutput.value = exchangeWidth.toFixed(2);
+      if (amplitudeOutput instanceof HTMLOutputElement) amplitudeOutput.value = correlationAmplitude.toFixed(2);
+      if (integrals instanceof HTMLElement) integrals.textContent = `analytic integrals: Ix = ${exact.exchange}; Ic = ${exact.correlation}; Ixc = ${exact.exchangeCorrelation}`;
+      if (origin instanceof HTMLElement) origin.textContent = `at x′−x=0: nx = ${central.exchange.toFixed(3)}; nc = ${central.correlation.toFixed(3)}; nxc = ${central.exchangeCorrelation.toFixed(3)}`;
+      if (interpretation instanceof HTMLElement) interpretation.textContent = correlationAmplitude === 0
+        ? 'With zero correlation amplitude, the exchange-correlation hole equals the exchange hole.'
+        : 'Correlation deepens the short-range depletion and returns the same probability in a broader positive tail.';
+    };
+
+    widthInput.addEventListener('input', update);
+    amplitudeInput.addEventListener('input', update);
+    update();
+  });
+</script>

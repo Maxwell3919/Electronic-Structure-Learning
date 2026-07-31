@@ -1,0 +1,95 @@
+<h2 id="review">常见误判、原创练习与来源边界 | Misconceptions, Original Exercises, and Source Boundaries</h2>
+
+## 常见误判 | Common Misconceptions
+
+1. **Born–Oppenheimer 近似意味着原子核静止。** 它先把核坐标作为电子问题的参数，再在电子能量面上恢复核运动。  
+   **Born–Oppenheimer means nuclei do not move.** It first treats nuclear coordinates as parameters of the electronic problem and then restores nuclear motion on electronic energy surfaces.
+2. **写出基本 Hamiltonian 就已经定义了实际计算。** 还缺边界条件、相对论项、外场、核量子处理、离散表示和近似态空间。  
+   **Writing the fundamental Hamiltonian defines a practical calculation.** Boundary conditions, relativistic terms, external fields, nuclear treatment, discretization, and the approximate state space remain to be specified.
+3. **扩展体系的电子—电子、电子—核和核—核能可以独立收敛。** 长程 Coulomb 项必须按整体电中性和一致边界成组处理。  
+   **Electron–electron, electron–nuclear, and nuclear–nuclear energies converge independently in an extended system.** Long-range Coulomb terms must be grouped consistently under overall neutrality.
+4. **Hellmann–Feynman force 对任何近似波函数都精确。** 只有在完整本征态或近似变分空间中的驻点才消除隐式态导数。  
+   **Hellmann–Feynman forces are exact for any approximate wavefunction.** State-derivative terms vanish only for an exact eigenstate or a stationary point in the chosen variational space.
+5. **平面波计算没有 Pulay 问题。** 固定胞原子力通常无移动基组 Pulay 项，但变胞和 cutoff 会产生 Pulay stress。  
+   **Plane-wave calculations have no Pulay problem.** Atomic forces at fixed cell often avoid moving-basis Pulay terms, while variable-cell calculations and finite cutoffs produce Pulay stress.
+6. **coupling-constant integration 只需两个端点。** 能量差取决于整个 integrand 和路径上的 branch following。  
+   **Coupling-constant integration needs only its endpoints.** The result depends on the entire integrand and correct branch following along the path.
+7. **一体密度和密度矩阵是同一对象。** $n(\mathbf r)$ 是一体密度；统计密度算符 $\hat\rho$ 定义整个系综。  
+   **The one-body density and density matrix are the same object.** $n(\mathbf r)$ is a one-body density, while $\hat\rho$ defines the quantum ensemble.
+8. **fractional occupation 自动证明强关联。** 热混合、数值 smearing、简并和真实多体 correlation 都可能产生分数占据。  
+   **Fractional occupation automatically proves strong correlation.** Thermal mixing, numerical smearing, degeneracy, and genuine many-body correlation can all produce fractional occupations.
+9. **Hartree–Fock 是独立电子且没有电子相互作用。** Fock 算符来自 Coulomb mean field 和 exchange，仍由 occupied orbitals 自洽决定。  
+   **Hartree–Fock has no electron interaction because it looks one-particle.** Its Fock operator contains Coulomb mean field and exchange and depends self-consistently on occupied orbitals.
+10. **exchange 是一般 correlation 的同义词。** exchange 由反对称性产生；correlation 通常指单 determinant exchange 之外的相互作用效应。  
+    **Exchange is synonymous with correlation.** Exchange follows from antisymmetry, while correlation commonly means interaction effects beyond one-determinant exchange.
+11. **exchange-correlation hole 处处为负。** exchange hole 非正，但 correlation 重排可形成正尾；严格约束是 total hole 积分为 −1。  
+    **The exchange-correlation hole is negative everywhere.** The exchange hole is nonpositive, while correlation can produce positive tails; the exact total-hole integral is −1.
+12. **HF correlation energy 与 DFT correlation energy 可以直接比较。** 两者参考态和密度约束不同。  
+    **Hartree–Fock and DFT correlation energies are directly interchangeable.** Their reference states and density constraints differ.
+
+## 原创练习 | Original Exercises
+
+以下题目为本站原创，不转录 Martin 的 Chapter 3 exercises。  
+The following problems are original to this site and do not reproduce Martin's Chapter 3 exercises.
+
+1. 对两个电子和两个核的体系，逐项写出完整非相对论 Hamiltonian，并检查每项在长度缩放 $\mathbf r\to\alpha\mathbf r$ 下的量纲和缩放。  
+   Write the full nonrelativistic Hamiltonian for two electrons and two nuclei and determine the dimensional and coordinate-scaling behaviour of every term.
+2. 从绝热展开 $\Psi=\sum_a\chi_a\Phi_a$ 出发，显式求核动能作用后的 diagonal 与 off-diagonal derivative couplings，并说明何时一电子面近似失效。  
+   Starting from the adiabatic expansion, derive diagonal and off-diagonal nuclear derivative couplings and identify the breakdown of a one-surface treatment.
+3. 构造一个周期胞总电荷为零、但电子和离子 Fourier 分量分别在 $G\to0$ 发散的例子，展示中性组合后发散如何消失。  
+   Construct a neutral periodic-cell example in which separate electronic and ionic Fourier terms diverge at small $G$ and show cancellation after neutral grouping.
+4. 对归一化参数态 $|\Psi_\lambda\rangle$ 完整推导 Hellmann–Feynman relation；随后加入一个未优化变分参数，写出残余力误差。  
+   Derive the Hellmann–Feynman relation for a normalized parameter-dependent state, then add one unoptimized variational parameter and obtain the residual force error.
+5. 给定二函数非正交基，推导 $d\varepsilon/dR=c^\dagger(H'-\varepsilon S')c$，并解释 overlap derivative 的物理来源。  
+   For a two-function nonorthogonal basis, derive the generalized-eigenvalue derivative and interpret the overlap derivative.
+6. 从各向同性缩放推导 Coulomb virial relation，说明为什么非局域 pseudopotential 和有限温度熵需要附加项。  
+   Derive the Coulomb virial relation from isotropic scaling and explain why nonlocal pseudopotentials and finite-temperature entropy add terms.
+7. 选择一条 $\hat H_\lambda=\hat H_0+\lambda\hat W$ 路径，给出至少三种 quadrature，构造具有端点高曲率的 integrand 并比较误差。  
+   Choose a coupling path, compare at least three quadratures, and test them on an integrand with high endpoint curvature.
+8. 从 free-energy functional 对密度算符变分，推导 canonical Gibbs state；再推导 grand-canonical 形式和粒子数涨落公式。  
+   Derive the canonical Gibbs state by varying the density operator and then obtain the grand-canonical form and particle-number fluctuation formula.
+9. 使用二能级密度矩阵模型验证 $F=U-TS$、$T\to0$ 与 $T\to\infty$ 极限；讨论 $\Delta=0,T=0$ 时密度矩阵的约定。  
+   Use the two-level model to verify thermodynamic identities and limits and discuss the degenerate zero-temperature convention.
+10. 对三个正交 spin-orbitals 构造 Slater determinant，证明归一化并计算一体约化密度矩阵的 occupation eigenvalues。  
+    Build a three-orbital Slater determinant, prove normalization, and compute natural occupations of its one-body reduced density matrix.
+11. 从 HF orbital equation 的期望值推导 total-energy double-counting correction，并给出一个错误地把 $\sum_i\varepsilon_i$ 当总能的数值反例。  
+    Derive the Hartree–Fock double-counting correction and construct a numerical counterexample to treating the eigenvalue sum as total energy.
+12. 对一电子体系用 exchange hole sum rule 证明 $E_x=-E_H$；说明为何这不表示存在实际的第二个电子。  
+    Use the exchange-hole sum rule to prove $E_x=-E_H$ for one electron and explain why this does not imply a physical second electron.
+13. 对一个 normalized exchange hole 加入积分为零的 correlation redistribution，验证 total hole sum rule；使用交互模型比较短程和长程变化。  
+    Add a zero-integral correlation redistribution to a normalized exchange hole, verify the total-hole sum rule, and compare short- and long-range changes using the model.
+14. 比较拉伸 H$_2$ 的 restricted HF、unrestricted HF 和 two-determinant ansatz，分别指出 spin symmetry、size consistency 与 static correlation 问题。  
+    Compare restricted HF, unrestricted HF, and a two-determinant ansatz for stretched H$_2$, identifying spin symmetry, size consistency, and static-correlation issues.
+15. 为一项声称“DFT+$U$ 证明材料强关联”的研究设计证据升级路线：列出 reference dependence、occupation matrices、spectral observables、温度和独立方法检查。  
+    Design an evidence-escalation route for a claim that DFT+$U$ proves strong correlation, including reference dependence, occupation matrices, spectra, temperature, and independent checks.
+
+### 解题检查框架 | Solution-check framework
+
+- 先写 Hamiltonian、粒子数、边界条件、系综和目标 observable。  
+  State Hamiltonian, particle number, boundary conditions, ensemble, and target observable first.
+- 把严格等式、变分限制、数值离散和经验模型分开。  
+  Separate exact identities, variational restrictions, numerical discretization, and empirical modelling.
+- 检查 normalization、double counting、self-interaction、单位和极限。  
+  Check normalization, double counting, self-interaction, units, and limiting cases.
+- 对 force/stress 用 finite difference，对 hole 用 sum rule，对 density matrix 用 positivity/trace/purity 做独立检查。  
+  Independently check force/stress with finite differences, holes with sum rules, and density matrices with positivity, trace, and purity.
+- 明确结果支持的是 ground-state energy、force、spectrum、thermal average 还是 correlation interpretation。  
+  State whether the result supports a ground-state energy, force, spectrum, thermal average, or correlation interpretation.
+
+## 来源与版权边界 | Sources and Copyright Boundary
+
+- **主来源 | Primary source:** Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Chapter 3, printed pp. 60–80, §§3.1–3.7.
+- **目录定位 | Directory locators:** section titles and printed-page numbers follow the source directory. Source exercises begin on p. 78 and are not reproduced.
+- **补充推导 | Supplemental derivations:** adiabatic derivative couplings, reciprocal-space neutrality, generalized-eigenvalue Pulay terms, canonical density-matrix variation, Fermi–Dirac occupation, HF double counting, conditional-hole sum rule, and density-fixed adiabatic connection are original website derivations.
+- **原创模型 | Original models:** avoided crossing, two-level thermal density matrix, and Gaussian exchange-correlation-hole redistribution use deterministic local code and no textbook data.
+- **未包含 | Excluded:** textbook PDF, scans, source figure layouts, captions, source exercise wording/answers, long translation, credentials, restricted code, and raw material calculations.
+- **主张边界 | Claim boundary:** website completion validates chapter coverage, original explanation, formula rendering, model identities, and browser behaviour. It does not validate Martin independently, solve a real many-electron material, prove a correlation classification, or establish scientific acceptance.
+
+## 章节连接 | Chapter Connections
+
+- [Chapter 1 · Introduction](../chapter-01-introduction/)
+- [Chapter 2 · Overview](../chapter-02-overview/)
+- [Chapter 4 · Periodic Solids and Electron Bands](../chapter-04-periodic-solids-and-electron-bands/)
+- [Chapter 5 · Uniform Electron Gas and sp-Bonded Metals](../chapter-05-uniform-electron-gas-and-sp-bonded-metals/)
+- [Part II · Density Functional Theory](../../part-02-density-functional-theory/)
+- [Appendix A · Functional Equations](../../part-07-appendices/appendix-a-functional-equations/)

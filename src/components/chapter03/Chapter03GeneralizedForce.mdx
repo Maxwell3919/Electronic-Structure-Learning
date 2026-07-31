@@ -1,0 +1,200 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-3-4">3.4 广义力定理与耦合常数积分 | Generalized Force Theorem and Coupling Constant Integration</h2>
+
+<BilingualSection titleZh="任意 Hamiltonian 参数都有共轭广义力" titleEn="Every Hamiltonian parameter has a conjugate generalized force" eyebrow="【Martin 原书 | Martin source】 §3.4 · pp. 67–68">
+  <div class="bilingual-section__zh">
+
+核位置只是 Hamiltonian 参数的一种。令 $\lambda$ 连续改变外势、相互作用强度、应变、磁场或某个模型耦合，对每个 $\lambda$ 都取同一目标本征支 $|\Psi_\lambda\rangle$，则
+
+$$
+\frac{dE_\lambda}{d\lambda}
+=\left\langle\Psi_\lambda\left|
+\frac{\partial\hat H_\lambda}{\partial\lambda}
+\right|\Psi_\lambda\right\rangle.
+$$
+
+共轭广义力可定义为 $X_\lambda=-dE/d\lambda$，具体符号取决于物理约定。有限能量差由沿路径积分得到：
+
+$$
+E(\lambda_2)-E(\lambda_1)
+=\int_{\lambda_1}^{\lambda_2}
+\left\langle\frac{\partial\hat H_\lambda}{\partial\lambda}\right\rangle_\lambda d\lambda.
+$$
+
+这类路径常称 coupling-constant integration 或 adiabatic connection。这里“adiabatic”表示体系沿同一本征态支连续跟随，不是实际时间动力学必然缓慢，也不保证路径没有简并、相变或 hysteresis。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A nuclear coordinate is only one possible Hamiltonian parameter. Let $\lambda$ continuously change an external potential, interaction strength, strain, magnetic field, or model coupling. Following the same target eigenstate branch $|\Psi_\lambda\rangle$ gives
+
+$$
+\frac{dE_\lambda}{d\lambda}
+=\left\langle\Psi_\lambda\left|
+\frac{\partial\hat H_\lambda}{\partial\lambda}
+\right|\Psi_\lambda\right\rangle.
+$$
+
+A conjugate generalized force may be defined as $X_\lambda=-dE/d\lambda$, with sign depending on physical convention. A finite energy difference is obtained by path integration:
+
+$$
+E(\lambda_2)-E(\lambda_1)
+=\int_{\lambda_1}^{\lambda_2}
+\left\langle\frac{\partial\hat H_\lambda}{\partial\lambda}\right\rangle_\lambda d\lambda.
+$$
+
+Such a path is often called coupling-constant integration or an adiabatic connection. “Adiabatic” here means continuous following of the same eigenstate branch, not necessarily a real slow-time process, and it does not guarantee absence of degeneracies, phase transitions, or hysteresis.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="把电子相互作用从 0 缩放到 1" titleEn="Scaling electron interaction from 0 to 1">
+  <div class="bilingual-section__zh">
+
+考虑
+
+$$
+\hat H_\lambda=\hat T+\hat V_{\mathrm{ext}}+\lambda\hat V_{ee},
+\qquad 0\le\lambda\le1.
+$$
+
+则
+
+$$
+\frac{dE_\lambda}{d\lambda}
+=\langle\Psi_\lambda|\hat V_{ee}|\Psi_\lambda\rangle,
+$$
+
+从非相互作用到完全相互作用的能量变化为
+
+$$
+E_1-E_0=\int_0^1
+\langle\hat V_{ee}\rangle_\lambda\,d\lambda.
+$$
+
+Martin 的这一简单路径保持外势不变，因此中间态的密度一般随 $\lambda$ 改变。DFT 中更常用 density-fixed adiabatic connection：随 $\lambda$ 同时调节外势 $V_\lambda(\mathbf r)$，使 $n_\lambda(\mathbf r)=n(\mathbf r)$。两条路径的 integrand、分解和物理解释不同，不能只因为积分端点相同就混用。
+
+该方法的代价是需要非物理中间耦合的态或响应。数值上还需要选择 quadrature、处理端点曲率并确认积分路径没有跳到不同局域解。单个 $\lambda=0$ 或 $1$ 的值通常不足以恢复积分。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Consider
+
+$$
+\hat H_\lambda=\hat T+\hat V_{\mathrm{ext}}+\lambda\hat V_{ee},
+\qquad 0\le\lambda\le1.
+$$
+
+Then
+
+$$
+\frac{dE_\lambda}{d\lambda}
+=\langle\Psi_\lambda|\hat V_{ee}|\Psi_\lambda\rangle,
+$$
+
+and
+
+$$
+E_1-E_0=\int_0^1
+\langle\hat V_{ee}\rangle_\lambda\,d\lambda.
+$$
+
+Martin's direct path keeps the external potential fixed, so the density generally changes with $\lambda$. The DFT adiabatic connection more commonly adjusts $V_\lambda(\mathbf r)$ so that $n_\lambda(\mathbf r)=n(\mathbf r)$. The two paths have different integrands, decompositions, and interpretations and must not be conflated merely because their endpoints are related.
+
+The price of coupling-constant integration is the need for states or responses at unphysical intermediate coupling. Numerically, quadrature, endpoint curvature, and branch following must be checked. A value at only $\lambda=0$ or $1$ rarely determines the integral.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: finite-temperature thermodynamic integration"
+  assumptions={[
+    'canonical ensemble at fixed N,V,T;',
+    'Hamiltonian depends smoothly on λ;',
+    'the equilibrium density matrix is used at every λ.']}
+>
+
+Helmholtz 自由能为
+
+$$
+F_\lambda=-\beta^{-1}\ln Z_\lambda,
+\qquad
+Z_\lambda=\operatorname{Tr}e^{-\beta\hat H_\lambda}.
+$$
+
+对 $\lambda$ 求导。即使 $\hat H$ 与 $\partial_\lambda\hat H$ 不对易，Duhamel identity 与 trace 的循环性给出
+
+$$
+\frac{dZ_\lambda}{d\lambda}
+=-\beta\operatorname{Tr}
+\left[e^{-\beta\hat H_\lambda}
+\frac{\partial\hat H_\lambda}{\partial\lambda}
+\right].
+$$
+
+因此
+
+$$
+\boxed{
+\frac{dF_\lambda}{d\lambda}
+=\operatorname{Tr}
+\left(\hat\rho_\lambda
+\frac{\partial\hat H_\lambda}{\partial\lambda}
+\right)
+=\left\langle\frac{\partial\hat H_\lambda}{\partial\lambda}\right\rangle_{T,\lambda}}
+$$
+
+以及
+
+$$
+F_1-F_0=\int_0^1
+\left\langle\partial_\lambda\hat H_\lambda\right\rangle_{T,\lambda}\,d\lambda.
+$$
+
+这正是 classical/quantum thermodynamic integration 的共同结构。若采样在一阶相变附近滞留于亚稳 basin，积分得到的是路径和采样历史依赖的 branch free energy，而非自动得到平衡自由能。
+
+<p lang="en">Differentiating the canonical partition function yields $dF/d\lambda=\langle\partial_\lambda H\rangle_T$. The formula does not require $H$ and its derivative to commute because trace cyclicity removes the operator-ordering complication. In practice, metastability and incomplete sampling can turn the integral into a branch-dependent free energy.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="力定理近似与冻结势思想" titleEn="Force-theorem approximations and frozen-potential ideas">
+  <div class="bilingual-section__zh">
+
+严格广义力公式要求每个 $\lambda$ 上的态达到相应变分驻点。实际电子结构中常用冻结密度或冻结势近似：只改变 Hamiltonian 的显式一体部分，使用参考态估算能量差、磁各向异性或小结构扰动。这样可以降低成本，但被忽略的自洽响应通常从二阶开始只在参考态足够接近、能量泛函真正驻定且占据没有非解析变化时成立。
+
+如果扰动导致能级交叉、金属占据改变、强电荷转移、磁态切换或软模，自洽重排可能是一阶重要量。冻结势结果应与若干完全自洽点比较，并明确它估计的是 band-energy difference、总能 difference 还是某个广义力。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The exact generalized-force formula requires a variational stationary state at every $\lambda$. Practical electronic-structure work often uses frozen-density or frozen-potential approximations, changing only the explicit one-body Hamiltonian and estimating structural, magnetic-anisotropy, or other small energy differences from a reference state. Neglected self-consistent response begins at higher order only when the reference is truly stationary, nearby, and occupations vary smoothly.
+
+Level crossings, metallic occupation changes, strong charge transfer, magnetic-state switching, and soft modes can make self-consistent rearrangement first-order important. A frozen-potential result should be compared with selected fully self-consistent points and should state whether it estimates a band-energy difference, a total-energy difference, or a generalized force.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="耦合常数积分的验收要求" titleEn="Acceptance requirements for coupling-constant integration" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>写明 $\hat H_\lambda$、固定量和端点物理意义；</li>
+      <li>说明跟踪 ground state、特定对称性支还是亚稳支；</li>
+      <li>对 $\lambda$ 网格和 quadrature 收敛，并检查端点奇异或高曲率；</li>
+      <li>监测密度、占据、磁矩和结构是否发生不连续跳变；</li>
+      <li>有限温度路径需证明采样跨越相关 basin 并报告统计误差。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>state $\hat H_\lambda$, fixed quantities, and physical meaning of both endpoints;</li>
+      <li>state whether the path follows the ground state, a symmetry branch, or a metastable branch;</li>
+      <li>converge the $\lambda$ grid and quadrature and inspect endpoint singularity or curvature;</li>
+      <li>monitor discontinuities in density, occupations, moments, and structure;</li>
+      <li>at finite temperature, demonstrate adequate basin sampling and report statistical uncertainty.</li>
+    </ul>
+  </div>
+</BilingualCallout>
