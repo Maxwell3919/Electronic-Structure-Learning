@@ -1,0 +1,216 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="method-comparison" class="chapter-anchor" aria-hidden="true"></span>
+
+## 方法比较与实际计算连接 | Method Comparison and Connection to Computation
+
+<BilingualSection titleZh="本章方法的固定比较维度" titleEn="Fixed comparison dimensions for the methods in this chapter">
+  <div class="bilingual-section__zh">
+
+| 方法 | 表示与边界 | 矩阵结构 | 系统控制参数 | 主要误差 |
+|---|---|---|---|---|
+| 平面波 | 周期体积中的全局 Fourier 基 | 正交基；动能对角；局域势借助 FFT 应用 | $E_{\mathrm{cut}}$、FFT 网格、k 点 | 基组截断、aliasing、k 积分、周期镜像 |
+| 均匀有限差分 | 网格点值与指定边界条件 | 局部稀疏 stencil | spacing $h$、stencil 阶数、盒长 | 截断误差、数值色散、边界误差 |
+| 有限元 / DG | 单元局部多项式与弱形式 | 稀疏块矩阵；DG 含界面通量 | 单元尺寸、阶数、penalty/flux | quadrature、界面、网格质量、局部加密误差 |
+| Wavelet / 多分辨率 | 按尺度与位置组织的局域函数 | 层级稀疏或压缩结构 | 尺度层级、阈值、细化准则 | 截断、层级传递、长程项与全局量误差 |
+
+“系统可收敛”必须指明控制序列和范数。平面波通过增加 cutoff 建立嵌套空间；有限差分通过 $h\to0$ 或提高阶数；有限元通过 $h/p$ refinement；wavelet 通过增加尺度和降低阈值。不同路线在严格极限中可逼近同一连续问题，但有限成本下的误差分布不同。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+| Method | Representation and boundary | Matrix structure | Systematic control | Main errors |
+|---|---|---|---|---|
+| Plane waves | Global Fourier basis in a periodic volume | Orthogonal; diagonal kinetic term; local potential applied by FFT | $E_{\mathrm{cut}}$, FFT grid, k points | Basis truncation, aliasing, k integration, periodic images |
+| Uniform finite difference | Grid values with stated boundary conditions | Local sparse stencil | Spacing $h$, stencil order, box size | Truncation, numerical dispersion, boundary error |
+| Finite element / DG | Element-local polynomials and weak form | Sparse block matrix; DG includes interface fluxes | Element size, order, penalty or flux | Quadrature, interface, mesh quality, refinement error |
+| Wavelet / multiresolution | Localized functions organized by scale and position | Hierarchical sparse or compressed structure | Scale depth, threshold, refinement criterion | Truncation, interlevel transfer, long-range and global-observable error |
+
+“Systematically convergent” requires a declared control sequence and norm. Plane waves enlarge an embedded space by raising the cutoff; finite differences take $h\to0$ or raise order; finite elements use $h/p$ refinement; wavelets add scales and lower thresholds. The routes can approach the same continuous problem in their strict limits, while distributing finite-cost error differently.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="理论方法到科学判断的证据链" titleEn="Evidence chain from method to scientific judgment" kind="practice">
+  <div class="bilingual-section__zh">
+
+```text
+连续 Hamiltonian 与边界条件
+→ 有限表示：Ecut / h / element order / wavelet threshold
+→ 有限矩阵或算子应用
+→ 本征残差与数值停止条件
+→ 基组、网格、k 点、盒长的独立收敛
+→ 总能、力、带隙、密度等目标 observable
+→ 方法适用性和物理解释
+```
+
+任一箭头都需要输入和判定标准。程序正常退出只覆盖执行状态；小本征残差只覆盖有限问题；SCF 收敛属于 Chapter 13 的另一层；这些条件都不能单独证明目标 observable 或论文主张。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+```text
+continuous Hamiltonian and boundary conditions
+→ finite representation: Ecut / h / element order / wavelet threshold
+→ finite matrix or operator application
+→ eigen-residual and numerical stopping criteria
+→ independent convergence in basis, grid, k points, and box size
+→ target observable: energy, force, gap, density, ...
+→ method applicability and physical interpretation
+```
+
+Every arrow needs inputs and an acceptance criterion. Normal program termination covers execution state only; a small eigen-residual covers the finite problem; SCF convergence is another layer introduced in Chapter 13. None of these conditions alone validates the target observable or a scientific claim.
+
+  </div>
+</BilingualCallout>
+
+### 实践连接 | Practical connection
+
+<BilingualSection titleZh="如何设计最低充分收敛检查" titleEn="Designing a minimally sufficient convergence check">
+  <div class="bilingual-section__zh">
+
+Sholl–Steckel 对简单固体和表面计算的实践讨论可转化为四个独立序列：
+
+<ol>
+  <li>固定几何、k 网格和其他设置，增加平面波 cutoff 或减小实空间 spacing；</li>
+  <li>固定表示精度，增加 k 点密度；</li>
+  <li>对分子、表面或缺陷，增加 supercell 尺寸或真空厚度；</li>
+  <li>对每条序列记录目标量，而不只记录总能或程序 residual。</li>
+</ol>
+
+判定标准应在运行前给出，例如相对能量差、最大力、带隙或密度积分在相邻两个更严格设置间变化小于给定容差。一个参数的稳定不能替代另一个参数的检查；若序列间强耦合，应采用二维或分阶段验证并说明固定条件。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The practical discussions of simple solids and surfaces in Sholl–Steckel can be converted into four independent sequences:
+
+<ol>
+  <li>Hold geometry, k mesh, and other settings fixed while raising the plane-wave cutoff or reducing the real-space spacing.</li>
+  <li>Hold representation accuracy fixed while increasing k-point density.</li>
+  <li>For molecules, surfaces, or defects, enlarge the supercell or vacuum region.</li>
+  <li>Record the target observable in every sequence rather than only the total energy or program residual.</li>
+</ol>
+
+The acceptance criterion should be declared before the runs, for example a change below a specified tolerance in a relative energy, maximum force, band gap, or density integral between the two strictest settings. Stability in one parameter does not replace checks in another. Strongly coupled sequences require a two-dimensional or staged validation with fixed conditions stated explicitly.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="为什么不能给出通用 cutoff" titleEn="Why no universal cutoff can be prescribed" kind="boundary">
+  <div class="bilingual-section__zh">
+
+所需 cutoff 或 spacing 取决于赝势/全电子处理、元素、局域化程度、目标 observable、力或应力精度以及程序对参数的定义。固定数值只能在给定输入族和验收标准下成立。本章因此提供收敛逻辑，不给所有材料通用的参数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The required cutoff or spacing depends on pseudopotential or all-electron treatment, chemical elements, localization, target observable, force or stress accuracy, and the program's parameter definition. A fixed value is valid only for a stated input family and acceptance criterion. This chapter therefore supplies convergence logic rather than a universal parameter for all materials.
+
+  </div>
+</BilingualCallout>
+
+### 常见误判 | Common misjudgments
+
+<BilingualSection titleZh="需要被排除的推断跳跃" titleEn="Inference jumps that must be rejected">
+  <div class="bilingual-section__zh">
+
+<ul>
+  <li><strong>“平面波基是完备的，所以有限 cutoff 已经准确。”</strong> 完备性属于无限极限；有限计算仍有截断误差。</li>
+  <li><strong>“cutoff 增加后总能下降，因此所有性质都收敛。”</strong> Rayleigh–Ritz 单调性只在固定线性问题和嵌套子空间中成立；不同 observable 需要分别检查。</li>
+  <li><strong>“FFT 网格很细，所以 k 点也足够。”</strong> 实空间分辨率与 Brillouin 区积分是独立离散。</li>
+  <li><strong>“高对称线没有穿越费米能，所以体系绝缘。”</strong> 路径外状态仍可能形成口袋。</li>
+  <li><strong>“实空间矩阵稀疏，所以算法一定更快。”</strong> 自由度数、谱条件、预条件、通信和精度目标共同决定成本。</li>
+  <li><strong>“两个程序结果接近，所以结果正确。”</strong> 一致性只有在 Hamiltonian、边界、核处理、占据和收敛标准对齐后才有明确含义；共同偏差仍可能存在。</li>
+</ul>
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<ul>
+  <li><strong>“The plane-wave basis is complete, so a finite cutoff is already accurate.”</strong> Completeness belongs to the infinite limit; a finite calculation retains truncation error.</li>
+  <li><strong>“The total energy decreases with cutoff, so every property is converged.”</strong> Rayleigh–Ritz monotonicity applies to a fixed linear problem in nested subspaces; different observables require separate checks.</li>
+  <li><strong>“The FFT grid is fine, so the k mesh is also sufficient.”</strong> Real-space resolution and Brillouin-zone integration are independent discretizations.</li>
+  <li><strong>“No symmetry-line band crosses the Fermi level, so the system is insulating.”</strong> Off-path states can still form pockets.</li>
+  <li><strong>“A real-space matrix is sparse, so the algorithm must be faster.”</strong> Degrees of freedom, spectral conditioning, preconditioning, communication, and accuracy jointly set cost.</li>
+  <li><strong>“Two codes agree, so the result is correct.”</strong> Agreement has a clear meaning only after aligning Hamiltonian, boundaries, core treatment, occupations, and convergence criteria; a shared bias may remain.</li>
+</ul>
+
+  </div>
+</BilingualSection>
+
+<span id="exercises" class="chapter-anchor" aria-hidden="true"></span>
+
+## 原创练习 | Original Exercises
+
+<BilingualSection titleZh="推导与证据审查" titleEn="Derivation and evidence audit">
+  <div class="bilingual-section__zh">
+
+<ol>
+  <li><strong>周期归一化。</strong> 从一维积分开始，推导三维平面波的 Kronecker 正交关系，并说明无限体积极限中求和测度如何变成积分测度。</li>
+  <li><strong>势矩阵。</strong> 对 <code>V(x)=2V₁ cos(G₀x)</code>，列出非零 <code>⟨k+G|V|k+G′⟩</code>，画出矩阵带状结构，并说明为何只耦合相差 <code>±G₀</code> 的基函数。</li>
+  <li><strong>Bragg 能隙。</strong> 从一般复数 <code>V_G=|V_G| exp(iφ)</code> 的二态矩阵求本征值和归一化本征矢，判断 <code>φ</code> 影响哪些量。</li>
+  <li><strong>结构因子。</strong> 对一维三点基元 <code>0,a/3,2a/3</code> 计算 <code>S_m</code>，找出消光级次，并区分振幅消光和强度消光。</li>
+  <li><strong>密度带宽。</strong> 设轨道仅含 <code>G=0,±G₀</code>，显式展开 <code>|ψ|²</code>，列出密度中出现的所有 Fourier 分量。</li>
+  <li><strong>有限差分误差。</strong> 用 Taylor 展开推导五点四阶二阶导数 stencil，并对 <code>exp(ikx)</code> 求数值色散至 <code>O((kh)⁴)</code>。</li>
+  <li><strong>收敛设计。</strong> 为“两个晶体结构的相对能量达到 1 meV/atom 精度”设计 cutoff、k 点和体积三类检查，列出固定输入、输出和接受标准。</li>
+  <li><strong>证据上限。</strong> 给定一次成功运行、一个小 SCF residual、一张高对称线能带和两个程序接近的总能，逐项写出它们能支持和不能支持的结论。</li>
+</ol>
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<ol>
+  <li><strong>Periodic normalization.</strong> Begin from a one-dimensional integral, derive the three-dimensional Kronecker orthogonality of plane waves, and explain how the sum measure becomes an integral measure in the infinite-volume limit.</li>
+  <li><strong>Potential matrix.</strong> For <code>V(x)=2V₁ cos(G₀x)</code>, list the nonzero <code>⟨k+G|V|k+G′⟩</code> elements, sketch the matrix bandwidth, and explain why only basis functions separated by <code>±G₀</code> are coupled.</li>
+  <li><strong>Bragg gap.</strong> Starting from a general complex <code>V_G=|V_G| exp(iφ)</code>, obtain eigenvalues and normalized eigenvectors of the two-state matrix and identify which quantities depend on <code>φ</code>.</li>
+  <li><strong>Structure factor.</strong> For a one-dimensional three-site basis at <code>0,a/3,2a/3</code>, calculate <code>S_m</code>, find extinct orders, and distinguish amplitude extinction from intensity extinction.</li>
+  <li><strong>Density bandwidth.</strong> Let an orbital contain only <code>G=0,±G₀</code>. Expand <code>|ψ|²</code> explicitly and list all Fourier components appearing in the density.</li>
+  <li><strong>Finite-difference error.</strong> Derive a five-point fourth-order stencil for the second derivative by Taylor expansion and obtain its numerical dispersion for <code>exp(ikx)</code> through <code>O((kh)⁴)</code>.</li>
+  <li><strong>Convergence design.</strong> Design cutoff, k-point, and volume checks for a relative energy target of 1 meV/atom between two crystal structures, specifying fixed inputs, outputs, and acceptance criteria.</li>
+  <li><strong>Evidence ceiling.</strong> Given a successful run, a small SCF residual, one symmetry-line band plot, and similar total energies from two codes, state separately what each observation does and does not support.</li>
+</ol>
+
+  </div>
+</BilingualSection>
+
+## 来源与边界 | Sources and Boundaries
+
+<BilingualSection titleZh="本章来源记录" titleEn="Source record for this chapter">
+  <div class="bilingual-section__zh">
+
+<ul>
+  <li>【Martin 原书 | Martin source】Part IV overview，印刷页 259–261；Chapter 12，印刷页 262–280，§§12.1–12.9。</li>
+  <li>【Martin 原书 | Martin source】Appendix F，印刷页 607–619，用于扩展体系 Coulomb 与周期边界背景；Appendix L，651–659，用于有限差分背景；Appendix M，661–676，用于 FFT、迭代和预条件的数值背景。</li>
+  <li>【外部实践来源 | External practice source】Sholl–Steckel Chapter 2，印刷页 35–47；Chapter 4，83–109；Chapter 10，209–225。仅用于周期固体、表面 supercell 和精度检查的实践连接。</li>
+  <li>【原创教学模型 | Original teaching models】Fourier 截断、二态近自由电子、两点结构因子、中心差分色散。其解析条件由 <code>scripts/validate-part04-ch12.mjs</code> 检查。</li>
+  <li>本页未复制教材图、教材正文、教材练习或答案；所有图形、推导和练习均为网站原创表达。</li>
+</ul>
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+<ul>
+  <li>【Martin source】Part IV overview, printed pp. 259–261; Chapter 12, printed pp. 262–280, §§12.1–12.9.</li>
+  <li>【Martin source】Appendix F, printed pp. 607–619, for periodic Coulomb background; Appendix L, pp. 651–659, for finite-difference background; Appendix M, pp. 661–676, for numerical background on FFTs, iteration, and preconditioning.</li>
+  <li>【External practice source】Sholl–Steckel Chapter 2, printed pp. 35–47; Chapter 4, pp. 83–109; Chapter 10, pp. 209–225. These are used only for practical links to periodic solids, surface supercells, and accuracy checks.</li>
+  <li>【Original teaching models】Fourier truncation, a two-state nearly-free-electron model, a two-site structure factor, and central-difference dispersion. Their analytic conditions are checked by <code>scripts/validate-part04-ch12.mjs</code>.</li>
+  <li>No textbook figure, body prose, exercise, or answer is reproduced. All diagrams, derivations, and exercises are original website expressions.</li>
+</ul>
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="当前不能由本章推出的结论" titleEn="Conclusions not licensed by this chapter" kind="boundary">
+  <div class="bilingual-section__zh">
+
+本章没有验证任何具体材料、赝势、软件版本或生产计算参数；没有建立 SCF、力、应力或分子动力学收敛；没有证明任一方法在所有体系上更准确或更快。它建立的是表示、离散、矩阵结构和误差分类，供 Chapter 13 的全计算流程使用。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+This chapter validates no particular material, pseudopotential, software version, or production parameter. It establishes no SCF, force, stress, or molecular-dynamics convergence, and does not show that one method is universally more accurate or faster. It establishes the representation, discretization, matrix structure, and error taxonomy needed by the full calculations in Chapter 13.
+
+  </div>
+</BilingualCallout>

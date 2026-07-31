@@ -1,15 +1,43 @@
 ---
 title: "Part IV · Determination of Electronic Structure: The Basic Methods"
-description: "电子结构的基本求解方法的完整目录级阅读骨架。"
+description: "从连续独立粒子方程进入平面波、实空间、局域轨道、增强函数与线性标度表示。"
 sidebar:
   order: 0
   label: "Part IV · Determination of Electronic Structure: The Basic Methods"
 ---
 
+import BilingualSection from '../../../components/BilingualSection.astro';
 import TrackOverview from '../../../components/TrackOverview.astro';
 import catalog from '../../../data/martin/index.mjs';
 
 # 电子结构的基本求解方法
+
+<BilingualSection titleZh="统一方法主线" titleEn="A unified route through the methods" eyebrow="Part IV">
+  <div class="bilingual-section__zh">
+
+Part IV 从同一个连续独立粒子方程出发，依次研究平面波与网格、局域原子轨道、APW/KKR/MTO 增强函数，以及利用局域性构造的线性标度方法。每章都把物理方程、有限表示、求解算法、数值误差和可支持的科学判断分开。
+
+```text
+连续方程 → 表示/离散 → Hc=εSc 或 Green's function
+         → 密度/密度矩阵 → 自洽循环 → observable 收敛
+```
+
+Chapter 12 已进入完整正文；后续章节仍按目录顺序保持 outline，只有上一章合并和部署后才开始下一章。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Part IV begins from the same continuous independent-particle equation and then studies plane waves and grids, localized atom-centered orbitals, APW/KKR/MTO augmented functions, and linear-scaling methods built from locality. Each chapter keeps the physical equation, finite representation, solution algorithm, numerical error, and supported scientific judgment separate.
+
+```text
+continuous equation → representation/discretization → Hc=εSc or Green's function
+                    → density/density matrix → self-consistency → observable convergence
+```
+
+Chapter 12 now contains the full body. Later chapters remain directory-level outlines and are opened only after the preceding chapter has been merged and deployed.
+
+  </div>
+</BilingualSection>
 
 <TrackOverview
   sourceTitle={catalog.source.title}
