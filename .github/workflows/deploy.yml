@@ -115,6 +115,7 @@ jobs:
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-a.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-b.py
           .venv-pages-smoke/bin/python scripts/smoke-part07-app-c.py
+          .venv-pages-smoke/bin/python scripts/smoke-part07-app-d.py
 
       - name: Upload browser-smoke evidence
         if: always()

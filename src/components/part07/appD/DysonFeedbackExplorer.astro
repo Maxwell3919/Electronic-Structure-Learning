@@ -1,0 +1,147 @@
+---
+import {
+  responseModelDefaults,
+  scalarDysonResponse,
+} from '../../../data/part07/responseGreenModel.mjs';
+
+const defaults = scalarDysonResponse({
+  bareResponse: responseModelDefaults.bareResponse,
+  kernel: responseModelDefaults.kernel,
+});
+const fallbackCases = [
+  { bareResponse: -0.8, kernel: 0 },
+  { bareResponse: -0.8, kernel: 0.6 },
+  { bareResponse: -0.8, kernel: -0.8 },
+].map((entry) => ({ ...entry, ...scalarDysonResponse(entry) }));
+---
+
+<figure class="chapter-visual dyson-explorer" data-dyson-explorer>
+  <figcaption>
+    <strong>原创交互模型：标量 Dyson 自洽反馈</strong>
+    <span lang="en">Original interactive model: scalar Dyson self-consistent feedback</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls dyson-explorer__controls">
+    <label>
+      <span>bare response χ⁰</span>
+      <input type="range" min="-1.5" max="-0.1" step="0.05" value={responseModelDefaults.bareResponse} data-dyson-bare />
+      <output data-dyson-bare-output>{responseModelDefaults.bareResponse.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>feedback kernel K</span>
+      <input type="range" min="-1.0" max="1.0" step="0.05" value={responseModelDefaults.kernel} data-dyson-kernel />
+      <output data-dyson-kernel-output>{responseModelDefaults.kernel.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 250" role="img" aria-labelledby="dyson-title dyson-desc">
+    <title id="dyson-title">Scalar feedback loop for the Dyson response equation</title>
+    <desc id="dyson-desc">
+      An external source enters a bare response chi zero. The induced density passes through a kernel K and feeds back into the effective source. The displayed denominator and screened response update with keyboard-operable sliders.
+    </desc>
+    <defs>
+      <marker id="dyson-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 z" class="dyson-explorer__arrowhead" />
+      </marker>
+    </defs>
+    <rect x="55" y="78" width="150" height="74" rx="12" class="dyson-explorer__box" />
+    <text x="130" y="106" text-anchor="middle">external source</text>
+    <text x="130" y="132" text-anchor="middle">δVext</text>
+    <line x1="205" y1="115" x2="290" y2="115" marker-end="url(#dyson-arrow)" class="dyson-explorer__arrow" />
+    <rect x="300" y="78" width="160" height="74" rx="12" class="dyson-explorer__box" />
+    <text x="380" y="106" text-anchor="middle">bare response</text>
+    <text x="380" y="132" text-anchor="middle">χ⁰</text>
+    <line x1="460" y1="115" x2="545" y2="115" marker-end="url(#dyson-arrow)" class="dyson-explorer__arrow" />
+    <rect x="555" y="78" width="150" height="74" rx="12" class="dyson-explorer__box dyson-explorer__box--accent" />
+    <text x="630" y="106" text-anchor="middle">induced density</text>
+    <text x="630" y="132" text-anchor="middle">δn = χ δVext</text>
+    <path d="M630 152 C630 218, 380 218, 380 152" marker-end="url(#dyson-arrow)" class="dyson-explorer__arrow" />
+    <rect x="475" y="184" width="150" height="48" rx="10" class="dyson-explorer__kernel" />
+    <text x="550" y="214" text-anchor="middle">δVint = K δn</text>
+  </svg>
+
+  <div class="chapter-visual__readout dyson-explorer__readout" aria-live="polite">
+    <span>denominator | 分母</span>
+    <strong data-dyson-denominator>{defaults.denominator.toFixed(3)}</strong>
+    <span>screened χ | 自洽响应</span>
+    <strong data-dyson-screened>{defaults.screenedResponse.toFixed(3)}</strong>
+    <span>inverse check | 逆响应检查</span>
+    <strong data-dyson-inverse>{defaults.inverseScreened.toFixed(3)}</strong>
+  </div>
+
+  <div class="dyson-explorer__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>χ⁰</th><th>K</th><th>1−χ⁰K</th><th>χ</th></tr></thead>
+      <tbody>
+        {fallbackCases.map((entry) => (
+          <tr>
+            <td>{entry.bareResponse.toFixed(2)}</td>
+            <td>{entry.kernel.toFixed(2)}</td>
+            <td>{entry.denominator.toFixed(2)}</td>
+            <td>{entry.screenedResponse.toFixed(3)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>单个无量纲通道满足 <code>δn=χ⁰(δVext+Kδn)</code>，因此 <code>χ=χ⁰/(1−χ⁰K)</code> 和 <code>χ⁻¹=(χ⁰)⁻¹−K</code>。</p>
+    <p lang="en"><strong>Model:</strong> one dimensionless channel obeys <code>δn=χ⁰(δVext+Kδn)</code>, giving <code>χ=χ⁰/(1−χ⁰K)</code> and <code>χ⁻¹=(χ⁰)⁻¹−K</code>.</p>
+    <p><strong>输入：</strong><code>χ⁰∈[−1.5,−0.1]</code>、<code>K∈[−1,1]</code>；原生 range 控件支持键盘方向键。默认值为 <code>χ⁰=−0.8</code>、<code>K=0.6</code>。</p>
+    <p lang="en"><strong>Inputs:</strong> <code>χ⁰∈[−1.5,−0.1]</code> and <code>K∈[−1,1]</code>; native range controls support arrow keys. Defaults are <code>χ⁰=−0.8</code> and <code>K=0.6</code>.</p>
+    <p><strong>验收：</strong><code>K=0</code> 时 <code>χ=χ⁰</code>；两种逆响应表达式数值一致；接近 <code>1−χ⁰K=0</code> 时模型 fail-closed。</p>
+    <p lang="en"><strong>Acceptance:</strong> at <code>K=0</code>, <code>χ=χ⁰</code>; the two inverse-response expressions agree numerically; the model fails closed near <code>1−χ⁰K=0</code>.</p>
+    <p><strong>边界：</strong>标量模型没有矩阵次序、空间非局域性、频率依赖和 local-field inversion，不能替代真实 TDDFT/DFPT 响应。</p>
+    <p lang="en"><strong>Boundary:</strong> the scalar model omits matrix ordering, spatial nonlocality, frequency dependence, and local-field inversion; it cannot replace a real TDDFT or DFPT response calculation.</p>
+  </div>
+</figure>
+
+<script>
+  import { scalarDysonResponse } from '../../../data/part07/responseGreenModel.mjs';
+
+  document.querySelectorAll('[data-dyson-explorer]').forEach((root) => {
+    const bare = root.querySelector('[data-dyson-bare]');
+    const kernel = root.querySelector('[data-dyson-kernel]');
+    const bareOutput = root.querySelector('[data-dyson-bare-output]');
+    const kernelOutput = root.querySelector('[data-dyson-kernel-output]');
+    const denominator = root.querySelector('[data-dyson-denominator]');
+    const screened = root.querySelector('[data-dyson-screened]');
+    const inverse = root.querySelector('[data-dyson-inverse]');
+    if (!(bare instanceof HTMLInputElement) || !(kernel instanceof HTMLInputElement)) return;
+
+    const update = () => {
+      try {
+        const result = scalarDysonResponse({ bareResponse: Number(bare.value), kernel: Number(kernel.value) });
+        if (bareOutput instanceof HTMLOutputElement) bareOutput.value = result.bareResponse.toFixed(2);
+        if (kernelOutput instanceof HTMLOutputElement) kernelOutput.value = result.kernel.toFixed(2);
+        if (denominator instanceof HTMLElement) denominator.textContent = result.denominator.toFixed(3);
+        if (screened instanceof HTMLElement) screened.textContent = result.screenedResponse.toFixed(3);
+        if (inverse instanceof HTMLElement) inverse.textContent = result.inverseScreened.toFixed(3);
+      } catch {
+        if (denominator instanceof HTMLElement) denominator.textContent = 'singular';
+        if (screened instanceof HTMLElement) screened.textContent = 'undefined';
+        if (inverse instanceof HTMLElement) inverse.textContent = 'undefined';
+      }
+    };
+    bare.addEventListener('input', update);
+    kernel.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .dyson-explorer { overflow-x: auto; }
+  .dyson-explorer svg { width: 100%; min-width: 38rem; }
+  .dyson-explorer text { fill: currentColor; font-size: 14px; }
+  .dyson-explorer__box { fill: var(--sl-color-gray-6); stroke: var(--sl-color-gray-4); stroke-width: 2; }
+  .dyson-explorer__box--accent { stroke: var(--sl-color-accent-high); }
+  .dyson-explorer__kernel { fill: var(--sl-color-gray-7); stroke: var(--sl-color-accent-high); }
+  .dyson-explorer__arrow { fill: none; stroke: currentColor; stroke-width: 2; }
+  .dyson-explorer__arrowhead { fill: currentColor; }
+  .dyson-explorer__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+  .dyson-explorer__controls label { display: grid; gap: 0.35rem; }
+  .dyson-explorer__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.45rem 1rem; }
+  .dyson-explorer__fallback { max-width: 36rem; }
+</style>

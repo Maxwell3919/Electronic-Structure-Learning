@@ -1,0 +1,293 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import PerturbationResponseMap from './PerturbationResponseMap.astro';
+import DysonFeedbackExplorer from './DysonFeedbackExplorer.astro';
+
+<PerturbationResponseMap />
+
+<span id="section-d-1"></span>
+
+## D.1 微扰理论 | Perturbation Theory
+
+<BilingualSection titleZh="非简并参考态的一阶方程" titleEn="First-order equation for a nondegenerate reference state" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+令 Hamiltonian、能量和归一化态沿形式参数 $\lambda$ 展开。零阶方程确定参考本征态。收集 $\lambda^1$ 的项得到一阶 Schrödinger 方程。将它左乘参考态，利用 Hermiticity 和归一化条件，可分离出一阶能量；再用补空间 projector $Q_n$ 消除平行于参考态的分量，得到只在正交补空间中求解的一阶态方程。
+
+这里的前提不是“扰动很小”这一句话，而是：参考本征值在所考虑子空间中孤立；所选归一化固定了沿参考态的 gauge；Hamiltonian 和态的展开在目标参数区间内有意义。接近简并或发生 level crossing 时，普通非简并公式的分母失去控制。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Expand the Hamiltonian, energy, and normalized state in a formal parameter $\lambda$. The zeroth-order equation defines the reference eigenstate. Collecting terms linear in $\lambda$ gives the first-order Schrödinger equation. Projection on the reference state isolates the first-order energy by Hermiticity and normalization; projection with $Q_n$ removes the component parallel to the reference state and leaves an equation in the orthogonal complement.
+
+The assumptions are more specific than saying that the perturbation is “small”: the reference eigenvalue must be isolated in the relevant subspace, a normalization convention must fix the parallel component, and the expansion must remain meaningful over the parameter range of interest. Near degeneracy or a level crossing, ordinary nondegenerate denominators are uncontrolled.
+
+  </div>
+</BilingualSection>
+
+$$
+\bigl(\hat H^{(0)}-E_n^{(0)}\bigr)|\Psi_n^{(1)}\rangle
+=-Q_n\hat H^{(1)}|\Psi_n^{(0)}\rangle,
+\qquad
+E_n^{(1)}=\langle\Psi_n^{(0)}|\hat H^{(1)}|\Psi_n^{(0)}\rangle.
+$$
+
+<BilingualSection titleZh="从 projected equation 到态求和" titleEn="From the projected equation to the state sum" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+若零阶本征态构成完备正交集，可在 $Q_n$ 子空间插入单位分解。对每个 $m\ne n$ 投影，算符 $\hat H^{(0)}-E_n^{(0)}$ 变成标量 $E_m^{(0)}-E_n^{(0)}$，从而恢复 Martin Eq. D.1 的能量分母形式。分母的符号由本征方程固定；把它写成 $E_n-E_m$ 或 $-(E_m-E_n)$ 必须与分子和整体符号同时一致。
+
+态求和是一种表示，不是唯一算法。若空态很多、能隙小或 basis 很大，可直接求解 projected Sternheimer 方程，避免显式枚举整个补空间。两种方法只有在相同 projector、边界条件、离散 Hamiltonian 和收敛标准下才应数值一致。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If the zeroth-order eigenstates form a complete orthonormal set, insert the identity in the $Q_n$ subspace. Projection on each $m\ne n$ turns $\hat H^{(0)}-E_n^{(0)}$ into the scalar $E_m^{(0)}-E_n^{(0)}$, yielding the energy-denominator form of Martin Eq. D.1. The sign of the denominator is fixed by the eigen-equation; writing $E_n-E_m$ or $-(E_m-E_n)$ requires a consistent change of the numerator or overall sign.
+
+The state sum is a representation, not the only algorithm. When many empty states are required, gaps are small, or the basis is large, the projected Sternheimer equation can be solved directly. The two routes should agree only when they use the same projector, boundary conditions, discrete Hamiltonian, and convergence criteria.
+
+  </div>
+</BilingualSection>
+
+$$
+|\Psi_n^{(1)}\rangle
+=\sum_{m\ne n}
+|\Psi_m^{(0)}\rangle
+\frac{\langle\Psi_m^{(0)}|\hat H^{(1)}|\Psi_n^{(0)}\rangle}
+{E_n^{(0)}-E_m^{(0)}}.
+$$
+
+<BilingualSection titleZh="observable 的一阶变化" titleEn="First-order change of an observable" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+对不显含 $\lambda$ 的 Hermitian operator $\hat O$，期望值的一阶变化来自 bra 和 ket 的一阶修正。将态求和代入，得到 Martin Eq. D.2 的谱表示。若 operator 本身也依赖参数，还要加入显式项 $\langle\Psi_n^{(0)}|\hat O^{(1)}|\Psi_n^{(0)}\rangle$；省略它会漏掉例如 moving-basis、strain 或 field-dependent operator 的贡献。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a Hermitian operator $\hat O$ with no explicit $\lambda$ dependence, the first-order expectation-value change comes from first-order corrections to the bra and ket. Substituting the state sum gives the spectral form of Martin Eq. D.2. If the operator itself depends on the parameter, the explicit term $\langle\Psi_n^{(0)}|\hat O^{(1)}|\Psi_n^{(0)}\rangle$ must be added; omitting it loses contributions from moving bases, strain-dependent operators, or field-dependent observables.
+
+  </div>
+</BilingualSection>
+
+$$
+\delta\langle\hat O\rangle_n
+=2\,\operatorname{Re}
+\sum_{m\ne n}
+\frac{
+\langle\Psi_n^{(0)}|\hat O|\Psi_m^{(0)}\rangle
+\langle\Psi_m^{(0)}|\hat H^{(1)}|\Psi_n^{(0)}\rangle
+}{E_n^{(0)}-E_m^{(0)}}.
+$$
+
+<BilingualSection titleZh="独立粒子体系中的占据—空态结构" titleEn="Occupied-empty structure in an independent-particle system" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+在有效独立粒子 Hamiltonian 中，每个占据轨道都有类似的一阶修正。对总 one-body observable 求和时，成对交换两个占据态 $i,j$ 的贡献相消，因此最终可以把中间态限制为空态，得到 Martin Eqs. D.3–D.4。这个相消依赖完整的占据子空间和 Hermitian 配对；部分占据、有限温度、非正交 metric、spinor 或非 Hermitian 有效问题需要相应推广。
+
+occupied-empty 求和中的分母同时编码 gap 和近简并敏感性。一个数值结果看似由“少数低能空态”主导，仍不能据此省略高能尾部；矩阵元、sum rule 和 basis completeness 决定截断误差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In an effective independent-particle Hamiltonian, each occupied orbital has an analogous first-order correction. When a total one-body observable is summed over occupied orbitals, terms involving pairs of occupied states cancel under interchange of $i$ and $j$, allowing the intermediate sum to be restricted to empty states as in Martin Eqs. D.3–D.4. The cancellation assumes a complete occupied subspace and Hermitian pairing; fractional occupations, finite temperature, nonorthogonal metrics, spinors, or non-Hermitian effective problems require a corresponding generalization.
+
+The denominators in the occupied-empty sum encode both the gap and sensitivity to near-degeneracy. Even when a numerical result appears dominated by a few low-energy empty states, the high-energy tail cannot be discarded without a completeness, matrix-element, or sum-rule check.
+
+  </div>
+</BilingualSection>
+
+$$
+\delta\langle\hat O\rangle
+=2\,\operatorname{Re}
+\sum_{i\in\mathrm{occ}}
+\sum_{a\in\mathrm{empty}}
+\frac{\langle\psi_i|\hat O|\psi_a\rangle
+\langle\psi_a|\delta\hat H_{\mathrm{eff}}|\psi_i\rangle}
+{\varepsilon_i-\varepsilon_a}.
+$$
+
+<BilingualCallout titleZh="简并和金属边界" titleEn="Degenerate and metallic boundary" kind="boundary">
+  <div class="bilingual-section__zh">
+
+若参考能级简并，必须先在简并子空间内对扰动矩阵对角化，或采用 projector/covariant formulation；不能把零分母用任意小数替代。金属还涉及 Fermi-surface occupation derivative、smearing/temperature convention 和可能的 intraband 项。绝缘体公式在加入一个数值展宽后不会自动变成严格金属响应。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a degenerate reference level, diagonalize the perturbation within the degenerate subspace or use a projector/covariant formulation; a zero denominator cannot be replaced by an arbitrary small number. Metals additionally require Fermi-surface occupation derivatives, a declared smearing or temperature convention, and possible intraband terms. Adding numerical broadening to an insulating formula does not automatically produce the correct metallic response.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-d-2"></span>
+
+## D.2 静态响应函数 | Static Response Functions
+
+<BilingualSection titleZh="从一阶密度到 χ⁰" titleEn="From the first-order density to χ⁰" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+把 one-body observable 取为 density operator，可由 occupied-empty 轨道积得到固定有效势下的独立粒子密度响应。对有效势在另一位置的泛函导数定义 $\chi_n^0(\mathbf r,\mathbf r')$。对于实的静态 Hermitian 问题，该 kernel 在交换空间指标后满足相应对称关系；在 magnetic、spinor、complex gauge 或非平衡问题中，应从具体 reciprocity 条件重新判断。
+
+$\chi^0$ 的 source 是 $\delta V_{\mathrm{eff}}$，不是外场。它回答“冻结 mean-field feedback 后，独立粒子密度怎样变化”。这个定义是 D.3 中区分 bare 与 reducible response 的关键。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Choosing the one-body observable to be the density operator gives the independent-particle density change as an occupied-empty sum of orbital products. Functional differentiation with respect to the effective potential at a second point defines $\chi_n^0(\mathbf r,\mathbf r')$. For a real static Hermitian problem, the kernel has the corresponding symmetry under interchange of spatial arguments; magnetic, spinor, complex-gauge, or nonequilibrium settings require a fresh reciprocity analysis.
+
+The source of $\chi^0$ is $\delta V_{\mathrm{eff}}$, not the external field. It answers how independent-particle density changes when mean-field feedback is frozen. This distinction is essential before introducing the reducible response in D.3.
+
+  </div>
+</BilingualSection>
+
+$$
+\chi_n^0(\mathbf r,\mathbf r')
+=2\sum_{i\in\mathrm{occ}}\sum_{a\in\mathrm{empty}}
+\frac{
+\psi_i^*(\mathbf r)\psi_a(\mathbf r)
+\psi_a^*(\mathbf r')\psi_i(\mathbf r')
+}{\varepsilon_i-\varepsilon_a}.
+$$
+
+<BilingualSection titleZh="Green 函数重写与 projector" titleEn="Green-function rewrite and the projector" eyebrow="【Martin 原书 + 补充澄清 | Martin source + clarification】">
+  <div class="bilingual-section__zh">
+
+定义排除参考态或占据态 singular component 的 reduced Green function 后，空态求和可压缩为 resolvent 作用。这个形式与 Sternheimer 求解紧密相关：二者都在补空间中表示 $(\varepsilon_i-\hat H)^{-1}$。若使用未投影的 Green function，$z=\varepsilon_i$ 处的 pole 会使表达式未定义；必须显式说明 pole exclusion、shift 或 contour prescription。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+After defining a reduced Green function that excludes the singular reference-state or occupied-subspace component, the empty-state sum can be compressed into a resolvent action. This is closely connected to the Sternheimer route: both represent $(\varepsilon_i-\hat H)^{-1}$ in the complementary subspace. An unprojected Green function has a pole at $z=\varepsilon_i$ and is undefined there unless a pole exclusion, shift, or contour prescription is stated.
+
+  </div>
+</BilingualSection>
+
+$$
+G_i^0(\mathbf r,\mathbf r')
+=\sum_{j\ne i}
+\frac{\psi_j(\mathbf r)\psi_j^*(\mathbf r')}{\varepsilon_i-\varepsilon_j},
+\qquad
+\chi_n^0(\mathbf r,\mathbf r')
+=2\sum_{i\in\mathrm{occ}}
+\psi_i^*(\mathbf r)G_i^0(\mathbf r,\mathbf r')\psi_i(\mathbf r').
+$$
+
+<BilingualSection titleZh="Fourier 分量与平移对称性" titleEn="Fourier components and translational symmetry" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+对 source 和 response 作 Fourier 变换，可得到 Martin Eq. D.8 的矩阵形式。均匀体系因连续平移对称性在 wave vector 上对角；晶体只在晶格平移下不变，因此通常需要 $(\mathbf G,\mathbf G')$ local-field matrix，而不是单个标量 $\chi(\mathbf q)$。忽略 off-diagonal reciprocal components 是额外近似。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Fourier transforming source and response gives the matrix form of Martin Eq. D.8. A homogeneous system is diagonal in wave vector because of continuous translational symmetry. A crystal is invariant only under lattice translations, so a local-field matrix in reciprocal vectors $(\mathbf G,\mathbf G')$ is generally required rather than a single scalar $\chi(\mathbf q)$. Dropping off-diagonal reciprocal components is an additional approximation.
+
+  </div>
+</BilingualSection>
+
+$$
+\chi_n^0(\mathbf q',\mathbf q)
+=2\sum_{i\in\mathrm{occ}}\sum_{a\in\mathrm{empty}}
+\frac{M_{ia}(\mathbf q')^*M_{ia}(\mathbf q)}
+{\varepsilon_i-\varepsilon_a},
+\qquad
+M_{ia}(\mathbf q)=\langle\psi_i|e^{i\mathbf q\cdot\mathbf r}|\psi_a\rangle.
+$$
+
+<span id="section-d-3"></span>
+
+## D.3 自洽场理论中的响应 | Response Functions in Self-Consistent Field Theories
+
+<BilingualSection titleZh="外场与有效场必须分开" titleEn="External and effective fields must be separated" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+在 Kohn–Sham 或其他 mean-field 理论中，有效势包含外场和由 density 产生的内部势。bare response 满足 $\delta n=\chi^0\delta V_{\mathrm{eff}}$，而实验或热力学问题通常关心 $\delta n/\delta V_{\mathrm{ext}}$。线性化内部势给出 kernel $K=\delta V_{\mathrm{int}}/\delta n$，于是诱导密度通过 $K$ 再次进入 source，形成自洽反馈。
+
+积分 kernel 的乘法代表空间、spin、Cartesian 或 reciprocal indices 上的卷积/矩阵乘法。标量代数的左右次序在一般非交换矩阵情形中不能随意交换；具体代码必须固定 index ordering。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In Kohn-Sham and other mean-field theories, the effective potential contains both the external source and an internal potential generated by the density. The bare response obeys $\delta n=\chi^0\delta V_{\mathrm{eff}}$, while experiments or thermodynamic derivatives usually require $\delta n/\delta V_{\mathrm{ext}}$. Linearizing the internal potential defines the kernel $K=\delta V_{\mathrm{int}}/\delta n$, so the induced density re-enters the source through a self-consistent feedback loop.
+
+Products of integral kernels denote convolution or matrix multiplication over spatial, spin, Cartesian, or reciprocal indices. Scalar algebra hides ordering; in a noncommuting matrix problem the left-right convention must be fixed by the implementation.
+
+  </div>
+</BilingualSection>
+
+$$
+\delta n
+=\chi^0\bigl(\delta V_{\mathrm{ext}}+K\delta n\bigr),
+\qquad
+\chi\equiv\frac{\delta n}{\delta V_{\mathrm{ext}}}.
+$$
+
+<BilingualSection titleZh="Dyson 形式与 inverse response" titleEn="Dyson form and inverse response" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+把含 $\delta n$ 的反馈项移到左侧，可得 $(1-\chi^0K)\delta n=\chi^0\delta V_{\mathrm{ext}}$。只要 operator $1-\chi^0K$ 在目标子空间中可逆，便得到 Dyson 方程。再左乘相应 inverse，可得 inverse-response difference。接近零 eigenvalue 时，响应会被强烈增强；这可能表示真实 instability，也可能来自不收敛的 basis、$k$-mesh、smearing、kernel 或数值 inversion，必须分开诊断。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Move the feedback term containing $\delta n$ to the left to obtain $(1-\chi^0K)\delta n=\chi^0\delta V_{\mathrm{ext}}$. If $1-\chi^0K$ is invertible in the target subspace, the Dyson equation follows. Multiplication by the corresponding inverses gives the inverse-response difference. A near-zero eigenvalue strongly enhances the response; it may signal a physical instability, but it may also arise from an unconverged basis, $k$ mesh, smearing, kernel, or numerical inversion.
+
+  </div>
+</BilingualSection>
+
+$$
+\boxed{\chi=(1-\chi^0K)^{-1}\chi^0},
+\qquad
+\boxed{\chi^{-1}=(\chi^0)^{-1}-K}.
+$$
+
+<DysonFeedbackExplorer />
+
+<BilingualSection titleZh="Hartree–xc kernel 与 RPA" titleEn="Hartree-xc kernel and RPA" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+对 density channel，kernel 可分成 Coulomb 部分和 exchange-correlation kernel。周期 reciprocal 表示中的 Coulomb head 具有 $4\pi/q^2$ 长程结构，具体 prefactor 取决于单位与 Fourier normalization。RPA 在这一框架中取 $f_{\mathrm{xc}}=0$，但保留 Coulomb feedback；因此 RPA 不是“无相互作用”，而是使用独立粒子 polarization 加上 Hartree screening 的特定 kernel 近似。
+
+spin-density channel 中纯 Coulomb 势不直接耦合到总自旋密度差，kernel 的结构相应改变。把 charge RPA 公式逐字复制到 spin response 会产生错误的长程项。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For the density channel, the kernel separates into Coulomb and exchange-correlation pieces. In a periodic reciprocal representation, the Coulomb head has the long-range $4\pi/q^2$ structure, with prefactors controlled by units and Fourier normalization. RPA sets $f_{\mathrm{xc}}=0$ in this framework but retains Coulomb feedback. It is therefore not a noninteracting response; it is a specific kernel approximation built from independent-particle polarization and Hartree screening.
+
+In the spin-density channel, the pure Coulomb potential does not directly couple to the difference of spin densities, so the kernel changes. Copying the charge-channel RPA formula into spin response introduces an incorrect long-range term.
+
+  </div>
+</BilingualSection>
+
+$$
+K(\mathbf q,\mathbf q')
+=v_C(\mathbf q)\delta_{\mathbf q\mathbf q'}
++f_{\mathrm{xc}}(\mathbf q,\mathbf q'),
+\qquad
+v_C(\mathbf q)=\frac{4\pi}{q^2}
+\quad\text{(Hartree atomic units)}.
+$$
+
+<BilingualCallout titleZh="静态响应的验收顺序" titleEn="Acceptance order for a static response" kind="practice">
+  <div class="bilingual-section__zh">
+
+1. 检查 reference ground state、occupations 和 symmetry。
+2. 分别收敛 $\chi^0$ 的 basis、空态/projected solve、$k$ mesh 和 smearing。
+3. 检查 kernel 的单位、spin channel、Fourier normalization 和 local-field matrix。
+4. 检查 Dyson inversion 的 conditioning 与 sum rules。
+5. 最后才判断目标 force constant、dielectric response、phonon 或 instability 是否达到科学接受标准。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+1. Check the reference ground state, occupations, and symmetry.
+2. Converge the basis, empty-state or projected solve, $k$ mesh, and smearing of $\chi^0$ separately.
+3. Check kernel units, spin channel, Fourier normalization, and local-field matrix structure.
+4. Check conditioning and sum rules of the Dyson inversion.
+5. Only then judge whether the target force constant, dielectric response, phonon, or instability meets the scientific acceptance criterion.
+
+  </div>
+</BilingualCallout>
