@@ -3,54 +3,54 @@ import { berryPhase, berryLoopModel } from '../../../data/part06/ch25TeachingMod
 const initialBerry = berryPhase(berryLoopModel.theta.default, berryLoopModel.gaugeWinding.default);
 ---
 
-<figure class="chapter-visual berry-gauge-loop" data-berry-gauge-loop>
-  <figcaption>
-    <strong>原创交互模型 B：Berry 相位的规范变化</strong>
-    <span lang="en">Original interactive model B: gauge behavior of the Berry phase</span>
-  </figcaption>
+  <figure class="chapter-visual berry-gauge-loop" data-berry-gauge-loop>
+    <figcaption>
+      <strong>原创交互模型 B：Berry 相位的规范变化</strong>
+      <span lang="en">Original interactive model B: gauge behavior of the Berry phase</span>
+    </figcaption>
 
-  <div class="chapter-visual__controls visual-controls--two">
-    <label>
-      <span>极角 θ | Polar angle</span>
-      <input type="range" min="0" max={Math.PI} step={Math.PI / 100} value={Math.PI / 2} data-berry-theta />
-      <output data-berry-theta-output>0.500π</output>
-    </label>
-    <label>
-      <span>规范绕行 w | Gauge winding</span>
-      <input type="range" min="-2" max="2" step="1" value="0" data-berry-winding />
-      <output data-berry-winding-output>0</output>
-    </label>
-  </div>
+    <div class="chapter-visual__controls visual-controls--two">
+      <label>
+        <span>极角 θ | Polar angle</span>
+        <input type="range" min="0" max={Math.PI} step={Math.PI / 100} value={Math.PI / 2} data-berry-theta />
+        <output data-berry-theta-output>0.500π</output>
+      </label>
+      <label>
+        <span>规范绕行 w | Gauge winding</span>
+        <input type="range" min="-2" max="2" step="1" value="0" data-berry-winding />
+        <output data-berry-winding-output>0</output>
+      </label>
+    </div>
 
-  <svg viewBox="0 0 640 320" role="img" aria-labelledby="berry-title berry-desc">
-    <title id="berry-title">Closed spinor loop and its gauge-dependent accumulated phase</title>
-    <desc id="berry-desc">A latitude loop on a Bloch sphere is shown together with the geometric phase. Integer gauge winding changes the accumulated phase by multiples of two pi but leaves its complex exponential unchanged.</desc>
-    <circle cx="220" cy="160" r="115" class="sphere-outline" />
-    <ellipse cx="220" cy="160" rx="115" ry="38" class="sphere-equator" />
-    <line x1="220" y1="35" x2="220" y2="285" class="visual-axis" />
-    <ellipse cx="220" cy="160" rx="115" ry="38" class="berry-latitude" data-berry-latitude />
-    <circle cx="335" cy="160" r="7" class="berry-point" data-berry-point />
-    <path d="M420,85 A70,70 0 1 1 419.9,85" class="phase-ring" />
-    <line x1="490" y1="155" x2="490" y2="95" class="phase-hand" data-berry-hand />
-    <text x="220" y="305" text-anchor="middle">state ray on Bloch sphere</text>
-    <text x="490" y="250" text-anchor="middle">exp(iγ)</text>
-  </svg>
+    <svg viewBox="0 0 640 320" role="img" aria-labelledby="berry-title berry-desc">
+      <title id="berry-title">Closed spinor loop and its gauge-dependent accumulated phase</title>
+      <desc id="berry-desc">A latitude loop on a Bloch sphere is shown together with the geometric phase. Integer gauge winding changes the accumulated phase by multiples of two pi but leaves its complex exponential unchanged.</desc>
+      <circle cx="220" cy="160" r="115" class="sphere-outline" />
+      <ellipse cx="220" cy="160" rx="115" ry="38" class="sphere-equator" />
+      <line x1="220" y1="35" x2="220" y2="285" class="visual-axis" />
+      <ellipse cx="220" cy="160" rx="115" ry="38" class="berry-latitude" data-berry-latitude />
+      <circle cx="335" cy="160" r="7" class="berry-point" data-berry-point />
+      <path d="M420,85 A70,70 0 1 1 419.9,85" class="phase-ring" />
+      <line x1="490" y1="155" x2="490" y2="95" class="phase-hand" data-berry-hand />
+      <text x="220" y="305" text-anchor="middle">state ray on Bloch sphere</text>
+      <text x="490" y="250" text-anchor="middle">exp(iγ)</text>
+    </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
-    <span data-berry-base>γ = {initialBerry.base.toFixed(4)}</span>
-    <span data-berry-shifted>γ′ = {initialBerry.gaugeShifted.toFixed(4)}</span>
-    <strong data-berry-invariant>exp(iγ′) = exp(iγ)</strong>
-  </div>
+    <div class="chapter-visual__readout" aria-live="polite">
+      <span data-berry-base>γ = {initialBerry.base.toFixed(4)}</span>
+      <span data-berry-shifted>γ′ = {initialBerry.gaugeShifted.toFixed(4)}</span>
+      <strong data-berry-invariant>exp(iγ′) = exp(iγ)</strong>
+    </div>
 
-  <div class="chapter-visual__contract">
-    <p><strong>状态回路：</strong><code>|u(\varphi)\rangle=\cos(\theta/2)|0\rangle+e^{i\varphi}\sin(\theta/2)|1\rangle</code>，<code>0\leq\varphi\leq2\pi</code>。本站约定 <code>A_\varphi=i\langle u|\partial_\varphi u\rangle</code>，因此 <code>\gamma=-\pi(1-\cos\theta)</code>。</p>
-    <p lang="en"><strong>State loop:</strong> <code>|u(\varphi)\rangle=\cos(\theta/2)|0\rangle+e^{i\varphi}\sin(\theta/2)|1\rangle</code> for <code>0\leq\varphi\leq2\pi</code>. With <code>A_\varphi=i\langle u|\partial_\varphi u\rangle</code>, the phase is <code>\gamma=-\pi(1-\cos\theta)</code>.</p>
-    <p><strong>验收：</strong>施加 <code>|u\rangle\to e^{iw\varphi}|u\rangle</code> 后，<code>\gamma' = \gamma-2\pi w</code>，而 <code>e^{i\gamma'}=e^{i\gamma}</code>。<code>w</code> 必须为整数，才能保持闭合回路端点的单值条件。</p>
-    <p lang="en"><strong>Acceptance:</strong> under <code>|u\rangle\to e^{iw\varphi}|u\rangle</code>, <code>\gamma'=\gamma-2\pi w</code> while <code>e^{i\gamma'}=e^{i\gamma}</code>. Integer <code>w</code> is required for a single-valued endpoint gauge on the closed loop.</p>
-    <p><strong>边界：</strong>这是参数空间中的二能级状态回路。它展示规范协变和模 <code>2\pi</code> 的不变量，不是特定晶体的 Bloch 能带，也没有单独给出 Chern 数。</p>
-    <p lang="en"><strong>Boundary:</strong> this is a two-level loop in parameter space. It demonstrates gauge covariance and the modulo-<code>2\pi</code> invariant; it is not a Bloch band of a specific crystal and does not by itself define a Chern number.</p>
-  </div>
-</figure>
+    <div class="chapter-visual__contract">
+      <p><strong>状态回路：</strong><code>|u(φ)⟩ = cos(θ/2)|0⟩ + exp(iφ) sin(θ/2)|1⟩</code>，<code>0 ≤ φ ≤ 2π</code>。本站约定 <code>Aφ = i⟨u|∂φu⟩</code>，因此 <code>γ = −π(1−cos θ)</code>。</p>
+      <p lang="en"><strong>State loop:</strong> <code>|u(φ)⟩ = cos(θ/2)|0⟩ + exp(iφ) sin(θ/2)|1⟩</code> for <code>0 ≤ φ ≤ 2π</code>. With <code>Aφ = i⟨u|∂φu⟩</code>, the phase is <code>γ = −π(1−cos θ)</code>.</p>
+      <p><strong>验收：</strong>施加 <code>|u⟩ → exp(iwφ)|u⟩</code> 后，<code>γ′ = γ−2πw</code>，而 <code>exp(iγ′)=exp(iγ)</code>。<code>w</code> 必须为整数，才能保持闭合回路端点的单值条件。</p>
+      <p lang="en"><strong>Acceptance:</strong> under <code>|u⟩ → exp(iwφ)|u⟩</code>, <code>γ′ = γ−2πw</code> while <code>exp(iγ′)=exp(iγ)</code>. Integer <code>w</code> is required for a single-valued endpoint gauge on the closed loop.</p>
+      <p><strong>边界：</strong>这是参数空间中的二能级状态回路。它展示规范协变和模 <code>2π</code> 的不变量，不是特定晶体的 Bloch 能带，也没有单独给出 Chern 数。</p>
+      <p lang="en"><strong>Boundary:</strong> this is a two-level loop in parameter space. It demonstrates gauge covariance and the modulo-<code>2π</code> invariant; it is not a Bloch band of a specific crystal and does not by itself define a Chern number.</p>
+    </div>
+  </figure>
 
 <script>
   import { berryPhase } from '../../../data/part06/ch25TeachingModels.mjs';
