@@ -1,0 +1,81 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[8];
+const coverage = {
+  'I.1': '驻定变分自由、固定电子与刚性共移路径、区域 A/B/C bookkeeping、Eqs. I.3–I.5',
+  'I.2': '同一参考势下的小有限差分、eigenvalue-sum theorem、线性阶误差与 self-consistency 边界',
+  'I.3': '各向同性 pressure、球面边界、ASA 限制、P(V)、bulk modulus 与能量积分',
+  'I.4': 'force-density divergence、closed-surface traction、kinetic/potential/XC crossing terms 与 gauge invariance',
+  'I.5': 'APW/LAPW rigid-sphere displacement、boundary-condition derivative、core cancellation 与 Pulay-like boundary terms',
+};
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-i-contents-title">
+  <h2 id="appendix-i-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、符号与适用边界 | Objects and conventions</a></li>
+    <li><a href="#section-i-1">I.1 变分自由与力 | Variational freedom and forces</a></li>
+    <li><a href="#section-i-2">I.2 能量差 | Energy differences</a></li>
+    <li><a href="#section-i-3">I.3 压力 | Pressure</a></li>
+    <li><a href="#section-i-4">I.4 力与应力 | Force and stress</a></li>
+    <li><a href="#section-i-5">I.5 APW 类方法中的力 | Force in APW-type methods</a></li>
+    <li><a href="#review">交叉引用、误判、练习与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-i-source-title">
+  <h2 id="appendix-i-source-title">来源地图 | Source map</h2>
+  <p>
+    下表记录 Martin Appendix I 的原节标题和印刷页定位。网站只使用书目身份、节标题、页码和公式对象建立导航；正文、推导、图形、数值模型和练习均为原创。
+  </p>
+  <p lang="en">
+    The table records the section titles and printed-page locators of Martin Appendix I. Bibliographic identity, section titles, page locators, and equation objects are used for navigation; exposition, derivations, diagrams, numerical models, and exercises are original.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>{coverage[section.id] ?? 'source-mapped reference coverage'}</td>
+          <td>source mapped;正文待完成 | source mapped; content pending</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Further reading and exercises, printed pp. 642–643</td>
+        <td>Source prose and two exercises not reproduced</td>
+        <td>原创 variational-path、frozen-reference、pressure、surface-flux 与 APW boundary 练习 | Original replacement exercises</td>
+        <td>original replacement planned</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 { margin-top: 0; }
+  .appendix-contents ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
+  .appendix-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol { columns: 1; }
+  }
+</style>
