@@ -1,0 +1,137 @@
+---
+import { fermiArcPoint, sliceChernBetweenWeylNodes } from '../../../data/part06/ch28WeylModels.mjs';
+const k0 = 1;
+const initialEnergy = 0;
+const initialSlice = 0;
+const initialPoint = fermiArcPoint(initialSlice, initialEnergy, 1, k0);
+---
+
+<figure class="chapter-visual fermi-arc-slice" data-fermi-arc-slice>
+  <figcaption>
+    <strong>原创交互模型：二维 Chern slices 如何组成表面 Fermi arc</strong>
+    <span lang="en">Original interactive model: how two-dimensional Chern slices assemble a surface Fermi arc</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>bulk slice k<sub>z</sub>/k₀</span>
+      <input type="range" min="-1.4" max="1.4" step="0.02" value={initialSlice} data-fa-slice />
+      <output data-fa-slice-out>{initialSlice.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>surface energy E/vk₀</span>
+      <input type="range" min="-0.7" max="0.7" step="0.02" value={initialEnergy} data-fa-energy />
+      <output data-fa-energy-out>{initialEnergy.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 390" role="img" aria-labelledby="fa-title fa-desc">
+    <title id="fa-title">Momentum slices between two Weyl nodes and the associated surface Fermi arc</title>
+    <desc id="fa-desc">The left panel shows the Chern number of a two-dimensional slice as kz crosses two Weyl nodes. The right panel shows the surface Brillouin zone, projected nodes, and an open constant-energy arc connecting them.</desc>
+
+    <g aria-label="Chern-number slices">
+      <line x1="70" y1="190" x2="355" y2="190" class="fa-axis" />
+      <line x1="212" y1="55" x2="212" y2="325" class="fa-axis" />
+      <rect x="110" y="95" width="205" height="190" class="fa-topological-window" />
+      <line x1="110" y1="65" x2="110" y2="315" class="fa-node-line" />
+      <line x1="315" y1="65" x2="315" y2="315" class="fa-node-line" />
+      <line x1="212" y1="65" x2="212" y2="315" class="fa-slice-cursor" data-fa-slice-cursor />
+      <text x="91" y="345">−k₀</text><text x="200" y="345">0</text><text x="304" y="345">+k₀</text>
+      <text x="82" y="42">2D bulk slices at fixed kₙ</text>
+      <text x="128" y="125">C(kz)=1</text><text x="76" y="300">C=0</text><text x="318" y="300">C=0</text>
+      <circle cx="110" cy="190" r="9" class="fa-node fa-node--minus" />
+      <circle cx="315" cy="190" r="9" class="fa-node fa-node--plus" />
+    </g>
+
+    <g aria-label="surface Fermi arc">
+      <rect x="430" y="65" width="270" height="250" class="fa-surface-bz" />
+      <line x1="565" y1="65" x2="565" y2="315" class="fa-axis" />
+      <line x1="430" y1="190" x2="700" y2="190" class="fa-axis" />
+      <circle cx="475" cy="190" r="10" class="fa-node fa-node--minus" />
+      <circle cx="655" cy="190" r="10" class="fa-node fa-node--plus" />
+      <path d="M475 190 C520 190 610 190 655 190" class="fa-arc" data-fa-arc />
+      <circle cx={initialPoint ? 565 + initialPoint.kz * 90 : 565} cy={190 - initialEnergy * 100} r="7" class="fa-probe" data-fa-probe />
+      <text x="450" y="45">one surface Brillouin zone</text>
+      <text x="455" y="215">χ=−1</text><text x="635" y="215">χ=+1</text>
+      <text x="548" y="340">projected kz</text><text x="405" y="83">ky</text>
+      <text x="480" y="290">open constant-energy contour</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-fa-chern>slice Chern number = {sliceChernBetweenWeylNodes(initialSlice, k0)}</span>
+    <span data-fa-point>surface point = (kz={initialSlice.toFixed(2)}, ky={initialEnergy.toFixed(2)})</span>
+    <strong data-fa-status>This slice lies between the Weyl nodes and contributes one chiral surface branch.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> 初始 $k_z=0$ 位于 $-k_0$ 与 $+k_0$ 两个 Weyl nodes 之间。该二维 slice 的 Chern number 为 1，固定 $E=0$ 的 surface branch 在 surface BZ 中形成连接两节点投影的开放 arc。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>把 Weyl semimetal 视为以 <code>kz</code> 参数化的二维 insulators。每跨过一个 chirality 为 ±1 的 Weyl node，slice Chern number 改变 ±1。所示 convention 中，<code>|kz|&lt;k0</code> 的 slices 有 <code>C=1</code>，外侧为 0。</p>
+    <p lang="en"><strong>Model:</strong> regard the Weyl semimetal as a family of two-dimensional insulators parameterized by <code>kz</code>. Crossing a Weyl node of chirality ±1 changes the slice Chern number by ±1. In the displayed convention, slices with <code>|kz|&lt;k0</code> have <code>C=1</code>, while the outer slices have zero.</p>
+    <p><strong>验收：</strong>有非零 Chern number 的每个 slice 在给定 surface 上贡献一条 chiral boundary branch；把这些 branches 随 <code>kz</code> 拼接，在固定能量得到只存在于两个 projected nodes 之间的 open contour。到达节点投影时，二维 slice gap 闭合，surface branch 与 bulk continuum 合并。</p>
+    <p lang="en"><strong>Acceptance:</strong> each nonzero-Chern slice contributes one chiral boundary branch on the chosen surface. Joining these branches as <code>kz</code> varies gives an open constant-energy contour only between the projected nodes. At a node projection the two-dimensional slice gap closes and the surface branch merges into the bulk continuum.</p>
+    <p><strong>边界：</strong>arc shape、energy dispersion 与 visibility 依赖 surface orientation、termination、chemical potential、additional trivial surface states 和 projected bulk pockets。若 opposite-chirality nodes 投影到同一点，该表面可不显示可分辨 arc。开放外观本身不是 Weyl 证据。</p>
+    <p lang="en"><strong>Boundary:</strong> the arc shape, energy dispersion, and visibility depend on surface orientation, termination, chemical potential, additional trivial surface states, and projected bulk pockets. If opposite-chirality nodes project to the same point, that surface need not show a resolvable arc. An open-looking contour alone is not evidence for a Weyl phase.</p>
+  </div>
+</figure>
+
+<script>
+  import { fermiArcPoint, sliceChernBetweenWeylNodes } from '../../../data/part06/ch28WeylModels.mjs';
+  document.querySelectorAll('[data-fermi-arc-slice]').forEach((root) => {
+    const sliceInput = root.querySelector('[data-fa-slice]');
+    const energyInput = root.querySelector('[data-fa-energy]');
+    if (!(sliceInput instanceof HTMLInputElement) || !(energyInput instanceof HTMLInputElement)) return;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element) element.textContent = value;
+    };
+    const update = () => {
+      const kz = Number(sliceInput.value);
+      const energy = Number(energyInput.value);
+      const chern = sliceChernBetweenWeylNodes(kz, 1);
+      const point = fermiArcPoint(kz, energy, 1, 1);
+      const cursor = root.querySelector('[data-fa-slice-cursor]');
+      if (cursor instanceof SVGLineElement) cursor.setAttribute('x1', String(212 + kz * 102.5));
+      if (cursor instanceof SVGLineElement) cursor.setAttribute('x2', String(212 + kz * 102.5));
+      const probe = root.querySelector('[data-fa-probe]');
+      if (probe instanceof SVGCircleElement) {
+        probe.setAttribute('cx', String(565 + kz * 90));
+        probe.setAttribute('cy', String(190 - energy * 100));
+        probe.classList.toggle('fa-probe--hidden', point === null);
+      }
+      const arc = root.querySelector('[data-fa-arc]');
+      if (arc instanceof SVGPathElement) {
+        const y = 190 - energy * 100;
+        arc.setAttribute('d', `M475 ${y} C520 ${y} 610 ${y} 655 ${y}`);
+      }
+      setText('[data-fa-slice-out]', kz.toFixed(2));
+      setText('[data-fa-energy-out]', energy.toFixed(2));
+      setText('[data-fa-chern]', `slice Chern number = ${chern}`);
+      setText('[data-fa-point]', point ? `surface point = (kz=${kz.toFixed(2)}, ky=${energy.toFixed(2)})` : 'surface point = none in the arc window');
+      setText('[data-fa-status]', chern !== 0
+        ? 'This slice lies between the Weyl nodes and contributes one chiral surface branch.'
+        : Math.abs(Math.abs(kz) - 1) < 0.02
+          ? 'The slice gap closes at a Weyl node; the surface branch merges into the bulk.'
+          : 'This outer slice is Chern-trivial in the declared model and contributes no arc branch.');
+    };
+    [sliceInput, energyInput].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .fermi-arc-slice svg { width: 100%; max-height: 29rem; }
+  .fermi-arc-slice text { fill: currentColor; font-size: 13px; }
+  .fa-axis { stroke: var(--sl-color-gray-3); stroke-width: 1.5; }
+  .fa-topological-window { fill: var(--sl-color-accent-low); opacity: 0.35; }
+  .fa-node-line { stroke: var(--sl-color-red-high, #b42318); stroke-width: 2; stroke-dasharray: 6 5; }
+  .fa-slice-cursor { stroke: var(--sl-color-text-accent); stroke-width: 3; }
+  .fa-surface-bz { fill: none; stroke: var(--sl-color-gray-3); stroke-width: 2; }
+  .fa-node { stroke: var(--sl-color-gray-7); stroke-width: 2; }
+  .fa-node--minus { fill: var(--sl-color-red-high, #b42318); }
+  .fa-node--plus { fill: var(--sl-color-accent-high); }
+  .fa-arc { fill: none; stroke: var(--sl-color-text-accent); stroke-width: 5; }
+  .fa-probe { fill: var(--sl-color-gray-1); stroke: var(--sl-color-gray-7); stroke-width: 2; }
+  .fa-probe--hidden { display: none; }
+</style>

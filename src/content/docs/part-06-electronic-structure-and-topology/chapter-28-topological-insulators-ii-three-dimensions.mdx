@@ -1,20 +1,18 @@
 ---
 title: "Chapter 28 · Topological Insulators II: Three Dimensions"
-description: "Martin Chapter 28 的目录级阅读骨架；正文待填充。"
+description: "从八个 TRIM 与四个三维 Z₂ 指标进入 weak/strong 拓扑绝缘体、三维紧束缚模型、Bi₂Se₃、Weyl/Dirac 节点与 Fermi arcs。"
 sidebar:
   order: 4
   label: "Chapter 28 · Topological Insulators II: Three Dimensions"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter28Body from '../../../components/part06/ch28/Chapter28Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[5].units[3].label}
-  sourcePage={catalog.parts[5].units[3].page}
-  sections={catalog.parts[5].units[3].sections}
-  exercisesPage={catalog.parts[5].units[3].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 28, printed pages 569–580; sections 28.1–28.5. Exercises begin on printed page 580 and are not reproduced. Chapters 25–27 supply the Berry/Chern, two-band, pumping, spinful time-reversal, Kramers-pair, and two-dimensional Z₂ prerequisites."
+  status="draft"
 />
+
+<Chapter28Body />
