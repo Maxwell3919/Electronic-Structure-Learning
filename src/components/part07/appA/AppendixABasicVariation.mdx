@@ -1,0 +1,457 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import FunctionalDirectionExplorer from './FunctionalDirectionExplorer.astro';
+
+<span id="section-a-1"></span>
+
+## A.1 基本定义与变分方程 | Basic Definitions and Variational Equations
+
+<BilingualSection titleZh="从有限增量到一阶变化" titleEn="From a finite increment to the first variation" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+给定 $n\in X$ 和允许方向 $\eta\in V$，有限变化是
+
+$$
+\Delta F[n;\varepsilon\eta]
+=
+F[n+\varepsilon\eta]-F[n].
+$$
+
+它通常包含 $\varepsilon$ 的一阶、二阶和更高阶项。若路径函数在 $\varepsilon=0$ 可微，则
+
+$$
+F[n+\varepsilon\eta]
+=
+F[n]
++
+\varepsilon\,\delta F[n;\eta]
++
+o(\varepsilon).
+$$
+
+因此 $\Delta F$ 是有限差值，$\delta F$ 是一阶系数。只有在线性泛函中，高阶项才对任意变化都严格消失。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For $n\in X$ and an admissible direction $\eta\in V$, the finite change is
+
+$$
+\Delta F[n;\varepsilon\eta]
+=
+F[n+\varepsilon\eta]-F[n].
+$$
+
+It generally contains first-, second-, and higher-order powers of $\varepsilon$. If the scalar path is differentiable at $\varepsilon=0$, then
+
+$$
+F[n+\varepsilon\eta]
+=
+F[n]
++
+\varepsilon\,\delta F[n;\eta]
++
+o(\varepsilon).
+$$
+
+Thus $\Delta F$ is a finite difference, while $\delta F$ is its first-order coefficient. Higher-order terms vanish for every variation only when the functional is linear.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="局域积分泛函的泛函导数" titleEn="Functional derivative of a local integral functional" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+考虑不含梯度的积分泛函
+
+$$
+F[n]=\int_\Omega \phi(n(\mathbf r),\mathbf r)\,d\mathbf r,
+$$
+
+并假设 $\phi$ 对第一变量可微，而且存在可积上界，使求导与积分可以交换。沿 $n_\varepsilon=n+\varepsilon\eta$：
+
+$$
+F[n_\varepsilon]
+=
+\int_\Omega
+\phi(n(\mathbf r)+\varepsilon\eta(\mathbf r),\mathbf r)
+\,d\mathbf r.
+$$
+
+对 $\varepsilon$ 求导，链式法则给出
+
+$$
+\frac{dF[n_\varepsilon]}{d\varepsilon}
+=
+\int_\Omega
+\frac{\partial\phi}{\partial n}
+(n+\varepsilon\eta,\mathbf r)
+\eta(\mathbf r)
+\,d\mathbf r.
+$$
+
+令 $\varepsilon=0$：
+
+$$
+\delta F[n;\eta]
+=
+\int_\Omega
+\frac{\partial\phi}{\partial n}(n(\mathbf r),\mathbf r)
+\eta(\mathbf r)
+\,d\mathbf r.
+$$
+
+与泛函导数的定义配对比较，得到
+
+$$
+\boxed{
+\frac{\delta F[n]}{\delta n(\mathbf r)}
+=
+\frac{\partial\phi}{\partial n}(n(\mathbf r),\mathbf r)
+}
+$$
+
+几乎处处成立。这里的偏导只作用于 $\phi$ 的数值变量；积分和允许变化把它提升为对整个函数的导数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Consider a local integral functional without gradients,
+
+$$
+F[n]=\int_\Omega \phi(n(\mathbf r),\mathbf r)\,d\mathbf r,
+$$
+
+where $\phi$ is differentiable in its first argument and an integrable dominating function permits differentiation under the integral. Along $n_\varepsilon=n+\varepsilon\eta$,
+
+$$
+F[n_\varepsilon]
+=
+\int_\Omega
+\phi(n(\mathbf r)+\varepsilon\eta(\mathbf r),\mathbf r)
+\,d\mathbf r.
+$$
+
+Differentiating with respect to $\varepsilon$ and applying the chain rule gives
+
+$$
+\frac{dF[n_\varepsilon]}{d\varepsilon}
+=
+\int_\Omega
+\frac{\partial\phi}{\partial n}
+(n+\varepsilon\eta,\mathbf r)
+\eta(\mathbf r)
+\,d\mathbf r.
+$$
+
+At $\varepsilon=0$,
+
+$$
+\delta F[n;\eta]
+=
+\int_\Omega
+\frac{\partial\phi}{\partial n}(n(\mathbf r),\mathbf r)
+\eta(\mathbf r)
+\,d\mathbf r.
+$$
+
+Comparison with the defining pairing yields
+
+$$
+\boxed{
+\frac{\delta F[n]}{\delta n(\mathbf r)}
+=
+\frac{\partial\phi}{\partial n}(n(\mathbf r),\mathbf r)
+}
+$$
+
+almost everywhere. The partial derivative acts on the numerical argument of $\phi$; integration and the admissible variations turn it into a derivative with respect to the complete function.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="线性权重泛函的检查" titleEn="Check with a weighted linear functional" kind="derivation">
+  <div class="bilingual-section__zh">
+
+令 $L[n]=\int_\Omega w(\mathbf r)n(\mathbf r)d\mathbf r$。直接代入：
+
+$$
+L[n+\varepsilon\eta]-L[n]
+=
+\varepsilon\int_\Omega w(\mathbf r)\eta(\mathbf r)d\mathbf r.
+$$
+
+没有二阶余项，因此 $\delta L/\delta n=w$。这也显示泛函导数仍是位置的函数；泛函本身的输出才是单个标量。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Let $L[n]=\int_\Omega w(\mathbf r)n(\mathbf r)d\mathbf r$. Direct substitution gives
+
+$$
+L[n+\varepsilon\eta]-L[n]
+=
+\varepsilon\int_\Omega w(\mathbf r)\eta(\mathbf r)d\mathbf r.
+$$
+
+There is no quadratic remainder, so $\delta L/\delta n=w$. The functional derivative is still a function of position; the functional itself is the object that returns one scalar.
+
+  </div>
+</BilingualCallout>
+
+<FunctionalDirectionExplorer />
+
+<span id="constrained-variation"></span>
+
+## 约束变分与 Lagrange 乘子 | Constrained Variation and Lagrange Multipliers
+
+<BilingualSection titleZh="从切空间到乘子方程" titleEn="From the tangent space to the multiplier equation" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+设目标是在约束
+
+$$
+C_a[n]=c_a,
+\qquad a=1,\ldots,m
+$$
+
+下使 $F[n]$ 驻值。可行路径 $n_\varepsilon$ 必须满足 $C_a[n_\varepsilon]=c_a$。对 $\varepsilon$ 在零点求导，允许方向受到线性化约束
+
+$$
+\delta C_a[n;\eta]=0.
+$$
+
+驻值条件是 $\delta F[n;\eta]=0$ 对所有满足这些线性化约束的 $\eta$ 成立。若约束导数线性独立，可引入乘子 $\lambda_a$，定义
+
+$$
+\mathcal L[n,\boldsymbol\lambda]
+=
+F[n]-\sum_{a=1}^m\lambda_a(C_a[n]-c_a).
+$$
+
+对 $n$ 的任意允许方向求一阶变化：
+
+$$
+\delta\mathcal L[n;\eta]
+=
+\delta F[n;\eta]
+-
+\sum_a\lambda_a\delta C_a[n;\eta].
+$$
+
+若两项都可由 $L^2$ 配对表示，则
+
+$$
+\delta\mathcal L
+=
+\int_\Omega
+\left[
+\frac{\delta F}{\delta n(\mathbf r)}
+-
+\sum_a\lambda_a
+\frac{\delta C_a}{\delta n(\mathbf r)}
+\right]
+\eta(\mathbf r)d\mathbf r.
+$$
+
+括号必须对任意 $\eta$ 为零，得到
+
+$$
+\boxed{
+\frac{\delta F}{\delta n(\mathbf r)}
+=
+\sum_a\lambda_a
+\frac{\delta C_a}{\delta n(\mathbf r)}
+}
+$$
+
+并与原约束 $C_a[n]=c_a$ 联立求解。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Suppose $F[n]$ is to be stationary subject to
+
+$$
+C_a[n]=c_a,
+\qquad a=1,\ldots,m.
+$$
+
+A feasible path must obey $C_a[n_\varepsilon]=c_a$. Differentiating at zero restricts admissible directions through the linearized constraints
+
+$$
+\delta C_a[n;\eta]=0.
+$$
+
+Stationarity requires $\delta F[n;\eta]=0$ for every direction satisfying those conditions. If the constraint derivatives are linearly independent, introduce multipliers $\lambda_a$ and define
+
+$$
+\mathcal L[n,\boldsymbol\lambda]
+=
+F[n]-\sum_{a=1}^m\lambda_a(C_a[n]-c_a).
+$$
+
+The first variation with respect to $n$ is
+
+$$
+\delta\mathcal L[n;\eta]
+=
+\delta F[n;\eta]
+-
+\sum_a\lambda_a\delta C_a[n;\eta].
+$$
+
+If both terms have $L^2$ representatives, then
+
+$$
+\delta\mathcal L
+=
+\int_\Omega
+\left[
+\frac{\delta F}{\delta n(\mathbf r)}
+-
+\sum_a\lambda_a
+\frac{\delta C_a}{\delta n(\mathbf r)}
+\right]
+\eta(\mathbf r)d\mathbf r.
+$$
+
+The bracket must vanish for arbitrary $\eta$, giving
+
+$$
+\boxed{
+\frac{\delta F}{\delta n(\mathbf r)}
+=
+\sum_a\lambda_a
+\frac{\delta C_a}{\delta n(\mathbf r)}
+}
+$$
+
+to be solved together with the original constraints $C_a[n]=c_a$.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="固定粒子数的密度变分" titleEn="Density variation at fixed particle number" eyebrow="【推断连接 | DFT connection】">
+  <div class="bilingual-section__zh">
+
+电子密度满足
+
+$$
+C[n]=\int_\Omega n(\mathbf r)d\mathbf r=N.
+$$
+
+因此 $\delta C/\delta n(\mathbf r)=1$，驻值条件化为
+
+$$
+\boxed{
+\frac{\delta F[n]}{\delta n(\mathbf r)}=\mu
+}
+$$
+
+其中常数乘子 $\mu$ 在 DFT 基态变分中与保持粒子数的化学势条件相联系。方程只说明可行集合上的驻值；还需要密度非负、可表示性、边界条件以及泛函本身的定义域。将 $\mu$ 写进方程并不会自动解决这些条件。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An electron density obeys
+
+$$
+C[n]=\int_\Omega n(\mathbf r)d\mathbf r=N.
+$$
+
+Since $\delta C/\delta n(\mathbf r)=1$, stationarity becomes
+
+$$
+\boxed{
+\frac{\delta F[n]}{\delta n(\mathbf r)}=\mu
+}
+$$
+
+with a constant multiplier $\mu$, connected in ground-state DFT to the chemical-potential condition enforcing particle number. This equation states stationarity only on the feasible set. Nonnegativity, representability, boundary conditions, and the domain of the functional still have to be satisfied; writing $\mu$ does not resolve them automatically.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="轨道正交约束" titleEn="Orbital orthogonality constraints" kind="boundary">
+  <div class="bilingual-section__zh">
+
+对一组轨道 $\{\psi_i\}$，约束为 $\langle\psi_i|\psi_j\rangle=\delta_{ij}$。乘子不再是单个数，而是 Hermitian 矩阵 $\Lambda_{ij}$。通过轨道子空间内的酉变换可将它对角化，才出现熟悉的单轨道本征值形式。把所有约束都写成一个标量乘子会丢失轨道间正交条件。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a set of orbitals $\{\psi_i\}$, the constraints are $\langle\psi_i|\psi_j\rangle=\delta_{ij}$. The multipliers form a Hermitian matrix $\Lambda_{ij}$ rather than a single number. A unitary rotation within the orbital subspace can diagonalize that matrix, producing the familiar single-orbital eigenvalue form. Replacing all constraints by one scalar multiplier would lose mutual orthogonality.
+
+  </div>
+</BilingualCallout>
+
+<span id="second-variation"></span>
+
+## 二阶变分、极小值与稳定性 | Second Variation, Minima, and Stability
+
+<BilingualSection titleZh="二阶项如何判定局部曲率" titleEn="How the second-order term measures local curvature" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+若路径二阶可微，Taylor 展开为
+
+$$
+F[n+\varepsilon\eta]
+=
+F[n]
++
+\varepsilon\,\delta F[n;\eta]
++
+\frac{\varepsilon^2}{2}\,\delta^2F[n;\eta,\eta]
++
+o(\varepsilon^2).
+$$
+
+驻值点满足一阶项对所有允许方向为零。此时：
+
+- 若 $\delta^2F[n;\eta,\eta]>0$ 对所有非零可行方向成立，并且存在足够的统一下界，则它支持严格局部极小；
+- 若某个方向使二阶变化为负，驻值点不是局部极小；
+- 若存在零方向，二阶检验不足，可能对应连续对称性、规范自由度、退化或需要检查高阶项。
+
+在约束问题中，二阶变化必须限制在约束流形的切空间上。对任意方向检查正定性会把不可行方向误算进稳定性判断。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If the path is twice differentiable, its Taylor expansion is
+
+$$
+F[n+\varepsilon\eta]
+=
+F[n]
++
+\varepsilon\,\delta F[n;\eta]
++
+\frac{\varepsilon^2}{2}\,\delta^2F[n;\eta,\eta]
++
+o(\varepsilon^2).
+$$
+
+At a stationary point the first-order term vanishes for every admissible direction. Then:
+
+- positivity of $\delta^2F[n;\eta,\eta]$ for all nonzero feasible directions, together with a suitable uniform lower bound, supports a strict local minimum;
+- one direction with negative second variation rules out a local minimum;
+- a zero direction makes the quadratic test inconclusive and may indicate a continuous symmetry, gauge freedom, degeneracy, or the need to inspect higher orders.
+
+For a constrained problem the second variation must be restricted to the tangent space of the constraint manifold. Testing all directions would include infeasible perturbations and can misclassify stability.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="驻值不等于基态" titleEn="Stationarity is not a ground-state proof" kind="boundary">
+  <div class="bilingual-section__zh">
+
+满足 Euler–Lagrange 或 Kohn–Sham 型方程只给出驻值候选。要把它称为最小值，还需检查可行集合、二阶性质或全局变分结构；要把数值解称为已收敛，还需检查离散、基组、网格、迭代残差和目标 observable；要把结果称为物理基态，还需确认模型适用性及与竞争态的比较。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Satisfying an Euler–Lagrange or Kohn–Sham-type equation produces a stationary candidate. Calling it a minimum requires the feasible set and second-order or global variational structure; calling a numerical solution converged requires discretization, basis/grid, iteration residual, and target-observable checks; calling it a physical ground state additionally requires model applicability and comparison with competing states.
+
+  </div>
+</BilingualCallout>
