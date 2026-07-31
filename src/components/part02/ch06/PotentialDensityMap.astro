@@ -1,0 +1,141 @@
+---
+import { twoSiteGroundState } from '../../../data/part02/ch06TeachingModels.mjs';
+
+const initial = twoSiteGroundState(1, 0, 1);
+const densityHeight = (density) => 150 * density;
+---
+
+<figure class="chapter-visual potential-density-map" data-potential-density-map>
+  <figcaption>
+    <strong>原创交互模型：外势差、加法常数与基态密度</strong>
+    <span lang="en">Original interactive model: potential difference, additive constant, and ground-state density</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>势差 Δ = vR − vL | Potential difference</span>
+      <input type="range" min="-4" max="4" step="0.1" value="1" data-pdm-delta />
+      <output data-pdm-delta-output>1.00</output>
+    </label>
+    <label>
+      <span>共同能量平移 c | Common energy shift</span>
+      <input type="range" min="-2" max="2" step="0.1" value="0" data-pdm-shift />
+      <output data-pdm-shift-output>0.00</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 640 300" role="img" aria-labelledby="pdm-title pdm-desc">
+    <title id="pdm-title">Two-site potential-to-density teaching model</title>
+    <desc id="pdm-desc">A two-site one-electron Hamiltonian maps the potential difference to left and right site occupations. A common additive shift changes the energy but not the density.</desc>
+
+    <text x="105" y="28" text-anchor="middle">vL = c − Δ/2</text>
+    <text x="535" y="28" text-anchor="middle">vR = c + Δ/2</text>
+    <line x1="40" y1="90" x2="170" y2="90" class="pdm-level" data-pdm-left-level />
+    <line x1="470" y1="150" x2="600" y2="150" class="pdm-level" data-pdm-right-level />
+    <line x1="170" y1="120" x2="470" y2="120" class="pdm-coupling" />
+    <text x="320" y="108" text-anchor="middle">t = 1</text>
+
+    <line x1="230" y1="265" x2="410" y2="265" class="plot-axis" />
+    <rect x="250" y={265 - densityHeight(initial.nLeft)} width="55" height={densityHeight(initial.nLeft)} class="pdm-density" data-pdm-left-bar />
+    <rect x="335" y={265 - densityHeight(initial.nRight)} width="55" height={densityHeight(initial.nRight)} class="pdm-density" data-pdm-right-bar />
+    <text x="277.5" y="286" text-anchor="middle">nL</text>
+    <text x="362.5" y="286" text-anchor="middle">nR</text>
+    <text x="320" y="195" text-anchor="middle">nL + nR = 1</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-pdm-density>nL = {initial.nLeft.toFixed(4)}, nR = {initial.nRight.toFixed(4)}</span>
+    <span data-pdm-energy>E0 = {initial.energy.toFixed(4)} (model units)</span>
+    <strong data-pdm-invariance>Changing c leaves nL and nR unchanged.</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>一个电子、两个局域基函数、固定跃迁幅 t = 1。二乘二 Hamiltonian 的对角元分别为 c − Δ/2 与 c + Δ/2，两个非对角元均为 −t。密度输出是两个站点的无量纲占据数。</p>
+    <p lang="en"><strong>Model:</strong> one electron in two localized basis functions with fixed hopping t = 1. The two diagonal matrix elements are c − Δ/2 and c + Δ/2, and both off-diagonal elements are −t. The outputs are dimensionless site occupations.</p>
+    <p><strong>验收：</strong>nL + nR = 1；Δ = 0 时 nL = nR = 1/2；固定 Δ 改变 c 时，基态能量平移相同数值而密度不变。</p>
+    <p lang="en"><strong>Acceptance:</strong> nL + nR = 1; at Δ = 0, both occupations equal one half; changing c at fixed Δ shifts the energy by the same amount and leaves the density unchanged.</p>
+    <p><strong>边界：</strong>这是有限维、非相互作用教学类比，只演示“势的加法常数不可由密度区分”。它不是连续空间 HK 定理的证明，也不代表真实材料或 Kohn–Sham 计算。</p>
+    <p lang="en"><strong>Boundary:</strong> this finite-dimensional noninteracting analogy only illustrates why a common additive potential cannot be distinguished from the density. It is not a proof of the continuum Hohenberg–Kohn theorem or a material calculation.</p>
+  </div>
+</figure>
+
+<script>
+  import { twoSiteGroundState } from '../../../data/part02/ch06TeachingModels.mjs';
+
+  document.querySelectorAll('[data-potential-density-map]').forEach((root) => {
+    const deltaInput = root.querySelector('[data-pdm-delta]');
+    const shiftInput = root.querySelector('[data-pdm-shift]');
+    const deltaOutput = root.querySelector('[data-pdm-delta-output]');
+    const shiftOutput = root.querySelector('[data-pdm-shift-output]');
+    const densityOutput = root.querySelector('[data-pdm-density]');
+    const energyOutput = root.querySelector('[data-pdm-energy]');
+    const leftBar = root.querySelector('[data-pdm-left-bar]');
+    const rightBar = root.querySelector('[data-pdm-right-bar]');
+    const leftLevel = root.querySelector('[data-pdm-left-level]');
+    const rightLevel = root.querySelector('[data-pdm-right-level]');
+
+    if (!(deltaInput instanceof HTMLInputElement) || !(shiftInput instanceof HTMLInputElement)) return;
+    if (!(leftBar instanceof SVGRectElement) || !(rightBar instanceof SVGRectElement)) return;
+
+    const levelY = (value) => 120 - 24 * value;
+    const update = () => {
+      const delta = Number(deltaInput.value);
+      const shift = Number(shiftInput.value);
+      const state = twoSiteGroundState(delta, shift, 1);
+      const leftHeight = 150 * state.nLeft;
+      const rightHeight = 150 * state.nRight;
+
+      leftBar.setAttribute('y', (265 - leftHeight).toFixed(2));
+      leftBar.setAttribute('height', leftHeight.toFixed(2));
+      rightBar.setAttribute('y', (265 - rightHeight).toFixed(2));
+      rightBar.setAttribute('height', rightHeight.toFixed(2));
+
+      if (leftLevel instanceof SVGLineElement) {
+        const y = levelY(shift - delta / 2).toFixed(2);
+        leftLevel.setAttribute('y1', y);
+        leftLevel.setAttribute('y2', y);
+      }
+      if (rightLevel instanceof SVGLineElement) {
+        const y = levelY(shift + delta / 2).toFixed(2);
+        rightLevel.setAttribute('y1', y);
+        rightLevel.setAttribute('y2', y);
+      }
+
+      if (deltaOutput instanceof HTMLOutputElement) deltaOutput.value = delta.toFixed(2);
+      if (shiftOutput instanceof HTMLOutputElement) shiftOutput.value = shift.toFixed(2);
+      if (densityOutput instanceof HTMLElement) densityOutput.textContent = `nL = ${state.nLeft.toFixed(4)}, nR = ${state.nRight.toFixed(4)}`;
+      if (energyOutput instanceof HTMLElement) energyOutput.textContent = `E0 = ${state.energy.toFixed(4)} (model units)`;
+    };
+
+    deltaInput.addEventListener('input', update);
+    shiftInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .potential-density-map svg {
+    width: 100%;
+    max-height: 22rem;
+  }
+
+  .pdm-level {
+    stroke: var(--sl-color-text-accent);
+    stroke-width: 4;
+  }
+
+  .pdm-coupling {
+    stroke: var(--sl-color-gray-4);
+    stroke-width: 2;
+    stroke-dasharray: 7 5;
+  }
+
+  .pdm-density {
+    fill: var(--sl-color-accent-high);
+    opacity: 0.8;
+  }
+
+  .potential-density-map text {
+    fill: currentColor;
+  }
+</style>

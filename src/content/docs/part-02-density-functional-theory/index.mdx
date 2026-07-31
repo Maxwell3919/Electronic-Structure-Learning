@@ -1,15 +1,33 @@
 ---
-title: "Part II · Density Functional Theory"
-description: "密度泛函理论的完整目录级阅读骨架。"
+title: "Part II · Density Functional Theory | 密度泛函理论"
+description: "从精确密度变分基础，经 Kohn–Sham 辅助体系，进入交换—关联泛函的构造、适用范围与误差边界。"
 sidebar:
   order: 0
   label: "Part II · Density Functional Theory"
 ---
 
 import TrackOverview from '../../../components/TrackOverview.astro';
+import BilingualSection from '../../../components/BilingualSection.astro';
 import catalog from '../../../data/martin/index.mjs';
 
-# 密度泛函理论
+# 密度泛函理论 | Density Functional Theory
+
+<BilingualSection titleZh="四章的逻辑顺序" titleEn="Logical sequence of the four chapters" eyebrow="Part II">
+  <div class="bilingual-section__zh">
+
+Part II 先回答基态密度为什么可以成为基本变量，再构造产生同一密度的 Kohn–Sham 辅助体系，最后讨论交换—关联泛函如何编码精确理论中仍未知的部分。阅读顺序不可随意压缩：Chapter 6 的 Hohenberg–Kohn 定理不提供 Kohn–Sham 方程；Chapter 7 的精确分解不选择实际泛函；Chapters 8–9 才进入局域、半局域、轨道依赖和非局域近似。
+
+当前已完成 Chapter 6。Chapter 7–9 仍保持目录级 outline，待前一章完成合并和部署后依次编写。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Part II first establishes why the ground-state density can serve as a basic variable, then constructs a Kohn–Sham auxiliary system with the same density, and finally develops approximations for the still-unknown exchange–correlation contribution. The sequence matters: the Hohenberg–Kohn theorem of Chapter 6 does not supply the Kohn–Sham equations; the exact decomposition of Chapter 7 does not select a practical functional; Chapters 8–9 introduce local, semilocal, orbital-dependent, and nonlocal approximations.
+
+Chapter 6 is complete. Chapters 7–9 remain directory-level outlines and will be written sequentially after the preceding chapter is merged and deployed.
+
+  </div>
+</BilingualSection>
 
 <TrackOverview
   sourceTitle={catalog.source.title}
