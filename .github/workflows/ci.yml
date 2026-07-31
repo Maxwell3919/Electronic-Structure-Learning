@@ -29,7 +29,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Validate Python smoke-test syntax
-        run: python3 -m py_compile scripts/smoke-pages.py scripts/smoke-part02-ch06.py scripts/smoke-part02-ch07.py
+        run: python3 -m py_compile scripts/smoke-pages.py scripts/smoke-part02-ch06.py scripts/smoke-part02-ch07.py scripts/smoke-pages-ch19.py
 
       - name: Validate model and build static site
         run: npm run check
