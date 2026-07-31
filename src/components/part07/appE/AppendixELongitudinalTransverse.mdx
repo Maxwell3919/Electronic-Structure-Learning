@@ -1,0 +1,500 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import LocalFieldMatrixExplorer from './LocalFieldMatrixExplorer.astro';
+
+<span id="section-e-4"></span>
+
+## E.4 标量纵向介电函数 | Scalar Longitudinal Dielectric Functions
+
+<BilingualSection titleZh="scalar potential 只生成纵向电场" titleEn="A scalar potential generates only a longitudinal electric field" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+静态问题和 density-functional formulation 常用 scalar potential。若
+
+$$
+\mathbf E(\mathbf r)=-\nabla V(\mathbf r),
+$$
+
+则在本站 Fourier convention $V(\mathbf r)=\int d^3q\,V(\mathbf q)e^{i\mathbf q\cdot\mathbf r}/(2\pi)^3$ 下，
+
+$$
+\mathbf E(\mathbf q)=-i\mathbf qV(\mathbf q),
+$$
+
+电场严格平行于 $\mathbf q$。因此 scalar dielectric function 是 longitudinal response；它不能描述有限 $q$ 的 transverse photon。
+
+Martin Eq. E.14 将 inverse dielectric function 定义为 total Coulomb potential 对 external potential 的响应：
+
+$$
+\epsilon^{-1}(\mathbf q,\mathbf q',\omega)
+=\frac{\delta V_{\mathrm{total}}^C(\mathbf q,\omega)}
+{\delta V_{\mathrm{ext}}(\mathbf q',\omega)},
+$$
+
+$$
+\epsilon(\mathbf q,\mathbf q',\omega)
+=\frac{\delta V_{\mathrm{ext}}(\mathbf q,\omega)}
+{\delta V_{\mathrm{total}}^C(\mathbf q',\omega)}.
+$$
+
+这里 $V_{\mathrm{total}}^C$ 是作用在无穷小 test charge 上的总 Coulomb potential，不包含作用在电子 auxiliary equation 中的 effective exchange-correlation potential $V_{xc}$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Static problems and density-functional formulations commonly use a scalar potential. If
+
+$$
+\mathbf E(\mathbf r)=-\nabla V(\mathbf r),
+$$
+
+then, under the website Fourier convention $V(\mathbf r)=\int d^3q\,V(\mathbf q)e^{i\mathbf q\cdot\mathbf r}/(2\pi)^3$,
+
+$$
+\mathbf E(\mathbf q)=-i\mathbf qV(\mathbf q),
+$$
+
+so the electric field is strictly parallel to $\mathbf q$. A scalar dielectric function is therefore a longitudinal response and cannot describe a finite-$q$ transverse photon.
+
+Martin Eq. E.14 defines the inverse dielectric function as the response of the total Coulomb potential to an external potential:
+
+$$
+\epsilon^{-1}(\mathbf q,\mathbf q',\omega)
+=\frac{\delta V_{\mathrm{total}}^C(\mathbf q,\omega)}
+{\delta V_{\mathrm{ext}}(\mathbf q',\omega)},
+$$
+
+$$
+\epsilon(\mathbf q,\mathbf q',\omega)
+=\frac{\delta V_{\mathrm{ext}}(\mathbf q,\omega)}
+{\delta V_{\mathrm{total}}^C(\mathbf q',\omega)}.
+$$
+
+Here $V_{\mathrm{total}}^C$ is the total Coulomb potential acting on an infinitesimal test charge. It does not include the effective exchange-correlation potential $V_{xc}$ acting on an electron in an auxiliary equation.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="由密度响应导出 ε⁻¹" titleEn="Deriving ε⁻¹ from the density response" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+外部 potential 诱导 density change
+
+$$
+\delta n=\chi\,\delta V_{\mathrm{ext}},
+$$
+
+其中 $\chi$ 是对 external source 的可约 density response。诱导 Coulomb potential 为
+
+$$
+\delta V_H=v_C\delta n,
+\qquad
+v_C(\mathbf q)=\frac{4\pi e^2}{q^2}
+$$
+
+（Gaussian units，电子电荷 $Q=-e$）。总 Coulomb potential 是
+
+$$
+\delta V_{\mathrm{total}}^C
+=\delta V_{\mathrm{ext}}+v_C\chi\delta V_{\mathrm{ext}}.
+$$
+
+因此 Martin Eq. E.15 为
+
+$$
+\boxed{
+\epsilon^{-1}=1+v_C\chi
+}.
+$$
+
+这里的 $1$ 是 reciprocal/real-space kernel 的单位算符。若使用 matrix indices，$v_C\chi$ 是 convolution；不能把它当成逐点标量乘法。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An external potential induces a density change
+
+$$
+\delta n=\chi\,\delta V_{\mathrm{ext}},
+$$
+
+where $\chi$ is the reducible density response to the external source. The induced Coulomb potential is
+
+$$
+\delta V_H=v_C\delta n,
+\qquad
+v_C(\mathbf q)=\frac{4\pi e^2}{q^2}
+$$
+
+in Gaussian units for electron charge $Q=-e$. The total Coulomb potential is
+
+$$
+\delta V_{\mathrm{total}}^C
+=\delta V_{\mathrm{ext}}+v_C\chi\delta V_{\mathrm{ext}}.
+$$
+
+Martin Eq. E.15 is therefore
+
+$$
+\boxed{
+\epsilon^{-1}=1+v_C\chi
+}.
+$$
+
+The symbol $1$ is the identity kernel in real or reciprocal space. With matrix indices, $v_C\chi$ denotes a convolution rather than pointwise scalar multiplication.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Kohn–Sham χ⁰、fxc 与可约响应" titleEn="Kohn–Sham χ⁰, fxc, and the reducible response" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+独立粒子 density response $\chi^0$ 以 Kohn–Sham effective potential 为 source：
+
+$$
+\delta n=\chi^0\delta V_{\mathrm{eff}},
+\qquad
+\delta V_{\mathrm{eff}}
+=\delta V_{\mathrm{ext}}+(v_C+f_{xc})\delta n.
+$$
+
+解 Dyson equation 得
+
+$$
+\chi=\frac{\chi^0}{1-(v_C+f_{xc})\chi^0}.
+$$
+
+代入 $\epsilon^{-1}=1+v_C\chi$，得到 Martin Eq. E.16：
+
+$$
+\boxed{
+\epsilon^{-1}
+=1+\frac{v_C\chi^0}{1-(v_C+f_{xc})\chi^0}
+=\frac{1-f_{xc}\chi^0}
+{1-(v_C+f_{xc})\chi^0}
+}.
+$$
+
+写成分式只适用于 scalar/commuting notation。实际 crystal calculation 中所有乘积和 inverse 都是 $G,G'$、spin、frequency 等指标上的 matrix operation。取 $f_{xc}=0$ 给出 RPA/independent-particle polarization 加 Hartree screening，而不是完全删除 interaction。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The independent-particle density response $\chi^0$ uses the Kohn-Sham effective potential as its source:
+
+$$
+\delta n=\chi^0\delta V_{\mathrm{eff}},
+\qquad
+\delta V_{\mathrm{eff}}
+=\delta V_{\mathrm{ext}}+(v_C+f_{xc})\delta n.
+$$
+
+Solving the Dyson equation gives
+
+$$
+\chi=\frac{\chi^0}{1-(v_C+f_{xc})\chi^0}.
+$$
+
+Substitution into $\epsilon^{-1}=1+v_C\chi$ gives Martin Eq. E.16:
+
+$$
+\boxed{
+\epsilon^{-1}
+=1+\frac{v_C\chi^0}{1-(v_C+f_{xc})\chi^0}
+=\frac{1-f_{xc}\chi^0}
+{1-(v_C+f_{xc})\chi^0}
+}.
+$$
+
+The quotient notation is valid only for a scalar or commuting representation. In a crystal calculation every product and inverse is a matrix operation over $G,G'$, spin, frequency, and other indices. Setting $f_{xc}=0$ gives independent-particle polarization with Hartree screening, not a complete removal of interactions.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="晶体 dielectric matrix 与 local-field correction" titleEn="Crystal dielectric matrices and local-field corrections" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+在晶体中写
+
+$$
+\mathbf q=\mathbf k+\mathbf G,
+\qquad
+\mathbf q'=\mathbf k+\mathbf G',
+$$
+
+其中 $\mathbf k$ 限制在第一 Brillouin zone。microscopic dielectric function 成为 matrix
+
+$$
+\epsilon_{GG'}(\mathbf k,\omega).
+$$
+
+光学外场只有长波 head $G'=0$，但诱导内部场可以包含 $G\ne0$。因此必须在保持 $G'\ne0$ external components 为零的约束下反演完整 matrix。macroscopic dielectric function 是 Martin Eq. E.17：
+
+$$
+\boxed{
+\epsilon_M(\mathbf k,\omega)
+=\frac{1}{[\epsilon^{-1}(\mathbf k,\omega)]_{00}}
+},
+$$
+
+而不是一般意义下的 $\epsilon_{00}$。
+
+将 matrix 分块为 head 与 local-field block，
+
+$$
+\epsilon=
+\begin{pmatrix}
+\epsilon_{00}&\epsilon_{0b}\\
+\epsilon_{b0}&\epsilon_{bb}
+\end{pmatrix},
+$$
+
+block inversion 给出
+
+$$
+\epsilon_M
+=\epsilon_{00}-\epsilon_{0b}\epsilon_{bb}^{-1}\epsilon_{b0},
+$$
+
+即 Schur complement。第二项就是 microscopic field 对 macroscopic response 的 local-field correction。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In a crystal, write
+
+$$
+\mathbf q=\mathbf k+\mathbf G,
+\qquad
+\mathbf q'=\mathbf k+\mathbf G',
+$$
+
+with $\mathbf k$ restricted to the first Brillouin zone. The microscopic dielectric function becomes the matrix
+
+$$
+\epsilon_{GG'}(\mathbf k,\omega).
+$$
+
+An optical external field has only the long-wavelength head $G'=0$, but induced internal fields can contain $G\ne0$. The full matrix must therefore be inverted while the short-wavelength external components remain zero. Martin Eq. E.17 defines the macroscopic dielectric function as
+
+$$
+\boxed{
+\epsilon_M(\mathbf k,\omega)
+=\frac{1}{[\epsilon^{-1}(\mathbf k,\omega)]_{00}}
+},
+$$
+
+not generally as $\epsilon_{00}$.
+
+Partitioning the matrix into a head and a local-field block,
+
+$$
+\epsilon=
+\begin{pmatrix}
+\epsilon_{00}&\epsilon_{0b}\\
+\epsilon_{b0}&\epsilon_{bb}
+\end{pmatrix},
+$$
+
+block inversion gives
+
+$$
+\epsilon_M
+=\epsilon_{00}-\epsilon_{0b}\epsilon_{bb}^{-1}\epsilon_{b0},
+$$
+
+the Schur complement. The second term is the local-field correction from microscopic fields to the macroscopic response.
+
+  </div>
+</BilingualSection>
+
+<LocalFieldMatrixExplorer />
+
+<BilingualSection titleZh="长波方向恢复 dielectric tensor" titleEn="Recovering the dielectric tensor from directional long-wavelength limits" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin Eq. E.18 通过不同方向的 $\hat{\mathbf k}$ 恢复 tensor：
+
+$$
+\epsilon(\hat{\mathbf k},\omega)
+=\lim_{|\mathbf k|\to0}
+\hat k_\alpha\epsilon_{\alpha\beta}(\mathbf k,\omega)
+\hat k_\beta.
+$$
+
+cubic crystal 中 $\epsilon_{\alpha\beta}=\epsilon\delta_{\alpha\beta}$，方向不影响结果；一般 anisotropic crystal 中不同方向对应不同 longitudinal projection。严格 $k=0$ 不包含方向信息，因此代码必须记录 approach direction 和 electrical boundary condition。
+
+loss spectroscopy 常绘制
+
+$$
+L(\mathbf q,\omega)
+=-\operatorname{Im}\epsilon^{-1}(\mathbf q,\omega).
+$$
+
+loss peak 可能来自 plasmon、phonon 或混合模，但必须结合零点/极点、matrix eigenmode、damping 和 selection rule 判断；一个 peak 不能单独确定 mode identity。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin Eq. E.18 recovers the tensor through directional limits $\hat{\mathbf k}$:
+
+$$
+\epsilon(\hat{\mathbf k},\omega)
+=\lim_{|\mathbf k|\to0}
+\hat k_\alpha\epsilon_{\alpha\beta}(\mathbf k,\omega)
+\hat k_\beta.
+$$
+
+In a cubic crystal $\epsilon_{\alpha\beta}=\epsilon\delta_{\alpha\beta}$ and the direction does not matter. In a general anisotropic crystal, different directions give different longitudinal projections. The point $k=0$ itself contains no approach direction, so a calculation must record the direction and electrical boundary condition.
+
+Loss spectroscopy commonly plots
+
+$$
+L(\mathbf q,\omega)
+=-\operatorname{Im}\epsilon^{-1}(\mathbf q,\omega).
+$$
+
+A loss peak can arise from a plasmon, phonon, or mixed mode, but its identity requires zeros/poles, dielectric-matrix eigenmodes, damping, and selection rules. A peak alone is insufficient.
+
+  </div>
+</BilingualSection>
+
+<span id="section-e-5"></span>
+
+## E.5 张量横向介电函数 | Tensor Transverse Dielectric Functions
+
+<BilingualSection titleZh="vector potential 与 minimal coupling" titleEn="Vector potential and minimal coupling" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+一般 time-dependent electric 与 magnetic fields 不能只由 scalar potential 表示。Martin Eq. E.19 以 vector potential 写出 perturbation：
+
+$$
+\Delta\hat H(t)
+=\frac{1}{2m_e}\sum_i
+\left\{
+\left[\mathbf p_i-\frac{e}{c}\mathbf A(t)\right]^2
+-\mathbf p_i^2
+\right\}.
+$$
+
+展开后同时出现线性 paramagnetic current coupling 与二次 diamagnetic term：
+
+$$
+\Delta\hat H
+=-\frac{e}{2m_ec}\sum_i
+\left(\mathbf p_i\cdot\mathbf A+\mathbf A\cdot\mathbf p_i\right)
++\frac{e^2}{2m_ec^2}\sum_i\mathbf A^2.
+$$
+
+计算 optical conductivity 时两个部分必须按 gauge 和 basis 一致处理；漏掉 diamagnetic/contact term 会破坏 zero-frequency limit 和 $f$-sum closure。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+General time-dependent electric and magnetic fields cannot be represented by a scalar potential alone. Martin Eq. E.19 writes the perturbation through the vector potential:
+
+$$
+\Delta\hat H(t)
+=\frac{1}{2m_e}\sum_i
+\left\{
+\left[\mathbf p_i-\frac{e}{c}\mathbf A(t)\right]^2
+-\mathbf p_i^2
+\right\}.
+$$
+
+Expansion gives both a linear paramagnetic current coupling and a quadratic diamagnetic term:
+
+$$
+\Delta\hat H
+=-\frac{e}{2m_ec}\sum_i
+\left(\mathbf p_i\cdot\mathbf A+\mathbf A\cdot\mathbf p_i\right)
++\frac{e^2}{2m_ec^2}\sum_i\mathbf A^2.
+$$
+
+An optical-conductivity calculation must treat both pieces consistently with its gauge and basis. Omitting the diamagnetic or contact term can violate the zero-frequency limit and $f$-sum closure.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="E–A 符号必须随 time convention 重算" titleEn="The E–A sign must be re-derived for the time convention" eyebrow="【来源记录 + convention audit | Source record + convention audit】">
+  <div class="bilingual-section__zh">
+
+在 gauge 取 scalar potential 为零时，
+
+$$
+\mathbf E(t)=-\frac{1}{c}\frac{d\mathbf A}{dt},
+\qquad
+\mathbf B=\nabla\times\mathbf A.
+$$
+
+Martin p.604 沿其 $e^{i\omega t}$ 文字 convention 写为 $\mathbf E(\omega)=-(i\omega/c)\mathbf A(\omega)$。本站固定 $e^{-i\omega t}$，因此
+
+$$
+\boxed{
+\mathbf E(\omega)=+\frac{i\omega}{c}\mathbf A(\omega)
+}.
+$$
+
+current response 对 $\mathbf A$ 的 sign、conductivity 对 $\mathbf E$ 的 sign、retarded denominator 和 $\operatorname{Im}\epsilon$ 必须在同一 convention 下联合检查。只替换一处 $i$ 的符号会破坏 power absorption 与 causality。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In a gauge with zero scalar potential,
+
+$$
+\mathbf E(t)=-\frac{1}{c}\frac{d\mathbf A}{dt},
+\qquad
+\mathbf B=\nabla\times\mathbf A.
+$$
+
+Using its stated $e^{i\omega t}$ convention, Martin p.604 writes $\mathbf E(\omega)=-(i\omega/c)\mathbf A(\omega)$. The website fixes $e^{-i\omega t}$, so
+
+$$
+\boxed{
+\mathbf E(\omega)=+\frac{i\omega}{c}\mathbf A(\omega)
+}.
+$$
+
+The sign of current response to $\mathbf A$, conductivity response to $\mathbf E$, retarded denominators, and $\operatorname{Im}\epsilon$ must be audited together under one convention. Flipping one factor of $i$ in isolation breaks absorbed-power and causality relations.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="transverse current response 与 current-functional kernel" titleEn="Transverse current response and the current-functional kernel" eyebrow="【Martin 原书 + 补充边界 | Martin source + supplemental boundary】">
+  <div class="bilingual-section__zh">
+
+对 transverse electromagnetic wave，observable 是 current density，source 是 vector potential。independent-particle Kubo structure 与 Appendix D 相同，但 operator 是 current/velocity，且必须包含 diamagnetic contribution。self-consistent field theory 的结构仍是 bare current response 加 kernel feedback；exchange-correlation quantity 不再只是 scalar $f_{xc}=\delta V_{xc}/\delta n$，而是 effective exchange-correlation vector potential 对 current 的 functional derivative，即 current-density functional theory 的 kernel。
+
+continuity equation 只约束 longitudinal current；transverse current 含有 density response 无法恢复的自由度。有限 $q$ 时 longitudinal 与 transverse channels 不能互换。只有在明确的 $q\to0$、$\omega\ne0$ optical limit、gauge 和 symmetry 下，两种计算才可能给出同一 macroscopic optical tensor。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a transverse electromagnetic wave, the observable is the current density and the source is the vector potential. The independent-particle Kubo structure is the same as in Appendix D, but the operator is the current or velocity and the diamagnetic contribution must be included. The self-consistent field structure remains a bare current response plus kernel feedback. The exchange-correlation object is no longer only the scalar $f_{xc}=\delta V_{xc}/\delta n$, but the functional derivative of an effective exchange-correlation vector potential with respect to current: the kernel of current-density functional theory.
+
+The continuity equation constrains only longitudinal current. Transverse current contains degrees of freedom that density response cannot reconstruct. At finite $q$, longitudinal and transverse channels are not interchangeable. They can approach the same macroscopic optical tensor only under a declared $q\to0$, $\omega\ne0$ optical limit, gauge, and symmetry.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="横向响应的数值验收" titleEn="Numerical acceptance of a transverse response" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>固定 velocity/current operator，包括 nonlocal pseudopotential 或 PAW correction。</li>
+      <li>验证 paramagnetic 与 diamagnetic terms 的 gauge consistency 和 low-frequency cancellation。</li>
+      <li>分别收敛 $k$ mesh、空态/linear solve、broadening、frequency grid 和 tensor symmetry。</li>
+      <li>检查 $f$-sum、causality、Kramers–Kronig 与 charge conservation。</li>
+      <li>说明所取的是 $q\to0$ optical limit、有限 $q$ transverse response，还是 longitudinal loss response。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>Fix the velocity/current operator, including nonlocal-pseudopotential or PAW corrections.</li>
+      <li>Verify gauge consistency and low-frequency cancellation between paramagnetic and diamagnetic terms.</li>
+      <li>Converge the $k$ mesh, empty-state or linear solve, broadening, frequency grid, and tensor symmetry separately.</li>
+      <li>Check the $f$-sum, causality, Kramers–Kronig relations, and charge conservation.</li>
+      <li>State whether the calculation is the $q\to0$ optical limit, a finite-$q$ transverse response, or a longitudinal loss response.</li>
+    </ul>
+  </div>
+</BilingualCallout>
