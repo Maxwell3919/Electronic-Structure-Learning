@@ -1,0 +1,319 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import RealTimeResolutionExplorer from './RealTimeResolutionExplorer.astro';
+
+<span id="section-21-6" className="chapter21-anchor" aria-hidden="true"></span>
+
+## 21.6 显式实时间计算 | Explicit Real-Time Calculations
+
+<BilingualSection titleZh="传播轨道，而不是先求全部激发态" titleEn="Propagate orbitals instead of solving for every excited state first" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+频率域方法在每个 $\omega$ 求解 response equation，或对角化一个跃迁空间矩阵。实时间 TDDFT 采取另一条路线：从基态占据轨道出发，施加时间依赖外场，并逐步传播
+
+$$
+ i\hbar\partial_t|\varphi_i(t)\rangle
+ =\hat H_{\mathrm{KS}}[n(t),t]|\varphi_i(t)\rangle.
+$$
+
+每个时间步由当前轨道得到密度，再更新 Hartree–XC 势。一个短脉冲可同时激发宽频率范围；记录诱导偶极或电流并 Fourier 变换即可得到线性谱，因此不需要逐个构造激发态。
+
+实时间传播形式上也能处理非线性强场响应，但本章的光谱路线仍属于线性响应：kick 或场幅必须足够小，使诱导 observable 与幅度成正比，且除以外场后得到的谱不依赖幅度。只运行一个场强不能验证这一条件。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A frequency-domain method solves a response equation at each $\omega$ or diagonalizes a transition-space matrix. Real-time TDDFT takes another route: start from the occupied ground-state orbitals, apply a time-dependent external field, and propagate
+
+$$
+ i\hbar\partial_t|\varphi_i(t)\rangle
+ =\hat H_{\mathrm{KS}}[n(t),t]|\varphi_i(t)\rangle.
+$$
+
+At every step the density is rebuilt from the orbitals and the Hartree–XC potential is updated. A short pulse can excite a broad frequency range at once; recording the induced dipole or current and Fourier transforming it yields a linear spectrum without constructing each excited state separately.
+
+Real-time propagation can also treat nonlinear strong-field response in form, but the spectral route in this chapter remains linear response: the kick or field amplitude must be small enough that the induced observable scales linearly and the field-normalized spectrum is amplitude independent. A single field amplitude does not validate this condition.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="短时间演化算符 | Short-time evolution operator"
+  assumptions={[
+    '先考虑一个时间区间内固定的 Hermitian Hamiltonian；',
+    'hbar=1 仅用于简化传播公式；',
+    '时间依赖和自洽 predictor-corrector 随后加入。',
+  ]}
+>
+
+若 $\hat H$ 在 $[t,t+\Delta t]$ 内固定，精确传播为
+
+$$
+|\psi(t+\Delta t)\rangle
+=e^{-i\hat H\Delta t}|\psi(t)\rangle.
+$$
+
+Hermitian $\hat H$ 使演化算符幺正：
+
+$$
+U^\dagger U=1,
+\qquad
+\langle\psi(t+\Delta t)|\psi(t+\Delta t)\rangle
+=\langle\psi(t)|\psi(t)\rangle.
+$$
+
+把状态展开在固定基 $|\alpha\rangle$ 中，$|\psi\rangle=\sum_\alpha c_\alpha|\alpha\rangle$，传播就是对 coefficient vector 作用矩阵指数。直接对角化 $H$ 通常昂贵，因此实际算法近似指数对向量的作用，而不是显式形成稠密指数矩阵。
+
+若 Hamiltonian 随时间变化，精确对象是 time-ordered exponential。把 $H[n(t)]$ 在一步内视为常数会引入时间离散误差；由于 $H$ 又依赖传播后的密度，通常需要 midpoint、predictor–corrector 或自洽时间步来保持目标阶数。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="四类传播近似的结构差别" titleEn="Structural differences among four propagation approximations" eyebrow="Algorithms">
+  <div className="bilingual-section__zh">
+
+**分裂算符。** 若 $\hat H=\hat T+\hat V$，对称二阶分裂为
+
+$$
+ e^{-i(\hat T+\hat V)\Delta t}
+ =
+ e^{-i\hat V\Delta t/2}
+ e^{-i\hat T\Delta t}
+ e^{-i\hat V\Delta t/2}
+ +O(\Delta t^3).
+$$
+
+当 $T$ 在 reciprocal space 对角、$V$ 在 real space 对角时，这一路线可用 FFT 高效切换。误差由不对易子控制；若有非局域势或 self-consistent midpoint 更新，简单分裂需要扩展。
+
+**Taylor 展开。** 截断
+
+$$
+ e^{-iH\Delta t}
+ \approx 1-iH\Delta t-\frac12H^2\Delta t^2+\cdots
+$$
+
+实现直接，但有限阶多项式一般不严格幺正。高阶和小步长可减小漂移，却必须对 norm、能量和谱逐项验证。
+
+**Crank–Nicolson/Cayley 形式。** 将时间导数居中得到
+
+$$
+\boxed{
+\left(1+\frac{i\Delta t}{2}H\right)\psi^{n+1}
+=
+\left(1-\frac{i\Delta t}{2}H\right)\psi^n
+}.
+$$
+
+对固定 Hermitian $H$，传播因子
+
+$$
+U_C=\left(1+\frac{i\Delta t}{2}H\right)^{-1}
+\left(1-\frac{i\Delta t}{2}H\right)
+$$
+
+严格幺正且二阶准确，但每步需要线性求解。对密度依赖 Hamiltonian，幺正代数本身不保证 midpoint density 已自洽。
+
+**Chebyshev/Krylov 多项式。** 将 Hamiltonian 谱缩放到有限区间后，用全局多项式或 Krylov 子空间近似指数对向量的作用。它们可在较大步长下高效，但需要可靠的谱界、递推停止准则和误差估计。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+**Split operator.** If $\hat H=\hat T+\hat V$, a symmetric second-order split is
+
+$$
+ e^{-i(\hat T+\hat V)\Delta t}
+ =
+ e^{-i\hat V\Delta t/2}
+ e^{-i\hat T\Delta t}
+ e^{-i\hat V\Delta t/2}
+ +O(\Delta t^3).
+$$
+
+When $T$ is diagonal in reciprocal space and $V$ in real space, FFTs make this route efficient. Commutators control the error; nonlocal potentials and a self-consistent midpoint update require extensions of the simplest split.
+
+**Taylor expansion.** Truncating
+
+$$
+ e^{-iH\Delta t}
+ \approx 1-iH\Delta t-\frac12H^2\Delta t^2+\cdots
+$$
+
+is direct, but a finite-order polynomial is generally not exactly unitary. Higher order and smaller steps reduce drift, yet norm, energy, and the target spectrum must be validated separately.
+
+**Crank–Nicolson/Cayley form.** Centering the time derivative gives
+
+$$
+\boxed{
+\left(1+\frac{i\Delta t}{2}H\right)\psi^{n+1}
+=
+\left(1-\frac{i\Delta t}{2}H\right)\psi^n
+}.
+$$
+
+For fixed Hermitian $H$, the factor
+
+$$
+U_C=\left(1+\frac{i\Delta t}{2}H\right)^{-1}
+\left(1-\frac{i\Delta t}{2}H\right)
+$$
+
+is exactly unitary and second-order accurate, at the price of a linear solve at every step. For a density-dependent Hamiltonian, that algebraic unitarity does not prove that the midpoint density is self-consistent.
+
+**Chebyshev/Krylov polynomials.** After scaling the Hamiltonian spectrum to a finite interval, a global polynomial or Krylov subspace approximates the action of the exponential. These methods can be efficient at larger steps, but require reliable spectral bounds, recurrence stopping rules, and error estimates.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="为什么 Cayley 保持 norm 而截断 Taylor 不保持 | Why Cayley preserves norm and a truncated Taylor factor does not"
+  assumptions={[
+    '考虑 H 的一个实本征值 E；',
+    '时间步 Delta t 为正；',
+    '只比较固定 Hamiltonian 的单步代数。',
+  ]}
+>
+
+对一个本征模，Cayley factor 为
+
+$$
+ u_C(E)=\frac{1-iE\Delta t/2}{1+iE\Delta t/2}.
+$$
+
+分子与分母互为复共轭，因此
+
+$$
+|u_C|^2=1.
+$$
+
+二阶 Taylor factor 为
+
+$$
+ u_{T2}(E)=1-iE\Delta t-\frac12(E\Delta t)^2.
+$$
+
+令 $x=E\Delta t$，则
+
+$$
+|u_{T2}|^2
+=\left(1-\frac{x^2}{2}\right)^2+x^2
+=1+\frac{x^4}{4}.
+$$
+
+所以每步都有正的 norm 误差；重复 $N$ 步后误差可累积为 $(1+x^4/4)^N$。这不表示任何 Taylor 方法都不可用，而是说明“形式上二阶”与“精确保持幺正约束”是两个不同性质。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="从 delta kick 到宽频谱" titleEn="From a delta kick to a broadband spectrum" eyebrow="Linear spectroscopy">
+  <div className="bilingual-section__zh">
+
+对有限体系，可施加很弱的瞬时偶极微扰
+
+$$
+\delta v_{\mathrm{ext}}(t)
+=-\kappa\,e\,\mathbf e\cdot\mathbf r\,\delta(t).
+$$
+
+积分跨过 $t=0$ 后，轨道获得位置依赖相位；随后在无外场条件下传播，记录诱导偶极
+
+$$
+\delta d_\alpha(t)=d_\alpha(t)-d_\alpha(0).
+$$
+
+由于 delta kick 在频域中近似常数，一个传播包含宽频率信息。在线性区，极化率可由
+
+$$
+\alpha_{\alpha\beta}(\omega)
+\propto
+\frac{1}{\kappa}
+\int_0^Tdt\,
+ e^{i\omega t}w(t)\delta d_\alpha(t)
+$$
+
+得到，其中 $w(t)$ 是有限时间窗口。周期体系相应记录电流而不是无界偶极。
+
+有限总时间 $T$ 引入特征角频率分辨率
+
+$$
+\Delta\omega_{\mathrm{res}}\sim\frac{2\pi}{T}.
+$$
+
+把 $w(t)=e^{-\gamma t}$ 作为数值窗口会抑制截断 ringing，但把峰额外展宽约 $\gamma$。零填充可以生成更密的绘图频率网格，却不增加由 $T$ 决定的真实分辨信息。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For a finite system, apply a weak instantaneous dipole perturbation
+
+$$
+\delta v_{\mathrm{ext}}(t)
+=-\kappa\,e\,\mathbf e\cdot\mathbf r\,\delta(t).
+$$
+
+Integrating across $t=0$ gives the orbitals a position-dependent phase. The system is then propagated without the external field while the induced dipole is recorded:
+
+$$
+\delta d_\alpha(t)=d_\alpha(t)-d_\alpha(0).
+$$
+
+Because a delta kick is approximately constant in frequency space, one propagation contains broadband information. In the linear regime, the polarizability follows from
+
+$$
+\alpha_{\alpha\beta}(\omega)
+\propto
+\frac{1}{\kappa}
+\int_0^Tdt\,
+ e^{i\omega t}w(t)\delta d_\alpha(t),
+$$
+
+where $w(t)$ is a finite-time window. The periodic counterpart records current rather than an unbounded dipole.
+
+A finite total time $T$ introduces a characteristic angular-frequency resolution
+
+$$
+\Delta\omega_{\mathrm{res}}\sim\frac{2\pi}{T}.
+$$
+
+Using $w(t)=e^{-\gamma t}$ suppresses truncation ringing but broadens peaks by a scale of order $\gamma$. Zero padding creates a denser plotting grid but adds no resolution beyond the information set by $T$.
+
+  </div>
+</BilingualSection>
+
+<RealTimeResolutionExplorer />
+
+<BilingualSection titleZh="传播收敛不是一个参数" titleEn="Propagation convergence is not a single parameter" eyebrow="Practical validation">
+  <div className="bilingual-section__zh">
+
+**时间步 $\Delta t$** 控制最高可稳定/准确传播的能量和短时间相位误差。**总时间 $T$** 控制可分辨的近邻峰。**窗口/人工阻尼** 控制 ringing 与人为线宽。**实空间盒子或平面波 cutoff** 控制高能激发和波函数表示。对电离或连续谱，边界反射还要求更大盒子、absorbing boundary 或 complex absorbing potential。
+
+自洽 TDKS 还要检查每步密度更新、orthonormality、对称性、规范、非局域算符与电流实现。一个 exactly norm-preserving propagator 仍可能使用过大的时间步，从而给出相位错误和错位谱峰；相反，短轨迹能保持 norm 却无法区分近邻激发。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The **time step $\Delta t$** controls the highest energy propagated stably and accurately and the short-time phase error. The **total time $T$** controls separation of nearby peaks. The **window/artificial damping** controls ringing and artificial linewidth. The **real-space box or plane-wave cutoff** controls high-energy excitations and wavefunction representation. Ionization or continuum spectra also require a larger box, absorbing boundary, or complex absorbing potential to suppress reflections.
+
+Self-consistent TDKS additionally requires checks of the density update at each step, orthonormality, symmetry, gauge, nonlocal operators, and current implementation. An exactly norm-preserving propagator can still use a time step that is too large and produce phase errors and displaced peaks; conversely, a short trajectory can preserve norm while being unable to resolve nearby excitations.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="实时间谱的最低报告项" titleEn="Minimum reporting set for a real-time spectrum" kind="practice">
+  <div className="bilingual-section__zh">
+    <ul>
+      <li>初态、场的形式/方向/幅度、gauge 与是否处于线性区；</li>
+      <li>传播器、时间步、总时间、predictor-corrector 和每步 self-consistency；</li>
+      <li>基组/网格、盒子、边界吸收、赝势与非局域电流项；</li>
+      <li>记录的 dipole/current、去除静态分量的方法、窗口和 Fourier convention；</li>
+      <li>至少两组 $\Delta t$、$T$、场幅和窗口参数的目标谱比较。</li>
+    </ul>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ul>
+      <li>the initial state, field shape/direction/amplitude, gauge, and evidence for the linear regime;</li>
+      <li>the propagator, time step, total time, predictor–corrector, and per-step self-consistency;</li>
+      <li>the basis/grid, box, absorbing boundary, pseudopotential, and nonlocal current terms;</li>
+      <li>the recorded dipole/current, removal of the static component, window, and Fourier convention;</li>
+      <li>target-spectrum comparisons for at least two time steps, total times, field amplitudes, and window parameters.</li>
+    </ul>
+  </div>
+</BilingualCallout>
