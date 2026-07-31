@@ -1,20 +1,18 @@
 ---
-title: "Appendix C · Adiabatic Approximation"
-description: "Martin Appendix C 的目录级阅读骨架；正文待填充。"
+title: "Appendix C · Adiabatic Approximation | 绝热近似"
+description: "电子—核通道展开、导数耦合、绝热核方程、失效条件与电子—声子连接的双语参考。"
 sidebar:
   order: 3
   label: "Appendix C · Adiabatic Approximation"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixCBody from '../../../components/part07/appC/AppendixCBody.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[2].label}
-  sourcePage={catalog.parts[6].units[2].page}
-  sections={catalog.parts[6].units[2].sections}
-  exercisesPage={catalog.parts[6].units[2].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix C, printed pages 587–589; sections C.1–C.2 and equations C.1–C.8. Source exercises are not reproduced."
+  status="appendix-content-complete"
 />
+
+<AppendixCBody />
