@@ -1,0 +1,76 @@
+<figure class="chapter-visual projector-flow">
+  <figcaption>
+    <strong>原创静态图：半局域通道到可分离投影子 | Original static diagram: semilocal channels to separable projectors</strong>
+    <span>图中箭头表示算符作用顺序，不表示数据流软件架构。</span>
+    <span lang="en">Arrows indicate the order of operator action, not a software data-flow architecture.</span>
+  </figcaption>
+
+  <svg viewBox="0 0 900 390" role="img" aria-labelledby="projector-flow-title projector-flow-desc">
+    <title id="projector-flow-title">Semilocal and separable nonlocal pseudopotential actions</title>
+    <desc id="projector-flow-desc">The upper path selects angular channels and performs radial multiplication. The lower path projects a state onto localized projectors, applies a small coupling matrix, and reconstructs a nonlocal correction.</desc>
+    <defs>
+      <marker id="projector-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
+
+    <text x="35" y="45" class="projector-flow__heading">Semilocal action</text>
+    <rect x="35" y="72" width="145" height="66" rx="10" />
+    <text x="107" y="101" text-anchor="middle">state ψ(r,Ω)</text>
+    <text x="107" y="121" text-anchor="middle">all angular content</text>
+    <line x1="180" y1="105" x2="250" y2="105" marker-end="url(#projector-arrow)" />
+    <rect x="255" y="72" width="170" height="66" rx="10" />
+    <text x="340" y="100" text-anchor="middle">select l,m</text>
+    <text x="340" y="121" text-anchor="middle">⟨Y_lm|ψ⟩</text>
+    <line x1="425" y1="105" x2="495" y2="105" marker-end="url(#projector-arrow)" />
+    <rect x="500" y="72" width="170" height="66" rx="10" />
+    <text x="585" y="100" text-anchor="middle">radial multiply</text>
+    <text x="585" y="121" text-anchor="middle">ΔV_l(r)</text>
+    <line x1="670" y1="105" x2="740" y2="105" marker-end="url(#projector-arrow)" />
+    <rect x="745" y="72" width="120" height="66" rx="10" />
+    <text x="805" y="101" text-anchor="middle">sum l,m</text>
+    <text x="805" y="121" text-anchor="middle">correction</text>
+
+    <text x="35" y="205" class="projector-flow__heading">Separable action</text>
+    <rect x="35" y="232" width="145" height="66" rx="10" />
+    <text x="107" y="261" text-anchor="middle">state |ψ⟩</text>
+    <text x="107" y="281" text-anchor="middle">global representation</text>
+    <line x1="180" y1="265" x2="250" y2="265" marker-end="url(#projector-arrow)" />
+    <rect x="255" y="232" width="170" height="66" rx="10" />
+    <text x="340" y="260" text-anchor="middle">localized overlaps</text>
+    <text x="340" y="281" text-anchor="middle">c_i=⟨β_i|ψ⟩</text>
+    <line x1="425" y1="265" x2="495" y2="265" marker-end="url(#projector-arrow)" />
+    <rect x="500" y="232" width="170" height="66" rx="10" />
+    <text x="585" y="260" text-anchor="middle">small matrix</text>
+    <text x="585" y="281" text-anchor="middle">d_i=Σ_j D_ij c_j</text>
+    <line x1="670" y1="265" x2="740" y2="265" marker-end="url(#projector-arrow)" />
+    <rect x="745" y="232" width="120" height="66" rx="10" />
+    <text x="805" y="260" text-anchor="middle">reconstruct</text>
+    <text x="805" y="281" text-anchor="middle">Σ_i|β_i⟩d_i</text>
+
+    <text x="450" y="355" text-anchor="middle">V_loc ψ is added in both representations; localized projectors vanish outside the declared core region.</text>
+  </svg>
+
+  <div class="chapter-visual__contract">
+    <p><strong>验收：</strong>语义回退必须保留两条作用路径：半局域形式为“角通道选择—径向乘法—求和”，可分离形式为“投影—有限矩阵—重构”。</p>
+    <p lang="en"><strong>Acceptance:</strong> the semantic fallback must preserve both paths: channel selection–radial multiplication–sum for the semilocal form, and projection–finite matrix–reconstruction for the separable form.</p>
+    <p><strong>边界：</strong>图中没有给出具体元素、投影子归一化、局域通道或 ghost-state 判据，不能用来验证赝势文件。</p>
+    <p lang="en"><strong>Boundary:</strong> no element, projector normalization, local channel, or ghost-state criterion is specified; the diagram cannot validate a pseudopotential file.</p>
+  </div>
+
+  <ol class="projector-flow__fallback">
+    <li>Semilocal: expand in spherical harmonics, multiply each radial channel by its channel correction, then sum.</li>
+    <li>Separable: calculate localized overlaps, apply a finite coupling matrix, and reconstruct the nonlocal correction.</li>
+    <li>Add the common local potential in either representation.</li>
+  </ol>
+</figure>
+
+<style>
+  .projector-flow svg { width: 100%; min-height: 19rem; }
+  .projector-flow svg rect { fill: var(--sl-color-gray-6); stroke: var(--sl-color-accent-high); stroke-width: 2; }
+  .projector-flow svg line { stroke: currentColor; stroke-width: 2; }
+  .projector-flow svg marker path { fill: currentColor; }
+  .projector-flow svg text { fill: currentColor; font-size: 14px; }
+  .projector-flow svg .projector-flow__heading { font-size: 17px; font-weight: 700; }
+  .projector-flow__fallback { margin-bottom: 0; }
+</style>

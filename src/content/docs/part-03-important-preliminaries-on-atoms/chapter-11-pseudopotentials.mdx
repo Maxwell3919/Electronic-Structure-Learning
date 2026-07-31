@@ -1,20 +1,33 @@
 ---
-title: "Chapter 11 · Pseudopotentials"
-description: "Martin Chapter 11 的目录级阅读骨架；正文待填充。"
+title: "Chapter 11 · Pseudopotentials | 赝势"
+description: "从散射等效、OPW 和范数守恒，到 projectors、ultrasoft、PAW 与实际验证边界。"
 sidebar:
   order: 2
   label: "Chapter 11 · Pseudopotentials"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter11Contents from '../../../components/part03/ch11/Chapter11Contents.astro';
+import Chapter11Orientation from '../../../components/part03/ch11/Chapter11Orientation.mdx';
+import Chapter11ScatteringOPW from '../../../components/part03/ch11/Chapter11ScatteringOPW.mdx';
+import Chapter11NormConserving from '../../../components/part03/ch11/Chapter11NormConserving.mdx';
+import Chapter11Projectors from '../../../components/part03/ch11/Chapter11Projectors.mdx';
+import Chapter11UltrasoftPAW from '../../../components/part03/ch11/Chapter11UltrasoftPAW.mdx';
+import Chapter11Review from '../../../components/part03/ch11/Chapter11Review.mdx';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[2].units[1].label}
-  sourcePage={catalog.parts[2].units[1].page}
-  sections={catalog.parts[2].units[1].sections}
-  exercisesPage={catalog.parts[2].units[1].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 11, printed pages 230–255; sections 11.1–11.13. Appendix J supplies scattering notation. Sholl–Steckel §§3.2–3.2.1 are used only for the practical cutoff connection."
+  status="chapter-complete"
 />
+
+<Chapter11Contents />
+
+<div class="chapter-11-body">
+  <Chapter11Orientation />
+  <Chapter11ScatteringOPW />
+  <Chapter11NormConserving />
+  <Chapter11Projectors />
+  <Chapter11UltrasoftPAW />
+  <Chapter11Review />
+</div>
