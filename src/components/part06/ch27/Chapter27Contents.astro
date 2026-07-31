@@ -1,0 +1,53 @@
+---
+const links = [
+  ['#reading-orientation', '阅读定位', 'Reading orientation'],
+  ['#source-map', '来源地图', 'Source map'],
+  ['#objects-and-conventions', '对象、对称性与证据层级', 'Objects, symmetries, and evidence levels'],
+  ['#sec-27-1', '27.1 二维 sp² 模型', '27.1 Two-dimensional sp² models'],
+  ['#complex-p-basis', '复 p± 基底与轨道角动量', 'Complex p± basis and orbital angular momentum'],
+  ['#sec-27-2', '27.2 Chern 绝缘体与反常量子霍尔效应', '27.2 Chern insulator and anomalous Hall effect'],
+  ['#chern-two-band-model', '两带 Chern Hamiltonian', 'Two-band Chern Hamiltonian'],
+  ['#chern-pump-edge', 'Chern、pump 与单向边缘谱', 'Chern, pumping, and chiral edge spectra'],
+  ['#sec-27-3', '27.3 SOC 与 diagonal approximation', '27.3 SOC and the diagonal approximation'],
+  ['#sec-27-4', '27.4 二维 Z₂ 不变量', '27.4 The two-dimensional Z₂ invariant'],
+  ['#sec-27-5', '27.5 方格模型实例', '27.5 Square-lattice example'],
+  ['#sec-27-6', '27.6 从链到面', '27.6 From chains to planes'],
+  ['#sec-27-7', '27.7 Hg/CdTe 量子阱', '27.7 Hg/CdTe quantum wells'],
+  ['#sec-27-8', '27.8 Graphene 与两站点模型', '27.8 Graphene and the two-site model'],
+  ['#sec-27-9', '27.9 大 SOC honeycomb 模型', '27.9 Large-SOC honeycomb model'],
+  ['#review-and-practice', '复核、练习与来源', 'Review, practice, and sources'],
+];
+---
+
+<nav class="chapter-contents" aria-labelledby="chapter-27-contents-title">
+  <h2 id="chapter-27-contents-title">章内导航 | Chapter contents</h2>
+  <ol>
+    {links.map(([href, zh, en]) => (
+      <li>
+        <a href={href}>
+          <span>{zh}</span>
+          <span lang="en">{en}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .chapter-contents {
+    margin-block: 1.25rem 2rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.75rem;
+    background: var(--sl-color-gray-7);
+  }
+  .chapter-contents ol {
+    columns: 2;
+    column-gap: 2rem;
+    margin-bottom: 0;
+  }
+  .chapter-contents li { break-inside: avoid; margin-block: 0.45rem; }
+  .chapter-contents a { display: grid; gap: 0.1rem; }
+  .chapter-contents a span[lang='en'] { color: var(--sl-color-gray-2); font-size: 0.9em; }
+  @media (max-width: 50rem) { .chapter-contents ol { columns: 1; } }
+</style>
