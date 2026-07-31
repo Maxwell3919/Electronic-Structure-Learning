@@ -12,28 +12,28 @@ import SpinOrbitExplorer from './SpinOrbitExplorer.astro';
 
 重元素核附近的电子速度较高，非相对论 Schrödinger 方程不足。Dirac 方程的低速展开产生标量相对论修正和自旋—轨道项。标量相对论处理改变径向方程和能级，却不显式分裂 $j=l\pm1/2$；完全相对论原子计算保留自旋角变量和相应的 $j$ 通道。
 
-对球对称势，常见的 Pauli 形式可写为
+若 $U(r)$ 表示电子在球对称场中的势能，常见的 Pauli 形式可写为
 
 $$
 \hat H_{\mathrm{SO}}
-=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dV}{dr}\,\mathbf L\cdot\mathbf S
+=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dU}{dr}\,\mathbf L\cdot\mathbf S.
 $$
 
-（SI 单位中还需保留 $\hbar$ 与电荷约定）。Martin 以等价的动量—势梯度形式写出该项，并把完整来源定位到 Appendix O。核附近的 $dV/dr$ 很大，因此 SOC 即使相对总能较小，也可定性改变简并、能隙与拓扑分类。
+若采用静电标势而不是电子势能，电荷符号必须显式保留。Martin 式 (10.14) 以动量—势梯度形式写出该项，并把完整来源定位到 Appendix O。核附近的势梯度很大，因此 SOC 即使相对总能较小，也可定性改变简并、能隙与拓扑分类。
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
 Electrons near a heavy nucleus can move sufficiently rapidly that the nonrelativistic Schrödinger equation is inadequate. A low-velocity reduction of the Dirac equation produces scalar-relativistic corrections and a spin–orbit term. A scalar-relativistic treatment changes radial equations and energies but does not explicitly split the $j=l\pm1/2$ manifolds; a fully relativistic atomic calculation retains spin-angular variables and the corresponding $j$ channels.
 
-For a spherical potential, a common Pauli form is
+If $U(r)$ denotes the electron potential energy in a spherical field, a common Pauli form is
 
 $$
 \hat H_{\mathrm{SO}}
-=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dV}{dr}\,\mathbf L\cdot\mathbf S
+=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dU}{dr}\,\mathbf L\cdot\mathbf S.
 $$
 
-(with the appropriate $\hbar$ and charge conventions in SI units). Martin gives the equivalent momentum–potential-gradient form and locates the full derivation in Appendix O. Because $dV/dr$ is large near the nucleus, spin–orbit coupling can qualitatively change degeneracies, gaps, and topological classifications even when it is small compared with the total energy.
+If an electrostatic scalar potential is used instead of the electron potential energy, the charge sign must remain explicit. Martin’s Eq. (10.14) gives the momentum–potential-gradient form and locates the full derivation in Appendix O. Because the potential gradient is large near the nucleus, spin–orbit coupling can qualitatively change degeneracies, gaps, and topological classifications even when it is small compared with the total energy.
 
   </div>
 </BilingualSection>
@@ -43,6 +43,7 @@ $$
   assumptions={[
     '单电子自旋 s=1/2 | One-electron spin s=1/2.',
     '总角动量 J=L+S，且状态由 j,l,s 同时标记 | J=L+S and the state is labelled by j,l,s.',
+    '以 Λ_LS=(L·S)/ℏ² 定义无量纲角动量算符 | The dimensionless operator is Λ_LS=(L·S)/ℏ².',
   ]}
 >
 
@@ -60,10 +61,16 @@ $$
 =\frac12\left(\mathbf J^2-\mathbf L^2-\mathbf S^2\right).
 $$
 
-在 $|j,l,s,m_j\rangle$ 上，除去公共的 $\hbar^2$ 因子，期望值为
+定义
 
 $$
-\langle\mathbf L\cdot\mathbf S\rangle
+\hat\Lambda_{LS}\equiv\frac{\mathbf L\cdot\mathbf S}{\hbar^2}.
+$$
+
+在 $|j,l,s,m_j\rangle$ 上，其无量纲本征值为
+
+$$
+\langle\hat\Lambda_{LS}\rangle
 =\frac12\left[j(j+1)-l(l+1)-s(s+1)\right].
 $$
 
@@ -71,36 +78,42 @@ $$
 
 $$
 \begin{aligned}
-j=l+\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=\frac{l}{2},\\
-j=l-\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=-\frac{l+1}{2}.
+j=l+\frac12 &: \quad \langle\hat\Lambda_{LS}\rangle=\frac{l}{2},\\
+j=l-\frac12 &: \quad \langle\hat\Lambda_{LS}\rangle=-\frac{l+1}{2}.
 \end{aligned}
 $$
 
-第二支只在 $l>0$ 时存在。若径向平均把 SOC 写成 ξ_nl L·S，两支能量差为
+第二支只在 $l>0$ 时存在。若径向平均模型写成
+
+$$
+\hat H_{\mathrm{SO}}^{\mathrm{model}}=\xi_{nl}\hat\Lambda_{LS},
+$$
+
+且 $\xi_{nl}$ 以能量为单位，则两支能量差为
 
 $$
 \Delta_{\mathrm{SO}}=\xi_{nl}\frac{2l+1}{2}.
 $$
 
-这一步只处理角动量代数；ξ_nl 必须由径向势和波函数或完整相对论方程决定。
+若直接写成 $\tilde\xi_{nl}\mathbf L\cdot\mathbf S$，则 $\tilde\xi_{nl}$ 的量纲必须是能量除以 $\hbar^2$。这一步只处理角动量代数；真实的耦合系数必须由径向势和波函数或完整相对论方程决定。
 
 <p lang="en">From $\mathbf J^2=(\mathbf L+\mathbf S)^2$ one obtains</p>
 
 $$
 \mathbf L\cdot\mathbf S
-=\frac12\left(\mathbf J^2-\mathbf L^2-\mathbf S^2\right),
+=\frac12\left(\mathbf J^2-\mathbf L^2-\mathbf S^2\right).
 $$
 
-<p lang="en">and hence, for $s=1/2$,</p>
+<p lang="en">Define the dimensionless operator $\hat\Lambda_{LS}=(\mathbf L\cdot\mathbf S)/\hbar^2$. For $s=1/2$, its eigenvalues are</p>
 
 $$
 \begin{aligned}
-j=l+\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=\frac{l}{2},\\
-j=l-\frac12 &: \quad \langle\mathbf L\cdot\mathbf S\rangle=-\frac{l+1}{2}.
+j=l+\frac12 &: \quad \langle\hat\Lambda_{LS}\rangle=\frac{l}{2},\\
+j=l-\frac12 &: \quad \langle\hat\Lambda_{LS}\rangle=-\frac{l+1}{2}.
 \end{aligned}
 $$
 
-<p lang="en">The lower-$j$ branch exists only for $l>0$. If the radial average is represented by ξ_nl L·S, the splitting is Δ_SO = ξ_nl(2l+1)/2. The angular algebra does not determine ξ_nl; that coefficient must come from the radial potential and wavefunction or from the full relativistic equation.</p>
+<p lang="en">The lower-$j$ branch exists only for $l>0$. If the radial model is written as $\hat H_{\mathrm{SO}}^{\mathrm{model}}=\xi_{nl}\hat\Lambda_{LS}$ with $\xi_{nl}$ in energy units, the splitting is $\Delta_{\mathrm{SO}}=\xi_{nl}(2l+1)/2$. Writing instead $\tilde\xi_{nl}\mathbf L\cdot\mathbf S$ requires $\tilde\xi_{nl}$ to have units of energy divided by $\hbar^2$. Angular algebra does not determine the physical coupling coefficient.</p>
 
 </DerivationBlock>
 

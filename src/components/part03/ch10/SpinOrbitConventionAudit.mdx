@@ -1,0 +1,81 @@
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<div
+  id="section-10-3-unit-audit"
+  data-spin-orbit-unit-convention
+  data-normalized-operator="LdotS-over-hbar2"
+  data-xi-unit="energy"
+>
+
+<BilingualCallout
+  titleZh="约定审计：自旋—轨道算符与 ξ 的量纲"
+  titleEn="Convention audit: dimensions of the spin–orbit operator and ξ"
+  kind="boundary"
+>
+  <div class="bilingual-section__zh">
+
+Martin 第 2 版式 (10.14) 采用动量—势梯度形式，并把完整相对论推导放在 Appendix O。把中心场结果写成球对称形式时，必须先说明 $V$ 表示静电标势还是电子的势能；电荷符号可以显式保留，也可以吸收到势能 $U(r)$ 中。若 $U(r)$ 表示电子势能，则常用形式为
+
+$$
+\hat H_{\mathrm{SO}}
+=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dU}{dr}\,
+\mathbf L\cdot\mathbf S.
+$$
+
+物理角动量算符 $\mathbf L$、$\mathbf S$ 含有 $\hbar$，所以 $\mathbf L\cdot\mathbf S$ 的量纲是 $\hbar^2$。为使用以 eV 表示的单一耦合能量，本站定义无量纲算符
+
+$$
+\hat\Lambda_{LS}
+\equiv\frac{\mathbf L\cdot\mathbf S}{\hbar^2},
+\qquad
+\hat H_{\mathrm{SO}}^{\mathrm{model}}
+=\xi_{nl}\hat\Lambda_{LS},
+$$
+
+其中 $\xi_{nl}$ 的量纲是能量。若改写成 $\tilde\xi\,\mathbf L\cdot\mathbf S$，则 $\tilde\xi$ 的量纲必须是能量除以 $\hbar^2$。这两个系数不能在同一算符定义下混用。
+
+对 $s=1/2$，$\hat\Lambda_{LS}$ 的本征值为 $l/2$ 和 $-(l+1)/2$，因此
+
+$$
+\Delta E_{\mathrm{SO}}
+=\xi_{nl}\frac{2l+1}{2}.
+$$
+
+这项审计只统一量纲和符号约定，不从角动量代数推断真实原子的 $\xi_{nl}$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin’s second-edition Eq. (10.14) uses a momentum–potential-gradient form and refers the full relativistic derivation to Appendix O. A spherical rewrite must first state whether $V$ denotes an electrostatic scalar potential or the electron’s potential energy; the charge sign may be explicit or absorbed into a potential energy $U(r)$. When $U(r)$ is the electron potential energy, a common form is
+
+$$
+\hat H_{\mathrm{SO}}
+=\frac{1}{2m_e^2c^2}\frac{1}{r}\frac{dU}{dr}\,
+\mathbf L\cdot\mathbf S.
+$$
+
+The physical angular-momentum operators $\mathbf L$ and $\mathbf S$ carry factors of $\hbar$, so $\mathbf L\cdot\mathbf S$ has dimensions of $\hbar^2$. To use a coupling reported directly in eV, this site defines the dimensionless operator
+
+$$
+\hat\Lambda_{LS}
+\equiv\frac{\mathbf L\cdot\mathbf S}{\hbar^2},
+\qquad
+\hat H_{\mathrm{SO}}^{\mathrm{model}}
+=\xi_{nl}\hat\Lambda_{LS},
+$$
+
+where $\xi_{nl}$ has dimensions of energy. If the Hamiltonian is instead written as $\tilde\xi\,\mathbf L\cdot\mathbf S$, then $\tilde\xi$ must have units of energy divided by $\hbar^2$. The two coefficients cannot be mixed under one operator definition.
+
+For $s=1/2$, the eigenvalues of $\hat\Lambda_{LS}$ are $l/2$ and $-(l+1)/2$, giving
+
+$$
+\Delta E_{\mathrm{SO}}
+=\xi_{nl}\frac{2l+1}{2}.
+$$
+
+This audit fixes the dimensional and sign conventions only; angular-momentum algebra does not determine the physical atomic value of $\xi_{nl}$.
+
+  </div>
+</BilingualCallout>
+
+</div>

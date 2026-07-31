@@ -135,6 +135,31 @@ def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
         pass
 
 
+def assert_soc_unit_convention(driver: webdriver.Chrome, context: str) -> tuple[WebElement, WebElement]:
+    audits = driver.find_elements(By.CSS_SELECTOR, "[data-spin-orbit-unit-convention]")
+    if len(audits) != 1:
+        fail(f"{context} should contain exactly one spin-orbit unit audit, received {len(audits)}")
+    audit = audits[0]
+    if not audit.is_displayed():
+        fail(f"{context} hides the spin-orbit unit audit")
+    if audit.get_attribute("data-normalized-operator") != "LdotS-over-hbar2":
+        fail(f"{context} spin-orbit audit lost the normalized operator declaration")
+    if audit.get_attribute("data-xi-unit") != "energy":
+        fail(f"{context} spin-orbit audit lost the xi energy-unit declaration")
+    text = " ".join(audit.text.split())
+    if "10.14" not in text:
+        fail(f"{context} spin-orbit audit is missing Martin Eq. (10.14)")
+    if "potential energy" not in text and "电子势能" not in text:
+        fail(f"{context} spin-orbit audit is missing the potential-energy convention")
+
+    model = driver.find_element(By.CSS_SELECTOR, "[data-spin-orbit]")
+    if model.get_attribute("data-normalized-operator") != "LdotS-over-hbar2":
+        fail(f"{context} spin-orbit model does not use L dot S over hbar squared")
+    if model.get_attribute("data-xi-unit") != "energy":
+        fail(f"{context} spin-orbit model does not declare xi as an energy")
+    return audit, model
+
+
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
@@ -170,6 +195,13 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             href = link.get_attribute("href") or ""
             if "/Electronic-Structure-Learning/" not in href:
                 fail(f"Chapter link escaped the Pages base path: {href}")
+
+        soc_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 desktop page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            soc_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-desktop.png"))
 
         visuals = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual")
         contracts = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual__contract")
@@ -226,6 +258,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         minus_input.send_keys("-98.0")
         WebDriverWait(driver, 10).until(lambda _: i_output.text != i_before)
 
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-desktop.png"))
         report["desktop"] = {
             "title": driver.title,
@@ -233,6 +266,13 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "contents_links": len(contents_links),
             "visuals": len(visuals),
             "visualization_contracts": len(contracts),
+            "spin_orbit_unit_convention": {
+                "displayed": True,
+                "normalized_operator": "LdotS-over-hbar2",
+                "xi_unit": "energy",
+                "martin_equation": "10.14",
+                "potential_energy_convention": True,
+            },
             "keyboard_controls": [
                 "radial_l", "radial_z", "hydrogenic_state", "hydrogenic_z",
                 "soc_l", "soc_xi", "delta_energy",
@@ -248,8 +288,19 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Chapter 10 narrow-screen bilingual layout is not a single column")
         if not driver.find_element(By.CSS_SELECTOR, ".chapter-contents").is_displayed():
             fail("Chapter 10 contents is hidden on the narrow viewport")
+        narrow_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 narrow page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            narrow_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-narrow.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-narrow.png"))
-        report["narrow"] = {"viewport": [390, 844], "bilingual_columns": 1}
+        report["narrow"] = {
+            "viewport": [390, 844],
+            "bilingual_columns": 1,
+            "spin_orbit_unit_convention": True,
+        }
     except Exception:
         save_failure_screenshot(driver, "chapter-10-desktop-failure.png")
         raise
@@ -271,10 +322,18 @@ def no_javascript_smoke(report: dict) -> None:
             fail("No-JavaScript fallbacks are incomplete")
         if len(driver.find_elements(By.CSS_SELECTOR, ".katex")) < 35:
             fail("No-JavaScript page lost rendered formulas")
+        no_js_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 no-JavaScript page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            no_js_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-no-javascript.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-no-javascript.png"))
         report["no_javascript"] = {
             "visualization_contracts": len(contracts),
             "static_svg_count": len(static_svgs),
+            "spin_orbit_unit_convention": True,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-10-no-javascript-failure.png")
