@@ -17,9 +17,31 @@ export const responseModelDefaults = Object.freeze({
   broadening: 0.08,
 });
 
+export function twoLevelPerturbation({ gap, coupling, observableCoupling = 1 }) {
+  ensurePositive(gap, 'gap');
+  ensureFinite(coupling, 'coupling');
+  ensureFinite(observableCoupling, 'observableCoupling');
+  const discriminant = Math.sqrt(gap ** 2 + 4 * coupling ** 2);
+  const exactGroundEnergy = 0.5 * (gap - discriminant);
+  const exactExcitedEnergy = 0.5 * (gap + discriminant);
+  return Object.freeze({
+    gap,
+    coupling,
+    firstStateCoefficient: -coupling / gap,
+    secondEnergy: -(coupling ** 2) / gap,
+    observableResponse: -2 * observableCoupling * coupling / gap,
+    exactGroundEnergy,
+    exactExcitedEnergy,
+    exactGap: discriminant,
+  });
+}
+
 export function scalarDysonResponse({ bareResponse, kernel }) {
   ensureFinite(bareResponse, 'bareResponse');
   ensureFinite(kernel, 'kernel');
+  if (Math.abs(bareResponse) < 1e-15) {
+    throw new RangeError('bareResponse must be non-zero for the inverse-response check.');
+  }
   const denominator = 1 - bareResponse * kernel;
   if (Math.abs(denominator) < 1e-12) {
     throw new RangeError('Dyson denominator is singular or numerically unresolved.');
@@ -50,6 +72,26 @@ export function oscillatorResponse({ omega, omega0, damping, force = 1 }) {
     imaginary: -force * imaginaryDenominator / norm,
     magnitude: Math.abs(force) / Math.sqrt(norm),
   });
+}
+
+export function oscillatorPoles({ omega0, damping }) {
+  ensurePositive(omega0, 'omega0');
+  ensureFinite(damping, 'damping');
+  if (damping < 0) throw new RangeError('damping must be non-negative.');
+  const halfGamma = damping / 2;
+  const radicand = omega0 ** 2 - halfGamma ** 2;
+  if (radicand < 0) {
+    const root = Math.sqrt(-radicand);
+    return Object.freeze([
+      Object.freeze({ real: 0, imaginary: -halfGamma + root }),
+      Object.freeze({ real: 0, imaginary: -halfGamma - root }),
+    ]);
+  }
+  const root = Math.sqrt(radicand);
+  return Object.freeze([
+    Object.freeze({ real: root, imaginary: -halfGamma }),
+    Object.freeze({ real: -root, imaginary: -halfGamma }),
+  ]);
 }
 
 export function oscillatorImpulse({ time, omega0, damping }) {
