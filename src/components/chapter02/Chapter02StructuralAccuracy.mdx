@@ -1,0 +1,68 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="section-2-4">2.4 DFT 对结构计算有多可靠？ | How Good Is DFT for Calculation of Structures?</h2>
+
+<BilingualSection titleZh="精确理论与近似泛函必须分开" titleEn="Exact theory and approximate functionals must be separated" eyebrow="【Martin 原书 | Martin source】 §2.4 · pp. 21–23">
+  <div class="bilingual-section__zh">
+
+基态密度泛函理论具有精确的形式基础，但实际计算必须选用近似交换—关联泛函。因此“DFT 是否准确”不是一个完整问题；需要指定泛函、材料类别、目标性质和比较条件。早期 LDA 已能系统预测固体的平衡体积、内聚能和体模量，后续 GGA、meta-GGA 与杂化泛函改善了若干系统误差，但没有一种近似对所有材料和性质都形成单调的准确度排序。
+
+Martin 汇总的固体基准显示，较先进泛函对晶格常数的平均相对误差可以低于约 1%，体模量的平均误差通常仍为数个百分点。最大误差显著高于平均误差，尤其可能出现在碱金属、过渡金属、磁性体系或成键类型发生竞争的材料中。平均基准成绩只能提供先验经验，不能替代单个体系的验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Ground-state density functional theory has an exact formal basis, but every practical calculation chooses an approximate exchange–correlation functional. “Is DFT accurate?” is therefore incomplete; the functional, material class, target property, and comparison conditions must be specified. Early LDA calculations already predicted equilibrium volumes, cohesive energies, and bulk moduli systematically. Later GGA, meta-GGA, and hybrid functionals reduce several systematic errors, but no approximation gives a monotonic accuracy ranking for all materials and properties.
+
+The solid-state benchmarks summarized by Martin show that advanced functionals can achieve mean relative errors below roughly one percent for lattice constants, while mean bulk-modulus errors remain several percent. Maximum errors are much larger than average errors and can occur in alkali metals, transition metals, magnetic systems, or materials with competing bond types. Average benchmark performance supplies prior experience; it does not validate an individual system.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="常见结构趋势及其物理来源" titleEn="Common structural trends and their physical origins">
+  <div class="bilingual-section__zh">
+
+LDA 往往偏好较高密度，表现为晶格常数偏小和材料偏硬；PBE 通常减弱这种过度结合，可能给出更大的体积和较小体模量。SCAN 与某些杂化泛函在许多基准中改善体积或体模量，但代价、数值敏感性和适用范围不同。杂化泛函常被选来改善带隙，不能因此推断其结构能量差在所有体系中更可靠。
+
+体模量是 $E(V)$ 曲率，因而比平衡晶格常数更敏感于噪声、体积采样和拟合。磁性材料还存在自旋态与体积的耦合：错误磁态可能产生看似收敛却错误的平衡体积。弱相互作用固体若缺少合适的非局域关联，会出现层间距或分子间距偏差；强关联和近简并体系也可能超出常用半局域泛函的经验范围。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+LDA often favours higher density, giving smaller lattice constants and a stiffer material. PBE commonly reduces this overbinding and may give larger volumes and smaller bulk moduli. SCAN and selected hybrid functionals improve volumes or moduli in many benchmarks, but their cost, numerical sensitivity, and domains of applicability differ. Hybrid functionals are often chosen to improve bandgaps; that does not imply universally superior structural energy differences.
+
+The bulk modulus is the curvature of $E(V)$ and is therefore more sensitive than the equilibrium lattice constant to numerical noise, volume sampling, and fitting. Magnetic materials also couple spin state to volume: a wrong magnetic state can produce an apparently converged but incorrect equilibrium structure. Weakly bound solids require a suitable treatment of nonlocal correlation to obtain layer or molecular separations, while strongly correlated and near-degenerate systems may fall outside the experience base of common semilocal functionals.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="与实验比较时不能忽略的修正" titleEn="Corrections required for theory–experiment comparison" kind="boundary">
+  <div class="bilingual-section__zh">
+
+多数静态 DFT 结构对应静止核、零温电子基态。实验晶格常数通常在有限温度测量，并包含零点振动和热膨胀。若理论—实验差异已接近 1%，零点膨胀、实验外推、同位素、缺陷和压力标定可能与泛函误差同量级。只有在结构身份、温度和外部条件对齐后，差异才能主要归因于电子结构近似。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Most static DFT structures correspond to stationary nuclei and a zero-temperature electronic ground state. Experimental lattice constants are usually measured at finite temperature and contain zero-point motion and thermal expansion. Once theory–experiment differences approach one percent, zero-point expansion, experimental extrapolation, isotopes, defects, and pressure calibration can be comparable to functional error. A discrepancy can be attributed mainly to the electronic approximation only after phase identity, temperature, and external conditions are aligned.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="单个材料的最小结构基准" titleEn="A minimum structural benchmark for one material">
+  <div class="bilingual-section__zh">
+
+对当前材料，至少应完成以下检查：验证赝势或全电子设置与所选泛函相容；收敛平面波截断、实空间网格和 $k$ 点；比较多个初始结构、磁序和必要的自旋—轨道设置；对体积和形状同时允许的自由度进行优化；检查力和应力阈值；用独立 $E(V)$ 曲线复核平衡点；再与同温度和同相实验或高等级计算比较。
+
+同一输入重复运行、两个程序采用同一赝势家族、或结果与数据库接近，不自动构成独立验证。独立性需要来自不同误差结构，例如全电子与赝势实现、不同泛函层级、实验状态方程或高精度多体基准，并且比较量和判定阈值事先明确。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a specific material, a minimum study should verify that pseudopotential or all-electron settings are compatible with the functional; converge plane-wave cutoff, real-space grid, and $k$ sampling; compare relevant starting structures, magnetic orders, and spin–orbit settings; relax all allowed volume and shape degrees of freedom; check force and stress thresholds; confirm the equilibrium using an independent $E(V)$ curve; and only then compare with experiment or higher-level calculations under matched conditions.
+
+Repeating the same input, using two codes with the same pseudopotential family, or matching a database value does not automatically provide independent validation. Independence must arise from a different error structure—for example all-electron versus pseudopotential implementations, distinct functional levels, an experimental equation of state, or a high-accuracy many-body benchmark—with the comparison quantity and acceptance threshold stated in advance.
+
+  </div>
+</BilingualSection>

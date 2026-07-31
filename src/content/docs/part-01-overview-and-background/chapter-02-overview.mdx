@@ -1,20 +1,18 @@
 ---
-title: "Chapter 2 · Overview"
-description: "Martin Chapter 2 的目录级阅读骨架；正文待填充。"
+title: "Chapter 2 · Overview | 概览"
+description: "从电子基态与激发态出发，连接结构、相变、声子、热力学、低维材料、光谱、拓扑与关联。"
 sidebar:
   order: 2
   label: "Chapter 2 · Overview"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter02Foundations from '../../../components/chapter02/Chapter02Foundations.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[0].units[1].label}
-  sourcePage={catalog.parts[0].units[1].page}
-  sections={catalog.parts[0].units[1].sections}
-  exercisesPage={catalog.parts[0].units[1].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 2, printed pages 15–59; all directory sections 2.1–2.17 are covered. Sholl–Steckel is used only for practical cross-reference."
+  status="review"
 />
+
+<Chapter02Foundations />
