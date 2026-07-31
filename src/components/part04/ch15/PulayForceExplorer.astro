@@ -1,0 +1,108 @@
+---
+import { movingBasisDimer, movingBasisFiniteDifference } from '../../../data/part04/ch15TeachingModels.mjs';
+
+const componentId = 'ch15-pulay-force';
+const defaults = { distance: 1.8, overlap0: 0.35 };
+const initial = movingBasisDimer(defaults);
+const finiteDifference = movingBasisFiniteDifference(defaults);
+const scale = 130;
+const baseline = 360;
+const bar = (value, y) => ({
+  x: value >= 0 ? baseline : baseline + value * scale,
+  width: Math.abs(value) * scale,
+  y,
+});
+const explicitBar = bar(initial.explicitHamiltonianDerivative, 75);
+const overlapContribution = -initial.eigenvalue * initial.overlapDerivativeExpectation;
+const overlapBar = bar(overlapContribution, 145);
+const totalBar = bar(initial.eigenvalueDerivative, 215);
+---
+
+<figure class="chapter-visual pulay-force" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：moving nonorthogonal basis 的 force derivative</strong>
+    <span lang="en">Original interactive model: force derivatives in a moving nonorthogonal basis</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls pulay-force__controls">
+    <label>distance R<input data-pulay-distance type="range" min="0.8" max="4" step="0.05" value={defaults.distance} /><output data-pulay-distance-output>{defaults.distance.toFixed(2)}</output></label>
+    <label>reference overlap s₀<input data-pulay-overlap0 type="range" min="0" max="0.6" step="0.02" value={defaults.overlap0} /><output data-pulay-overlap0-output>{defaults.overlap0.toFixed(2)}</output></label>
+  </div>
+
+  <svg viewBox="0 0 720 300" role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Explicit Hamiltonian and overlap derivative contributions to a generalized eigenvalue derivative</title>
+    <desc id={`${componentId}-desc`}>Three signed bars show the explicit Hamiltonian derivative, the overlap-metric correction, and their total.</desc>
+    <line class="pulay-zero" x1={baseline} y1="45" x2={baseline} y2="255" />
+    <text x="25" y="100">C†H′C</text>
+    <text x="25" y="170">−ε C†S′C</text>
+    <text x="25" y="240">dε/dR</text>
+    <rect class="pulay-bar pulay-bar--explicit" data-pulay-explicit x={explicitBar.x} y={explicitBar.y} width={explicitBar.width} height="32" />
+    <rect class="pulay-bar pulay-bar--overlap" data-pulay-overlap-term x={overlapBar.x} y={overlapBar.y} width={overlapBar.width} height="32" />
+    <rect class="pulay-bar pulay-bar--total" data-pulay-total x={totalBar.x} y={totalBar.y} width={totalBar.width} height="32" />
+    <text x={baseline} y="282" text-anchor="middle">signed derivative contribution</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>ε=<output data-pulay-energy>{initial.eigenvalue.toFixed(6)}</output></span>
+    <span>s(R)=<output data-pulay-overlap>{initial.overlap.toFixed(5)}</output></span>
+    <span>analytic force=<strong data-pulay-force>{initial.force.toFixed(6)}</strong></span>
+    <span>finite-difference force=<output data-pulay-fd>{finiteDifference.force.toFixed(6)}</output></span>
+    <span>|difference|=<output data-pulay-error>{Math.abs(initial.force - finiteDifference.force).toExponential(2)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>a two-function generalized eigenproblem with distance-dependent hopping <code>t=t₀e^{-κR}</code> and overlap <code>s=s₀e^{-λR}</code>; onsite terms are fixed.</p>
+    <p lang="en"><strong>Model:</strong> a two-function generalized eigenproblem with distance-dependent hopping <code>t=t₀e^{-κR}</code> and overlap <code>s=s₀e^{-λR}</code>; onsite terms are fixed.</p>
+    <p><strong>验收：</strong>S-normalized eigenvector 满足 <code>dε/dR=C†(H′−εS′)C</code>；analytic force 与中心有限差分在默认步长下相差小于数值容差。令 <code>s₀=0</code> 时 overlap contribution 消失。</p>
+    <p lang="en"><strong>Acceptance:</strong> the S-normalized eigenvector satisfies <code>dε/dR=C†(H′−εS′)C</code>; the analytic force agrees with a centred finite difference within numerical tolerance. Setting <code>s₀=0</code> removes the overlap contribution.</p>
+    <p><strong>边界：</strong>这里的 <code>−εS′</code> 是 finite generalized-eigenproblem 中的 moving-metric term。真实 DFT force 还包含所有 Hamiltonian、density、projector、electrostatic 和 basis-response derivatives。</p>
+    <p lang="en"><strong>Boundary:</strong> <code>−εS′</code> is the moving-metric term of this finite generalized eigenproblem. A real DFT force also contains every Hamiltonian, density, projector, electrostatic, and basis-response derivative.</p>
+  </div>
+
+  <noscript><p>无 JavaScript fallback：静态图对应 R=1.8、s₀=0.35；explicit、overlap 和 total derivative 以及 finite-difference check 仍可读取。</p></noscript>
+</figure>
+
+<script>
+  import { movingBasisDimer, movingBasisFiniteDifference } from '../../../data/part04/ch15TeachingModels.mjs';
+  const root = document.getElementById('ch15-pulay-force');
+  if (root) {
+    const distance = root.querySelector('[data-pulay-distance]');
+    const overlap0 = root.querySelector('[data-pulay-overlap0]');
+    const explicitBar = root.querySelector('[data-pulay-explicit]');
+    const overlapBar = root.querySelector('[data-pulay-overlap-term]');
+    const totalBar = root.querySelector('[data-pulay-total]');
+    const outputs = {
+      distance: root.querySelector('[data-pulay-distance-output]'), overlap0: root.querySelector('[data-pulay-overlap0-output]'), energy: root.querySelector('[data-pulay-energy]'), overlap: root.querySelector('[data-pulay-overlap]'), force: root.querySelector('[data-pulay-force]'), fd: root.querySelector('[data-pulay-fd]'), error: root.querySelector('[data-pulay-error]'),
+    };
+    if (distance instanceof HTMLInputElement && overlap0 instanceof HTMLInputElement && explicitBar instanceof SVGRectElement && overlapBar instanceof SVGRectElement && totalBar instanceof SVGRectElement) {
+      const baseline = 360, scale = 130;
+      const setBar = (element, value) => {
+        element.setAttribute('x', String(value >= 0 ? baseline : baseline + value * scale));
+        element.setAttribute('width', String(Math.abs(value) * scale));
+      };
+      const set = (item, value) => { if (item instanceof HTMLOutputElement) item.value = value; else if (item instanceof HTMLElement) item.textContent = value; };
+      const update = () => {
+        const parameters = { distance: Number(distance.value), overlap0: Number(overlap0.value) };
+        const result = movingBasisDimer(parameters);
+        const fd = movingBasisFiniteDifference(parameters);
+        setBar(explicitBar, result.explicitHamiltonianDerivative);
+        setBar(overlapBar, -result.eigenvalue * result.overlapDerivativeExpectation);
+        setBar(totalBar, result.eigenvalueDerivative);
+        set(outputs.distance, parameters.distance.toFixed(2)); set(outputs.overlap0, parameters.overlap0.toFixed(2)); set(outputs.energy, result.eigenvalue.toFixed(6)); set(outputs.overlap, result.overlap.toFixed(5)); set(outputs.force, result.force.toFixed(6)); set(outputs.fd, fd.force.toFixed(6)); set(outputs.error, Math.abs(result.force - fd.force).toExponential(2));
+      };
+      [distance, overlap0].forEach((control) => control.addEventListener('input', update));
+      update();
+    }
+  }
+</script>
+
+<style>
+  .pulay-force__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.8rem; }
+  .pulay-force__controls label { display: grid; gap: 0.3rem; }
+  .pulay-force input, .pulay-force svg { width: 100%; }
+  .pulay-force svg text { fill: currentColor; font-size: 14px; }
+  .pulay-zero { stroke: currentColor; stroke-width: 1.5; }
+  .pulay-bar--explicit { fill: var(--sl-color-accent-high); }
+  .pulay-bar--overlap { fill: var(--sl-color-orange-high); }
+  .pulay-bar--total { fill: currentColor; opacity: 0.75; }
+</style>
