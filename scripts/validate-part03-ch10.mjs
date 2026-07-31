@@ -115,12 +115,32 @@ const chapterPath = 'src/content/docs/part-03-important-preliminaries-on-atoms/c
 const chapter = readFileSync(chapterPath, 'utf8');
 assert.ok(!chapter.includes('outline · 正文待填充'), 'Chapter 10 still contains the generated outline marker');
 assert.ok(!chapter.includes('TODO'), 'Chapter 10 still contains TODO');
+assert.match(chapter, /Chapter10ResponsiveRoot/);
+assert.match(chapter, /<Chapter10ResponsiveRoot>[\s\S]*<Chapter10Contents/);
+assert.match(chapter, /<Chapter10Review \/>[\s\S]*<\/Chapter10ResponsiveRoot>/);
 assert.match(chapter, /Chapter10Radial/);
 assert.match(chapter, /Chapter10SphericalAtom/);
 assert.match(chapter, /SpinOrbitConventionAudit/);
 assert.match(chapter, /Chapter10RelativityOpenShell/);
 assert.match(chapter, /Chapter10EnergeticsASA/);
 assert.match(chapter, /Chapter10Review/);
+
+const responsiveRoot = readFileSync(
+  'src/components/part03/ch10/Chapter10ResponsiveRoot.astro',
+  'utf8',
+);
+assert.match(responsiveRoot, /data-chapter10-responsive-root/);
+assert.match(responsiveRoot, /\.chapter10-root[\s\S]*min-width:\s*0/);
+assert.match(responsiveRoot, /\.chapter10-root[\s\S]*max-width:\s*100%/);
+assert.match(responsiveRoot, /\.chapter10-root \.bilingual-section__grid/);
+assert.match(responsiveRoot, /\.chapter10-root \.bilingual-section__zh/);
+assert.match(responsiveRoot, /\.chapter10-root \.bilingual-section__en/);
+assert.match(responsiveRoot, /\.chapter10-root \.katex-display/);
+assert.match(responsiveRoot, /overflow-x:\s*auto/);
+assert.match(responsiveRoot, /overflow-y:\s*hidden/);
+assert.match(responsiveRoot, /\[data-soc-math-scroll\] \.katex-display/);
+assert.match(responsiveRoot, /overflow:\s*visible/);
+assert.match(responsiveRoot, /overflow-wrap:\s*anywhere/);
 
 const conventionAudit = readFileSync(
   'src/components/part03/ch10/SpinOrbitConventionAudit.mdx',
@@ -183,4 +203,4 @@ assert.doesNotMatch(
   'Spin-orbit explorer retains the dimensionally ambiguous model caption',
 );
 
-console.log('Part III Chapter 10 deterministic validation passed: radial models, spin-orbit unit convention, local equation containment, Delta-SCF arithmetic, and route registration.');
+console.log('Part III Chapter 10 deterministic validation passed: radial models, spin-orbit unit convention, chapter-root formula containment, local equation containment, Delta-SCF arithmetic, and route registration.');
