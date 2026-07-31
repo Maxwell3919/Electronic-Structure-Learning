@@ -11,18 +11,18 @@ const initialWidth = Math.min(initial.ratio / cap, 1) * 100;
 <figure class="chapter-visual cp-flow" id={componentId}>
   <figcaption>
     <strong>BOMD 与 CPMD 的数据流及频率分离 | BOMD/CPMD flow and frequency separation</strong>
-    <span>原创教学模型：上部比较求解流程，下部用 $\omega_{\mathrm e}\propto\Delta/\sqrt\mu$ 表示虚拟电子频率的趋势。</span>
-    <span lang="en">Original teaching model: the upper diagram compares workflows; the lower model uses $\omega_{\mathrm e}\propto\Delta/\sqrt\mu$ to show the trend of fictitious electronic frequency.</span>
+    <span>原创教学模型：上部比较求解流程，下部用 ωe ∝ Δ/√μ 表示虚拟电子频率的趋势。</span>
+    <span lang="en">Original teaching model: the upper diagram compares workflows; the lower model uses ωe ∝ Δ/√μ to show the trend of fictitious electronic frequency.</span>
   </figcaption>
 
   <div class="cp-flow__workflows" aria-label="BOMD and CPMD workflow comparison">
     <section>
       <h3>BOMD</h3>
       <ol>
-        <li>固定 $\mathbf R^j$ | fix ionic geometry</li>
+        <li>固定 R at step j | fix ionic geometry</li>
         <li>电子最小化/SCF 到定态 | electronic minimization</li>
-        <li>计算 $\mathbf F^j$ | evaluate forces</li>
-        <li>传播离子到 $j+1$ | propagate ions</li>
+        <li>计算 F at step j | evaluate forces</li>
+        <li>传播离子到 j+1 | propagate ions</li>
       </ol>
     </section>
     <section>
@@ -38,15 +38,15 @@ const initialWidth = Math.min(initial.ratio / cap, 1) * 100;
 
   <div class="chapter-visual__controls">
     <label>
-      模型能隙 $\Delta$（无量纲）
+      模型能隙 Δ（无量纲）
       <input data-gap type="range" min="0.2" max="5" step="0.1" value={defaults.gap} />
     </label>
     <label>
-      虚拟质量 $\mu$（无量纲）
+      虚拟质量 μ（无量纲）
       <input data-mass type="range" min="50" max="1600" step="50" value={defaults.fictitiousMass} />
     </label>
     <label>
-      离子频率 $\omega_{\mathrm I}$（无量纲）
+      离子频率 ωI（无量纲）
       <input data-ionic type="range" min="0.02" max="0.2" step="0.01" value={defaults.ionicFrequency} />
     </label>
   </div>
@@ -60,26 +60,26 @@ const initialWidth = Math.min(initial.ratio / cap, 1) * 100;
       <span class="cp-flow__threshold" aria-hidden="true"></span>
     </div>
     <p data-state>
-      当前模型比值 $\omega_{\mathrm e}/\omega_{\mathrm I}={initial.ratio.toFixed(1)}$。比值较大只表示频率分离更有利，不构成 CPMD 轨迹已等同于 BOMD 的证明。
+      当前模型比值 ωe/ωI={initial.ratio.toFixed(1)}。比值较大只表示频率分离更有利，不构成 CPMD 轨迹已等同于 BOMD 的证明。
     </p>
   </div>
 
   <div class="chapter-visual__readout" aria-live="polite">
-    <span>$\Delta=$ <output data-gap-output>{defaults.gap.toFixed(1)}</output></span>
-    <span>$\mu=$ <output data-mass-output>{defaults.fictitiousMass.toFixed(0)}</output></span>
-    <span>$\omega_{\mathrm I}=$ <output data-ionic-output>{defaults.ionicFrequency.toFixed(2)}</output></span>
-    <span>$\omega_{\mathrm e}=$ <output data-electronic-output>{initial.electronicFrequency.toFixed(3)}</output></span>
+    <span>Δ = <output data-gap-output>{defaults.gap.toFixed(1)}</output></span>
+    <span>μ = <output data-mass-output>{defaults.fictitiousMass.toFixed(0)}</output></span>
+    <span>ωI = <output data-ionic-output>{defaults.ionicFrequency.toFixed(2)}</output></span>
+    <span>ωe = <output data-electronic-output>{initial.electronicFrequency.toFixed(3)}</output></span>
     <span>ratio = <output data-ratio>{initial.ratio.toFixed(1)}</output></span>
   </div>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$\omega_{\mathrm e}=\Delta/\sqrt\mu$ 仅保留能隙和虚拟质量的尺度趋势；不包含真实轨道谱、预条件、金属占据或耦合矩阵元。</p>
-    <p><strong>验收：</strong>固定 $\Delta$ 与 $\omega_{\mathrm I}$，将 $\mu$ 增大四倍时 $\omega_{\mathrm e}$ 与频率比应减半；固定 $\mu$ 时比值与 $\Delta$ 成正比。</p>
+    <p><strong>模型：</strong>ωe = Δ/√μ 仅保留能隙和虚拟质量的尺度趋势；不包含真实轨道谱、预条件、金属占据或耦合矩阵元。</p>
+    <p><strong>验收：</strong>固定 Δ 与 ωI，将 μ 增大四倍时 ωe 与频率比应减半；固定 μ 时比值与 Δ 成正比。</p>
     <p><strong>边界：</strong>较大比值是必要的数值趋势之一，不是 CPMD 与 BOMD 等价、绝热性成立或真实电子动力学被描述的充分条件。</p>
   </div>
 
   <noscript>
-    <p><strong>无 JavaScript fallback：</strong>BOMD/CPMD 流程与默认频率比仍完整显示；滑块不会更新。默认参数为 $\Delta=2$、$\mu=400$、$\omega_{\mathrm I}=0.08$。</p>
+    <p><strong>无 JavaScript fallback：</strong>BOMD/CPMD 流程与默认频率比仍完整显示；滑块不会更新。默认参数为 Δ=2、μ=400、ωI=0.08。</p>
   </noscript>
 </figure>
 
@@ -99,28 +99,41 @@ const initialWidth = Math.min(initial.ratio / cap, 1) * 100;
     const electronicOutput = root.querySelector('[data-electronic-output]');
     const ratioOutput = root.querySelector('[data-ratio]');
 
-    const update = () => {
-      const params = {
-        gap: Number(gap.value),
-        fictitiousMass: Number(mass.value),
-        ionicFrequency: Number(ionic.value),
+    if (
+      gap instanceof HTMLInputElement
+      && mass instanceof HTMLInputElement
+      && ionic instanceof HTMLInputElement
+      && bar instanceof HTMLElement
+      && state instanceof HTMLElement
+      && gapOutput instanceof HTMLOutputElement
+      && massOutput instanceof HTMLOutputElement
+      && ionicOutput instanceof HTMLOutputElement
+      && electronicOutput instanceof HTMLOutputElement
+      && ratioOutput instanceof HTMLOutputElement
+    ) {
+      const update = () => {
+        const params = {
+          gap: Number(gap.value),
+          fictitiousMass: Number(mass.value),
+          ionicFrequency: Number(ionic.value),
+        };
+        const result = adiabaticSeparationRatio(params);
+        const capped = Math.min(result.ratio / 30, 1) * 100;
+        bar.style.width = `${capped}%`;
+        gapOutput.value = params.gap.toFixed(1);
+        massOutput.value = params.fictitiousMass.toFixed(0);
+        ionicOutput.value = params.ionicFrequency.toFixed(2);
+        electronicOutput.value = result.electronicFrequency.toFixed(3);
+        ratioOutput.value = result.ratio.toFixed(1);
+        const descriptor = result.ratio >= 10
+          ? '模型显示较清楚的频率分离'
+          : '模型显示电子与离子频率接近，绝热跟随风险较高';
+        state.textContent = `当前模型比值 ωe/ωI=${result.ratio.toFixed(1)}：${descriptor}。该比值不是 CPMD 轨迹等同于 BOMD 的充分证明。`;
       };
-      const result = adiabaticSeparationRatio(params);
-      const capped = Math.min(result.ratio / 30, 1) * 100;
-      bar.style.width = `${capped}%`;
-      gapOutput.textContent = params.gap.toFixed(1);
-      massOutput.textContent = params.fictitiousMass.toFixed(0);
-      ionicOutput.textContent = params.ionicFrequency.toFixed(2);
-      electronicOutput.textContent = result.electronicFrequency.toFixed(3);
-      ratioOutput.textContent = result.ratio.toFixed(1);
-      const descriptor = result.ratio >= 10
-        ? '模型显示较清楚的频率分离'
-        : '模型显示电子与离子频率接近，绝热跟随风险较高';
-      state.textContent = `当前模型比值 ωe/ωI=${result.ratio.toFixed(1)}：${descriptor}。该比值不是 CPMD 轨迹等同于 BOMD 的充分证明。`;
-    };
 
-    [gap, mass, ionic].forEach((control) => control?.addEventListener('input', update));
-    update();
+      [gap, mass, ionic].forEach((control) => control.addEventListener('input', update));
+      update();
+    }
   }
 </script>
 
