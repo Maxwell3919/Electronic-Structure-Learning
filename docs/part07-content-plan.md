@@ -1,3 +1,3 @@
 # Part VII content plan
 
-Temporary repair marker.
+This file will be restored by the pending merge commit.
