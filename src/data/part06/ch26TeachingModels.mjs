@@ -72,3 +72,41 @@ export function sampledTwoSiteGap(t1, t2, delta = 0, samples = 2001) {
   }
   return { gap: minimum, k: kAtMinimum };
 }
+
+export function sshWinding(t1, t2, tolerance = 1e-12) {
+  [t1, t2, tolerance].forEach((value, index) => finite(value, ['t1', 't2', 'tolerance'][index]));
+  if (tolerance < 0) throw new RangeError('tolerance must be non-negative');
+  const difference = Math.abs(t2) - Math.abs(t1);
+  if (Math.abs(difference) <= tolerance) {
+    return { winding: null, berryPhase: null, gapClosed: true };
+  }
+  const winding = difference > 0 ? 1 : 0;
+  return {
+    winding,
+    berryPhase: winding === 1 ? Math.PI : 0,
+    gapClosed: false,
+  };
+}
+
+export function sshEdgeProfile(t1, t2, cells = 12) {
+  [t1, t2].forEach((value, index) => finite(value, ['t1', 't2'][index]));
+  if (!Number.isInteger(cells) || cells < 1) throw new RangeError('cells must be a positive integer');
+  if (t2 === 0) {
+    return { normalizable: false, ratio: null, localizationLength: Infinity, amplitudes: [] };
+  }
+
+  const ratio = -t1 / t2;
+  const magnitude = Math.abs(ratio);
+  const normalizable = magnitude < 1;
+  const amplitudes = Array.from({ length: cells }, (_, index) => ratio ** index);
+  const norm = Math.sqrt(amplitudes.reduce((sum, value) => sum + value * value, 0));
+  const normalized = norm === 0 ? amplitudes : amplitudes.map((value) => value / norm);
+  const localizationLength = magnitude === 0 ? 0 : magnitude === 1 ? Infinity : 1 / Math.abs(Math.log(magnitude));
+
+  return {
+    normalizable,
+    ratio,
+    localizationLength,
+    amplitudes: normalized,
+  };
+}
