@@ -1,0 +1,58 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const treatments = {
+  '21.1': '区分加减电子谱与粒子数不变的中性激发；建立光学 observable 层级 | Separate addition/removal spectra from neutral excitations and establish the optical-observable hierarchy',
+  '21.2': '作用量驻定、时间依赖 Kohn–Sham 方程、历史依赖、因果性与绝热近似 | Action stationarity, time-dependent Kohn–Sham equations, history dependence, causality, and the adiabatic approximation',
+  '21.3': '有限体系极化率、周期体系电流/矢势、独立粒子介电响应与联合态密度边界 | Finite-system polarizability, periodic current/vector potential, independent-particle dielectric response, and the joint-DOS boundary',
+  '21.4': 'Dyson 响应方程、Hartree–XC kernel、跃迁空间耦合与 Casida 型本征问题 | Dyson response, the Hartree–XC kernel, transition-space coupling, and a Casida-type eigenproblem',
+  '21.5': '频率域 Sternheimer/Liouville 响应、微扰专用迭代与空态求和边界 | Frequency-domain Sternheimer/Liouville response, perturbation-specific iteration, and the empty-state-sum boundary',
+  '21.6': '实时间传播、幺正性、split operator、Cayley 形式、delta kick 与有限时间谱 | Real-time propagation, unitarity, split operators, Cayley form, delta kicks, and finite-time spectra',
+  '21.7': '分子/团簇极化率、strength function、振子强度和规则、尺寸与集体响应 | Molecular/cluster polarizability, strength functions, oscillator-strength sum rules, size, and collective response',
+  '21.8': '晶体宏观电流、局域场、起始带隙、激子、长程 kernel 与周期实时间方法 | Crystal macroscopic current, local fields, starting gaps, excitons, long-range kernels, and periodic real-time methods',
+  '21.9': '超越绝热近似的记忆、频率依赖、轨道依赖、exact exchange 与 hybrid 路线 | Memory, frequency dependence, orbital dependence, exact exchange, and hybrid routes beyond the adiabatic approximation',
+};
+
+const unit = catalog.parts[4].units[2];
+---
+
+<h2 id="source-map">来源地图 | Source Map</h2>
+
+<div class="chapter21-source-table chapter-source-map">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">节 | Section</th>
+        <th scope="col">Martin 原节标题 | Martin title</th>
+        <th scope="col">印刷页 | Print page</th>
+        <th scope="col">本站处理 | Website treatment</th>
+        <th scope="col">状态 | Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {unit.sections.map((section) => (
+        <tr>
+          <td><code>{section.id}</code></td>
+          <td>{section.title}</td>
+          <td>{section.page}</td>
+          <td>{treatments[section.id]}</td>
+          <td>active draft</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<p>
+  【Martin 原书 | Martin source】章节结构与印刷页定位来自 Martin 第 2 版 Chapter 21，正文印刷页 446–463，习题位于 p.464。本站不转录原书正文、图、图注、习题或答案。
+</p>
+<p lang="en">
+  【Martin source】The section structure and printed-page locators follow Martin, 2nd ed., Chapter 21, with body text on pp. 446–463 and exercises on p. 464. This site reproduces neither source prose, figures, captions, exercises, nor answers.
+</p>
+
+<p>
+  【依赖来源 | Dependency sources】Chapter 7 提供静态 Kohn–Sham 对象及其本征值边界；Chapter 9 提供 generalized Kohn–Sham 与 hybrid/range-separated 起点；Chapter 20 与 Appendices D、E 提供响应函数、Sternheimer、介电函数和电流/场约定。GW/BSE 只用于标出本章边界。
+</p>
+<p lang="en">
+  【Dependency sources】Chapter 7 supplies the static Kohn–Sham objects and eigenvalue boundary; Chapter 9 supplies generalized-Kohn–Sham and hybrid/range-separated starting points; Chapter 20 and Appendices D and E supply response, Sternheimer, dielectric, current, and field conventions. GW/BSE appear only to mark the chapter boundary.
+</p>
