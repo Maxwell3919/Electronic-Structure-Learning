@@ -1,0 +1,272 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import BornHuangChannelDiagram from './BornHuangChannelDiagram.astro';
+
+<span id="section-c-1"></span>
+
+## C.1 一般表述 | General Formulation
+
+<BilingualSection titleZh="从完整 Hamiltonian 到参数化电子问题" titleEn="From the full Hamiltonian to the parameterized electronic problem" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 式 C.1 将完整 Hamiltonian 写成
+
+$$
+\boxed{
+\hat H=\hat T_N+\hat T_e+\hat U
+=\hat T_N+\hat H_e(\mathbf R)
+}.
+$$
+
+$\hat U$ 包含电子—电子、电子—核和核—核势能。固定核坐标后，先求
+
+$$
+\hat H_e(\mathbf R)|\Psi_i(\mathbf R)\rangle
+=E_i(\mathbf R)|\Psi_i(\mathbf R)\rangle.
+$$
+
+$\mathbf R$ 在这里是参数，不是已经量子化掉的常数；电子能量和电子态都随它变化。完整耦合态满足 Martin 式 C.2：
+
+$$
+\hat H|\Psi_s\rangle=E_s|\Psi_s\rangle.
+$$
+
+若固定 $\mathbf R$ 的电子本征态构成完备集，完整态可按式 C.3 精确展开：
+
+$$
+\boxed{
+\Psi_s(\mathbf r,\mathbf R)
+=\sum_i\chi_{si}(\mathbf R)\Psi_i(\mathbf r;\mathbf R)
+}.
+$$
+
+到这一步尚未使用绝热近似。近似来自后面删除通道之间的耦合，而不是来自展开本身。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin's Eq. C.1 writes the full Hamiltonian as
+
+$$
+\boxed{
+\hat H=\hat T_N+\hat T_e+\hat U
+=\hat T_N+\hat H_e(\mathbf R)
+}.
+$$
+
+The operator $\hat U$ contains electron-electron, electron-nuclear, and nuclear-nuclear potential terms. At fixed nuclear coordinates, solve
+
+$$
+\hat H_e(\mathbf R)|\Psi_i(\mathbf R)\rangle
+=E_i(\mathbf R)|\Psi_i(\mathbf R)\rangle.
+$$
+
+The coordinates $\mathbf R$ are parameters here rather than constants removed from the quantum problem; both electronic energies and states vary with them. The complete coupled state satisfies Martin's Eq. C.2,
+
+$$
+\hat H|\Psi_s\rangle=E_s|\Psi_s\rangle.
+$$
+
+If the fixed-$\mathbf R$ electronic eigenstates form a complete set, Eq. C.3 gives the exact expansion
+
+$$
+\boxed{
+\Psi_s(\mathbf r,\mathbf R)
+=\sum_i\chi_{si}(\mathbf R)\Psi_i(\mathbf r;\mathbf R)
+}.
+$$
+
+No adiabatic approximation has yet been made. The approximation appears later when channel couplings are deleted, not when the expansion is introduced.
+
+  </div>
+</BilingualSection>
+
+<BornHuangChannelDiagram />
+
+<span id="coupled-equations"></span>
+
+## 核动能的乘积法则与耦合方程 | Product Rule and Coupled Nuclear Equations
+
+<BilingualSection titleZh="逐项作用核动能" titleEn="Acting with nuclear kinetic energy term by term" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+对某个核 $J$ 和通道 $i$，二阶导数满足
+
+$$
+\nabla_J^2\left(\chi_{si}\Psi_i\right)
+=
+\Psi_i\nabla_J^2\chi_{si}
++2(\nabla_J\chi_{si})\cdot(\nabla_J\Psi_i)
++\chi_{si}\nabla_J^2\Psi_i.
+$$
+
+第一项保持在普通核动能 $\hat T_N\chi_{si}$ 中。第二项包含核波函数的一阶导数和电子态的一阶参数导数；第三项包含电子态的二阶参数导数。将完整展开代入 Schrödinger 方程，左乘 $\langle\Psi_k(\mathbf R)|$ 并只对电子变量积分，电子 Hamiltonian 项因本征方程变成 $E_k\chi_{sk}$，得到
+
+$$
+\left[\hat T_N+E_k(\mathbf R)-E_s\right]\chi_{sk}
+=
+-\sum_i\left(A_{ki}+B_{ki}\right)\chi_{si}.
+$$
+
+这就是 Martin 式 C.4。负号来自 $\hat T_N$ 中的负 Laplacian；$A$ 还包含作用在 $\chi$ 上的一阶微分算符，不能当作普通标量矩阵元。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For nucleus $J$ and channel $i$, the second derivative obeys
+
+$$
+\nabla_J^2\left(\chi_{si}\Psi_i\right)
+=
+\Psi_i\nabla_J^2\chi_{si}
++2(\nabla_J\chi_{si})\cdot(\nabla_J\Psi_i)
++\chi_{si}\nabla_J^2\Psi_i.
+$$
+
+The first term remains in the ordinary nuclear kinetic energy $\hat T_N\chi_{si}$. The second combines a first derivative of the nuclear amplitude with a first parametric derivative of the electronic state, while the third contains a second parametric derivative of the electronic state. Substitute the complete expansion into the Schrödinger equation, multiply by $\langle\Psi_k(\mathbf R)|$, and integrate only over electronic variables. The electronic Hamiltonian reduces through its eigenvalue equation to $E_k\chi_{sk}$, giving
+
+$$
+\left[\hat T_N+E_k(\mathbf R)-E_s\right]\chi_{sk}
+=
+-\sum_i\left(A_{ki}+B_{ki}\right)\chi_{si}.
+$$
+
+This is Martin's Eq. C.4. The minus sign originates in the negative Laplacian in $\hat T_N$. The object $A$ also contains a first-order differential operator acting on $\chi$ and is not merely a scalar matrix element.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="一次与二次导数耦合" titleEn="First- and second-derivative couplings" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+定义电子导数矩阵
+
+$$
+\mathbf d_{ki}^{J}(\mathbf R)
+=\langle\Psi_k(\mathbf R)|\nabla_J\Psi_i(\mathbf R)\rangle_{\mathbf r},
+$$
+
+和
+
+$$
+\tau_{ki}^{J}(\mathbf R)
+=\langle\Psi_k(\mathbf R)|\nabla_J^2\Psi_i(\mathbf R)\rangle_{\mathbf r}.
+$$
+
+Martin 式 C.5–C.6 可写成
+
+$$
+\boxed{
+A_{ki}
+=
+\sum_J\frac{m_e}{M_J}
+\mathbf d_{ki}^{J}\cdot\nabla_J
+},
+$$
+
+$$
+\boxed{
+B_{ki}
+=
+\sum_J\frac{m_e}{2M_J}\tau_{ki}^{J}
+}.
+$$
+
+$\mathbf d^J$ 的量纲为长度的负一次方，$\tau^J$ 为长度的负二次方。与核导数及质量比组合后，$A$ 和 $B$ 都具有能量量纲。两者均按 $m_e/M_J$ 缩放，但靠近电子简并时电子态导数可能同时增大，因此质量抑制不能单独保证耦合很小。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Define the electronic derivative matrices
+
+$$
+\mathbf d_{ki}^{J}(\mathbf R)
+=\langle\Psi_k(\mathbf R)|\nabla_J\Psi_i(\mathbf R)\rangle_{\mathbf r}
+$$
+
+and
+
+$$
+\tau_{ki}^{J}(\mathbf R)
+=\langle\Psi_k(\mathbf R)|\nabla_J^2\Psi_i(\mathbf R)\rangle_{\mathbf r}.
+$$
+
+Martin's Eqs. C.5-C.6 become
+
+$$
+\boxed{
+A_{ki}
+=
+\sum_J\frac{m_e}{M_J}
+\mathbf d_{ki}^{J}\cdot\nabla_J
+},
+$$
+
+$$
+\boxed{
+B_{ki}
+=
+\sum_J\frac{m_e}{2M_J}\tau_{ki}^{J}
+}.
+$$
+
+The vector $\mathbf d^J$ has dimensions of inverse length and $\tau^J$ inverse length squared. Combined with a nuclear derivative and the mass ratio, both $A$ and $B$ have dimensions of energy. Both carry the factor $m_e/M_J$, but electronic-state derivatives can simultaneously grow near a degeneracy, so mass suppression alone does not guarantee weak coupling.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="矩阵结构与 Hermiticity" titleEn="Matrix structure and Hermiticity" kind="derivation">
+  <div class="bilingual-section__zh">
+
+对正交关系求导：
+
+$$
+0=\nabla_J\delta_{ki}
+=\langle\nabla_J\Psi_k|\Psi_i\rangle
++\langle\Psi_k|\nabla_J\Psi_i\rangle.
+$$
+
+因此
+
+$$
+\mathbf d_{ki}^{J}
+=-\left(\mathbf d_{ik}^{J}\right)^*,
+$$
+
+即导数耦合矩阵反 Hermitian。完整 $A+B$ 与核动能必须共同处理，才能保持总有效核 Hamiltonian 的 Hermiticity；单独丢弃离散伴随项、边界项或只保留某一方向的矩阵元会破坏该性质。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Differentiate the orthogonality relation,
+
+$$
+0=\nabla_J\delta_{ki}
+=\langle\nabla_J\Psi_k|\Psi_i\rangle
++\langle\Psi_k|\nabla_J\Psi_i\rangle.
+$$
+
+Hence
+
+$$
+\mathbf d_{ki}^{J}
+=-\left(\mathbf d_{ik}^{J}\right)^*,
+$$
+
+so the derivative-coupling matrix is anti-Hermitian. The complete combination of nuclear kinetic energy with $A+B$ must be treated together to preserve Hermiticity of the effective nuclear Hamiltonian. Dropping a discrete adjoint, boundary term, or one direction of a matrix element can destroy that property.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="连续方程与离散实现" titleEn="Continuous equation and discrete implementation" eyebrow="【补充实现边界 | Supplemental implementation boundary】">
+  <div class="bilingual-section__zh">
+
+实际计算不会显式求完整电子态集合。有限差分、Sternheimer 方程、wavefunction overlap 或局域 diabatic 基都可能用于近似 $\mathbf d_{ki}^{J}$。若采用相邻核构型的波函数差分，任意相位和简并子空间内的酉旋转会使逐态差分失去意义；必须先进行相位对齐或子空间平行输运。网格步长收敛、电子基收敛和态跟踪是不同检查。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A practical calculation does not explicitly construct a complete electronic spectrum. Finite differences, Sternheimer equations, wavefunction overlaps, or a locally diabatic basis may approximate $\mathbf d_{ki}^{J}$. For finite differences between neighboring nuclear configurations, arbitrary phases and unitary rotations inside degenerate subspaces make state-by-state differences meaningless unless phases or subspaces are aligned by parallel transport. Nuclear step-size convergence, electronic-basis convergence, and state tracking are separate checks.
+
+  </div>
+</BilingualSection>
