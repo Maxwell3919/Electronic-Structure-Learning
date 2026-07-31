@@ -1,0 +1,106 @@
+<figure class="chapter-visual response-map">
+  <figcaption>
+    <strong>原创示意图：从态微扰到响应与 Green 函数</strong>
+    <span lang="en">Original diagram: from state perturbation to response and Green functions</span>
+  </figcaption>
+
+  <svg viewBox="0 0 940 330" role="img" aria-labelledby="response-map-title response-map-desc">
+    <title id="response-map-title">Hierarchy connecting state perturbation, bare response, self-consistent response, and Green functions</title>
+    <desc id="response-map-desc">
+      A perturbation changes eigenstates. Summing occupied-to-empty transitions gives the independent-particle response. A feedback kernel produces the self-consistent response. The same denominators are represented by a Green-function resolvent. A separate variational branch leads to the two-n-plus-one theorem.
+    </desc>
+    <defs>
+      <marker id="response-map-arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 z" class="response-map__arrowhead" />
+      </marker>
+    </defs>
+
+    <g transform="translate(24 42)">
+      <rect x="0" y="0" width="170" height="88" rx="12" class="response-map__box" />
+      <text x="85" y="28" text-anchor="middle">state correction</text>
+      <text x="85" y="52" text-anchor="middle">|ψ⁽¹⁾⟩</text>
+      <text x="85" y="75" text-anchor="middle">energy denominators</text>
+    </g>
+
+    <line x1="204" y1="86" x2="286" y2="86" marker-end="url(#response-map-arrow)" class="response-map__arrow" />
+
+    <g transform="translate(296 42)">
+      <rect x="0" y="0" width="180" height="88" rx="12" class="response-map__box" />
+      <text x="90" y="28" text-anchor="middle">bare response</text>
+      <text x="90" y="52" text-anchor="middle">χ⁰ = δn/δVeff</text>
+      <text x="90" y="75" text-anchor="middle">occupied-empty sum</text>
+    </g>
+
+    <line x1="486" y1="86" x2="568" y2="86" marker-end="url(#response-map-arrow)" class="response-map__arrow" />
+
+    <g transform="translate(578 42)">
+      <rect x="0" y="0" width="190" height="88" rx="12" class="response-map__box" />
+      <text x="95" y="28" text-anchor="middle">feedback kernel</text>
+      <text x="95" y="52" text-anchor="middle">K = δVint/δn</text>
+      <text x="95" y="75" text-anchor="middle">Hartree + fxc</text>
+    </g>
+
+    <line x1="778" y1="86" x2="858" y2="86" marker-end="url(#response-map-arrow)" class="response-map__arrow" />
+
+    <g transform="translate(754 166)">
+      <rect x="0" y="0" width="170" height="94" rx="12" class="response-map__box response-map__box--accent" />
+      <text x="85" y="28" text-anchor="middle">reducible response</text>
+      <text x="85" y="54" text-anchor="middle">χ = χ⁰(1−Kχ⁰)⁻¹</text>
+      <text x="85" y="78" text-anchor="middle">response to Vext</text>
+    </g>
+    <path d="M 673 130 C 710 154, 780 139, 837 166" marker-end="url(#response-map-arrow)" class="response-map__arrow" />
+
+    <g transform="translate(296 190)">
+      <rect x="0" y="0" width="210" height="94" rx="12" class="response-map__box" />
+      <text x="105" y="28" text-anchor="middle">resolvent representation</text>
+      <text x="105" y="54" text-anchor="middle">G(z) = (z−H)⁻¹</text>
+      <text x="105" y="78" text-anchor="middle">poles, DOS, projectors</text>
+    </g>
+    <path d="M 386 130 C 386 153, 401 168, 401 190" marker-end="url(#response-map-arrow)" class="response-map__arrow" />
+
+    <g transform="translate(24 190)">
+      <rect x="0" y="0" width="190" height="94" rx="12" class="response-map__box" />
+      <text x="95" y="28" text-anchor="middle">variational energy</text>
+      <text x="95" y="54" text-anchor="middle">stationarity + normalization</text>
+      <text x="95" y="78" text-anchor="middle">2n+1 order reduction</text>
+    </g>
+    <path d="M 108 130 C 108 154, 119 169, 119 190" marker-end="url(#response-map-arrow)" class="response-map__arrow" />
+  </svg>
+
+  <div class="response-map__fallback">
+    <ol>
+      <li><strong>态微扰：</strong>从补空间中的一阶态修正开始，能量差出现在分母。</li>
+      <li><strong>独立粒子响应：</strong>占据—空态求和构成固定有效势的 $\chi^0$。</li>
+      <li><strong>自洽响应：</strong>kernel $K$ 把诱导密度反馈为诱导势，得到对外场的 $\chi$。</li>
+      <li><strong>Green 函数：</strong>resolvent 用复能量变量组织相同的极点和投影。</li>
+      <li><strong>变分阶次：</strong>能量驻值使高阶波函数修正可在 $2n+1$ 定理中被消去。</li>
+    </ol>
+    <ol lang="en">
+      <li><strong>State perturbation:</strong> start with the first-order correction in the complementary subspace; energy differences appear in denominators.</li>
+      <li><strong>Independent-particle response:</strong> occupied-empty sums form $\chi^0$ at fixed effective potential.</li>
+      <li><strong>Self-consistent response:</strong> the kernel $K$ feeds induced density back into an induced potential, giving $\chi$ with respect to the external source.</li>
+      <li><strong>Green function:</strong> the resolvent organizes the same poles and projectors through a complex energy variable.</li>
+      <li><strong>Variational order:</strong> energy stationarity eliminates higher-order wavefunction corrections in the $2n+1$ theorem.</li>
+    </ol>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>学习目的：</strong>区分态修正、bare response、feedback kernel、可约响应、resolvent 和变分阶次，避免把它们写成一个未定义的“响应函数”。</p>
+    <p lang="en"><strong>Learning purpose:</strong> distinguish state correction, bare response, feedback kernel, reducible response, resolvent, and variational order rather than calling all of them an undefined “response function.”</p>
+    <p><strong>验收：</strong>图和语义列表必须包含上述五个连接，并明确 $\chi^0$ 与 $\chi$ 的 source 不同。</p>
+    <p lang="en"><strong>Acceptance:</strong> the diagram and semantic list contain all five connections and identify the different sources of $\chi^0$ and $\chi$.</p>
+    <p><strong>边界：</strong>箭头表示数学依赖，不表示任意材料中数值上都可忽略简并、局域场、频率依赖或多体修正。</p>
+    <p lang="en"><strong>Boundary:</strong> arrows denote mathematical dependencies; they do not imply that degeneracy, local fields, frequency dependence, or many-body corrections are numerically negligible in a material.</p>
+  </div>
+</figure>
+
+<style>
+  .response-map { overflow-x: auto; }
+  .response-map svg { width: 100%; min-width: 46rem; }
+  .response-map text { fill: currentColor; font-size: 14px; }
+  .response-map__box { fill: var(--sl-color-gray-6); stroke: var(--sl-color-gray-4); stroke-width: 2; }
+  .response-map__box--accent { stroke: var(--sl-color-accent-high); }
+  .response-map__arrow { fill: none; stroke: currentColor; stroke-width: 2; }
+  .response-map__arrowhead { fill: currentColor; }
+  .response-map__fallback { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+</style>

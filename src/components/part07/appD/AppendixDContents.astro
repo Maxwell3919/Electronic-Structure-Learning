@@ -1,0 +1,100 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[3];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-d-contents-title">
+  <h2 id="appendix-d-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、单位与响应约定 | Objects, units, and response conventions</a></li>
+    <li><a href="#section-d-1">D.1 微扰理论 | Perturbation theory</a></li>
+    <li><a href="#section-d-2">D.2 静态响应函数 | Static response functions</a></li>
+    <li><a href="#section-d-3">D.3 自洽场响应 | Response in self-consistent field theories</a></li>
+    <li><a href="#section-d-4">D.4 动态响应与 Kramers–Kronig | Dynamic response and Kramers–Kronig</a></li>
+    <li><a href="#section-d-5">D.5 Green 函数 | Green’s functions</a></li>
+    <li><a href="#section-d-6">D.6 2n+1 定理 | The 2n+1 theorem</a></li>
+    <li><a href="#review">交叉引用、误判、练习与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-d-source-title">
+  <h2 id="appendix-d-source-title">来源地图 | Source map</h2>
+  <p>
+    下表记录 Martin Appendix D 的目录标题和印刷页定位。网站正文、补充推导、图形和练习均为原创，不转录教材正文、原图或习题。
+  </p>
+  <p lang="en">
+    The table records Martin Appendix D directory titles and printed-page locators. Website prose, supplemental derivations, diagrams, and exercises are original and do not reproduce textbook prose, figures, or exercises.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>
+            {section.id === 'D.1'
+              ? '一阶态修正、observable 响应、占据/空态求和和简并边界'
+              : section.id === 'D.2'
+                ? '静态密度响应、Fourier 分量、独立粒子 susceptibility'
+                : section.id === 'D.3'
+                  ? '外场、有效场、kernel、Dyson 方程、逆响应和 RPA'
+                  : section.id === 'D.4'
+                    ? '阻尼谐振子、因果性、频域解析性、KK、Kubo–Greenwood 和动态 kernel'
+                    : section.id === 'D.5'
+                      ? 'resolvent、谱表示、DOS、density matrix、轮廓积分和局域性'
+                      : '阶次展开、归一化约束、变分消元与三阶能量'}
+          </td>
+          <td>source mapped; substantive drafting</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Exercises, printed p. {appendix.exercisesPage}</td>
+        <td>Source exercises not reproduced</td>
+        <td>原创微扰、因果、轮廓积分和阶次验证练习 | Original perturbation, causality, contour, and order-checking exercises</td>
+        <td>original replacement planned</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 {
+    margin-top: 0;
+  }
+
+  .appendix-contents ol {
+    columns: 2;
+    column-gap: 2rem;
+    margin-bottom: 0;
+  }
+
+  .appendix-contents li {
+    break-inside: avoid;
+    margin-block: 0.35rem;
+  }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol {
+      columns: 1;
+    }
+  }
+</style>
