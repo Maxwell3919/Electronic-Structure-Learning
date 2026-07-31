@@ -1,0 +1,233 @@
+---
+import {
+  diatomicFrequencies,
+  sampleDiatomicDispersion,
+} from '../../../data/part05/ch20TeachingModels.mjs';
+
+const componentId = 'ch20-chain-dispersion';
+const width = 760;
+const height = 330;
+const pad = { left: 58, right: 24, top: 28, bottom: 52 };
+const defaults = { spring: 1, mass1: 1, mass2: 2, latticeConstant: 1 };
+const defaultQFraction = 0.35;
+const dispersion = sampleDiatomicDispersion({ ...defaults, points: 161 });
+const maxFrequency = Math.max(...dispersion.map((point) => point.optical)) * 1.08;
+
+const xScale = (q) => pad.left + (q / Math.PI) * (width - pad.left - pad.right);
+const yScale = (frequency) => pad.top
+  + (1 - frequency / maxFrequency) * (height - pad.top - pad.bottom);
+const polyline = (key) => dispersion
+  .map((point) => `${xScale(point.q).toFixed(2)},${yScale(point[key]).toFixed(2)}`)
+  .join(' ');
+const defaultQ = defaultQFraction * Math.PI;
+const selected = diatomicFrequencies({ q: defaultQ, ...defaults });
+---
+
+<figure class="chapter-visual chain-dispersion" id={componentId}>
+  <figcaption>
+    <strong>一维双原子链：实空间弹簧到声子色散 | Diatomic chain: real-space springs to phonon dispersion</strong>
+    <span>原创教学模型：调节质量比和波矢，观察声学支、光学支、Gamma 极限与区边界。</span>
+    <span lang="en">Original teaching model: vary the mass ratio and wavevector to inspect acoustic and optical branches, the Gamma limit, and the zone boundary.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      质量比 m₂/m₁ | mass ratio
+      <input data-mass-ratio type="range" min="1" max="5" step="0.1" value={defaults.mass2} />
+    </label>
+    <label>
+      约化波矢 q/(π/a) | reduced wavevector
+      <input data-q type="range" min="0" max="1" step="0.01" value={defaultQFraction} />
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>双原子链的声学和光学色散</title>
+    <desc id={`${componentId}-desc`}>横轴为从 Gamma 到一维布里渊区边界的约化波矢，纵轴为无量纲角频率。两条曲线分别为声学和光学支，竖线标出当前波矢。</desc>
+    <line class="axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <line class="guide" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <line class="guide" x1={width - pad.right} y1={pad.top} x2={width - pad.right} y2={height - pad.bottom} />
+    <polyline class="curve curve--acoustic" data-acoustic points={polyline('acoustic')} />
+    <polyline class="curve curve--optical" data-optical points={polyline('optical')} />
+    <line class="selection" data-selection x1={xScale(defaultQ)} x2={xScale(defaultQ)} y1={pad.top} y2={height - pad.bottom} />
+    <circle class="marker marker--acoustic" data-acoustic-marker cx={xScale(defaultQ)} cy={yScale(selected.acoustic)} r="5" />
+    <circle class="marker marker--optical" data-optical-marker cx={xScale(defaultQ)} cy={yScale(selected.optical)} r="5" />
+    <text x={pad.left} y={height - 20} text-anchor="middle">Γ</text>
+    <text x={width - pad.right} y={height - 20} text-anchor="middle">π/a</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 4} text-anchor="middle">q</text>
+    <text transform={`translate(17 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">ω (dimensionless)</text>
+    <text class="direct-label" x={width - 150} y={pad.top + 28}>optical / 光学</text>
+    <text class="direct-label" x={width - 165} y={height - pad.bottom - 22}>acoustic / 声学</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>m₂/m₁ = <output data-mass-output>{defaults.mass2.toFixed(1)}</output></span>
+    <span>q/(π/a) = <output data-q-output>{defaultQFraction.toFixed(2)}</output></span>
+    <span>ω acoustic = <output data-acoustic-output>{selected.acoustic.toFixed(3)}</output></span>
+    <span>ω optical = <output data-optical-output>{selected.optical.toFixed(3)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>最近邻同一弹簧常数 K=1、m₁=1、晶格常数 a=1 的无限双原子链；纵轴为无量纲角频率。</p>
+    <p><strong>验收：</strong>Gamma 点声学频率必须为零；将两种质量同时乘 2 时全部频率按 1/√2 缩放；质量不等时声学支和光学支在区边界保持间隙。</p>
+    <p><strong>边界：</strong>模型不含三维极化、长程 Coulomb、电子屏蔽、非谐性或真实材料参数；曲线只验证 Fourier/质量加权逻辑。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认质量比 2、q/(π/a)=0.35 的两条色散和当前点仍可见；控件不更新。</p>
+  </noscript>
+</figure>
+
+<script>
+  import {
+    diatomicFrequencies,
+    sampleDiatomicDispersion,
+  } from '../../../data/part05/ch20TeachingModels.mjs';
+
+  const root = document.getElementById('ch20-chain-dispersion');
+  if (root) {
+    const massInput = root.querySelector('[data-mass-ratio]');
+    const qInput = root.querySelector('[data-q]');
+    const acousticCurve = root.querySelector('[data-acoustic]');
+    const opticalCurve = root.querySelector('[data-optical]');
+    const selection = root.querySelector('[data-selection]');
+    const acousticMarker = root.querySelector('[data-acoustic-marker]');
+    const opticalMarker = root.querySelector('[data-optical-marker]');
+    const massOutput = root.querySelector('[data-mass-output]');
+    const qOutput = root.querySelector('[data-q-output]');
+    const acousticOutput = root.querySelector('[data-acoustic-output]');
+    const opticalOutput = root.querySelector('[data-optical-output]');
+
+    if (
+      massInput instanceof HTMLInputElement
+      && qInput instanceof HTMLInputElement
+      && acousticCurve instanceof SVGPolylineElement
+      && opticalCurve instanceof SVGPolylineElement
+      && selection instanceof SVGLineElement
+      && acousticMarker instanceof SVGCircleElement
+      && opticalMarker instanceof SVGCircleElement
+      && massOutput instanceof HTMLOutputElement
+      && qOutput instanceof HTMLOutputElement
+      && acousticOutput instanceof HTMLOutputElement
+      && opticalOutput instanceof HTMLOutputElement
+    ) {
+      const width = 760;
+      const height = 330;
+      const pad = { left: 58, right: 24, top: 28, bottom: 52 };
+      const xScale = (q) => pad.left + (q / Math.PI) * (width - pad.left - pad.right);
+
+      const update = () => {
+        const mass2 = Number(massInput.value);
+        const qFraction = Number(qInput.value);
+        const dispersion = sampleDiatomicDispersion({
+          spring: 1,
+          mass1: 1,
+          mass2,
+          latticeConstant: 1,
+          points: 161,
+        });
+        const maxFrequency = Math.max(...dispersion.map((point) => point.optical)) * 1.08;
+        const yScale = (frequency) => pad.top
+          + (1 - frequency / maxFrequency) * (height - pad.top - pad.bottom);
+        const toPolyline = (key) => dispersion
+          .map((point) => `${xScale(point.q).toFixed(2)},${yScale(point[key]).toFixed(2)}`)
+          .join(' ');
+        const q = qFraction * Math.PI;
+        const selected = diatomicFrequencies({
+          q,
+          spring: 1,
+          mass1: 1,
+          mass2,
+          latticeConstant: 1,
+        });
+        const x = xScale(q);
+
+        acousticCurve.setAttribute('points', toPolyline('acoustic'));
+        opticalCurve.setAttribute('points', toPolyline('optical'));
+        selection.setAttribute('x1', String(x));
+        selection.setAttribute('x2', String(x));
+        acousticMarker.setAttribute('cx', String(x));
+        acousticMarker.setAttribute('cy', String(yScale(selected.acoustic)));
+        opticalMarker.setAttribute('cx', String(x));
+        opticalMarker.setAttribute('cy', String(yScale(selected.optical)));
+        massOutput.value = mass2.toFixed(1);
+        qOutput.value = qFraction.toFixed(2);
+        acousticOutput.value = selected.acoustic.toFixed(3);
+        opticalOutput.value = selected.optical.toFixed(3);
+      };
+
+      massInput.addEventListener('input', update);
+      qInput.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .chain-dispersion {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    overflow-x: auto;
+  }
+
+  .chain-dispersion svg {
+    display: block;
+    width: 100%;
+    min-width: 34rem;
+    height: auto;
+  }
+
+  .axis {
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .guide {
+    stroke: var(--sl-color-gray-4);
+    stroke-dasharray: 4 4;
+  }
+
+  .curve {
+    fill: none;
+    stroke-width: 2.7;
+  }
+
+  .curve--acoustic {
+    stroke: currentColor;
+  }
+
+  .curve--optical {
+    stroke: var(--sl-color-accent-high);
+  }
+
+  .selection {
+    stroke: currentColor;
+    stroke-width: 1.3;
+    stroke-dasharray: 6 4;
+  }
+
+  .marker {
+    stroke: var(--sl-color-gray-7);
+    stroke-width: 2;
+  }
+
+  .marker--acoustic {
+    fill: currentColor;
+  }
+
+  .marker--optical {
+    fill: var(--sl-color-accent-high);
+  }
+
+  text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .direct-label {
+    font-weight: 600;
+  }
+</style>

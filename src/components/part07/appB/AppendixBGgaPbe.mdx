@@ -1,0 +1,460 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import PBEEnhancementExplorer from './PBEEnhancementExplorer.astro';
+
+<span id="section-b-2"></span>
+
+## B.2 广义梯度近似 | Generalized-Gradient Approximations
+
+<BilingualSection titleZh="从局域密度到半局域梯度信息" titleEn="From local density to semilocal gradient information" eyebrow="【Martin 原书 + 补充组织 | Martin source + supplemental organization】">
+  <div class="bilingual-section__zh">
+
+Martin 在 B.2 只强调 GGA 形式很多，没有试图列出完整目录。统一结构可写成
+
+$$
+E_{\mathrm{xc}}^{\mathrm{GGA}}
+=
+\int d^3r\,
+f\!\left(
+ n_\uparrow,n_\downarrow,
+ \nabla n_\uparrow,\nabla n_\downarrow
+\right).
+$$
+
+为了不让梯度变量携带单位，实际构造通常把 $|\nabla n|$ 除以由局域密度形成的同量纲尺度。交换常用
+
+$$
+s=\frac{|\nabla n|}{2k_Fn},
+\qquad
+k_F=(3\pi^2n)^{1/3}.
+$$
+
+在均匀密度中 $\nabla n=0$，所以 $s=0$，GGA 若满足正确局域极限，应退化到 LSDA/LDA。缓慢变化只说明 $s\ll1$；它不说明高阶梯度项、边界或自旋结构一定可以忽略。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin's B.2 stresses that many GGA forms exist and does not attempt an exhaustive list. Their common structure can be written as
+
+$$
+E_{\mathrm{xc}}^{\mathrm{GGA}}
+=
+\int d^3r\,
+f\!\left(
+ n_\uparrow,n_\downarrow,
+ \nabla n_\uparrow,\nabla n_\downarrow
+\right).
+$$
+
+To avoid a dimensional gradient variable, practical constructions divide $|\nabla n|$ by a local density scale of the same dimensions. Exchange commonly uses
+
+$$
+s=\frac{|\nabla n|}{2k_Fn},
+\qquad
+k_F=(3\pi^2n)^{1/3}.
+$$
+
+A uniform density has $\nabla n=0$ and therefore $s=0$. A GGA with the correct local limit must then reduce to LSDA/LDA. A slowly varying density only establishes $s\ll1$; it does not by itself remove higher-gradient, boundary, or spin effects.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="能量、势与分部积分" titleEn="Energy, potential, and integration by parts" eyebrow="【Appendix A 交叉引用 | Appendix A cross-reference】">
+  <div class="bilingual-section__zh">
+
+对标量密度形式
+
+$$
+E[n]=\int d^3r\,f(n,\nabla n),
+$$
+
+连续泛函导数为
+
+$$
+\boxed{
+v(\mathbf r)
+=
+\frac{\partial f}{\partial n}
+-
+\nabla\cdot\frac{\partial f}{\partial(\nabla n)}
+}
+$$
+
+并依赖 Appendix A 中说明的周期、固定值或衰减边界条件。若 $f$ 通过 $s=|\nabla n|/(2k_Fn)$ 依赖梯度，则
+
+$$
+\frac{\partial f}{\partial(\nabla n)}
+=
+\frac{\partial f}{\partial s}
+\frac{\nabla n}{2k_Fn|\nabla n|}
+$$
+
+在 $|\nabla n|\ne0$ 处成立。零梯度处必须使用解析极限，使 $\partial f/\partial s$ 的小 $s$ 行为与方向因子共同给出有限结果。直接计算单位向量再用数值截断掩盖除零，可能使势与能量不再互为导数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a scalar-density form
+
+$$
+E[n]=\int d^3r\,f(n,\nabla n),
+$$
+
+the continuous functional derivative is
+
+$$
+\boxed{
+v(\mathbf r)
+=
+\frac{\partial f}{\partial n}
+-
+\nabla\cdot\frac{\partial f}{\partial(\nabla n)}
+}
+$$
+
+subject to the periodic, fixed-value, or decaying boundary conditions stated in Appendix A. If $f$ depends on the gradient through $s=|\nabla n|/(2k_Fn)$, then
+
+$$
+\frac{\partial f}{\partial(\nabla n)}
+=
+\frac{\partial f}{\partial s}
+\frac{\nabla n}{2k_Fn|\nabla n|}
+$$
+
+where $|\nabla n|\ne0$. At zero gradient, an analytic limit must combine the small-$s$ behavior of $\partial f/\partial s$ with the direction factor to produce a finite result. Computing the unit vector first and hiding division by zero through numerical clipping can break the derivative relation between energy and potential.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="GGA 标签不能确定实现" titleEn="A GGA label does not identify an implementation" kind="boundary">
+  <div class="bilingual-section__zh">
+
+同一 GGA 名称仍可能对应不同自旋约定、相关参数化、常数精度、密度截断、梯度离散、势的解析或数值导数以及赝势生成泛函。比较结果前至少需要核对这些身份；输入文件中出现 `PBE` 只是一条来源主张，不构成实现等价的独立验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The same GGA label can still hide different spin conventions, correlation parametrizations, constant precision, density floors, gradient discretizations, analytic versus numerical potentials, and pseudopotential-generation functionals. These identities must be checked before comparing results. The appearance of `PBE` in an input file is a source claim, not independent verification of implementation equivalence.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-b-3"></span>
+
+## B.3 GGA 的显式 PBE 形式 | Explicit PBE Form
+
+<BilingualSection titleZh="交换能和增强因子" titleEn="Exchange energy and enhancement factor" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+PBE 交换写成未极化均匀电子气交换能乘以增强因子：
+
+$$
+E_x^{\mathrm{PBE}}[n]
+=
+\int d^3r\,
+n\varepsilon_x^{\mathrm{hom}}(n)F_x(s).
+$$
+
+Martin 式 B.7 为
+
+$$
+\boxed{
+F_x(s)
+=
+1+\kappa
+-
+\frac{\kappa}{1+\mu s^2/\kappa}
+},
+$$
+
+其中 $\kappa=0.804$、$\mu=0.21951$。前者控制大梯度上界，后者控制小梯度二次项及交换—相关线性响应的组合。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+PBE exchange is written as the exchange energy of an unpolarized uniform gas multiplied by an enhancement factor,
+
+$$
+E_x^{\mathrm{PBE}}[n]
+=
+\int d^3r\,
+n\varepsilon_x^{\mathrm{hom}}(n)F_x(s).
+$$
+
+Martin's Eq. B.7 is
+
+$$
+\boxed{
+F_x(s)
+=
+1+\kappa
+-
+\frac{\kappa}{1+\mu s^2/\kappa}
+},
+$$
+
+with $\kappa=0.804$ and $\mu=0.21951$. The former controls the large-gradient bound, while the latter controls the small-gradient quadratic term and the combined exchange-correlation linear response.
+
+  </div>
+</BilingualSection>
+
+<PBEEnhancementExplorer />
+
+<span id="pbe-limits"></span>
+
+## PBE 交换的极限和导数 | Limits and Derivatives of PBE Exchange
+
+<BilingualSection titleZh="均匀极限、小梯度展开与有界性" titleEn="Uniform limit, small-gradient expansion, and boundedness" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+令 $u=\mu s^2/\kappa$。在 $s=0$ 时 $u=0$，因此
+
+$$
+F_x(0)=1+\kappa-\kappa=1,
+$$
+
+恢复局域交换。对 $|u|<1$ 使用
+
+$$
+\frac{1}{1+u}=1-u+u^2+O(u^3),
+$$
+
+得到
+
+$$
+F_x(s)
+=
+1+\mu s^2-
+\frac{\mu^2}{\kappa}s^4+O(s^6).
+$$
+
+大梯度时分式趋于零：
+
+$$
+\lim_{s\to\infty}F_x(s)=1+\kappa=1.804.
+$$
+
+一阶导数为
+
+$$
+\frac{dF_x}{ds}
+=
+\frac{2\mu s}{\left(1+\mu s^2/\kappa\right)^2},
+$$
+
+所以 $s>0$ 时单调增加，$s=0$ 处导数为零。二阶展开、单调性和饱和值构成独立于图形外观的低成本回归检查。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Let $u=\mu s^2/\kappa$. At $s=0$, $u=0$ and
+
+$$
+F_x(0)=1+\kappa-\kappa=1,
+$$
+
+recovering local exchange. For $|u|<1$,
+
+$$
+\frac{1}{1+u}=1-u+u^2+O(u^3),
+$$
+
+which gives
+
+$$
+F_x(s)
+=
+1+\mu s^2-
+\frac{\mu^2}{\kappa}s^4+O(s^6).
+$$
+
+At large gradient the fraction vanishes,
+
+$$
+\lim_{s\to\infty}F_x(s)=1+\kappa=1.804.
+$$
+
+The first derivative is
+
+$$
+\frac{dF_x}{ds}
+=
+\frac{2\mu s}{\left(1+\mu s^2/\kappa\right)^2},
+$$
+
+so the factor increases for $s>0$ and has zero slope at $s=0$. The quadratic expansion, monotonicity, and saturation value provide low-cost regression tests independent of the appearance of a plotted curve.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="PBE 的小梯度选择" titleEn="The PBE small-gradient choice" kind="source">
+  <div class="bilingual-section__zh">
+
+Martin 说明 PBE 的 $\mu$ 选择用于恢复均匀电子气的交换—相关线性响应，并与相关项的梯度贡献抵消；因此它不等同于单独恢复交换的已知低梯度展开系数。这是构造约束之间的取舍，不能解释成某个材料结果的经验拟合参数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin explains that PBE chooses $\mu$ to recover the exchange-correlation linear response of the uniform gas through cancellation with the correlation gradient contribution. It therefore does not coincide with independently restoring the known exchange-only low-gradient coefficient. This is a tradeoff among construction constraints, not an empirical fit to a particular material result.
+
+  </div>
+</BilingualCallout>
+
+## PBE 相关修正 | PBE Correlation Correction
+
+<BilingualSection titleZh="局域相关加梯度修正" titleEn="Local correlation plus a gradient correction" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 式 B.8 将 PBE 相关写成均匀电子气相关能和附加项 $H$：
+
+$$
+E_c^{\mathrm{PBE}}[n_\uparrow,n_\downarrow]
+=
+\int d^3r\,n
+\left[
+\varepsilon_c^{\mathrm{hom}}(r_s,\zeta)
++H(r_s,\zeta,t)
+\right].
+$$
+
+相关约化梯度为
+
+$$
+t=\frac{|\nabla n|}{2\phi k_{\mathrm{TF}}n},
+\qquad
+\phi(\zeta)=
+\frac{(1+\zeta)^{2/3}+(1-\zeta)^{2/3}}{2}.
+$$
+
+$t$ 使用 Thomas–Fermi 屏蔽波矢 $k_{\mathrm{TF}}$，与交换的 $s$ 使用 $k_F$ 不同。把两者混用会改变函数的密度缩放和约束。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin's Eq. B.8 writes PBE correlation as uniform-gas correlation plus an additive term $H$,
+
+$$
+E_c^{\mathrm{PBE}}[n_\uparrow,n_\downarrow]
+=
+\int d^3r\,n
+\left[
+\varepsilon_c^{\mathrm{hom}}(r_s,\zeta)
++H(r_s,\zeta,t)
+\right].
+$$
+
+The correlation reduced gradient is
+
+$$
+t=\frac{|\nabla n|}{2\phi k_{\mathrm{TF}}n},
+\qquad
+\phi(\zeta)=
+\frac{(1+\zeta)^{2/3}+(1-\zeta)^{2/3}}{2}.
+$$
+
+The variable $t$ uses the Thomas-Fermi screening wave vector $k_{\mathrm{TF}}$, whereas exchange uses $k_F$ in $s$. Interchanging them changes density scaling and the constraints of the functional.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="式 B.9–B.10" titleEn="Equations B.9-B.10" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+PBE 相关修正写为
+
+$$
+\boxed{
+H
+=
+\frac{e^2}{a_0}\gamma\phi^3
+\ln\left[
+1+\frac{\beta}{\gamma}t^2
+\frac{1+At^2}{1+At^2+A^2t^4}
+\right]
+},
+$$
+
+其中
+
+$$
+\boxed{
+A
+=
+\frac{\beta}{\gamma}
+\left[
+\exp\left(
+-\frac{\varepsilon_c^{\mathrm{hom}}}
+{\gamma\phi^3(e^2/a_0)}
+\right)-1
+\right]^{-1}
+}.
+$$
+
+在 Hartree 原子单位中 $e^2/a_0=1$。$A$ 依赖局域 $r_s$ 和 $\zeta$，不是全局常数。$t=0$ 时对数参数为 1，因此 $H=0$ 并恢复 LSDA 相关。小 $t$ 展开给出
+
+$$
+H
+=
+\frac{e^2}{a_0}\beta\phi^3t^2+O(t^4),
+$$
+
+因为 $\ln(1+x)=x+O(x^2)$ 且有理因子在 $t=0$ 为 1。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The PBE correlation correction is
+
+$$
+\boxed{
+H
+=
+\frac{e^2}{a_0}\gamma\phi^3
+\ln\left[
+1+\frac{\beta}{\gamma}t^2
+\frac{1+At^2}{1+At^2+A^2t^4}
+\right]
+},
+$$
+
+with
+
+$$
+\boxed{
+A
+=
+\frac{\beta}{\gamma}
+\left[
+\exp\left(
+-\frac{\varepsilon_c^{\mathrm{hom}}}
+{\gamma\phi^3(e^2/a_0)}
+\right)-1
+\right]^{-1}
+}.
+$$
+
+In Hartree atomic units $e^2/a_0=1$. The quantity $A$ depends on the local $r_s$ and $\zeta$; it is not a global constant. At $t=0$, the logarithm has argument one, so $H=0$ and LSDA correlation is recovered. The small-$t$ expansion is
+
+$$
+H
+=
+\frac{e^2}{a_0}\beta\phi^3t^2+O(t^4),
+$$
+
+because $\ln(1+x)=x+O(x^2)$ and the rational factor tends to one at $t=0$.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="公式能支持和不能支持的判断" titleEn="What the formulas do and do not establish" kind="boundary">
+  <div class="bilingual-section__zh">
+
+式 B.7–B.10 规定一个解析近似及若干极限。它们可以检查维度、局域极限、梯度展开、上界和导数一致性；不能单独证明晶格常数、能隙、磁矩、反应能或声子对任一材料准确。材料级判断仍需要与适当参考比较，并检查赝势、基组、采样、自洽和目标 observable 收敛。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Equations B.7-B.10 define an analytic approximation and selected limits. They support checks of dimensions, the local limit, gradient expansion, boundedness, and derivative consistency. They do not prove that a lattice constant, band gap, magnetic moment, reaction energy, or phonon is accurate for a material. Material-level judgment still requires an appropriate reference and convergence of pseudopotential, basis, sampling, self-consistency, and the target observable.
+
+  </div>
+</BilingualCallout>

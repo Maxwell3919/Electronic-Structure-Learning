@@ -1,20 +1,18 @@
 ---
-title: "Appendix B · LSDA and GGA Functionals"
-description: "Martin Appendix B 的目录级阅读骨架；正文待填充。"
+title: "Appendix B · LSDA and GGA Functionals | LSDA 与 GGA 泛函"
+description: "均匀电子气参数化、自旋缩放、相关势、约化梯度和显式 PBE 形式的双语公式参考。"
 sidebar:
   order: 2
   label: "Appendix B · LSDA and GGA Functionals"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixBBody from '../../../components/part07/appB/AppendixBBody.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[1].label}
-  sourcePage={catalog.parts[6].units[1].page}
-  sections={catalog.parts[6].units[1].sections}
-  exercisesPage={catalog.parts[6].units[1].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix B, printed pages 584–586; sections B.1–B.3. External primary references are identified separately in the source boundary."
+  status="appendix-content-complete"
 />
+
+<AppendixBBody />
