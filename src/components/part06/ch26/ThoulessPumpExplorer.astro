@@ -59,15 +59,15 @@ const flowPoints = flowInitial.centers.map((value, index) => `${430 + (285 * ind
     <strong data-pump-status>The loop encloses one gap-closing point: one particle is pumped per filled lower band and adiabatic cycle.</strong>
   </div>
 
-  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> c=1、R=0.65 的环路包围 $t_1=t_2,\Delta=0$，离散球面固角给出低能带 $C=1$，Wilson-loop Berry phase 在一周期内展开 $2\pi$。</p></noscript>
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> c=1、R=0.65 的环路包围 t₁=t₂、Δ=0；离散球面固角给出低能带 C=1，Wilson-loop Berry phase 在一周期内展开 2π。</p></noscript>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$\mathbf d(k,\lambda)=(c+R\cos\lambda+v\cos k,\ w\sin k,\ R\sin\lambda)$。Martin 的平滑 pump 对应 $c=v$。左图还标出 $k=0$ 的第二个闭隙点，以避免把过大的参数环路误判为只包围一个奇点。</p>
-    <p lang="en"><strong>Model:</strong> $\mathbf d(k,\lambda)=(c+R\cos\lambda+v\cos k,\ w\sin k,\ R\sin\lambda)$. Martin's smooth pump is the case $c=v$. The second $k=0$ gap-closing point is also displayed so that an excessively large loop is not mistaken for a loop around only one singularity.</p>
-    <p><strong>计算：</strong>页面用规范不变的球面三角形固角求 $\hat{\mathbf d}:T^2\to S^2$ 的 degree，并取低能带 $C_-=-\deg\hat{\mathbf d}$；每个 $\lambda$ 的 Wannier center 由闭合 $k$ 回路的归一化 overlap product 求 Berry phase，再沿周期展开相位。</p>
-    <p lang="en"><strong>Computation:</strong> the page uses gauge-invariant spherical-triangle solid angles to obtain the degree of $\hat{\mathbf d}:T^2\to S^2$ and sets $C_-=-\deg\hat{\mathbf d}$. At each $\lambda$, the Wannier centre comes from the Berry phase of a normalized closed-loop overlap product in $k$, followed by phase unwrapping over the cycle.</p>
-    <p><strong>边界：</strong>整数输运要求 occupied manifold 在整个 $(k,\lambda)$ torus 上有隙、循环闭合、演化相对于最小能隙足够绝热，并完整填充目标带。有限速率、部分填充、耗散或穿过闭隙点时不能直接使用 $N_{\rm pump}=C$。</p>
-    <p lang="en"><strong>Boundary:</strong> integer transport requires a gapped occupied manifold over the full $(k,\lambda)$ torus, a closed cycle, evolution adiabatic relative to the minimum gap, and complete filling of the target band. A finite-rate scan, partial filling, dissipation, or a path through a gap closing does not justify $N_{\rm pump}=C$.</p>
+    <p><strong>模型：</strong><code>d(k, λ)=(c+R cos λ+v cos k, w sin k, R sin λ)</code>。Martin 的平滑 pump 对应 <code>c=v</code>。左图还标出 <code>k=0</code> 的第二个闭隙点，以避免把过大的参数环路误判为只包围一个奇点。</p>
+    <p lang="en"><strong>Model:</strong> <code>d(k, λ)=(c+R cos λ+v cos k, w sin k, R sin λ)</code>. Martin's smooth pump is the case <code>c=v</code>. The second <code>k=0</code> gap-closing point is also displayed so that an excessively large loop is not mistaken for a loop around only one singularity.</p>
+    <p><strong>计算：</strong>页面用规范不变的球面三角形固角求 <code>d-hat: T² → S²</code> 的 degree，并取低能带 <code>C−=−degree(d-hat)</code>；每个 λ 的 Wannier center 由闭合 k 回路的归一化 overlap product 求 Berry phase，再沿周期展开相位。</p>
+    <p lang="en"><strong>Computation:</strong> the page uses gauge-invariant spherical-triangle solid angles to obtain the degree of <code>d-hat: T² → S²</code> and sets <code>C−=−degree(d-hat)</code>. At each λ, the Wannier centre comes from the Berry phase of a normalized closed-loop overlap product in k, followed by phase unwrapping over the cycle.</p>
+    <p><strong>边界：</strong>整数输运要求 occupied manifold 在整个 (k, λ) torus 上有隙、循环闭合、演化相对于最小能隙足够绝热，并完整填充目标带。有限速率、部分填充、耗散或穿过闭隙点时不能直接使用 <code>Npump=C</code>。</p>
+    <p lang="en"><strong>Boundary:</strong> integer transport requires a gapped occupied manifold over the full (k, λ) torus, a closed cycle, evolution adiabatic relative to the minimum gap, and complete filling of the target band. A finite-rate scan, partial filling, dissipation, or a path through a gap closing does not justify <code>Npump=C</code>.</p>
   </div>
 </figure>
 
