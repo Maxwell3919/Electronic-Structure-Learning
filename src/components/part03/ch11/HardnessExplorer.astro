@@ -13,7 +13,7 @@ const points = Array.from({ length: 401 }, (_, index) => {
   return { q, tail: residualFourierTail(defaultRc, q) };
 });
 const x = (q) => 62 + q / qMax * 668;
-const y = (tail) => 35 + (Math.log10(Math.max(tail, 1e-12)) + 12) / 12 * 245;
+const y = (tail) => 35 + (-Math.log10(Math.max(tail, 1e-12)) / 12) * 245;
 const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.q).toFixed(2)} ${y(point.tail).toFixed(2)}`).join(' ');
 ---
 
@@ -41,9 +41,15 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
 
   <svg viewBox="0 0 760 330" role="img" aria-labelledby="hardness-title hardness-desc">
     <title id="hardness-title">Fourier-tail proxy versus reciprocal cutoff</title>
-    <desc id="hardness-desc">The logarithm of an analytic reciprocal-space tail for an adjustable core radius.</desc>
+    <desc id="hardness-desc">The logarithm of an analytic reciprocal-space tail for an adjustable core radius, plotted from zero at the top to minus twelve at the bottom.</desc>
     <line class="plot-axis" x1="62" y1="280" x2="730" y2="280" />
     <line class="plot-axis" x1="62" y1="35" x2="62" y2="280" />
+    <line class="plot-axis" x1="56" y1="35" x2="62" y2="35" />
+    <line class="plot-axis" x1="56" y1="157.5" x2="62" y2="157.5" />
+    <line class="plot-axis" x1="56" y1="280" x2="62" y2="280" />
+    <text x="52" y="40" text-anchor="end">0</text>
+    <text x="52" y="162.5" text-anchor="end">−6</text>
+    <text x="52" y="285" text-anchor="end">−12</text>
     <line class="plot-guide" data-tolerance-line x1="62" y1={y(tolerance)} x2="730" y2={y(tolerance)} />
     <line class="plot-guide" data-cutoff-line x1={x(defaultCutoff)} y1="35" x2={x(defaultCutoff)} y2="280" />
     <path class="hardness-explorer__curve" data-tail-curve d={path} />
@@ -60,8 +66,8 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
   <div class="chapter-visual__contract">
     <p><strong>模型：</strong>归一化尾部取 <code>T(q)=exp[-(r_c q)²]</code>。给定容差 τ 时，<code>q_c=sqrt(-ln τ)/r_c</code>。</p>
     <p lang="en"><strong>Model:</strong> the normalized tail is <code>T(q)=exp[-(r_c q)²]</code>. For tolerance τ, <code>q_c=sqrt(-ln τ)/r_c</code>.</p>
-    <p><strong>验收：</strong>固定容差下 r_c q_c 保持常数；r_c 减半时 q_c 加倍，动能代理增加四倍。</p>
-    <p lang="en"><strong>Acceptance:</strong> r_c q_c remains constant at fixed tolerance; halving r_c doubles q_c and quadruples the kinetic-energy proxy.</p>
+    <p><strong>验收：</strong>固定容差下 r_c q_c 保持常数；r_c 减半时 q_c 加倍，动能代理增加四倍；纵轴必须把 log10 T=0 放在顶部、−12 放在底部，使尾部随 q 增大向下衰减。</p>
+    <p lang="en"><strong>Acceptance:</strong> r_c q_c remains constant at fixed tolerance; halving r_c doubles q_c and quadruples the kinetic-energy proxy; the vertical axis must place log10 T=0 at the top and −12 at the bottom so the tail decays downward as q increases.</p>
     <p><strong>边界：</strong>真实 hardness 由赝波函数、各通道、局域分量、增广电荷和目标 observable 共同决定，不能由单一芯半径公式给出。</p>
     <p lang="en"><strong>Boundary:</strong> real hardness depends on pseudo-wavefunctions, channels, local component, augmentation charge, and the target observable; it cannot be inferred from one core-radius formula.</p>
   </div>
@@ -81,7 +87,7 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
       const qMax = 6;
       const count = 500;
       const x = (q) => 62 + q / qMax * 668;
-      const y = (tail) => 35 + (Math.log10(Math.max(tail, 1e-12)) + 12) / 12 * 245;
+      const y = (tail) => 35 + (-Math.log10(Math.max(tail, 1e-12)) / 12) * 245;
       const path = Array.from({ length: count + 1 }, (_, index) => {
         const q = qMax * index / count;
         const tail = Math.exp(-((rc * q) ** 2));
