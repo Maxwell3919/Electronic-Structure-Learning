@@ -26,7 +26,7 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
 
   <div class="chapter-visual__controls">
     <label>
-      <span>模型芯半径 | Model core radius r_c: <output data-rc-output>1.8</output> Bohr</span>
+      <span>模型芯半径 | Model core radius $r_c$: <output data-rc-output>1.8</output> Bohr</span>
       <input data-rc type="range" min="0.8" max="3.0" step="0.1" value="1.8" aria-label="Model core radius for Fourier-tail proxy" />
     </label>
     <label>
@@ -52,22 +52,22 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
   </svg>
 
   <p class="chapter-visual__readout" aria-live="polite">
-    <span>达到容差所需 q_c：<strong data-q-cut>{defaultCutoff.toFixed(4)}</strong> Bohr⁻¹</span>
-    <span>动能代理 q_c²/2：<strong data-energy-cut>{(defaultCutoff ** 2 / 2).toFixed(4)}</strong> Ha</span>
-    <span>r_c q_c：<strong data-product>{(defaultRc * defaultCutoff).toFixed(6)}</strong></span>
+    <span>达到容差所需 $q_c$：<strong data-q-cut>{defaultCutoff.toFixed(4)}</strong> Bohr⁻¹</span>
+    <span>动能代理 $q_c^2/2$：<strong data-energy-cut>{(defaultCutoff ** 2 / 2).toFixed(4)}</strong> Ha</span>
+    <span>$r_c q_c$：<strong data-product>{(defaultRc * defaultCutoff).toFixed(6)}</strong></span>
   </p>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>归一化尾部取 <code>T(q)=exp[-(r_c q)²]</code>。给定容差 τ 时，<code>q_c=sqrt(-ln τ)/r_c</code>。</p>
-    <p lang="en"><strong>Model:</strong> the normalized tail is <code>T(q)=exp[-(r_c q)²]</code>. For tolerance τ, <code>q_c=sqrt(-ln τ)/r_c</code>.</p>
-    <p><strong>验收：</strong>固定容差下 r_c q_c 保持常数；r_c 减半时 q_c 加倍，动能代理增加四倍。</p>
-    <p lang="en"><strong>Acceptance:</strong> r_c q_c remains constant at fixed tolerance; halving r_c doubles q_c and quadruples the kinetic-energy proxy.</p>
+    <p><strong>模型：</strong>归一化尾部取 T(q)=exp[-(r_cq)^2]。给定容差 tau 时，q_c=sqrt(-ln tau)/r_c。</p>
+    <p lang="en"><strong>Model:</strong> the normalized tail is T(q)=exp[-(r_cq)^2]. For tolerance tau, q_c=sqrt(-ln tau)/r_c.</p>
+    <p><strong>验收：</strong>固定容差下 $r_cq_c$ 保持常数；$r_c$ 减半时 $q_c$ 加倍，动能代理增加四倍。</p>
+    <p lang="en"><strong>Acceptance:</strong> $r_cq_c$ remains constant at fixed tolerance; halving $r_c$ doubles $q_c$ and quadruples the kinetic-energy proxy.</p>
     <p><strong>边界：</strong>真实 hardness 由赝波函数、各通道、局域分量、增广电荷和目标 observable 共同决定，不能由单一芯半径公式给出。</p>
     <p lang="en"><strong>Boundary:</strong> real hardness depends on pseudo-wavefunctions, channels, local component, augmentation charge, and the target observable; it cannot be inferred from one core-radius formula.</p>
   </div>
 
   <noscript>
-    <p>无 JavaScript 时显示 r_c=1.8 Bohr、容差 10^-6 的解析尾部和截断代理。</p>
+    <p>无 JavaScript 时显示 $r_c=1.8$ Bohr、容差 $10^{-6}$ 的解析尾部和截断代理。</p>
   </noscript>
 </figure>
 
@@ -84,7 +84,7 @@ const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.
       const y = (tail) => 35 + (Math.log10(Math.max(tail, 1e-12)) + 12) / 12 * 245;
       const path = Array.from({ length: count + 1 }, (_, index) => {
         const q = qMax * index / count;
-        const tail = Math.exp(-(rc * q) ** 2);
+        const tail = Math.exp(-((rc * q) ** 2));
         return `${index === 0 ? 'M' : 'L'} ${x(q).toFixed(2)} ${y(tail).toFixed(2)}`;
       }).join(' ');
       const qCut = Math.sqrt(-Math.log(tolerance)) / rc;
