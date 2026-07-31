@@ -51,8 +51,8 @@ const totalBar = bar(initial.eigenvalueDerivative, 215);
   </div>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>a two-function generalized eigenproblem with distance-dependent hopping <code>t=t₀e^{-κR}</code> and overlap <code>s=s₀e^{-λR}</code>; onsite terms are fixed.</p>
-    <p lang="en"><strong>Model:</strong> a two-function generalized eigenproblem with distance-dependent hopping <code>t=t₀e^{-κR}</code> and overlap <code>s=s₀e^{-λR}</code>; onsite terms are fixed.</p>
+    <p><strong>模型：</strong>a two-function generalized eigenproblem with distance-dependent hopping <code>t=t₀ exp(-κR)</code> and overlap <code>s=s₀ exp(-λR)</code>; onsite terms are fixed.</p>
+    <p lang="en"><strong>Model:</strong> a two-function generalized eigenproblem with distance-dependent hopping <code>t=t₀ exp(-κR)</code> and overlap <code>s=s₀ exp(-λR)</code>; onsite terms are fixed.</p>
     <p><strong>验收：</strong>S-normalized eigenvector 满足 <code>dε/dR=C†(H′−εS′)C</code>；analytic force 与中心有限差分在默认步长下相差小于数值容差。令 <code>s₀=0</code> 时 overlap contribution 消失。</p>
     <p lang="en"><strong>Acceptance:</strong> the S-normalized eigenvector satisfies <code>dε/dR=C†(H′−εS′)C</code>; the analytic force agrees with a centred finite difference within numerical tolerance. Setting <code>s₀=0</code> removes the overlap contribution.</p>
     <p><strong>边界：</strong>这里的 <code>−εS′</code> 是 finite generalized-eigenproblem 中的 moving-metric term。真实 DFT force 还包含所有 Hamiltonian、density、projector、electrostatic 和 basis-response derivatives。</p>
