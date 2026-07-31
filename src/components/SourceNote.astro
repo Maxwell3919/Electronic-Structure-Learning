@@ -1,17 +1,38 @@
 ---
+type PageStatus = 'outline' | 'draft' | 'review' | 'validated';
+type LegacyCompleteStatus = `${string}-complete`;
+type DeclaredStatus = PageStatus | LegacyCompleteStatus;
+
 interface Props {
   source: string;
   locator: string;
-  status?: 'outline' | 'draft' | 'review' | 'validated';
+  status?: DeclaredStatus;
 }
 
-const { source, locator, status = 'outline' } = Astro.props;
+const canonicalStatuses = new Set<PageStatus>(['outline', 'draft', 'review', 'validated']);
+const rawStatus = Astro.props.status ?? 'outline';
+
+let canonicalStatus: PageStatus;
+if (canonicalStatuses.has(rawStatus as PageStatus)) {
+  canonicalStatus = rawStatus as PageStatus;
+} else if (rawStatus.endsWith('-complete')) {
+  canonicalStatus = 'validated';
+} else {
+  throw new Error(`Invalid SourceNote status: ${rawStatus}`);
+}
+
+const { source, locator } = Astro.props;
 ---
 
-<aside class="source-note" aria-label="来源定位">
+<aside class="source-note" aria-label="来源定位 / Source locator">
   <div class="source-note__header">
-    <strong>来源定位</strong>
-    <span class="source-note__status">{status}</span>
+    <strong>来源定位 / Source locator</strong>
+    <span
+      class="source-note__status"
+      data-status={canonicalStatus}
+      data-declared-status={rawStatus}
+      aria-label={`页面状态 / Page status: ${canonicalStatus}`}
+    >{rawStatus}</span>
   </div>
   <div>{source}</div>
   <div>{locator}</div>
