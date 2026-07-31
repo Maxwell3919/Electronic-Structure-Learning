@@ -113,3 +113,48 @@ export const grapheneStructureFactor = ({ kx, ky, bondLength = 1 }) => {
     magnitude: Math.hypot(real, imaginary),
   };
 };
+
+export const grapheneBands = ({
+  kx,
+  ky,
+  hopping = -1,
+  sublatticeMass = 0,
+  bondLength = 1,
+}) => {
+  [
+    ['hopping', hopping],
+    ['sublatticeMass', sublatticeMass],
+  ].forEach(([name, value]) => ensureFinite(name, value));
+  const factor = grapheneStructureFactor({ kx, ky, bondLength });
+  const radius = Math.sqrt(sublatticeMass ** 2 + (hopping * factor.magnitude) ** 2);
+  return {
+    lower: -radius,
+    upper: radius,
+    directGap: 2 * radius,
+    structureFactorMagnitude: factor.magnitude,
+  };
+};
+
+export const grapheneKPoint = ({ bondLength = 1 } = {}) => {
+  ensureFinite('bondLength', bondLength);
+  if (bondLength <= 0) throw new RangeError('bondLength must be positive');
+  return {
+    kx: 4 * Math.PI / (3 * Math.sqrt(3) * bondLength),
+    ky: 0,
+  };
+};
+
+export const nanotubeZoneFolding = ({ n, m }) => {
+  if (!Number.isInteger(n) || !Number.isInteger(m) || n < 0 || m < 0 || (n === 0 && m === 0)) {
+    throw new RangeError('n and m must be nonnegative integers and not both zero');
+  }
+  const difference = n - m;
+  const remainder = ((difference % 3) + 3) % 3;
+  const zoneFoldingMetallic = remainder === 0;
+  return {
+    difference,
+    remainder,
+    zoneFoldingMetallic,
+    family: zoneFoldingMetallic ? '3q' : remainder === 1 ? '3q+1' : '3q+2',
+  };
+};
