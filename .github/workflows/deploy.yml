@@ -64,7 +64,7 @@ jobs:
     name: Live Pages browser smoke
     needs: deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       PAGES_URL: ${{ needs.deploy.outputs.page_url }}
       DEPLOYED_SHA: ${{ github.sha }}
@@ -92,9 +92,13 @@ jobs:
           python3 -m venv .venv-pages-smoke
           .venv-pages-smoke/bin/python -m pip install --disable-pip-version-check selenium==4.34.2
 
-      - name: Run live desktop, narrow-screen, keyboard, and no-JavaScript checks
+      - name: Run Chapter 1 live browser checks
         shell: bash
         run: .venv-pages-smoke/bin/python scripts/smoke-pages.py
+
+      - name: Run Chapter 2 live browser checks
+        shell: bash
+        run: .venv-pages-smoke/bin/python scripts/smoke-chapter02-pages.py
 
       - name: Upload browser-smoke evidence
         if: always()
@@ -110,7 +114,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           STATUS_STATE: success
-          STATUS_DESCRIPTION: Live Pages browser smoke passed
+          STATUS_DESCRIPTION: Live Pages browser smoke passed for Chapters 1 and 2
         shell: bash
         run: |
           python3 - <<'PY'
@@ -147,7 +151,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           STATUS_STATE: failure
-          STATUS_DESCRIPTION: Live Pages browser smoke failed
+          STATUS_DESCRIPTION: Live Pages browser smoke failed for Chapter 1 or 2
         shell: bash
         run: |
           python3 - <<'PY'
