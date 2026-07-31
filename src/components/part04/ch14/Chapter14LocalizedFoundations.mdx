@@ -1,0 +1,444 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import NonorthogonalChainExplorer from './NonorthogonalChainExplorer.astro';
+import SlaterKosterOrientationExplorer from './SlaterKosterOrientationExplorer.astro';
+
+<span id="section-14-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.1 局域原子中心轨道 | Localized Atom-Centered Orbitals
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 296–297 建立原子中心局域函数、实空间矩阵元、Bloch sums、Hamiltonian/overlap Fourier 矩阵和广义本征方程，并指出局域性使矩阵可截断但不保证截断精度。下面补足归一化、正定 metric 与 k-block 推导。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 296–297 introduce atom-centred localized functions, real-space matrix elements, Bloch sums, Fourier Hamiltonian/overlap matrices, and the generalized eigenproblem, while noting that locality permits truncation but does not guarantee its accuracy. The derivations below make normalization, positive-definite metrics, and k-block structure explicit.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="实空间基函数与矩阵元" titleEn="Real-space basis functions and matrix elements">
+  <div class="bilingual-section__zh">
+
+用复合指标 $m=(\kappa,n,l,\mu,\ldots)$ 标记原胞内第 $\kappa$ 个原子上的轨道、径向层和角动量分量。位于晶格平移 $\mathbf T$ 的基函数写为
+
+$$
+\chi_{m\mathbf T}(\mathbf r)
+=\chi_m(\mathbf r-\boldsymbol\tau_m-\mathbf T).
+$$
+
+平移不变的单粒子 Hamiltonian 满足
+
+$$
+H_{mm'}(\mathbf T)
+=\langle\chi_{m\mathbf 0}|\hat H|\chi_{m'\mathbf T}\rangle,
+\qquad
+S_{mm'}(\mathbf T)
+=\langle\chi_{m\mathbf 0}|\chi_{m'\mathbf T}\rangle.
+$$
+
+只需要一个相对平移，是因为同时平移 bra、ket 和 Hamiltonian 不改变矩阵元。$H(\mathbf T)$ 与 $S(\mathbf T)$ 是表示数据，不是连续算符本身。若基函数指数衰减或具有有限支撑，远距离矩阵元通常衰减；把它们在某个半径后置零仍是额外近似。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Use a composite index $m=(\kappa,n,l,\mu,\ldots)$ for an orbital, radial shell, and angular component on atom $\kappa$ inside the reference cell. The basis function in lattice translate $\mathbf T$ is
+
+$$
+\chi_{m\mathbf T}(\mathbf r)
+=\chi_m(\mathbf r-\boldsymbol\tau_m-\mathbf T).
+$$
+
+For a translation-invariant one-particle Hamiltonian,
+
+$$
+H_{mm'}(\mathbf T)
+=\langle\chi_{m\mathbf 0}|\hat H|\chi_{m'\mathbf T}\rangle,
+\qquad
+S_{mm'}(\mathbf T)
+=\langle\chi_{m\mathbf 0}|\chi_{m'\mathbf T}\rangle.
+$$
+
+Only one relative translation is needed because translating bra, ket, and Hamiltonian together leaves the matrix element unchanged. $H(\mathbf T)$ and $S(\mathbf T)$ are representation data, not the continuous operator itself. Exponentially decaying or finite-support basis functions usually produce decaying distant matrix elements; setting them identically to zero beyond a cutoff remains an additional approximation.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Bloch sums 与 k-block 矩阵 | Bloch sums and k-block matrices"
+  assumptions={[
+    'Born–von Kármán 边界含 N 个原胞；',
+    '所有平移相关矩阵元只依赖相对晶格矢；',
+    '采用 Bloch phase exp(ik·T)，其他相位规范必须一致改变矩阵。',
+  ]}
+>
+
+定义
+
+$$
+|\chi_{m\mathbf k}\rangle
+=\frac{1}{\sqrt N}\sum_{\mathbf T}
+e^{i\mathbf k\cdot\mathbf T}|\chi_{m\mathbf T}\rangle.
+$$
+
+计算两个 Bloch sums 的 Hamiltonian 元：
+
+$$
+\begin{aligned}
+\langle\chi_{m\mathbf k}|\hat H|\chi_{m'\mathbf k'}\rangle
+&=\frac1N\sum_{\mathbf T\mathbf T'}
+e^{-i\mathbf k\cdot\mathbf T}
+e^{i\mathbf k'\cdot\mathbf T'}
+H_{mm'}(\mathbf T'-\mathbf T)\\
+&=\delta_{\mathbf k\mathbf k'}
+\sum_{\mathbf R}e^{i\mathbf k\cdot\mathbf R}H_{mm'}(\mathbf R).
+\end{aligned}
+$$
+
+晶格求和产生 $\delta_{\mathbf k\mathbf k'}$，所以不同 k 不耦合。定义
+
+$$
+H_{mm'}(\mathbf k)=\sum_{\mathbf T}e^{i\mathbf k\cdot\mathbf T}H_{mm'}(\mathbf T),
+\qquad
+S_{mm'}(\mathbf k)=\sum_{\mathbf T}e^{i\mathbf k\cdot\mathbf T}S_{mm'}(\mathbf T).
+$$
+
+Hermiticity 来自
+
+$$
+H_{mm'}(\mathbf T)=H_{m'm}^*(-\mathbf T),
+\quad
+S_{mm'}(\mathbf T)=S_{m'm}^*(-\mathbf T),
+$$
+
+因此 $H(\mathbf k)=H^\dagger(\mathbf k)$、$S(\mathbf k)=S^\dagger(\mathbf k)$。
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="非正交基中的广义本征问题 | Generalized eigenproblem in a nonorthogonal basis"
+  assumptions={[
+    '有限 Bloch 基线性无关，因此 S(k) 正定；',
+    'Hamiltonian 在该有限空间中 Hermitian；',
+    '轨道系数按同一 Bloch phase convention 排列。',
+  ]}
+>
+
+展开
+
+$$
+|\psi_{n\mathbf k}\rangle
+=\sum_m c_{mn}(\mathbf k)|\chi_{m\mathbf k}\rangle.
+$$
+
+把 Schrödinger 方程投影到 $\langle\chi_{m\mathbf k}|$：
+
+$$
+\sum_{m'}H_{mm'}(\mathbf k)c_{m'n}(\mathbf k)
+=\varepsilon_{n\mathbf k}
+\sum_{m'}S_{mm'}(\mathbf k)c_{m'n}(\mathbf k).
+$$
+
+即
+
+$$
+\boxed{H(\mathbf k)c_n(\mathbf k)=
+\varepsilon_{n\mathbf k}S(\mathbf k)c_n(\mathbf k)}.
+$$
+
+物理归一化不是 $c_n^\dagger c_n=1$，而是
+
+$$
+c_n^\dagger(\mathbf k)S(\mathbf k)c_m(\mathbf k)=\delta_{nm}.
+$$
+
+若 $S$ 正定，可用 $S^{-1/2}$ 变换为普通 Hermitian 问题
+
+$$
+S^{-1/2}HS^{-1/2}u_n=\varepsilon_nu_n,
+\qquad c_n=S^{-1/2}u_n.
+$$
+
+该正交化通常使原本短程的 Hamiltonian 变得更长程，因为矩阵函数 $S^{-1/2}$ 一般不是严格局域。正交与局域不能同时视为无成本条件。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="S(k) 的正定性是模型有效条件" titleEn="Positive-definite S(k) is a model-validity condition" kind="boundary">
+  <div class="bilingual-section__zh">
+
+若 $S(\mathbf k)$ 出现零或负本征值，有限基在该 k 点线性相关或经验 overlap 参数不再定义合法 Hilbert-space metric。此时得到的能带不能通过“继续对角化”修复。需要改变基、参数或截断。小正本征值也会放大条件数和数值误差。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A zero or negative eigenvalue of $S(\mathbf k)$ indicates linear dependence at that k point or an empirical overlap model that no longer defines a valid Hilbert-space metric. Continuing diagonalization cannot repair the resulting bands; the basis, parameters, or truncation must change. A very small positive eigenvalue also amplifies conditioning and numerical error.
+
+  </div>
+</BilingualCallout>
+
+<NonorthogonalChainExplorer />
+
+<span id="section-14-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.2 原子型轨道的矩阵元 | Matrix Elements with Atomic-Like Orbitals
+
+<BilingualSection titleZh="径向函数乘角向函数" titleEn="Radial functions times angular functions">
+  <div class="bilingual-section__zh">
+
+原子型基函数通常分离为
+
+$$
+\chi_{nl\mu}(\mathbf r)=R_{nl}(r)Y_{l\mu}(\hat{\mathbf r}),
+$$
+
+或等价的实 Cartesian/spherical harmonics。对于一条连接两个中心的 bond，可把局部 z 轴取在 bond 方向。围绕 bond 轴的旋转对称使矩阵元按磁量子数绝对值分类：$|m|=0$ 为 $\sigma$，$|m|=1$ 为 $\pi$，$|m|=2$ 为 $\delta$。例如 p–p 只需 $V_{pp\sigma}$ 与 $V_{pp\pi}$ 两个 bond-aligned integrals。
+
+这些 irreducible integrals 包含径向函数、Hamiltonian 和原子间距。方向旋转只重组它们，不计算径向数值。若 Hamiltonian 还显著依赖第三个原子或环境密度，two-centre 表不足以表示完整矩阵元。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An atomic-like basis is commonly separated as
+
+$$
+\chi_{nl\mu}(\mathbf r)=R_{nl}(r)Y_{l\mu}(\hat{\mathbf r}),
+$$
+
+or in equivalent real Cartesian/spherical harmonics. For a bond joining two centres, choose the local z axis along the bond. Rotational symmetry around that axis classifies matrix elements by absolute magnetic quantum number: $|m|=0$ is $\sigma$, $|m|=1$ is $\pi$, and $|m|=2$ is $\delta$. A p–p pair therefore needs only $V_{pp\sigma}$ and $V_{pp\pi}$ in bond-aligned axes.
+
+These irreducible integrals contain radial functions, the Hamiltonian, and interatomic distance. Directional rotation only recombines them; it does not determine radial values. If a third atom or environmental density contributes substantially to the Hamiltonian, a two-centre table is not a complete representation.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="代表性的 s–p 与 p–p Slater–Koster 旋转 | Representative s–p and p–p Slater–Koster rotation"
+  assumptions={[
+    '使用实 Cartesian p_x,p_y,p_z 轨道；',
+    '键单位向量的方向余弦为 (l,m,n)；',
+    '采用声明的 orbital phase convention；奇宇称轨道换相位会改变相应符号。',
+  ]}
+>
+
+s 轨道是标量，沿 bond 的 p 轨道为
+
+$$
+|p_\sigma\rangle=l|p_x\rangle+m|p_y\rangle+n|p_z\rangle.
+$$
+
+因此
+
+$$
+\langle s|\hat H|p_x\rangle=lV_{sp\sigma},
+$$
+
+以及循环置换。p–p operator 在 bond-aligned 分解中为
+
+$$
+\hat H_{pp}=V_{pp\pi}I+
+(V_{pp\sigma}-V_{pp\pi})|\hat{\mathbf d}\rangle\langle\hat{\mathbf d}|.
+$$
+
+投影到 Cartesian 轨道得到
+
+$$
+\boxed{
+\langle p_x|H|p_x\rangle
+=l^2V_{pp\sigma}+(1-l^2)V_{pp\pi}
+}
+$$
+
+和
+
+$$
+\boxed{
+\langle p_x|H|p_y\rangle
+=lm(V_{pp\sigma}-V_{pp\pi}).
+}
+$$
+
+当 bond 沿 x，$l=1$，于是 $p_xp_x=V_{pp\sigma}$、$p_yp_y=V_{pp\pi}$、off-diagonal 元为零。该极限是方向余弦实现的最低回归测试。
+
+</DerivationBlock>
+
+<SlaterKosterOrientationExplorer />
+
+<BilingualSection titleZh="严格对称性与 two-centre 近似" titleEn="Exact symmetry versus the two-centre approximation">
+  <div class="bilingual-section__zh">
+
+点群和空间群可以严格要求某些矩阵元相等、互为共轭或为零；这些约束不依赖 Slater–Koster 拟合。two-centre approximation 进一步假设一个 pair matrix element 只由两中心物种、轨道、距离和 bond 方向决定。晶体势来自所有原子，因此该假设通常是经验简化。
+
+多中心修正可以表现为 coordination-dependent onsite、bond-order/environment-dependent hopping 或显式三中心项。加入它们可能提升 transferability，但同时增加参数量与可识别性问题。更多参数不自动意味着更可靠。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Point and space-group symmetry can rigorously require matrix elements to be equal, conjugate, or zero; these constraints do not depend on Slater–Koster fitting. The two-centre approximation further assumes that a pair matrix element depends only on the two species, orbitals, distance, and bond direction. Since the crystal potential is generated by all atoms, this is generally an empirical simplification.
+
+Multicentre corrections can enter as coordination-dependent onsite terms, bond-order or environment-dependent hoppings, or explicit three-centre contributions. They may improve transferability but also increase parameter count and identifiability problems. More parameters do not automatically produce a more reliable model.
+
+  </div>
+</BilingualSection>
+
+<span id="section-14-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.3 自旋–轨道相互作用 | Spin–Orbit Interaction
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 301–302 将 SOC 在局域基中近似为原子中心的 on-site $\mathbf L\cdot\boldsymbol\sigma$ 项，并展示 p-shell spinor matrix 的结构。Appendix O 说明其相对论来源与近似边界。本页不复制教材矩阵表。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 301–302 approximate SOC in a localized basis by an atom-centred onsite $\mathbf L\cdot\boldsymbol\sigma$ term and show the structure of the p-shell spinor matrix. Appendix O supplies the relativistic origin and approximation boundary. The textbook matrix table is not reproduced.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="局域基中的 spinor Hamiltonian" titleEn="Spinor Hamiltonian in a localized basis">
+  <div class="bilingual-section__zh">
+
+加入自旋后，每个空间轨道对应两个 spinor 分量，矩阵维度加倍。常用 atomic-centre 近似写为
+
+$$
+\hat H_{\mathrm{SO}}
+=\sum_R\sum_l\frac{\zeta_l^R}{2}
+\mathbf L_R\cdot\boldsymbol\sigma,
+$$
+
+其中 $\zeta_l^R$ 是原子 R 的 l shell 参数，$\boldsymbol\sigma$ 为 Pauli matrices。$L_z\sigma_z$ 给出 spin-conserving diagonal/off-diagonal orbital mixing，$L_\pm\sigma_\mp$ 产生 spin-flip matrix elements。
+
+该形式在 p、d shell 的局域轨道基中易于构造，并保持 Hermiticity 与时间反演约束。它忽略不同原子之间的 SOC matrix elements 及晶体势的完整非球形梯度；对重元素、强杂化或低对称环境，on-site 参数的 transferability 需要验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+With spin, every spatial orbital has two spinor components and the matrix dimension doubles. A common atom-centred approximation is
+
+$$
+\hat H_{\mathrm{SO}}
+=\sum_R\sum_l\frac{\zeta_l^R}{2}
+\mathbf L_R\cdot\boldsymbol\sigma,
+$$
+
+where $\zeta_l^R$ is an l-shell parameter on atom R and $\boldsymbol\sigma$ are Pauli matrices. $L_z\sigma_z$ contributes spin-conserving orbital mixing, while $L_\pm\sigma_\mp$ generates spin-flip matrix elements.
+
+This form is straightforward in localized p- and d-shell bases and can preserve Hermiticity and time-reversal constraints. It omits intersite SOC matrix elements and the full nonspherical gradient of the crystal potential. For heavy elements, strong hybridization, or low-symmetry environments, transferability of an onsite parameter requires validation.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="原子 L·S 的 j splitting 与加权重心 | Atomic L·S splitting and the weighted centre of gravity"
+  assumptions={[
+    '单电子 l shell，s=1/2；',
+    '使用 H_SO=ζ L·S；',
+    '忽略晶场和不同原子之间的 SOC。',
+  ]}
+>
+
+利用
+
+$$
+\mathbf L\cdot\mathbf S
+=\frac12[J(J+1)-L(L+1)-S(S+1)],
+$$
+
+对 $j=l+1/2$：
+
+$$
+\langle\mathbf L\cdot\mathbf S\rangle_+=\frac l2,
+$$
+
+对 $j=l-1/2$：
+
+$$
+\langle\mathbf L\cdot\mathbf S\rangle_-=-\frac{l+1}{2}.
+$$
+
+能量差为
+
+$$
+\Delta E=\zeta\frac{2l+1}{2}.
+$$
+
+两个 multiplet 的简并度分别为 $2l+2$ 和 $2l$，加权 trace 满足
+
+$$
+(2l+2)\frac{\zeta l}{2}
++(2l)\left[-\frac{\zeta(l+1)}{2}\right]=0.
+$$
+
+SOC 在完整 l shell 内重排能级但不移动其简并加权重心。晶场、截断基或环境依赖参数会改变实际 band splitting，不能只用原子公式外推。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="SOC 参数不是材料不变量" titleEn="An SOC parameter is not a material invariant" kind="boundary">
+  <div class="bilingual-section__zh">
+
+$\zeta_l$ 可以来自原子计算、bulk band fitting 或下折叠。不同基、价电子集合、晶场和正交化会改变有效参数。一个参数在某条高对称线拟合良好，不证明全 BZ spin texture、拓扑不变量或磁各向异性正确；这些量需使用完整 spinor Hamiltonian 与相应收敛/对称性检查。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+$\zeta_l$ may come from an atomic calculation, bulk-band fit, or downfolding. Its effective value changes with basis, valence space, crystal field, and orthogonalization. A good fit along one symmetry line does not validate full-BZ spin texture, a topological invariant, or magnetic anisotropy; those require the complete spinor Hamiltonian and their own convergence and symmetry checks.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-14-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.4 Slater–Koster 二中心近似 | Slater–Koster Two-Center Approximation
+
+<BilingualSection titleZh="从矩阵元到参数表" titleEn="From matrix elements to a parameter table">
+  <div class="bilingual-section__zh">
+
+Slater–Koster 方法把所有 bond orientations 的矩阵元写成少数 bond-aligned integrals 与方向余弦的多项式。对给定物种对和距离，参数集可能包括
+
+$$
+ss\sigma,\ sp\sigma,\ pp\sigma,\ pp\pi,
+\ sd\sigma,\ pd\sigma,\ pd\pi,
+\ dd\sigma,\ dd\pi,\ dd\delta,
+$$
+
+以及相应 overlap integrals。空间群相关的所有键必须由同一参数和旋转规则生成，否则模型会破坏晶体对称。
+
+参数可以来自显式原子轨道积分、第一性原理 bands 的下折叠/拟合、实验能带或混合策略。参数来源决定可支持的主张；从 valence bands 拟合出的 Hamiltonian 不自动描述 conduction bands、总能或结构变化。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The Slater–Koster construction writes matrix elements for every bond orientation as direction-cosine polynomials multiplying a small set of bond-aligned integrals. For a species pair at a given distance, the set can include
+
+$$
+ss\sigma,\ sp\sigma,\ pp\sigma,\ pp\pi,
+\ sd\sigma,\ pd\sigma,\ pd\pi,
+\ dd\sigma,\ dd\pi,\ dd\delta,
+$$
+
+and corresponding overlap integrals. Every space-group-related bond must be generated from the same parameters and rotation rules, or the model breaks crystal symmetry.
+
+Parameters can come from explicit atomic-orbital integrals, downfolding or fitting of first-principles bands, experimental bands, or mixed strategies. Their origin limits the supported claim. A Hamiltonian fitted to valence bands does not automatically describe conduction bands, total energies, or structural changes.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="band fitting 与 total-energy fitting" titleEn="Band fitting versus total-energy fitting">
+  <div class="bilingual-section__zh">
+
+若目标只是固定结构附近的 band interpolation，可以最小化一组参考本征值的误差，并允许不影响目标窗口的参数组合保持不唯一。若目标是 total energy、force 或 stress，还需指定 band-energy double counting、短程 repulsion、charge transfer、environment dependence 和参数对距离的导数。两类拟合的损失函数与训练数据不同。
+
+因此，“能带拟合 RMS 很小”不能支持结构优化或相稳定性。反过来，一个为总能拟合的模型也可能牺牲未占据带的精度。验收标准必须对应目标 observable，而不是用单一拟合分数概括模型。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If the target is band interpolation near one structure, a fit can minimize errors in selected eigenvalues while leaving parameter combinations outside the target window underdetermined. A total-energy, force, or stress model additionally needs band-energy double counting, short-range repulsion, charge transfer, environment dependence, and distance derivatives of parameters. The loss functions and training data are different.
+
+A small band-fit RMS therefore does not support structural optimization or phase stability. Conversely, a total-energy fit may sacrifice unoccupied-band accuracy. Acceptance criteria must follow the target observable rather than a single generic fit score.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="模型适用域必须显式记录" titleEn="The model domain must be explicit" kind="practice">
+  <div class="bilingual-section__zh">
+
+最低记录包括：物种与价轨道集合、结构/应变/距离范围、charge 与 spin 状态、参考方法、拟合能量窗口、是否包含 overlap/SOC/environment terms、训练/验证拆分及目标误差。对新 coordination 或键长的预测属于外推；需要独立 reference 数据，而不是仅依赖模型内部平滑性。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A minimum record states species and valence-orbital set, structure/strain/distance range, charge and spin state, reference method, fitted energy window, whether overlap/SOC/environment terms are included, train/validation split, and target error. Prediction for new coordination or bond length is extrapolation and needs independent reference data rather than model smoothness alone.
+
+  </div>
+</BilingualCallout>

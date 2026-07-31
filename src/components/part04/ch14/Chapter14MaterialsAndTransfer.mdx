@@ -1,0 +1,336 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+
+<span id="section-14-10" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.10 半导体与过渡金属 | Semiconductors and Transition Metals
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 311–312 总结经验 tight-binding 对 tetrahedral semiconductors、transition metals 和相关能带的应用，并强调参数选择、拟合范围与模型复杂度。下面只讨论可复查的结构关系，不给未经核验的材料参数。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 311–312 summarize empirical tight binding for tetrahedral semiconductors, transition metals, and related bands, emphasizing parameter choice, fit range, and model complexity. The discussion below retains checkable structural relations and supplies no unverified material parameters.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="tetrahedral semiconductor 的 sp3 结构" titleEn="sp3 structure of a tetrahedral semiconductor">
+  <div class="bilingual-section__zh">
+
+在 diamond/zinc-blende-like lattice 中，每个原子有四个 tetrahedral bonds。一个最小 valence basis 常含每个原子的 $s,p_x,p_y,p_z$，二原子 primitive basis 因而产生八条 spinless bands。Slater–Koster rotations 由四个 bond directions 生成 $ss\sigma$、$sp\sigma$、$pp\sigma$、$pp\pi$ matrix elements；on-site s–p separation 和异核 sublattice on-site differences 控制 bonding/antibonding 与 ionicity-like splitting。
+
+只用最近邻 orthogonal sp3 模型可以捕捉若干 symmetry labels 和 valence/conduction trends，但 conduction valleys、effective masses 或高能 bands 往往需要 next-neighbour hopping、额外 $s^*$ / d orbitals、overlap 或 spin–orbit terms。增加 orbital 不是“更真实”的自动证明；需要在目标能量窗口检查 interpolation 和未参与拟合的量。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In diamond- or zinc-blende-like lattices, each atom has four tetrahedral bonds. A minimal valence basis often contains $s,p_x,p_y,p_z$ on each atom, producing eight spinless bands for a two-atom primitive basis. Slater–Koster rotations over four bond directions generate $ss\sigma$, $sp\sigma$, $pp\sigma$, and $pp\pi$ matrix elements. Onsite s–p separation and heteronuclear sublattice onsite differences control bonding/antibonding and ionicity-like splittings.
+
+A nearest-neighbour orthogonal sp3 model can capture selected symmetry labels and valence/conduction trends, but conduction valleys, effective masses, or higher bands often need further-neighbour hopping, additional $s^*$ or d orbitals, overlap, or spin–orbit terms. Adding orbitals is not automatic evidence of realism; interpolation and quantities excluded from fitting must be checked in the target energy window.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="transition-metal d bands" titleEn="Transition-metal d bands">
+  <div class="bilingual-section__zh">
+
+五个 d orbitals 通过 $dd\sigma$、$dd\pi$、$dd\delta$ channels 形成方向依赖的 bands。其 bandwidth、crystal-field splitting 与 hybridization 对 coordination 和 bond geometry 高度敏感。若还包含 s/p orbitals，会出现 s–d、p–d mixing。一个只拟合非磁 bulk bands 的参数集没有自动定义磁 exchange、不同 oxidation state、低配位 surface 或大 strain。
+
+canonical-band 思路可以把 angular geometry 与少数 radial/potential parameters 分开，帮助理解不同 d fillings 的共同趋势；实际元素仍有不同 radial extent、s–d charge transfer、magnetism 和 relativistic effects。趋势图不能替代元素级计算或实验。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Five d orbitals form direction-dependent bands through $dd\sigma$, $dd\pi$, and $dd\delta$ channels. Their bandwidth, crystal-field splitting, and hybridization are highly sensitive to coordination and bond geometry. Including s or p orbitals adds s–d and p–d mixing. A parameter set fitted only to nonmagnetic bulk bands does not automatically define magnetic exchange, different oxidation states, low-coordination surfaces, or large strains.
+
+Canonical-band ideas can separate angular geometry from a small number of radial or potential parameters and expose common trends across d fillings. Real elements still differ in radial extent, s–d charge transfer, magnetism, and relativistic effects. A trend diagram does not replace element-specific calculation or experiment.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="fit window 与 validation set" titleEn="Fit window and validation set" kind="practice">
+  <div class="bilingual-section__zh">
+
+经验 TB 至少应报告：参考 bands 的 k 点和能量窗口、orbital projections/symmetry labels、参数约束、训练与独立验证 structures、error metric，以及是否同时拟合 derivatives。只报告总 RMS 会掩盖 band crossing、orbital ordering、effective mass 或 high-symmetry degeneracy 的系统错误。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An empirical TB fit should report at least the k points and energy window of reference bands, orbital projections or symmetry labels, parameter constraints, training and independent validation structures, error metric, and whether derivatives are fitted. A total RMS alone can hide systematic errors in crossings, orbital order, effective masses, or symmetry degeneracies.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-14-11" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.11 紧束缚中的总能、力和应力 | Total Energy, Force, and Stress in Tight-Binding
+
+<BilingualSection titleZh="band energy 不是自动完整的 total energy" titleEn="Band energy is not automatically a complete total energy">
+  <div class="bilingual-section__zh">
+
+占据本征值和定义
+
+$$
+E_{\mathrm{band}}=\sum_{n\mathbf k}w_{\mathbf k}f_{n\mathbf k}
+\varepsilon_{n\mathbf k}.
+$$
+
+若 Hamiltonian parameters 来自固定 external potential，该量是对应单粒子问题的占据能量。若参数已吸收电子重排、屏蔽和 double counting，单独 $E_{\mathrm{band}}$ 不能作为不同结构之间的物理总能。经验 total-energy TB 常写为
+
+$$
+E_{\mathrm{TB}}=E_{\mathrm{band}}+E_{\mathrm{rep}}+E_{\mathrm{charge/magnetic}}+\cdots,
+$$
+
+其中 $E_{\mathrm{rep}}$ 或 embedding/environment terms 由 reference total energies/forces 拟合。分解不是唯一的；可比较的是同一模型定义下的总和。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The occupied eigenvalue sum is
+
+$$
+E_{\mathrm{band}}=\sum_{n\mathbf k}w_{\mathbf k}f_{n\mathbf k}
+\varepsilon_{n\mathbf k}.
+$$
+
+If Hamiltonian parameters arise from a fixed external potential, this is the occupied energy of that one-particle problem. When parameters absorb electronic rearrangement, screening, and double counting, $E_{\mathrm{band}}$ alone is not a physical total energy across structures. An empirical total-energy TB model often has
+
+$$
+E_{\mathrm{TB}}=E_{\mathrm{band}}+E_{\mathrm{rep}}+E_{\mathrm{charge/magnetic}}+\cdots,
+$$
+
+with repulsive, embedding, or environmental terms fitted to reference total energies or forces. The decomposition is not unique; the comparable object is the sum under one model definition.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="广义本征值对结构参数的导数 | Derivative of a generalized eigenvalue"
+  assumptions={[
+    'H(R)c_n=ε_n S(R)c_n；',
+    'c_n†Sc_n=1；',
+    '非简并态或已在简并子空间内正确对角化导数；',
+    'occupation changes and Fermi-surface terms are treated consistently.']}
+>
+
+对结构参数 $R$ 求导：
+
+$$
+H'c+Hc'=\varepsilon'Sc+\varepsilon S'c+\varepsilon Sc'.
+$$
+
+左乘 $c^\dagger$，利用 $c^\dagger H=\varepsilon c^\dagger S$，含 $c'$ 的项相消，得到
+
+$$
+\boxed{
+\frac{d\varepsilon_n}{dR}
+=c_n^\dagger\left(\frac{dH}{dR}
+-\varepsilon_n\frac{dS}{dR}\right)c_n.
+}
+$$
+
+orthogonal basis 中 $S'=0$，只剩 Hellmann–Feynman-like matrix derivative。非正交 basis 的 $-\varepsilon S'$ 项不可忽略；它不是 Chapter 15 连续 basis-function Pulay derivation 的全部，但已经显示 metric 随结构变化如何进入模型力。
+
+若 occupations 固定，band force 为
+
+$$
+F_R^{\mathrm{band}}=-\sum f_n\frac{d\varepsilon_n}{dR}.
+$$
+
+完整模型还需 $-dE_{\mathrm{rep}}/dR$、charge/magnetic terms 和占据/entropy consistency。简并、metallic occupations 或不充分 electronic stationarity 需要额外处理。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="距离依赖 hopping 与 pair force" titleEn="Distance-dependent hopping and pair forces">
+  <div class="bilingual-section__zh">
+
+若 two-centre integral $V_{ll'\eta}(R)$ 依赖 bond length，原子移动同时改变 radial magnitude 与 direction cosines。导数分为
+
+$$
+\frac{dH}{d\mathbf R}
+=\frac{\partial H}{\partial R}\hat{\mathbf R}
++\frac{\partial H}{\partial l}\frac{dl}{d\mathbf R}
++\frac{\partial H}{\partial m}\frac{dm}{d\mathbf R}
++\frac{\partial H}{\partial n}\frac{dn}{d\mathbf R}.
+$$
+
+只拟合 hopping values 而不约束其 distance derivative，可能得到不错的 bands 却产生差的 forces。force training、energy conservation 与 smooth cutoff 需要单独验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+If a two-centre integral $V_{ll'\eta}(R)$ depends on bond length, atomic motion changes both radial magnitude and direction cosines. Its derivative separates as
+
+$$
+\frac{dH}{d\mathbf R}
+=\frac{\partial H}{\partial R}\hat{\mathbf R}
++\frac{\partial H}{\partial l}\frac{dl}{d\mathbf R}
++\frac{\partial H}{\partial m}\frac{dm}{d\mathbf R}
++\frac{\partial H}{\partial n}\frac{dn}{d\mathbf R}.
+$$
+
+Fitting hopping values without constraining distance derivatives can reproduce bands while producing poor forces. Force training, energy conservation, and smooth cutoffs require separate validation.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="stress 是对 strain 的导数" titleEn="Stress is a strain derivative">
+  <div class="bilingual-section__zh">
+
+对均匀 strain $\epsilon_{\alpha\beta}$，模型 stress 为
+
+$$
+\sigma_{\alpha\beta}
+=\frac1\Omega\frac{\partial E_{\mathrm{TB}}}
+{\partial\epsilon_{\alpha\beta}},
+$$
+
+固定 fractional coordinates 时 bond vectors 和 cell volume 同时变化。stress 需要 hopping/overlap/repulsive terms 对距离和方向的连续导数，并受 cutoff switching 影响。一个只为 equilibrium bands 拟合的 model 没有自动定义可靠 elastic constants 或 pressure phase stability。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For homogeneous strain $\epsilon_{\alpha\beta}$, model stress is
+
+$$
+\sigma_{\alpha\beta}
+=\frac1\Omega\frac{\partial E_{\mathrm{TB}}}
+{\partial\epsilon_{\alpha\beta}},
+$$
+
+with bond vectors and cell volume changing together at fixed fractional coordinates. Stress needs continuous distance and angular derivatives of hopping, overlap, and repulsive terms, and is sensitive to cutoff switching. A model fitted only to equilibrium bands does not automatically define reliable elastic constants or pressure-induced phase stability.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="力定理的证据前提" titleEn="Evidence prerequisites for force formulas" kind="boundary">
+  <div class="bilingual-section__zh">
+
+公式要求 coefficients 已对当前 Hamiltonian 达到 stationary eigenstates，occupations 与能量泛函一致，所有结构依赖参数均被求导。若 charge self-consistency、magnetic moments 或 environment descriptors 还未收敛，遗漏其响应会破坏 force consistency。数值有限差分 energy–force check 是最低回归测试，但单个构型通过不证明 transferability。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The formula assumes coefficients are stationary eigenstates of the current Hamiltonian, occupations are consistent with the energy functional, and every structure-dependent parameter is differentiated. If charge self-consistency, magnetic moments, or environmental descriptors are not converged, omitted response breaks force consistency. A numerical energy–force finite-difference check is a minimum regression test, but passing one configuration does not establish transferability.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-14-12" class="chapter-anchor" aria-hidden="true"></span>
+
+## 14.12 可转移性：非正交性与环境依赖 | Transferability: Nonorthogonality and Environment Dependence
+
+<BilingualSection titleZh="为什么 nonorthogonality 可以改善表示" titleEn="Why nonorthogonality can improve a representation">
+  <div class="bilingual-section__zh">
+
+真实原子轨道在相邻位点重叠。保留 $S\ne I$ 可以用较短程 Hamiltonian/overlap matrices 表示某些 bands，并保留更接近原子轨道的 basis character。强行正交化会把 overlap effects 转移到 Hamiltonian 中，通常生成更长程 hopping 和环境依赖。
+
+但 nonorthogonality 不是自由改进：$S$ 必须正定，矩阵元和 normalization 更复杂，力含 $S'$，parameter fitting 更相关。overlap 过大或截断不一致可产生 near-linear dependence 和非物理 poles。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Real atomic orbitals overlap on neighbouring sites. Retaining $S\ne I$ can represent selected bands with shorter-ranged Hamiltonian and overlap matrices while preserving more atomic-like basis character. Forced orthogonalization transfers overlap effects into the Hamiltonian and generally produces longer-ranged hoppings and environmental dependence.
+
+Nonorthogonality is not a free improvement: $S$ must remain positive definite, matrix elements and normalization become more complicated, forces contain $S'$, and fitted parameters become more correlated. Excessive overlap or inconsistent truncation can generate near-linear dependence and unphysical poles.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Löwdin orthogonalization 如何生成更长程项 | How Löwdin orthogonalization generates longer-range terms"
+  assumptions={[
+    'S=I+σ 且 ||σ||<1；',
+    '使用 symmetric orthogonalization H_orth=S^{-1/2}HS^{-1/2}；',
+    '矩阵乘积的 real-space convolution 决定作用范围。',
+  ]}
+>
+
+binomial expansion 给出
+
+$$
+S^{-1/2}=I-\frac12\sigma+\frac38\sigma^2-\frac5{16}\sigma^3+\cdots.
+$$
+
+因此
+
+$$
+H_{\mathrm{orth}}
+=H-\frac12(\sigma H+H\sigma)
++\frac14\sigma H\sigma
++\frac38(\sigma^2H+H\sigma^2)+\cdots.
+$$
+
+即使 $H$ 和 $\sigma$ 只连接最近邻，矩阵乘积也连接经过两步、三步路径的更远位点。严格正交化一般生成无限范围但衰减的 effective Hamiltonian。把正交模型再次截断是新的近似；其误差需与 nonorthogonal 原模型分别测试。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="environment-dependent parameters" titleEn="Environment-dependent parameters">
+  <div class="bilingual-section__zh">
+
+在不同 coordination、volume、charge 或 chemical surroundings 中，effective onsite 和 hopping 会因 screening、hybridization 与 basis relaxation 改变。经验模型可引入
+
+$$
+\varepsilon_m=\varepsilon_m(\rho_i,q_i,\{R_{ij}\}),
+\qquad
+t_{mm'}=t_{mm'}(R_{ij},\rho_i,\rho_j,\ldots),
+$$
+
+其中 descriptors 必须具有 permutation/rotation invariance 或按 tensor rules 变换。若 descriptor 由当前 charge/density 决定，还需要内层 self-consistency 和相应 energy derivative。
+
+环境依赖可以扩大 fit domain，但也可能把缺失物理吸收到难以解释的函数中。必须保留训练域、外推检测、energy/force consistency 和 uncertainty/evidence ceiling。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Across coordination, volume, charge, or chemical environment, effective onsite and hopping terms change through screening, hybridization, and basis relaxation. An empirical model can introduce
+
+$$
+\varepsilon_m=\varepsilon_m(\rho_i,q_i,\{R_{ij}\}),
+\qquad
+t_{mm'}=t_{mm'}(R_{ij},\rho_i,\rho_j,\ldots),
+$$
+
+with descriptors that are permutation/rotation invariant or transform under declared tensor rules. If a descriptor depends on current charge or density, an inner self-consistency and its energy derivative are required.
+
+Environmental dependence can enlarge the fit domain but can also absorb missing physics into hard-to-interpret functions. Training domain, extrapolation detection, energy/force consistency, and an uncertainty or evidence ceiling must be retained.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="transferability 的分层验证" titleEn="Layered validation of transferability">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>插值。</strong> 同一结构、同一能量窗口中保留的 bands、symmetry labels 和 orbital weights。</li>
+      <li><strong>局部结构变化。</strong> 小 strain、phonon displacement、bond-length derivative 与 force。</li>
+      <li><strong>不同 coordination。</strong> surface、defect、cluster 或不同 phase。</li>
+      <li><strong>不同 electronic state。</strong> charge、spin、occupation、oxidation 或 Fermi-level window。</li>
+      <li><strong>目标科学量。</strong> relative energy、elasticity、transport、topology 或 dynamics 的独立 acceptance。</li>
+    </ol>
+
+后一层失败不能用前一层拟合好来否认。一个“universal parameter set”只有在明确覆盖的物种、结构和 electronic-state domain 内才有意义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Interpolation.</strong> Retained bands, symmetry labels, and orbital weights in the same structure and energy window.</li>
+      <li><strong>Local structural change.</strong> Small strain, phonon displacement, bond-length derivatives, and forces.</li>
+      <li><strong>Different coordination.</strong> Surfaces, defects, clusters, or another phase.</li>
+      <li><strong>Different electronic state.</strong> Charge, spin, occupation, oxidation, or Fermi-level window.</li>
+      <li><strong>Target scientific quantity.</strong> Independent acceptance for relative energies, elasticity, transport, topology, or dynamics.</li>
+    </ol>
+
+Success at an earlier layer cannot negate failure at a later one. A “universal parameter set” is meaningful only within a declared species, structural, and electronic-state domain.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="参数平滑不等于物理外推可靠" titleEn="Smooth parameters do not guarantee reliable physical extrapolation" kind="boundary">
+  <div class="bilingual-section__zh">
+
+连续函数可以在训练域外给出数值平滑但物理错误的 hopping、charge 或 force。外推需要 reference calculations/experiments、descriptor-domain checks 和 failure flags。不能把没有数值发散写成 transferability 已验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A continuous function can produce numerically smooth but physically wrong hopping, charge, or force outside its training domain. Extrapolation needs reference calculations or experiments, descriptor-domain checks, and failure flags. Absence of numerical divergence is not validated transferability.
+
+  </div>
+</BilingualCallout>

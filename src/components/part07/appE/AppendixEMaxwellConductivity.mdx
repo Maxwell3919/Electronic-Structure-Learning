@@ -1,0 +1,560 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import SpectralWeightExplorer from './SpectralWeightExplorer.astro';
+
+<span id="section-e-1"></span>
+
+## E.1 物质中的电磁波 | Electromagnetic Waves in Matter
+
+<BilingualSection titleZh="Gaussian 单位中的 Maxwell 方程" titleEn="Maxwell equations in Gaussian units" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+设载流粒子的电荷为 $Q$、数密度为 $n(\mathbf r,t)$，charge-current density 为 $\mathbf j(\mathbf r,t)$。Martin Eq. E.1 在 Gaussian 单位中写为
+
+$$
+\nabla\cdot\mathbf E=4\pi Qn,
+\qquad
+\nabla\times\mathbf E=-\frac{1}{c}\frac{\partial\mathbf B}{\partial t},
+$$
+
+$$
+\nabla\cdot\mathbf B=0,
+\qquad
+\nabla\times\mathbf B=\frac{4\pi}{c}\mathbf j+
+\frac{1}{c}\frac{\partial\mathbf E}{\partial t}.
+$$
+
+对 Ampère–Maxwell 方程取散度，左侧恒为零；再用 Gauss law，得到 continuity equation
+
+$$
+\nabla\cdot\mathbf j=-Q\frac{\partial n}{\partial t}.
+$$
+
+这个推导是严格的电荷守恒关系，不依赖介电近似。若离散 Maxwell solver、charge-density response 和 current response 不满足同一离散 continuity equation，纵向与横向结果可能不相容。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Let the charge of a carrier be $Q$, its number density $n(\mathbf r,t)$, and its charge-current density $\mathbf j(\mathbf r,t)$. Martin Eq. E.1 in Gaussian units is
+
+$$
+\nabla\cdot\mathbf E=4\pi Qn,
+\qquad
+\nabla\times\mathbf E=-\frac{1}{c}\frac{\partial\mathbf B}{\partial t},
+$$
+
+$$
+\nabla\cdot\mathbf B=0,
+\qquad
+\nabla\times\mathbf B=\frac{4\pi}{c}\mathbf j+
+\frac{1}{c}\frac{\partial\mathbf E}{\partial t}.
+$$
+
+Taking the divergence of the Ampère–Maxwell equation gives zero on the left. Using Gauss's law then yields the continuity equation
+
+$$
+\nabla\cdot\mathbf j=-Q\frac{\partial n}{\partial t}.
+$$
+
+This is an exact charge-conservation relation, not a dielectric approximation. If a discrete Maxwell solver, density response, and current response do not satisfy the same discrete continuity equation, their longitudinal and transverse results can be inconsistent.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="非相对论静电极限" titleEn="Nonrelativistic electrostatic limit" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+电子结构 Hamiltonian 通常使用 $c\to\infty$ 的非相对论极限：忽略传播延迟与辐射场，取 $\mathbf B=0$，并用 scalar potential $V$ 表示纵向电场，
+
+$$
+\mathbf E=-\nabla V,
+\qquad
+\nabla^2V=-4\pi Qn.
+$$
+
+这是 Poisson 问题，而不是完整的光传播问题。静态 DFT、Hartree potential 和大多数 ground-state Coulomb 求解属于这一层；optical response、retardation 或 transverse photons 需要回到完整 Maxwell 结构。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Electronic-structure Hamiltonians usually use the nonrelativistic $c\to\infty$ limit: propagation delay and radiation fields are neglected, $\mathbf B=0$, and a scalar potential $V$ represents the longitudinal electric field,
+
+$$
+\mathbf E=-\nabla V,
+\qquad
+\nabla^2V=-4\pi Qn.
+$$
+
+This is a Poisson problem rather than a complete wave-propagation problem. Static DFT, the Hartree potential, and most ground-state Coulomb solvers belong to this layer. Optical response, retardation, or transverse photons require the full Maxwell structure.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="内部源、外部源与极化" titleEn="Internal sources, external sources, and polarization" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+为了定义 material response，Martin Eq. E.4 将 charge 和 current 分为内部与外部部分：
+
+$$
+n=n_{\mathrm{int}}+n_{\mathrm{ext}},
+\qquad
+\mathbf j=\mathbf j_{\mathrm{int}}+\mathbf j_{\mathrm{ext}}.
+$$
+
+外部部分来自电极、探针、边界或人为施加的 source；内部部分是物质的诱导 response。极化场由
+
+$$
+\nabla\cdot\mathbf P(\mathbf r,t)=-Qn_{\mathrm{int}}(\mathbf r,t)
+$$
+
+定义。结合 continuity equation，Martin Eq. E.6 写成
+
+$$
+\frac{\partial\mathbf P}{\partial t}
+=\mathbf j_{\mathrm{int}}+\nabla\times\mathbf M.
+$$
+
+散度只固定 $\mathbf P$ 的纵向部分，curl term 也显示 current decomposition 存在横向自由度。有限体系可用 dipole moment 固定平均极化；周期体系的宏观极化需要 Chapter 24 的 Berry-phase 结构。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+To define a material response, Martin Eq. E.4 divides charge and current into internal and external parts:
+
+$$
+n=n_{\mathrm{int}}+n_{\mathrm{ext}},
+\qquad
+\mathbf j=\mathbf j_{\mathrm{int}}+\mathbf j_{\mathrm{ext}}.
+$$
+
+The external part comes from electrodes, probes, boundaries, or an imposed source; the internal part is the induced material response. The polarization field is defined by
+
+$$
+\nabla\cdot\mathbf P(\mathbf r,t)=-Qn_{\mathrm{int}}(\mathbf r,t).
+$$
+
+Together with the continuity equation, Martin Eq. E.6 is
+
+$$
+\frac{\partial\mathbf P}{\partial t}
+=\mathbf j_{\mathrm{int}}+\nabla\times\mathbf M.
+$$
+
+The divergence fixes only the longitudinal part of $\mathbf P$, and the curl term displays a transverse freedom in the current decomposition. A finite system can fix the average polarization through its dipole moment; periodic matter requires the Berry-phase structure of Chapter 24.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="位移场 D 与外部 source" titleEn="The displacement field D and external sources" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+定义
+
+$$
+\mathbf D=\mathbf E+4\pi\mathbf P.
+$$
+
+Martin Eq. E.7 将 Maxwell 方程重写为只含外部 source 的形式：
+
+$$
+\nabla\cdot\mathbf D=4\pi Qn_{\mathrm{ext}},
+\qquad
+\nabla\times\mathbf E=-\frac{1}{c}\frac{\partial\mathbf B}{\partial t},
+$$
+
+$$
+\nabla\cdot\mathbf B=0,
+\qquad
+\nabla\times\mathbf B=\frac{4\pi}{c}\mathbf j_{\mathrm{ext}}
++\frac{1}{c}\frac{\partial\mathbf D}{\partial t}.
+$$
+
+样品内部可以有非零 $\mathbf D$，即使局部 $n_{\mathrm{ext}}$ 和 $\mathbf j_{\mathrm{ext}}$ 为零，因为 boundary sources 可在内部建立场。$\mathbf E$ 是物质中的总场；$\mathbf D$ 是由外部源决定的 field variable。二者的差不是“真场与辅助场”的等级差，而是 source accounting 的差别。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Define
+
+$$
+\mathbf D=\mathbf E+4\pi\mathbf P.
+$$
+
+Martin Eq. E.7 rewrites Maxwell's equations using external sources only:
+
+$$
+\nabla\cdot\mathbf D=4\pi Qn_{\mathrm{ext}},
+\qquad
+\nabla\times\mathbf E=-\frac{1}{c}\frac{\partial\mathbf B}{\partial t},
+$$
+
+$$
+\nabla\cdot\mathbf B=0,
+\qquad
+\nabla\times\mathbf B=\frac{4\pi}{c}\mathbf j_{\mathrm{ext}}
++\frac{1}{c}\frac{\partial\mathbf D}{\partial t}.
+$$
+
+A sample interior can have nonzero $\mathbf D$ even where local $n_{\mathrm{ext}}$ and $\mathbf j_{\mathrm{ext}}$ vanish, because boundary sources establish fields inside. The field $\mathbf E$ is the total material field, whereas $\mathbf D$ is tied to external-source accounting. Their distinction is not a hierarchy between a “real” and an “auxiliary” field.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="拓扑边界" titleEn="Topological boundary" kind="boundary">
+  <div class="bilingual-section__zh">
+
+Martin 的脚注明确指出，上述 phenomenological derivation 严格适用于 trivial topology。Chern insulator 和 quantum Hall system 的 bulk/edge current、Hall tensor 与 surface response 需要 Chapters 25–28 和 Appendix Q 的拓扑结构；不能仅用局域标量 $\epsilon$ 和普通 polarization field 覆盖全部效应。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin's footnote states that the phenomenological derivation above is strictly applicable to trivial topology. Bulk/edge currents, Hall tensors, and surface response in Chern insulators and quantum Hall systems require the topology of Chapters 25–28 and Appendix Q; a local scalar $\epsilon$ and ordinary polarization field do not capture every effect.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-e-2"></span>
+
+## E.2 电导与介电张量 | Conductivity and Dielectric Tensors
+
+<BilingualSection titleZh="最一般的线性 causal conductivity" titleEn="The general linear causal conductivity" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+物质关系必须把内部 current 与总 electric field 连接。最一般的线性、空间非局域、时间 causal 形式为
+
+$$
+\mathbf j_{\mathrm{int}}(\mathbf r,t)
+=\int d\mathbf r'\int_{-\infty}^{t}dt'\,
+\boldsymbol\sigma(\mathbf r,\mathbf r',t-t')
+\mathbf E(\mathbf r',t').
+$$
+
+上限 $t$ 表示 response 只依赖过去。对 $e^{-i\omega t}$ convention，frequency-domain relation 为
+
+$$
+\mathbf j_{\mathrm{int}}(\mathbf r,\omega)
+=\int d\mathbf r'\,
+\boldsymbol\sigma(\mathbf r,\mathbf r',\omega)
+\mathbf E(\mathbf r',\omega).
+$$
+
+$oldsymbol\sigma$ 同时可能含 Cartesian、spin、band、空间和频率结构。局域标量 conductivity 是在均匀、各向同性、长波和适当 boundary condition 下的简化。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The material relation must connect the internal current to the total electric field. The most general linear, spatially nonlocal, causal form is
+
+$$
+\mathbf j_{\mathrm{int}}(\mathbf r,t)
+=\int d\mathbf r'\int_{-\infty}^{t}dt'\,
+\boldsymbol\sigma(\mathbf r,\mathbf r',t-t')
+\mathbf E(\mathbf r',t').
+$$
+
+The upper limit $t$ enforces dependence on the past only. Under the $e^{-i\omega t}$ convention, the frequency-domain relation is
+
+$$
+\mathbf j_{\mathrm{int}}(\mathbf r,\omega)
+=\int d\mathbf r'\,
+\boldsymbol\sigma(\mathbf r,\mathbf r',\omega)
+\mathbf E(\mathbf r',\omega).
+$$
+
+The tensor $\boldsymbol\sigma$ can carry Cartesian, spin, band, spatial, and frequency structure. A local scalar conductivity is a reduction valid only under homogeneous, isotropic, long-wavelength, and suitable boundary conditions.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="从 current 到 polarization，再到 ε" titleEn="From current to polarization and then to ε" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+忽略 magnetization curl 对 longitudinal/macroscopic average 的贡献，并采用 $e^{-i\omega t}$，由 $\partial_t\mathbf P=\mathbf j_{\mathrm{int}}$ 得
+
+$$
+-i\omega\mathbf P=\mathbf j_{\mathrm{int}},
+\qquad
+\mathbf P=\frac{i}{\omega}\boldsymbol\sigma\mathbf E.
+$$
+
+代入 $\mathbf D=\mathbf E+4\pi\mathbf P$：
+
+$$
+\boxed{
+\boldsymbol\epsilon(\omega)
+=\mathbf1+\frac{4\pi i}{\omega}\boldsymbol\sigma(\omega)
+}.
+$$
+
+对于每个 tensor component，
+
+$$
+\operatorname{Re}\sigma_{\alpha\beta}
+=\frac{\omega}{4\pi}\operatorname{Im}\epsilon_{\alpha\beta},
+\qquad
+\operatorname{Im}\sigma_{\alpha\beta}
+=-\frac{\omega}{4\pi}
+\bigl(\operatorname{Re}\epsilon_{\alpha\beta}-\delta_{\alpha\beta}\bigr).
+$$
+
+这些关系依赖 Gaussian units 和 time convention。SI 中对应式为 $\epsilon_r=1+i\sigma/(\epsilon_0\omega)$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Neglecting the magnetization curl in a longitudinal or macroscopic average and using $e^{-i\omega t}$, the relation $\partial_t\mathbf P=\mathbf j_{\mathrm{int}}$ gives
+
+$$
+-i\omega\mathbf P=\mathbf j_{\mathrm{int}},
+\qquad
+\mathbf P=\frac{i}{\omega}\boldsymbol\sigma\mathbf E.
+$$
+
+Substitution into $\mathbf D=\mathbf E+4\pi\mathbf P$ yields
+
+$$
+\boxed{
+\boldsymbol\epsilon(\omega)
+=\mathbf1+\frac{4\pi i}{\omega}\boldsymbol\sigma(\omega)
+}.
+$$
+
+For each tensor component,
+
+$$
+\operatorname{Re}\sigma_{\alpha\beta}
+=\frac{\omega}{4\pi}\operatorname{Im}\epsilon_{\alpha\beta},
+\qquad
+\operatorname{Im}\sigma_{\alpha\beta}
+=-\frac{\omega}{4\pi}
+\bigl(\operatorname{Re}\epsilon_{\alpha\beta}-\delta_{\alpha\beta}\bigr).
+$$
+
+These relations depend on Gaussian units and the time convention. In SI the corresponding expression is $\epsilon_r=1+i\sigma/(\epsilon_0\omega)$.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="ε 与 ε⁻¹ 的 source 不同" titleEn="ε and ε⁻¹ have different sources" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+介电 kernel 定义为
+
+$$
+\mathbf D(\mathbf r,\omega)
+=\int d\mathbf r'\,
+\boldsymbol\epsilon(\mathbf r,\mathbf r',\omega)
+\mathbf E(\mathbf r',\omega),
+$$
+
+而 inverse relation 是
+
+$$
+\mathbf E(\mathbf r,\omega)
+=\int d\mathbf r'\,
+\boldsymbol\epsilon^{-1}(\mathbf r,\mathbf r',\omega)
+\mathbf D(\mathbf r',\omega).
+$$
+
+因此 $\epsilon-1$ 与 $\sigma$ 是对总场 $\mathbf E$ 的 response，$\epsilon^{-1}-1$ 是对 external-source field $\mathbf D$ 的 response。refractive-index 与 macroscopic voltage 实验通常涉及 $ar\epsilon$ 或 $ar\sigma$；charged-particle scattering 和 loss spectroscopy 更直接涉及 $\epsilon^{-1}(\mathbf q,\omega)$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The dielectric kernel is defined by
+
+$$
+\mathbf D(\mathbf r,\omega)
+=\int d\mathbf r'\,
+\boldsymbol\epsilon(\mathbf r,\mathbf r',\omega)
+\mathbf E(\mathbf r',\omega),
+$$
+
+whereas the inverse relation is
+
+$$
+\mathbf E(\mathbf r,\omega)
+=\int d\mathbf r'\,
+\boldsymbol\epsilon^{-1}(\mathbf r,\mathbf r',\omega)
+\mathbf D(\mathbf r',\omega).
+$$
+
+Thus $\epsilon-1$ and $\sigma$ respond to the total field $\mathbf E$, while $\epsilon^{-1}-1$ responds to the external-source field $\mathbf D$. Refractive-index and macroscopic-voltage measurements commonly involve $\bar\epsilon$ or $\bar\sigma$; charged-particle scattering and loss spectroscopy couple more directly to $\epsilon^{-1}(\mathbf q,\omega)$.
+
+  </div>
+</BilingualSection>
+
+<span id="section-e-3"></span>
+
+## E.3 f-sum rule | The f Sum Rule
+
+<BilingualSection titleZh="高频自由电子极限" titleEn="High-frequency free-electron limit" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+在 $\omega\to\infty$ 时，电子来不及感受低频结构和束缚势；对单个 carrier，
+
+$$
+m_e\ddot{\mathbf x}=Q\mathbf E.
+$$
+
+采用 $e^{-i\omega t}$，
+
+$$
+\mathbf x(\omega)=-\frac{Q}{m_e\omega^2}\mathbf E(\omega),
+\qquad
+\mathbf P=nQ\mathbf x
+=-\frac{nQ^2}{m_e\omega^2}\mathbf E.
+$$
+
+因此
+
+$$
+\epsilon_{\alpha\beta}(\omega)
+\xrightarrow{\omega\to\infty}
+\delta_{\alpha\beta}
+\left(1-\frac{\omega_p^2}{\omega^2}\right),
+\qquad
+\omega_p^2=\frac{4\pi nQ^2}{m_e}.
+$$
+
+各向同性高频系数只取决于总 carrier density 和 bare mass，而不取决于低频峰如何分布。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At $\omega\to\infty$, electrons cannot follow low-frequency structure or binding potentials. For one carrier,
+
+$$
+m_e\ddot{\mathbf x}=Q\mathbf E.
+$$
+
+With $e^{-i\omega t}$,
+
+$$
+\mathbf x(\omega)=-\frac{Q}{m_e\omega^2}\mathbf E(\omega),
+\qquad
+\mathbf P=nQ\mathbf x
+=-\frac{nQ^2}{m_e\omega^2}\mathbf E.
+$$
+
+Hence
+
+$$
+\epsilon_{\alpha\beta}(\omega)
+\xrightarrow{\omega\to\infty}
+\delta_{\alpha\beta}
+\left(1-\frac{\omega_p^2}{\omega^2}\right),
+\qquad
+\omega_p^2=\frac{4\pi nQ^2}{m_e}.
+$$
+
+The isotropic high-frequency coefficient depends only on the total carrier density and bare mass, not on the distribution of low-frequency peaks.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="由 Kramers–Kronig 高频展开得到 sum rule" titleEn="Deriving the sum rule from the high-frequency KK expansion" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+对 causal dielectric function，利用 reality condition $\epsilon(-\omega)=\epsilon(\omega)^*$，Kramers–Kronig relation 可写为
+
+$$
+\operatorname{Re}\epsilon(\omega)-1
+=\frac{2}{\pi}\,\mathcal P
+\int_0^\infty d\omega'\,
+\frac{\omega'\operatorname{Im}\epsilon(\omega')}
+{\omega'^2-\omega^2}.
+$$
+
+当 $|\omega|$ 远大于所有 spectral frequencies，
+
+$$
+\frac{1}{\omega'^2-\omega^2}
+=-\frac{1}{\omega^2}+O(\omega^{-4}).
+$$
+
+比较 $1/\omega^2$ 系数与自由电子极限，得到
+
+$$
+\boxed{
+\int_0^\infty d\omega\,
+\omega\operatorname{Im}\epsilon_{\alpha\beta}(\omega)
+=\frac{\pi}{2}\omega_p^2\delta_{\alpha\beta}
+}.
+$$
+
+再用 $\operatorname{Re}\sigma=\omega\operatorname{Im}\epsilon/(4\pi)$，得到 conductivity sum
+
+$$
+\boxed{
+\int_0^\infty d\omega\,
+\operatorname{Re}\sigma_{\alpha\beta}(\omega)
+=\frac{\omega_p^2}{8}\delta_{\alpha\beta}
+=\frac{\pi nQ^2}{2m_e}\delta_{\alpha\beta}
+}.
+$$
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a causal dielectric function, the reality condition $\epsilon(-\omega)=\epsilon(\omega)^*$ gives the Kramers–Kronig form
+
+$$
+\operatorname{Re}\epsilon(\omega)-1
+=\frac{2}{\pi}\,\mathcal P
+\int_0^\infty d\omega'\,
+\frac{\omega'\operatorname{Im}\epsilon(\omega')}
+{\omega'^2-\omega^2}.
+$$
+
+When $|\omega|$ is much larger than every spectral frequency,
+
+$$
+\frac{1}{\omega'^2-\omega^2}
+=-\frac{1}{\omega^2}+O(\omega^{-4}).
+$$
+
+Matching the $1/\omega^2$ coefficient to the free-electron limit gives
+
+$$
+\boxed{
+\int_0^\infty d\omega\,
+\omega\operatorname{Im}\epsilon_{\alpha\beta}(\omega)
+=\frac{\pi}{2}\omega_p^2\delta_{\alpha\beta}
+}.
+$$
+
+Using $\operatorname{Re}\sigma=\omega\operatorname{Im}\epsilon/(4\pi)$ then gives
+
+$$
+\boxed{
+\int_0^\infty d\omega\,
+\operatorname{Re}\sigma_{\alpha\beta}(\omega)
+=\frac{\omega_p^2}{8}\delta_{\alpha\beta}
+=\frac{\pi nQ^2}{2m_e}\delta_{\alpha\beta}
+}.
+$$
+
+  </div>
+</BilingualSection>
+
+<SpectralWeightExplorer />
+
+<BilingualCallout titleZh="sum rule 的验收与边界" titleEn="Acceptance and limits of the sum rule" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>积分必须包含 Drude/intraband、interband 和足够高能 tail；有限窗口缺失的权重不能被称为违反严格 sum rule。</li>
+      <li>pseudopotential、nonlocal velocity operator、有限 basis、$k$ mesh 和 broadening 会影响数值闭合。</li>
+      <li>sum rule 约束总权重，不决定单个 peak 的身份、能量、线宽或 oscillator-strength 分解。</li>
+      <li>在 effective low-energy model 中，积分只覆盖模型子空间，缺失权重通常流向被积分掉的高能自由度。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>The integral must include Drude/intraband, interband, and a sufficiently high-energy tail; missing finite-window weight is not automatically a violation of the exact sum rule.</li>
+      <li>Pseudopotentials, nonlocal velocity operators, finite bases, $k$ meshes, and broadening affect numerical closure.</li>
+      <li>The sum rule constrains total weight, not the identity, energy, linewidth, or oscillator-strength decomposition of an individual peak.</li>
+      <li>In an effective low-energy model, the integral covers only the model subspace; missing weight generally resides in integrated-out high-energy degrees of freedom.</li>
+    </ul>
+  </div>
+</BilingualCallout>

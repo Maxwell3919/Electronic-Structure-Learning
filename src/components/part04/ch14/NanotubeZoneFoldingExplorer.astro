@@ -1,0 +1,109 @@
+---
+import { nanotubeZoneFolding } from '../../../data/part04/ch14TeachingModels.mjs';
+
+const componentId = 'ch14-nanotube-folding';
+const defaults = { n: 8, m: 2 };
+const initial = nanotubeZoneFolding(defaults);
+const initialOffset = initial.zoneFoldingMetallic ? 0 : initial.remainder === 1 ? 28 : -28;
+---
+
+<figure class="chapter-visual nanotube-folding" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：nanotube zone-folding family</strong>
+    <span lang="en">Original interactive model: nanotube zone-folding family</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls nanotube-folding__controls">
+    <label>
+      <span>chiral index n</span>
+      <input data-tube-n type="range" min="1" max="15" step="1" value={defaults.n} />
+      <output data-tube-n-output>{defaults.n}</output>
+    </label>
+    <label>
+      <span>chiral index m</span>
+      <input data-tube-m type="range" min="0" max="15" step="1" value={defaults.m} />
+      <output data-tube-m-output>{defaults.m}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 700 330" role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Schematic transverse quantization lines relative to a graphene K point</title>
+    <desc id={`${componentId}-desc`}>Parallel allowed lines are shown in a reciprocal-space window. A K marker lies on a line for the zone-folding metallic family and between lines for the other two families.</desc>
+    <rect x="80" y="40" width="540" height="230" rx="10" class="nanotube-folding__bz" />
+    <line x1="180" y1="55" x2="180" y2="255" class="nanotube-folding__line" />
+    <line x1="280" y1="55" x2="280" y2="255" class="nanotube-folding__line" />
+    <line x1="380" y1="55" x2="380" y2="255" class="nanotube-folding__line" />
+    <line x1="480" y1="55" x2="480" y2="255" class="nanotube-folding__line" />
+    <circle data-tube-k cx={380 + initialOffset} cy="155" r="12" class="nanotube-folding__k" />
+    <text data-tube-k-label x={397 + initialOffset} y="160">K</text>
+    <text x="350" y="300" text-anchor="middle">allowed transverse momenta / 允许的横向动量线</text>
+    <text x="100" y="70">graphene reciprocal-space window</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-tube-index>({defaults.n},{defaults.m})</span>
+    <span data-tube-family>n−m={initial.difference}, family={initial.family}</span>
+    <strong data-tube-state>{initial.zoneFoldingMetallic ? 'zone-folding metallic' : 'zone-folding semiconducting'}</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>nearest-neighbour graphene zone folding 将 tube circumference 量子化；若 <code>(n−m) mod 3=0</code>，允许线穿过 K family，模型判为 metallic。图中线距和 K 偏移只是 family 示意。</p>
+    <p lang="en"><strong>Model:</strong> nearest-neighbour graphene zone folding quantizes momentum around the tube circumference. If <code>(n−m) mod 3=0</code>, an allowed line crosses the K family and the model is metallic. Line spacing and K offset are schematic family indicators.</p>
+    <p><strong>验收：</strong>armchair <code>(n,n)</code> 始终属于 metallic family；zigzag <code>(n,0)</code> 只有 n 可被 3 整除时属于 metallic family。</p>
+    <p lang="en"><strong>Acceptance:</strong> every armchair <code>(n,n)</code> tube belongs to the metallic family; a zigzag <code>(n,0)</code> tube belongs to it only when n is divisible by three.</p>
+    <p><strong>边界：</strong>曲率、σ–π mixing、SOC、strain、interaction 和结构弛豫可打开小 gap 或改变色散；“zone-folding metallic”不等于实验中严格零 gap 或高电导。</p>
+    <p lang="en"><strong>Boundary:</strong> curvature, σ–π mixing, SOC, strain, interactions, and relaxation can open small gaps or alter dispersion. “Zone-folding metallic” does not guarantee an experimentally exact zero gap or high conductivity.</p>
+  </div>
+
+  <noscript><p>关闭 JavaScript 后显示 (8,2) 的静态 metallic-family zone-folding 示意。</p></noscript>
+</figure>
+
+<script>
+  import { nanotubeZoneFolding } from '../../../data/part04/ch14TeachingModels.mjs';
+
+  const root = document.getElementById('ch14-nanotube-folding');
+  if (root) {
+    const nInput = root.querySelector('[data-tube-n]');
+    const mInput = root.querySelector('[data-tube-m]');
+    const nOutput = root.querySelector('[data-tube-n-output]');
+    const mOutput = root.querySelector('[data-tube-m-output]');
+    const indexOutput = root.querySelector('[data-tube-index]');
+    const familyOutput = root.querySelector('[data-tube-family]');
+    const stateOutput = root.querySelector('[data-tube-state]');
+    const marker = root.querySelector('[data-tube-k]');
+    const markerLabel = root.querySelector('[data-tube-k-label]');
+    if (
+      nInput instanceof HTMLInputElement && mInput instanceof HTMLInputElement
+      && nOutput instanceof HTMLOutputElement && mOutput instanceof HTMLOutputElement
+      && indexOutput instanceof HTMLElement && familyOutput instanceof HTMLElement && stateOutput instanceof HTMLElement
+      && marker instanceof SVGCircleElement && markerLabel instanceof SVGTextElement
+    ) {
+      const update = () => {
+        const n = Number(nInput.value);
+        const m = Number(mInput.value);
+        const result = nanotubeZoneFolding({ n, m });
+        nOutput.value = n.toFixed(0);
+        mOutput.value = m.toFixed(0);
+        indexOutput.textContent = `(${n},${m})`;
+        familyOutput.textContent = `n−m=${result.difference}, family=${result.family}`;
+        stateOutput.textContent = result.zoneFoldingMetallic ? 'zone-folding metallic' : 'zone-folding semiconducting';
+        const offset = result.zoneFoldingMetallic ? 0 : result.remainder === 1 ? 28 : -28;
+        marker.setAttribute('cx', String(380 + offset));
+        markerLabel.setAttribute('x', String(397 + offset));
+      };
+      nInput.addEventListener('input', update);
+      mInput.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .nanotube-folding__controls { display: grid; grid-template-columns: repeat(auto-fit,minmax(12rem,1fr)); gap: 0.8rem; }
+  .nanotube-folding__controls label { display: grid; gap: 0.35rem; }
+  .nanotube-folding input, .nanotube-folding svg { width: 100%; }
+  .nanotube-folding svg text { fill: currentColor; font-size: 13px; }
+  .nanotube-folding__bz { fill: var(--sl-color-gray-7); stroke: var(--sl-color-gray-3); }
+  .nanotube-folding__line { stroke: currentColor; stroke-width: 1.5; }
+  .nanotube-folding__k { fill: var(--sl-color-accent-high); }
+</style>

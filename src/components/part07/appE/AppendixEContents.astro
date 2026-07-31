@@ -1,0 +1,87 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[4];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-e-contents-title">
+  <h2 id="appendix-e-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、单位与约定 | Objects, units, and conventions</a></li>
+    <li><a href="#section-e-1">E.1 物质中的电磁波 | Electromagnetic waves in matter</a></li>
+    <li><a href="#section-e-2">E.2 电导与介电张量 | Conductivity and dielectric tensors</a></li>
+    <li><a href="#section-e-3">E.3 f-sum rule | The f sum rule</a></li>
+    <li><a href="#section-e-4">E.4 标量纵向介电函数 | Scalar longitudinal dielectric functions</a></li>
+    <li><a href="#section-e-5">E.5 张量横向介电函数 | Tensor transverse dielectric functions</a></li>
+    <li><a href="#section-e-6">E.6 晶格介电贡献 | Lattice dielectric contribution</a></li>
+    <li><a href="#review">交叉引用、误判、练习与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-e-source-title">
+  <h2 id="appendix-e-source-title">来源地图 | Source map</h2>
+  <p>
+    下表记录 Martin Appendix E 的原节标题与印刷页定位。网站正文、推导、图形和练习均为原创，不转录教材正文、原图或练习。
+  </p>
+  <p lang="en">
+    The table records the section titles and printed-page locators of Martin Appendix E. Website exposition, derivations, diagrams, and exercises are original and do not reproduce the textbook body, source figures, or exercises.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>
+            {section.id === 'E.1'
+              ? 'Maxwell 方程、内外源、极化、D 场与连续性方程'
+              : section.id === 'E.2'
+                ? '非局域电导/介电张量、总场与外场响应、宏观平均'
+                : section.id === 'E.3'
+                  ? '高频自由电子极限、plasma frequency 与光谱权重守恒'
+                  : section.id === 'E.4'
+                    ? '纵向标量势、χ/χ⁰、介电矩阵、local-field corrections 与长波极限'
+                    : section.id === 'E.5'
+                      ? 'vector potential、current response、横向电磁波与 current-DFT 边界'
+                      : 'Born effective charge、非解析力常数、晶格介电和 proper piezoelectric response'}
+          </td>
+          <td>substantive draft</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Exercises, printed p. {appendix.exercisesPage}</td>
+        <td>Source exercises not reproduced</td>
+        <td>原创 convention、sum-rule、matrix inversion、LO–TO 与单位检查 | Original convention, sum-rule, matrix-inversion, LO–TO, and unit checks</td>
+        <td>original replacement</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 { margin-top: 0; }
+  .appendix-contents ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
+  .appendix-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol { columns: 1; }
+  }
+</style>
