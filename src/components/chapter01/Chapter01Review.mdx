@@ -15,35 +15,49 @@
 
 ## 练习与复盘 | Exercises and Review
 
-以下问题均为本站原创，不对应 Martin 原书习题。
+以下问题均为本站原创，不对应 Martin 原书习题。  
+The following questions are original to this site and do not reproduce Martin’s exercises.
 
-1. 给出 $\Psi(\mathbf{x}_1,\mathbf{x}_2)$、$\psi_i(\mathbf r)$、$n(\mathbf r)$、$g(E)$ 和 $\varepsilon_{n\mathbf k}$ 的定义域与物理角色，并说明从多体波函数得到密度时丢失了哪些信息。
-2. 从两自旋轨道写出二电子 Slater determinant，交换两套电子坐标验证符号变化，再令两个轨道相同并解释 determinant 为零。
-3. 从 Fermi–Dirac 公式推导 $T\to0^+$ 时 $\varepsilon<\mu$、$\varepsilon=\mu$、$\varepsilon>\mu$ 的极限，并用交互图检查趋势。
-4. 对一维含 $N$ 个原胞的周期环列出允许 $k$，再把态计数推广到三维 $N_1N_2N_3$ 个原胞。
-5. 日志显示 `convergence has been achieved` 且能带穿过费米能。列出判断“材料是稳定金属”仍缺少的结构、数值、方法和实验层证据。
-6. 解释 Hartree–Fock 已含交换却仍可能在断键、窄带或近简并问题中失效。
-7. 审查“PBE gap 为 0.8 eV，因此实验光学吸收边为 0.8 eV”，区分 Kohn–Sham gap、基本 gap、光学 gap、激子与数值收敛。
-8. 画出参数驱动的两带模型，分别表示保持 gap 的平庸变形、闭合后指标不变、闭合后指标改变，并说明为何仅观察闭合不够。
+1. 给出 $\Psi(\mathbf{x}_1,\mathbf{x}_2)$、$\psi_i(\mathbf r)$、$n(\mathbf r)$、$g(E)$ 和 $\varepsilon_{n\mathbf k}$ 的定义域与物理角色，并说明从多体波函数得到密度时丢失了哪些信息。  
+   State the domains and physical roles of $\Psi(\mathbf{x}_1,\mathbf{x}_2)$, $\psi_i(\mathbf r)$, $n(\mathbf r)$, $g(E)$, and $\varepsilon_{n\mathbf k}$. Explain what information is lost when the density is obtained from a many-body wavefunction.
+2. 从两个自旋轨道写出二电子 Slater determinant，交换两套电子坐标验证符号变化，再令两个轨道相同并解释 determinant 为零。  
+   Construct a two-electron Slater determinant from two spin orbitals, verify its sign change under exchange, then make the orbitals identical and explain why the determinant vanishes.
+3. 从 Fermi–Dirac 公式推导 $T\to0^+$ 时 $\varepsilon<\mu$、$\varepsilon=\mu$、$\varepsilon>\mu$ 的极限，并用交互图检查趋势。  
+   Derive the $T\to0^+$ limits for $\varepsilon<\mu$, $\varepsilon=\mu$, and $\varepsilon>\mu$, then check the trend with the interactive model.
+4. 对一维含 $N$ 个原胞的周期环列出允许 $k$，再把态计数推广到三维 $N_1N_2N_3$ 个原胞。  
+   List the allowed $k$ values for a one-dimensional periodic ring with $N$ cells, then generalize the counting to $N_1N_2N_3$ cells in three dimensions.
+5. 日志显示 `convergence has been achieved` 且能带穿过费米能。列出判断“材料是稳定金属”仍缺少的结构、数值、方法和实验层证据。  
+   A log reports `convergence has been achieved`, and a band crosses the Fermi level. List the structural, numerical, methodological, and experimental evidence still needed before calling the material a stable metal.
+6. 解释 Hartree–Fock 已含交换却仍可能在断键、窄带或近简并问题中失效。  
+   Explain why Hartree–Fock can fail for bond breaking, narrow bands, or near-degeneracy even though it includes exchange.
+7. 审查“PBE gap 为 0.8 eV，因此实验光学吸收边为 0.8 eV”，区分 Kohn–Sham gap、基本 gap、光学 gap、激子与数值收敛。  
+   Critique the claim “the PBE gap is 0.8 eV, so the experimental optical absorption edge is 0.8 eV.” Distinguish the Kohn–Sham, fundamental, and optical gaps, excitons, and numerical convergence.
+8. 画出参数驱动的两带模型，分别表示保持 gap 的平庸变形、闭合后指标不变、闭合后指标改变，并说明为何仅观察闭合不够。  
+   Sketch parameter-driven two-band models for a gap-preserving trivial deformation, a closing with unchanged invariant, and a closing with changed invariant. Explain why observing a closing alone is insufficient.
 
 ### 解题检查框架 | Solution-check framework
 
-- 先写对象与假设，再写方程；
-- 每个等号注明定义、代数变形、边界条件或近似；
-- 检查单位、归一化与特殊极限；
-- 把模型内部结论与真实材料结论分开；
-- 指出最小反例或缺失证据。
+- 先写对象与假设，再写方程。  
+  State the objects and assumptions before writing equations.
+- 每个等号注明定义、代数变形、边界条件或近似。  
+  Identify whether each equality follows from a definition, algebraic step, boundary condition, or approximation.
+- 检查单位、归一化与特殊极限。  
+  Check units, normalization, and limiting cases.
+- 把模型内部结论与真实材料结论分开。  
+  Separate conclusions internal to a model from claims about real materials.
+- 指出最小反例或缺失证据。  
+  Identify the minimal counterexample or missing evidence.
 
 ## 来源、原创内容与边界 | Sources, Original Work, and Boundaries
 
-- **Martin 主来源：** Chapter 1, printed pp. 1–14；1.1 p. 2，1.2 p. 3，1.3 p. 7，1.4 p. 10，1.5 p. 11，1.6 p. 11，1.7 p. 12，1.8 p. 13。
-- **Sholl–Steckel 实践连接：** Chapter 1 §§1.3–1.7, printed pp. 7–30；用于 Schrödinger 方程、密度、交换—关联和方法边界的实践交叉参考。
-- **本站原创：** 定态方程、Fermi 占据、周期边界态计数和拓扑连续性推导；量子历史时间线、Fermi 占据与两带填充可视化；全部练习。
-- **边界：** 时间线不是完整科学史；两带模型无色散、相互作用、无序或声子；交互不是实际 DFT 求解器；构建通过不验证真实材料或教材主张。
+- **Martin 主来源 | Primary Martin source:** Chapter 1, printed pp. 1–14；1.1 p. 2，1.2 p. 3，1.3 p. 7，1.4 p. 10，1.5 p. 11，1.6 p. 11，1.7 p. 12，1.8 p. 13。
+- **Sholl–Steckel 实践连接 | Practice connection:** Chapter 1 §§1.3–1.7, printed pp. 7–30；用于 Schrödinger 方程、密度、交换—关联和方法边界的实践交叉参考。It is used as a practical cross-reference for the Schrödinger equation, density, exchange–correlation, and method boundaries.
+- **本站原创 | Original to this site:** 定态方程、Fermi 占据、周期边界态计数和拓扑连续性推导；量子历史时间线、Fermi 占据与两带填充可视化；全部练习。The stationary-state, Fermi-occupation, periodic-state-counting, and topological-continuity derivations; all three teaching visualizations; and all exercises are original.
+- **边界 | Boundary:** 时间线不是完整科学史；两带模型无色散、相互作用、无序或声子；交互不是实际 DFT 求解器；构建通过不验证真实材料或教材主张。The timeline is selective; the two-band model omits dispersion, interactions, disorder, and phonons; the interactions are not DFT solvers; and a successful build does not validate material or textbook claims.
 
 ## 章节连接 | Chapter Connections
 
-- [Part I 总览](../)
+- [Part I 总览 | Part I overview](../)
 - [Chapter 2 · Overview](../chapter-02-overview/)
 - [Chapter 3 · Theoretical Background](../chapter-03-theoretical-background/)
 - [Sholl–Steckel Chapter 1](../../practice-sholl-steckel/chapter-01-what-is-density-functional-theory/)
