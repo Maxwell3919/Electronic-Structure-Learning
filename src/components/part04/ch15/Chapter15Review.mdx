@@ -1,0 +1,120 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="method-comparison" class="chapter-anchor" aria-hidden="true"></span>
+
+## 方法比较、收敛设计与证据边界 | Method Comparison, Convergence Design, and Evidence Boundaries
+
+| 维度 | Gaussian basis | Numerical atomic orbitals | Green/recursion route | Explicit mixed basis |
+|---|---|---|---|---|
+| radial representation | analytic primitives + contractions | tabulated/solved radial functions | inherits chosen localized representation | localized + delocalized sets |
+| systematic parameter | exponents, contractions, ζ/polarization/diffuse hierarchy | ζ/polarization, confinement, support, radial/angular grids | recursion depth, terminator, η, underlying basis | each sub-basis plus cross blocks |
+| overlap | generally nonorthogonal | generally nonorthogonal | orthogonalized or generalized metric | potentially strongly nonorthogonal |
+| key integral advantage | Gaussian product and analytic recurrences | pretabulated two-centre terms + grids | selected spectral quantities from matrix-vector products | complementary resolution by region/direction |
+| key numerical risk | linear dependence, cusp/tail inefficiency, BSSE | confinement/tail error, interpolation/grid derivatives | termination, broadening, embedding/self-consistency | redundancy, conditioning, double counting |
+| vacuum efficiency | often good with atom-centred functions | good if support follows atoms | depends on embedding/boundaries | can avoid vacuum basis in selected directions |
+| force/stress burden | derivative integrals and overlap response | table/grid/basis derivatives | derivative of H/S/self-energy if forces required | all sub-basis and cross derivatives |
+| main claim ceiling | finite-basis result for declared method | finite-basis/grid result for declared construction | declared spectral/embedding quantity | declared combined variational space |
+
+<BilingualSection titleZh="最低收敛矩阵" titleEn="A minimum convergence matrix">
+  <div class="bilingual-section__zh">
+    <p>单参数 sweep 不足以证明 localized-basis calculation。最低成本的充分设计通常包含：</p>
+    <ol>
+      <li><strong>basis hierarchy：</strong>radial multiplicity、polarization、diffuse/tight functions 和 support radius；</li>
+      <li><strong>grid/quadrature：</strong>local-potential grid、radial/angular quadrature、Poisson solver；</li>
+      <li><strong>sampling：</strong>k mesh、occupations/smearing、finite cluster boundary；</li>
+      <li><strong>solver：</strong>generalized eigensolver residual、linear-dependence threshold、SCF mixing；</li>
+      <li><strong>derivatives：</strong>force/stress finite differences at multiple displacement/strain steps；</li>
+      <li><strong>observable：</strong>energy differences、geometry、bands、gap、dipole、response 或 local DOS 的直接收敛。</li>
+    </ol>
+    <p>至少在两个 sufficiently fine grids 上比较 basis hierarchy，并在两个 sufficiently large bases 上比较 grid，才能识别 coupled error。只看总能可能漏掉 force、stress、unoccupied states 和 response 的慢收敛。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>A one-parameter sweep is not sufficient evidence for a localized-basis calculation. A minimum practical design commonly includes:</p>
+    <ol>
+      <li><strong>basis hierarchy:</strong> radial multiplicity, polarization, diffuse or tight functions, and support radius;</li>
+      <li><strong>grid or quadrature:</strong> local-potential grid, radial and angular quadrature, and Poisson solver;</li>
+      <li><strong>sampling:</strong> k mesh, occupations or smearing, and finite-cluster boundary;</li>
+      <li><strong>solver:</strong> generalized-eigensolver residual, linear-dependence threshold, and SCF mixing;</li>
+      <li><strong>derivatives:</strong> force and stress finite differences at several displacement or strain steps;</li>
+      <li><strong>observable:</strong> direct convergence of energy differences, geometry, bands, gap, dipole, response, or local DOS.</li>
+    </ol>
+    <p>Compare the basis hierarchy on at least two sufficiently fine grids and the grid on at least two sufficiently large bases to identify coupled errors. Total energy alone can miss slow convergence of forces, stress, unoccupied states, and response.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="常见误判" titleEn="Common misjudgments" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li><strong>atom-centred basis 没有真空成本，所以一定更准确：</strong>cost structure 与 basis completeness 是不同问题。</li>
+      <li><strong>DZP/TZP 名称可跨代码直接比较：</strong>confinement、exponents、contractions 和 polarization generation 可能完全不同。</li>
+      <li><strong>Tr(P) 是 electron count：</strong>非正交 basis 中应检查 $\mathrm{Tr}(PS)$。</li>
+      <li><strong>SCF 收敛证明 basis 收敛：</strong>SCF 只在选定 finite representation 中找到 fixed point。</li>
+      <li><strong>variational total energy 保证 forces 更好：</strong>forces 对 basis/grid derivatives 更敏感，且不必具有同样单调性。</li>
+      <li><strong>Pulay force 是可选小 correction：</strong>其大小取决于 basis motion/incompleteness；遗漏会破坏 energy-force consistency。</li>
+      <li><strong>finite support 自动给 O(N)：</strong>sparse matrix construction 仍可能接 dense diagonalization。</li>
+      <li><strong>larger diffuse basis 总是更好：</strong>可能造成 linear dependence、SCF instability 或不受控 BSSE。</li>
+      <li><strong>η-broadened DOS 峰宽是 lifetime：</strong>η 与 finite recursion/finite cell 是 numerical choices。</li>
+      <li><strong>mixed basis 同时继承两种方法优点：</strong>也继承 cross-overlap、conditioning 和 derivative complexity。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>An atom-centred basis has no vacuum cost and is therefore more accurate:</strong> cost structure and basis completeness are different questions.</li>
+      <li><strong>DZP or TZP labels are directly comparable across codes:</strong> confinement, exponents, contractions, and polarization generation can differ completely.</li>
+      <li><strong>Tr(P) is the electron count:</strong> a nonorthogonal basis requires $\mathrm{Tr}(PS)$.</li>
+      <li><strong>SCF convergence proves basis convergence:</strong> SCF only finds a fixed point in the selected finite representation.</li>
+      <li><strong>A variational total energy guarantees better forces:</strong> forces are more sensitive to basis and grid derivatives and need not share the same monotonicity.</li>
+      <li><strong>Pulay force is an optional small correction:</strong> its magnitude depends on basis motion and incompleteness; omission breaks energy-force consistency.</li>
+      <li><strong>Finite support automatically gives O(N):</strong> sparse matrix construction may still feed a dense diagonalization.</li>
+      <li><strong>A larger diffuse basis is always better:</strong> it can create linear dependence, SCF instability, or uncontrolled BSSE.</li>
+      <li><strong>The width of an η-broadened DOS peak is a lifetime:</strong> η and finite recursion or cell size are numerical choices.</li>
+      <li><strong>A mixed basis inherits only the advantages of both methods:</strong> it also inherits cross-overlap, conditioning, and derivative complexity.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+### Practical evidence chain | 实际计算证据链
+
+<BilingualSection titleZh="从输入到科学解释" titleEn="From input to scientific interpretation">
+  <div class="bilingual-section__zh">
+    <p><strong>basis specification → integral/grid validation → generalized solver → SCF → derivative consistency → target observable → method comparison → scientific interpretation</strong></p>
+    <p>程序正常退出只支持 execution completion；small eigensolver residual 只支持 finite matrix solution；SCF convergence 只支持 selected basis/grid fixed point；energy/force convergence 支持指定 numerical tolerances；科学结论还需要 method applicability、identity/provenance、alternative explanations 与 experiment/independent calculation 的适当比较。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p><strong>basis specification → integral/grid validation → generalized solver → SCF → derivative consistency → target observable → method comparison → scientific interpretation</strong></p>
+    <p>Normal program termination supports execution completion only. A small eigensolver residual supports the finite matrix solution. SCF convergence supports a fixed point in the selected basis and grid. Energy or force convergence supports declared numerical tolerances. A scientific conclusion additionally requires method applicability, identity and provenance, alternative explanations, and appropriate comparison with experiment or independent calculations.</p>
+  </div>
+</BilingualSection>
+
+<span id="exercises" class="chapter-anchor" aria-hidden="true"></span>
+
+## 原创练习 | Original Exercises
+
+<ol>
+  <li><strong>generalized variation：</strong>从 $\mathcal R[c]=(c^\dagger Hc)/(c^\dagger Sc)$ 推导 $Hc=\varepsilon Sc$，并证明 different eigenvalues 的 eigenvectors 可取 S-orthogonal。</li>
+  <li><strong>electron count：</strong>对两个 basis functions、$S_{12}=s$ 和一个 occupied state，构造 $P$，验证 $\mathrm{Tr}(PS)=f$，并给出 $\mathrm{Tr}(P)\ne f$ 的数值例子。</li>
+  <li><strong>Gaussian product：</strong>完成两 primitive s Gaussians 的配方，推导 product centre、prefactor 和三维 overlap；检查 $A=B$ 与 large-separation 极限。</li>
+  <li><strong>basis conditioning：</strong>给定 overlap eigenvalues $1,0.2,10^{-7}$，分析 symmetric orthogonalization 对 coefficient noise 的放大；提出删除方向的阈值测试和 target-state preservation test。</li>
+  <li><strong>confinement：</strong>对 $e^{-\zeta r}$ 模型计算 cutoff tail norm，比较改变 $\zeta$ 与 $R_c$ 的效果。解释为何相同 tail norm 不保证相同 kinetic-energy error。</li>
+  <li><strong>grid–basis cross convergence：</strong>设计一个 3×3 matrix，横轴 basis level、纵轴 grid spacing，给出判定 false plateau 的规则。</li>
+  <li><strong>force derivative：</strong>从 generalized eigenproblem 推导 $d\varepsilon/dR=c^\dagger(H'-\varepsilon S')c$；用 two-function model 做 central finite difference，并研究 step-size window。</li>
+  <li><strong>stress：</strong>列出 atom-centred basis 下 homogeneous strain 会改变的至少六类对象，并说明哪些不出现在 fixed-cell force test 中。</li>
+  <li><strong>Green function：</strong>证明 $\mathrm{Tr}[S(zS-H)^{-1}]=\sum_i(z-\varepsilon_i)^{-1}$；讨论 finite η 对 spectral normalization 与 peak position 的影响。</li>
+  <li><strong>recursion：</strong>对三-site chain 手工求 Lanczos $a_n,b_n$ 与 local continued fraction，再与直接 diagonalization 的 local spectral weights 比较。</li>
+  <li><strong>mixed basis：</strong>构造一个 localized vector 几乎位于 plane-wave subspace 内的 $S$，计算 smallest eigenvalue，并比较 projection、thresholding 与保留 redundancy 的风险。</li>
+  <li><strong>证据审查：</strong>某 calculation 使用“TZDP”、SCF residual $10^{-8}$ 且 forces 小于阈值。逐项判断能否支持 basis convergence、geometry accuracy、phonon stability、bandgap、binding energy 与 dynamics，并为每项给出最低新增检查。</li>
+</ol>
+
+## 来源与版权边界 | Sources and Copyright Boundary
+
+<BilingualSection titleZh="来源定位" titleEn="Source locators">
+  <div class="bilingual-section__zh">
+    <p>本章组织依据 Martin 第 2 版 Chapter 15，印刷页 320–330，§§15.1–15.8。教材练习从印刷页 331 开始，未复制。Chapter 7、11、14、18 与 Appendices F、G、N 只用于当前公式和方法边界的交叉定位。</p>
+    <p>公开正文、推导、比较、五个教学模型与练习均为原创。模型只验证声明的 finite algebra/numerical limits，不是任何 code、basis library、material 或 production DFT result。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>The organization follows Martin, second edition, Chapter 15, printed pp. 320–330, §§15.1–15.8. Source exercises begin on printed p. 331 and are not reproduced. Chapters 7, 11, 14, and 18 and Appendices F, G, and N are used only as cross-locators for the equations and method boundaries needed here.</p>
+    <p>All public prose, derivations, comparisons, five teaching models, and exercises are original. The models validate only their declared finite algebraic or numerical limits; they are not a code, basis library, material, or production DFT result.</p>
+  </div>
+</BilingualSection>

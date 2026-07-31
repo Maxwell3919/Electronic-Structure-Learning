@@ -1,0 +1,109 @@
+---
+import { uniformChainContinuedFraction } from '../../../data/part04/ch15TeachingModels.mjs';
+
+const componentId = 'ch15-recursion';
+const defaults = { depth: 12, broadening: 0.12, hoppingMagnitude: 1 };
+const width = 720;
+const height = 320;
+const pad = { left: 54, right: 24, top: 24, bottom: 48 };
+const energies = Array.from({ length: 361 }, (_, index) => -3.2 + 6.4 * index / 360);
+const sample = (depth, broadening, hoppingMagnitude) => energies.map((energy) => uniformChainContinuedFraction({ energy, hopping: -hoppingMagnitude, broadening, depth }).localDensityOfStates);
+const initial = sample(defaults.depth, defaults.broadening, defaults.hoppingMagnitude);
+const yMax = 1.8;
+const toPolyline = (values) => values.map((value, index) => {
+  const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+  const y = pad.top + (yMax - Math.min(yMax, value)) * (height - pad.top - pad.bottom) / yMax;
+  return `${x.toFixed(2)},${y.toFixed(2)}`;
+}).join(' ');
+const centre = uniformChainContinuedFraction({ energy: 0, hopping: -defaults.hoppingMagnitude, broadening: defaults.broadening, depth: defaults.depth });
+---
+
+<figure class="chapter-visual recursion-explorer" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：recursion continued fraction 与 local DOS</strong>
+    <span lang="en">Original interactive model: a recursion continued fraction and local DOS</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls recursion-explorer__controls">
+    <label>recursion depth N<input data-rec-depth type="range" min="2" max="40" step="1" value={defaults.depth} /><output data-rec-depth-output>{defaults.depth}</output></label>
+    <label>broadening η<input data-rec-broadening type="range" min="0.03" max="0.4" step="0.01" value={defaults.broadening} /><output data-rec-broadening-output>{defaults.broadening.toFixed(2)}</output></label>
+    <label>|t|<input data-rec-hopping type="range" min="0.4" max="1.5" step="0.05" value={defaults.hoppingMagnitude} /><output data-rec-hopping-output>{defaults.hoppingMagnitude.toFixed(2)}</output></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Local density of states from a truncated continued fraction for a uniform chain</title>
+    <desc id={`${componentId}-desc`}>A finite recursion depth and positive imaginary broadening produce a smooth local spectral density.</desc>
+    <line class="plot-axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="plot-axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <line class="rec-band-edge" data-rec-edge-left x1={pad.left + ((-2 * defaults.hoppingMagnitude + 3.2) / 6.4) * (width - pad.left - pad.right)} x2={pad.left + ((-2 * defaults.hoppingMagnitude + 3.2) / 6.4) * (width - pad.left - pad.right)} y1={pad.top} y2={height - pad.bottom} />
+    <line class="rec-band-edge" data-rec-edge-right x1={pad.left + ((2 * defaults.hoppingMagnitude + 3.2) / 6.4) * (width - pad.left - pad.right)} x2={pad.left + ((2 * defaults.hoppingMagnitude + 3.2) / 6.4) * (width - pad.left - pad.right)} y1={pad.top} y2={height - pad.bottom} />
+    <polyline class="rec-curve" data-rec-curve points={toPolyline(initial)} />
+    <text x={pad.left} y={height - 14} text-anchor="middle">−3.2</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 14} text-anchor="middle">0</text>
+    <text x={width - pad.right} y={height - 14} text-anchor="middle">3.2</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 1} text-anchor="middle">energy</text>
+    <text transform={`translate(18 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">local DOS</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>D(E=0)=<strong data-rec-centre>{centre.localDensityOfStates.toFixed(6)}</strong></span>
+    <span>nominal nearest-neighbour band edges: <output data-rec-edges>±{(2 * defaults.hoppingMagnitude).toFixed(2)}</output></span>
+    <span>continued-fraction levels: <output data-rec-levels>{defaults.depth}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>an orthogonal uniform nearest-neighbour chain with recursion coefficients <code>a_n=0</code>, <code>b_n=t</code>, truncated after N levels. <code>D(E)=−Im G(E+iη)/π</code>.</p>
+    <p lang="en"><strong>Model:</strong> an orthogonal uniform nearest-neighbour chain with recursion coefficients <code>a_n=0</code>, <code>b_n=t</code>, truncated after N levels. <code>D(E)=−Im G(E+iη)/π</code>.</p>
+    <p><strong>验收：</strong><code>t=0</code> 极限退化为 centred Lorentzian；正 η 保证 nonnegative spectral density；增加 depth 改变 finite-termination ripples，但不改变声明的 Hamiltonian parameters。</p>
+    <p lang="en"><strong>Acceptance:</strong> the <code>t=0</code> limit is a centred Lorentzian; positive η gives a nonnegative spectral density; increasing depth changes finite-termination ripples without changing the declared Hamiltonian parameters.</p>
+    <p><strong>边界：</strong>η 是 numerical broadening，不是 lifetime；finite-depth termination 不是 surface self-energy；该 orthogonal chain 不代表 nonorthogonal DFT recursion。</p>
+    <p lang="en"><strong>Boundary:</strong> η is numerical broadening rather than a lifetime; finite-depth termination is not a surface self-energy; this orthogonal chain is not a nonorthogonal DFT recursion calculation.</p>
+  </div>
+
+  <noscript><p>无 JavaScript fallback：静态图对应 N=12、η=0.12、|t|=1；nominal band edges 和 local DOS 曲线仍可读取。</p></noscript>
+</figure>
+
+<script>
+  import { uniformChainContinuedFraction } from '../../../data/part04/ch15TeachingModels.mjs';
+  const root = document.getElementById('ch15-recursion');
+  if (root) {
+    const depth = root.querySelector('[data-rec-depth]');
+    const broadening = root.querySelector('[data-rec-broadening]');
+    const hopping = root.querySelector('[data-rec-hopping]');
+    const curve = root.querySelector('[data-rec-curve]');
+    const left = root.querySelector('[data-rec-edge-left]');
+    const right = root.querySelector('[data-rec-edge-right]');
+    const outputs = { depth: root.querySelector('[data-rec-depth-output]'), broadening: root.querySelector('[data-rec-broadening-output]'), hopping: root.querySelector('[data-rec-hopping-output]'), centre: root.querySelector('[data-rec-centre]'), edges: root.querySelector('[data-rec-edges]'), levels: root.querySelector('[data-rec-levels]') };
+    if (depth instanceof HTMLInputElement && broadening instanceof HTMLInputElement && hopping instanceof HTMLInputElement && curve instanceof SVGPolylineElement && left instanceof SVGLineElement && right instanceof SVGLineElement) {
+      const width = 720, height = 320, pad = { left: 54, right: 24, top: 24, bottom: 48 }, yMax = 1.8;
+      const energies = Array.from({ length: 361 }, (_, index) => -3.2 + 6.4 * index / 360);
+      const points = (values) => values.map((value, index) => {
+        const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+        const y = pad.top + (yMax - Math.min(yMax, value)) * (height - pad.top - pad.bottom) / yMax;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      }).join(' ');
+      const set = (item, value) => { if (item instanceof HTMLOutputElement) item.value = value; else if (item instanceof HTMLElement) item.textContent = value; };
+      const update = () => {
+        const N = Number(depth.value), eta = Number(broadening.value), t = Number(hopping.value);
+        const values = energies.map((energy) => uniformChainContinuedFraction({ energy, hopping: -t, broadening: eta, depth: N }).localDensityOfStates);
+        curve.setAttribute('points', points(values));
+        const leftX = pad.left + ((-2 * t + 3.2) / 6.4) * (width - pad.left - pad.right);
+        const rightX = pad.left + ((2 * t + 3.2) / 6.4) * (width - pad.left - pad.right);
+        left.setAttribute('x1', String(leftX)); left.setAttribute('x2', String(leftX)); right.setAttribute('x1', String(rightX)); right.setAttribute('x2', String(rightX));
+        set(outputs.depth, N.toFixed(0)); set(outputs.broadening, eta.toFixed(2)); set(outputs.hopping, t.toFixed(2)); set(outputs.centre, uniformChainContinuedFraction({ energy: 0, hopping: -t, broadening: eta, depth: N }).localDensityOfStates.toFixed(6)); set(outputs.edges, `±${(2 * t).toFixed(2)}`); set(outputs.levels, N.toFixed(0));
+      };
+      [depth, broadening, hopping].forEach((control) => control.addEventListener('input', update));
+      update();
+    }
+  }
+</script>
+
+<style>
+  .recursion-explorer__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.8rem; }
+  .recursion-explorer__controls label { display: grid; gap: 0.3rem; }
+  .recursion-explorer input, .recursion-explorer svg { width: 100%; }
+  .recursion-explorer svg text { fill: currentColor; font-size: 13px; }
+  .plot-axis { stroke: currentColor; stroke-width: 1.4; }
+  .rec-curve { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 2.3; }
+  .rec-band-edge { stroke: var(--sl-color-orange-high); stroke-dasharray: 5 5; }
+</style>

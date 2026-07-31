@@ -1,0 +1,117 @@
+---
+import { oneDimensionalExponentialTail, smoothConfinedExponential } from '../../../data/part04/ch15TeachingModels.mjs';
+
+const componentId = 'ch15-basis-confinement';
+const defaults = { decay: 1, cutoff: 3.5 };
+const width = 720;
+const height = 320;
+const pad = { left: 54, right: 24, top: 24, bottom: 48 };
+const xs = Array.from({ length: 321 }, (_, index) => -7 + 14 * index / 320);
+const curves = (decay, cutoff) => ({
+  unconfined: xs.map((x) => smoothConfinedExponential({ radius: x, decay, cutoff }).unconfined),
+  confined: xs.map((x) => smoothConfinedExponential({ radius: x, decay, cutoff }).value),
+});
+const initialCurves = curves(defaults.decay, defaults.cutoff);
+const initialTail = oneDimensionalExponentialTail(defaults);
+const toPolyline = (values) => values.map((value, index) => {
+  const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+  const y = pad.top + (1.05 - value) * (height - pad.top - pad.bottom) / 1.05;
+  return `${x.toFixed(2)},${y.toFixed(2)}`;
+}).join(' ');
+---
+
+<figure class="chapter-visual basis-confinement" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：finite support 与 tail error</strong>
+    <span lang="en">Original interactive model: finite support and tail error</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls basis-confinement__controls">
+    <label>decay ζ<input data-bc-decay type="range" min="0.4" max="2" step="0.05" value={defaults.decay} /><output data-bc-decay-output>{defaults.decay.toFixed(2)}</output></label>
+    <label>cutoff R_c<input data-bc-cutoff type="range" min="1.5" max="6" step="0.1" value={defaults.cutoff} /><output data-bc-cutoff-output>{defaults.cutoff.toFixed(1)}</output></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>An exponential orbital before and after smooth finite-support confinement</title>
+    <desc id={`${componentId}-desc`}>The confined function equals an exponential times a smooth cubic cutoff and is exactly zero outside the chosen radius.</desc>
+    <line class="plot-axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="plot-axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <polyline class="bc-curve bc-curve--unconfined" data-bc-unconfined points={toPolyline(initialCurves.unconfined)} />
+    <polyline class="bc-curve bc-curve--confined" data-bc-confined points={toPolyline(initialCurves.confined)} />
+    <line class="bc-cutoff" data-bc-cutoff-left x1={pad.left + ((7 - defaults.cutoff) / 14) * (width - pad.left - pad.right)} x2={pad.left + ((7 - defaults.cutoff) / 14) * (width - pad.left - pad.right)} y1={pad.top} y2={height - pad.bottom} />
+    <line class="bc-cutoff" data-bc-cutoff-right x1={pad.left + ((7 + defaults.cutoff) / 14) * (width - pad.left - pad.right)} x2={pad.left + ((7 + defaults.cutoff) / 14) * (width - pad.left - pad.right)} y1={pad.top} y2={height - pad.bottom} />
+    <text x={(width + pad.left - pad.right) / 2} y={height - 10} text-anchor="middle">x (arbitrary length)</text>
+    <text transform={`translate(18 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">orbital amplitude</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>omitted norm of unconfined model beyond R_c:</span>
+    <strong data-bc-tail>{initialTail.omittedDensityNorm.toExponential(3)}</strong>
+    <span>strict support diameter: <output data-bc-diameter>{(2 * defaults.cutoff).toFixed(1)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>one-dimensional even orbital <code>exp(-ζ|x|)</code> multiplied inside <code>R_c</code> by <code>1-3u²+2u³</code>, <code>u=|x|/R_c</code>, and set to zero outside.</p>
+    <p lang="en"><strong>Model:</strong> a one-dimensional even orbital <code>exp(-ζ|x|)</code> multiplied inside <code>R_c</code> by <code>1-3u²+2u³</code>, <code>u=|x|/R_c</code>, and set to zero outside.</p>
+    <p><strong>验收：</strong>confined function 在 <code>|x|≥R_c</code> 严格为零；unconfined normalized model 的 omitted density norm 为 <code>exp(-2ζR_c)</code>，随 cutoff 单调下降。</p>
+    <p lang="en"><strong>Acceptance:</strong> the confined function is exactly zero for <code>|x|≥R_c</code>; the omitted density norm of the normalized unconfined model is <code>exp(-2ζR_c)</code> and decreases monotonically with cutoff.</p>
+    <p><strong>边界：</strong>该一维 cutoff 不是任何代码的 numerical atomic orbital generator；真实 basis error 还依赖 angular channel、multiple-ζ、polarization、potential 和 environment。</p>
+    <p lang="en"><strong>Boundary:</strong> this one-dimensional cutoff is not a numerical-atomic-orbital generator from any code; real basis error also depends on angular channel, multiple-ζ functions, polarization, potential, and environment.</p>
+  </div>
+
+  <noscript><p>无 JavaScript fallback：静态图对应 ζ=1、R_c=3.5；有限支撑和解析 tail norm 仍可读取。</p></noscript>
+</figure>
+
+<script>
+  import { oneDimensionalExponentialTail, smoothConfinedExponential } from '../../../data/part04/ch15TeachingModels.mjs';
+  const root = document.getElementById('ch15-basis-confinement');
+  if (root) {
+    const decay = root.querySelector('[data-bc-decay]');
+    const cutoff = root.querySelector('[data-bc-cutoff]');
+    const unconfined = root.querySelector('[data-bc-unconfined]');
+    const confined = root.querySelector('[data-bc-confined]');
+    const left = root.querySelector('[data-bc-cutoff-left]');
+    const right = root.querySelector('[data-bc-cutoff-right]');
+    const decayOutput = root.querySelector('[data-bc-decay-output]');
+    const cutoffOutput = root.querySelector('[data-bc-cutoff-output]');
+    const tailOutput = root.querySelector('[data-bc-tail]');
+    const diameterOutput = root.querySelector('[data-bc-diameter]');
+    if (decay instanceof HTMLInputElement && cutoff instanceof HTMLInputElement && unconfined instanceof SVGPolylineElement && confined instanceof SVGPolylineElement && left instanceof SVGLineElement && right instanceof SVGLineElement) {
+      const width = 720, height = 320, pad = { left: 54, right: 24, top: 24, bottom: 48 };
+      const xs = Array.from({ length: 321 }, (_, index) => -7 + 14 * index / 320);
+      const points = (values) => values.map((value, index) => {
+        const x = pad.left + index * (width - pad.left - pad.right) / (values.length - 1);
+        const y = pad.top + (1.05 - value) * (height - pad.top - pad.bottom) / 1.05;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      }).join(' ');
+      const update = () => {
+        const zeta = Number(decay.value), rc = Number(cutoff.value);
+        const samples = xs.map((x) => smoothConfinedExponential({ radius: x, decay: zeta, cutoff: rc }));
+        unconfined.setAttribute('points', points(samples.map((item) => item.unconfined)));
+        confined.setAttribute('points', points(samples.map((item) => item.value)));
+        const leftX = pad.left + ((7 - rc) / 14) * (width - pad.left - pad.right);
+        const rightX = pad.left + ((7 + rc) / 14) * (width - pad.left - pad.right);
+        left.setAttribute('x1', String(leftX)); left.setAttribute('x2', String(leftX));
+        right.setAttribute('x1', String(rightX)); right.setAttribute('x2', String(rightX));
+        if (decayOutput instanceof HTMLOutputElement) decayOutput.value = zeta.toFixed(2);
+        if (cutoffOutput instanceof HTMLOutputElement) cutoffOutput.value = rc.toFixed(1);
+        if (tailOutput instanceof HTMLElement) tailOutput.textContent = oneDimensionalExponentialTail({ decay: zeta, cutoff: rc }).omittedDensityNorm.toExponential(3);
+        if (diameterOutput instanceof HTMLOutputElement) diameterOutput.value = (2 * rc).toFixed(1);
+      };
+      [decay, cutoff].forEach((control) => control.addEventListener('input', update));
+      update();
+    }
+  }
+</script>
+
+<style>
+  .basis-confinement__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.8rem; }
+  .basis-confinement__controls label { display: grid; gap: 0.3rem; }
+  .basis-confinement input, .basis-confinement svg { width: 100%; }
+  .basis-confinement svg text { fill: currentColor; font-size: 13px; }
+  .plot-axis { stroke: currentColor; stroke-width: 1.4; }
+  .bc-curve { fill: none; stroke-width: 2.3; }
+  .bc-curve--unconfined { stroke: currentColor; stroke-dasharray: 7 5; }
+  .bc-curve--confined { stroke: var(--sl-color-accent-high); }
+  .bc-cutoff { stroke: var(--sl-color-orange-high); stroke-dasharray: 4 4; }
+</style>
