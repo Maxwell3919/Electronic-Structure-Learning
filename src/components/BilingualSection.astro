@@ -1,0 +1,28 @@
+---
+interface Props {
+  titleZh?: string;
+  titleEn?: string;
+  eyebrow?: string;
+  compact?: boolean;
+}
+
+const {
+  titleZh,
+  titleEn,
+  eyebrow,
+  compact = false,
+} = Astro.props;
+---
+
+<section class:list={['bilingual-section', { 'bilingual-section--compact': compact }]}>
+  {(eyebrow || titleZh || titleEn) && (
+    <header class="bilingual-section__header">
+      {eyebrow && <p class="bilingual-section__eyebrow">{eyebrow}</p>}
+      {titleZh && <h3>{titleZh}</h3>}
+      {titleEn && <p class="bilingual-section__title-en" lang="en">{titleEn}</p>}
+    </header>
+  )}
+  <div class="bilingual-section__grid">
+    <slot />
+  </div>
+</section>
