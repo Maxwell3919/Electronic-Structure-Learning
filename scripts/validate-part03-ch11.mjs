@@ -39,8 +39,12 @@ for (const coreRadius of [1.2, 1.8, 2.2, 2.6]) {
 }
 
 // Equal logarithmic derivatives at the reference energy for strong and weak wells.
-for (const [energy, depth] of [[0.1, 9], [0.2, 12], [0.4, 13.5]]) {
+// The cases lie in the declared domain where a unique positive-depth weak root
+// exists on the first branch 0 < q rc < pi.
+for (const [energy, depth] of [[0.1, 10.5], [0.2, 12], [0.4, 13.5]]) {
   const weakDepth = matchedWeakWellDepth(energy, depth, 1);
+  assert.ok(Number.isFinite(weakDepth), `Expected a finite weak-well match for E=${energy}, depth=${depth}`);
+  assert.ok(weakDepth > 0, `Expected a positive weak-well depth for E=${energy}, depth=${depth}`);
   assert.ok(weakDepth < depth - 0.5, `Expected a distinct weaker well for E=${energy}, depth=${depth}`);
   close(
     logDerivativeS(energy, weakDepth, 1),
