@@ -1,0 +1,401 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import SternheimerResponseExplorer from './SternheimerResponseExplorer.astro';
+
+<span id="section-20-3" className="chapter20-anchor" aria-hidden="true"></span>
+
+## 20.3 声子与密度响应函数 | Phonons and Density Response Functions
+
+<BilingualSection titleZh="二阶能量导数只需要一阶密度响应" titleEn="A second energy derivative requires only first-order density response" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+令外部参数 $\lambda$ 表示一个核位移、应变或外场分量。固定核位置下的电子能量可写成
+
+$$
+E_\lambda[n]
+=
+F[n]+
+\int n(\mathbf r)V_{\mathrm{ext}}(\mathbf r;\lambda)\,d\mathbf r
++E_{\mathrm{ion}}(\lambda),
+$$
+
+其中 $F[n]$ 收集电子动能、Hartree 和交换—关联项。基态密度 $n_\lambda$ 使能量在粒子数约束下驻定，因此一阶总导数只需外势的显式导数。对两个参数 $\lambda,\mu$ 再求一次导数时，会出现 $n^{(1)}_\mu=\partial n/\partial\mu$。这就是声子力常数与密度响应的连接：总能的二阶导数依赖电子密度对一次微扰的线性变化，而不需要二阶波函数。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Let an external parameter $\lambda$ denote a nuclear displacement, strain, or field component. At fixed nuclei the electronic energy may be written
+
+$$
+E_\lambda[n]
+=
+F[n]+
+\int n(\mathbf r)V_{\mathrm{ext}}(\mathbf r;\lambda)\,d\mathbf r
++E_{\mathrm{ion}}(\lambda),
+$$
+
+where $F[n]$ contains electronic kinetic, Hartree, and exchange–correlation terms. The ground-state density $n_\lambda$ makes the energy stationary at fixed particle number, so the first total derivative needs only the explicit derivative of the external potential. A second derivative with respect to parameters $\lambda$ and $\mu$ contains the first-order density $n^{(1)}_\mu=\partial n/\partial\mu$. This connects phonon force constants to density response: a second derivative of the total energy requires the linear density response to a first-order perturbation, not a second-order wavefunction.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Hellmann–Feynman 一阶导数到二阶响应 | From first derivative to second-order response"
+  assumptions={[
+    '每个参数值处的密度是同一能量泛函的驻点；',
+    '粒子数约束和边界条件在求导中保持一致；',
+    '外势及离子能对参数可微。',
+  ]}
+>
+
+在驻点密度处，
+
+$$
+\frac{dE}{d\lambda}
+=
+\frac{\partial E_{\mathrm{ion}}}{\partial\lambda}
++
+\int n(\mathbf r)
+\frac{\partial V_{\mathrm{ext}}(\mathbf r)}{\partial\lambda}
+\,d\mathbf r.
+$$
+
+对 $\mu$ 求导：
+
+$$
+\frac{d^2E}{d\mu\,d\lambda}
+=
+\frac{\partial^2E_{\mathrm{ion}}}{\partial\mu\partial\lambda}
++
+\int n^{(1)}_\mu(\mathbf r)
+V^{(1)}_{\mathrm{ext},\lambda}(\mathbf r)\,d\mathbf r
++
+\int n(\mathbf r)
+V^{(2)}_{\mathrm{ext},\mu\lambda}(\mathbf r)\,d\mathbf r.
+$$
+
+第一项是离子—离子或显式约束的二阶导数；第二项是诱导密度与另一微扰的耦合；第三项来自外势本身的二阶参数依赖。对局域核势，$V^{(1)}$ 和 $V^{(2)}$ 分别是势对核坐标的一阶和二阶导数。非局域赝势、增广电荷和基组移动会增加相应显式项，不能被一个局域密度积分概括。
+
+若 $\lambda=u_{I\alpha}$、$\mu=u_{J\beta}$，该式给出力常数。密度响应部分通常是计算代价的核心，因为
+
+$$
+n^{(1)}_\mu(\mathbf r)
+=
+\int \chi(\mathbf r,\mathbf r')
+V^{(1)}_{\mathrm{ext},\mu}(\mathbf r')\,d\mathbf r'.
+$$
+
+The first derivative follows from stationarity. Differentiating again produces a direct ionic term, a coupling between the induced density and the other first-order perturbation, and a second derivative of the external potential. Nonlocal pseudopotential and basis-dependent terms must be added explicitly. Setting the parameters to atomic displacements yields the force-constant matrix.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="相互作用响应、独立粒子响应和屏蔽" titleEn="Interacting response, independent-particle response, and screening" eyebrow="Response equation">
+  <div className="bilingual-section__zh">
+
+定义静态密度响应
+
+$$
+\chi(\mathbf r,\mathbf r')
+=
+\frac{\delta n(\mathbf r)}
+{\delta V_{\mathrm{ext}}(\mathbf r')}.
+$$
+
+Kohn–Sham 轨道首先对总有效势响应。令 $\chi_0$ 为非相互作用 Kohn–Sham 响应，$K_{\mathrm{Hxc}}=v_c+f_{\mathrm{xc}}$ 为 Hartree—交换关联 kernel，则
+
+$$
+\delta n
+=
+\chi_0\delta V_{\mathrm{KS}},
+\qquad
+\delta V_{\mathrm{KS}}
+=
+\delta V_{\mathrm{ext}}+K_{\mathrm{Hxc}}\delta n.
+$$
+
+消去 $\delta V_{\mathrm{KS}}$：
+
+$$
+\boxed{
+\chi
+=
+\chi_0+\chi_0K_{\mathrm{Hxc}}\chi
+}
+$$
+
+或形式上
+
+$$
+\chi^{-1}=\chi_0^{-1}-K_{\mathrm{Hxc}}.
+$$
+
+这是静态 Dyson-like 方程。它说明电子对核位移的响应必须自洽屏蔽；只对裸离子势做一次独立粒子响应一般不等于 DFPT 力常数。若使用频率依赖 kernel 和 retarded boundary，则进入 Chapter 21 的动态响应问题。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Define the static density response
+
+$$
+\chi(\mathbf r,\mathbf r')
+=
+\frac{\delta n(\mathbf r)}
+{\delta V_{\mathrm{ext}}(\mathbf r')}.
+$$
+
+Kohn–Sham orbitals respond first to the total effective potential. With $\chi_0$ the noninteracting Kohn–Sham response and $K_{\mathrm{Hxc}}=v_c+f_{\mathrm{xc}}$ the Hartree–exchange–correlation kernel,
+
+$$
+\delta n
+=
+\chi_0\delta V_{\mathrm{KS}},
+\qquad
+\delta V_{\mathrm{KS}}
+=
+\delta V_{\mathrm{ext}}+K_{\mathrm{Hxc}}\delta n.
+$$
+
+Eliminating the screened potential gives
+
+$$
+\boxed{
+\chi
+=
+\chi_0+\chi_0K_{\mathrm{Hxc}}\chi
+}
+$$
+
+or formally $\chi^{-1}=\chi_0^{-1}-K_{\mathrm{Hxc}}$. This static Dyson-like equation shows that the response to an ionic displacement must be self-consistently screened. A single independent-particle response to the bare ionic perturbation is generally not a DFPT force constant. Frequency-dependent kernels and retarded boundary conditions belong to the dynamic response developed in Chapter 21.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="独立粒子响应中的占据—空态求和 | Occupied–empty sum for the independent-particle response"
+  assumptions={[
+    '先考虑零温、非简并绝缘体；',
+    '轨道正交归一；',
+    '静态微扰且采用 occupied-space 正交规范；',
+    '自旋简并因子显式写为 2。',
+  ]}
+>
+
+对占据态 $i$，一阶轨道的空态展开为
+
+$$
+|\psi_i^{(1)}\rangle
+=
+\sum_{a\in\mathrm{empty}}
+|\psi_a\rangle
+\frac{\langle\psi_a|\delta V_{\mathrm{KS}}|\psi_i\rangle}
+{\varepsilon_i-\varepsilon_a}.
+$$
+
+密度一阶变化为
+
+$$
+\delta n(\mathbf r)
+=
+2\sum_{i\in\mathrm{occ}}
+\left[
+\psi_i^*(\mathbf r)\psi_i^{(1)}(\mathbf r)+\mathrm{c.c.}/2
+\right],
+$$
+
+从而静态 $\chi_0$ 可写成占据—空态跃迁之和：
+
+$$
+\chi_0(\mathbf r,\mathbf r')
+=
+2\sum_{i\in\mathrm{occ}}
+\sum_{a\in\mathrm{empty}}
+\frac{
+\psi_i^*(\mathbf r)\psi_a(\mathbf r)
+\psi_a^*(\mathbf r')\psi_i(\mathbf r')
++\mathrm{c.c.}
+}
+{\varepsilon_i-\varepsilon_a}.
+$$
+
+完整构造 $\chi_0(\mathbf r,\mathbf r')$ 或 reciprocal-space 介电矩阵需要大量空带和矩阵元素，而且随后仍需求解屏蔽方程。若只关心少数具体原子位移，直接求每个占据态对该扰动的一阶响应更经济，这导向 Sternheimer 方程。
+
+For a zero-temperature nondegenerate insulator, first-order orbitals may be expanded over empty states, and substitution into the density gives the familiar occupied–empty response sum. Building a general response matrix requires many empty states and matrix elements. Perturbation-specific DFPT instead solves directly for the first-order occupied orbitals.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="金属和有限温占据" titleEn="Metals and fractional occupations" kind="boundary">
+  <div className="bilingual-section__zh">
+    <p>金属中分母可在 Fermi 面附近变小，且占据数随微扰变化。响应包含带间项、带内/Fermi-surface 项、化学势调整和 smearing/电子温度 convention。绝缘体的简单 occupied/empty 投影不能原样套用；数值结果必须对 k 网格、展宽与占据方案联合收敛。</p>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <p>In a metal, denominators become small near the Fermi surface and occupations change under perturbation. The response contains interband terms, intraband/Fermi-surface terms, chemical-potential adjustment, and a declared smearing or electronic-temperature convention. The simple insulating occupied/empty projection cannot be transferred unchanged; k sampling, broadening, and occupation treatment must be converged together.</p>
+  </div>
+</BilingualCallout>
+
+<span id="section-20-4" className="chapter20-anchor" aria-hidden="true"></span>
+
+## 20.4 Green 函数表述与 Sternheimer 方程 | Green’s Function Formulation and the Sternheimer Equation
+
+<DerivationBlock
+  title="一阶 Kohn–Sham 方程 | First-order Kohn–Sham equation"
+  assumptions={[
+    '基态满足 H^(0)|psi_n^(0)> = epsilon_n|psi_n^(0)>；',
+    '先考虑孤立占据子空间和静态微扰；',
+    '轨道规范取占据子空间内的一阶旋转为零。',
+  ]}
+>
+
+将
+
+$$
+\hat H=\hat H^{(0)}+\lambda\hat V_{\mathrm{KS}}^{(1)}+O(\lambda^2),
+$$
+
+$$
+|\psi_n\rangle
+=|\psi_n^{(0)}\rangle+\lambda|\psi_n^{(1)}\rangle+O(\lambda^2),
+$$
+
+$$
+\varepsilon_n
+=\varepsilon_n^{(0)}+\lambda\varepsilon_n^{(1)}+O(\lambda^2)
+$$
+
+代入本征方程并收集一阶项：
+
+$$
+(\hat H^{(0)}-\varepsilon_n^{(0)})|\psi_n^{(1)}\rangle
+=
+-(\hat V_{\mathrm{KS}}^{(1)}-\varepsilon_n^{(1)})|\psi_n^{(0)}\rangle.
+$$
+
+左侧算符在 $|\psi_n^{(0)}\rangle$ 上有零模。定义占据投影
+
+$$
+\hat P_v=\sum_{m\in\mathrm{occ}}|\psi_m^{(0)}\rangle\langle\psi_m^{(0)}|,
+\qquad
+\hat Q_c=1-\hat P_v,
+$$
+
+并选择 parallel-transport/orthogonal gauge
+
+$$
+\hat P_v|\psi_n^{(1)}\rangle=0.
+$$
+
+对方程左乘 $Q_c$ 后，$\varepsilon_n^{(1)}|\psi_n^{(0)}\rangle$ 被投影消去：
+
+$$
+\boxed{
+\hat Q_c(\hat H^{(0)}-\varepsilon_n^{(0)})\hat Q_c
+|\psi_n^{(1)}\rangle
+=
+-\hat Q_c\hat V_{\mathrm{KS}}^{(1)}|\psi_n^{(0)}\rangle.
+}
+$$
+
+这就是投影 Sternheimer 方程。实际迭代求解常在 occupied 子空间加入正移位，使整个数值算符可逆；只要右端和最终响应正确投影，该移位不改变空态响应。
+
+The first-order eigenvalue equation is singular in the occupied space. Choosing an occupied-space gauge and projecting onto the complementary subspace removes the zero modes and the first-order eigenvalue term. The resulting Sternheimer equation produces the same empty-space response as the explicit sum without constructing every empty eigenstate.
+
+</DerivationBlock>
+
+<SternheimerResponseExplorer />
+
+<BilingualSection titleZh="Green 函数只是线性算符逆的另一种写法" titleEn="The Green function is another representation of the projected inverse" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+在空态子空间中定义约化 Green 算符
+
+$$
+\hat G_n
+=
+\hat Q_c
+\frac{1}{\varepsilon_n^{(0)}-\hat H^{(0)}}
+\hat Q_c.
+$$
+
+则
+
+$$
+|\psi_n^{(1)}\rangle
+=
+\hat G_n\hat V_{\mathrm{KS}}^{(1)}|\psi_n^{(0)}\rangle.
+$$
+
+将 $G_n$ 在空态本征基展开，会恢复 20.3 的显式分母求和；用迭代线性求解器作用 $G_n$，则无需保存所有空态。两者是同一线性响应的不同数值表示，不是两个不同物理近似。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Define the reduced Green operator in the empty subspace,
+
+$$
+\hat G_n
+=
+\hat Q_c
+\frac{1}{\varepsilon_n^{(0)}-\hat H^{(0)}}
+\hat Q_c.
+$$
+
+Then
+
+$$
+|\psi_n^{(1)}\rangle
+=
+\hat G_n\hat V_{\mathrm{KS}}^{(1)}|\psi_n^{(0)}\rangle.
+$$
+
+Expanding $G_n$ in empty eigenstates recovers the explicit denominator sum of §20.3; applying it with an iterative linear solver avoids storing all empty states. These are two numerical representations of the same linear response, not different physical approximations.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="自洽 DFPT 循环" titleEn="The self-consistent DFPT cycle" eyebrow="Implementation logic">
+  <div className="bilingual-section__zh">
+
+$V_{\mathrm{KS}}^{(1)}$ 不是已知固定函数，而是
+
+$$
+V_{\mathrm{KS}}^{(1)}
+=
+V_{\mathrm{ext}}^{(1)}
++
+\int K_{\mathrm{Hxc}}(\mathbf r,\mathbf r')
+ n^{(1)}(\mathbf r')\,d\mathbf r'.
+$$
+
+因此一次 DFPT 迭代包含：由当前 $n^{(1)}$ 构造屏蔽势；对每个相关占据态求解投影线性方程；从 $\psi^{(1)}$ 和占据变化重建 $n^{(1)}$；混合并检查残差。它与基态 SCF 类似，但未知量是一阶响应，算符是基态 Hamiltonian 的移位/投影形式，收敛目标是 response residual 与最终力常数或 observable。
+
+程序报告“线性方程收敛”只说明某个代数残差达到阈值。仍需检查基态一致性、所有独立微扰是否完成、对称重建、ASR、$k/q$ 网格、金属占据和最终声子/EPC observable 的收敛。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+$V_{\mathrm{KS}}^{(1)}$ is not a fixed known function but
+
+$$
+V_{\mathrm{KS}}^{(1)}
+=
+V_{\mathrm{ext}}^{(1)}
++
+\int K_{\mathrm{Hxc}}(\mathbf r,\mathbf r')
+ n^{(1)}(\mathbf r')\,d\mathbf r'.
+$$
+
+A DFPT iteration therefore constructs the screened potential from a trial first-order density, solves a projected linear equation for every relevant occupied state, rebuilds the density including occupation changes, mixes the response, and checks its residual. It resembles ground-state SCF, but the unknown is a first-order response, the operator is a projected/shifted ground-state Hamiltonian, and convergence must be assessed for both the algebraic residual and the final force constant or observable.
+
+A message that the linear equation converged certifies only a declared algebraic tolerance. Ground-state consistency, completion of every independent perturbation, symmetry reconstruction, the ASR, $k/q$ sampling, metallic occupations, and convergence of phonon or EPC observables remain separate checks.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="规范、简并与占据子空间" titleEn="Gauge, degeneracy, and the occupied subspace" kind="boundary">
+  <div className="bilingual-section__zh">
+    <p>单个轨道在简并或近简并子空间内没有唯一导数，只有占据投影、密度矩阵和规范不变量具有直接意义。数值实现可采用 parallel-transport gauge、子空间对角化或 density-matrix response。比较两次计算时，不应逐轨道比较任意相位/旋转后的 $\psi^{(1)}$；应比较投影子空间、密度、力常数和规范一致的矩阵元。</p>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <p>An individual orbital derivative is not unique inside a degenerate or nearly degenerate subspace. Occupied projectors, density matrices, and gauge-invariant observables are the meaningful objects. Implementations may use a parallel-transport gauge, subspace diagonalization, or density-matrix response. Two calculations should not be compared orbital by orbital after arbitrary phase or unitary rotations; compare subspaces, densities, force constants, and gauge-consistent matrix elements.</p>
+  </div>
+</BilingualCallout>
