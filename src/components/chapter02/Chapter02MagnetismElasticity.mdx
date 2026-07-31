@@ -1,0 +1,162 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-2-7">2.7 磁性与电子—电子相互作用 | Magnetism and Electron–Electron Interactions</h2>
+
+<BilingualSection titleZh="磁有序是相互作用驱动的破缺对称性" titleEn="Magnetic order is an interaction-driven broken symmetry" eyebrow="【Martin 原书 | Martin source】 §2.7 · pp. 31–33">
+  <div class="bilingual-section__zh">
+
+磁性基态具有自发的自旋和/或轨道矩。铁磁体的宏观磁矩非零，反铁磁体的局域矩按空间排列并由对称性抵消。单电子自旋提供磁矩自由度，但自发有序需要电子—电子相互作用改变不同自旋排布的能量。局域化原子矩、能带离域和不同格点间的关联共同决定实际磁态。
+
+平均场或自旋密度泛函计算可以把交换—关联作用表示为自旋依赖有效势，并自洽求解自旋密度 $n_\uparrow(\mathbf r)$、$n_\downarrow(\mathbf r)$ 与磁化密度 $m(\mathbf r)=n_\uparrow-n_\downarrow$。这种形式能描述许多有序基态，却不能自动捕捉所有量子涨落、Kondo 屏蔽、重费米子或低维非平均场行为。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A magnetic ground state has a spontaneous spin and/or orbital moment. A ferromagnet has a nonzero macroscopic moment, whereas local moments in an antiferromagnet vary in space and cancel by symmetry. One-electron spin supplies a magnetic degree of freedom, but spontaneous order requires electron–electron interactions to change the energy of different spin arrangements. Localized atomic moments, band delocalization, and intersite correlations jointly determine the physical magnetic state.
+
+Mean-field or spin-density-functional calculations can represent exchange–correlation effects by a spin-dependent effective potential and solve self-consistently for $n_\uparrow(\mathbf r)$, $n_\downarrow(\mathbf r)$, and $m(\mathbf r)=n_\uparrow-n_\downarrow$. This form describes many ordered ground states but does not automatically capture all quantum fluctuations, Kondo screening, heavy-fermion behaviour, or low-dimensional non-mean-field physics.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: Stoner susceptibility"
+  assumptions={[
+    '从未相互作用或独立准粒子静态自旋响应 χ0 出发；',
+    '交换—关联有效场在线性范围写成 Vm = Vext + I m；',
+    '忽略空间非局域性、频率依赖和高阶磁化项。',
+  ]}
+>
+
+线性响应定义为
+
+$$
+m=\chi_0 V_m.
+$$
+
+将自洽有效场 $V_m=V_{\mathrm{ext}}+I m$ 代入：
+
+$$
+m=\chi_0(V_{\mathrm{ext}}+I m).
+$$
+
+移项得
+
+$$
+(1-I\chi_0)m=\chi_0 V_{\mathrm{ext}},
+$$
+
+因此相互作用修正后的磁化率为
+
+$$
+\chi\equiv\frac{m}{V_{\mathrm{ext}}}
+=\frac{\chi_0}{1-I\chi_0}.
+$$
+
+在简化金属图像中 $\chi_0\propto N(E_F)$，采用 Martin 的记号可写成
+
+$$
+\chi=\frac{N(E_F)}{1-I N(E_F)}.
+$$
+
+当 $I N(E_F)\to1$ 时，线性顺磁态响应发散，提示 $m=0$ 状态失稳。这只是平均场不稳定判据：它不决定最终磁结构、转变温度或量子涨落，也不能从一个 DOS 峰单独推导铁磁性。
+
+<p lang="en">Starting from $m=\chi_0V_m$ and the self-consistent field $V_m=V_{\mathrm{ext}}+Im$ gives $\chi=\chi_0/(1-I\chi_0)$. In a simplified metal $\chi_0$ is proportional to the density of states at the Fermi level, producing the Stoner form. The denominator approaching zero signals a mean-field instability of the paramagnetic state; it does not determine the final magnetic structure, transition temperature, or fluctuation corrections.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="磁性计算必须显式比较的对象" titleEn="Objects that a magnetic calculation must compare explicitly" kind="boundary">
+  <div class="bilingual-section__zh">
+
+需要比较非磁、铁磁及物理上可行的多种反铁磁初态，并检查超胞是否能表示相应波矢。总磁矩为零不能区分非磁与反铁磁；局域投影矩依赖投影定义。若自旋—轨道耦合重要，还需比较磁化方向与轨道矩。SCF 收敛到某一磁解只证明固定点存在，不证明它是最低能量或正确的有限温度相。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Nonmagnetic, ferromagnetic, and physically plausible antiferromagnetic initial states must be compared, with a supercell capable of representing each ordering vector. Zero total moment does not distinguish a nonmagnetic state from an antiferromagnet, and local projected moments depend on the projection definition. When spin–orbit coupling matters, magnetization direction and orbital moments must also be compared. SCF convergence to one magnetic solution establishes a fixed point, not the lowest-energy state or the correct finite-temperature phase.
+
+  </div>
+</BilingualCallout>
+
+<h2 id="section-2-8">2.8 弹性：应力—应变关系 | Elasticity: Stress–Strain Relations</h2>
+
+<BilingualSection titleZh="应力和弹性来自总能对形变的导数" titleEn="Stress and elasticity are derivatives of total energy" eyebrow="【Martin 原书 | Martin source】 §2.8 · pp. 33–35">
+  <div class="bilingual-section__zh">
+
+电子基态总能不仅随体积变化，也随晶胞的各向异性形变变化。小应变张量 $u_{\alpha\beta}$ 描述位移梯度的对称部分；应力张量是总能对该应变的导数。在线性范围，二阶导数给出弹性常数；较大应变下的非线性项可用于高阶弹性、理想强度和结构失稳研究。
+
+Martin 使用的符号约定写成
+
+$$
+\sigma_{\alpha\beta}
+=-\frac{1}{V}\frac{\partial E_{\mathrm{total}}}{\partial u_{\alpha\beta}}.
+$$
+
+不同程序可能采用相反应力符号或不同有限应变定义，比较前必须核对约定。各向同性静水应变应退化到压力关系，提供直接的实现检查。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The electronic ground-state total energy depends not only on volume but also on anisotropic deformation of the cell. The small-strain tensor $u_{\alpha\beta}$ is the symmetric part of the displacement gradient; the stress tensor is the derivative of total energy with respect to this strain. In the linear regime, second derivatives give elastic constants. Nonlinear terms at larger strain describe higher-order elasticity, ideal strength, and structural instability.
+
+Using Martin's sign convention,
+
+$$
+\sigma_{\alpha\beta}
+=-\frac{1}{V}\frac{\partial E_{\mathrm{total}}}{\partial u_{\alpha\beta}}.
+$$
+
+Codes may use the opposite stress sign or different finite-strain definitions, so conventions must be checked before comparison. An isotropic hydrostatic strain should reduce to the pressure relation and provides a direct implementation test.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: elastic constants from a strain expansion"
+  assumptions={[
+    '参考结构已达到零力或声明外压下的机械平衡；',
+    '应变足够小，可截断到二阶；',
+    '内部原子坐标按研究目的固定或在每个应变下重新弛豫，并明确说明。',
+  ]}
+>
+
+在参考体积 $V_0$ 附近，总能展开为
+
+$$
+E(\mathbf u)=E_0
+-V_0\sum_{\alpha\beta}\sigma^{(0)}_{\alpha\beta}u_{\alpha\beta}
++\frac{V_0}{2}\sum_{\alpha\beta\gamma\delta}
+C_{\alpha\beta\gamma\delta}
+ u_{\alpha\beta}u_{\gamma\delta}
++O(u^3).
+$$
+
+若参考态无外应力，$\sigma^{(0)}=0$。由二阶导数定义
+
+$$
+C_{\alpha\beta\gamma\delta}
+=\frac{1}{V_0}
+\frac{\partial^2E}
+{\partial u_{\alpha\beta}\partial u_{\gamma\delta}}.
+$$
+
+选择一个参数化应变 $\mathbf u(\eta)$，计算正负多个 $\eta$ 点并拟合 $E(\eta)$，即可得到相应弹性常数组合。使用正负应变有助于分离奇偶阶项；仅用单侧应变会把残余应力和三阶项混入二阶系数。
+
+<p lang="en">Expanding the energy to second order in strain defines the elastic tensor. A parameterized strain path $\mathbf u(\eta)$ converts selected tensor combinations into the curvature of $E(\eta)$. Sampling both positive and negative strains helps separate residual stress and odd-order nonlinear terms from the quadratic elastic response.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="弹性常数的验证边界" titleEn="Validation boundary for elastic constants" kind="practice">
+  <div class="bilingual-section__zh">
+
+弹性常数对 $k$ 点、截断能、应变幅度、内部坐标弛豫和应力噪声敏感。至少应检查多个应变幅度窗口、能量拟合与直接应力斜率的一致性、晶体对称性要求以及 Born 机械稳定判据。满足机械稳定不证明声子全布里渊区稳定，也不证明材料能在实验条件下合成或承受缺陷控制的真实断裂强度。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Elastic constants are sensitive to $k$ sampling, basis cutoff, strain amplitude, internal-coordinate relaxation, and stress noise. At minimum, test several strain windows, compare energy-curvature and direct stress-slope estimates, enforce crystal-symmetry relations, and examine the Born mechanical-stability criteria. Mechanical stability does not establish full-Brillouin-zone phonon stability, synthesizability, or defect-controlled experimental fracture strength.
+
+  </div>
+</BilingualCallout>

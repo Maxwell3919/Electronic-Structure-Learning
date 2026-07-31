@@ -30,7 +30,7 @@ export default defineConfig({
         baseUrl:
           'https://github.com/Maxwell3919/Electronic-Structure-Learning/edit/main/',
       },
-      customCss: ['./src/styles/custom.css'],
+      customCss: ['./src/styles/custom.css', './src/styles/chapter02.css'],
       sidebar: [
         { label: '开始', items: ['start-here', 'reading-system', 'book-map'] },
         part('Part I · Overview and Background', 'part-01-overview-and-background'),
