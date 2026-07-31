@@ -32,16 +32,26 @@ export const integrate = (fn, upper, steps = 4000) => {
 
 export const normInside = (fn, rc) => integrate((r) => fn(r) ** 2, rc);
 
+const normCorrectionCache = new Map();
+
 export const normCorrectionCoefficient = (rc) => {
+  if (normCorrectionCache.has(rc)) return normCorrectionCache.get(rc);
+
   const target = normInside(reducedAllElectron, rc);
   const baseNorm = normInside((r) => hermiteBase(r, rc), rc);
   const cross = 2 * integrate((r) => hermiteBase(r, rc) * correctionShape(r, rc), rc);
   const square = normInside((r) => correctionShape(r, rc), rc);
   const discriminant = cross ** 2 - 4 * square * (baseNorm - target);
-  if (discriminant < 0 || square < 1e-14) return 0;
-  const rootA = (-cross + Math.sqrt(discriminant)) / (2 * square);
-  const rootB = (-cross - Math.sqrt(discriminant)) / (2 * square);
-  return Math.abs(rootA) <= Math.abs(rootB) ? rootA : rootB;
+
+  let coefficient = 0;
+  if (discriminant >= 0 && square >= 1e-14) {
+    const rootA = (-cross + Math.sqrt(discriminant)) / (2 * square);
+    const rootB = (-cross - Math.sqrt(discriminant)) / (2 * square);
+    coefficient = Math.abs(rootA) <= Math.abs(rootB) ? rootA : rootB;
+  }
+
+  normCorrectionCache.set(rc, coefficient);
+  return coefficient;
 };
 
 export const reducedPseudo = (r, rc, conserveNorm = true) => {
@@ -62,40 +72,32 @@ export const logDerivativeS = (energy, depth, rc = 1) => {
 
 export const matchedWeakWellDepth = (energy, strongDepth, rc = 1) => {
   const target = logDerivativeS(energy, strongDepth, rc);
-  const strongQ = Math.sqrt(2 * (energy + strongDepth));
-  let best = null;
-  let previousQ = 0.05;
-  let previousF = previousQ * rc / Math.tan(previousQ * rc) - 1 - target;
-  const maxQ = Math.max(0.1, strongQ - Math.PI / rc * 0.6);
-  const samples = 30000;
+  if (!Number.isFinite(target) || target >= 0) return Number.NaN;
 
-  for (let index = 1; index <= samples; index += 1) {
-    const q = 0.05 + (maxQ - 0.05) * index / samples;
-    if (Math.abs(Math.sin(q * rc)) < 1e-4) {
-      previousQ = q;
-      previousF = Number.NaN;
-      continue;
-    }
-    const value = q * rc / Math.tan(q * rc) - 1 - target;
-    if (Number.isFinite(previousF) && value * previousF < 0) {
-      let lower = previousQ;
-      let upper = q;
-      for (let iteration = 0; iteration < 80; iteration += 1) {
-        const middle = 0.5 * (lower + upper);
-        const middleValue = middle * rc / Math.tan(middle * rc) - 1 - target;
-        const lowerValue = lower * rc / Math.tan(lower * rc) - 1 - target;
-        if (middleValue * lowerValue <= 0) upper = middle;
-        else lower = middle;
-      }
-      const root = 0.5 * (lower + upper);
-      if (Math.abs(root - strongQ) > 0.2) best = root;
-    }
-    previousQ = q;
-    previousF = value;
+  const equation = (q) => q * rc / Math.tan(q * rc) - 1 - target;
+  let lower = 1e-8 / rc;
+  let upper = (Math.PI - 1e-8) / rc;
+  let lowerValue = equation(lower);
+  const upperValue = equation(upper);
+  if (!Number.isFinite(lowerValue) || !Number.isFinite(upperValue) || lowerValue * upperValue > 0) {
+    return Number.NaN;
   }
 
-  if (best === null) return strongDepth;
-  return best ** 2 / 2 - energy;
+  for (let iteration = 0; iteration < 100; iteration += 1) {
+    const middle = 0.5 * (lower + upper);
+    const middleValue = equation(middle);
+    if (lowerValue * middleValue <= 0) {
+      upper = middle;
+    } else {
+      lower = middle;
+      lowerValue = middleValue;
+    }
+  }
+
+  const root = 0.5 * (lower + upper);
+  const matchedDepth = root ** 2 / 2 - energy;
+  if (!(matchedDepth > 0 && matchedDepth < strongDepth)) return Number.NaN;
+  return matchedDepth;
 };
 
 export const residualFourierTail = (coreRadius, cutoffQ) => Math.exp(-((coreRadius * cutoffQ) ** 2));
