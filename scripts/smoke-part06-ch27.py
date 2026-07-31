@@ -117,7 +117,7 @@ def set_value(active, element, value):
           ? HTMLSelectElement.prototype
           : HTMLInputElement.prototype;
         Object.getOwnPropertyDescriptor(proto,'value').set.call(element,value);
-        element.dispatchEvent(new Event(element instanceof HTMLSelectElement?'change':'input',{bubbles:true}));
+        element.dispatchEvent(new Event('input',{bubbles:true}));
         element.dispatchEvent(new Event('change',{bubbles:true}));
         """,
         element,
