@@ -1,0 +1,37 @@
+---
+const sections = [
+  ['28.1', 'Weak and Strong Topological Insulators in Three Dimensions: Four Topological Invariants', 569, 'eight TRIM, one strong and three weak Z2 indices; surface-parity boundary', 'substantive batch A'],
+  ['28.2', 'Tight-Binding Example in 3D', 572, 'sp3/p-orbital tight binding, full SOC and surface Dirac model', 'planned in this PR'],
+  ['28.3', 'Normal and Topological Insulators in Three Dimensions: Sb2Se3 and Bi2Se3', 573, 'parity inversion near Gamma, full occupied-manifold and material-evidence boundary', 'planned in this PR'],
+  ['28.4', 'Weyl and Dirac Semimetals', 575, 'codimension, bulk nodes, chirality, symmetry breaking and node pairing', 'planned in this PR'],
+  ['28.5', 'Fermi Arcs', 578, 'surface spectral flow between projected Weyl nodes and opposite-surface completion', 'planned in this PR'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-28-source-map-title">
+  <h2 id="chapter-28-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    Martin 第 2 版 Chapter 28 的印刷页范围为 569–580，共五个目录节。Exercises 从印刷页 580 开始，本站不转录题目。
+    本章承接 Chapter 27 的二维 spinful time-reversal Z₂ 分类，将 occupied-manifold obstruction 扩展到三维，并严格区分绝缘体表面的 Dirac cone、三维体内的 Dirac/Weyl node 与 Weyl phase 的 Fermi arc。
+  </p>
+  <div class="table-scroll" tabindex="0" aria-label="Chapter 28 source map table">
+    <table>
+      <thead><tr><th>原节</th><th>Martin 标题</th><th>印刷页</th><th>本站边界</th><th>当前状态</th></tr></thead>
+      <tbody>
+        {sections.map(([id, title, page, scope, status]) => (
+          <tr><td>{id}</td><td lang="en">{title}</td><td>{page}</td><td>{scope}</td><td>{status}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-boundary">
+    【来源边界】章节标题与页码用于定位。正文、推导、图示、数值内核和练习由本站独立编写；不提交教材 PDF、扫描页、原图、图注、习题原文或答案。材料、表面态、Weyl/Dirac 节点与 Fermi arc 的结论只在声明的模型、对称性、full-BZ gap 或节点、occupied manifold、surface termination 和数值收敛范围内成立。
+  </p>
+</section>
+
+<style>
+  .chapter-source-map { margin-block: 1.5rem; }
+  .table-scroll { max-width: 100%; overflow-x: auto; }
+  table { min-width: 66rem; }
+  .source-boundary { border-left: 0.25rem solid var(--sl-color-accent); padding: 0.75rem 0.9rem; background: var(--sl-color-gray-7); }
+</style>
