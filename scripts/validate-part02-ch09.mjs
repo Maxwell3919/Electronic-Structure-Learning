@@ -158,6 +158,7 @@ close(
   1e-14,
   'C6 alpha linearity',
 );
+// u_max=300 makes the omitted analytic tail smaller than the retained 2e-8 relative tolerance.
 const numericalC6 = numericalCasimirPolderC6({ ...parameters, maximumFrequency: 300, intervals: 200000 });
 relativeClose(numericalC6, analyticC6, 2e-8, 'Casimir-Polder quadrature');
 
