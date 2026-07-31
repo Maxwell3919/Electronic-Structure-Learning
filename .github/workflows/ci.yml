@@ -55,6 +55,7 @@ jobs:
           scripts/smoke-part07-app-c.py
           scripts/smoke-part07-app-d.py
           scripts/smoke-part07-app-e.py
+          scripts/smoke-part07-app-f.py
 
       - name: Validate models and build static site
         run: npm run check
