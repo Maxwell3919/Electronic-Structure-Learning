@@ -181,9 +181,21 @@ export function pumpVector(k, lambda, center = 1, radius = 0.65, v = 1, w = 1) {
   };
 }
 
+export function pumpCriticalDistance(center = 1, radius = 0.65, v = 1) {
+  [center, radius, v].forEach((value, index) => finite(value, ['center', 'radius', 'v'][index]));
+  if (radius < 0) throw new RangeError('radius must be non-negative');
+  return Math.min(
+    Math.abs(Math.abs(center - v) - radius),
+    Math.abs(Math.abs(center + v) - radius),
+  );
+}
+
 export function samplePumpTopology(center = 1, radius = 0.65, v = 1, w = 1, mesh = 31) {
   [center, radius, v, w].forEach((value, index) => finite(value, ['center', 'radius', 'v', 'w'][index]));
   if (!Number.isInteger(mesh) || mesh < 5) throw new RangeError('mesh must be an integer >= 5');
+  if (pumpCriticalDistance(center, radius, v) < 1e-12) {
+    return { gapClosed: true, minimumGap: 0, mappingDegree: null, lowerBandChern: null, residual: null };
+  }
 
   let totalSolidAngle = 0;
   let minimumRadius = Infinity;
@@ -204,7 +216,7 @@ export function samplePumpTopology(center = 1, radius = 0.65, v = 1, w = 1, mesh
       });
       const unit = raw.map(normalize);
       if (unit.some((vector) => vector === null)) {
-        return { gapClosed: true, minimumGap: 0, mappingDegree: null, lowerBandChern: null };
+        return { gapClosed: true, minimumGap: 0, mappingDegree: null, lowerBandChern: null, residual: null };
       }
       totalSolidAngle += solidAngle(unit[0], unit[1], unit[2]) + solidAngle(unit[0], unit[2], unit[3]);
     }
@@ -213,7 +225,7 @@ export function samplePumpTopology(center = 1, radius = 0.65, v = 1, w = 1, mesh
   const mappingDegreeRaw = totalSolidAngle / (4 * Math.PI);
   const mappingDegree = Math.round(mappingDegreeRaw);
   return {
-    gapClosed: minimumRadius < 1e-8,
+    gapClosed: false,
     minimumGap: 2 * minimumRadius,
     mappingDegree,
     lowerBandChern: -mappingDegree,
@@ -243,6 +255,7 @@ export function pumpBerryPhase(lambda, center = 1, radius = 0.65, v = 1, w = 1, 
 export function pumpWannierFlow(center = 1, radius = 0.65, v = 1, w = 1, lambdaSamples = 65, kSamples = 181) {
   [center, radius, v, w].forEach((value, index) => finite(value, ['center', 'radius', 'v', 'w'][index]));
   if (!Number.isInteger(lambdaSamples) || lambdaSamples < 3) throw new RangeError('lambdaSamples must be an integer >= 3');
+  if (pumpCriticalDistance(center, radius, v) < 1e-12) throw new RangeError('Wannier flow is undefined when the pump cycle crosses a gap closing');
 
   const wrapped = Array.from({ length: lambdaSamples }, (_, index) => {
     const lambda = (TAU * index) / (lambdaSamples - 1);
