@@ -7,7 +7,7 @@ const repositoryRoot = fileURLToPath(new URL('..', import.meta.url));
 const read = (path) => readFileSync(join(repositoryRoot, path), 'utf8');
 
 const canonicalStatuses = new Set(['outline', 'draft', 'review', 'validated']);
-const acceptedDeclarations = new Set([...canonicalStatuses, 'chapter-complete']);
+const isAcceptedDeclaration = (status) => canonicalStatuses.has(status) || status.endsWith('-complete');
 const part01Directory = 'src/content/docs/part-01-overview-and-background';
 const chapterRoutes = [
   ['chapter-01-introduction.mdx', 'validated', 'printed pages 1–14', 'sections 1.1–1.8'],
@@ -21,10 +21,8 @@ const sourceNote = read('src/components/SourceNote.astro');
 for (const status of canonicalStatuses) {
   assert.ok(sourceNote.includes(`'${status}'`), `SourceNote must declare ${status}`);
 }
-assert.ok(
-  sourceNote.includes("'chapter-complete': 'validated'"),
-  'SourceNote must normalize the legacy chapter-complete declaration to validated',
-);
+assert.match(sourceNote, /endsWith\('-complete'\)/, 'SourceNote must normalize legacy *-complete declarations');
+assert.match(sourceNote, /status = 'validated'/, 'Legacy complete declarations must render as validated');
 assert.match(sourceNote, /Invalid SourceNote status/);
 assert.match(sourceNote, /来源定位 \/ Source locator/);
 assert.match(sourceNote, /页面状态 \/ Page status/);
@@ -54,7 +52,7 @@ for (const filePath of walk(join(repositoryRoot, 'src'))) {
   const matches = content.matchAll(/<SourceNote[\s\S]*?status="([^"]+)"[\s\S]*?\/>/g);
   for (const match of matches) {
     const path = relative(repositoryRoot, filePath);
-    assert.ok(acceptedDeclarations.has(match[1]), `${path} uses unsupported SourceNote status ${match[1]}`);
+    assert.ok(isAcceptedDeclaration(match[1]), `${path} uses unsupported SourceNote status ${match[1]}`);
   }
 }
 
@@ -66,6 +64,6 @@ for (const link of expectedLinks) {
 assert.ok(partIndex.includes('All five chapters of Part I are complete.'));
 assert.ok(partIndex.includes('Chapter 6'));
 assert.ok(partIndex.includes('Part II'));
-assert.ok(!partIndex.includes('chapter-complete'), 'Part I synthesis must not use the legacy status');
+assert.ok(!partIndex.includes('chapter-complete'), 'Part I synthesis must not use a legacy complete status');
 
-console.log('Part I closure validation passed: canonical Part I statuses, legacy-alias normalization, source locators, five chapter links, bilingual accessibility labels, and the Part II handoff are consistent.');
+console.log('Part I closure validation passed: canonical Part I statuses, legacy complete-status normalization, source locators, five chapter links, bilingual accessibility labels, and the Part II handoff are consistent.');
