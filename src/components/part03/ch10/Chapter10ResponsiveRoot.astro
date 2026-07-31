@@ -1,0 +1,47 @@
+<div class="chapter10-root" data-chapter10-responsive-root>
+  <slot />
+</div>
+
+<style is:global>
+  .chapter10-root,
+  .chapter10-root > *,
+  .chapter10-root .bilingual-section,
+  .chapter10-root .bilingual-section__grid,
+  .chapter10-root .bilingual-section__zh,
+  .chapter10-root .bilingual-section__en,
+  .chapter10-root .derivation-block,
+  .chapter10-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter10-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter10-root .chapter-source-map,
+  .chapter10-root .katex-display,
+  .chapter10-root pre,
+  .chapter10-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter10-root [data-soc-math-scroll] .katex-display {
+    max-width: none;
+    overflow: visible;
+  }
+
+  .chapter10-root p,
+  .chapter10-root li,
+  .chapter10-root th,
+  .chapter10-root td {
+    overflow-wrap: anywhere;
+  }
+</style>
