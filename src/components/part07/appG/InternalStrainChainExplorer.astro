@@ -1,0 +1,174 @@
+---
+import { internalStrainChain, stressModelDefaults } from '../../../data/part07/stressStrainModel.mjs';
+
+const defaults = internalStrainChain(stressModelDefaults.chain);
+const x0 = 95;
+const scale = 170;
+const mapX = (distance) => x0 + scale * distance / defaults.referenceLength;
+const fallbackRows = [
+  { label: 'symmetric cell', R1: 1, R2: 1, K1: 2, K2: 2 },
+  { label: 'stiff molecule', R1: 1, R2: 1.4, K1: 12, K2: 1 },
+  { label: 'soft molecule', R1: 1, R2: 1.4, K1: 1, K2: 6 },
+].map((entry) => ({ ...entry, ...internalStrainChain({ ...entry, strain: 0.08 }) }));
+---
+
+<figure class="chapter-visual internal-strain-chain" data-internal-chain>
+  <figcaption>
+    <strong>原创交互模型：diatomic chain 的 clamped-ion 与 relaxed-ion 内应变</strong>
+    <span lang="en">Original interactive model: clamped-ion and relaxed-ion internal strain in a diatomic chain</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls internal-strain-chain__controls">
+    <label>
+      <span>cell strain η</span>
+      <input type="range" min="-0.12" max="0.16" step="0.01" value={stressModelDefaults.chain.strain} data-chain-strain />
+      <output data-chain-strain-output>{stressModelDefaults.chain.strain.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>bond-1 stiffness K1</span>
+      <input type="range" min="0.5" max="12" step="0.5" value={stressModelDefaults.chain.K1} data-chain-k1 />
+      <output data-chain-k1-output>{stressModelDefaults.chain.K1.toFixed(1)}</output>
+    </label>
+    <label>
+      <span>bond-2 stiffness K2</span>
+      <input type="range" min="0.5" max="12" step="0.5" value={stressModelDefaults.chain.K2} data-chain-k2 />
+      <output data-chain-k2-output>{stressModelDefaults.chain.K2.toFixed(1)}</output>
+    </label>
+    <label>
+      <span>reference bond R1</span>
+      <input type="range" min="0.6" max="1.8" step="0.1" value={stressModelDefaults.chain.R1} data-chain-r1 />
+      <output data-chain-r1-output>{stressModelDefaults.chain.R1.toFixed(1)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 360" role="img" aria-labelledby="chain-title chain-desc">
+    <title id="chain-title">Uniformly scaled and force-relaxed diatomic chains under the same cell strain</title>
+    <desc id="chain-desc">
+      The upper chain keeps the internal coordinate fixed in fractional coordinates. The lower chain redistributes the total extension between two unequal springs until the spring forces balance. Their energy difference is the internal-relaxation contribution.
+    </desc>
+    <rect x="30" y="35" width="700" height="280" rx="12" class="internal-strain-chain__panel" />
+    <text x="375" y="68" text-anchor="middle">same strained cell length, different internal coordinate</text>
+
+    <text x="60" y="132">clamped-ion</text>
+    <line x1="205" y1="122" x2="655" y2="122" class="internal-strain-chain__cell" />
+    <circle cx="205" cy="122" r="13" class="internal-strain-chain__atom-a" />
+    <circle cx={mapX(defaults.R1 + defaults.uniformBond1Change) + 110} cy="122" r="13" class="internal-strain-chain__atom-b" data-chain-clamped-middle />
+    <circle cx="655" cy="122" r="13" class="internal-strain-chain__atom-a" />
+    <line x1="218" y1="122" x2={mapX(defaults.R1 + defaults.uniformBond1Change) + 97} y2="122" class="internal-strain-chain__spring-one" data-chain-clamped-one />
+    <line x1={mapX(defaults.R1 + defaults.uniformBond1Change) + 123} y1="122" x2="642" y2="122" class="internal-strain-chain__spring-two" data-chain-clamped-two />
+
+    <text x="60" y="230">relaxed-ion</text>
+    <line x1="205" y1="220" x2="655" y2="220" class="internal-strain-chain__cell" />
+    <circle cx="205" cy="220" r="13" class="internal-strain-chain__atom-a" />
+    <circle cx={mapX(defaults.relaxedBond1) + 110} cy="220" r="13" class="internal-strain-chain__atom-b" data-chain-relaxed-middle />
+    <circle cx="655" cy="220" r="13" class="internal-strain-chain__atom-a" />
+    <line x1="218" y1="220" x2={mapX(defaults.relaxedBond1) + 97} y2="220" class="internal-strain-chain__spring-one" data-chain-relaxed-one />
+    <line x1={mapX(defaults.relaxedBond1) + 123} y1="220" x2="642" y2="220" class="internal-strain-chain__spring-two" data-chain-relaxed-two />
+
+    <line x1={mapX(defaults.R1 + defaults.uniformBond1Change) + 110} y1="147" x2={mapX(defaults.relaxedBond1) + 110} y2="193" class="internal-strain-chain__shift" data-chain-shift />
+    <text x="375" y="286" text-anchor="middle" data-chain-force-label>K1ΔR1 = K2ΔR2 = {defaults.force1.toFixed(4)}</text>
+  </svg>
+
+  <div class="chapter-visual__readout internal-strain-chain__readout" aria-live="polite">
+    <span>internal shift u_int</span><strong data-chain-internal-shift>{defaults.internalShift.toFixed(6)}</strong>
+    <span>Γ = u_int/η</span><strong data-chain-gamma>{defaults.internalStrainParameter.toFixed(6)}</strong>
+    <span>clamped stiffness</span><strong data-chain-clamped-stiffness>{defaults.clampedStrainStiffness.toFixed(6)}</strong>
+    <span>relaxed stiffness</span><strong data-chain-relaxed-stiffness>{defaults.relaxedStrainStiffness.toFixed(6)}</strong>
+    <span>energy lowering</span><strong data-chain-energy-lowering>{(defaults.clampedEnergy - defaults.relaxedEnergy).toFixed(6)}</strong>
+    <span>force mismatch</span><strong data-chain-force-mismatch>{Math.abs(defaults.force1 - defaults.force2).toExponential(2)}</strong>
+  </div>
+
+  <div class="internal-strain-chain__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>case at η=0.08</th><th>Γ</th><th>clamped stiffness</th><th>relaxed stiffness</th></tr></thead>
+      <tbody>
+        {fallbackRows.map((entry) => (
+          <tr>
+            <td>{entry.label}</td>
+            <td>{entry.internalStrainParameter.toFixed(5)}</td>
+            <td>{entry.clampedStrainStiffness.toFixed(5)}</td>
+            <td>{entry.relaxedStrainStiffness.toFixed(5)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>一维 cell 含两个 harmonic bonds，reference lengths <code>R1,R2</code>、spring constants <code>K1,K2</code>。给定总 cell extension 后，relaxed internal coordinate 满足 <code>K1ΔR1=K2ΔR2</code>。</p>
+    <p lang="en"><strong>Model:</strong> a one-dimensional cell contains two harmonic bonds with reference lengths <code>R1,R2</code> and spring constants <code>K1,K2</code>. At fixed total cell extension, the relaxed internal coordinate satisfies <code>K1ΔR1=K2ΔR2</code>.</p>
+    <p><strong>验收：</strong><code>Keff=K1K2/(K1+K2)</code>；relaxed stiffness 不大于 clamped stiffness；<code>K1≫K2</code> 时 bond 1 近似不可压缩；<code>R1=R2</code> 且 <code>K1=K2</code> 时 Γ=0。</p>
+    <p lang="en"><strong>Acceptance:</strong> <code>Keff=K1K2/(K1+K2)</code>; relaxed stiffness does not exceed clamped stiffness; bond 1 becomes nearly incompressible when <code>K1≫K2</code>; and Γ vanishes when <code>R1=R2</code> and <code>K1=K2</code>.</p>
+    <p><strong>边界：</strong>这是单 internal coordinate 的 harmonic benchmark。真实晶体需要完整 force-constant matrix、strain–internal-coordinate coupling、acoustic sum rule、symmetry 和所有原子力收敛。</p>
+    <p lang="en"><strong>Boundary:</strong> this is a harmonic benchmark with one internal coordinate. A real crystal requires the full force-constant matrix, strain–internal-coordinate coupling, acoustic sum rule, symmetry, and convergence of every atomic force.</p>
+  </div>
+</figure>
+
+<script>
+  import { internalStrainChain } from '../../../data/part07/stressStrainModel.mjs';
+
+  document.querySelectorAll('[data-internal-chain]').forEach((root) => {
+    const strain = root.querySelector('[data-chain-strain]');
+    const k1 = root.querySelector('[data-chain-k1]');
+    const k2 = root.querySelector('[data-chain-k2]');
+    const r1 = root.querySelector('[data-chain-r1]');
+    if (!(strain instanceof HTMLInputElement) || !(k1 instanceof HTMLInputElement)
+      || !(k2 instanceof HTMLInputElement) || !(r1 instanceof HTMLInputElement)) return;
+    const elements = {
+      clampedMiddle: root.querySelector('[data-chain-clamped-middle]'), relaxedMiddle: root.querySelector('[data-chain-relaxed-middle]'),
+      clampedOne: root.querySelector('[data-chain-clamped-one]'), clampedTwo: root.querySelector('[data-chain-clamped-two]'), relaxedOne: root.querySelector('[data-chain-relaxed-one]'), relaxedTwo: root.querySelector('[data-chain-relaxed-two]'), shift: root.querySelector('[data-chain-shift]'), forceLabel: root.querySelector('[data-chain-force-label]'),
+    };
+    const outputs = {
+      strain: root.querySelector('[data-chain-strain-output]'), k1: root.querySelector('[data-chain-k1-output]'), k2: root.querySelector('[data-chain-k2-output]'), r1: root.querySelector('[data-chain-r1-output]'),
+      shift: root.querySelector('[data-chain-internal-shift]'), gamma: root.querySelector('[data-chain-gamma]'), clamped: root.querySelector('[data-chain-clamped-stiffness]'), relaxed: root.querySelector('[data-chain-relaxed-stiffness]'), lowering: root.querySelector('[data-chain-energy-lowering]'), mismatch: root.querySelector('[data-chain-force-mismatch]'),
+    };
+    const start = 205; const end = 655; const width = end - start;
+    const setMiddle = (middle, one, two, x) => {
+      if (middle instanceof SVGCircleElement) middle.setAttribute('cx', x.toFixed(2));
+      if (one instanceof SVGLineElement) one.setAttribute('x2', (x - 13).toFixed(2));
+      if (two instanceof SVGLineElement) two.setAttribute('x1', (x + 13).toFixed(2));
+    };
+    const update = () => {
+      const input = { R1: Number(r1.value), R2: 1.4, K1: Number(k1.value), K2: Number(k2.value), strain: Number(strain.value) };
+      const result = internalStrainChain(input);
+      const clampedX = start + width * (input.R1 + result.uniformBond1Change) / result.strainedLength;
+      const relaxedX = start + width * result.relaxedBond1 / result.strainedLength;
+      setMiddle(elements.clampedMiddle, elements.clampedOne, elements.clampedTwo, clampedX);
+      setMiddle(elements.relaxedMiddle, elements.relaxedOne, elements.relaxedTwo, relaxedX);
+      if (elements.shift instanceof SVGLineElement) {
+        elements.shift.setAttribute('x1', clampedX.toFixed(2)); elements.shift.setAttribute('x2', relaxedX.toFixed(2));
+      }
+      if (elements.forceLabel instanceof SVGTextElement) elements.forceLabel.textContent = `K1ΔR1 = K2ΔR2 = ${result.force1.toFixed(4)}`;
+      if (outputs.strain instanceof HTMLOutputElement) outputs.strain.value = input.strain.toFixed(2);
+      if (outputs.k1 instanceof HTMLOutputElement) outputs.k1.value = input.K1.toFixed(1);
+      if (outputs.k2 instanceof HTMLOutputElement) outputs.k2.value = input.K2.toFixed(1);
+      if (outputs.r1 instanceof HTMLOutputElement) outputs.r1.value = input.R1.toFixed(1);
+      if (outputs.shift instanceof HTMLElement) outputs.shift.textContent = result.internalShift.toFixed(6);
+      if (outputs.gamma instanceof HTMLElement) outputs.gamma.textContent = result.internalStrainParameter.toFixed(6);
+      if (outputs.clamped instanceof HTMLElement) outputs.clamped.textContent = result.clampedStrainStiffness.toFixed(6);
+      if (outputs.relaxed instanceof HTMLElement) outputs.relaxed.textContent = result.relaxedStrainStiffness.toFixed(6);
+      if (outputs.lowering instanceof HTMLElement) outputs.lowering.textContent = (result.clampedEnergy - result.relaxedEnergy).toFixed(6);
+      if (outputs.mismatch instanceof HTMLElement) outputs.mismatch.textContent = Math.abs(result.force1 - result.force2).toExponential(2);
+    };
+    [strain, k1, k2, r1].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .internal-strain-chain { overflow-x: auto; }
+  .internal-strain-chain svg { width: 100%; min-width: 44rem; }
+  .internal-strain-chain text { fill: currentColor; font-size: 13px; }
+  .internal-strain-chain__panel { fill: var(--sl-color-gray-6); stroke: var(--sl-color-gray-4); stroke-width: 2; }
+  .internal-strain-chain__cell { stroke: var(--sl-color-gray-3); stroke-width: 2; }
+  .internal-strain-chain__atom-a { fill: var(--sl-color-accent-high); stroke: var(--sl-color-gray-7); stroke-width: 2; }
+  .internal-strain-chain__atom-b { fill: currentColor; stroke: var(--sl-color-gray-7); stroke-width: 2; }
+  .internal-strain-chain__spring-one { stroke: var(--sl-color-accent-high); stroke-width: 5; }
+  .internal-strain-chain__spring-two { stroke: currentColor; stroke-width: 5; stroke-dasharray: 8 4; }
+  .internal-strain-chain__shift { stroke: var(--sl-color-accent-high); stroke-width: 2; stroke-dasharray: 4 4; }
+  .internal-strain-chain__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.8rem; }
+  .internal-strain-chain__controls label { display: grid; gap: 0.3rem; }
+  .internal-strain-chain__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.4rem 1rem; }
+  .internal-strain-chain__fallback { max-width: 48rem; }
+</style>

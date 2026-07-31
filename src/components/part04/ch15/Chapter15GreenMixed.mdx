@@ -1,0 +1,294 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import RecursionExplorer from './RecursionExplorer.astro';
+
+<span id="section-15-7" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.7 Green function 与 recursion 方法 | Green’s Function and Recursion Methods
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 329–330 强调局域轨道对 defect/embedding Green-function methods 的适配性，也指出 full self-consistent DFT 中 Hamiltonian construction 的困难。下面补充 nonorthogonal resolvent、spectral trace、Lanczos recursion 与 continued-fraction truncation。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 329–330 emphasize the suitability of localized orbitals for defect and embedding Green-function methods while noting the difficulty of Hamiltonian construction in fully self-consistent DFT. The nonorthogonal resolvent, spectral trace, Lanczos recursion, and continued-fraction truncation below are supplemental.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="resolvent 作为求解对象" titleEn="The resolvent as a computational object">
+  <div class="bilingual-section__zh">
+    <p>与显式求全部 eigenvectors 不同，Green function 直接回答指定 energy、site、orbital 或 subspace 的 spectral/response 问题。对 generalized matrix pair $(H,S)$，定义 coefficient-space resolvent</p>
+
+$$
+\mathcal G(z)=(zS-H)^{-1},
+\qquad z=E+i\eta,
+\quad \eta>0.
+$$
+
+    <p>它满足 $(zS-H)\mathcal G=I$。在 $C^\dagger SC=I$ 的 complete finite basis 中，</p>
+
+$$
+\mathcal G(z)=C(zI-\varepsilon)^{-1}C^\dagger.
+$$
+
+    <p>total finite-basis density of states 为</p>
+
+$$
+D(E)=-\frac1\pi\operatorname{Im}
+\operatorname{Tr}[S\mathcal G(E+i\eta)].
+$$
+
+    <p>basis-或 atom-resolved DOS 需要指定 dual basis/projector/population convention。直接取 $\mathcal G_{\mu\mu}$ 并称为唯一 local DOS 在非正交 basis 中没有 basis-invariant 意义。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Instead of explicitly finding every eigenvector, a Green function answers spectral or response questions at selected energies, sites, orbitals, or subspaces. For a generalized matrix pair $(H,S)$, define the coefficient-space resolvent</p>
+
+$$
+\mathcal G(z)=(zS-H)^{-1},
+\qquad z=E+i\eta,
+\quad \eta>0.
+$$
+
+    <p>It satisfies $(zS-H)\mathcal G=I$. In a complete finite basis with $C^\dagger SC=I$,</p>
+
+$$
+\mathcal G(z)=C(zI-\varepsilon)^{-1}C^\dagger.
+$$
+
+    <p>The total finite-basis density of states is</p>
+
+$$
+D(E)=-\frac1\pi\operatorname{Im}
+\operatorname{Tr}[S\mathcal G(E+i\eta)].
+$$
+
+    <p>A basis- or atom-resolved DOS requires a declared dual basis, projector, or population convention. In a nonorthogonal basis, taking $\mathcal G_{\mu\mu}$ and calling it the unique local DOS is not basis invariant.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="spectral representation 与 electron count | Spectral representation and electron count"
+  assumptions={[
+    'finite Hermitian generalized eigenproblem；',
+    'S positive definite；',
+    'η>0 and a declared occupation function f(E)。',
+  ]}
+>
+
+由
+
+$$
+HC=SC\varepsilon,
+\qquad C^\dagger SC=I,
+$$
+
+可得
+
+$$
+(zS-H)C=SC(zI-\varepsilon).
+$$
+
+因此
+
+$$
+\mathcal G(z)=C(zI-\varepsilon)^{-1}C^\dagger.
+$$
+
+乘以 S 并取 trace：
+
+$$
+\operatorname{Tr}[S\mathcal G(z)]
+=\sum_i\frac1{z-\varepsilon_i}.
+$$
+
+利用
+
+$$
+-\frac1\pi\operatorname{Im}\frac1{E+i\eta-\varepsilon_i}
+=\frac1\pi\frac{\eta}{(E-\varepsilon_i)^2+\eta^2},
+$$
+
+得到 broadened DOS。density matrix 可由 spectral integration 构造：
+
+$$
+P=-\frac1\pi\int dE\,f(E)
+\operatorname{Im}\mathcal G(E+i0^+).
+$$
+
+然后 $N=\operatorname{Tr}(PS)$。finite η 将 delta peaks 替换为 Lorentzians；它可以稳定 integration，却不是 physical lifetime，除非 self-energy formalism 另有依据。
+
+</DerivationBlock>
+
+### Recursion and continued fractions | 递归与连分式
+
+<BilingualSection titleZh="Lanczos tridiagonalization" titleEn="Lanczos tridiagonalization">
+  <div class="bilingual-section__zh">
+    <p>在 orthonormal representation 中，从 normalized local vector $|q_0\rangle$ 出发：</p>
+
+$$
+|r_n\rangle=H|q_n\rangle-b_n|q_{n-1}\rangle,
+$$
+
+$$
+a_n=\langle q_n|r_n\rangle,
+\qquad
+|r_n'\rangle=|r_n\rangle-a_n|q_n\rangle,
+$$
+
+$$
+b_{n+1}=\|r_n'\|,
+\qquad
+|q_{n+1}\rangle=|r_n'\rangle/b_{n+1}.
+$$
+
+    <p>在 Krylov basis 中 H 变成 tridiagonal matrix，local Green function 为</p>
+
+$$
+G_{00}(z)=
+\cfrac{1}{z-a_0-
+\cfrac{b_1^2}{z-a_1-
+\cfrac{b_2^2}{z-a_2-\cdots}}}.
+$$
+
+    <p>只需 matrix-vector products，适合 sparse localized Hamiltonian 与 selected local spectra。nonorthogonal basis 可先 orthogonalize，或使用 generalized Lanczos with explicit metric；两者的 conditioning 与 locality 不相同。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>In an orthonormal representation, start from a normalized local vector $|q_0\rangle$:</p>
+
+$$
+|r_n\rangle=H|q_n\rangle-b_n|q_{n-1}\rangle,
+$$
+
+$$
+a_n=\langle q_n|r_n\rangle,
+\qquad
+|r_n'\rangle=|r_n\rangle-a_n|q_n\rangle,
+$$
+
+$$
+b_{n+1}=\|r_n'\|,
+\qquad
+|q_{n+1}\rangle=|r_n'\rangle/b_{n+1}.
+$$
+
+    <p>In the Krylov basis, H becomes tridiagonal and the local Green function is</p>
+
+$$
+G_{00}(z)=
+\cfrac{1}{z-a_0-
+\cfrac{b_1^2}{z-a_1-
+\cfrac{b_2^2}{z-a_2-\cdots}}}.
+$$
+
+    <p>Only matrix-vector products are required, making the method suitable for sparse localized Hamiltonians and selected local spectra. A nonorthogonal basis can be orthogonalized first or treated with a generalized Lanczos method using an explicit metric; the conditioning and locality of these choices differ.</p>
+  </div>
+</BilingualSection>
+
+<RecursionExplorer />
+
+<BilingualCallout titleZh="termination、broadening 与 self-consistency" titleEn="Termination, broadening, and self-consistency" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>finite recursion depth produces discrete/oscillatory termination structure；</li>
+      <li>a terminator encodes an assumed asymptotic environment and must be declared；</li>
+      <li>η controls numerical resolution and integrated leakage；</li>
+      <li>embedding self-energy determines open-boundary physics and is not the same as truncating a chain；</li>
+      <li>full DFT still requires density/potential update and charge conservation, often making Hamiltonian construction harder than evaluating one Green function。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>finite recursion depth produces discrete or oscillatory termination structure;</li>
+      <li>a terminator encodes an assumed asymptotic environment and must be declared;</li>
+      <li>η controls numerical resolution and integrated leakage;</li>
+      <li>an embedding self-energy determines open-boundary physics and is not the same as truncating a chain;</li>
+      <li>full DFT still requires density and potential updates plus charge conservation, often making Hamiltonian construction harder than evaluating one Green function.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<span id="section-15-8" class="chapter-anchor" aria-hidden="true"></span>
+
+## 15.8 Mixed Basis
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 330 讨论 Gaussian+plane-wave 等同一区域 mixed basis，以及平面内 plane waves 与法向 Gaussians 的各向异性表示，并区分它们与 ultrasoft/PAW transformation。下面补充 block generalized matrix、linear dependence 与 double-counting boundary。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed p. 330 discusses mixed bases such as Gaussians plus plane waves in the same region, anisotropic representations using in-plane plane waves and normal-direction Gaussians, and their distinction from ultrasoft or PAW transformations. The block generalized matrix, linear-dependence, and double-counting boundaries below are supplemental.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="basis union 的 block problem" titleEn="The block problem of a basis union">
+  <div class="bilingual-section__zh">
+    <p>令 $\{\chi_\mu\}$ 为 localized set，$\{\phi_G\}$ 为 delocalized set。若二者都作为 explicit variational basis，</p>
+
+$$
+\begin{pmatrix}
+H_{\chi\chi}&H_{\chi\phi}\\
+H_{\phi\chi}&H_{\phi\phi}
+\end{pmatrix}
+\begin{pmatrix}c_\chi\\c_\phi\end{pmatrix}
+=\varepsilon
+\begin{pmatrix}
+S_{\chi\chi}&S_{\chi\phi}\\
+S_{\phi\chi}&S_{\phi\phi}
+\end{pmatrix}
+\begin{pmatrix}c_\chi\\c_\phi\end{pmatrix}.
+$$
+
+    <p>cross-overlap 与 cross-Hamiltonian blocks 不能省略。若 localized function 已能由 retained plane waves 精确/近似表示，basis union 会产生 small eigenvalues of S。需要 projection、orthogonalization、thresholding 或 basis redesign，并验证这些处理没有删除 target states。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Let $\{\chi_\mu\}$ be a localized set and $\{\phi_G\}$ a delocalized set. If both are explicit variational basis functions,</p>
+
+$$
+\begin{pmatrix}
+H_{\chi\chi}&H_{\chi\phi}\\
+H_{\phi\chi}&H_{\phi\phi}
+\end{pmatrix}
+\begin{pmatrix}c_\chi\\c_\phi\end{pmatrix}
+=\varepsilon
+\begin{pmatrix}
+S_{\chi\chi}&S_{\chi\phi}\\
+S_{\phi\chi}&S_{\phi\phi}
+\end{pmatrix}
+\begin{pmatrix}c_\chi\\c_\phi\end{pmatrix}.
+$$
+
+    <p>Cross-overlap and cross-Hamiltonian blocks cannot be omitted. If a localized function is already represented exactly or approximately by the retained plane waves, the union develops small eigenvalues of S. Projection, orthogonalization, thresholding, or basis redesign is required, followed by verification that target states were not removed.</p>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="mixed basis 与 PAW augmentation 的区别" titleEn="Mixed bases versus PAW augmentation">
+  <div class="bilingual-section__zh">
+    <p>在 explicit mixed basis 中，localized 与 delocalized coefficients 都是 variational unknowns。PAW/ultrasoft methods 则通过 transformation/projector formalism 把 localized augmentation analytically tied to smooth auxiliary states，最终 eigenproblem 的 unknowns 可只在 smooth representation 中。二者可能共享“smooth + localized correction”的直觉，却具有不同 overlap operator、degrees of freedom、double counting 和 force derivatives。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>In an explicit mixed basis, both localized and delocalized coefficients are variational unknowns. PAW or ultrasoft methods use a transformation or projector formalism in which localized augmentation is analytically tied to smooth auxiliary states, so the eigenproblem can have unknowns only in the smooth representation. The approaches may share the intuition of a smooth part plus localized correction, but they have different overlap operators, degrees of freedom, double counting, and force derivatives.</p>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="各向异性 mixed basis" titleEn="Anisotropic mixed bases">
+  <div class="bilingual-section__zh">
+    <p>对于平面内周期、法向非周期的 surface/interface，可选</p>
+
+$$
+\Phi_{\mathbf k+\mathbf G_\parallel,n}(\mathbf r)
+=\frac{1}{\sqrt A}e^{i(\mathbf k+\mathbf G_\parallel)\cdot\mathbf r_\parallel}
+ g_n(z),
+$$
+
+    <p>其中 $g_n(z)$ 可为 Gaussians、finite elements 或其他 localized functions。平面内 Bloch symmetry 精确保留，z direction 不需引入大 vacuum plane-wave basis。代价是 anisotropic convergence：$G_\parallel$ cutoff、z-basis completeness、boundary conditions 和 cross integrals 必须分别测试。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For a surface or interface that is periodic in-plane and nonperiodic normal to the plane, one may choose</p>
+
+$$
+\Phi_{\mathbf k+\mathbf G_\parallel,n}(\mathbf r)
+=\frac{1}{\sqrt A}e^{i(\mathbf k+\mathbf G_\parallel)\cdot\mathbf r_\parallel}
+ g_n(z),
+$$
+
+    <p>where $g_n(z)$ can be Gaussians, finite elements, or other localized functions. In-plane Bloch symmetry is retained exactly, while the z direction does not require a large vacuum plane-wave basis. The price is anisotropic convergence: the $G_\parallel$ cutoff, z-basis completeness, boundary conditions, and cross integrals must be tested separately.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="mixed 不自动等于 best of both" titleEn="Mixed does not automatically mean the best of both" kind="boundary">
+  <div class="bilingual-section__zh">mixed basis 可以减少某类 basis count，也可以增加 conditioning、implementation 和 derivative complexity。只有在同一 observable/accuracy target 下报告 total time、memory、basis conditioning、SCF behaviour、force/stress consistency 和 convergence，才能支持“更高效”的比较。</div>
+  <div class="bilingual-section__en" lang="en">A mixed basis can reduce one type of basis count while increasing conditioning, implementation, and derivative complexity. A claim of greater efficiency requires total time, memory, basis conditioning, SCF behaviour, force or stress consistency, and convergence at the same observable and accuracy target.</div>
+</BilingualCallout>

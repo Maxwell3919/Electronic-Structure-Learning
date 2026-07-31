@@ -1,0 +1,392 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import CoupledTransitionExplorer from './CoupledTransitionExplorer.astro';
+
+<span id="section-21-4" className="chapter21-anchor" aria-hidden="true"></span>
+
+## 21.4 时间依赖 DFT 与线性响应 | Time-Dependent DFT and Linear Response
+
+<BilingualSection titleZh="独立粒子响应必须经过诱导势自洽" titleEn="The independent-particle response must be closed through the induced potential" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+§21.3 的 $\chi_0$ 描述固定 Kohn–Sham Hamiltonian 对有效势变化的响应。真实 TDDFT 线性响应中，外场改变密度，密度又改变 Hartree 和 exchange–correlation 势。写成算符卷积，
+
+$$
+\delta n=\chi_0\,\delta v_{\mathrm{eff}},
+\qquad
+\delta v_{\mathrm{eff}}
+=
+\delta v_{\mathrm{ext}}+f_{\mathrm{Hxc}}\,\delta n,
+$$
+
+其中
+
+$$
+f_{\mathrm{Hxc}}(1,2)
+=
+\frac{e^2}{|\mathbf r_1-\mathbf r_2|}\delta(t_1-t_2)
++f_{\mathrm{xc}}(1,2).
+$$
+
+这里的 $1,2$ 同时代表空间、自旋和时间变量。把两式联立得到相互作用响应；Hartree 项提供经典诱导场，$f_{\mathrm{xc}}$ 必须补偿独立粒子系统与真实相互作用系统之间剩余的动态差别。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The $\chi_0$ of §21.3 describes the response of a fixed Kohn–Sham Hamiltonian to a change in its effective potential. In the true TDDFT linear response, an external field changes the density, and that density changes the Hartree and exchange–correlation potentials. In operator-convolution notation,
+
+$$
+\delta n=\chi_0\,\delta v_{\mathrm{eff}},
+\qquad
+\delta v_{\mathrm{eff}}
+=
+\delta v_{\mathrm{ext}}+f_{\mathrm{Hxc}}\,\delta n,
+$$
+
+where
+
+$$
+f_{\mathrm{Hxc}}(1,2)
+=
+\frac{e^2}{|\mathbf r_1-\mathbf r_2|}\delta(t_1-t_2)
++f_{\mathrm{xc}}(1,2).
+$$
+
+The labels $1,2$ include space, spin, and time variables. Combining the equations gives the interacting response. The Hartree term supplies the classical induced field, while $f_{\mathrm{xc}}$ must provide the remaining dynamic difference between the auxiliary independent-particle system and the interacting system.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Dyson 方程与极点条件 | Dyson equation and pole condition"
+  assumptions={[
+    '围绕稳定基态做一阶线性化；',
+    'retarded Fourier 变换，所有算符乘积隐含空间/自旋积分；',
+    '逆算符只在所选离散响应子空间中定义。',
+  ]}
+>
+
+代入 $\delta v_{\mathrm{eff}}$：
+
+$$
+\delta n
+=
+\chi_0\delta v_{\mathrm{ext}}
++
+\chi_0 f_{\mathrm{Hxc}}\delta n.
+$$
+
+移项后
+
+$$
+\left(1-\chi_0 f_{\mathrm{Hxc}}\right)\delta n
+=
+\chi_0\delta v_{\mathrm{ext}},
+$$
+
+因此
+
+$$
+\boxed{
+\chi(\omega)
+=
+\left[1-\chi_0(\omega)f_{\mathrm{Hxc}}(\omega)\right]^{-1}\chi_0(\omega)
+}
+$$
+
+或等价地
+
+$$
+\chi=\chi_0+\chi_0f_{\mathrm{Hxc}}\chi.
+$$
+
+非平凡无外场解满足
+
+$$
+\det\left[1-\chi_0(\omega)f_{\mathrm{Hxc}}(\omega)\right]=0,
+$$
+
+这些频率是相互作用响应的 collective poles。由于矩阵不交换，$[1-\chi_0f]^{-1}\chi_0$ 与 $\chi_0[1-f\chi_0]^{-1}$ 的顺序必须与定义一致，不能把标量代数直接搬到离散矩阵实现。
+
+The poles of $\chi_0$ are independent Kohn–Sham transitions. The poles of $\chi$ follow after self-consistent coupling through $f_{\mathrm{Hxc}}$: they can shift, split, mix, become bright or dark, and acquire a different macroscopic weight. A kernel is therefore not a post-processing rigid shift of every line.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="从空间响应到跃迁空间" titleEn="From spatial response to transition space" eyebrow="Transition basis">
+  <div className="bilingual-section__zh">
+
+用基态轨道展开一阶密度矩阵，
+
+$$
+\delta n_\sigma(\mathbf r,\omega)
+=
+\sum_{ij}
+\varphi^*_{i\sigma}(\mathbf r)
+\,\delta\rho_{ij\sigma}(\omega)\,
+\varphi_{j\sigma}(\mathbf r).
+$$
+
+固定有效势下，密度矩阵元素含有 occupation difference 和能量分母：
+
+$$
+\delta\rho_{ij\sigma}^{0}(\omega)
+=
+\frac{f_{i\sigma}-f_{j\sigma}}
+{\omega-(\epsilon_{j\sigma}-\epsilon_{i\sigma})+i\eta}
+\,\delta v^{\mathrm{eff}}_{ij\sigma}(\omega).
+$$
+
+因此只有 occupation 不同的轨道对直接形成跃迁基。kernel 的矩阵元为
+
+$$
+K_{ia,jb}
+=
+\iint d\mathbf r\,d\mathbf r'\,
+\varphi_i^*(\mathbf r)\varphi_a(\mathbf r)
+ f_{\mathrm{Hxc}}(\mathbf r,\mathbf r',\omega)
+\varphi_j(\mathbf r')\varphi_b^*(\mathbf r').
+$$
+
+它同时包含 Coulomb screening、spin channel、空间非局域性和可能的频率依赖。若起点含 hybrid 或其他非局域算符，响应方程还必须一致地线性化该非局域项；仅替换基态本征值而不替换 kernel 不是同一个理论近似。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Expand the first-order density matrix in ground-state orbitals:
+
+$$
+\delta n_\sigma(\mathbf r,\omega)
+=
+\sum_{ij}
+\varphi^*_{i\sigma}(\mathbf r)
+\,\delta\rho_{ij\sigma}(\omega)\,
+\varphi_{j\sigma}(\mathbf r).
+$$
+
+At fixed effective potential, a density-matrix element contains an occupation difference and energy denominator:
+
+$$
+\delta\rho_{ij\sigma}^{0}(\omega)
+=
+\frac{f_{i\sigma}-f_{j\sigma}}
+{\omega-(\epsilon_{j\sigma}-\epsilon_{i\sigma})+i\eta}
+\,\delta v^{\mathrm{eff}}_{ij\sigma}(\omega).
+$$
+
+Thus orbital pairs with different occupations form the direct transition basis. The kernel matrix element is
+
+$$
+K_{ia,jb}
+=
+\iint d\mathbf r\,d\mathbf r'\,
+\varphi_i^*(\mathbf r)\varphi_a(\mathbf r)
+ f_{\mathrm{Hxc}}(\mathbf r,\mathbf r',\omega)
+\varphi_j(\mathbf r')\varphi_b^*(\mathbf r').
+$$
+
+It contains Coulomb screening, spin channel, spatial nonlocality, and possible frequency dependence. If the starting point contains a hybrid or another nonlocal operator, the response equation must linearize that nonlocal term consistently; replacing only the ground-state eigenvalues without replacing the kernel is not the same approximation.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Casida 型本征问题 | Casida-type eigenproblem"
+  assumptions={[
+    '闭壳层或已明确 spin channel；',
+    '先采用 frequency-independent adiabatic kernel；',
+    '跃迁 i to a 的能量 Delta_ia 为正；',
+    '矩阵元采用与轨道规范一致的实/共轭 convention。',
+  ]}
+>
+
+将正、负频率跃迁成对组织并做对称化，可得到平方频率本征问题的一般结构
+
+$$
+\boxed{
+\sum_{jb}
+\left[
+\Delta_{ia}^2\delta_{ij}\delta_{ab}
++
+2\sqrt{\Delta_{ia}\Delta_{jb}}\,K_{ia,jb}
+\right]F_{jb}^{S}
+=
+\Omega_S^2 F_{ia}^{S}
+}.
+$$
+
+$\Omega_S$ 是中性激发能量，$F^S$ 描述各 KS 跃迁在 collective excitation 中的权重。若 $K=0$，本征值退回独立跃迁；若 $K\ne0$，不同 $ia$ 对相互混合。偶极谱权来自
+
+$$
+D_S
+\propto
+\sum_{ia}
+\sqrt{\Delta_{ia}}\,d_{ia}F_{ia}^{S},
+$$
+
+所以 kernel 不只移动峰，还改变 bright/dark 性质。
+
+完整 Casida 形式可写成含 resonant block $A$ 和 antiresonant block $B$ 的非平凡本征问题。忽略 $B$ 得到 Tamm–Dancoff approximation (TDA)，其 Hermitian transition-space Hamiltonian 更易求解，但在强耦合、低能集体模式或 sum-rule 精度要求高时需要单独验证。下面的交互图只实现二跃迁 TDA 型模型，并明确保持该边界。
+
+</DerivationBlock>
+
+<CoupledTransitionExplorer />
+
+<BilingualCallout titleZh="kernel 不会自动修复起始带隙" titleEn="The kernel does not automatically repair the starting gap" kind="boundary">
+  <div className="bilingual-section__zh">
+    <p>绝热 TDDFT 的矩阵从 KS/GKS 跃迁能量和 kernel 共同构成。若起始带隙偏低，短程 semilocal kernel 往往主要重新分配谱权，不能提供所需的长期程电子—空穴吸引，也不能普遍把 continuum threshold 移到正确 quasiparticle gap。起点误差与 response-kernel 误差必须分别诊断。</p>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <p>An adiabatic TDDFT matrix is built jointly from KS/GKS transition energies and the kernel. If the starting gap is too small, a short-range semilocal kernel often redistributes spectral weight without supplying the required long-range electron–hole attraction or generally moving the continuum threshold to the correct quasiparticle gap. Starting-point error and response-kernel error must be diagnosed separately.</p>
+  </div>
+</BilingualCallout>
+
+<span id="section-21-5" className="chapter21-anchor" aria-hidden="true"></span>
+
+## 21.5 时间依赖密度泛函微扰理论 | Time-Dependent Density-Functional Perturbation Theory
+
+<BilingualSection titleZh="只求目标微扰的响应" titleEn="Solve only for the response to the target perturbation" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+显式跃迁空间需要 $N_{\mathrm{occ}}N_{\mathrm{empty}}$ 个轨道对，并可能形成同阶大小的矩阵。平面波或实空间基组中，空态数和矩阵存储可成为主要瓶颈。TDDFPT 改写问题：对给定频率、偏振或外部场，直接求占据轨道的一阶响应或一阶密度矩阵，而不先枚举完整空态集合。
+
+这与 Chapter 20 的静态 Sternheimer 思路相同，但 resolvent 现在含 $\pm\omega+i\eta$，并且需要同时处理正频和负频分量。自洽性仍然存在：一阶密度产生一阶 Hartree–XC 势，再反作用于一阶轨道。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+An explicit transition basis contains $N_{\mathrm{occ}}N_{\mathrm{empty}}$ orbital pairs and may generate matrices of comparable dimension. In plane-wave or real-space bases, the number of empty states and matrix storage can become the dominant bottleneck. TDDFPT reformulates the task: for a specified frequency, polarization, or external field, solve directly for the first-order occupied-orbital response or first-order density matrix without first enumerating a complete empty-state set.
+
+This is the dynamic counterpart of the static Sternheimer logic in Chapter 20, but the resolvent now contains $\pm\omega+i\eta$ and both positive- and negative-frequency components are needed. Self-consistency remains: the first-order density generates a first-order Hartree–XC potential that acts back on the first-order orbitals.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="频率域投影 Sternheimer 方程 | Projected frequency-domain Sternheimer equations"
+  assumptions={[
+    '基态 Kohn–Sham 方程已收敛；',
+    '线性响应且占据数固定；',
+    'P_c=1-P_v 投影到 occupied manifold 的正交补；',
+    'eta is positive，避免在实轴 pole 上直接求逆。',
+  ]}
+>
+
+令外场含 $e^{-i\omega t}$ 分量，并写
+
+$$
+\delta\varphi_i(t)
+=
+\delta\varphi_i^{+}(\omega)e^{-i\omega t}
++
+\delta\varphi_i^{-}(\omega)e^{+i\omega t}.
+$$
+
+对 TDKS 方程线性化并投影到空子空间，得到典型形式
+
+$$
+\boxed{
+\left(\hat H_0-\epsilon_i-\hbar\omega-i\eta\right)
+|\delta\varphi_i^{+}\rangle
+=
+-\hat P_c\,\delta\hat v_{\mathrm{eff}}^{+}|\varphi_i\rangle
+}
+$$
+
+和
+
+$$
+\boxed{
+\left(\hat H_0-\epsilon_i+\hbar\omega+i\eta\right)
+|\delta\varphi_i^{-}\rangle
+=
+-\hat P_c\,\delta\hat v_{\mathrm{eff}}^{-}|\varphi_i\rangle.
+}
+$$
+
+一阶密度由两部分组合：
+
+$$
+\delta n(\mathbf r,\omega)
+=
+\sum_i f_i
+\left[
+\varphi_i^*(\mathbf r)\delta\varphi_i^{+}(\mathbf r)
++
+\delta\varphi_i^{- *}(\mathbf r)\varphi_i(\mathbf r)
+\right].
+$$
+
+再用
+
+$$
+\delta v_{\mathrm{eff}}
+=
+\delta v_{\mathrm{ext}}+f_{\mathrm{Hxc}}\delta n
+$$
+
+闭合自洽循环。把左侧算符在空态上谱展开会恢复显式 empty-state denominators，因此 Sternheimer 与 sum-over-states 在同一离散空间和同一 kernel 下是重写关系，不是两种不同物理理论。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Liouvillian 与 Lanczos 路线" titleEn="Liouvillian and Lanczos route" eyebrow="Algorithmic formulation">
+  <div className="bilingual-section__zh">
+
+也可直接对一阶密度矩阵写运动方程。基态满足 $[\hat H_0,\hat\rho_0]=0$；线性化 von Neumann 方程得到
+
+$$
+\left(\omega-\mathcal L\right)\delta\rho(\omega)
+=
+[\delta v_{\mathrm{ext}}(\omega),\rho_0],
+$$
+
+其中 Liouvillian $\mathcal L$ 同时包含 $[H_0,\delta\rho]$ 和诱导 Hartree–XC 势的作用。目标响应是 resolvent 的矩阵元，
+
+$$
+\langle A|(\omega-\mathcal L)^{-1}|B\rangle.
+$$
+
+Lanczos 或其他 Krylov 方法可从一个外场向量构造低维递推，在不对角化全部激发的情况下获得较宽频率区间的谱。效率优势取决于预条件、频率范围、阻尼、非 Hermitian 结构和收敛标准；“未显式计算空态”不等于计算成本与空态数完全无关，因为基组和线性求解难度仍编码相同高能空间。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The equation of motion can also be written directly for the first-order density matrix. The ground state obeys $[\hat H_0,\hat\rho_0]=0$; linearizing the von Neumann equation gives
+
+$$
+\left(\omega-\mathcal L\right)\delta\rho(\omega)
+=
+[\delta v_{\mathrm{ext}}(\omega),\rho_0],
+$$
+
+where the Liouvillian $\mathcal L$ contains both $[H_0,\delta\rho]$ and the induced Hartree–XC potential. A target response is a resolvent matrix element,
+
+$$
+\langle A|(\omega-\mathcal L)^{-1}|B\rangle.
+$$
+
+Lanczos or another Krylov method can build a low-dimensional recursion from one perturbation vector and recover a broad frequency range without diagonalizing every excitation. The efficiency depends on preconditioning, frequency range, damping, non-Hermitian structure, and convergence criteria. “No explicit empty states” does not mean that cost is independent of the high-energy space: the basis and linear-solve difficulty still encode it.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="频率域方法的验证矩阵" titleEn="Validation matrix for frequency-domain methods" kind="practice">
+  <div className="bilingual-section__zh">
+    <ul>
+      <li>独立收敛基态、响应线性方程 residual、占据/空子空间投影和自洽 kernel 循环；</li>
+      <li>比较不同 $\eta$ 和频率网格，避免把网格峰值误认成稳定 oscillator strength；</li>
+      <li>在小体系中对照显式跃迁矩阵、Sternheimer 和实时间结果；</li>
+      <li>检查 TDA 与完整 resonant/antiresonant 耦合的差异；</li>
+      <li>对 hybrid/nonlocal 起点验证 kernel 和矩阵元是否一致实现。</li>
+    </ul>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ul>
+      <li>converge the ground state, response-equation residual, occupied/empty projection, and self-consistent kernel loop separately;</li>
+      <li>compare multiple values of $\eta$ and frequency meshes so that grid peak height is not mistaken for stable oscillator strength;</li>
+      <li>cross-check explicit transition matrices, Sternheimer response, and real-time response in a small system;</li>
+      <li>test the difference between TDA and full resonant/antiresonant coupling;</li>
+      <li>for hybrid/nonlocal starting points, verify consistent implementation of the kernel and matrix elements.</li>
+    </ul>
+  </div>
+</BilingualCallout>

@@ -1,0 +1,62 @@
+---
+import Chapter21OrientationAndTerms from './Chapter21OrientationAndTerms.mdx';
+import Chapter21SourceMap from './Chapter21SourceMap.astro';
+import Chapter21Foundations from './Chapter21Foundations.mdx';
+import Chapter21LinearResponse from './Chapter21LinearResponse.mdx';
+import Chapter21RealTime from './Chapter21RealTime.mdx';
+import Chapter21OpticalSystems from './Chapter21OpticalSystems.mdx';
+import Chapter21BeyondAdiabatic from './Chapter21BeyondAdiabatic.mdx';
+import Chapter21Closing from './Chapter21Closing.mdx';
+---
+
+<div class="chapter21-root">
+  <Chapter21OrientationAndTerms />
+  <Chapter21SourceMap />
+  <Chapter21Foundations />
+  <Chapter21LinearResponse />
+  <Chapter21RealTime />
+  <Chapter21OpticalSystems />
+  <Chapter21BeyondAdiabatic />
+  <Chapter21Closing />
+</div>
+
+<style is:global>
+  .chapter21-root,
+  .chapter21-root > *,
+  .chapter21-root .bilingual-section,
+  .chapter21-root .bilingual-section__grid,
+  .chapter21-root .bilingual-section__zh,
+  .chapter21-root .bilingual-section__en,
+  .chapter21-root .derivation-block,
+  .chapter21-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter21-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter21-root .chapter-source-map,
+  .chapter21-root .chapter21-symbol-table,
+  .chapter21-root .chapter21-evidence-table,
+  .chapter21-root .chapter21-source-table,
+  .chapter21-root .katex-display,
+  .chapter21-root pre {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter21-root p,
+  .chapter21-root li,
+  .chapter21-root th,
+  .chapter21-root td {
+    overflow-wrap: anywhere;
+  }
+</style>

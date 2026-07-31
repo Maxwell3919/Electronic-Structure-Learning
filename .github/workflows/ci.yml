@@ -35,6 +35,8 @@ jobs:
           scripts/smoke-chapter02-pages.py
           scripts/smoke-chapter03-pages.py
           scripts/smoke-chapter04-pages.py
+          scripts/smoke-chapter05-pages.py
+          scripts/smoke-part01-index.py
           scripts/smoke-part02-index.py
           scripts/smoke-part02-ch06.py
           scripts/smoke-part02-ch07.py
@@ -47,6 +49,7 @@ jobs:
           scripts/smoke-part04-ch14.py
           scripts/smoke-pages-ch19.py
           scripts/smoke-part05-ch20.py
+          scripts/smoke-part05-ch21.py
           scripts/smoke-part06-ch25.py
           scripts/smoke-part06-ch26.py
           scripts/smoke-part06-ch27.py
@@ -56,6 +59,7 @@ jobs:
           scripts/smoke-part07-app-d.py
           scripts/smoke-part07-app-e.py
           scripts/smoke-part07-app-f.py
+          scripts/smoke-part07-app-g.py
 
       - name: Validate models and build static site
         run: npm run check
