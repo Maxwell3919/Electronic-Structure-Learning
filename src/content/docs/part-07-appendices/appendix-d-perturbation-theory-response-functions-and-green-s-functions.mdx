@@ -1,20 +1,18 @@
 ---
-title: "Appendix D · Perturbation Theory, Response Functions, and Green’s Functions"
-description: "Martin Appendix D 的目录级阅读骨架；正文待填充。"
+title: "Appendix D · Perturbation Theory, Response Functions, and Green’s Functions | 微扰、响应与 Green 函数"
+description: "从态微扰、静态与动态响应、自洽 screening 和因果性，到 resolvent、谱权重、contour integration 与 2n+1 定理的双语参考附录。"
 sidebar:
   order: 4
-  label: "Appendix D · Perturbation Theory, Response Functions, and Green’s Functions"
+  label: "Appendix D · Perturbation, Response, Green Functions"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixDBody from '../../../components/part07/appD/AppendixDBody.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[3].label}
-  sourcePage={catalog.parts[6].units[3].page}
-  sections={catalog.parts[6].units[3].sections}
-  exercisesPage={catalog.parts[6].units[3].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix D, printed pages 590–599; sections D.1–D.6; equations D.1–D.36. Source exercises are not reproduced."
+  status="appendix-content-complete"
 />
+
+<AppendixDBody />
