@@ -1,0 +1,23 @@
+---
+interface Props {
+  titleZh: string;
+  titleEn: string;
+  kind?: 'source' | 'derivation' | 'boundary' | 'practice';
+}
+
+const {
+  titleZh,
+  titleEn,
+  kind = 'source',
+} = Astro.props;
+---
+
+<aside class:list={['bilingual-callout', `bilingual-callout--${kind}`]}>
+  <header>
+    <strong>{titleZh}</strong>
+    <span lang="en">{titleEn}</span>
+  </header>
+  <div class="bilingual-callout__grid">
+    <slot />
+  </div>
+</aside>

@@ -1,0 +1,50 @@
+import BilingualSection from '../BilingualSection.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+## 1.8 电子结构的拓扑 | Topology of Electronic Structure
+
+<BilingualSection titleZh="拓扑分类关注连续变形下保持的量" titleEn="Topology classifies quantities preserved under continuous deformation" eyebrow="Martin 1.8 · p. 13">
+  <div class="bilingual-section__zh">
+
+拓扑电子结构把 Bloch 波函数在整个 Brillouin 区中的全局结构作为分类对象。局部能量可连续变化，而某些整数或离散不变量在保持相关对称性与体能隙的连续变形中不变。量子 Hall 系统的 Chern 数与时间反演对称绝缘体的 $\mathbb Z_2$ 指标属于不同对称类别，不能混成同一标签。
+
+Shockley 的表面态模型说明，体能带连接方式改变时，边界态可能进入能隙。现代 bulk–boundary correspondence 给出更系统的关系，但观察到一个表面态不足以独立确定体拓扑；还需确认体能隙、保护对称性、态的连接方式，并排除平庸表面共振。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Topological electronic structure classifies the global organization of Bloch wavefunctions across the Brillouin zone. Local energies may vary continuously, while certain integer or discrete invariants remain fixed under deformations that preserve the relevant symmetry and bulk gap. The Chern number of a quantum Hall system and the $\mathbb Z_2$ index of a time-reversal-invariant insulator belong to different symmetry classes.
+
+Shockley’s surface-state model showed that changing bulk-band connectivity may introduce boundary states into a gap. Modern bulk–boundary correspondence makes the relation systematic, but one observed surface state does not determine bulk topology. The bulk gap, protecting symmetry, state connectivity, and exclusion of trivial surface resonances must also be established.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: 保持能隙的连续变形为何不能改变离散指标"
+  assumptions={[
+    'H(k,λ) 连续依赖 λ | H(k,λ) depends continuously on λ.',
+    '整个 Brillouin 区保持占据—未占据能隙 | The occupied–unoccupied gap stays finite throughout the Brillouin zone.',
+    '保护分类所需的对称性保持 | The protecting symmetry is preserved.',
+    '指标连续依赖占据子空间投影且只取离散值 | The invariant is continuous in the occupied projector and takes discrete values.',
+  ]}
+>
+
+能隙保持时，占据子空间投影可写为
+
+<p lang="en">While the gap remains open, the projector onto the occupied subspace can be written as</p>
+
+$$
+P(\mathbf k,\lambda)=\sum_{n\in\mathrm{occ}}
+|u_{n\mathbf k}(\lambda)\rangle\langle u_{n\mathbf k}(\lambda)|.
+$$
+
+Hamiltonian 连续且能隙不闭合时，$P(\mathbf k,\lambda)$ 可连续变化。若拓扑指标 $\nu[P]$ 只取离散值，它不能沿连续路径从一个值平滑变成另一个值，因此 $\nu(0)=\nu(1)$。
+
+<p lang="en">If the Hamiltonian varies continuously without closing the gap, then $P(\mathbf k,\lambda)$ also varies continuously. A topological invariant $\nu[P]$ restricted to discrete values cannot change smoothly along that path, so $\nu(0)=\nu(1)$.</p>
+
+若两端指标不同，至少有一个前提失效：体能隙闭合、保护对称性破坏，或体系离开所用有效 Hamiltonian 的分类范围。能隙闭合是可能的转变点，却不充分证明指标发生改变。
+
+<p lang="en">Different endpoint invariants require at least one assumption to fail: the bulk gap closes, the protecting symmetry is broken, or the system leaves the classification defined by the effective Hamiltonian. A gap closing is a possible transition point, not sufficient proof that the invariant has changed.</p>
+
+</DerivationBlock>

@@ -1,0 +1,35 @@
+import BilingualSection from '../BilingualSection.astro';
+
+## 1.2 独立电子图像为何如此成功？ | Why Is the Independent-Electron Picture So Successful?
+
+<BilingualSection titleZh="有效单粒子问题的含义" titleEn="Meaning of an effective one-particle problem" eyebrow="Martin 1.2 · pp. 3–7">
+  <div class="bilingual-section__zh">
+
+真实 Hamiltonian 含有电子—电子相互作用，因此原则上不能拆成彼此无关的单电子方程。独立电子图像把核势以及相互作用的某些平均效应放入有效势，再求解单粒子本征态。这个形式是对多体问题的重新组织，不代表相互作用已从真实体系中消失。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The physical Hamiltonian contains electron–electron interactions and therefore cannot generally be separated into unrelated one-electron equations. The independent-electron picture places the nuclear potential and selected average interaction effects into an effective potential, then solves one-particle eigenstates. This reorganizes the many-body problem; it does not remove interactions from the physical system.
+
+  </div>
+</BilingualSection>
+
+$$
+\hat H_{\mathrm{eff}}\psi_i(\mathbf r)=\varepsilon_i\psi_i(\mathbf r),
+\qquad
+\hat H_{\mathrm{eff}}=-\frac{\hbar^2}{2m_e}\nabla^2+V_{\mathrm{eff}}(\mathbf r).
+$$
+
+<BilingualSection titleZh="方程的来源与边界" titleEn="Origin and boundary of the equation">
+  <div class="bilingual-section__zh">
+
+从时间依赖 Schrödinger 方程取定态形式，时间因子写成 $\exp(-i\varepsilon_i t/\hbar)$，即可得到本征值方程。动量算符 $\hat{\mathbf p}=-i\hbar\nabla$ 给出动能 $\hat{\mathbf p}^2/(2m_e)=-\hbar^2\nabla^2/(2m_e)$。该推导确定了给定有效 Hamiltonian 的形式，却没有给出 $V_{\mathrm{eff}}$ 的唯一构造。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Taking a stationary form of the time-dependent Schrödinger equation, with time factor $\exp(-i\varepsilon_i t/\hbar)$, gives the eigenvalue equation. The momentum operator $\hat{\mathbf p}=-i\hbar\nabla$ yields the kinetic energy $\hat{\mathbf p}^2/(2m_e)=-\hbar^2\nabla^2/(2m_e)$. This derivation fixes the form of a specified effective Hamiltonian but does not uniquely construct $V_{\mathrm{eff}}$.
+
+  </div>
+</BilingualSection>
