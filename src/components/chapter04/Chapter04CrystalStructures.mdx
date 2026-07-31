@@ -1,0 +1,437 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-4-1">4.1 晶体结构：晶格 + 基元 | Structures of Crystals: Lattice + Basis</h2>
+
+<BilingualSection titleZh="离散平移群定义 Bravais lattice" titleEn="A discrete translation group defines a Bravais lattice" eyebrow="【Martin 原书 | Martin source】 §4.1 · pp. 81–91">
+  <div class="bilingual-section__zh">
+
+理想无限晶体具有离散平移不变性。选择维数 $d$ 中线性无关的 primitive vectors $\mathbf a_1,\ldots,\mathbf a_d$，所有 Bravais translations 为
+
+$$
+\mathbf T(\mathbf n)=\sum_{i=1}^{d}n_i\mathbf a_i,
+\qquad n_i\in\mathbb Z.
+$$
+
+这些平移在向量加法下构成 Abelian group：零向量是单位元，$-\mathbf T$ 是逆元，任意两次平移的和仍在集合中。Bravais lattice 指的是这组点或平移本身，不包含每个点上放置什么原子。
+
+primitive vectors 不唯一。若整数矩阵 $\mathbf M$ 满足 $\det\mathbf M=\pm1$，新向量
+
+$$
+\mathbf a'_i=\sum_jM_{ij}\mathbf a_j
+$$
+
+生成同一 lattice；这样的 unimodular 变换改变 cell 形状但不改变 primitive-cell volume。若 $|\det\mathbf M|>1$，新 vectors 只生成原 lattice 的子格，对应 supercell 而不是另一组 primitive vectors。
+
+Born–von Karman 边界条件把无限体系暂时替换为含 $N_i$ 个 primitive translations 的大周期晶体：
+
+$$
+f(\mathbf r+N_i\mathbf a_i)=f(\mathbf r).
+$$
+
+它用于离散化允许的 $\mathbf k$ 并定义 thermodynamic limit；物理 bulk 结论应在 $N_i\to\infty$ 时不依赖大胞形状和边界选取。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An ideal infinite crystal has discrete translational invariance. Choose linearly independent primitive vectors $\mathbf a_1,\ldots,\mathbf a_d$ in dimension $d$. Every Bravais translation is
+
+$$
+\mathbf T(\mathbf n)=\sum_{i=1}^{d}n_i\mathbf a_i,
+\qquad n_i\in\mathbb Z.
+$$
+
+These translations form an Abelian group under vector addition. The zero vector is the identity, $-\mathbf T$ is the inverse, and the sum of any two translations remains in the set. The Bravais lattice is this set of points or translations; it does not specify which atoms are attached to each point.
+
+Primitive vectors are not unique. If an integer matrix $\mathbf M$ has $\det\mathbf M=\pm1$, then
+
+$$
+\mathbf a'_i=\sum_jM_{ij}\mathbf a_j
+$$
+
+generates the same lattice. Such a unimodular transformation changes cell shape but not primitive-cell volume. If $|\det\mathbf M|>1$, the new vectors generate only a sublattice and define a supercell rather than another primitive basis.
+
+Born–von Karman boundary conditions temporarily replace an infinite system by a large periodic crystal containing $N_i$ primitive translations:
+
+$$
+f(\mathbf r+N_i\mathbf a_i)=f(\mathbf r).
+$$
+
+They discretize allowed $\mathbf k$ values and define the thermodynamic limit. Bulk conclusions should become independent of large-cell shape and boundary choice as $N_i\to\infty$.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="primitive-cell volume 与 determinant | Primitive-cell volume and the determinant"
+  assumptions={[
+    'primitive vectors are linearly independent;',
+    'orientation may be right- or left-handed;',
+    'cell boundaries are assigned consistently so shared faces are not double counted.']}
+>
+
+把 primitive vectors 作为矩阵的列：
+
+$$
+\mathbf A=
+\begin{pmatrix}
+|&|&&|\\
+\mathbf a_1&\mathbf a_2&\cdots&\mathbf a_d\\
+|&|&&|
+\end{pmatrix}.
+$$
+
+unit cube 中的 fractional coordinate $\boldsymbol\xi\in[0,1)^d$ 映射到 real space：
+
+$$
+\mathbf r=\mathbf A\boldsymbol\xi.
+$$
+
+Jacobian 是 $|\det\mathbf A|$，因此 primitive-cell measure 为
+
+$$
+\boxed{\Omega_{\mathrm{cell}}=|\det\mathbf A|}.
+$$
+
+三维中等价于 scalar triple product
+
+$$
+\Omega_{\mathrm{cell}}
+=|\mathbf a_1\cdot(\mathbf a_2\times\mathbf a_3)|,
+$$
+
+二维中为 parallelogram area
+
+$$
+A_{\mathrm{cell}}=|a_{1x}a_{2y}-a_{1y}a_{2x}|.
+$$
+
+若换 primitive basis $\mathbf A'=\mathbf A\mathbf M^T$，则
+
+$$
+|\det\mathbf A'|
+=|\det\mathbf A|\,|\det\mathbf M|.
+$$
+
+同一 primitive lattice 要求 $|\det\mathbf M|=1$；一个 $m$ 倍 supercell 满足 $|\det\mathbf M|=m$，含 $m$ 个 primitive cells。
+
+<p lang="en">The primitive vectors map the unit fractional cube into a real-space parallelepiped. The Jacobian is the determinant magnitude, giving cell volume. A unimodular integer basis change preserves volume, while a supercell transformation multiplies it by the integer index of the sublattice.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="primitive parallelepiped 与 Wigner–Seitz cell" titleEn="Primitive parallelepiped and Wigner–Seitz cell">
+  <div class="bilingual-section__zh">
+
+最直接的 primitive cell 是
+
+$$
+\mathbf r=\sum_i\xi_i\mathbf a_i,
+\qquad 0\le\xi_i<1.
+$$
+
+它通常不显示 lattice 的完整 point symmetry。Wigner–Seitz construction 从一个 lattice point 出发，连接所有邻近点，对每条连线作垂直平分面，取同时包含原点的一侧。保留下来的最小凸多面体是与原点最近的点集，也是 lattice 的 Voronoi cell。
+
+Wigner–Seitz cell 是 primitive，因为每个 generic point 都唯一归属于最近 lattice point；将该 cell 平移到所有 lattice points 后恰好铺满空间。它的边界可在等距面上共享，边界 measure 为零，不影响积分和 cell volume。
+
+在 square lattice 中 Wigner–Seitz cell 是 square；在 2D triangular lattice 中是 regular hexagon。名称“triangular lattice”描述 lattice points 形成的三角网格，不表示 primitive Wigner–Seitz cell 必须是三角形。类似地，fcc 的 Wigner–Seitz cell 是 rhombic dodecahedron，bcc 的是 truncated octahedron；conventional cubic cell 只是更方便显示 cubic axes。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The most direct primitive cell is the parallelepiped
+
+$$
+\mathbf r=\sum_i\xi_i\mathbf a_i,
+\qquad 0\le\xi_i<1.
+$$
+
+It often hides the full point symmetry. The Wigner–Seitz construction starts from one lattice point, joins it to neighbouring points, constructs perpendicular bisectors, and keeps the half-spaces containing the origin. Their minimal convex intersection is the set of points closer to the origin than to any other lattice point, i.e. the Voronoi cell of the lattice.
+
+The Wigner–Seitz cell is primitive because every generic point has one nearest lattice point. Translating it to all lattice points tiles space. Boundary points may be shared but have zero measure and do not affect integrals or volume.
+
+For a square lattice the Wigner–Seitz cell is square; for a two-dimensional triangular lattice it is a regular hexagon. “Triangular lattice” describes the point network and does not require a triangular primitive cell. Likewise, fcc and bcc Wigner–Seitz cells are noncubic polyhedra, whereas their conventional cubic cells are chosen to display cubic axes.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="crystal = Bravais lattice + basis" titleEn="Crystal = Bravais lattice + basis">
+  <div class="bilingual-section__zh">
+
+真实 crystal 由每个 Bravais lattice point 上重复的 basis 生成。若 primitive cell 中有 $N_b$ 个 atoms，位置为 $\boldsymbol\tau_s$，全部原子坐标为
+
+$$
+\mathbf R_{s,\mathbf n}
+=\boldsymbol\tau_s+\mathbf T(\mathbf n),
+\qquad s=1,\ldots,N_b.
+$$
+
+用 fractional coordinates 表示
+
+$$
+\boldsymbol\tau_s
+=\sum_i\tau^L_{si}\mathbf a_i,
+$$
+
+其中 $\tau^L_{si}$ 与 Cartesian components 不同。添加整数向量不改变物理位置类：
+
+$$
+\boldsymbol\tau_s^L
+\sim\boldsymbol\tau_s^L+\mathbf m,
+\qquad \mathbf m\in\mathbb Z^d.
+$$
+
+选择 cell origin 也会统一平移所有 basis coordinates。比较两个结构文件时，不能只逐行比较 fractional coordinates；需要允许 lattice-basis 变换、origin shift、atom permutation 和 periodic images。
+
+basis 原子身份决定 translation group。honeycomb pattern 若两 sublattices 是相同元素，Bravais lattice 仍是 triangular，而 basis 有两个相同 atoms；若两位置是不同元素如 BN，几何 lattice 仍 triangular，但 inversion 等 point symmetries 改变。若在 bcc conventional cube 的 body-center 和 corner 放相同元素，真正 Bravais lattice 是 bcc；放不同元素形成 CsCl-type crystal 后，body-center translation 不再把 crystal 映回自身，Bravais lattice 降为 simple cubic with a two-atom basis。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A physical crystal is generated by repeating a basis at every Bravais lattice point. If a primitive cell contains $N_b$ atoms at positions $\boldsymbol\tau_s$, all atomic coordinates are
+
+$$
+\mathbf R_{s,\mathbf n}
+=\boldsymbol\tau_s+\mathbf T(\mathbf n),
+\qquad s=1,\ldots,N_b.
+$$
+
+Fractional coordinates are defined by
+
+$$
+\boldsymbol\tau_s
+=\sum_i\tau^L_{si}\mathbf a_i.
+$$
+
+Adding an integer lattice coordinate gives the same periodic position class. Changing the cell origin shifts every basis coordinate together. Structure-file comparison therefore must allow lattice-basis transformations, origin shifts, atom permutations, and periodic images rather than matching fractional-coordinate rows literally.
+
+Atomic identities can change the translation group. A honeycomb arrangement has a triangular Bravais lattice and a two-site basis. Replacing equivalent sites by different elements, as in BN, retains the translation lattice but changes point symmetries. A conventional body-centred cube with identical atoms has a bcc Bravais lattice. If corner and body-centre sites are different species, the body-centre displacement is no longer a symmetry translation; the Bravais lattice becomes simple cubic with a two-atom basis.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="basis choice 与 structure factor 的不变量 | Basis choice and structure-factor invariance"
+  assumptions={[
+    'same physical crystal and reciprocal vector G;',
+    'atomic form factors depend only on species and G;',
+    'origin changes are applied consistently.']}
+>
+
+周期 density 或 scattering amplitude 的 basis dependence 常通过 structure factor
+
+$$
+S(\mathbf G)=\sum_{s=1}^{N_b}
+f_s(\mathbf G)e^{-i\mathbf G\cdot\boldsymbol\tau_s}
+$$
+
+出现。若整体 origin shift 为 $\boldsymbol\delta$，所有 basis positions 变成 $\boldsymbol\tau_s'=\boldsymbol\tau_s-\boldsymbol\delta$，于是
+
+$$
+S'(\mathbf G)
+=e^{i\mathbf G\cdot\boldsymbol\delta}S(\mathbf G).
+$$
+
+amplitude 获得整体 phase，而 intensity
+
+$$
+|S'(\mathbf G)|^2=|S(\mathbf G)|^2
+$$
+
+不变。若把某个 basis atom 移到相邻 cell，$\boldsymbol\tau_s' =\boldsymbol\tau_s+\mathbf T$，则 reciprocal condition $e^{-i\mathbf G\cdot\mathbf T}=1$ 使该项完全不变。
+
+因此 fractional coordinates、origin 和 cell assignment 可变，但可观察 diffraction intensities、total density 和 energy 必须在一致变换下不变。程序若因简单 origin shift 给出不同 total energy，说明 grids、boundary corrections、symmetry constraints 或 numerical precision 没有一致处理。
+
+<p lang="en">Changing the origin multiplies a structure factor by a global phase, leaving diffraction intensity invariant. Moving a basis atom by a Bravais translation leaves each reciprocal-lattice phase unchanged. Coordinate conventions may change, but observables must not.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="二维结构：square、triangular 与 honeycomb" titleEn="Two-dimensional structures: square, triangular, and honeycomb">
+  <div class="bilingual-section__zh">
+
+2D square lattice 可选
+
+$$
+\mathbf a_1=a(1,0),
+\qquad
+\mathbf a_2=a(0,1),
+$$
+
+每个 lattice point 有四个最近邻。triangular lattice 可选
+
+$$
+\mathbf a_1=a(1,0),
+\qquad
+\mathbf a_2=a\left(\frac12,\frac{\sqrt3}{2}\right),
+$$
+
+每点有六个最近邻，primitive area 为 $\sqrt3a^2/2$。
+
+honeycomb 不是 Bravais lattice，因为从一个 sublattice site 到最近邻另一个 sublattice site 的位移不把整个 point set 映射为自身。它由 triangular Bravais lattice 加两个-site basis 组成。例如可取
+
+$$
+\boldsymbol\tau_A=0,
+\qquad
+\boldsymbol\tau_B=\frac13(\mathbf a_1+\mathbf a_2)
+$$
+
+或任何 periodic/origin-equivalent choice。graphene 和 BN 共用 honeycomb geometry，但 identical/different sublattice species 改变 inversion、band degeneracy 和 allowed onsite terms。
+
+2H transition-metal dichalcogenide monolayer 的 top view 也显示 triangular metal lattice，但 primitive basis 含一个 metal 和上下两个 chalcogen atoms。1T 与 2H 可共享 composition 和 in-plane lattice，却具有不同 out-of-plane coordination 与 stacking of chalcogen sublayers；因此“俯视图相同”不等于完整 crystal structure 相同。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A square lattice may use
+
+$$
+\mathbf a_1=a(1,0),
+\qquad
+\mathbf a_2=a(0,1),
+$$
+
+with four nearest neighbours. A triangular lattice may use
+
+$$
+\mathbf a_1=a(1,0),
+\qquad
+\mathbf a_2=a\left(\frac12,\frac{\sqrt3}{2}\right),
+$$
+
+with six nearest neighbours and primitive area $\sqrt3a^2/2$.
+
+A honeycomb pattern is not a Bravais lattice because a nearest-neighbour displacement between the two sublattices does not map the entire point set onto itself. It is a triangular Bravais lattice with a two-site basis, for example
+
+$$
+\boldsymbol\tau_A=0,
+\qquad
+\boldsymbol\tau_B=\frac13(\mathbf a_1+\mathbf a_2),
+$$
+
+up to equivalent origin and periodic choices. Graphene and BN share honeycomb geometry, while equal or different sublattice species change inversion, band degeneracy, and allowed onsite terms.
+
+A 2H transition-metal dichalcogenide monolayer also shows a triangular metal lattice in top view, but its primitive basis contains one metal and two chalcogen atoms above and below the metal plane. The 1T and 2H structures can share composition and in-plane lattice while differing in out-of-plane coordination. A common top view is not a complete structural equivalence.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="三维 cubic lattices 与常见 two-atom bases" titleEn="Three-dimensional cubic lattices and common two-atom bases">
+  <div class="bilingual-section__zh">
+
+simple cubic conventional axes 本身可作为 primitive vectors：
+
+$$
+\mathbf a_1=a(1,0,0),\quad
+\mathbf a_2=a(0,1,0),\quad
+\mathbf a_3=a(0,0,1).
+$$
+
+fcc conventional cube 不是 primitive。一个 primitive choice 为
+
+$$
+\mathbf a_1=\frac a2(0,1,1),\quad
+\mathbf a_2=\frac a2(1,0,1),\quad
+\mathbf a_3=\frac a2(1,1,0),
+$$
+
+cell volume $a^3/4$。bcc 可取
+
+$$
+\mathbf a_1=\frac a2(-1,1,1),\quad
+\mathbf a_2=\frac a2(1,-1,1),\quad
+\mathbf a_3=\frac a2(1,1,-1),
+$$
+
+cell volume $a^3/2$。conventional cube 分别含 4 个 fcc lattice points 和 2 个 bcc lattice points，和 volume ratio 一致。
+
+NaCl/rock-salt 与 zinc-blende 都可使用 fcc Bravais lattice 和 two-atom basis，但 basis displacement 不同。以 one species at origin，rock-salt 可用相对位移 $a(1/2,1/2,1/2)$ 的 equivalent choice；zinc-blende 使用 $a(1/4,1/4,1/4)$。若 zinc-blende 两 species 相同，得到 diamond structure；diamond 的 inversion center 位于 bond center，而不是 atomic site。
+
+cubic perovskite $ABO_3$ 的 Bravais lattice 为 simple cubic，basis 可取 corner B、body-center A 和三个 face-centered oxygens 的 equivalent assignment。A 与 B 具有不同配位环境：A 常为 12-fold oxygen coordination，B 位于 oxygen octahedron。真实 perovskites 常发生 octahedral rotations、polar displacements、Jahn–Teller distortions 或 magnetic ordering，使 primitive cell 扩大并降低 symmetry；理想 cubic cell 只是 reference structure。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The conventional simple-cubic axes are primitive. An fcc conventional cube is not primitive; a possible primitive set is
+
+$$
+\mathbf a_1=\frac a2(0,1,1),\quad
+\mathbf a_2=\frac a2(1,0,1),\quad
+\mathbf a_3=\frac a2(1,1,0),
+$$
+
+with volume $a^3/4$. For bcc one may choose
+
+$$
+\mathbf a_1=\frac a2(-1,1,1),\quad
+\mathbf a_2=\frac a2(1,-1,1),\quad
+\mathbf a_3=\frac a2(1,1,-1),
+$$
+
+with volume $a^3/2$. The conventional cube therefore contains four fcc lattice points or two bcc lattice points, consistent with the volume ratios.
+
+Rock salt and zinc blende both use an fcc Bravais lattice with a two-atom basis but have different basis displacements. If the two zinc-blende sites are occupied by the same element, the result is diamond. Diamond inversion centres lie at bond centres rather than atomic sites.
+
+Ideal cubic perovskite $ABO_3$ has a simple-cubic Bravais lattice and a five-atom basis. A and B sites have different oxygen coordination. Real perovskites frequently develop octahedral rotations, polar displacements, Jahn–Teller distortions, or magnetic order that enlarge the primitive cell and reduce symmetry; the ideal cubic structure is a reference rather than a universal ground state.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="close-packed planes、fcc 与 hcp" titleEn="Close-packed planes, fcc, and hcp">
+  <div class="bilingual-section__zh">
+
+二维 hard disks 的最大密度排列是 triangular layer，每个 site 有六个 in-plane nearest neighbours。将相同 layers 堆叠到三维时，第二层只能占第一层三角孔的一组，记作 B；第三层可回到 A 或占另一组 C。
+
+$$
+\cdots ABCABC\cdots \quad\Rightarrow\quad \mathrm{fcc},
+$$
+
+$$
+\cdots ABAB\cdots \quad\Rightarrow\quad \mathrm{hcp}.
+$$
+
+fcc stacking 本身形成 Bravais lattice，可用 one-site primitive basis；hcp 需要 hexagonal Bravais lattice 加 two-site basis。两者 ideal hard-sphere packing fraction 相同、每 atom 有 12 nearest neighbours，但 stacking sequence、reciprocal lattice、phonons、stacking-fault energy 和 electronic bands 不同。相同 coordination number 不意味着相同 energy。
+
+任意更长 stacking sequence 产生更大 primitive cell 或 polytype。层状材料中的 2H、3R 等 polytypes 也体现类似思想，但原子内部 basis、orientation 和 interlayer chemistry 比 hard-sphere model 更复杂。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The densest arrangement of hard disks in two dimensions is a triangular layer with six in-plane nearest neighbours. Stacking identical layers in three dimensions places the second layer in one set of triangular holes, denoted B. The third layer can return to A or occupy the distinct C set:
+
+$$
+\cdots ABCABC\cdots \quad\Rightarrow\quad \mathrm{fcc},
+$$
+
+$$
+\cdots ABAB\cdots \quad\Rightarrow\quad \mathrm{hcp}.
+$$
+
+The fcc stacking is itself a Bravais lattice with a one-site primitive basis. Hcp requires a hexagonal Bravais lattice with a two-site basis. Ideal hard-sphere packing fraction and coordination are the same, but stacking sequence, reciprocal lattice, phonons, stacking-fault energy, and electronic bands differ. Equal coordination does not imply equal energy.
+
+Longer stacking sequences create larger primitive cells or polytypes. Layered-material polytypes such as 2H and 3R use a related stacking language, but their internal basis, orientation, and interlayer chemistry are more complicated than a hard-sphere model.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="结构身份与计算准备的最低检查" titleEn="Minimum checks for structural identity and calculation readiness" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>通过 lattice reduction 或 symmetry finder 识别 primitive translation group，而不是把输入 conventional cell 当作 primitive；</li>
+      <li>记录 space group、origin choice、Wyckoff positions、occupancies、magnetic moments 和 symmetry tolerance；</li>
+      <li>比较结构时允许 unimodular basis change、supercell mapping、atom permutation 和 periodic images；</li>
+      <li>对二维结构明确真空方向不属于 physical lattice periodicity，并区分 2D layer group 与 3D supercell space group；</li>
+      <li>在 relaxation 后重新识别 symmetry，检查是否发生 cell multiplication、species exchange、bond breaking 或 layer sliding；</li>
+      <li>primitive identity、局域几何合理和 SCF 收敛仍不能证明 thermodynamic、dynamical 或 finite-temperature stability。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>identify the primitive translation group using lattice reduction or symmetry analysis rather than assuming the input conventional cell is primitive;</li>
+      <li>record space group, origin choice, Wyckoff positions, occupancies, magnetic moments, and symmetry tolerance;</li>
+      <li>allow unimodular basis changes, supercell mappings, atom permutations, and periodic images when comparing structures;</li>
+      <li>for a two-dimensional structure, state that the vacuum direction is not a physical periodicity and distinguish a layer group from the three-dimensional supercell space group;</li>
+      <li>redetect symmetry after relaxation and check for cell multiplication, species exchange, bond breaking, or layer sliding;</li>
+      <li>primitive identity, plausible local geometry, and SCF convergence still do not establish thermodynamic, dynamical, or finite-temperature stability.</li>
+    </ul>
+  </div>
+</BilingualCallout>

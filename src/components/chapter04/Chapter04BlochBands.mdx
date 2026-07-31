@@ -1,0 +1,357 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-4-3">4.3 晶体中的激发态：一般 Bloch 定理 | Excited States in Crystals: General Bloch Theorem</h2>
+
+<BilingualSection titleZh="translation group 分类所有晶体激发" titleEn="The translation group classifies every crystal excitation" eyebrow="【Martin 原书 | Martin source】 §4.3 · pp. 94–98">
+  <div class="bilingual-section__zh">
+
+对固定晶体结构，任意 bulk Hamiltonian、dynamical matrix 或 response kernel 若与所有 Bravais translations 对易，translation operators
+
+$$
+\hat T_{\mathbf R}f(\mathbf r)=f(\mathbf r+\mathbf R)
+$$
+
+形成 Abelian group：
+
+$$
+\hat T_{\mathbf R}\hat T_{\mathbf R'}
+=\hat T_{\mathbf R+\mathbf R'}
+=\hat T_{\mathbf R'}\hat T_{\mathbf R}.
+$$
+
+彼此对易的 unitary operators 可与 Hamiltonian 同时对角化。若 $|\Psi_{\mathbf k}\rangle$ 属于一个 translation representation，
+
+$$
+\hat T_{\mathbf R}|\Psi_{\mathbf k}\rangle
+=\lambda_{\mathbf k}(\mathbf R)|\Psi_{\mathbf k}\rangle.
+$$
+
+unitarity 要求 $|\lambda|=1$，group multiplication 要求
+
+$$
+\lambda(\mathbf R+\mathbf R')
+=\lambda(\mathbf R)\lambda(\mathbf R').
+$$
+
+离散 Abelian translation group 的一维 unitary representations 因此为
+
+$$
+\boxed{\lambda_{\mathbf k}(\mathbf R)=e^{i\mathbf k\cdot\mathbf R}}.
+$$
+
+$\mathbf k$ 和 $\mathbf k+\mathbf G$ 给出相同 representation，因为 $e^{i\mathbf G\cdot\mathbf R}=1$。因此 crystal momentum 是 reciprocal-cell 中的 equivalence class，而非唯一无限向量。
+
+这一 theorem 不依赖 independent electrons。它适用于 exact many-body quasiparticle addition/removal states、neutral excitons、phonons、magnons 和其他 translation-covariant excitations。具体 dispersion、lifetime、spectral weight 和 interaction content 取决于相应 many-body problem。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a fixed crystal, any bulk Hamiltonian, dynamical matrix, or response kernel that commutes with every Bravais translation can be classified by the Abelian translation group. Translation operators satisfy
+
+$$
+\hat T_{\mathbf R}\hat T_{\mathbf R'}
+=\hat T_{\mathbf R+\mathbf R'}
+=\hat T_{\mathbf R'}\hat T_{\mathbf R}.
+$$
+
+Commuting unitary translations can be diagonalized together with the Hamiltonian. A translation eigenstate obeys
+
+$$
+\hat T_{\mathbf R}|\Psi_{\mathbf k}\rangle
+=\lambda_{\mathbf k}(\mathbf R)|\Psi_{\mathbf k}\rangle.
+$$
+
+Unitarity requires unit modulus and group multiplication requires multiplicativity. The one-dimensional unitary representations are
+
+$$
+\lambda_{\mathbf k}(\mathbf R)=e^{i\mathbf k\cdot\mathbf R}.
+$$
+
+$\mathbf k$ and $\mathbf k+\mathbf G$ define the same representation because $e^{i\mathbf G\cdot\mathbf R}=1$. Crystal momentum is therefore an equivalence class within one reciprocal primitive cell, not a unique vector in infinite space.
+
+The theorem does not require independent electrons. It applies to exact many-body addition/removal excitations, neutral excitons, phonons, magnons, and other translation-covariant excitations. Dispersion, lifetime, spectral weight, and interaction content still depend on the corresponding many-body problem.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Bloch form 从 translation eigenvalue 得到 | Bloch form from a translation eigenvalue"
+  assumptions={[
+    'one-particle coordinate representation is used for the displayed derivation;',
+    'the state belongs to a fixed translation representation k;',
+    'the crystal is infinite or uses Born–von Karman boundaries.']}
+>
+
+若 one-particle state 满足
+
+$$
+\psi_{n\mathbf k}(\mathbf r+\mathbf R)
+=e^{i\mathbf k\cdot\mathbf R}
+\psi_{n\mathbf k}(\mathbf r),
+$$
+
+定义
+
+$$
+u_{n\mathbf k}(\mathbf r)
+=e^{-i\mathbf k\cdot\mathbf r}\psi_{n\mathbf k}(\mathbf r).
+$$
+
+则
+
+$$
+\begin{aligned}
+u_{n\mathbf k}(\mathbf r+\mathbf R)
+&=e^{-i\mathbf k\cdot(\mathbf r+\mathbf R)}
+\psi_{n\mathbf k}(\mathbf r+\mathbf R)\\
+&=e^{-i\mathbf k\cdot\mathbf r}\psi_{n\mathbf k}(\mathbf r)
+=u_{n\mathbf k}(\mathbf r).
+\end{aligned}
+$$
+
+因此
+
+$$
+\boxed{
+\psi_{n\mathbf k}(\mathbf r)
+=e^{i\mathbf k\cdot\mathbf r}u_{n\mathbf k}(\mathbf r)},
+\qquad
+u_{n\mathbf k}(\mathbf r+\mathbf R)=u_{n\mathbf k}(\mathbf r).
+$$
+
+Bloch function 的 probability density 是 periodic：
+
+$$
+|\psi_{n\mathbf k}(\mathbf r+\mathbf R)|^2
+=|\psi_{n\mathbf k}(\mathbf r)|^2.
+$$
+
+phase factor 只编码 cells 之间的相位关系。$u_{n\mathbf k}$ 不是唯一：乘以 smooth $k$-dependent phase $e^{i\theta_n(\mathbf k)}$ 不改变物理 state。涉及 Berry phase、Wannier functions 或 topology 时，必须跟踪这种 gauge freedom。
+
+<p lang="en">Multiplying a translation eigenfunction by $e^{-i\mathbf k\cdot\mathbf r}$ removes the intercell phase and produces a periodic function. The periodic part retains a $k$-dependent phase gauge, which becomes essential for Berry phases, Wannier functions, and topology.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="Bloch Hamiltonian 与 band eigenproblem" titleEn="Bloch Hamiltonian and the band eigenproblem">
+  <div class="bilingual-section__zh">
+
+对 local independent-particle Hamiltonian
+
+$$
+\hat H=-\frac12\nabla^2+V(\mathbf r),
+\qquad V(\mathbf r+\mathbf R)=V(\mathbf r),
+$$
+
+代入 Bloch form：
+
+$$
+\hat H e^{i\mathbf k\cdot\mathbf r}u_{n\mathbf k}
+=e^{i\mathbf k\cdot\mathbf r}
+\hat H(\mathbf k)u_{n\mathbf k},
+$$
+
+其中
+
+$$
+\boxed{
+\hat H(\mathbf k)
+=\frac12(-i\nabla+\mathbf k)^2+V(\mathbf r)}.
+$$
+
+因此每个 $\mathbf k$ 上只需在一个 primitive cell 内解 periodic boundary eigenproblem：
+
+$$
+\hat H(\mathbf k)u_{n\mathbf k}
+=\varepsilon_n(\mathbf k)u_{n\mathbf k}.
+$$
+
+band index $n$ 标记固定 k block 中的离散 eigenvalues。由于 $\mathbf k+\mathbf G$ 属于同一 translation representation，能量集合周期：
+
+$$
+\{\varepsilon_n(\mathbf k+\mathbf G)\}
+=\{\varepsilon_n(\mathbf k)\}.
+$$
+
+逐 band label 的 periodicity 可能需要 reordering，因为 bands 可在 symmetry-allowed crossings 处交换排序。物理对象是整个 spectrum 或连续跟踪的 subspace，不是单纯按每个 k 的能量排序编号。
+
+nonlocal pseudopotential、spin–orbit、magnetic vector potential 或 generalized Kohn–Sham operator 会改变 $\hat H(\mathbf k)$ 的显式形式，但只要 translation symmetry 保持，k-block decomposition 仍成立。无序、缺陷、incommensurate modulation 或有限边界会破坏 primitive translation group，需要 supercell、configuration averaging 或非周期方法。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a local independent-particle Hamiltonian
+
+$$
+\hat H=-\frac12\nabla^2+V(\mathbf r),
+\qquad V(\mathbf r+\mathbf R)=V(\mathbf r),
+$$
+
+Bloch substitution gives the cell-periodic Hamiltonian
+
+$$
+\hat H(\mathbf k)
+=\frac12(-i\nabla+\mathbf k)^2+V(\mathbf r),
+$$
+
+and
+
+$$
+\hat H(\mathbf k)u_{n\mathbf k}
+=\varepsilon_n(\mathbf k)u_{n\mathbf k}.
+$$
+
+Each $\mathbf k$ therefore requires only a primitive-cell eigenproblem with periodic boundary conditions. The spectrum is reciprocal-periodic. Individual energy-order labels may need reordering at symmetry-allowed crossings; the invariant object is the spectrum or a continuously tracked subspace rather than a naïve sorted band number.
+
+Nonlocal pseudopotentials, spin–orbit coupling, magnetic vector potentials, and generalized Kohn–Sham operators change the explicit $\hat H(\mathbf k)$, but k-block decomposition survives whenever translations remain a symmetry. Disorder, defects, incommensurate modulation, and finite boundaries require supercells, configurational methods, or nonperiodic descriptions.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="group velocity 与 energy gradient | Group velocity and the energy gradient"
+  assumptions={[
+    'an isolated differentiable band is considered;',
+    'the Bloch state is normalized in one cell;',
+    'external fields and scattering are absent during the derivative.']}
+>
+
+Hellmann–Feynman theorem 对 $\hat H(\mathbf k)$ 给出
+
+$$
+\nabla_{\mathbf k}\varepsilon_n(\mathbf k)
+=\left\langle u_{n\mathbf k}\left|
+\nabla_{\mathbf k}\hat H(\mathbf k)
+\right|u_{n\mathbf k}\right\rangle.
+$$
+
+对 local Schrödinger Hamiltonian，
+
+$$
+\nabla_{\mathbf k}\hat H(\mathbf k)
+=-i\nabla+\mathbf k,
+$$
+
+所以 atomic units 中
+
+$$
+\nabla_{\mathbf k}\varepsilon_n
+=\langle -i\nabla+\mathbf k\rangle.
+$$
+
+恢复 $\hbar$，semiclassical group velocity 为
+
+$$
+\boxed{
+\mathbf v_n(\mathbf k)
+=\frac1\hbar\nabla_{\mathbf k}\varepsilon_n(\mathbf k)}.
+$$
+
+在 extrema，gradient 为零；curvature 控制 inverse effective-mass tensor：
+
+$$
+(m_n^{*-1})_{\alpha\beta}
+=\frac1{\hbar^2}
+\frac{\partial^2\varepsilon_n}
+{\partial k_\alpha\partial k_\beta}.
+$$
+
+该 relation 对 isolated quasiparticle-like band 最清楚。degenerate subspace 需要 matrix-valued velocity 和 degenerate perturbation theory；strong interaction 或 broad spectral features 需要 self-energy 和 spectral function，不能由一条 Kohn–Sham line 无条件读取 lifetime 或 transport mass。
+
+<p lang="en">Applying Hellmann–Feynman differentiation to the Bloch Hamiltonian gives the band-energy gradient and hence semiclassical group velocity. Band curvature defines an effective-mass tensor only for a suitably isolated, differentiable quasiparticle-like band. Degeneracy and strong spectral broadening require a subspace or many-body treatment.</p>
+
+</DerivationBlock>
+
+<BilingualSection titleZh="k-space counting、band filling 与 metallicity" titleEn="k-space counting, band filling, and metallicity">
+  <div class="bilingual-section__zh">
+
+Born–von Karman crystal 含 $N_{\mathrm{cell}}$ 个 primitive cells，因此每个 band 在一个 reciprocal primitive cell 内有 $N_{\mathrm{cell}}$ 个 k states。若 spin degeneracy 存在，每个 band 可容纳
+
+$$
+2N_{\mathrm{cell}}
+$$
+
+electrons，即每 primitive cell 两个 electrons。若 spin degeneracy 被 magnetism 或 spin–orbit/symmetry breaking 去除，capacity 必须按实际 band degeneracy 计数。
+
+零温 independent-particle filling 按 energy 占据，化学势以下 states filled。若一个 isolated group of bands 完全 filled 且与 empty bands 存在 global gap，得到 band insulator。若 chemical potential 穿过 band，通常有 Fermi surface 和 metallic low-energy states。若 bands 在 isolated point/line 接触，可能形成 semimetal；classification 需要 full BZ，而不是只看高对称 path。
+
+“奇数电子数必为金属”只在特定 symmetry 与 degeneracy assumptions 下成立。magnetic order 可扩大 cell 或 split spin bands；strong correlation 可产生 Mott insulator；spin–orbit 与 nonsymmorphic symmetry 可 enforce 或 remove degeneracies。electron counting 是必要约束，不是一般充分条件。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A Born–von Karman crystal with $N_{\mathrm{cell}}$ primitive cells has $N_{\mathrm{cell}}$ k states in each band. With spin degeneracy, one band holds $2N_{\mathrm{cell}}$ electrons, or two electrons per primitive cell. When magnetism or spin–orbit/symmetry breaking removes spin degeneracy, capacity must be counted using the actual band degeneracy.
+
+At zero temperature in an independent-particle picture, states are filled in energy order. A fully occupied isolated band group separated by a global gap gives a band insulator. A chemical potential crossing a band generally produces a Fermi surface and metallic low-energy states. Point or line contacts can give semimetals. Classification requires the full Brillouin zone rather than a selected high-symmetry path.
+
+“An odd electron count implies a metal” holds only under particular symmetry and degeneracy assumptions. Magnetic order can enlarge the cell or split spin bands, strong interaction can create a Mott insulator, and spin–orbit or nonsymmorphic symmetries can enforce or remove degeneracies. Electron counting is a constraint, not a universal sufficient test.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="crystal-momentum conservation 与 Umklapp" titleEn="Crystal-momentum conservation and Umklapp">
+  <div class="bilingual-section__zh">
+
+translation symmetry 约束 scattering matrix elements。若若干 Bloch excitations 相互作用，非零 matrix element 要求总 crystal momentum conserved modulo reciprocal vector：
+
+$$
+\mathbf k_1+\mathbf k_2-\mathbf k_3-\mathbf k_4
+=\mathbf G.
+$$
+
+$\mathbf G=0$ 常称 normal process，$\mathbf G\ne0$ 称 Umklapp。ordinary mechanical momentum 可与 lattice 交换 reciprocal-lattice amount；因此 crystal momentum conservation 不等于连续空间 momentum conservation。
+
+对 electron–phonon scattering，常写
+
+$$
+\mathbf k' = \mathbf k+\mathbf q+\mathbf G.
+$$
+
+把所有 vectors fold 回 first BZ 后，$\mathbf G$ 记录 lattice 接收的 momentum class。Umklapp 对 thermal resistance 和 resistivity 很重要，但是否实际发生还受 energy conservation、occupation、matrix elements 和 phase space 限制；从几何允许性不能直接推导 scattering rate。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Translation symmetry constrains scattering matrix elements. Interacting Bloch excitations conserve total crystal momentum modulo a reciprocal vector:
+
+$$
+\mathbf k_1+\mathbf k_2-\mathbf k_3-\mathbf k_4
+=\mathbf G.
+$$
+
+Processes with $\mathbf G=0$ are commonly called normal; those with $\mathbf G\ne0$ are Umklapp processes. Mechanical momentum can be exchanged with the lattice by a reciprocal-lattice amount, so crystal-momentum conservation is not continuous-space momentum conservation.
+
+For electron–phonon scattering one writes
+
+$$
+\mathbf k' = \mathbf k+\mathbf q+\mathbf G.
+$$
+
+After folding vectors into the first BZ, $\mathbf G$ records the momentum class transferred to the lattice. Umklapp can control electrical and thermal resistance, but actual rates also require energy conservation, occupations, matrix elements, and phase space. Geometric allowance alone does not determine a scattering rate.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="band plot 的证据上限" titleEn="Evidence ceiling of a band plot" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>high-symmetry path 只采样一维 lines，不能证明 full-BZ band gap、Fermi pockets 或 extrema；</li>
+      <li>Kohn–Sham eigenvalues 是 auxiliary spectrum，不自动等于 exact addition/removal quasiparticle energies；</li>
+      <li>band crossing 需要 symmetry/subspace analysis，视觉相交可能是 avoided crossing 的采样伪象；</li>
+      <li>一条线的 orbital color 依赖 projector、gauge 和 band disentanglement；</li>
+      <li>topology 需要 occupied-subspace invariant 和 global gap/connection，不由单个 inversion 或 surface band 自动证明；</li>
+      <li>metallicity、transport、superconductivity 和 lifetime 需要 full-BZ states、matrix elements、scattering/interaction theory 与独立 convergence。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>a high-symmetry path samples one-dimensional lines and cannot establish the full-BZ gap, Fermi pockets, or extrema;</li>
+      <li>Kohn–Sham eigenvalues form an auxiliary spectrum and are not automatically exact addition/removal quasiparticle energies;</li>
+      <li>a crossing requires symmetry and subspace analysis; a visual intersection may be an undersampled avoided crossing;</li>
+      <li>orbital colouring depends on projectors, gauge, and band disentanglement;</li>
+      <li>topology requires an occupied-subspace invariant and global gap/connectivity and is not proved by one inversion or surface band;</li>
+      <li>metallicity, transport, superconductivity, and lifetime require full-BZ states, matrix elements, interaction/scattering theory, and independent convergence.</li>
+    </ul>
+  </div>
+</BilingualCallout>
