@@ -1,20 +1,18 @@
 ---
-title: "Chapter 14 · Localized Orbitals: Tight-Binding"
-description: "Martin Chapter 14 的目录级阅读骨架；正文待填充。"
+title: "Chapter 14 · Localized Orbitals: Tight-Binding | 局域轨道与紧束缚"
+description: "从非正交局域 Bloch 基、Slater–Koster 与 SOC，进入单带、双带、graphene、nanotube、总能和 transferability。"
 sidebar:
   order: 3
   label: "Chapter 14 · Localized Orbitals: Tight-Binding"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter14Body from '../../../components/part04/ch14/Chapter14Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[3].units[2].label}
-  sourcePage={catalog.parts[3].units[2].page}
-  sections={catalog.parts[3].units[2].sections}
-  exercisesPage={catalog.parts[3].units[2].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 14, printed pp. 295–315; sections 14.1–14.12. Exercises begin p. 317 and are not reproduced."
+  status="draft"
 />
+
+<Chapter14Body />
