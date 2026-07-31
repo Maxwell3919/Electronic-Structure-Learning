@@ -1,0 +1,74 @@
+---
+import Chapter28Contents from './Chapter28Contents.astro';
+import Chapter28Content from './Chapter28Content.astro';
+---
+
+<div class="chapter28-root">
+  <Chapter28Contents />
+  <Chapter28Content />
+</div>
+
+<style is:global>
+  .chapter28-root,
+  .chapter28-root > *,
+  .chapter28-root .bilingual-section,
+  .chapter28-root .bilingual-section__grid,
+  .chapter28-root .bilingual-section__zh,
+  .chapter28-root .bilingual-section__en,
+  .chapter28-root .derivation-block,
+  .chapter28-root .bilingual-callout {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter28-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .chapter28-root .chapter-source-map,
+  .chapter28-root .table-scroll,
+  .chapter28-root .katex-display,
+  .chapter28-root pre,
+  .chapter28-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter28-root p,
+  .chapter28-root li,
+  .chapter28-root th,
+  .chapter28-root td,
+  .chapter28-root code {
+    overflow-wrap: anywhere;
+  }
+
+  .chapter28-root .chapter-visual__controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .chapter28-root .chapter-visual__controls label {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .chapter28-root .chapter-visual__readout,
+  .chapter28-root .chapter-visual__contract {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  @media (max-width: 50rem) {
+    .chapter28-root .chapter-visual__controls {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+const links = [
+  ['#reading-orientation', '阅读定位', 'Reading orientation'],
+  ['#source-map', '来源地图', 'Source map'],
+  ['#objects-and-evidence', '对象、约定与证据层级', 'Objects, conventions, and evidence levels'],
+  ['#sec-28-1', '28.1 三维 weak/strong 拓扑绝缘体', '28.1 Weak and strong topological insulators in 3D'],
+  ['#eight-trim', '八个 TRIM 与四个 Z₂ 指标', 'Eight TRIM and four Z₂ indices'],
+  ['#weak-stacking', 'weak stacking 与平移对称边界', 'Weak stacking and translation boundary'],
+  ['#strong-surface', 'strong index 与表面 Dirac parity', 'Strong index and surface-Dirac parity'],
+  ['#sec-28-2', '28.2 三维紧束缚实例', '28.2 Tight-binding example in 3D'],
+  ['#sec-28-3', '28.3 Sb₂Se₃ 与 Bi₂Se₃', '28.3 Sb₂Se₃ and Bi₂Se₃'],
+  ['#sec-28-4', '28.4 Weyl 与 Dirac 半金属', '28.4 Weyl and Dirac semimetals'],
+  ['#codimension', '两带闭隙的 codimension', 'Codimension of a two-band closing'],
+  ['#weyl-charge', 'Weyl chirality 与 Berry-flux charge', 'Weyl chirality and Berry-flux charge'],
+  ['#sec-28-5', '28.5 Fermi arcs', '28.5 Fermi arcs'],
+  ['#review-and-practice', '复核、练习与来源', 'Review, practice, and sources'],
+];
+---
+
+<nav class="chapter-contents" aria-labelledby="chapter-28-contents-title">
+  <h2 id="chapter-28-contents-title">章内导航 | Chapter contents</h2>
+  <ol>
+    {links.map(([href, zh, en]) => (
+      <li>
+        <a href={href}>
+          <span>{zh}</span>
+          <span lang="en">{en}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .chapter-contents {
+    margin-block: 1.25rem 2rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.75rem;
+    background: var(--sl-color-gray-7);
+  }
+  .chapter-contents ol {
+    columns: 2;
+    column-gap: 2rem;
+    margin-bottom: 0;
+  }
+  .chapter-contents li { break-inside: avoid; margin-block: 0.45rem; }
+  .chapter-contents a { display: grid; gap: 0.1rem; }
+  .chapter-contents a span[lang='en'] { color: var(--sl-color-gray-2); font-size: 0.9em; }
+  @media (max-width: 50rem) { .chapter-contents ol { columns: 1; } }
+</style>
