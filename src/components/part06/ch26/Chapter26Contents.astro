@@ -1,0 +1,46 @@
+---
+const links = [
+  ['#reading-orientation', '阅读定位', 'Reading orientation'],
+  ['#source-map', '来源地图', 'Source map'],
+  ['#objects-and-conventions', '对象与约定', 'Objects and conventions'],
+  ['#sec-26-1', '26.1 两带的一般表述', '26.1 General formulation'],
+  ['#two-band-eigensystem', '两带本征系统与投影算符', 'Eigensystem and projectors'],
+  ['#bloch-sphere-patches', 'Bloch sphere 与规范补丁', 'Bloch sphere and gauge patches'],
+  ['#sec-26-2', '26.2 一维两带模型', '26.2 One-dimensional models'],
+  ['#two-site-model', '两站点模型', 'Two-site model'],
+  ['#sp-model', 's–p 模型及模型映射', 's–p model and mapping'],
+];
+---
+
+<nav class="chapter-contents" aria-labelledby="chapter-26-contents-title">
+  <h2 id="chapter-26-contents-title">章内导航 | Chapter contents</h2>
+  <ol>
+    {links.map(([href, zh, en]) => (
+      <li>
+        <a href={href}>
+          <span>{zh}</span>
+          <span lang="en">{en}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .chapter-contents {
+    margin-block: 1.25rem 2rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.75rem;
+    background: var(--sl-color-gray-7);
+  }
+  .chapter-contents ol {
+    columns: 2;
+    column-gap: 2rem;
+    margin-bottom: 0;
+  }
+  .chapter-contents li { break-inside: avoid; margin-block: 0.45rem; }
+  .chapter-contents a { display: grid; gap: 0.1rem; }
+  .chapter-contents a span[lang='en'] { color: var(--sl-color-gray-2); font-size: 0.9em; }
+  @media (max-width: 50rem) { .chapter-contents ol { columns: 1; } }
+</style>
