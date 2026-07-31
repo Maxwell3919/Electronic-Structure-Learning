@@ -7,8 +7,8 @@
   <div class="chapter-visual__controls chapter-visual__controls--three">
     <label>
       <span>每晶胞电子数 N | Electrons per cell</span>
-      <input type="range" min="0" max="4" step="0.25" value="2" data-band-electrons />
-      <output data-band-electrons-output>2.00</output>
+      <input type="range" min="0" max="4" step="1" value="2" data-band-electrons />
+      <output data-band-electrons-output>2</output>
     </label>
     <label>
       <span>能隙 Eg | Gap (eV)</span>
@@ -29,19 +29,19 @@
     <line x1="80" y1="30" x2="80" y2="260" class="plot-axis" />
     <text x="32" y="42">E</text>
     <rect x="130" y="190" width="360" height="42" rx="8" class="band-filling__band" />
-    <rect x="130" y="70" width="360" height="42" rx="8" class="band-filling__band" data-upper-band />
+    <rect x="130" y="103" width="360" height="42" rx="8" class="band-filling__band" data-upper-band />
     <text x="500" y="217">lower band</text>
-    <text x="500" y="97">upper band</text>
-    <line x1="130" y1="151" x2="490" y2="151" class="plot-guide" data-gap-line />
-    <text x="310" y="144" text-anchor="middle" data-gap-label>Eg = 1.00 eV</text>
+    <text x="500" y="130" data-upper-label>upper band</text>
+    <line x1="130" y1="167.5" x2="490" y2="167.5" class="plot-guide" data-gap-line />
+    <text x="310" y="160.5" text-anchor="middle" data-gap-label>Eg = 1.00 eV</text>
     <g data-lower-electrons aria-label="Electrons occupying the lower band"></g>
     <g data-upper-electrons aria-label="Electrons occupying the upper band"></g>
   </svg>
 
   <div class="chapter-visual__readout band-filling__readout" aria-live="polite">
     <strong data-band-classification>正能隙且低能带填满 | Filled lower band with a positive gap</strong>
-    <span data-band-explanation>最低单粒子激发需要跨越 Eg；在本模型的热尺度下不易发生。</span>
-    <span lang="en" data-band-explanation-en>The lowest single-particle excitation crosses Eg and is thermally suppressed on the selected scale.</span>
+    <span data-band-explanation>跨隙激发相对所选热尺度受到强烈抑制。</span>
+    <span lang="en" data-band-explanation-en>Gap-crossing excitations are strongly suppressed on the selected thermal scale.</span>
   </div>
 
   <div class="chapter-visual__contract">
@@ -63,6 +63,7 @@
     const gapOutput = root.querySelector('[data-band-gap-output]');
     const thermalOutput = root.querySelector('[data-band-thermal-output]');
     const upperBand = root.querySelector('[data-upper-band]');
+    const upperLabel = root.querySelector('[data-upper-label]');
     const gapLine = root.querySelector('[data-gap-line]');
     const gapLabel = root.querySelector('[data-gap-label]');
     const lowerElectrons = root.querySelector('[data-lower-electrons]');
@@ -71,15 +72,15 @@
     const explanation = root.querySelector('[data-band-explanation]');
     const explanationEn = root.querySelector('[data-band-explanation-en]');
     if (!(electronInput instanceof HTMLInputElement) || !(gapInput instanceof HTMLInputElement) || !(thermalInput instanceof HTMLInputElement)) return;
-    if (!(upperBand instanceof SVGRectElement) || !(gapLine instanceof SVGLineElement) || !(gapLabel instanceof SVGTextElement)) return;
+    if (!(upperBand instanceof SVGRectElement) || !(upperLabel instanceof SVGTextElement) || !(gapLine instanceof SVGLineElement) || !(gapLabel instanceof SVGTextElement)) return;
     if (!(lowerElectrons instanceof SVGGElement) || !(upperElectrons instanceof SVGGElement)) return;
 
     const makeDots = (group, count, y) => {
       group.replaceChildren();
-      const fullDots = Math.floor(count * 4 + 1e-9);
+      const fullDots = Math.floor(count + 1e-9);
       for (let index = 0; index < fullDots; index += 1) {
         const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot.setAttribute('cx', String(165 + index * 38));
+        dot.setAttribute('cx', String(180 + index * 46));
         dot.setAttribute('cy', String(y));
         dot.setAttribute('r', '8');
         dot.setAttribute('class', 'band-filling__electron');
@@ -93,17 +94,18 @@
       const thermal = Number(thermalInput.value);
       const lower = Math.min(electrons, 2);
       const upper = Math.max(0, electrons - 2);
-      const upperY = 190 - Math.min(gap, 2) * 60;
-      upperBand.setAttribute('y', String(upperY - 120));
-      const lineY = (232 + upperY - 120) / 2;
+      const upperY = 148 - gap * 45;
+      const lineY = (upperY + 42 + 190) / 2;
+      upperBand.setAttribute('y', String(upperY));
+      upperLabel.setAttribute('y', String(upperY + 27));
       gapLine.setAttribute('y1', String(lineY));
       gapLine.setAttribute('y2', String(lineY));
       gapLabel.setAttribute('y', String(lineY - 7));
       gapLabel.textContent = `Eg = ${gap.toFixed(2)} eV`;
       makeDots(lowerElectrons, lower, 211);
-      makeDots(upperElectrons, upper, upperY - 99);
+      makeDots(upperElectrons, upper, upperY + 21);
 
-      if (electronOutput instanceof HTMLOutputElement) electronOutput.value = electrons.toFixed(2);
+      if (electronOutput instanceof HTMLOutputElement) electronOutput.value = electrons.toFixed(0);
       if (gapOutput instanceof HTMLOutputElement) gapOutput.value = `${gap.toFixed(2)} eV`;
       if (thermalOutput instanceof HTMLOutputElement) thermalOutput.value = `${thermal.toFixed(2)} eV`;
 
@@ -113,18 +115,18 @@
         if (classification instanceof HTMLElement) classification.textContent = '部分填充能带 | Partially filled band';
         if (explanation instanceof HTMLElement) explanation.textContent = '费米能附近存在未占据的同带状态，单粒子图像中可产生任意低能激发。';
         if (explanationEn instanceof HTMLElement) explanationEn.textContent = 'Unoccupied states remain in the same band near the Fermi level, allowing arbitrarily low-energy single-particle excitations.';
-      } else if (Math.abs(electrons - 2) < 1e-9 && gap > 0) {
+      } else if (electrons === 2 && gap > 0) {
         if (classification instanceof HTMLElement) classification.textContent = '正能隙且低能带填满 | Filled lower band with a positive gap';
         const ratio = gap / thermal;
         if (explanation instanceof HTMLElement) explanation.textContent = ratio <= 5
-          ? '跨隙激发在所选热尺度上并非极度受抑制；这对应小能隙的教学情形。'
-          : '跨隙激发相对所选热尺度受到强烈抑制；这对应大能隙的教学情形。';
+          ? '跨隙激发在所选热尺度上并非极度受抑制；这对应小能隙教学情形。'
+          : '跨隙激发相对所选热尺度受到强烈抑制；这对应大能隙教学情形。';
         if (explanationEn instanceof HTMLElement) explanationEn.textContent = ratio <= 5
           ? 'Gap-crossing excitations are not strongly suppressed on the selected thermal scale, representing a small-gap teaching case.'
           : 'Gap-crossing excitations are strongly suppressed on the selected thermal scale, representing a large-gap teaching case.';
-      } else if (Math.abs(electrons - 2) < 1e-9 && gap === 0) {
+      } else if (electrons === 2 && gap < 1e-9) {
         if (classification instanceof HTMLElement) classification.textContent = '满带与空带接触 | Filled and empty bands touch';
-        if (explanation instanceof HTMLElement) explanation.textContent = '电子计数本身不能决定输运；必须知道接触点附近的色散、简并和相互作用。';
+        if (explanation instanceof HTMLElement) explanation.textContent = '电子计数本身不能决定输运；还需知道接触点附近的色散、简并和相互作用。';
         if (explanationEn instanceof HTMLElement) explanationEn.textContent = 'Counting alone cannot determine transport; dispersion, degeneracy, and interactions near the touching point are required.';
       } else {
         if (classification instanceof HTMLElement) classification.textContent = '边界占据情形 | Boundary filling case';
