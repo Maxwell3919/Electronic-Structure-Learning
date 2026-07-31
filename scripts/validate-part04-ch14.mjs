@@ -60,7 +60,7 @@ assert.equal(nanotubeZoneFolding({ n: 12, m: 0 }).zoneFoldingMetallic, true);
 assert.equal(nanotubeZoneFolding({ n: 13, m: 0 }).zoneFoldingMetallic, false);
 assert.equal(nanotubeZoneFolding({ n: 6, m: 1 }).family, '3q+2');
 
-// 6. Content and assembly gates.
+// 6. Content, assembly, and visualization gates.
 const paths = {
   route: 'src/content/docs/part-04-determination-of-electronic-structure/chapter-14-localized-orbitals-tight-binding.mdx',
   body: 'src/components/part04/ch14/Chapter14Body.astro',
@@ -71,6 +71,11 @@ const paths = {
   graphene: 'src/components/part04/ch14/Chapter14GrapheneAndLattices.mdx',
   materials: 'src/components/part04/ch14/Chapter14MaterialsAndTransfer.mdx',
   review: 'src/components/part04/ch14/Chapter14Review.mdx',
+  nonorthogonalVisual: 'src/components/part04/ch14/NonorthogonalChainExplorer.astro',
+  slaterKosterVisual: 'src/components/part04/ch14/SlaterKosterOrientationExplorer.astro',
+  twoBandVisual: 'src/components/part04/ch14/TwoBandHybridizationExplorer.astro',
+  grapheneVisual: 'src/components/part04/ch14/GrapheneDiracExplorer.astro',
+  nanotubeVisual: 'src/components/part04/ch14/NanotubeZoneFoldingExplorer.astro',
 };
 const content = Object.fromEntries(await Promise.all(Object.entries(paths).map(async ([key, path]) => [key, await readFile(path, 'utf8')])));
 assert.match(content.route, /status="draft"|status="review"/);
@@ -84,6 +89,11 @@ for (let section = 1; section <= 12; section += 1) {
 }
 for (const id of ['ch14-nonorthogonal-chain', 'ch14-slater-koster', 'ch14-two-band', 'ch14-graphene-dirac', 'ch14-nanotube-zone-folding']) {
   assert.match(joined, new RegExp(id), `missing visualization ${id}`);
+}
+for (const key of ['nonorthogonalVisual', 'slaterKosterVisual', 'twoBandVisual', 'grapheneVisual', 'nanotubeVisual']) {
+  assert.match(content[key], /chapter-visual__contract/, `${key} must expose a visualization contract`);
+  assert.match(content[key], /<noscript>/, `${key} must expose a no-JavaScript fallback`);
+  assert.match(content[key], /<svg/, `${key} must expose a static SVG`);
 }
 assert.equal((content.sourceMap.match(/body and derivations filled|正文与推导已填充/g) ?? []).length >= 1, true);
 assert.equal((content.contents.match(/section-14-/g) ?? []).length, 12);
