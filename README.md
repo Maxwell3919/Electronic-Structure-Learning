@@ -38,14 +38,22 @@ https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.
 - Part I · [Chapter 1 · Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-01-introduction/)
 - Part I · [Chapter 2 · Overview](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-02-overview/)
 - Part I · [Chapter 3 · Theoretical Background](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-03-theoretical-background/)
+- Part I · [Chapter 4 · Periodic Solids and Electron Bands](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-04-periodic-solids-and-electron-bands/)
 - Part II · [Chapter 6 · Density Functional Theory: Foundations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-06-density-functional-theory-foundations/)
 - Part II · [Chapter 7 · The Kohn–Sham Auxiliary System](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-07-the-kohn-sham-auxiliary-system/)
 - Part II · [Chapter 8 · Functionals for Exchange and Correlation I](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-08-functionals-for-exchange-and-correlation-i/)
+- Part II · [Chapter 9 · Functionals for Exchange and Correlation II](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-09-functionals-for-exchange-and-correlation-ii/)
 - Part III · [Chapter 10 · Electronic Structure of Atoms](https://maxwell3919.github.io/Electronic-Structure-Learning/part-03-important-preliminaries-on-atoms/chapter-10-electronic-structure-of-atoms/)
+- Part III · [Chapter 11 · Pseudopotentials](https://maxwell3919.github.io/Electronic-Structure-Learning/part-03-important-preliminaries-on-atoms/chapter-11-pseudopotentials/)
 - Part IV · [Chapter 12 · Plane Waves and Grids: Basics](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-12-plane-waves-and-grids-basics/)
+- Part IV · [Chapter 13 · Plane Waves and Real-Space Methods: Full Calculations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-13-plane-waves-and-real-space-methods-full-calculations/)
 - Part V · [Chapter 19 · Quantum Molecular Dynamics (QMD)](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-19-quantum-molecular-dynamics-qmd/)
+- Part V · [Chapter 20 · Response Functions: Phonons and Magnons](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-20-response-functions-phonons-and-magnons/)
 - Part VI · [Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-25-topology-of-the-electronic-structure-of-a-crystal-introduction/)
+- Part VI · [Chapter 26 · Two-Band Models: Berry Phase, Winding, and Topology](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-26-two-band-models-berry-phase-winding-and-topology/)
 - Part VII · [Appendix A · Functional Equations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-a-functional-equations/)
+- Part VII · [Appendix B · LSDA and GGA Functionals](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-b-lsda-and-gga-functionals/)
+- Part VII · [Appendix C · Adiabatic Approximation](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-c-adiabatic-approximation/)
 
 其他页面仍处于 `outline` 或独立 PR 编写状态。每个 substantive 单元包含其适用范围内的双语正文、推导、来源定位、原创练习或教学可视化，并通过相应的静态构建与 chapter-local validation 门槛。
 
