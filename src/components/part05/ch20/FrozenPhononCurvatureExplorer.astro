@@ -1,0 +1,214 @@
+---
+import {
+  frozenPhononCurvature,
+  sampleFrozenPhononError,
+} from '../../../data/part05/ch20TeachingModels.mjs';
+
+const componentId = 'ch20-frozen-curvature';
+const width = 760;
+const height = 330;
+const pad = { left: 64, right: 26, top: 26, bottom: 58 };
+const defaults = {
+  curvature: 1,
+  quartic: 0.4,
+  energyNoise: 1e-6,
+  displacement: 0.07,
+};
+const sample = sampleFrozenPhononError({
+  curvature: defaults.curvature,
+  quartic: defaults.quartic,
+  energyNoise: defaults.energyNoise,
+  points: 180,
+});
+const minH = sample[0].displacement;
+const maxH = sample.at(-1).displacement;
+const minError = Math.min(...sample.map((point) => Math.max(point.absoluteError, 1e-9)));
+const maxError = Math.max(...sample.map((point) => point.absoluteError));
+const logMin = Math.log10(minError) - 0.25;
+const logMax = Math.log10(maxError) + 0.25;
+const xScale = (h) => pad.left
+  + (Math.log(h / minH) / Math.log(maxH / minH)) * (width - pad.left - pad.right);
+const yScale = (error) => pad.top
+  + (1 - (Math.log10(Math.max(error, 1e-9)) - logMin) / (logMax - logMin))
+    * (height - pad.top - pad.bottom);
+const points = sample
+  .map((point) => `${xScale(point.displacement).toFixed(2)},${yScale(point.absoluteError).toFixed(2)}`)
+  .join(' ');
+const selected = frozenPhononCurvature(defaults);
+---
+
+<figure class="chapter-visual frozen-curvature" id={componentId}>
+  <figcaption>
+    <strong>冻结声子有限位移：非谐误差与数值噪声 | Frozen phonons: anharmonic error versus numerical noise</strong>
+    <span>原创教学模型：中心二阶差分作用于含四次项的能量面，并加入确定性的能量噪声尺度。</span>
+    <span lang="en">Original teaching model: a central second difference acts on a quartic energy surface with a deterministic energy-noise scale.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      位移 h（无量纲） | displacement
+      <input data-displacement type="range" min="0.005" max="0.4" step="0.005" value={defaults.displacement} />
+    </label>
+    <label>
+      能量噪声 ε (×10⁻⁶) | energy noise
+      <input data-noise type="range" min="0" max="5" step="0.5" value="1" />
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>有限位移曲率误差随位移幅度变化</title>
+    <desc id={`${componentId}-desc`}>横轴为对数位移幅度，纵轴为曲率绝对误差的对数。曲线在位移过小的噪声区和位移过大的非谐区上升。</desc>
+    <line class="axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <polyline class="error-curve" data-curve points={points} />
+    <circle class="selection-marker" data-marker cx={xScale(defaults.displacement)} cy={yScale(selected.absoluteError)} r="6" />
+    <text x={pad.left} y={height - 26} text-anchor="middle">0.005</text>
+    <text x={width - pad.right} y={height - 26} text-anchor="middle">0.4</text>
+    <text x={(width + pad.left - pad.right) / 2} y={height - 6} text-anchor="middle">displacement h (log scale)</text>
+    <text transform={`translate(18 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">|estimated curvature − exact| (log)</text>
+    <text class="region-label" x={pad.left + 95} y={pad.top + 26}>noise-limited / 噪声区</text>
+    <text class="region-label" x={width - pad.right - 185} y={pad.top + 26}>anharmonic / 非谐区</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>h = <output data-h-output>{defaults.displacement.toFixed(3)}</output></span>
+    <span>ε = <output data-noise-output>{defaults.energyNoise.toExponential(1)}</output></span>
+    <span>estimated curvature = <output data-estimate>{selected.estimate.toFixed(6)}</output></span>
+    <span>absolute error = <output data-error>{selected.absoluteError.toExponential(2)}</output></span>
+    <span>anharmonic/noise contributions = <output data-components>{selected.anharmonicError.toExponential(1)} / {selected.noiseError.toExponential(1)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>E(h)=½κh²+¼βh⁴，κ=1、β=0.4；三点中心差分中使用声明的确定性能量噪声 ε。</p>
+    <p><strong>验收：</strong>ε=0 时小位移误差按 h² 缩放；β=0 的对应解析极限没有非谐误差；ε&gt;0 时误差在 h→0 按 ε/h² 放大，并形成有限的最佳位移区间。</p>
+    <p><strong>边界：</strong>真实计算的噪声不必是该对称模式；最佳位移依赖力/能量精度、模式刚度、赝势和目标非谐阶数，不能从本图直接取固定 Å 数值。</p>
+  </div>
+
+  <noscript>
+    <p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 h=0.07、ε=10⁻⁶ 的误差曲线和当前点仍可见；控件不更新。</p>
+  </noscript>
+</figure>
+
+<script>
+  import {
+    frozenPhononCurvature,
+    sampleFrozenPhononError,
+  } from '../../../data/part05/ch20TeachingModels.mjs';
+
+  const root = document.getElementById('ch20-frozen-curvature');
+  if (root) {
+    const displacementInput = root.querySelector('[data-displacement]');
+    const noiseInput = root.querySelector('[data-noise]');
+    const curve = root.querySelector('[data-curve]');
+    const marker = root.querySelector('[data-marker]');
+    const hOutput = root.querySelector('[data-h-output]');
+    const noiseOutput = root.querySelector('[data-noise-output]');
+    const estimateOutput = root.querySelector('[data-estimate]');
+    const errorOutput = root.querySelector('[data-error]');
+    const componentOutput = root.querySelector('[data-components]');
+
+    if (
+      displacementInput instanceof HTMLInputElement
+      && noiseInput instanceof HTMLInputElement
+      && curve instanceof SVGPolylineElement
+      && marker instanceof SVGCircleElement
+      && hOutput instanceof HTMLOutputElement
+      && noiseOutput instanceof HTMLOutputElement
+      && estimateOutput instanceof HTMLOutputElement
+      && errorOutput instanceof HTMLOutputElement
+      && componentOutput instanceof HTMLOutputElement
+    ) {
+      const width = 760;
+      const height = 330;
+      const pad = { left: 64, right: 26, top: 26, bottom: 58 };
+      const minH = 0.005;
+      const maxH = 0.4;
+      const xScale = (h) => pad.left
+        + (Math.log(h / minH) / Math.log(maxH / minH)) * (width - pad.left - pad.right);
+
+      const update = () => {
+        const displacement = Number(displacementInput.value);
+        const energyNoise = Number(noiseInput.value) * 1e-6;
+        const sample = sampleFrozenPhononError({
+          curvature: 1,
+          quartic: 0.4,
+          energyNoise,
+          minDisplacement: minH,
+          maxDisplacement: maxH,
+          points: 180,
+        });
+        const minError = Math.min(...sample.map((point) => Math.max(point.absoluteError, 1e-9)));
+        const maxError = Math.max(...sample.map((point) => Math.max(point.absoluteError, 1e-9)));
+        const logMin = Math.log10(minError) - 0.25;
+        const logMax = Math.log10(maxError) + 0.25;
+        const yScale = (error) => pad.top
+          + (1 - (Math.log10(Math.max(error, 1e-9)) - logMin) / (logMax - logMin))
+            * (height - pad.top - pad.bottom);
+        const result = frozenPhononCurvature({
+          displacement,
+          curvature: 1,
+          quartic: 0.4,
+          energyNoise,
+        });
+
+        curve.setAttribute('points', sample
+          .map((point) => `${xScale(point.displacement).toFixed(2)},${yScale(point.absoluteError).toFixed(2)}`)
+          .join(' '));
+        marker.setAttribute('cx', String(xScale(displacement)));
+        marker.setAttribute('cy', String(yScale(result.absoluteError)));
+        hOutput.value = displacement.toFixed(3);
+        noiseOutput.value = energyNoise.toExponential(1);
+        estimateOutput.value = result.estimate.toFixed(6);
+        errorOutput.value = result.absoluteError.toExponential(2);
+        componentOutput.value = `${result.anharmonicError.toExponential(1)} / ${result.noiseError.toExponential(1)}`;
+      };
+
+      displacementInput.addEventListener('input', update);
+      noiseInput.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .frozen-curvature {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    overflow-x: auto;
+  }
+
+  .frozen-curvature svg {
+    display: block;
+    width: 100%;
+    min-width: 34rem;
+    height: auto;
+  }
+
+  .axis {
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .error-curve {
+    fill: none;
+    stroke: var(--sl-color-accent-high);
+    stroke-width: 2.8;
+  }
+
+  .selection-marker {
+    fill: currentColor;
+    stroke: var(--sl-color-gray-7);
+    stroke-width: 2;
+  }
+
+  text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .region-label {
+    font-weight: 600;
+  }
+</style>
