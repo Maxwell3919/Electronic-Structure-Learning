@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   compareQuadraticPhases,
   gapHierarchy,
@@ -10,6 +11,7 @@ import {
 const close = (actual, expected, tolerance = 1e-10) => {
   assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} != ${expected}`);
 };
+const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 const phaseA = { equilibriumVolume: 20, curvature: 0.5, offset: 0 };
 const phaseB = { equilibriumVolume: 16, curvature: 0.5, offset: 0.2 };
@@ -52,4 +54,32 @@ for (const [routeId, route] of Object.entries(propertyRoutes)) {
   }
 }
 
-console.log('Chapter 2 teaching-model validation passed: EOS competition, gap hierarchy, and 5 property routes checked.');
+const foundations = read('src/components/chapter02/Chapter02Foundations.astro');
+assert.match(foundations, /Chapter02StonerConventionAudit/);
+assert.ok(
+  foundations.indexOf('<StonerConventionAudit />') < foundations.indexOf('<MagnetismElasticity />'),
+  'The Stoner convention audit must appear immediately before the Section 2.7–2.8 component',
+);
+
+const stonerAudit = read('src/components/chapter02/Chapter02StonerConventionAudit.mdx');
+assert.match(stonerAudit, /data-ch2-stoner-convention-audit/);
+for (const equation of ['2.2', '2.3']) {
+  assert.ok(stonerAudit.includes(equation), `Stoner audit must identify Eq. (${equation})`);
+}
+assert.ok(stonerAudit.includes('h\\equiv -V_m'), 'Stoner audit must define the positive-magnetization field h = -V_m');
+assert.ok(stonerAudit.includes('m=-\\delta E/\\delta V_m'), 'Stoner audit must retain Martin’s conjugate-potential definition');
+assert.match(stonerAudit, /single-spin or two-spin DOS|单自旋或双自旋 DOS/);
+assert.match(stonerAudit, /cannot be compared|才可直接比较/);
+assert.match(stonerAudit, /does not alter the Stoner mean-field conclusion|不改变 Stoner 平均场结论/);
+
+const gapExplorer = read('src/components/GapHierarchyExplorer.astro');
+assert.match(gapExplorer, /aria-live="polite" aria-atomic="true"/);
+assert.match(gapExplorer, /data-gap-note-zh/);
+assert.match(gapExplorer, /data-gap-note-en/);
+assert.match(gapExplorer, /data-gap-regime="physical"/);
+assert.match(gapExplorer, /outside-model-regime/);
+assert.match(gapExplorer, /零值只是绘图截断/);
+assert.match(gapExplorer, /zero is only a plotting clamp/);
+assert.doesNotMatch(gapExplorer, /lang="en" data-gap-note>/, 'The live status must not remain English-only');
+
+console.log('Chapter 2 validation passed: EOS competition, gap hierarchy, 5 property routes, Stoner field/DOS conventions, and bilingual live-status accessibility checked.');
