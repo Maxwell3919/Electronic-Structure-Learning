@@ -103,8 +103,19 @@ assert.throws(() => pzCorrelationEnergy(0), RangeError);
 assert.throws(() => samplePbeEnhancement({ count: 1 }), RangeError);
 assert.throws(() => pbeExchangeEnhancement(Number.NaN), TypeError);
 
-// Content contract: all source sections and visual contracts are present in the assembled files.
-const files = await Promise.all([
+// Content contract: source sections, visual contracts, and actual page assembly must all be present.
+const [
+  body,
+  contents,
+  orientation,
+  lsda,
+  ggaPbe,
+  review,
+  hierarchy,
+  spinExplorer,
+  pbeExplorer,
+] = await Promise.all([
+  readFile('src/components/part07/appB/AppendixBBody.astro', 'utf8'),
   readFile('src/components/part07/appB/AppendixBContents.astro', 'utf8'),
   readFile('src/components/part07/appB/AppendixBOrientation.mdx', 'utf8'),
   readFile('src/components/part07/appB/AppendixBLSDA.mdx', 'utf8'),
@@ -114,15 +125,42 @@ const files = await Promise.all([
   readFile('src/components/part07/appB/SpinInterpolationExplorer.astro', 'utf8'),
   readFile('src/components/part07/appB/PBEEnhancementExplorer.astro', 'utf8'),
 ]);
-const combined = files.join('\n');
+const combined = [body, contents, orientation, lsda, ggaPbe, review, hierarchy, spinExplorer, pbeExplorer].join('\n');
 for (const marker of ['section-b-1', 'section-b-2', 'section-b-3', 'pbe-limits', 'cross-references', 'review']) {
   assert.ok(combined.includes(marker), `missing Appendix B marker: ${marker}`);
 }
 assert.equal(
   (combined.match(/chapter-visual__contract/g) ?? []).length,
   3,
-  'Appendix B must expose three visualization contracts',
+  'Appendix B must define three visualization contracts',
 );
+
+const assemblyChecks = [
+  {
+    name: 'DensityIngredientHierarchy',
+    source: body,
+    importPattern: "import DensityIngredientHierarchy from './DensityIngredientHierarchy.astro';",
+  },
+  {
+    name: 'SpinInterpolationExplorer',
+    source: lsda,
+    importPattern: "import SpinInterpolationExplorer from './SpinInterpolationExplorer.astro';",
+  },
+  {
+    name: 'PBEEnhancementExplorer',
+    source: ggaPbe,
+    importPattern: "import PBEEnhancementExplorer from './PBEEnhancementExplorer.astro';",
+  },
+];
+for (const { name, source, importPattern } of assemblyChecks) {
+  assert.ok(source.includes(importPattern), `${name} import is missing from its assembled parent`);
+  assert.ok(source.includes(`<${name} />`), `${name} is defined but not rendered in the Appendix B component tree`);
+}
+
+assert.ok(body.includes('<AppendixBOrientation />'), 'Appendix B orientation is not assembled');
+assert.ok(body.includes('<AppendixBLSDA />'), 'Appendix B LSDA body is not assembled');
+assert.ok(body.includes('<AppendixBGgaPbe />'), 'Appendix B GGA/PBE body is not assembled');
+assert.ok(body.includes('<AppendixBReview />'), 'Appendix B review is not assembled');
 assert.ok(!combined.includes('outline · 正文待填充'), 'Appendix B still contains an outline placeholder');
 
-console.log('Part VII Appendix B validation passed: spin scaling, PBE limits, PZ derivatives, failures, and content contracts.');
+console.log('Part VII Appendix B validation passed: spin scaling, PBE limits, PZ derivatives, failures, visual assembly, and content contracts.');
