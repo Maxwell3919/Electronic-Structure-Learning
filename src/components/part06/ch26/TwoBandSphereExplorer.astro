@@ -1,0 +1,110 @@
+---
+import { twoBandState } from '../../../data/part06/ch26TeachingModels.mjs';
+const initial = twoBandState(Math.PI / 3, Math.PI / 4, 1, 0);
+const pointX = 220 + 112 * initial.unit.x;
+const pointY = 180 - 112 * initial.unit.z;
+const energyY = (energy) => 180 - 62 * energy;
+---
+
+<figure class="chapter-visual two-band-sphere" data-two-band-sphere>
+  <figcaption>
+    <strong>原创交互模型：两带 Hamiltonian、Bloch sphere 与能隙</strong>
+    <span lang="en">Original interactive model: two-band Hamiltonian, Bloch sphere, and gap</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label><span>极角 θ | polar angle</span><input type="range" min="0" max="3.14159" step="0.01" value="1.0472" data-tbs-theta /><output data-tbs-theta-out>1.05</output></label>
+    <label><span>方位角 φ | azimuth</span><input type="range" min="-3.14159" max="3.14159" step="0.01" value="0.7854" data-tbs-phi /><output data-tbs-phi-out>0.79</output></label>
+    <label><span>半径 r=|d| | radius</span><input type="range" min="0" max="2" step="0.02" value="1" data-tbs-radius /><output data-tbs-radius-out>1.00</output></label>
+    <label><span>共同能移 d₀ | common shift</span><input type="range" min="-1" max="1" step="0.02" value="0" data-tbs-d0 /><output data-tbs-d0-out>0.00</output></label>
+  </div>
+
+  <svg viewBox="0 0 640 360" role="img" aria-labelledby="tbs-title tbs-desc">
+    <title id="tbs-title">Bloch-sphere representation of a two-band Hamiltonian</title>
+    <desc id="tbs-desc">The direction of d fixes the eigenprojectors, its magnitude fixes the gap, and d zero shifts both energies.</desc>
+    <defs><marker id="tbs-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" /></marker></defs>
+    <circle cx="220" cy="180" r="120" class="tbs-sphere" />
+    <ellipse cx="220" cy="180" rx="120" ry="38" class="tbs-equator" />
+    <line x1="75" y1="180" x2="365" y2="180" class="tbs-axis" />
+    <line x1="220" y1="35" x2="220" y2="325" class="tbs-axis" />
+    <text x="370" y="174">nₓ</text><text x="229" y="45">n_z</text>
+    <line x1="220" y1="180" x2={pointX} y2={pointY} class="tbs-vector" marker-end="url(#tbs-arrow)" data-tbs-vector />
+    <circle cx={pointX} cy={pointY} r="6" class="tbs-point" data-tbs-point />
+
+    <line x1="430" y1="45" x2="430" y2="315" class="tbs-energy-axis" />
+    <line x1="455" y1={energyY(initial.upper)} x2="590" y2={energyY(initial.upper)} class="tbs-upper" data-tbs-upper />
+    <line x1="455" y1={energyY(initial.lower)} x2="590" y2={energyY(initial.lower)} class="tbs-lower" data-tbs-lower />
+    <text x="600" y={energyY(initial.upper) + 5} data-tbs-upper-label>E+ = 1.00</text>
+    <text x="600" y={energyY(initial.lower) + 5} data-tbs-lower-label>E− = −1.00</text>
+    <text x="485" y="337">energy / model units</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-tbs-vector-out>n = ({initial.unit.x.toFixed(3)}, {initial.unit.y.toFixed(3)}, {initial.unit.z.toFixed(3)})</span>
+    <span data-tbs-gap>gap = {initial.gap.toFixed(2)}</span>
+    <strong data-tbs-status>Gapped: the direction defines two eigenprojectors.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> 静态图显示 θ=π/3、φ=π/4、r=1、d₀=0；能级为 ±1，能隙为 2。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>H=d₀I+r n·σ，n=(sinθ cosφ, sinθ sinφ, cosθ)。方向 n 决定本征投影算符，r 决定直接能隙 2r，d₀ 只共同平移两个能级。</p>
+    <p lang="en"><strong>Model:</strong> H=d₀I+r n·σ with n=(sinθ cosφ, sinθ sinφ, cosθ). The direction fixes the eigenprojectors, r fixes the direct gap 2r, and d₀ shifts both energies equally.</p>
+    <p><strong>验收：</strong>固定 θ、φ、r 改变 d₀ 时 n 和能隙不变；固定方向改变 r 时能级关于 d₀ 对称分离；r=0 时能隙闭合，n 不再由 Hamiltonian 唯一定义。</p>
+    <p lang="en"><strong>Acceptance:</strong> changing d₀ at fixed θ, φ, and r leaves n and the gap unchanged; changing r separates the levels symmetrically about d₀; at r=0 the gap closes and n is no longer fixed by the Hamiltonian.</p>
+    <p><strong>边界：</strong>球面是二维 Hilbert 空间 projector 的参数化，不是实空间自旋纹理。真实材料是否可约化为该模型需要额外的能带流形和对称性验证。</p>
+    <p lang="en"><strong>Boundary:</strong> the sphere parameterizes projectors in a two-dimensional Hilbert space; it is not automatically a real-space spin texture. Reducing a material to this model requires separate manifold and symmetry validation.</p>
+  </div>
+</figure>
+
+<script>
+  import { twoBandState } from '../../../data/part06/ch26TeachingModels.mjs';
+  document.querySelectorAll('[data-two-band-sphere]').forEach((root) => {
+    const theta = root.querySelector('[data-tbs-theta]');
+    const phi = root.querySelector('[data-tbs-phi]');
+    const radius = root.querySelector('[data-tbs-radius]');
+    const d0 = root.querySelector('[data-tbs-d0]');
+    if (!(theta instanceof HTMLInputElement) || !(phi instanceof HTMLInputElement) || !(radius instanceof HTMLInputElement) || !(d0 instanceof HTMLInputElement)) return;
+    const vector = root.querySelector('[data-tbs-vector]');
+    const point = root.querySelector('[data-tbs-point]');
+    const upper = root.querySelector('[data-tbs-upper]');
+    const lower = root.querySelector('[data-tbs-lower]');
+    const update = () => {
+      const state = twoBandState(Number(theta.value), Number(phi.value), Number(radius.value), Number(d0.value));
+      const unit = state.unit ?? { x: 0, y: 0, z: 0 };
+      const x = 220 + 112 * unit.x;
+      const y = 180 - 112 * unit.z;
+      if (vector instanceof SVGLineElement) { vector.setAttribute('x2', x.toFixed(2)); vector.setAttribute('y2', y.toFixed(2)); vector.style.opacity = state.closed ? '0' : '1'; }
+      if (point instanceof SVGCircleElement) { point.setAttribute('cx', x.toFixed(2)); point.setAttribute('cy', y.toFixed(2)); point.style.opacity = state.closed ? '0' : '1'; }
+      const energyY = (energy) => 180 - 62 * energy;
+      if (upper instanceof SVGLineElement) { upper.setAttribute('y1', energyY(state.upper).toFixed(2)); upper.setAttribute('y2', energyY(state.upper).toFixed(2)); }
+      if (lower instanceof SVGLineElement) { lower.setAttribute('y1', energyY(state.lower).toFixed(2)); lower.setAttribute('y2', energyY(state.lower).toFixed(2)); }
+      const setText = (selector, value) => { const element = root.querySelector(selector); if (element instanceof HTMLElement || element instanceof SVGTextElement) element.textContent = value; };
+      setText('[data-tbs-theta-out]', Number(theta.value).toFixed(2));
+      setText('[data-tbs-phi-out]', Number(phi.value).toFixed(2));
+      setText('[data-tbs-radius-out]', Number(radius.value).toFixed(2));
+      setText('[data-tbs-d0-out]', Number(d0.value).toFixed(2));
+      setText('[data-tbs-upper-label]', `E+ = ${state.upper.toFixed(2)}`);
+      setText('[data-tbs-lower-label]', `E− = ${state.lower.toFixed(2)}`);
+      setText('[data-tbs-vector-out]', state.closed ? 'n undefined at d=0' : `n = (${unit.x.toFixed(3)}, ${unit.y.toFixed(3)}, ${unit.z.toFixed(3)})`);
+      setText('[data-tbs-gap]', `gap = ${state.gap.toFixed(2)}`);
+      setText('[data-tbs-status]', state.closed ? 'Gap closed: the two projectors are not separated.' : 'Gapped: the direction defines two eigenprojectors.');
+    };
+    [theta, phi, radius, d0].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .two-band-sphere svg { width: 100%; max-height: 26rem; }
+  .two-band-sphere text { fill: currentColor; font-size: 14px; }
+  .tbs-sphere { fill: none; stroke: var(--sl-color-gray-4); stroke-width: 2; }
+  .tbs-equator { fill: none; stroke: var(--sl-color-gray-5); stroke-dasharray: 6 5; }
+  .tbs-axis, .tbs-energy-axis { stroke: var(--sl-color-gray-4); stroke-width: 1.5; }
+  .tbs-vector { stroke: var(--sl-color-text-accent); stroke-width: 4; }
+  .tbs-vector + * { fill: var(--sl-color-text-accent); }
+  .tbs-point { fill: var(--sl-color-accent-high); }
+  .tbs-upper { stroke: var(--sl-color-text-accent); stroke-width: 4; }
+  .tbs-lower { stroke: var(--sl-color-accent-high); stroke-width: 4; }
+  #tbs-arrow path { fill: var(--sl-color-text-accent); }
+</style>
