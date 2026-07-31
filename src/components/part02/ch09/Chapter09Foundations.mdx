@@ -1,0 +1,341 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import Chapter09SourceMap from './Chapter09SourceMap.astro';
+import RangeSeparatedHybridExplorer from './RangeSeparatedHybridExplorer.astro';
+
+<span id="reading-orientation" className="chapter-09-anchor" aria-hidden="true"></span>
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章处理的问题" titleEn="The problem addressed in this chapter" eyebrow="Orientation">
+  <div className="bilingual-section__zh">
+
+Chapter 8 以 exchange–correlation hole、均匀电子气和局域/半局域信息构造 LDA、GGA 与 weighted-density 近似。Chapter 9 继续增加可用信息：占据轨道、非局域 density matrix、kinetic-energy density、localized subspace、线性响应和远程极化率。随着信息增加，辅助单粒子算符、势的定义、计算成本和可解释量也会改变。
+
+本章必须保持几类对象分离。普通 Kohn–Sham 使用局域乘法势；generalized Kohn–Sham（GKS）允许非局域 orbital-dependent operator；OEP 则从 orbital-dependent energy 寻找局域乘法势；DFT+U/SIC 依赖选定 localized orbitals 或 projectors；RPA 和 dispersion functional 依赖 response；mBJ 是 potential-only construction，不提供一致总能泛函。
+
+完成本章后，应能说明 Jacob’s ladder 代表的信息层级而非普适精度排序，从 orbital-dependent variation 得到 GKS operator，推导 range separation、meta-GGA indicator、OEP chain rule、Dudarev correction、ACFD/RPA 与 Casimir–Polder $C_6$，并判断一个 bandgap、结构、结合能或 localized-state 主张需要哪一种能量/势/响应和数值证据。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Chapter 8 constructed LDA, GGA, and weighted-density approximations from the exchange–correlation hole, the uniform electron gas, and local or semilocal information. Chapter 9 adds occupied orbitals, a nonlocal density matrix, kinetic-energy density, localized subspaces, linear response, and long-range polarizability. As the information level changes, so do the auxiliary one-particle operator, the meaning of a potential, computational cost, and the quantities that can be interpreted.
+
+Several objects must remain distinct. Ordinary Kohn–Sham theory uses a local multiplicative potential. Generalized Kohn–Sham theory permits a nonlocal orbital-dependent operator. OEP instead searches for a local multiplicative potential associated with an orbital-dependent energy. DFT+U and SIC depend on selected localized orbitals or projectors. RPA and dispersion functionals depend on response. mBJ is a potential-only construction and does not provide a consistent total-energy functional.
+
+After this chapter, the reader should be able to interpret Jacob’s ladder as an information hierarchy rather than a universal accuracy ranking, obtain a GKS operator from orbital variation, derive range separation, meta-GGA indicators, the OEP chain rule, a Dudarev correction, ACFD/RPA, and a Casimir–Polder coefficient, and identify the energy, potential, response, and numerical evidence required by a claim about gaps, structures, binding, or localized states.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本章后的最低能力" titleEn="Minimum capability after this chapter" kind="practice">
+  <div className="bilingual-section__zh">
+    <ul>
+      <li>区分普通 KS、GKS、OEP、localized-subspace correction、response functional 和 potential-only method；</li>
+      <li>说明 exact exchange fraction、range parameter、$U/J$、projector 和 damping 都是方法定义的一部分；</li>
+      <li>区分 Kohn–Sham/GKS orbital gap、fundamental gap、quasiparticle gap 和 optical gap；</li>
+      <li>对 orbital-dependent energy 写出一致的 variation、double counting 和 derivative 边界；</li>
+      <li>分别验证总能、势/本征值、力/结构、response 和目标 observable。</li>
+    </ul>
+  </div>
+  <div className="bilingual-section__en" lang="en">
+    <ul>
+      <li>distinguish ordinary KS, GKS, OEP, localized-subspace corrections, response functionals, and potential-only methods;</li>
+      <li>treat exact-exchange fractions, range parameters, $U/J$, projectors, and damping as part of the method definition;</li>
+      <li>separate KS/GKS orbital, fundamental, quasiparticle, and optical gaps;</li>
+      <li>write consistent variations, double counting, and derivative boundaries for orbital-dependent energies;</li>
+      <li>validate energies, potentials or eigenvalues, forces or structures, response, and target observables separately.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+<Chapter09SourceMap />
+
+<span id="objects-and-notation" className="chapter-09-anchor" aria-hidden="true"></span>
+
+## 物理对象、数学对象与符号 | Physical and Mathematical Objects
+
+<BilingualSection titleZh="信息层级和算符类型" titleEn="Information levels and operator types" eyebrow="Notation">
+  <div className="bilingual-section__zh">
+
+除非另有说明，采用 Hartree 原子单位。
+
+- $\gamma_\sigma(\mathbf r,\mathbf r')=\sum_i f_{i\sigma}\phi_{i\sigma}(\mathbf r)\phi^*_{i\sigma}(\mathbf r')$：one-body density matrix；对角线是 $n_\sigma$。
+- $E_x^{\mathrm{EXX}}[\{\phi\}]$：占据轨道的 exact-exchange energy；它是 orbital functional，而不是显式局域 density functional。
+- $\hat v_x^{\mathrm{Fock}}$：由 orbital variation 产生的非局域 exchange operator。
+- $v_x^{\mathrm{OEP}}(\mathbf r)$：在 OEP 限制下得到的局域乘法 exchange potential。
+- $\tau_\sigma(\mathbf r)=\frac12\sum_i f_{i\sigma}|\nabla\phi_{i\sigma}|^2$：positive kinetic-energy density；它具有 gauge/representation 约定。
+- $\tau_W=|\nabla n|^2/(8n)$、$\tau_{\mathrm{unif}}=(3/10)(3\pi^2)^{2/3}n^{5/3}$：one-orbital 和均匀气参考。
+- $\mathbf n^I$：选定 correlated subspace $I$ 的 occupation matrix；其数值依赖 projector/subspace。
+- $U,J,U_{\mathrm{eff}}$：screened localized interaction parameters；不是体系无关常数。
+- $\chi_0,\chi_\lambda$：非相互作用与 coupling-constant-dependent density response。
+- $C_6$：远程 dipole–dipole dispersion coefficient；其定义依赖 dynamic polarizability。
+- $v_{\mathrm{mBJ}}$：mBJ model potential；没有对应已知一致总能 $E_{\mathrm{mBJ}}[n]$。
+
+“更高阶”可能表示更丰富输入、更非局域算符或更昂贵 response integration；它不自动表示对当前 observable 更准确。一个方法可以改善 gap，却不能给出一致力；可以改善能量，却让势或 density 更差；也可以在训练域内误差低而对新化学空间失效。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Hartree atomic units are used unless stated otherwise.
+
+- $\gamma_\sigma(\mathbf r,\mathbf r')=\sum_i f_{i\sigma}\phi_{i\sigma}(\mathbf r)\phi^*_{i\sigma}(\mathbf r')$ is the one-body density matrix; its diagonal is $n_\sigma$.
+- $E_x^{\mathrm{EXX}}[\{\phi\}]$ is the exact-exchange energy of occupied orbitals and is an orbital functional rather than an explicit local density functional.
+- $\hat v_x^{\mathrm{Fock}}$ is the nonlocal exchange operator from orbital variation.
+- $v_x^{\mathrm{OEP}}(\mathbf r)$ is a local multiplicative exchange potential obtained under the OEP restriction.
+- $\tau_\sigma(\mathbf r)=\frac12\sum_i f_{i\sigma}|\nabla\phi_{i\sigma}|^2$ is a positive kinetic-energy density with a specified gauge or representation convention.
+- $\tau_W$ and $\tau_{\mathrm{unif}}$ are one-orbital and uniform-gas references.
+- $\mathbf n^I$ is an occupation matrix for a chosen correlated subspace and depends on the projector or subspace definition.
+- $U$, $J$, and $U_{\mathrm{eff}}$ are screened localized-interaction parameters, not system-independent constants.
+- $\chi_0$ and $\chi_\lambda$ are noninteracting and coupling-dependent density responses.
+- $C_6$ is a long-range dipole–dipole dispersion coefficient defined through dynamic polarizability.
+- $v_{\mathrm{mBJ}}$ is a model potential without a known consistent total-energy functional.
+
+A “higher rung” can mean richer input, a more nonlocal operator, or a more expensive response integral. It does not imply universal accuracy for the present observable.
+
+  </div>
+</BilingualSection>
+
+<span id="section-9-1" className="chapter-09-anchor" aria-hidden="true"></span>
+
+## 9.1 超越局域密度与 GGA | Beyond LDA and GGA
+
+<BilingualSection titleZh="Jacob’s ladder 是信息地图" titleEn="Jacob’s ladder is an information map">
+  <div className="bilingual-section__zh">
+
+Jacob’s ladder 用逐步增加的变量组织泛函：局域密度，密度梯度，kinetic-energy density 或 Laplacian，occupied orbitals/exact exchange，以及 unoccupied-state response。该图有助于判断实现成本和所需输入，却不是严格线性精度序列。不同 rungs 可能满足不同 exact constraints、使用不同经验参数，并针对不同性质优化。
+
+Chapter 9 的方法还不全位于一条单轴 ladder 上。DFT+U 改变特定 localized subspace；range separation 改变 Coulomb interaction 的距离分配；OEP 改变“orbital energy 对应局域势”的约束；mBJ 直接构造势；pairwise dispersion 可作为后处理能量修正。这些路线应按其 variational object、输入、输出和证据上限分类。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Jacob’s ladder organizes approximations by progressively richer inputs: local density, density gradients, kinetic-energy density or Laplacian, occupied orbitals and exact exchange, and finally unoccupied-state response. The picture helps identify implementation cost and required information but is not a strictly ordered accuracy theorem. Different rungs enforce different constraints, use different empirical parameters, and target different properties.
+
+The methods in Chapter 9 do not all lie on one scalar ladder. DFT+U modifies a chosen localized subspace; range separation redistributes the Coulomb interaction by distance; OEP changes the restriction on the potential representing an orbital energy; mBJ constructs a potential directly; and a pairwise dispersion term can be a post-processing energy correction. Each route must be classified by its variational object, inputs, outputs, and evidence ceiling.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="方法身份的最低记录" titleEn="Minimum record of method identity" kind="practice">
+  <div className="bilingual-section__zh">
+
+报告不能只写 “hybrid”“meta-GGA”“DFT+U” 或 “vdW corrected”。至少需要具体 functional/version、exact-exchange fraction 与 range parameter、$U/J$ 的定义和 projector、dispersion scheme/damping、spin/relativistic treatment、pseudopotential compatibility，以及结构和目标性质是否用同一方法计算。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A report cannot stop at “hybrid,” “meta-GGA,” “DFT+U,” or “vdW corrected.” It must identify the functional and version, exact-exchange fraction and range parameter, the definition of $U/J$ and projectors, the dispersion and damping scheme, spin and relativistic treatment, pseudopotential compatibility, and whether structure and target properties used the same method.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-9-2" className="chapter-09-anchor" aria-hidden="true"></span>
+
+## 9.2 Generalized Kohn–Sham 与带隙 | Generalized Kohn–Sham and Bandgaps
+
+<BilingualSection titleZh="从局域势到非局域辅助算符" titleEn="From a local potential to a nonlocal auxiliary operator">
+  <div className="bilingual-section__zh">
+
+普通 KS 把未知项的导数表示为局域乘法势 $v_{\mathrm{xc}}(\mathbf r)$。若能量显式依赖轨道或 density matrix，直接对轨道变分通常产生非局域算符。GKS 保留可处理的单粒子方程，但允许
+
+$$
+\left[-\frac12\nabla^2+v_{\mathrm{ext}}+v_H+\hat v_{\mathrm{xc}}^{\mathrm{GKS}}\right]\phi_i
+=\epsilon_i\phi_i,
+$$
+
+其中 $\hat v_{\mathrm{xc}}^{\mathrm{GKS}}$ 可以是 integral operator 或 differential operator。不同 orbital functionals 定义不同 GKS systems；它们不共享普通 KS 的局域势唯一性和所有 eigenvalue relations。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Ordinary KS theory represents the derivative of the unknown contribution by a local multiplicative potential. Direct variation of an energy that depends explicitly on orbitals or the density matrix generally produces a nonlocal operator. GKS retains tractable one-particle equations while allowing
+
+$$
+[-\nabla^2/2+v_{\mathrm{ext}}+v_H+\hat v_{\mathrm{xc}}^{\mathrm{GKS}}]\phi_i=\epsilon_i\phi_i,
+$$
+
+where the exchange–correlation term can be an integral or differential operator. Different orbital functionals define different GKS auxiliary systems and do not inherit every uniqueness or eigenvalue relation of ordinary local KS theory.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="exact exchange 的 orbital variation | Orbital variation of exact exchange"
+  assumptions={[
+    '占据自旋轨道正交归一，先固定占据。',
+    '使用同自旋 exchange；Coulomb kernel 和边界条件使积分有限。',
+  ]}
+>
+
+exact exchange energy 为
+
+$$
+E_x^{\mathrm{EXX}}
+=-\frac12\sum_{ij\sigma}f_{i\sigma}f_{j\sigma}
+\iint d\mathbf r\,d\mathbf r'\,
+\frac{\phi^*_{i\sigma}(\mathbf r)\phi_{j\sigma}(\mathbf r)
+\phi^*_{j\sigma}(\mathbf r')\phi_{i\sigma}(\mathbf r')}
+{|\mathbf r-\mathbf r'|}.
+$$
+
+对 $\phi^*_{i\sigma}(\mathbf r)$ 变分得到
+
+$$
+(\hat v_x^{\mathrm{Fock}}\phi_{i\sigma})(\mathbf r)
+=-\sum_j f_{j\sigma}\phi_{j\sigma}(\mathbf r)
+\int d\mathbf r'\,
+\frac{\phi^*_{j\sigma}(\mathbf r')\phi_{i\sigma}(\mathbf r')}
+{|\mathbf r-\mathbf r'|}.
+$$
+
+该结果在 $\mathbf r$ 的值依赖轨道在所有 $\mathbf r'$ 的 overlap，因此是非局域 operator，不能一般写成同一个 $v_x(\mathbf r)$ 乘所有轨道。若允许该 operator，得到 GKS/Hartree–Fock-like 方程；若强制局域势，则进入 §9.5 的 OEP 问题。
+
+The orbital derivative of exact exchange is a nonlocal integral operator. Allowing it produces a GKS or Hartree–Fock-like equation; restricting the auxiliary operator to a common local potential leads to OEP.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="基本隙、普通 KS gap 与 GKS gap | Fundamental, ordinary-KS, and GKS gaps"
+  assumptions={[
+    '基本隙定义为 I−A，而非光学激发。',
+    '比较相同结构、spin state、boundary and particle-number convention。',
+  ]}
+>
+
+精确普通 KS 关系为
+
+$$
+E_g^{\mathrm{fund}}
+=\epsilon_L^{\mathrm{KS}}-\epsilon_H^{\mathrm{KS}}
++\Delta_{\mathrm{xc}}.
+$$
+
+GKS 把一部分 discontinuous/nonlocal physics 放进 orbital operator，常使其 eigenvalue gap 接近 fundamental gap，但分解方式依赖 functional。一般仍不能写成“所有 GKS gaps 都严格等于 $I-A$”。有限体系可直接用总能差
+
+$$
+I=E(N-1)-E(N),\qquad
+A=E(N)-E(N+1),
+$$
+
+周期固体则需处理 charged-cell electrostatics、finite size 和 chemical-potential references。光学隙还含 electron–hole interaction。
+
+The exact ordinary-KS gap requires a derivative discontinuity. A GKS operator can move part of this physics into a nonlocal eigenvalue problem and often improves gaps, but the equality with $I-A$ is not universal. Total-energy differences and optical response remain separate definitions.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="更好的 gap 不验证整个泛函" titleEn="A better gap does not validate the whole functional" kind="boundary">
+  <div className="bilingual-section__zh">
+
+Hybrid、mBJ 或 DFT+U 可把某个 bandgap 拉近实验，却同时改变结构、band ordering、effective masses、localized-state positions 和 screening。实验 gap 还依赖温度、zero-point renormalization、defects、excitons 和测量定义。单个 gap 匹配不能证明总能、力或全部谱准确。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A hybrid, mBJ, or DFT+U calculation can move one bandgap toward experiment while changing structure, band ordering, effective masses, localized-state positions, and screening. Experimental gaps also depend on temperature, zero-point renormalization, defects, excitons, and the measurement definition. One matched gap does not validate total energies, forces, or the entire spectrum.
+
+  </div>
+</BilingualCallout>
+
+<span id="section-9-3" className="chapter-09-anchor" aria-hidden="true"></span>
+
+## 9.3 Hybrid 泛函与 range separation | Hybrid Functionals and Range Separation
+
+<BilingualSection titleZh="global hybrid 的能量混合" titleEn="Energy mixing in a global hybrid">
+  <div className="bilingual-section__zh">
+
+Global hybrid 把一定比例的 nonlocal exact exchange 与 semilocal exchange–correlation 组合。PBE0 的形式为
+
+$$
+E_{\mathrm{xc}}^{\mathrm{PBE0}}
+=E_{\mathrm{xc}}^{\mathrm{PBE}}
++\frac14\left(E_x^{\mathrm{EXX}}-E_x^{\mathrm{PBE}}\right).
+$$
+
+$1/4$ 来自特定 adiabatic-connection argument 与近似，不是所有体系唯一最优比例。B3LYP 使用多项 empirical coefficients 和不同 exchange/correlation components，其成功域与训练/拟合历史相关。Dielectric-dependent hybrid 常令 $a\sim\epsilon_\infty^{-1}$，把 screening 信息引入比例，但会形成结构—电子态—介电常数的自洽选择问题。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A global hybrid combines a fraction of nonlocal exact exchange with semilocal exchange and correlation. PBE0 is
+
+$$
+E_{\mathrm{xc}}^{\mathrm{PBE0}}
+=E_{\mathrm{xc}}^{\mathrm{PBE}}+\frac14(E_x^{\mathrm{EXX}}-E_x^{\mathrm{PBE}}).
+$$
+
+The one-quarter fraction follows a particular adiabatic-connection argument and approximation rather than a universal optimum. B3LYP uses several empirical coefficients and components. Dielectric-dependent hybrids often relate the fraction to $\epsilon_\infty^{-1}$, introducing screening information and a self-consistency question between structure, electronic state, and dielectric response.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="Coulomb range separation | Coulomb range separation"
+  assumptions={[
+    '$\omega>0$，r>0。',
+    'erf(x)+erfc(x)=1。',
+  ]}
+>
+
+恒等式
+
+$$
+\frac1r
+=\frac{\operatorname{erfc}(\omega r)}r
++\frac{\operatorname{erf}(\omega r)}r
+$$
+
+把 Coulomb interaction 分成 short range 和 long range。利用
+
+$$
+\operatorname{erf}(x)=\frac2{\sqrt\pi}
+\int_0^x e^{-t^2}dt,
+$$
+
+小 $r$ 时
+
+$$
+\operatorname{erf}(\omega r)
+=\frac{2\omega r}{\sqrt\pi}+O(r^3),
+$$
+
+因此 long-range kernel 在原点趋于有限 $2\omega/\sqrt\pi$，而 singular $1/r$ 留在 short-range term。大 $r$ 时 erfc 衰减，long-range term 恢复 $1/r$。
+
+HSE 在 short range 使用 exact exchange，在 long range 使用 semilocal exchange，以降低 periodic exact exchange 成本并避免 unscreened Hartree–Fock exchange 在金属中的病态。Long-range-corrected hybrids 采用相反分配，用于恢复 finite-system exchange potential 的远程行为。CAM 等方法允许不同的 short-/long-range fractions。
+
+The error-function identity separates the Coulomb singularity and long-range tail. Screened and long-range-corrected hybrids assign exact exchange to different parts of this exact algebraic split; the physical approximation lies in that assignment and in the chosen parameter.
+
+</DerivationBlock>
+
+<RangeSeparatedHybridExplorer />
+
+<BilingualSection titleZh="计算成本与实现边界" titleEn="Computational cost and implementation boundaries">
+  <div className="bilingual-section__zh">
+
+Exact exchange 需要 occupied-orbital pair integrals，并在周期体系中引入 dense $k$-point coupling、Coulomb singularity treatment 和更高 communication/storage cost。Screening、density fitting、FFT、localized orbitals 和 adaptively compressed exchange 可降低成本，但改变算法误差和收敛参数。
+
+Hybrid 计算还需检查：pseudopotential 是否用兼容 functional/relativistic treatment 生成；exact exchange 的 $k$ mesh 和 q→0 treatment；SCF mixing；空带和 dielectric response（若参数依赖 screening）；结构是否重新弛豫。用 semilocal 结构直接算 hybrid gap 是一项额外近似，必须声明。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Exact exchange requires occupied-orbital pair integrals and introduces dense $k$-point coupling, Coulomb-singularity treatment, and higher communication or storage costs in periodic systems. Screening, density fitting, FFT methods, localized orbitals, and compressed exchange reduce cost while adding algorithmic approximations and convergence parameters.
+
+A hybrid calculation must also check pseudopotential compatibility, the exact-exchange $k$ mesh and small-$q$ treatment, SCF mixing, empty-state or dielectric requirements when screening sets parameters, and whether the structure was re-relaxed. Evaluating a hybrid gap on a semilocal geometry is an additional approximation that must be stated.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="金属中的 unscreened exact exchange" titleEn="Unscreened exact exchange in metals" kind="boundary">
+  <div className="bilingual-section__zh">
+
+金属 Fermi surface 的 occupation discontinuity 与 long-range unscreened exchange 可导致异常 dispersion、density of states 和缓慢 $k$ convergence。有限 smearing 可以改善数值积分，却不自动修复 method-level behavior。对金属选择 global hybrid 必须有针对目标 observable 的依据和收敛证据。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The occupation discontinuity at a metallic Fermi surface combined with long-range unscreened exchange can produce anomalous dispersions, densities of states, and slow $k$-point convergence. Smearing can stabilize integration but does not automatically repair the method-level behavior. A global hybrid in a metal requires property-specific justification and convergence evidence.
+
+  </div>
+</BilingualCallout>

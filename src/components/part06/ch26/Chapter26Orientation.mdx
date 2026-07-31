@@ -1,0 +1,83 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<section id="reading-orientation">
+
+## 阅读定位 | Reading Orientation
+
+<BilingualSection titleZh="本章的受控问题" titleEn="The controlled problem of this chapter" eyebrow="Orientation">
+  <div class="bilingual-section__zh">
+
+Chapter 25 建立了 Bloch 本征矢、occupied subspace、Berry 相位和 Chern 数的共同语言。本章把这些对象压缩到二维 Hilbert 空间，在那里每个 Hermitian Hamiltonian 都能写成单位矩阵与三支 Pauli 矩阵的线性组合。这个压缩使能隙闭合、规范补丁、winding、边界终止和绝热泵可以逐步计算，而不是只依赖几何比喻。
+
+这里的“两带”指每个参数点上使用二维基底表示的模型空间。真实材料通常需要更多轨道、spin、SOC 和远离费米能的带；一个有效两带模型只有在目标流形、对称性、能隙和参数映射被明确验证时，才能承载材料解释。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Chapter 25 established the common language of Bloch eigenvectors, occupied subspaces, Berry phases, and Chern numbers. This chapter compresses those objects into a two-dimensional Hilbert space, where every Hermitian Hamiltonian is a linear combination of the identity and three Pauli matrices. The reduction makes gap closing, gauge patches, winding, boundary termination, and adiabatic pumping directly calculable rather than merely pictorial.
+
+“Two band” means a two-dimensional basis at each point of parameter space. Real materials normally require additional orbitals, spin, spin–orbit coupling, and remote bands. An effective two-band model can support a material interpretation only after its target manifold, symmetries, gap, and parameter mapping have been validated.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本章后应能完成的判断" titleEn="Judgments expected after this chapter" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>从任意二阶 Hermitian 矩阵提取标量项和三维 <em>d</em> 向量，并求出本征值、projector 和两个规范补丁中的本征矢；</li>
+      <li>说明 <em>d</em><sub>0</sub> 为什么平移能量而不改变本征矢，及 <em>d</em>=0 为什么是两带能隙闭合点；</li>
+      <li>区分 two-site/SSH、Rice–Mele 与 s–p 模型中的基底、unit cell 和物理终止；</li>
+      <li>只在相应 chiral、inversion 或其他约束成立时定义并解释一维 winding 或量子化 Zak phase；</li>
+      <li>把 bulk invariant、有限链端态、终止依赖和普通 Shockley 状态分开判断；</li>
+      <li>说明二维参数空间中的 Chern 数为何控制完整绝热周期的量子化泵浦，而不是任意有限速率参数扫描。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>extract the scalar term and three-component d vector from any 2×2 Hermitian matrix, then obtain eigenvalues, projectors, and eigenvectors in two gauge patches;</li>
+      <li>explain why d0 shifts energies without changing eigenvectors and why d=0 is a two-band gap closing;</li>
+      <li>distinguish basis, unit-cell, and physical-termination choices in two-site/SSH, Rice–Mele, and s–p models;</li>
+      <li>define and interpret a one-dimensional winding or quantized Zak phase only under the required chiral, inversion, or related constraint;</li>
+      <li>separate a bulk invariant, finite-chain end states, termination dependence, and ordinary Shockley states;</li>
+      <li>explain why a Chern number on a two-dimensional parameter space controls a complete adiabatic pump cycle rather than an arbitrary finite-rate scan.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+</section>
+
+<section id="objects-and-conventions">
+
+## 对象与约定 | Objects and Conventions
+
+<BilingualSection titleZh="本章固定约定" titleEn="Conventions fixed for this chapter" eyebrow="Conventions">
+  <div class="bilingual-section__zh">
+
+本章使用
+
+$$
+H(\boldsymbol\kappa)=d_0(\boldsymbol\kappa)I+\mathbf d(\boldsymbol\kappa)\cdot\boldsymbol\sigma,
+$$
+
+其中 $\boldsymbol\kappa$ 可以是晶体动量 $k$，也可以是 $(k,\lambda)$ 等联合参数。除非另行说明，二维 Brillouin zone 的正向为 $(k_x,k_y)$，低能带记为 $-$，occupied projector 记为 $P_-$。Bloch sphere 上的单位向量为 $\hat{\mathbf d}=\mathbf d/|\mathbf d|$，只有在 $|\mathbf d|>0$ 时定义。
+
+“winding number”只用于映射确实被限制在允许整数绕行的子空间时；一般三分量 $\mathbf d(k)$ 的一维闭合曲线没有自动量子化的 winding。Zak phase 还依赖 Bloch/unit-cell convention，而端态进一步依赖物理终止。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+We use
+
+$$
+H(\boldsymbol\kappa)=d_0(\boldsymbol\kappa)I+\mathbf d(\boldsymbol\kappa)\cdot\boldsymbol\sigma,
+$$
+
+where $\boldsymbol\kappa$ may denote crystal momentum $k$ or a joint parameter such as $(k,\lambda)$. Unless stated otherwise, the positive orientation of a two-dimensional Brillouin zone is $(k_x,k_y)$, the lower band is labelled $-$, and its occupied projector is $P_-$. The Bloch-sphere vector $\hat{\mathbf d}=\mathbf d/|\mathbf d|$ exists only where $|\mathbf d|>0$.
+
+A “winding number” is used only when the map is constrained to a subspace that supports an integer winding. A generic three-component closed curve $\mathbf d(k)$ in one dimension is not automatically assigned such an integer. The Zak phase also depends on Bloch and unit-cell conventions, while an end state additionally depends on the physical termination.
+
+  </div>
+</BilingualSection>
+
+</section>

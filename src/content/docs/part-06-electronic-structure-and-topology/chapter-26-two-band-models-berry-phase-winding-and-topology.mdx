@@ -1,20 +1,18 @@
 ---
 title: "Chapter 26 · Two-Band Models: Berry Phase, Winding, and Topology"
-description: "Martin Chapter 26 的目录级阅读骨架；正文待填充。"
+description: "从任意二阶 Hermitian Hamiltonian 到 Bloch sphere、两站点链、Shockley 转变、winding、Chern 数与 Thouless 泵的双语推导。"
 sidebar:
   order: 2
   label: "Chapter 26 · Two-Band Models: Berry Phase, Winding, and Topology"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter26Body from '../../../components/part06/ch26/Chapter26Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[5].units[1].label}
-  sourcePage={catalog.parts[5].units[1].page}
-  sections={catalog.parts[5].units[1].sections}
-  exercisesPage={catalog.parts[5].units[1].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 26, printed pages 531–544; sections 26.1–26.7. Exercises begin on printed page 545 and are not reproduced. Chapter 25 and Chapter 24 supply the topology and polarization prerequisites."
+  status="draft"
 />
+
+<Chapter26Body />

@@ -1,0 +1,120 @@
+---
+import { hybridExchangeProfile } from '../../../data/part02/ch09TeachingModels.mjs';
+
+const initial = hybridExchangeProfile(3, { exactFraction: 0.25, omega: 0.3, screened: true });
+const samples = Array.from({ length: 241 }, (_, index) => {
+  const distance = 0.25 + (9.75 * index) / 240;
+  return hybridExchangeProfile(distance, { exactFraction: 0.25, omega: 0.3, screened: true });
+});
+const xScale = (distance) => 55 + ((distance - 0.25) / 9.75) * 650;
+const yScale = (weight) => 235 - weight * 170;
+const exactPath = samples.map((point, index) =>
+  `${index === 0 ? 'M' : 'L'} ${xScale(point.distance).toFixed(2)} ${yScale(point.exactWeight).toFixed(2)}`,
+).join(' ');
+---
+
+<figure class="chapter-visual range-hybrid" data-range-hybrid>
+  <figcaption>
+    <strong>原创交互模型：Coulomb range separation 与 exact-exchange 权重</strong>
+    <span lang="en">Original interactive model: Coulomb range separation and exact-exchange weight</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>range parameter ω</span>
+      <input type="range" min="0.08" max="0.80" step="0.02" value="0.30" data-rh-omega />
+      <output data-rh-omega-output>0.30</output>
+    </label>
+    <label>
+      <span>global exact fraction a</span>
+      <input type="range" min="0" max="1" step="0.05" value="0.25" data-rh-fraction />
+      <output data-rh-fraction-output>0.25</output>
+    </label>
+    <label>
+      <span>模型 | Model</span>
+      <select data-rh-screened>
+        <option value="screened" selected>screened short-range exact exchange</option>
+        <option value="global">global exact exchange</option>
+      </select>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 300" role="img" aria-labelledby="rh-title rh-desc">
+    <title id="rh-title">Exact-exchange weight versus interelectronic distance</title>
+    <desc id="rh-desc">A global hybrid has constant exact-exchange weight. A screened hybrid multiplies that fraction by the complementary-error-function short-range Coulomb fraction.</desc>
+    <line x1="55" y1="235" x2="705" y2="235" class="plot-axis" />
+    <line x1="55" y1="45" x2="55" y2="235" class="plot-axis" />
+    <path d={exactPath} class="range-hybrid__curve" data-rh-path />
+    <line x1="55" y1={yScale(0.25)} x2="705" y2={yScale(0.25)} class="range-hybrid__global" data-rh-global-line />
+    <text x="705" y="270" text-anchor="end">r / model length</text>
+    <text x="20" y="55">exact weight</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-rh-split>at r=3: SR fraction = {initial.shortFraction.toFixed(6)}, LR fraction = {initial.longFraction.toFixed(6)}</span>
+    <strong data-rh-weight>exact-exchange weight = {initial.exactWeight.toFixed(6)}</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>使用 1/r = erfc(ωr)/r + erf(ωr)/r。Global hybrid 的 exact-exchange 权重为常数 a；screened 模型使用 a·erfc(ωr)。长度和 ω⁻¹ 为相互一致的模型单位。</p>
+    <p lang="en"><strong>Model:</strong> the Coulomb interaction is split with error and complementary-error functions. Global exact exchange has constant weight a; the screened model uses a·erfc(ωr).</p>
+    <p><strong>验收：</strong>short- 与 long-range fractions 之和为 1；screened exact weight 在 r→0 趋于 a、随 r 单调降到 0；global 权重对距离不变。</p>
+    <p lang="en"><strong>Acceptance:</strong> the short- and long-range fractions sum to one. The screened weight approaches a at short range and decreases to zero; the global weight is distance independent.</p>
+    <p><strong>边界：</strong>权重曲线不计算 exchange integrals、介电屏蔽、bandgap 或总能。a 与 ω 没有普适唯一值；HSE、LC、CAM 和 dielectric-dependent hybrids 采用不同分配。</p>
+    <p lang="en"><strong>Boundary:</strong> the curve computes no exchange integral, dielectric screening, bandgap, or total energy. Neither a nor ω has a universal value.</p>
+  </div>
+</figure>
+
+<script>
+  import { hybridExchangeProfile } from '../../../data/part02/ch09TeachingModels.mjs';
+
+  document.querySelectorAll('[data-range-hybrid]').forEach((root) => {
+    const omegaInput = root.querySelector('[data-rh-omega]');
+    const fractionInput = root.querySelector('[data-rh-fraction]');
+    const modeSelect = root.querySelector('[data-rh-screened]');
+    const path = root.querySelector('[data-rh-path]');
+    const globalLine = root.querySelector('[data-rh-global-line]');
+    if (!(omegaInput instanceof HTMLInputElement) || !(fractionInput instanceof HTMLInputElement) || !(modeSelect instanceof HTMLSelectElement) || !(path instanceof SVGPathElement) || !(globalLine instanceof SVGLineElement)) return;
+
+    const xScale = (distance) => 55 + ((distance - 0.25) / 9.75) * 650;
+    const yScale = (weight) => 235 - weight * 170;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLOutputElement) element.value = value;
+      else if (element instanceof HTMLElement) element.textContent = value;
+    };
+
+    const update = () => {
+      const omega = Number(omegaInput.value);
+      const exactFraction = Number(fractionInput.value);
+      const screened = modeSelect.value === 'screened';
+      const samples = Array.from({ length: 241 }, (_, index) => {
+        const distance = 0.25 + (9.75 * index) / 240;
+        return hybridExchangeProfile(distance, { exactFraction, omega, screened });
+      });
+      path.setAttribute('d', samples.map((point, index) =>
+        `${index === 0 ? 'M' : 'L'} ${xScale(point.distance).toFixed(2)} ${yScale(point.exactWeight).toFixed(2)}`,
+      ).join(' '));
+      const globalY = yScale(exactFraction).toFixed(2);
+      globalLine.setAttribute('y1', globalY);
+      globalLine.setAttribute('y2', globalY);
+      const probe = hybridExchangeProfile(3, { exactFraction, omega, screened });
+      setText('[data-rh-omega-output]', omega.toFixed(2));
+      setText('[data-rh-fraction-output]', exactFraction.toFixed(2));
+      setText('[data-rh-split]', `at r=3: SR fraction = ${probe.shortFraction.toFixed(6)}, LR fraction = ${probe.longFraction.toFixed(6)}`);
+      setText('[data-rh-weight]', `exact-exchange weight = ${probe.exactWeight.toFixed(6)}`);
+    };
+
+    omegaInput.addEventListener('input', update);
+    fractionInput.addEventListener('input', update);
+    modeSelect.addEventListener('change', update);
+    update();
+  });
+</script>
+
+<style>
+  .range-hybrid svg { width: 100%; max-height: 23rem; }
+  .range-hybrid text { fill: currentColor; font-size: 14px; }
+  .range-hybrid__curve { fill: none; stroke: var(--sl-color-text-accent); stroke-width: 3.5; }
+  .range-hybrid__global { stroke: var(--sl-color-accent-high); stroke-width: 2; stroke-dasharray: 8 5; }
+</style>
