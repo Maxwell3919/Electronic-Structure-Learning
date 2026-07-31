@@ -1,21 +1,29 @@
 ---
 type PageStatus = 'outline' | 'draft' | 'review' | 'validated';
+type DeclaredStatus = PageStatus | 'chapter-complete';
 
 interface Props {
   source: string;
   locator: string;
-  status?: PageStatus;
+  status?: DeclaredStatus;
 }
 
-const allowedStatuses = new Set<PageStatus>(['outline', 'draft', 'review', 'validated']);
+const statusAliases: Record<DeclaredStatus, PageStatus> = {
+  outline: 'outline',
+  draft: 'draft',
+  review: 'review',
+  validated: 'validated',
+  'chapter-complete': 'validated',
+};
+
 const rawStatus = Astro.props.status ?? 'outline';
 
-if (!allowedStatuses.has(rawStatus)) {
+if (!(rawStatus in statusAliases)) {
   throw new Error(`Invalid SourceNote status: ${rawStatus}`);
 }
 
 const { source, locator } = Astro.props;
-const status = rawStatus;
+const status = statusAliases[rawStatus];
 ---
 
 <aside class="source-note" aria-label="来源定位 / Source locator">
