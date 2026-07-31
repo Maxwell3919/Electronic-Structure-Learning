@@ -5,10 +5,10 @@ const componentId = 'ch22-slab-work-function';
 const width = 820;
 const height = 340;
 const pad = { left: 66, right: 28, top: 28, bottom: 56 };
-const defaults = { bulkReference: -8, fermiEnergy: -5, leftDipole: 2.2, rightDipole: 2.2, vacuumThickness: 18 };
+const defaults = { bulkReference: -8, fermiEnergy: -8, leftDipole: 3.5, rightDipole: 3.5, vacuumThickness: 18 };
 const result = slabWorkFunction(defaults);
 const yMin = -8.8;
-const yMax = -4.8;
+const yMax = -3.8;
 const xScale = (z) => pad.left + z / result.length * (width - pad.left - pad.right);
 const yScale = (value) => pad.top + (yMax - value) / (yMax - yMin) * (height - pad.top - pad.bottom);
 const points = result.profile.map(({ z, potential }) => `${xScale(z).toFixed(2)},${yScale(potential).toFixed(2)}`).join(' ');
@@ -22,10 +22,10 @@ const points = result.profile.map(({ z, potential }) => `${xScale(z).toFixed(2)}
   </figcaption>
 
   <div class="chapter-visual__controls">
-    <label>左表面偶极步 ΔV<sub>L</sub> (eV) <input data-left type="range" min="0.5" max="4" step="0.1" value={defaults.leftDipole} /></label>
-    <label>右表面偶极步 ΔV<sub>R</sub> (eV) <input data-right type="range" min="0.5" max="4" step="0.1" value={defaults.rightDipole} /></label>
+    <label>左表面偶极步 ΔV<sub>L</sub> (eV) <input data-left type="range" min="1" max="4" step="0.1" value={defaults.leftDipole} /></label>
+    <label>右表面偶极步 ΔV<sub>R</sub> (eV) <input data-right type="range" min="1" max="4" step="0.1" value={defaults.rightDipole} /></label>
     <label>真空厚度 L<sub>vac</sub> (Å) <input data-vacuum type="range" min="8" max="35" step="1" value={defaults.vacuumThickness} /></label>
-    <label>费米能 E<sub>F</sub> (eV) <input data-fermi type="range" min="-6.5" max="-3.5" step="0.1" value={defaults.fermiEnergy} /></label>
+    <label>费米能 E<sub>F</sub> (eV) <input data-fermi type="range" min="-8.5" max="-5" step="0.1" value={defaults.fermiEnergy} /></label>
   </div>
 
   <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
@@ -54,11 +54,11 @@ const points = result.profile.map(({ z, potential }) => `${xScale(z).toFixed(2)}
 
   <div class="chapter-visual__contract">
     <p><strong>模型：</strong>体内参考固定为 −8 eV；两侧表面偶极分别把真空能级抬高 ΔV<sub>L/R</sub>。非对称偶极在周期超胞中以线性残余场表示，未模拟真实自洽电荷。</p>
-    <p><strong>验收：</strong>ΔV<sub>L</sub>=ΔV<sub>R</sub> 时残余场严格为零且 Φ<sub>L</sub>=Φ<sub>R</sub>；固定偶极差时增加真空厚度使场幅值按 1/L<sub>vac</sub> 减小；移动 E<sub>F</sub> 只改变功函数，不改变势剖面。</p>
+    <p><strong>验收：</strong>默认状态给出正功函数；ΔV<sub>L</sub>=ΔV<sub>R</sub> 时残余场严格为零且 Φ<sub>L</sub>=Φ<sub>R</sub>；固定偶极差时增加真空厚度使场幅值按 1/L<sub>vac</sub> 减小；移动 E<sub>F</sub> 只改变功函数，不改变势剖面。</p>
     <p><strong>边界：</strong>该模型不替代平面/宏观平均、自洽 dipole correction、slab 厚度收敛、真空平台检查或真实表面电荷密度。一个“看似平坦”的局部区间也不能单独证明功函数收敛。</p>
   </div>
 
-  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认对称 slab 曲线、读数与验收条件仍可见；滑块不更新。</p></noscript>
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 Φ=3.5 eV 的对称 slab 曲线、读数与验收条件仍可见；滑块不更新。</p></noscript>
 </figure>
 
 <script>
@@ -78,7 +78,7 @@ const points = result.profile.map(({ z, potential }) => `${xScale(z).toFixed(2)}
       && slabRegion instanceof SVGRectElement && state instanceof HTMLElement
       && Object.values(outputs).every((item) => item instanceof HTMLOutputElement)) {
       const width = 820; const height = 340; const pad = { left: 66, right: 28, top: 28, bottom: 56 };
-      const yMin = -8.8; const yMax = -4.8;
+      const yMin = -8.8; const yMax = -3.8;
       const yScale = (value) => pad.top + (yMax - value) / (yMax - yMin) * (height - pad.top - pad.bottom);
       const update = () => {
         const params = {
