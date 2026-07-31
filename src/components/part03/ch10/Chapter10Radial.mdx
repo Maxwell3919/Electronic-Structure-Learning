@@ -57,7 +57,7 @@ $$
 \hat L^2Y_{lm}(\Omega)=l(l+1)Y_{lm}(\Omega).
 $$
 
-令 $\psi_{nlm}(\mathbf r)=R_{nl}(r)Y_{lm}(\Omega)$。径向导数不作用于 $Y_{lm}$，角动量算符不作用于 $R_{nl}$，因此
+令 ψ_nlm(r) = R_nl(r)Y_lm(Ω)。径向导数不作用于 Y_lm，角动量算符不作用于 R_nl，因此
 
 $$
 \nabla^2\psi_{nlm}=
@@ -77,7 +77,7 @@ $$
 =\varepsilon_{nl}R_{nl}.
 $$
 
-第一导数来自球坐标体积元，不便于直接与一维 Schrödinger 方程比较。定义约化径向函数 $u_{nl}(r)=rR_{nl}(r)$。由于
+第一导数来自球坐标体积元，不便于直接与一维 Schrödinger 方程比较。定义约化径向函数 u_nl(r) = rR_nl(r)。由于
 
 $$
 R=\frac{u}{r},\qquad
@@ -113,7 +113,7 @@ $$
 -\frac{\hat L^2}{r^2},
 $$
 
-<p lang="en">with $\hat L^2Y_{lm}=l(l+1)Y_{lm}$. Substituting $\psi_{nlm}=R_{nl}Y_{lm}$ separates the angular factor and gives</p>
+<p lang="en">with L²Y_lm = l(l+1)Y_lm. Substituting ψ_nlm = R_nlY_lm separates the angular factor and gives</p>
 
 $$
 -\frac{1}{2r^2}\frac{d}{dr}
@@ -122,7 +122,7 @@ $$
 =\varepsilon_{nl}R_{nl}.
 $$
 
-<p lang="en">Defining $u_{nl}=rR_{nl}$ yields $d[r^2R']/dr=ru''$ and therefore</p>
+<p lang="en">Defining u_nl = rR_nl yields $d[r^2R']/dr=ru''$ and therefore</p>
 
 $$
 \boxed{
@@ -145,14 +145,14 @@ $$
 p(p-1)=l(l+1),
 $$
 
-因此 $p=l+1$ 或 $p=-l$。第二个解导致 $R=u/r\sim r^{-l-1}$；除特殊的奇异势讨论外，它不满足原点的正则性与有限范数要求。物理解采用
+因此 $p=l+1$ 或 $p=-l$。第二个解导致 R = u/r ∼ r^(−l−1)；除特殊的奇异势讨论外，它不满足原点的正则性与有限范数要求。物理解采用
 
 $$
 u_{nl}(r)\propto r^{l+1},\qquad R_{nl}(r)\propto r^l,
 \qquad r\to0.
 $$
 
-对束缚态，若远处势趋于常数并把该常数选为零，则 $\varepsilon<0$。远处方程近似为 $u''\simeq -2\varepsilon u$，可接受分支按 $e^{-\kappa r}$ 衰减，其中 $\kappa=\sqrt{-2\varepsilon}$；增长分支必须排除。
+对束缚态，若远处势趋于常数并把该常数选为零，则 $\varepsilon<0$。远处方程近似为 $u''\simeq -2\varepsilon u$，可接受分支按 exp(−κr) 衰减，其中 κ = √(−2ε)；增长分支必须排除。
 
   </div>
   <div class="bilingual-section__en" lang="en">
@@ -163,14 +163,14 @@ $$
 p(p-1)=l(l+1),
 $$
 
-so that $p=l+1$ or $p=-l$. The second solution implies $R=u/r\sim r^{-l-1}$ and, outside special discussions of singular potentials, violates regularity and finite-norm requirements. The physical branch is
+so that $p=l+1$ or $p=-l$. The second solution implies R = u/r ∼ r^(−l−1) and, outside special discussions of singular potentials, violates regularity and finite-norm requirements. The physical branch is
 
 $$
 u_{nl}(r)\propto r^{l+1},\qquad R_{nl}(r)\propto r^l,
 \qquad r\to0.
 $$
 
-For a bound state, if the potential tends to a constant that is chosen as zero, then $\varepsilon<0$. The asymptotic equation is $u''\simeq -2\varepsilon u$, and the admissible branch decays as $e^{-\kappa r}$ with $\kappa=\sqrt{-2\varepsilon}$; the growing branch must be excluded.
+For a bound state, if the potential tends to a constant that is chosen as zero, then $\varepsilon<0$. The asymptotic equation is $u''\simeq -2\varepsilon u$, and the admissible branch decays as exp(−κr) with κ = √(−2ε); the growing branch must be excluded.
 
   </div>
 </BilingualSection>
@@ -198,7 +198,7 @@ $$
 
 因此径向概率分布是 $|u|^2$，积分测度是 $dr$。把 $|R|^2$ 直接画成“径向概率”会漏掉球壳面积因子 $r^2$。
 
-<p lang="en">Using $d^3r=r^2dr\,d\Omega$ and $\int|Y_{lm}|^2d\Omega=1$ gives</p>
+<p lang="en">Using $d^3r=r^2dr\,d\Omega$ and ∫|Y_lm|² dΩ = 1 gives</p>
 
 $$
 1=\int_0^\infty r^2|R_{nl}(r)|^2dr
@@ -279,7 +279,7 @@ $$
 =\frac{1}{r^2}\left(\frac{d^2u}{d\rho^2}-\frac{du}{d\rho}\right).
 $$
 
-直接代入径向方程会出现一阶导数。再选择适当的幅度缩放，例如把径向函数乘以 $r^{1/2}$，可以把方程改写为无一阶导数的形式。不同原子程序可能采用不同的未知函数与网格参数；比较离散方程时必须先统一这些定义。
+直接代入径向方程会出现一阶导数。再选择适当的幅度缩放，例如把径向函数乘以 √r，可以把方程改写为无一阶导数的形式。不同原子程序可能采用不同的未知函数与网格参数；比较离散方程时必须先统一这些定义。
 
 <p lang="en">The chain rule yields</p>
 
@@ -289,7 +289,7 @@ $$
 =\frac{1}{r^2}\left(\frac{d^2u}{d\rho^2}-\frac{du}{d\rho}\right).
 $$
 
-<p lang="en">A direct substitution introduces a first derivative. An additional amplitude scaling, such as multiplying the radial function by $r^{1/2}$, can restore a second-order form without that term. Atomic programs may use different unknown functions and grid parameters, so their discrete equations must be compared only after the definitions have been aligned.</p>
+<p lang="en">A direct substitution introduces a first derivative. An additional amplitude scaling, such as multiplying the radial function by √r, can restore a second-order form without that term. Atomic programs may use different unknown functions and grid parameters, so their discrete equations must be compared only after the definitions have been aligned.</p>
 
 </DerivationBlock>
 
