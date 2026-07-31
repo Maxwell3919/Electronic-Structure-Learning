@@ -1,0 +1,48 @@
+---
+const sections = [
+  ['8.1', 'Overview', 171, '交换—关联近似的角色与本章/下一章边界'],
+  ['8.2', 'Exc and the Exchange–Correlation Hole', 172, 'pair density、条件密度、交换—关联洞、耦合常数平均与 sum rule'],
+  ['8.3', 'Local (Spin) Density Approximation (LSDA)', 174, '均匀电子气参考、LDA/LSDA 与自旋极化变量'],
+  ['8.4', 'How Can the Local Approximation Possibly Work As Well As It Does?', 175, '球平均交换—关联洞、原子/H₂/Si 例证与局域近似的证据边界'],
+  ['8.5', 'Generalized-Gradient Approximations (GGAs)', 179, '梯度展开失效、reduced gradient、spin scaling、增强因子与约束'],
+  ['8.6', 'LDA and GGA Expressions for the Potential Vxcσ(r)', 183, 'LDA/GGA 泛函导数、分部积分、算符形式与离散一致性'],
+  ['8.7', 'Average and Weighted Density Formulations: ADA and WDA', 185, '非局域平均/加权密度、sum-rule 动机与 core/valence 边界'],
+  ['8.8', 'Functionals Fitted to Databases', 185, '数据库拟合、可迁移性、domain shift 与机器学习边界'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter-08-source-map-title">
+  <h2 id="chapter-08-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    Martin 第 2 版 Chapter 8 的印刷页范围为 171–185；原书习题从第 186 页开始，本站不转录题目。
+    Sholl–Steckel Chapter 1 §1.5 只用于 LDA/GGA 的实践语境和“必须报告具体泛函”的提醒，不替代 Martin 的理论顺序。
+  </p>
+  <div class="table-wrap" tabindex="0" aria-label="Chapter 8 source-map table">
+    <table>
+      <thead>
+        <tr><th>原节</th><th>Martin 标题</th><th>印刷页</th><th>本站处理</th><th>状态</th></tr>
+      </thead>
+      <tbody>
+        {sections.map(([id, title, page, scope]) => (
+          <tr>
+            <td>{id}</td><td lang="en">{title}</td><td>{page}</td><td>{scope}</td><td>原创双语正文</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-boundary">
+    【来源边界】目录标题和页码用于定位。正文、推导、图示、数值模型和练习均为本站原创；Chapter 8 不提前展开 hybrid、meta-GGA、OEP、SIC、DFT+U 或非局域色散泛函的完整理论。
+  </p>
+</section>
+
+<style>
+  .chapter-source-map { margin-block: 1.5rem; }
+  .table-wrap { max-width: 100%; overflow-x: auto; }
+  table { min-width: 59rem; }
+  .source-boundary {
+    border-left: 0.25rem solid var(--sl-color-accent);
+    padding: 0.75rem 0.9rem;
+    background: var(--sl-color-gray-7);
+  }
+</style>

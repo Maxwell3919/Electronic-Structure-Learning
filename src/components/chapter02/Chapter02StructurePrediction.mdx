@@ -1,0 +1,116 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-2-6">2.6 结构预测：高压氮与氢硫化物 | Structure Prediction: Nitrogen Solids and Hydrogen Sulfide Superconductors at High Pressure</h2>
+
+<BilingualSection titleZh="结构预测是离散搜索与连续优化的组合" titleEn="Structure prediction combines discrete search and continuous optimization" eyebrow="【Martin 原书 | Martin source】 §2.6 · pp. 26–31">
+  <div class="bilingual-section__zh">
+
+给定组成并不能唯一确定晶体结构。晶格类型、原子数、空间群、原子排列和可能的分子单元形成巨大离散空间；每个候选还需要对晶格参数和内部坐标进行连续优化。模拟退火、随机搜索、进化算法、粒子群和其他全局搜索方法通过不同方式提出候选，电子结构计算则提供能量、力和应力用于局域弛豫与排序。
+
+搜索算法找到的是“在给定搜索空间、随机种子、原胞大小和计算近似下发现的最低候选”，不自动证明全局最优。可靠结构预测需要重复搜索、不同初始群体、原胞大小扩展、对称性释放和更高精度重排。低精度搜索阶段可以筛选，但最终能量差必须在统一高精度设置下复算。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Composition does not uniquely determine crystal structure. Lattice type, atom count, space group, atomic arrangement, and possible molecular units form a vast discrete space; every candidate also requires continuous optimization of lattice parameters and internal coordinates. Simulated annealing, random search, evolutionary algorithms, particle-swarm methods, and other global-search approaches propose candidates in different ways, while electronic-structure calculations supply energies, forces, and stresses for local relaxation and ranking.
+
+A search algorithm finds the lowest candidate discovered under a specified search space, random seed, cell size, and computational approximation; it does not automatically prove a global optimum. Reliable prediction requires repeated searches, independent initial populations, expanded cell sizes, released symmetry constraints, and higher-accuracy reranking. A low-cost search stage may screen candidates, but final energy differences must be recomputed with a uniform high-accuracy setup.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="聚合氮：从分子三键到三维单键网络" titleEn="Polymeric nitrogen: from molecular triple bonds to a three-dimensional single-bond network">
+  <div class="bilingual-section__zh">
+
+常压氮由 N$_2$ 分子构成，每个原子通过强三键与一个近邻结合。压力增大时，大体积的分子晶体与更高配位的非分子网络竞争。Martin 介绍的 cubic-gauche 结构由 DFT 计算在高压下提出，结构并非从简单化学直觉直接得到；多年后实验在高温高压条件下制备并通过衍射识别。
+
+这个例子说明预测的含义：计算先提出具体结构、稳定压力范围和力学性质，实验随后检验是否能沿现实路径形成。理论上的低焓不保证室温动力学可达；实验合成也不自动证明该相在所有压力下是热力学基态。卸压后能否保留还取决于能垒和分解路径。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At ambient pressure, nitrogen consists of N$_2$ molecules in which each atom is joined to one neighbour by a strong triple bond. Under compression, large-volume molecular crystals compete with higher-coordination nonmolecular networks. Martin describes the cubic-gauche structure, proposed by DFT calculations as a high-pressure phase and not readily guessed from simple chemical intuition; years later it was produced at high temperature and pressure and identified by diffraction.
+
+The example clarifies what prediction means. Calculation proposed a concrete structure, stability range, and mechanical properties, while experiment later tested whether a realistic pathway could form it. Low theoretical enthalpy does not guarantee kinetic accessibility at room temperature, and experimental synthesis does not prove that the phase is the thermodynamic ground state at every pressure. Retention after decompression depends on barriers and decomposition pathways.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="H–S 体系：结构、化学计量与超导证据链" titleEn="The H–S system: structure, stoichiometry, and the superconductivity evidence chain">
+  <div class="bilingual-section__zh">
+
+高压富氢材料把结构搜索与成分稳定性结合起来。Martin 描述的工作分别搜索 H$_2$S 及更富氢的组成，得到随压力变化的分子相、金属相和高对称 H$_3$S 结构。理论预测的高频声子、金属电子态和电子—声子耦合给出高 $T_c$ 候选，随后实验观察到高压超导并通过衍射结果支持预测的高压结构及元素硫共存。
+
+这里必须拆开多个判断：结构搜索是否找到相关候选；该化学计量是否对分解稳定；结构是否动力学稳定；电子结构是否金属；声子和电子—声子矩阵元是否收敛；所用超导理论是否适用；计算 $T_c$ 与实验转变是否在压力、同位素和相身份上可比。DOS 在费米能附近出现峰值只是一项输入特征，不足以独立证明强耦合或高 $T_c$。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+High-pressure hydrogen-rich materials combine structural search with compositional stability. The studies summarized by Martin searched H$_2$S and more hydrogen-rich compositions, finding pressure-dependent molecular phases, metallic phases, and a high-symmetry H$_3$S structure. High-frequency phonons, metallic electronic states, and electron–phonon coupling produced a high-$T_c$ candidate. Experiments subsequently observed high-pressure superconductivity, while diffraction supported the predicted high-pressure structure and coexistence with elemental sulfur.
+
+Several judgments must remain separate: whether the structural search found the relevant candidate; whether the stoichiometry is stable against decomposition; whether the structure is dynamically stable; whether its electronic structure is metallic; whether phonons and electron–phonon matrix elements are converged; whether the superconducting theory applies; and whether calculated and measured $T_c$ values are comparable in pressure, isotope, and phase identity. A peak in the density of states at the Fermi level is only one input feature and does not independently prove strong coupling or high $T_c$.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: formation enthalpy and the convex hull"
+  assumptions={[
+    '固定压力、零温，并将所有候选换算到统一原子或化学式归一化；',
+    '候选结构已在该压力下充分弛豫；',
+    '允许分解为相同元素总数的任意相组合。',
+  ]}
+>
+
+对二元体系 $A$–$B$，令候选组成中 $B$ 的原子分数为 $x$，其每原子焓为 $h(x;P)$。相对于端元的形成焓定义为
+
+$$
+\Delta h_f(x;P)
+= h(x;P)-[(1-x)h_A(P)+x h_B(P)].
+$$
+
+若候选可以分解为两个组成 $x_1<x<x_2$ 的相，守恒条件给出
+
+$$
+x=(1-\lambda)x_1+\lambda x_2,
+\qquad
+\lambda=\frac{x-x_1}{x_2-x_1}.
+$$
+
+分解产物的焓为线性组合
+
+$$
+h_{\mathrm{mix}}(x;P)
+=(1-\lambda)h(x_1;P)+\lambda h(x_2;P).
+$$
+
+若 $h(x;P)>h_{\mathrm{mix}}(x;P)$，候选在零温下对该两相分解不稳定。所有组成点下方的分段线性包络就是凸包；位于凸包上的相对所有已纳入候选的两相组合稳定。这里的“稳定”仍受候选集合完整性、能量精度和有限温度贡献限制。
+
+<p lang="en">For a binary $A$–$B$ system, the formation enthalpy subtracts the linear combination of elemental reference enthalpies. A candidate at composition $x$ is unstable against two phases at $x_1$ and $x_2$ if its enthalpy lies above their composition-conserving linear interpolation. The lower piecewise-linear envelope is the convex hull. Membership on the hull establishes stability only relative to the included candidate set, numerical accuracy, and the zero-temperature approximation.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="结构预测发布前的最小清单" titleEn="Minimum checklist before publishing a structure prediction" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>给出组成、压力、原胞大小、搜索算法、种群/种子和停止条件；</li>
+      <li>报告候选去重、对称性识别和不同搜索批次的重复发现率；</li>
+      <li>用统一高精度参数复算低能候选，并检查赝势、泛函和磁态敏感性；</li>
+      <li>比较形成焓凸包，而非只比较同一化学计量的结构；</li>
+      <li>检查全布里渊区声子、弹性或有限温度稳定性；</li>
+      <li>把“低焓候选”“动力学稳定”“可合成”“已实验确认”作为不同状态报告。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>state composition, pressure, cell size, search algorithm, populations or seeds, and stopping conditions;</li>
+      <li>report candidate deduplication, symmetry identification, and rediscovery across independent searches;</li>
+      <li>rerank low-energy candidates with a uniform high-accuracy setup and test pseudopotential, functional, and magnetic-state sensitivity;</li>
+      <li>construct a formation-enthalpy convex hull rather than comparing structures only at one stoichiometry;</li>
+      <li>check full-Brillouin-zone phonons, elasticity, or finite-temperature stability as appropriate;</li>
+      <li>report “low-enthalpy candidate,” “dynamically stable,” “synthesizable,” and “experimentally confirmed” as distinct states.</li>
+    </ul>
+  </div>
+</BilingualCallout>

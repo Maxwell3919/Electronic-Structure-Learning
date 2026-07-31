@@ -1,0 +1,156 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+import DerivationBlock from '../DerivationBlock.astro';
+
+<h2 id="section-3-2">3.2 凝聚态中的 Coulomb 相互作用 | Coulomb Interaction in Condensed Matter</h2>
+
+<BilingualSection titleZh="扩展 Coulomb 系统必须整体电中性" titleEn="An extended Coulomb system must be neutral" eyebrow="【Martin 原书 | Martin source】 §3.2 · p. 64">
+  <div class="bilingual-section__zh">
+
+$1/r$ 相互作用在大距离缓慢衰减。若一个宏观体积内存在不随尺寸消失的净电荷密度，电场能会随体系尺寸超线性增长，热力学极限中的每粒子能量不能保持有限。因此 Martin 强调两点：任何扩展体系必须整体电中性；实际求和时必须把能量项组织成中性组合。
+
+电子—电子 Hartree 能、电子—核能和核—核能分别都可能含依赖求和顺序或边界条件的长程部分：
+
+$$
+E_H[n]=\frac12\iint
+\frac{n(\mathbf r)n(\mathbf r')}
+{|\mathbf r-\mathbf r'|}\,d^3r\,d^3r',
+$$
+
+$$
+E_{eI}=\int V_{\mathrm{ext}}(\mathbf r)n(\mathbf r)\,d^3r,
+\qquad E_{II}=\frac12\sum_{I\ne J}\frac{Z_IZ_J}{|\mathbf R_I-\mathbf R_J|}.
+$$
+
+正确对象是经典 Coulomb 中性组合
+
+$$
+E_{CC}=E_H+E_{eI}+E_{II}.
+$$
+
+单独截断某一项、改变某一项的周期镜像处理或使用不同的 $G=0$ 约定，会破坏长程抵消并产生任意能量偏移、虚假电场或尺寸发散。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The $1/r$ interaction decays slowly. If a macroscopic region carries a net charge density that does not vanish with system size, field energy grows superextensively and the thermodynamic-limit energy per particle cannot remain finite. Martin therefore emphasizes two requirements: every extended system must be neutral, and practical energy evaluation must organize terms into neutral groups.
+
+The electron–electron Hartree, electron–nuclear, and nuclear–nuclear energies can each contain long-range pieces whose values depend on summation order or boundary convention:
+
+$$
+E_H[n]=\frac12\iint
+\frac{n(\mathbf r)n(\mathbf r')}
+{|\mathbf r-\mathbf r'|}\,d^3r\,d^3r',
+$$
+
+$$
+E_{eI}=\int V_{\mathrm{ext}}(\mathbf r)n(\mathbf r)\,d^3r,
+\qquad E_{II}=\frac12\sum_{I\ne J}\frac{Z_IZ_J}{|\mathbf R_I-\mathbf R_J|}.
+$$
+
+The physically meaningful object is the neutral classical Coulomb group
+
+$$
+E_{CC}=E_H+E_{eI}+E_{II}.
+$$
+
+Truncating one term separately, treating its periodic images differently, or using inconsistent $G=0$ conventions destroys the long-range cancellation and can generate arbitrary offsets, spurious fields, or size divergence.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="总能中的短程交换关联余项" titleEn="The short-ranged exchange-correlation remainder in the total energy">
+  <div class="bilingual-section__zh">
+
+把经典 Hartree 能加上再减去，总能可写为
+
+$$
+E=\langle\hat T\rangle
++\left(\langle\hat V_{ee}\rangle-E_H[n]\right)
++E_{CC}.
+$$
+
+$E_{CC}$ 包含已经按电中性组织的全部经典长程静电。中括号是具有同一一体密度时，真实相互作用电子 Coulomb 能与连续经典电荷 Hartree 能之差。Martin 将它识别为 DFT 交换关联能的势能部分。
+
+这个差值的远程部分相互抵消。对一个电子固定在 $\mathbf r$ 的条件概率，其他电子附近的概率亏损和重排形成 exchange-correlation hole；该洞携带有限总电荷，使余下相互作用比裸 $1/r$ 更局域。这里的“短程”是关于长程发散抵消的陈述，不表示关联函数严格在有限半径后为零，也不排除金属、低维体系或临界点中的长程尾部。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Adding and subtracting the classical Hartree energy gives
+
+$$
+E=\langle\hat T\rangle
++\left(\langle\hat V_{ee}\rangle-E_H[n]\right)
++E_{CC}.
+$$
+
+$E_{CC}$ contains all classical long-range electrostatics organized as a neutral object. The bracket is the difference between the Coulomb energy of interacting electrons and the Hartree energy of a continuous classical charge distribution with the same one-body density. Martin identifies it as the potential contribution to the DFT exchange-correlation energy.
+
+Long-range pieces cancel in this difference. Conditional depletion and rearrangement of other electrons around an electron fixed at $\mathbf r$ form an exchange-correlation hole with finite integrated charge, making the residual interaction more local than bare $1/r$. “Short-ranged” here means cancellation of the long-range divergence; it does not imply a strictly finite support or exclude long tails in metals, low-dimensional systems, or critical regimes.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="补充推导 | Supplemental derivation: reciprocal-space neutrality and the G=0 mode"
+  assumptions={[
+    '三维周期胞体积为 Ω，采用一致 Fourier 归一化；',
+    '总电荷密度包含电子与离子或补偿背景；',
+    '暂不处理二维 Coulomb 截断和表面电场。',
+  ]}
+>
+
+令总电荷密度为 $\rho(\mathbf r)$，Fourier 系数为
+
+$$
+\rho_{\mathbf G}=\frac1\Omega\int_\Omega
+\rho(\mathbf r)e^{-i\mathbf G\cdot\mathbf r}\,d^3r.
+$$
+
+Poisson 方程 $\nabla^2\phi=-4\pi\rho$ 对 $\mathbf G\ne0$ 给出
+
+$$
+\phi_{\mathbf G}=\frac{4\pi}{G^2}\rho_{\mathbf G}.
+$$
+
+静电能为
+
+$$
+E_{\mathrm{es}}=\frac12\int\rho\phi\,d^3r
+=2\pi\Omega\sum_{\mathbf G\ne0}
+\frac{|\rho_{\mathbf G}|^2}{G^2},
+$$
+
+其中 $\mathbf G=0$ 模对应胞内净电荷
+
+$$
+\rho_{\mathbf 0}=\frac{Q_{\mathrm{cell}}}{\Omega}.
+$$
+
+若 $Q_{\mathrm{cell}}\ne0$，$1/G^2$ 核在 $G\to0$ 发散，必须引入明确的补偿背景和有限尺寸修正，或改变物理边界条件。简单“删除 $G=0$”等价于选择一个补偿/势零点约定，不能把带电周期超胞自动变成孤立带电体系。
+
+<p lang="en">In reciprocal space, the Coulomb kernel is $4\pi/G^2$. Neutrality sets the total-charge $G=0$ coefficient to zero. For a charged cell, dropping the singular mode silently introduces a compensating convention rather than reproducing an isolated charged object. Charged defects, slabs, and two-dimensional systems require explicit boundary conditions and finite-size corrections.</p>
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="实际计算中的边界" titleEn="Practical boundaries" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>总能差必须使用相同胞、净电荷、背景、dipole correction 和 electrostatic solver 约定；</li>
+      <li>带电缺陷需要镜像、电势对齐和介电有限尺寸修正；</li>
+      <li>slab 或二维层需要检查真空、偶极、Coulomb 截断和面积归一化；</li>
+      <li>Ewald、实空间截断与 reciprocal solver 的一致不能仅靠总能看似收敛判断；</li>
+      <li>交换关联“短程余项”不允许忽略金属屏蔽、非局域色散或低维长程响应。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>energy differences require consistent cell, net charge, background, dipole correction, and electrostatic-solver conventions;</li>
+      <li>charged defects require image, potential-alignment, and dielectric finite-size corrections;</li>
+      <li>slabs and layers require vacuum, dipole, Coulomb-truncation, and area-normalization checks;</li>
+      <li>agreement among Ewald, real-space, and reciprocal solvers cannot be inferred from visually converged total energies alone;</li>
+      <li>a “short-ranged remainder” does not justify omitting metallic screening, nonlocal dispersion, or low-dimensional long-range response.</li>
+    </ul>
+  </div>
+</BilingualCallout>

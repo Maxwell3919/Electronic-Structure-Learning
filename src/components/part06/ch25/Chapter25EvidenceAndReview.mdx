@@ -1,0 +1,92 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="evidence-matrix" class="chapter-anchor" aria-hidden="true"></span>
+
+## 拓扑主张与证据等级 | Topological Claims and Evidence Levels
+
+<div class="table-scroll" tabindex="0" role="region" aria-label="Topology claim evidence matrix">
+
+| 主张 | 最低 bulk 证据 | invariant / symmetry | boundary 证据 | 主要替代解释 | 较弱证据不能推出 |
+|---|---|---|---|---|---|
+| 模型发生拓扑相变 | 整个参数空间追踪直接能隙 | 两侧有隙区不变量不同 | 可选界面谱流 | 对称性类别改变、目标流形改变 | 单点能带反转 |
+| 2D Chern 相 | 全 BZ 隔离占据流形 | 收敛整数 Chern 数与方向约定 | 与 $C$ 一致的净手性谱流 | 数值网格、普通边缘态 | 局部曲率热点、SOC 开隙 |
+| 2D $\mathbb Z_2$ 相 | 全 BZ Kramers 占据流形与直接隙 | 适用的 $\mathbb Z_2$ 计算；parity 只限反演体系 | 奇数 partner switching 或等价边界结构 | TRS 破坏、有限宽度杂化 | 总 Chern 数为零、能带反转 |
+| 3D strong TI | 3D BZ 上稳定目标流形 | $(\nu_0;\nu_1\nu_2\nu_3)$ 且 $\nu_0=1$ | 指定晶面的表面谱 | 表面共振、弱 TI 的取向效应 | 单个 Dirac-like 交点 |
+| Weyl 节点 | 3D 节点搜索与二重简并 | 包围曲面 Chern 数/手性 | 非节点身份的必要条件 | 高对称线偶然交叉、微小能隙 | 一条路径上的线性交叉 |
+| Fermi arc | Weyl 节点及表面投影 | 2D 切片 Chern 数改变 | 收敛表面谱函数的开放轮廓 | 普通表面口袋、投影体带 | bulk band path 或单张等能图 |
+| Majorana 模式 | BdG 能隙与零模 | 粒子—空穴对称及适用超导拓扑 | 边界/涡旋局域、长度与扰动检查 | 普通 Andreev bound state | 普通 TI 表面态或零偏峰 alone |
+
+</div>
+
+<BilingualSection titleZh="连接实际电子结构计算" titleEn="Connection to practical electronic-structure calculations" eyebrow="Calculation boundary">
+  <div class="bilingual-section__zh">
+
+真实材料的最低流程是：核验晶体结构与磁序；对 SOC、泛函、$U$ 和基组进行受控计算；确认目标直接能隙或节点流形；提取占据 Bloch 态、对称性表示或经验证的 Wannier 模型；在全 BZ、TR-invariant planes 或包围曲面上计算不变量；最后以收敛 slab 或半无限 Green function 检查边界谱。
+
+各门槛必须分开记录。程序正常结束不等于 SCF 收敛；SCF 收敛不等于带隙或不变量对 k 网格收敛；Wannier 插值吻合不等于保持对称性和拓扑；边界谱出现一条线不等于 bulk invariant 已得到支持。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A minimal material workflow is: verify the crystal structure and magnetic order; perform controlled calculations over SOC, functional, $U$, and basis choices; establish the target direct gap or nodal manifold; extract occupied Bloch states, symmetry representations, or a validated Wannier model; evaluate the invariant over the full Brillouin zone, time-reversal-invariant planes, or an enclosing surface; and finally test the boundary spectrum with a converged slab or semi-infinite Green function.
+
+Each gate must be recorded separately. Program completion is not SCF convergence; SCF convergence is not convergence of a gap or invariant with respect to the k mesh; band interpolation is not preservation of symmetry and topology; and one line in a boundary spectrum is not evidence that the bulk invariant has been established.
+
+  </div>
+</BilingualSection>
+
+<span id="review" class="chapter-anchor" aria-hidden="true"></span>
+
+## 常见误判、原创练习与来源边界 | Misjudgments, Original Exercises, and Source Boundaries
+
+<BilingualCallout titleZh="高影响误判" titleEn="High-impact misjudgments" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li><strong>能带反转：</strong>是候选机制，不是 invariant。</li>
+      <li><strong>SOC 开隙：</strong>说明相对论项改变谱，不自动给出 $\mathbb Z_2$。</li>
+      <li><strong>局部 Berry curvature：</strong>是积分密度，不是全 BZ Chern 数。</li>
+      <li><strong>隙内边界态：</strong>可能是 Tamm、Shockley、共振或有限尺寸态。</li>
+      <li><strong>parity product：</strong>只在满足空间反演和时间反演等前提时适用。</li>
+      <li><strong>高对称路径交叉：</strong>不能代替 3D 节点搜索与拓扑电荷。</li>
+      <li><strong>成功 Wannierization：</strong>不能代替流形、对称性与 invariant 核验。</li>
+      <li><strong>普通 TI 能带：</strong>不能直接推出 Majorana；必须进入 BdG 超导问题。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li><strong>Band inversion:</strong> a candidate mechanism, not an invariant.</li>
+      <li><strong>An SOC gap:</strong> evidence that relativistic terms modify the spectrum, not an automatic $\mathbb Z_2$ result.</li>
+      <li><strong>Local Berry curvature:</strong> an integrand, not the full-zone Chern number.</li>
+      <li><strong>An in-gap boundary state:</strong> possibly Tamm, Shockley, resonant, or finite-size in origin.</li>
+      <li><strong>A parity product:</strong> applicable only with the required inversion and time-reversal assumptions.</li>
+      <li><strong>A high-symmetry-path crossing:</strong> not a substitute for a three-dimensional node search and topological charge.</li>
+      <li><strong>Successful Wannierization:</strong> not a substitute for manifold, symmetry, and invariant validation.</li>
+      <li><strong>An ordinary TI band structure:</strong> not a Majorana result; the superconducting BdG problem is essential.</li>
+    </ul>
+  </div>
+</BilingualCallout>
+
+### 原创练习 | Original Exercises
+
+1. **规范变换。** 从归一化条件推导 $\langle u|\partial_k u\rangle$ 为纯虚数，再完整推导 $A\to A-\partial_k\phi$。说明开放路径与闭合路径的差别。
+2. **离散 Berry 相位。** 为五个归一化复向量构造闭合重叠乘积。分别给每个向量乘随机相位，验证乘积相位不变；再令一个相邻重叠趋近零，解释数值失效机制。
+3. **闭隙判定。** 对可视化 A 的 Hamiltonian 求 $E_\pm(k)$，解析确定所有闭隙点，并说明为什么只绘制 $k=0$ 会漏掉其中一个转变。
+4. **Chern 网格。** 在 $m=-1$ 下计算 $N=11,21,41,61$；记录 raw flux、整数和最小 link overlap。给每个网格点施加确定性相位，比较结果。
+5. **证据分级。** 给定“SOC 打开 40 meV 能隙、$\Gamma$ 点发生轨道交换、slab 出现一条隙内线”，列出仍缺少的 bulk、symmetry、invariant 和 boundary 证据。
+6. **时间反演。** 证明 spinful TRIM 处的 Kramers 正交性；指出该证明在哪一步使用 $\Theta^2=-1$ 和 $\mathbf k=-\mathbf k+\mathbf G$。
+7. **Wannier 障碍。** 比较 Chern 带与时间反演 $\mathbb Z_2$ 带的 Wannier 陈述：分别判断“局域 Wannier 存在”和“对称 Kramers frame 存在”。
+8. **Majorana 边界。** 对一个普通零能 bound state 与 BdG Majorana 候选，列出区分它们所需的粒子—空穴关系、空间局域、有限尺寸分裂和扰动响应。
+
+### 来源与范围 | Sources and Scope
+
+- **主要组织来源：** Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Chapter 25, printed pp. 517–529; prerequisites in Chapters 23–24 and Appendices O–Q.
+- **Berry phase：** M. V. Berry, “Quantal phase factors accompanying adiabatic changes,” *Proc. R. Soc. A* **392**, 45–57 (1984), DOI `10.1098/rspa.1984.0023`.
+- **量子 Hall/Chern：** D. J. Thouless, M. Kohmoto, M. P. Nightingale, and M. den Nijs, *Phys. Rev. Lett.* **49**, 405–408 (1982), DOI `10.1103/PhysRevLett.49.405`.
+- **$\mathbb Z_2$：** C. L. Kane and E. J. Mele, *Phys. Rev. Lett.* **95**, 146802 (2005), DOI `10.1103/PhysRevLett.95.146802`.
+- **反演判据：** L. Fu and C. L. Kane, *Phys. Rev. B* **76**, 045302 (2007), DOI `10.1103/PhysRevB.76.045302`.
+- **拓扑量子化学：** B. Bradlyn *et al.*, *Nature* **547**, 298–305 (2017), DOI `10.1038/nature23268`.
+- **界面零模背景：** R. Jackiw and C. Rebbi, *Phys. Rev. D* **13**, 3398–3409 (1976), DOI `10.1103/PhysRevD.13.3398`.
+- **一维 Majorana 链：** A. Yu. Kitaev, *Physics-Uspekhi* **44**, 131–136 (2001), DOI `10.1070/1063-7869/44/10S/S29`.
+
+【版权边界】本站不复刻上述来源的图、版式、正文或习题。页面中的四个图形、三个计算内核、推导组织、证据矩阵和练习均为本项目原创。教学模型只验证其声明的有限维数学，不构成任何真实材料拓扑分类的独立验证。

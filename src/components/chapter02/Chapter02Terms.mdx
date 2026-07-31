@@ -1,0 +1,75 @@
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="terminology">物理对象、术语与证据门槛 | Physical Objects, Terms, and Evidence Gates</h2>
+
+<dl class="chapter-terms">
+  <div>
+    <dt>电子基态 | Electronic ground state</dt>
+    <dd>固定核位置与粒子数下电子 Hamiltonian 的最低能态。<span lang="en">The lowest-energy electronic state at fixed nuclear positions and particle number.</span></dd>
+  </div>
+  <div>
+    <dt>Born–Oppenheimer 能量面 | Born–Oppenheimer energy surface</dt>
+    <dd>电子基态能量随核坐标变化的函数；其梯度给出绝热力。<span lang="en">The electronic ground-state energy as a function of nuclear coordinates; its gradient gives adiabatic forces.</span></dd>
+  </div>
+  <div>
+    <dt>平衡结构 | Equilibrium structure</dt>
+    <dd>在指定组成、外部约束和热力学势下的稳定或局域稳定几何。局域优化结果不自动等于全局稳定相。<span lang="en">A stable or metastable geometry under a specified composition, constraint, and thermodynamic potential. A local optimization is not automatically the globally stable phase.</span></dd>
+  </div>
+  <div>
+    <dt>激发能 | Excitation energy</dt>
+    <dd>激发态与参考态之间的能量差。必须说明粒子数是否改变。<span lang="en">An energy difference between an excited state and a reference state; whether particle number changes must be stated.</span></dd>
+  </div>
+  <div>
+    <dt>加/减电子谱 | Addition/removal spectrum</dt>
+    <dd>从 N 电子基态进入 N+1 或 N−1 电子态的能量与谱权重，和普通 Kohn–Sham 本征值并非一般等同。<span lang="en">Energies and spectral weights connecting an N-electron ground state to N+1 or N−1 states; these are not generally identical to ordinary Kohn–Sham eigenvalues.</span></dd>
+  </div>
+  <div>
+    <dt>定粒子数激发 | Neutral excitation</dt>
+    <dd>保持电子总数不变的激发，例如许多光学跃迁和激子。<span lang="en">An excitation at fixed total electron number, including many optical transitions and excitons.</span></dd>
+  </div>
+  <div>
+    <dt>总能 | Total energy</dt>
+    <dd>给定结构、边界条件和理论近似下体系的能量；能量差的可比性要求相同的计算定义。<span lang="en">The system energy under specified structure, boundary conditions, and theoretical approximation; comparable differences require a common computational definition.</span></dd>
+  </div>
+  <div>
+    <dt>自由能与 Gibbs 自由能 | Free and Gibbs energies</dt>
+    <dd>$F=E-TS$ 适合固定体积与温度；$G=H-TS$、$H=E+PV$ 适合固定压力与温度。<span lang="en">$F=E-TS$ is natural at fixed volume and temperature; $G=H-TS$ with $H=E+PV$ is natural at fixed pressure and temperature.</span></dd>
+  </div>
+  <div>
+    <dt>目标 observable | Target observable</dt>
+    <dd>当前计算需要收敛和验证的具体物理量，例如相对焓、声子频率、带隙或光学峰。<span lang="en">The specific physical quantity whose numerical convergence and validation matter, such as relative enthalpy, a phonon frequency, a gap, or an optical peak.</span></dd>
+  </div>
+  <div>
+    <dt>结构、动力学和热力学稳定性 | Structural, dynamical, and thermodynamic stability</dt>
+    <dd>分别指几何驻点、对微小位移无不稳定模、以及在指定环境下具有最低相关热力学势。三者不可互相替代。<span lang="en">Respectively: a geometric stationary point, absence of unstable infinitesimal modes, and minimization of the relevant thermodynamic potential under stated conditions. These criteria are not interchangeable.</span></dd>
+  </div>
+  <div>
+    <dt>参考零点 | Reference zero</dt>
+    <dd>能量、势能、化学势和谱图的零点必须明确；绝对零点改变不应影响一致定义下的能量差。<span lang="en">The zero of energy, potential, chemical potential, or spectrum must be stated; shifting an absolute zero should not change consistently defined differences.</span></dd>
+  </div>
+  <div>
+    <dt>计算条件 | Computational conditions</dt>
+    <dd>泛函、赝势或全电子处理、基组、采样、超胞、展宽、温度和约束共同定义计算对象。<span lang="en">Functional, pseudopotential or all-electron treatment, basis, sampling, supercell, broadening, temperature, and constraints jointly define the calculation.</span></dd>
+  </div>
+</dl>
+
+<BilingualCallout titleZh="五个不能合并的证据门槛" titleEn="Five evidence gates that must remain separate" kind="boundary">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>程序是否正常结束；</li>
+      <li>SCF、几何优化或其他内部迭代是否满足声明阈值；</li>
+      <li>目标 observable 是否对基组、采样、超胞和其他数值参数收敛；</li>
+      <li>物理近似是否适用于目标体系与状态；</li>
+      <li>最终科学结论是否获得相匹配的独立证据。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>whether the program terminated normally;</li>
+      <li>whether SCF, geometry optimization, or another internal iteration met its declared threshold;</li>
+      <li>whether the target observable converged with basis, sampling, supercell, and other numerical parameters;</li>
+      <li>whether the physical approximation applies to the target system and state;</li>
+      <li>whether the final scientific conclusion has evidence matched to its strength.</li>
+    </ol>
+  </div>
+</BilingualCallout>
