@@ -1,0 +1,117 @@
+---
+const defaultL = 2;
+const defaultXi = 0.2;
+const lsPlus = defaultL / 2;
+const lsMinus = -(defaultL + 1) / 2;
+---
+
+<figure class="chapter-visual spin-orbit-explorer" data-spin-orbit>
+  <figcaption>
+    <strong>原创教学模型：$\mathbf L\cdot\mathbf S$ 分裂 | Original teaching model: $\mathbf L\cdot\mathbf S$ splitting</strong>
+    <span>模型 Hamiltonian 为 H_SO = ξ L·S，采用单电子 $s=1/2$。</span>
+    <span lang="en">The model Hamiltonian is H_SO = ξ L·S for one electron with $s=1/2$.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>轨道角动量 $l$: <output data-l-output>{defaultL}</output></span>
+      <input data-l type="range" min="0" max="5" step="1" value={defaultL} aria-label="Orbital angular momentum l" />
+    </label>
+    <label>
+      <span>耦合常数 $\xi$: <output data-xi-output>{defaultXi.toFixed(2)}</output> eV</span>
+      <input data-xi type="range" min="-1" max="1" step="0.05" value={defaultXi} aria-label="Spin orbit coupling constant xi in electron volts" />
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 300" role="img" aria-labelledby="soc-title soc-desc">
+    <title id="soc-title">Spin orbit splitting into j equals l plus or minus one half</title>
+    <desc id="soc-desc">Energy levels from the analytic L dot S eigenvalues, with degeneracies two j plus one.</desc>
+    <line class="soc-centre" x1="90" y1="150" x2="670" y2="150" />
+    <line data-plus-line class="soc-level soc-plus" x1="390" y1="120" x2="650" y2="120" />
+    <line data-minus-line class="soc-level soc-minus" x1="110" y1="195" x2="370" y2="195" />
+    <text x="100" y="143">unsplit centre</text>
+    <text data-plus-label x="520" y="105" text-anchor="middle">j=5/2, g=6, ΔE=+0.200 eV</text>
+    <text data-minus-label x="240" y="220" text-anchor="middle">j=3/2, g=4, ΔE=−0.300 eV</text>
+  </svg>
+
+  <p class="chapter-visual__readout" aria-live="polite">
+    <span>〈L·S〉 for j = l + 1/2 = <strong data-ls-plus>{lsPlus.toFixed(2)}</strong></span>
+    <span>〈L·S〉 for j = l − 1/2 = <strong data-ls-minus>{lsMinus.toFixed(2)}</strong></span>
+    <span>简并度加权迹：<strong data-trace>0.000000</strong> eV</span>
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>验收：</strong>对 $l>0$，两支本征值分别为 $l/2$ 和 $-(l+1)/2$；用简并度 $2j+1$ 加权后，完整 $l\otimes s$ 空间中的能量迹为零。</p>
+    <p lang="en"><strong>Acceptance:</strong> for $l>0$, the two eigenvalues are $l/2$ and $-(l+1)/2$; weighting by degeneracy $2j+1$ gives zero trace over the complete $l\otimes s$ space.</p>
+    <p><strong>边界：</strong>$\xi$ 在真实原子中来自径向势梯度和径向波函数，通常依赖壳层与化学环境。此图不计算 $\xi$，也不包含晶场或多电子多重态。</p>
+    <p lang="en"><strong>Boundary:</strong> in a real atom, $\xi$ follows from the radial potential gradient and radial wavefunction and generally depends on shell and environment. The figure does not calculate $\xi$ and omits crystal fields and many-electron multiplets.</p>
+  </div>
+
+  <noscript><p>无 JavaScript 时显示默认 $l=2$、$\xi=0.20$ eV 的解析分裂。</p></noscript>
+</figure>
+
+<script>
+  document.querySelectorAll('[data-spin-orbit]').forEach((root) => {
+    const lInput = root.querySelector('[data-l]');
+    const xiInput = root.querySelector('[data-xi]');
+    const update = () => {
+      const l = Number(lInput.value);
+      const xi = Number(xiInput.value);
+      const plusExists = l >= 0;
+      const minusExists = l > 0;
+      const lsPlus = l / 2;
+      const lsMinus = -(l + 1) / 2;
+      const ePlus = xi * lsPlus;
+      const eMinus = xi * lsMinus;
+      const scale = 85;
+      const yPlus = 150 - Math.max(-1.2, Math.min(1.2, ePlus)) * scale;
+      const yMinus = 150 - Math.max(-1.2, Math.min(1.2, eMinus)) * scale;
+      root.querySelector('[data-plus-line]').setAttribute('y1', String(yPlus));
+      root.querySelector('[data-plus-line]').setAttribute('y2', String(yPlus));
+      root.querySelector('[data-minus-line]').setAttribute('y1', String(yMinus));
+      root.querySelector('[data-minus-line]').setAttribute('y2', String(yMinus));
+      root.querySelector('[data-minus-line]').style.display = minusExists ? '' : 'none';
+      root.querySelector('[data-minus-label]').style.display = minusExists ? '' : 'none';
+      const jPlus = l + 0.5;
+      const jMinus = l - 0.5;
+      const gPlus = 2 * l + 2;
+      const gMinus = 2 * l;
+      root.querySelector('[data-plus-label]').textContent = `j=${jPlus}, g=${gPlus}, ΔE=${ePlus >= 0 ? '+' : ''}${ePlus.toFixed(3)} eV`;
+      root.querySelector('[data-minus-label]').textContent = `j=${jMinus}, g=${gMinus}, ΔE=${eMinus >= 0 ? '+' : ''}${eMinus.toFixed(3)} eV`;
+      root.querySelector('[data-l-output]').textContent = String(l);
+      root.querySelector('[data-xi-output]').textContent = xi.toFixed(2);
+      root.querySelector('[data-ls-plus]').textContent = lsPlus.toFixed(2);
+      root.querySelector('[data-ls-minus]').textContent = minusExists ? lsMinus.toFixed(2) : 'not present';
+      const trace = plusExists ? gPlus * ePlus + (minusExists ? gMinus * eMinus : 0) : 0;
+      const normalizedTrace = Math.abs(trace) < 1e-12 ? 0 : trace;
+      root.querySelector('[data-trace]').textContent = normalizedTrace.toFixed(6);
+    };
+    lInput.addEventListener('input', update);
+    xiInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .spin-orbit-explorer svg {
+    width: 100%;
+    min-height: 15rem;
+  }
+
+  .spin-orbit-explorer svg text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .soc-centre {
+    stroke: var(--sl-color-gray-4);
+    stroke-dasharray: 6 5;
+  }
+
+  .soc-level {
+    stroke-width: 5;
+  }
+
+  .soc-plus { stroke: #3273dc; }
+  .soc-minus { stroke: #d97706; }
+</style>

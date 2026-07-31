@@ -1,0 +1,83 @@
+<figure class="chapter-visual atomic-sphere-boundary">
+  <figcaption>
+    <strong>原创示意图：原子球边界条件 | Original schematic: atomic-sphere boundary conditions</strong>
+    <span>三条曲线只表示边界条件与节点/斜率关系，不是某个元素的定量波函数。</span>
+    <span lang="en">The curves show boundary-condition and slope relations only; they are not quantitative wavefunctions for a particular element.</span>
+  </figcaption>
+
+  <svg viewBox="0 0 780 380" role="img" aria-labelledby="asa-title asa-desc">
+    <title id="asa-title">Free atom, bonding-like, and antibonding-like radial boundary conditions</title>
+    <desc id="asa-desc">A vertical line marks the atomic-sphere radius. The bonding-like curve has zero derivative at the boundary; the antibonding-like curve has zero value.</desc>
+    <line class="plot-axis" x1="60" y1="310" x2="730" y2="310" />
+    <line class="plot-axis" x1="60" y1="50" x2="60" y2="310" />
+    <line class="sphere-radius" x1="610" y1="45" x2="610" y2="315" />
+    <text x="610" y="335" text-anchor="middle">$r_0$</text>
+    <path class="free" d="M60 300 C120 260,160 100,235 125 C315 150,350 275,420 245 C500 215,555 270,610 286 C660 300,700 304,730 306" />
+    <path class="bonding" d="M60 300 C120 250,165 82,245 118 C330 155,370 275,445 230 C520 185,570 168,610 168" />
+    <path class="antibonding" d="M60 300 C120 270,160 120,235 138 C320 158,360 250,430 225 C505 198,565 250,610 310" />
+    <text x="635" y="165">$R'(r_0)=0$</text>
+    <text x="635" y="300">$R(r_0)=0$</text>
+    <text x="500" y="285">free-atom decay</text>
+  </svg>
+
+  <div class="atomic-sphere-boundary__legend">
+    <span><i class="legend-free"></i>自由原子 | free atom</span>
+    <span><i class="legend-bonding"></i>成键型带底 | bonding-like band bottom</span>
+    <span><i class="legend-antibonding"></i>反键型带顶 | antibonding-like band top</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>验收：</strong>成键型曲线在 $r_0$ 处切线水平；反键型曲线在 $r_0$ 处过零。两种边界条件给出的本征值差定义模型带宽。</p>
+    <p lang="en"><strong>Acceptance:</strong> the bonding-like curve has a horizontal tangent at $r_0$, whereas the antibonding-like curve crosses zero there. The difference between the two eigenvalues defines the model band width.</p>
+    <p><strong>边界：</strong>图中球替代真实 Wigner–Seitz 多面体，忽略非球对称势、不同原子间杂化细节和完整 Bloch 边界条件。</p>
+    <p lang="en"><strong>Boundary:</strong> the sphere replaces the true Wigner–Seitz polyhedron and omits nonspherical potentials, detailed intersite hybridization, and full Bloch boundary conditions.</p>
+  </div>
+</figure>
+
+<style>
+  .atomic-sphere-boundary svg {
+    width: 100%;
+    min-height: 18rem;
+  }
+
+  .atomic-sphere-boundary svg text {
+    fill: currentColor;
+    font-size: 14px;
+  }
+
+  .atomic-sphere-boundary svg path {
+    fill: none;
+    stroke-width: 3;
+  }
+
+  .sphere-radius {
+    stroke: var(--sl-color-gray-3);
+    stroke-width: 2;
+    stroke-dasharray: 6 5;
+  }
+
+  .free { stroke: #6b7280; }
+  .bonding { stroke: #3273dc; }
+  .antibonding { stroke: #d97706; }
+
+  .atomic-sphere-boundary__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .atomic-sphere-boundary__legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .atomic-sphere-boundary__legend i {
+    width: 1.4rem;
+    height: 0.18rem;
+  }
+
+  .legend-free { background: #6b7280; }
+  .legend-bonding { background: #3273dc; }
+  .legend-antibonding { background: #d97706; }
+</style>
