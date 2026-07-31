@@ -50,11 +50,11 @@ const base = metaGgaIndicators({ density, gradientMagnitude, kineticEnergyDensit
   </div>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$\tau_W=|\nabla n|^2/(8n)$，$\tau_{\mathrm{unif}}=(3/10)(3\pi^2)^{2/3}n^{5/3}$，$\alpha=(\tau-\tau_W)/\tau_{\mathrm{unif}}$，$z=\tau_W/\tau$。第三个控件选取 $\tau=\tau_W+c\tau_{\mathrm{unif}}$。</p>
-    <p lang="en"><strong>Model:</strong> the controls construct $\tau=\tau_W+c\tau_{\mathrm{unif}}$ and report the standard dimensionless indicators $\alpha$ and $z$.</p>
-    <p><strong>验收：</strong>$c=0$ 时 $\alpha=0$ 且 $z=1$；$c=1$ 时 $\alpha=1$；$\tau$ 不得低于 $\tau_W$。改变密度和梯度时三项量按声明公式同步更新。</p>
-    <p lang="en"><strong>Acceptance:</strong> $c=0$ gives $\alpha=0$ and $z=1$; $c=1$ gives $\alpha=1$; $\tau$ cannot lie below $\tau_W$.</p>
-    <p><strong>边界：</strong>$\alpha$ 与 $z$ 识别局域 orbital environment，不直接给出 exchange–correlation energy、bond order、metallicity 或 functional error。真实 meta-GGA 还需完整 enhancement/interpolation 公式。</p>
+    <p><strong>模型：</strong>τW = |∇n|²/(8n)，τunif = (3/10)(3π²)²ᐟ³n⁵ᐟ³，α = (τ−τW)/τunif，z = τW/τ。第三个控件选取 τ = τW + c·τunif。</p>
+    <p lang="en"><strong>Model:</strong> the controls construct τ = τW + c·τunif and report the standard dimensionless indicators α and z.</p>
+    <p><strong>验收：</strong>c=0 时 α=0 且 z=1；c=1 时 α=1；τ 不得低于 τW。改变密度和梯度时三项量按声明公式同步更新。</p>
+    <p lang="en"><strong>Acceptance:</strong> c=0 gives α=0 and z=1; c=1 gives α=1; τ cannot lie below τW.</p>
+    <p><strong>边界：</strong>α 与 z 识别局域 orbital environment，不直接给出 exchange–correlation energy、bond order、metallicity 或 functional error。真实 meta-GGA 还需完整 enhancement/interpolation 公式。</p>
     <p lang="en"><strong>Boundary:</strong> the indicators classify a local orbital environment but do not themselves determine an energy, bond order, metallicity, or error.</p>
   </div>
 </figure>
