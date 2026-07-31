@@ -1,6 +1,6 @@
 ---
-title: "Part VII · Appendices"
-description: "附录的完整目录级阅读骨架。"
+title: "Part VII · Appendices | 附录"
+description: "为正文提供泛函、响应、库仑、力与应力、数值算法、相对论、拓扑和程序生态的统一参考层。"
 sidebar:
   order: 0
   label: "Part VII · Appendices"
@@ -9,7 +9,22 @@ sidebar:
 import TrackOverview from '../../../components/TrackOverview.astro';
 import catalog from '../../../data/martin/index.mjs';
 
-# 附录
+# Part VII · 附录 | Appendices
+
+Part VII 用于补足正文压缩的数学步骤、数值算法和统一约定。各附录按照 A→R 顺序独立完成；附录中的公式参考不能替代正文的物理叙事、计算收敛检查或科学接受标准。
+
+Part VII supplies mathematical steps, numerical algorithms, and common conventions that the numbered chapters legitimately compress. Appendices are completed independently in A→R order. A reference formula does not replace the physical narrative, calculation-convergence checks, or scientific acceptance criteria of the main chapters.
+
+## 当前状态 | Current status
+
+| Appendix | Website state | Source range | Main support |
+|---|---|---:|---|
+| A · Functional Equations | substantive draft in PR #20 | 581–583 | Chapters 3, 6–9 |
+| B–R | outline | 584–703 | See the Part VII content plan and each Appendix page |
+
+状态只描述网站内容进度。`substantive draft` 不表示公式、模型或科学主张已经过独立验证；完成状态还要求 GitHub Actions、部署和实际页面检查通过。
+
+The state describes website-content progress only. `substantive draft` does not mean that formulas, models, or scientific claims have been independently validated. Completion additionally requires successful GitHub Actions, deployment, and live-page checks.
 
 <TrackOverview
   sourceTitle={catalog.source.title}
