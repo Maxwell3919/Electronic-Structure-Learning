@@ -1,0 +1,321 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import ElectronPhononCouplingDiagram from './ElectronPhononCouplingDiagram.astro';
+
+<span id="section-c-2"></span>
+
+## C.2 电子—声子相互作用 | Electron-Phonon Interactions
+
+<BilingualSection titleZh="非对角通道如何描述电子跃迁" titleEn="How off-diagonal channels describe electronic transitions" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 将电子—声子相互作用与 $C_{ii'}$ 的非对角矩阵元联系起来。一次导数项
+
+$$
+A_{ii'}
+=
+\sum_J\frac{m_e}{M_J}
+\langle\Psi_i|\nabla_J\Psi_{i'}\rangle_{\mathbf r}
+\cdot\nabla_J
+$$
+
+同时包含电子态对核位置的导数和作用在核波函数上的动量算符。把核坐标改写成 normal modes 并量子化后，$\nabla_J$ 或位移算符可产生或湮灭一个声子，从而把电子态 $i'$ 连接到 $i$。
+
+这里有两个不同但相关的表示。Born–Huang 通道方程使用导数耦合 $\langle i|\nabla_J|i'\rangle$；标准 EPC Hamiltonian 通常使用势对 normal coordinate 的导数矩阵元。Martin 式 C.8 给出二者在非简并线性响应中的连接。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin connects electron-phonon interactions with off-diagonal matrix elements of $C_{ii'}$. The first-derivative term
+
+$$
+A_{ii'}
+=
+\sum_J\frac{m_e}{M_J}
+\langle\Psi_i|\nabla_J\Psi_{i'}\rangle_{\mathbf r}
+\cdot\nabla_J
+$$
+
+contains both the derivative of an electronic state with respect to nuclear position and a momentum operator acting on the nuclear wavefunction. After nuclear coordinates are transformed to normal modes and quantized, the corresponding displacement or derivative operator creates or annihilates one phonon while connecting electronic state $i'$ to $i$.
+
+Two related but distinct representations are involved. The Born-Huang channel equation uses the derivative coupling $\langle i|\nabla_J|i'\rangle$, whereas a standard EPC Hamiltonian normally uses the derivative of the potential with respect to a normal coordinate. Martin's Eq. C.8 connects them in nondegenerate linear response.
+
+  </div>
+</BilingualSection>
+
+## 式 C.8 的推导 | Derivation of Eq. C.8
+
+<BilingualSection titleZh="对参数化电子本征方程求导" titleEn="Differentiating the parameterized electronic eigenproblem" eyebrow="【Martin 原书 + 补充推导 | Martin source + supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+从
+
+$$
+\hat H_e(\mathbf R)|\Psi_{i'}(\mathbf R)\rangle
+=E_{i'}(\mathbf R)|\Psi_{i'}(\mathbf R)\rangle
+$$
+
+对 $\mathbf R_J$ 求导：
+
+$$
+(\nabla_J\hat H_e)|\Psi_{i'}\rangle
++\hat H_e|\nabla_J\Psi_{i'}\rangle
+=(\nabla_JE_{i'})|\Psi_{i'}\rangle
++E_{i'}|\nabla_J\Psi_{i'}\rangle.
+$$
+
+左乘另一个电子态 $\langle\Psi_i|$。当 $i\ne i'$ 时，正交性使
+
+$$
+(\nabla_JE_{i'})\langle\Psi_i|\Psi_{i'}\rangle=0,
+$$
+
+而 $\langle\Psi_i|\hat H_e=E_i\langle\Psi_i|$，因此
+
+$$
+\langle\Psi_i|\nabla_J\hat H_e|\Psi_{i'}\rangle
++E_i\langle\Psi_i|\nabla_J\Psi_{i'}\rangle
+=E_{i'}\langle\Psi_i|\nabla_J\Psi_{i'}\rangle.
+$$
+
+整理得到
+
+$$
+\boxed{
+\langle\Psi_i|\nabla_J\Psi_{i'}\rangle
+=
+\frac{
+\langle\Psi_i|\nabla_J\hat H_e|\Psi_{i'}\rangle
+}{E_{i'}-E_i}
+}.
+$$
+
+对核坐标无关的电子动能 $\hat T_e$，$\nabla_J\hat H_e=\nabla_JV$；核—核势对电子态是单位算符，其非对角电子矩阵元为零。于是得到 Martin 式 C.8：
+
+$$
+\boxed{
+\langle\Psi_i|\nabla_J|\Psi_{i'}\rangle
+=
+\frac{\langle\Psi_i|\nabla_JV|\Psi_{i'}\rangle}
+{E_{i'}-E_i}
+},\qquad i\ne i'.
+$$
+
+每一步都要求电子态在该点可微，并且 $E_{i'}\ne E_i$。简并时不能使用该分母，必须先在简并子空间中对 $\nabla_J\hat H_e$ 作矩阵化处理。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Start from
+
+$$
+\hat H_e(\mathbf R)|\Psi_{i'}(\mathbf R)\rangle
+=E_{i'}(\mathbf R)|\Psi_{i'}(\mathbf R)\rangle
+$$
+
+and differentiate with respect to $\mathbf R_J$,
+
+$$
+(\nabla_J\hat H_e)|\Psi_{i'}\rangle
++\hat H_e|\nabla_J\Psi_{i'}\rangle
+=(\nabla_JE_{i'})|\Psi_{i'}\rangle
++E_{i'}|\nabla_J\Psi_{i'}\rangle.
+$$
+
+Multiply by another electronic state $\langle\Psi_i|$. For $i\ne i'$, orthogonality eliminates
+
+$$
+(\nabla_JE_{i'})\langle\Psi_i|\Psi_{i'}\rangle=0,
+$$
+
+and $\langle\Psi_i|\hat H_e=E_i\langle\Psi_i|$, so
+
+$$
+\langle\Psi_i|\nabla_J\hat H_e|\Psi_{i'}\rangle
++E_i\langle\Psi_i|\nabla_J\Psi_{i'}\rangle
+=E_{i'}\langle\Psi_i|\nabla_J\Psi_{i'}\rangle.
+$$
+
+Rearrangement gives
+
+$$
+\boxed{
+\langle\Psi_i|\nabla_J\Psi_{i'}\rangle
+=
+\frac{
+\langle\Psi_i|\nabla_J\hat H_e|\Psi_{i'}\rangle
+}{E_{i'}-E_i}
+}.
+$$
+
+The electronic kinetic energy $\hat T_e$ is independent of nuclear coordinates, so $\nabla_J\hat H_e=\nabla_JV$. The nuclear-nuclear potential is proportional to the identity in electronic space and has no off-diagonal electronic matrix element. Thus Martin's Eq. C.8 is
+
+$$
+\boxed{
+\langle\Psi_i|\nabla_J|\Psi_{i'}\rangle
+=
+\frac{\langle\Psi_i|\nabla_JV|\Psi_{i'}\rangle}
+{E_{i'}-E_i}
+},\qquad i\ne i'.
+$$
+
+Each step assumes differentiable electronic states and $E_{i'}\ne E_i$. At degeneracy the denominator form is invalid; $\nabla_J\hat H_e$ must first be treated as a matrix within the degenerate subspace.
+
+  </div>
+</BilingualSection>
+
+<ElectronPhononCouplingDiagram />
+
+## 从核位移到 one-phonon 矩阵元 | From Nuclear Displacement to a One-Phonon Matrix Element
+
+<BilingualSection titleZh="normal-mode 量子化" titleEn="Quantization of normal modes" eyebrow="【补充推导 | Supplemental derivation】">
+  <div class="bilingual-section__zh">
+
+在周期晶体中，将晶胞 $l$、原子 $J$ 的位移展开为声子 normal modes：
+
+$$
+\hat u_{lJ\alpha}
+=\frac{1}{\sqrt{N_q}}
+\sum_{\mathbf q\nu}
+\sqrt{\frac{\hbar}{2M_J\omega_{\mathbf q\nu}}}
+\,e_{J\alpha}(\mathbf q\nu)
+\left(
+\hat a_{\mathbf q\nu}
++\hat a_{-\mathbf q\nu}^{\dagger}
+\right)
+e^{i\mathbf q\cdot\mathbf R_l}.
+$$
+
+$e_{J\alpha}$ 的归一化必须与质量因子保持一致；上式采用极化向量不含 $M_J^{-1/2}$ 的常见约定。电子势的一阶变化为
+
+$$
+\delta\hat V
+=\sum_{lJ\alpha}
+\hat u_{lJ\alpha}
+\frac{\partial\hat V}{\partial R_{lJ\alpha}}.
+$$
+
+因此 Bloch 态之间的 one-phonon 矩阵元具有结构
+
+$$
+\boxed{
+ g_{mn\nu}(\mathbf k,\mathbf q)
+=
+\sum_{J\alpha}
+\sqrt{\frac{\hbar}{2M_J\omega_{\mathbf q\nu}}}
+\,e_{J\alpha}(\mathbf q\nu)
+\left\langle
+\psi_{m,\mathbf k+\mathbf q}
+\left|
+\partial_{\mathbf qJ\alpha}V_{\mathrm{SCF}}
+\right|
+\psi_{n\mathbf k}
+\right\rangle
+}.
+$$
+
+该式是对 Chapter 20 的补充连接，不是 Martin C.2 中完整列出的公式。实际 DFPT 使用自洽屏蔽势导数 $\partial V_{\mathrm{SCF}}$，而不是只取裸离子势导数。不同代码可能把 $\hbar$、质量、频率、晶胞数或极化向量归一化放在 $g$ 的不同位置，比较前必须统一 convention。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In a periodic crystal, expand the displacement of atom $J$ in cell $l$ in phonon normal modes,
+
+$$
+\hat u_{lJ\alpha}
+=\frac{1}{\sqrt{N_q}}
+\sum_{\mathbf q\nu}
+\sqrt{\frac{\hbar}{2M_J\omega_{\mathbf q\nu}}}
+\,e_{J\alpha}(\mathbf q\nu)
+\left(
+\hat a_{\mathbf q\nu}
++\hat a_{-\mathbf q\nu}^{\dagger}
+\right)
+e^{i\mathbf q\cdot\mathbf R_l}.
+$$
+
+The normalization of $e_{J\alpha}$ must be consistent with the mass factor; the displayed convention uses polarization vectors without an embedded $M_J^{-1/2}$. To linear order,
+
+$$
+\delta\hat V
+=\sum_{lJ\alpha}
+\hat u_{lJ\alpha}
+\frac{\partial\hat V}{\partial R_{lJ\alpha}}.
+$$
+
+A one-phonon matrix element between Bloch states therefore has the structure
+
+$$
+\boxed{
+ g_{mn\nu}(\mathbf k,\mathbf q)
+=
+\sum_{J\alpha}
+\sqrt{\frac{\hbar}{2M_J\omega_{\mathbf q\nu}}}
+\,e_{J\alpha}(\mathbf q\nu)
+\left\langle
+\psi_{m,\mathbf k+\mathbf q}
+\left|
+\partial_{\mathbf qJ\alpha}V_{\mathrm{SCF}}
+\right|
+\psi_{n\mathbf k}
+\right\rangle
+}.
+$$
+
+This is a supplemental connection to Chapter 20 rather than a formula written in full in Martin C.2. Practical DFPT uses the derivative of the self-consistent screened potential $\partial V_{\mathrm{SCF}}$, not merely the bare ionic derivative. Codes may place $\hbar$, masses, frequencies, cell counts, or eigenvector normalization in different parts of the definition of $g$; conventions must be aligned before values are compared.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="导数耦合 d 与 EPC 矩阵元 g" titleEn="Derivative coupling d versus EPC matrix element g" kind="boundary">
+  <div class="bilingual-section__zh">
+
+式 C.8 中的
+
+$$
+d_{ii'}^J
+=\frac{\langle i|\nabla_JV|i'\rangle}{E_{i'}-E_i}
+$$
+
+是绝热电子基随核坐标旋转的导数耦合。标准 $g$ 使用 numerator 乘声子零点振幅，不再除以同一个电子能量差。把式 C.8 的分母再写入 $g$ 会改变 Hamiltonian 定义。二者可以在推导中互换表示，但必须跟踪采用的是通道耦合还是势微扰矩阵元。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+In Eq. C.8,
+
+$$
+d_{ii'}^J
+=\frac{\langle i|\nabla_JV|i'\rangle}{E_{i'}-E_i}
+$$
+
+is the derivative coupling that describes rotation of the adiabatic electronic basis with nuclear coordinates. A standard $g$ uses the numerator multiplied by the phonon zero-point amplitude and is not divided by the same electronic energy separation again. Inserting the Eq. C.8 denominator into $g$ a second time changes the Hamiltonian definition. The two representations can be related in a derivation, but the distinction between channel coupling and potential perturbation must be tracked.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="质量、频率和低能模式" titleEn="Mass, frequency, and low-energy modes" eyebrow="【推断连接 | Supplemental inference】">
+  <div class="bilingual-section__zh">
+
+零点振幅按 $(M_J\omega_{\mathbf q\nu})^{-1/2}$ 缩放，因此较重原子或较高频率会减小位移振幅；但势导数矩阵元和声子极化也同时变化，不能只凭质量判断 EPC 强弱。$\omega\to0$ 时表面上的 $1/\sqrt{\omega}$ 需要与平移不变性、声学极化、相空间和最终 observable 共同处理。一个单独很大的 $g$、一个低频模式或一条高对称线不能建立收敛的 $\lambda$ 或超导结论。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The zero-point amplitude scales as $(M_J\omega_{\mathbf q\nu})^{-1/2}$, so a heavier atom or higher frequency reduces the displacement amplitude. The potential derivative and phonon eigenvector change at the same time, however, so mass alone does not rank EPC strength. The apparent $1/\sqrt{\omega}$ behavior as $\omega\to0$ must be treated together with translational invariance, acoustic polarization, phase space, and the final observable. One large $g$, one low-frequency mode, or one high-symmetry path cannot establish a converged $\lambda$ or superconductivity claim.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="数值实现验收" titleEn="Numerical implementation checks" kind="practice">
+  <div class="bilingual-section__zh">
+
+实现层至少分别检查：位移/normal-coordinate 归一化；电子态相位与简并子空间；势导数是裸势还是自洽势；声学和电荷守恒 sum rule；k/q 网格、展宽与能量窗口；矩阵元、谱函数 $\alpha^2F(\omega)$、积分 $\lambda$ 和最终 $T_c$ 的各自收敛。程序正常结束或单个矩阵元有限不能替代这些门槛。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+At minimum, implementation checks must separately cover displacement/normal-coordinate normalization, electronic phases and degenerate subspaces, bare versus self-consistent potential derivatives, acoustic and charge-conservation sum rules, k/q meshes, broadening and energy windows, and the individual convergence of matrix elements, $\alpha^2F(\omega)$, $\lambda$, and any final $T_c$. Program completion or one finite matrix element does not replace these gates.
+
+  </div>
+</BilingualCallout>

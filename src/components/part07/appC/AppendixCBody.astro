@@ -1,0 +1,57 @@
+---
+import AppendixCContents from './AppendixCContents.astro';
+import AppendixCOrientation from './AppendixCOrientation.mdx';
+import AppendixCCoupledEquations from './AppendixCCoupledEquations.mdx';
+import AppendixCAdiabaticLimits from './AppendixCAdiabaticLimits.mdx';
+import AppendixCElectronPhonon from './AppendixCElectronPhonon.mdx';
+import AppendixCReview from './AppendixCReview.mdx';
+---
+
+<div class="appendix-c-root">
+  <AppendixCContents />
+  <AppendixCOrientation />
+  <AppendixCCoupledEquations />
+  <AppendixCAdiabaticLimits />
+  <AppendixCElectronPhonon />
+  <AppendixCReview />
+</div>
+
+<style is:global>
+  .appendix-c-root,
+  .appendix-c-root > *,
+  .appendix-c-root .bilingual-section,
+  .appendix-c-root .bilingual-section__grid,
+  .appendix-c-root .bilingual-section__zh,
+  .appendix-c-root .bilingual-section__en,
+  .appendix-c-root .bilingual-callout,
+  .appendix-c-root .derivation-block {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appendix-c-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .appendix-c-root .chapter-source-map,
+  .appendix-c-root .katex-display,
+  .appendix-c-root pre,
+  .appendix-c-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .appendix-c-root p,
+  .appendix-c-root li,
+  .appendix-c-root th,
+  .appendix-c-root td,
+  .appendix-c-root code {
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -1,0 +1,21 @@
+import BilingualCallout from '../BilingualCallout.astro';
+import ReciprocalLatticeExplorer from '../ReciprocalLatticeExplorer.astro';
+import BlochBandFoldingExplorer from '../BlochBandFoldingExplorer.astro';
+import DOSDimensionalityExplorer from '../DOSDimensionalityExplorer.astro';
+
+<h2 id="visualizations">原创教学模型 | Original Teaching Models</h2>
+
+<BilingualCallout titleZh="阅读顺序" titleEn="Suggested order" kind="concept">
+  <div class="bilingual-section__zh">
+    <p>先用 direct/reciprocal lattice 模型检查坐标对偶，再观察 free-electron branches 如何 fold 入第一 BZ，最后比较相同 quadratic extremum 在不同维度下产生的 DOS edge。三个模型分别对应 geometry、translation representation 和 energy-space measure。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Use the direct/reciprocal model first to verify coordinate duality, then inspect free-electron zone folding, and finally compare the DOS edges produced by the same quadratic extremum in different dimensions. The models isolate geometry, translation representations, and energy-space measure.</p>
+  </div>
+</BilingualCallout>
+
+<ReciprocalLatticeExplorer />
+
+<BlochBandFoldingExplorer />
+
+<DOSDimensionalityExplorer />

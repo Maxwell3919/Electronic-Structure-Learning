@@ -1,0 +1,103 @@
+import BilingualSection from '../BilingualSection.astro';
+import BilingualCallout from '../BilingualCallout.astro';
+
+<h2 id="reading-orientation">阅读定位 | Reading Orientation</h2>
+
+<BilingualSection titleZh="本章把无限晶体压缩为有限信息" titleEn="This chapter compresses an infinite crystal into finite information" eyebrow="Martin Chapter 4 · printed pp. 81–108">
+  <div class="bilingual-section__zh">
+
+Chapter 3 从相互作用电子—核 Hamiltonian 出发，说明哪些对象必须在多体理论中定义；Chapter 4 加入晶体的离散平移对称性。无限多个原子位置不再逐一列举，而由有限的 primitive vectors、primitive-cell basis 和空间群操作生成。相同的平移群也对电子、声子、自旋波和其他激发进行严格分类，产生 crystal momentum、Bloch phase、bands 和 Brillouin-zone integrals。
+
+本章的核心不是背诵 sc、fcc、bcc 或高对称点名称，而是掌握三组互相对偶的结构：
+
+$$
+\text{real-space lattice}
+\longleftrightarrow
+\text{reciprocal lattice},
+$$
+
+$$
+\text{periodic ground-state quantity}
+\longleftrightarrow
+\mathbf G\text{-space Fourier coefficients},
+$$
+
+$$
+\text{translation eigenvalue}
+\longleftrightarrow
+\mathbf k\text{ in one reciprocal primitive cell}.
+$$
+
+Brillouin zone、band index、special k points 和 density of states 都从这些关系导出。Chapter 4 只建立普适几何和对称性框架；具体 plane-wave matrix、tight-binding bands、pseudopotential 和 self-consistent implementation 属于后续 Chapters 12–17。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Chapter 3 started from the interacting electron–nuclear Hamiltonian and identified the objects required in a many-body theory. Chapter 4 adds discrete translational symmetry. An infinite set of nuclear positions is generated from finite primitive vectors, a primitive-cell basis, and space-group operations. The same translation group rigorously classifies electrons, phonons, spin waves, and other excitations, producing crystal momentum, Bloch phases, energy bands, and Brillouin-zone integrals.
+
+The purpose is not to memorize names such as sc, fcc, bcc, or lists of high-symmetry points. The chapter develops three dual structures:
+
+$$
+\text{real-space lattice}
+\longleftrightarrow
+\text{reciprocal lattice},
+$$
+
+$$
+\text{periodic ground-state quantity}
+\longleftrightarrow
+\mathbf G\text{-space Fourier coefficients},
+$$
+
+$$
+\text{translation eigenvalue}
+\longleftrightarrow
+\mathbf k\text{ in one reciprocal primitive cell}.
+$$
+
+Brillouin zones, band indices, special points, and density of states follow from these relations. Chapter 4 establishes the universal geometry and symmetry framework; explicit plane-wave matrices, tight-binding bands, pseudopotentials, and self-consistent implementations belong to Chapters 12–17.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="前置知识与后续连接" titleEn="Prerequisites and later connections">
+  <div class="bilingual-section__zh">
+
+前置知识包括线性代数中的矩阵、行列式和基变换，Fourier series/transform，群的闭合性，以及 Chapter 3 的 independent-particle equation 和 general symmetry classification。Appendix B 提供 lattice/symmetry notation，Appendix F 处理周期 Coulomb sums，Appendix M 连接 FFT 和离散 reciprocal grids，Appendix P–R 则补充 gauge、Berry 和拓扑数学。
+
+Chapter 5 将把本章的 k-space counting 应用于 uniform electron gas；Chapter 14 将把 Bloch theorem 变成 plane-wave 与 tight-binding band equations；Part V 使用 Brillouin-zone integrals 计算 forces、responses 和 spectra；Part VI 将关注 $u_{n\mathbf k}$ 随 $\mathbf k$ 的 global topology。因此本章是后续大多数电子结构计算的共同语言。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Prerequisites include matrices, determinants, and basis transformations; Fourier series and transforms; group closure; and the independent-particle equations and symmetry language of Chapter 3. Appendix B supplies lattice and symmetry notation, Appendix F treats periodic Coulomb sums, Appendix M connects FFTs with discrete reciprocal grids, and Appendices P–R provide gauge, Berry, and topological mathematics.
+
+Chapter 5 applies the present k-space counting to the uniform electron gas. Chapter 14 turns the Bloch theorem into explicit plane-wave and tight-binding band equations. Part V uses Brillouin-zone integrals for forces, response, and spectra. Part VI studies the global topology of $u_{n\mathbf k}$ over the Brillouin zone. This chapter is therefore common language for most later electronic-structure calculations.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="读完后应能作出的判断" titleEn="Judgments expected after this chapter" kind="practice">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>从 primitive vectors 与 basis 唯一生成晶体，并区分 primitive、conventional 与 Wigner–Seitz cells；</li>
+      <li>构造 reciprocal vectors，证明 $\mathbf a_i\cdot\mathbf b_j=2\pi\delta_{ij}$，并把 Fourier 支撑限制到 $\mathbf G$；</li>
+      <li>从 translation group 的一维 unitary representations 推导一般 Bloch theorem；</li>
+      <li>区分 ordinary momentum、crystal momentum、reciprocal-lattice equivalence 与 Umklapp；</li>
+      <li>根据 time reversal、inversion、spin–orbit 与 little-group symmetry 判断简并与不可约 k 区；</li>
+      <li>为 insulating 与 metallic integrands 选择并验证适当 k sampling；</li>
+      <li>区分 DOS、projected DOS、joint DOS、spectral function 和 Fermi surface。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>generate a crystal from primitive vectors and a basis and distinguish primitive, conventional, and Wigner–Seitz cells;</li>
+      <li>construct reciprocal vectors, prove $\mathbf a_i\cdot\mathbf b_j=2\pi\delta_{ij}$, and restrict Fourier support to reciprocal vectors;</li>
+      <li>derive the general Bloch theorem from one-dimensional unitary representations of the translation group;</li>
+      <li>separate ordinary momentum, crystal momentum, reciprocal-lattice equivalence, and Umklapp;</li>
+      <li>use time reversal, inversion, spin–orbit coupling, and little-group symmetry to reason about degeneracies and irreducible k regions;</li>
+      <li>select and validate k sampling for insulating and metallic integrands;</li>
+      <li>distinguish DOS, projected DOS, joint DOS, spectral functions, and Fermi surfaces.</li>
+    </ul>
+  </div>
+</BilingualCallout>

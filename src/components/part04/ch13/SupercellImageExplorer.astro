@@ -1,0 +1,132 @@
+---
+import { periodicImageTeachingError } from '../../../data/part04/ch13TeachingModels.mjs';
+
+const componentId = 'ch13-supercell-images';
+const defaults = { cellLength: 8, decayLength: 2 };
+const initialError = periodicImageTeachingError(defaults);
+---
+
+<figure class="chapter-visual supercell-explorer" id={componentId}>
+  <figcaption>
+    <strong>原创交互模型：超胞长度与周期镜像误差</strong>
+    <span lang="en">Original interactive model: supercell length and periodic-image error</span>
+  </figcaption>
+
+  <label class="supercell-explorer__control">
+    <span>超胞长度 L（无量纲）| Supercell length L</span>
+    <input data-cell-length type="range" min="4" max="20" step="1" value={defaults.cellLength} />
+    <output data-cell-length-output>{defaults.cellLength}</output>
+  </label>
+
+  <svg viewBox="0 0 720 250" role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Repeated localized objects in periodic supercells</title>
+    <desc id={`${componentId}-desc`}>Three repeated cells contain identical localized objects. The cell width changes with the control and the displayed overlap tails become smaller as images separate.</desc>
+    <line class="supercell-explorer__axis" x1="30" y1="190" x2="690" y2="190" />
+    <g data-cell-left>
+      <rect data-cell-rect x="50" y="42" width="180" height="148" class="supercell-explorer__cell" />
+      <circle data-object cx="140" cy="132" r="22" class="supercell-explorer__object" />
+      <path data-tail d="M85 132 C105 92 175 92 195 132 C175 172 105 172 85 132" class="supercell-explorer__tail" />
+    </g>
+    <g data-cell-centre>
+      <rect data-cell-rect x="270" y="42" width="180" height="148" class="supercell-explorer__cell supercell-explorer__cell--primary" />
+      <circle data-object cx="360" cy="132" r="22" class="supercell-explorer__object" />
+      <path data-tail d="M305 132 C325 92 395 92 415 132 C395 172 325 172 305 132" class="supercell-explorer__tail" />
+    </g>
+    <g data-cell-right>
+      <rect data-cell-rect x="490" y="42" width="180" height="148" class="supercell-explorer__cell" />
+      <circle data-object cx="580" cy="132" r="22" class="supercell-explorer__object" />
+      <path data-tail d="M525 132 C545 92 615 92 635 132 C615 172 545 172 525 132" class="supercell-explorer__tail" />
+    </g>
+    <text x="360" y="225" text-anchor="middle">periodic direction / 周期方向</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>归一化镜像误差 | normalized image error:</span>
+    <strong data-image-error>{initialError.toExponential(3)}</strong>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>局域对象的镜像耦合假设按 <code>exp(−L/ξ)</code> 衰减，固定 <code>ξ=2</code>。L 和误差均无量纲；SVG 只示意重复边界。</p>
+    <p lang="en"><strong>Model:</strong> image coupling of a localized object is assumed to decay as <code>exp(−L/ξ)</code> with fixed <code>ξ=2</code>. L and the error are dimensionless; the SVG only illustrates repeated boundaries.</p>
+    <p><strong>验收：</strong>L 每增加 ξ，误差必须乘以 <code>e^(−1)</code>；整个允许区间中误差严格单调下降。</p>
+    <p lang="en"><strong>Acceptance:</strong> increasing L by ξ must multiply the error by <code>e^(−1)</code>, and the error must decrease strictly across the allowed range.</p>
+    <p><strong>边界：</strong>该指数律只代表短程局域尾部。带电缺陷、偶极层、弹性场和金属 Friedel 型响应可呈代数或形状依赖，不能用本模型外推。</p>
+    <p lang="en"><strong>Boundary:</strong> the exponential law represents a short-range localized tail only. Charged defects, dipole layers, elastic fields, and metallic Friedel-like response can be algebraic or shape dependent and cannot be extrapolated with this model.</p>
+  </div>
+
+  <noscript><p>关闭 JavaScript 后显示 L=8、ξ=2 的静态重复单元，归一化误差为 exp(−4)。</p></noscript>
+</figure>
+
+<script>
+  import { periodicImageTeachingError } from '../../../data/part04/ch13TeachingModels.mjs';
+
+  const root = document.getElementById('ch13-supercell-images');
+  if (root) {
+    const input = root.querySelector('[data-cell-length]');
+    const output = root.querySelector('[data-cell-length-output]');
+    const errorOutput = root.querySelector('[data-image-error]');
+    const tails = Array.from(root.querySelectorAll('[data-tail]'));
+    if (
+      input instanceof HTMLInputElement
+      && output instanceof HTMLOutputElement
+      && errorOutput instanceof HTMLElement
+    ) {
+      const update = () => {
+        const cellLength = Number(input.value);
+        const error = periodicImageTeachingError({ cellLength, decayLength: 2 });
+        output.value = cellLength.toFixed(0);
+        errorOutput.textContent = error.toExponential(3);
+        tails.forEach((tail) => {
+          if (tail instanceof SVGPathElement) tail.style.opacity = String(Math.max(0.08, Math.min(0.8, 7 * error)));
+        });
+      };
+      input.addEventListener('input', update);
+      update();
+    }
+  }
+</script>
+
+<style>
+  .supercell-explorer__control {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .supercell-explorer input,
+  .supercell-explorer svg {
+    width: 100%;
+  }
+
+  .supercell-explorer svg text {
+    fill: currentColor;
+    font-size: 13px;
+  }
+
+  .supercell-explorer__axis {
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .supercell-explorer__cell {
+    fill: var(--sl-color-gray-7);
+    stroke: var(--sl-color-gray-3);
+    stroke-width: 1.6;
+    stroke-dasharray: 5 4;
+  }
+
+  .supercell-explorer__cell--primary {
+    stroke: var(--sl-color-accent-high);
+    stroke-width: 2.4;
+  }
+
+  .supercell-explorer__object {
+    fill: var(--sl-color-accent-high);
+  }
+
+  .supercell-explorer__tail {
+    fill: none;
+    stroke: var(--sl-color-accent-high);
+    stroke-width: 2;
+    opacity: 0.13;
+  }
+</style>

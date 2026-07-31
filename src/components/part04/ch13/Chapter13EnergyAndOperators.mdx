@@ -1,0 +1,284 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import PlaneWaveSCFFlow from './PlaneWaveSCFFlow.astro';
+
+<span id="section-13-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 13.1 第一性原理赝势方法 | Ab initio Pseudopotential Method
+
+<BilingualCallout titleZh="来源层级" titleEn="Source layer" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 284–285 组织 reciprocal-space 总能、输入密度能量式、力和 Kohn–Sham 局域势。下面以统一 Fourier 规范重新推导有限项，并补充残差、力和应力的数值边界。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 284–285 organize reciprocal-space total energy, an input-density energy expression, forces, and the local Kohn–Sham potential. The treatment below re-derives finite terms under one Fourier convention and adds numerical boundaries for residuals, forces, and stress.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="从 Chapter 12 的矩阵到完整 Hamiltonian" titleEn="From the Chapter 12 matrix to a complete Hamiltonian">
+  <div class="bilingual-section__zh">
+
+在固定晶格、k 点、占据和赝势数据下，平滑 Bloch 轨道写成
+
+$$
+\tilde\psi_{n\mathbf k}(\mathbf r)
+=\frac{1}{\sqrt\Omega}\sum_{\mathbf G}
+ c_{n\mathbf k}(\mathbf G)e^{i(\mathbf k+\mathbf G)\cdot\mathbf r}.
+$$
+
+有限 Hamiltonian 包含四条算符路径：
+
+$$
+\hat H_{\mathrm{KS}}^\sigma
+=\hat T+\hat V_{\mathrm{ext,local}}
++\hat V_{\mathrm H}[n]
++\hat V_{\mathrm{xc}}^\sigma[n]
++\hat V_{\mathrm{NL}}.
+$$
+
+$\hat T$ 在 G 空间对角；前三个局域势在实空间逐点相乘；$\hat V_{\mathrm{NL}}$ 由投影子或一般双波矢矩阵元作用。把非局域算符写成一个 $V(\mathbf G-\mathbf G')$ 会丢失其角动量和 projector 结构。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For fixed lattice, k points, occupations, and pseudopotential data, a smooth Bloch orbital is
+
+$$
+\tilde\psi_{n\mathbf k}(\mathbf r)
+=\frac{1}{\sqrt\Omega}\sum_{\mathbf G}
+ c_{n\mathbf k}(\mathbf G)e^{i(\mathbf k+\mathbf G)\cdot\mathbf r}.
+$$
+
+The finite Hamiltonian contains four operator paths:
+
+$$
+\hat H_{\mathrm{KS}}^\sigma
+=\hat T+\hat V_{\mathrm{ext,local}}
++\hat V_{\mathrm H}[n]
++\hat V_{\mathrm{xc}}^\sigma[n]
++\hat V_{\mathrm{NL}}.
+$$
+
+$\hat T$ is diagonal in G space; the three local potentials are pointwise multiplications in real space; and $\hat V_{\mathrm{NL}}$ acts through projectors or a general two-wave-vector matrix. Replacing the nonlocal operator by a single $V(\mathbf G-\mathbf G')$ discards its angular-momentum and projector structure.
+
+  </div>
+</BilingualSection>
+
+<PlaneWaveSCFFlow />
+
+### Fourier 规范与有限 Coulomb 组合 | Fourier convention and finite Coulomb groupings
+
+<DerivationBlock
+  title="为什么不能单独保留 G=0 Hartree 项 | Why the G=0 Hartree term cannot be retained alone"
+  assumptions={[
+    '使用 Hartree 原子单位；',
+    '原胞体积为 Ω，n(r) 是正的电子数密度；',
+    'Fourier 系数定义为 f(G)=Ω^{-1}∫_Ω f(r)e^{-iG·r}dr；',
+    '体系原胞总电荷为零。',
+  ]}
+>
+
+周期 Poisson 方程为
+
+$$
+\nabla^2V_{\mathrm H}(\mathbf r)=-4\pi n(\mathbf r).
+$$
+
+对 $\mathbf G\ne0$，Fourier 变换给出
+
+$$
+V_{\mathrm H}(\mathbf G)=\frac{4\pi}{G^2}n(\mathbf G),
+$$
+
+因此电子 Hartree 能可以写成
+
+$$
+E_{\mathrm H}
+=\frac12\int_\Omega n(\mathbf r)V_{\mathrm H}(\mathbf r)d^3r
+=2\pi\Omega\sum_{\mathbf G\ne0}\frac{|n(\mathbf G)|^2}{G^2}.
+$$
+
+当 $G\to0$ 时核 $4\pi/G^2$ 发散；平均电子密度不能作为一个孤立的无限周期电荷分布求能。实际中将电子平均密度、离子长程 Coulomb 项和离子—离子 Ewald 项组成中性组合，发散部分在组合中消去。
+
+局域 Kohn–Sham 势的 $G=0$ 分量还包含另一层含义：对无限周期体系给所有本征值加同一常数不会改变轨道和能带差，因此平均势可选作能量零点。**势的 gauge 自由与 Coulomb 总能的中性化是相关但不同的论证**；不能因本征值零点任意，就任意删除总能中的结构依赖常数。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="计算实现中的检查" titleEn="Implementation check" kind="practice">
+  <div class="bilingual-section__zh">
+
+若代码分别输出 Hartree、local ionic、Ewald 和背景修正，各项可能依赖约定甚至单独很大；可比较量是同一规范下的有限总和。改变赝势文件、Ewald 约定或电荷修正后，只比较某一个分项没有明确物理意义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A code may report Hartree, local ionic, Ewald, and background corrections separately; individual values can be convention dependent or large. The comparable quantity is the finite sum under one convention. After changing pseudopotential data, Ewald conventions, or charge corrections, comparing one isolated component has no defined physical meaning.
+
+  </div>
+</BilingualCallout>
+
+### 总能的两种组织 | Two organizations of the total energy
+
+<BilingualSection titleZh="轨道期望值形式" titleEn="Orbital-expectation form">
+  <div class="bilingual-section__zh">
+
+对 norm-conserving 型赝势，可把每原胞总能概括为
+
+$$
+\begin{aligned}
+E_{\mathrm{tot}}=&
+\sum_{n\mathbf k\sigma}w_{\mathbf k}f_{n\mathbf k\sigma}
+\langle\tilde\psi_{n\mathbf k\sigma}|
+\hat T+\hat V_{\mathrm{ext,local}}+\hat V_{\mathrm{NL}}
+|\tilde\psi_{n\mathbf k\sigma}\rangle\\
+&+E_{\mathrm H}[n]+E_{\mathrm{xc}}[n_\uparrow,n_\downarrow]
++E_{\mathrm{ion-ion}}+E_{\mathrm{local\ correction}}.
+\end{aligned}
+$$
+
+最后一项代表赝势局域部分与点离子/Ewald 拆分之间的有限常数；其具体写法依赖赝势定义。该式的输入是归一化轨道、占据、结构和一致的赝势数据。它不是“能带能量之和”。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a norm-conserving-type pseudopotential, the total energy per cell can be organized as
+
+$$
+\begin{aligned}
+E_{\mathrm{tot}}=&
+\sum_{n\mathbf k\sigma}w_{\mathbf k}f_{n\mathbf k\sigma}
+\langle\tilde\psi_{n\mathbf k\sigma}|
+\hat T+\hat V_{\mathrm{ext,local}}+\hat V_{\mathrm{NL}}
+|\tilde\psi_{n\mathbf k\sigma}\rangle\\
+&+E_{\mathrm H}[n]+E_{\mathrm{xc}}[n_\uparrow,n_\downarrow]
++E_{\mathrm{ion-ion}}+E_{\mathrm{local\ correction}}.
+\end{aligned}
+$$
+
+The final term represents finite constants associated with the chosen separation between the local pseudopotential and the point-ion/Ewald construction; its explicit form depends on the pseudopotential convention. Inputs are normalized orbitals, occupations, structure, and consistent pseudopotential data. This is not a sum of band energies.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="本征值和为什么需要 double-counting 修正 | Why an eigenvalue sum needs double-counting corrections"
+  assumptions={[
+    '轨道满足同一个自洽 Kohn–Sham Hamiltonian；',
+    '占据和 k 点权重与密度构造一致；',
+    '外势和非局域势已经包含在本征值中。',
+  ]}
+>
+
+把 Kohn–Sham 方程对占据态求期望并求和：
+
+$$
+\sum_{n\mathbf k\sigma}w_{\mathbf k}f_{n\mathbf k\sigma}\varepsilon_{n\mathbf k\sigma}
+=T_s+E_{\mathrm{ext}}+2E_{\mathrm H}
++\sum_\sigma\int n_\sigma(\mathbf r)V_{\mathrm{xc}}^\sigma(\mathbf r)d^3r.
+$$
+
+Hartree 势期望为 $\int nV_H=2E_H$，而总能只含一次 $E_H$；xc 本征值贡献是 $\int nV_{xc}$，并不等于 $E_{xc}$。因此
+
+$$
+\boxed{
+E_{\mathrm{tot}}
+=\sum f\varepsilon
+-E_{\mathrm H}
++E_{\mathrm{xc}}
+-\sum_\sigma\int n_\sigma V_{\mathrm{xc}}^\sigma d^3r
++E_{\mathrm{ion-ion}}+E_{\mathrm{local\ correction}}
+}.
+$$
+
+这一步只整理相同自洽解的能量，不说明单个 Kohn–Sham 本征值是总能贡献或实验准粒子能量。对 ultrasoft/PAW 或 orbital-dependent functional，还会出现 overlap、augmentation 或非局域 functional 的相应项。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="输入密度能量式与 saddle-point 边界" titleEn="Input-density energy expression and its saddle-point boundary">
+  <div class="bilingual-section__zh">
+
+Martin 进一步把本征值、输入密度和 double-counting 项组合成一个在 SCF 过程中常用的能量表达。它在 $n_{\mathrm{in}}=n_{\mathrm{out}}$ 时与自洽总能一致，并可能比直接输出量更平滑，但相对于任意输入密度不是普通的变分上界；在一致解附近具有 saddle-point 结构。
+
+因此，迭代中“该能量变化很小”只说明这个特定标量稳定，不能替代密度 residual、轨道 residual、力或目标能量差的检查。一次对角化得到的近似能量可以构成非自洽近似，但必须显式标记其输入密度来源和适用边界。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin also combines eigenvalues, the input density, and double-counting terms into an energy expression useful during the SCF cycle. It agrees with the self-consistent total energy when $n_{\mathrm{in}}=n_{\mathrm{out}}$ and can vary more smoothly than direct output quantities, but it is not an ordinary variational upper bound over arbitrary input densities; it has a saddle-point structure near the consistent solution.
+
+A small change of this scalar during iteration therefore does not replace density residuals, orbital residuals, forces, or convergence of a target energy difference. A one-diagonalization energy can define a non-self-consistent approximation only when the origin of its input density and its applicability boundary are stated.
+
+  </div>
+</BilingualSection>
+
+### 力：结构相位、非局域投影子与定态条件 | Forces: structural phases, projectors, and stationarity
+
+<DerivationBlock
+  title="局域赝势的原子位置导数 | Atomic-position derivative of a local pseudopotential"
+  assumptions={[
+    '局域离子势是原子中心函数的平移和；',
+    '结构在固定原胞和固定平面波基中移动；',
+    '电子态已达到所用能量泛函的定态点。',
+  ]}
+>
+
+对位于 $\mathbf R_I$ 的局域势，Fourier 分量含结构相位
+
+$$
+V_I^{\mathrm{local}}(\mathbf G;\mathbf R_I)
+=v_I^{\mathrm{local}}(\mathbf G)e^{-i\mathbf G\cdot\mathbf R_I}.
+$$
+
+所以
+
+$$
+\frac{\partial V_I^{\mathrm{local}}(\mathbf G)}{\partial\mathbf R_I}
+=-i\mathbf G V_I^{\mathrm{local}}(\mathbf G).
+$$
+
+局域电子—离子力由 $-\partial E/\partial\mathbf R_I$ 给出，因而包含密度 Fourier 分量与上述相位导数的乘积；再加上 Ewald 离子项。非局域投影子 $|\beta_{I\mu}\rangle$ 也随原子中心平移，其导数产生独立的非局域力项，不能由局域密度乘势公式替代。
+
+在固定原胞的平面波基中，基函数不随单个原子位置移动，因此没有原子中心轨道式的 Pulay force；但有限 SCF residual、有限本征 residual、FFT/grid 不一致或不连续的 projector 实现仍会造成力误差。改变原胞时，平面波集合和 cutoff 边界随应变变化，stress 还涉及 basis response/Pulay-stress 型误差。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="力和应力的验证门" titleEn="Validation gates for force and stress" kind="boundary">
+  <div class="bilingual-section__zh">
+
+总能在某个 cutoff 下稳定，不自动保证力或应力稳定。力需检查电子定态、projector/augmentation 项和 force observable 对 cutoff、FFT 网格与 k 点的收敛；应力还需检查原胞导数、Pulay stress 和体积/形状变化时的基组一致性。结构优化停止只说明使用中的力阈值被满足，不证明目标相或相对能量已达到科学接受标准。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A stable total energy at one cutoff does not automatically imply stable forces or stress. Forces require electronic stationarity, projector/augmentation contributions, and convergence of the force observable with cutoff, FFT grid, and k points. Stress additionally requires cell derivatives, Pulay stress, and basis consistency under volume or shape changes. Termination of a structural optimization states only that its force threshold was met; it does not validate the phase or a relative energy to a scientific acceptance criterion.
+
+  </div>
+</BilingualCallout>
+
+### 有限问题的求解对象 | The finite problem being solved
+
+<BilingualSection titleZh="迭代本征求解并不构造完整矩阵" titleEn="Iterative eigensolution need not construct the full matrix">
+  <div class="bilingual-section__zh">
+
+实际平面波计算通常只需要 $\hat H|\psi\rangle$：动能在 G 空间相乘，局域势经 FFT 到实空间相乘，非局域 projector 以低秩形式作用。Davidson、共轭梯度或 RMM-DIIS 等方法在子空间中更新所需占据态和部分空态，不必显式保存完整稠密 Hamiltonian。
+
+本征 residual
+
+$$
+|r_n\rangle=\hat H|\psi_n\rangle-\varepsilon_n|\psi_n\rangle
+$$
+
+衡量固定输入势下有限本征问题的误差。它不能说明输入势已经自洽，也不能说明 cutoff、k 点、赝势或泛函适用。外层 SCF 必须另行比较 $n_{\mathrm{out}}$ 与 $n_{\mathrm{in}}$ 或相应势 residual。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A practical plane-wave calculation usually needs only the action $\hat H|\psi\rangle$: kinetic energy is multiplied in G space, a local potential is multiplied after an FFT to real space, and nonlocal projectors act in low-rank form. Davidson, conjugate-gradient, or RMM-DIIS families update the required occupied and selected empty states in subspaces without storing the full dense Hamiltonian.
+
+The eigen-residual
+
+$$
+|r_n\rangle=\hat H|\psi_n\rangle-\varepsilon_n|\psi_n\rangle
+$$
+
+measures error in the finite eigenproblem for a fixed input potential. It does not show that the potential is self-consistent or that cutoff, k points, pseudopotential, or functional are applicable. The outer SCF loop must separately compare $n_{\mathrm{out}}$ with $n_{\mathrm{in}}$ or use the corresponding potential residual.
+
+  </div>
+</BilingualSection>

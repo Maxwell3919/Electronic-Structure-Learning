@@ -1,0 +1,61 @@
+---
+import Contents from './Chapter04Contents.astro';
+import Orientation from './Chapter04Orientation.mdx';
+import SourceMap from './Chapter04SourceMap.astro';
+import Notation from './Chapter04Notation.mdx';
+import CrystalStructures from './Chapter04CrystalStructures.mdx';
+import ReciprocalLattice from './Chapter04ReciprocalLattice.mdx';
+import BlochBands from './Chapter04BlochBands.mdx';
+import Symmetries from './Chapter04Symmetries.mdx';
+import IntegrationDOS from './Chapter04IntegrationDOS.mdx';
+import Visualizations from './Chapter04Visualizations.mdx';
+import Review from './Chapter04Review.mdx';
+---
+
+<div class="chapter04-root">
+  <Contents />
+  <Orientation />
+  <SourceMap />
+  <Notation />
+  <CrystalStructures />
+  <ReciprocalLattice />
+  <BlochBands />
+  <Symmetries />
+  <IntegrationDOS />
+  <Visualizations />
+  <Review />
+</div>
+
+<style is:global>
+  .chapter04-root,
+  .chapter04-root > *,
+  .chapter04-root .bilingual-section,
+  .chapter04-root .bilingual-section__grid,
+  .chapter04-root .bilingual-section__zh,
+  .chapter04-root .bilingual-section__en,
+  .chapter04-root .derivation-block,
+  .chapter04-root .bilingual-callout,
+  .chapter04-root .chapter-visual {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter04-root .chapter-source-map,
+  .chapter04-root .table-scroll,
+  .chapter04-root .katex-display,
+  .chapter04-root pre,
+  .chapter04-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter04-root p,
+  .chapter04-root li,
+  .chapter04-root th,
+  .chapter04-root td,
+  .chapter04-root code {
+    overflow-wrap: anywhere;
+  }
+</style>
