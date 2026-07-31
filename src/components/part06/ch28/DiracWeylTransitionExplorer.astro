@@ -1,0 +1,150 @@
+---
+import { diracZeemanPhase, diracZeemanSpectrum } from '../../../data/part06/ch28WeylModels.mjs';
+const initialMass = 0.7;
+const initialZeeman = 1;
+const velocity = 1;
+const initialPhase = diracZeemanPhase(initialMass, initialZeeman, velocity);
+const samples = Array.from({ length: 121 }, (_, index) => {
+  const kz = -1.8 + 3.6 * index / 120;
+  const energies = diracZeemanSpectrum(0, 0, kz, { mass: initialMass, zeeman: initialZeeman, velocity });
+  return { x: 70 + 330 * index / 120, kz, energies };
+});
+const bandPaths = [0, 1, 2, 3].map((band) => samples.map(({ x, energies }) => `${x},${190 - 70 * energies[band]}`).join(' '));
+---
+
+<figure class="chapter-visual dirac-weyl" data-dirac-weyl>
+  <figcaption>
+    <strong>原创交互模型：mass–Zeeman competition 将 gapped Dirac model 分裂为 Weyl nodes</strong>
+    <span lang="en">Original interactive model: mass–Zeeman competition splits a gapped Dirac model into Weyl nodes</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>Dirac mass m</span>
+      <input type="range" min="0" max="1.5" step="0.02" value={initialMass} data-dw-mass />
+      <output data-dw-mass-out>{initialMass.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>time-reversal-breaking field b</span>
+      <input type="range" min="0" max="1.5" step="0.02" value={initialZeeman} data-dw-zeeman />
+      <output data-dw-zeeman-out>{initialZeeman.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 380" role="img" aria-labelledby="dwt-title dwt-desc">
+    <title id="dwt-title">Bulk spectrum of a four-band Dirac model under a time-reversal-breaking Zeeman field</title>
+    <desc id="dwt-desc">The left panel shows four bulk bands along kz. When b exceeds m, the middle bands meet at two Weyl nodes. The right panel displays the gapped, critical, and Weyl regimes.</desc>
+
+    <g aria-label="bulk spectrum along kz">
+      <line x1="70" y1="190" x2="400" y2="190" class="dwt-axis" />
+      <line x1="235" y1="35" x2="235" y2="345" class="dwt-axis" />
+      {bandPaths.map((points, index) => <polyline points={points} class:list={['dwt-band', index === 1 || index === 2 ? 'dwt-band--inner' : 'dwt-band--outer']} data-dwt-band={index} />)}
+      {initialPhase.nodes.map((node, index) => (
+        <circle cx={235 + node / 1.8 * 165} cy="190" r="8" class="dwt-node" data-dwt-node={index} />
+      ))}
+      <circle cx="235" cy="190" r="8" class="dwt-node dwt-node--hidden" data-dwt-node="critical" />
+      <text x="58" y="365">−k</text><text x="228" y="365">0</text><text x="390" y="365">+k</text>
+      <text x="84" y="52">bulk energy</text>
+    </g>
+
+    <g aria-label="phase diagram">
+      <rect x="465" y="55" width="240" height="250" rx="12" class="dwt-panel" />
+      <line x1="495" y1="255" x2="675" y2="75" class="dwt-boundary" />
+      <text x="510" y="105">b &gt; m</text><text x="510" y="128">two Weyl nodes</text>
+      <text x="595" y="250">b &lt; m</text><text x="595" y="273">gapped</text>
+      <text x="540" y="187">b=m: critical</text>
+      <circle cx={495 + initialMass / 1.5 * 180} cy={285 - initialZeeman / 1.5 * 180} r="9" class="dwt-cursor" data-dwt-cursor />
+      <text x="590" y="330">m →</text><text x="445" y="85">b ↑</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-dwt-phase>phase = Weyl</span>
+    <span data-dwt-nodes>nodes k<sub>z</sub> = ±{Math.abs(initialPhase.nodes[1]).toFixed(3)}</span>
+    <span data-dwt-separation>node separation = {initialPhase.nodeSeparation.toFixed(3)}</span>
+    <strong data-dwt-status>Time reversal is broken and the two Weyl nodes carry opposite chirality.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> 初始 $m=0.7$、$b=1$、$v=1$ 满足 $b&gt;m$，中间两带在 $k_z=\pm\sqrt{b^2-m^2}/v\approx\pm0.714$ 闭合，形成一对 opposite-chirality Weyl nodes。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>H=v τx(σ·k)+m τz+b σz</code>。四条能带为 <code>±sqrt[v²(kx²+ky²)+(sqrt(m²+v²kz²)±b)²]</code>。</p>
+    <p lang="en"><strong>Model:</strong> <code>H=v τx(σ·k)+m τz+b σz</code>. The four bands are <code>±sqrt[v²(kx²+ky²)+(sqrt(m²+v²kz²)±b)²]</code>.</p>
+    <p><strong>验收：</strong><code>b&lt;m</code> 时 bulk gap 为 <code>2(m−b)</code>；<code>b=m</code> 时在原点临界闭隙；<code>b&gt;m</code> 时节点位于 <code>kz=±sqrt(b²−m²)/v</code>。两个节点的 chirality 相反，因此完整 BZ 的净 charge 为零。</p>
+    <p lang="en"><strong>Acceptance:</strong> for <code>b&lt;m</code> the bulk gap is <code>2(m−b)</code>; at <code>b=m</code> the origin is critical; for <code>b&gt;m</code> the nodes occur at <code>kz=±sqrt(b²−m²)/v</code>. Their chiralities are opposite, so the net charge over the complete BZ is zero.</p>
+    <p><strong>边界：</strong>这是 Martin 讨论的 continuum teaching model，不是 full-BZ lattice node search。continuum 中“两个节点”不能替代真实晶体对全部 BZ、所有 symmetry-related nodes、tilt、additional bands 与 Fermi-level pockets 的检查。</p>
+    <p lang="en"><strong>Boundary:</strong> this is the continuum teaching model discussed by Martin, not a full-BZ lattice node search. Two continuum nodes do not replace a real-crystal search over the entire BZ, including all symmetry-related nodes, tilt, additional bands, and Fermi-level pockets.</p>
+  </div>
+</figure>
+
+<script>
+  import { diracZeemanPhase, diracZeemanSpectrum } from '../../../data/part06/ch28WeylModels.mjs';
+  document.querySelectorAll('[data-dirac-weyl]').forEach((root) => {
+    const massInput = root.querySelector('[data-dw-mass]');
+    const zeemanInput = root.querySelector('[data-dw-zeeman]');
+    if (!(massInput instanceof HTMLInputElement) || !(zeemanInput instanceof HTMLInputElement)) return;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element) element.textContent = value;
+    };
+    const update = () => {
+      const mass = Number(massInput.value);
+      const zeeman = Number(zeemanInput.value);
+      const phase = diracZeemanPhase(mass, zeeman, 1);
+      const points = [[], [], [], []];
+      for (let index = 0; index <= 120; index += 1) {
+        const kz = -1.8 + 3.6 * index / 120;
+        const energies = diracZeemanSpectrum(0, 0, kz, { mass, zeeman, velocity: 1 });
+        energies.forEach((energy, band) => points[band].push(`${70 + 330 * index / 120},${190 - 70 * energy}`));
+      }
+      root.querySelectorAll('[data-dwt-band]').forEach((element) => {
+        if (element instanceof SVGPolylineElement) element.setAttribute('points', points[Number(element.dataset.dwtBand)].join(' '));
+      });
+      root.querySelectorAll('[data-dwt-node]').forEach((element) => element.classList.add('dwt-node--hidden'));
+      if (phase.phase === 'weyl') {
+        phase.nodes.forEach((node, index) => {
+          const element = root.querySelector(`[data-dwt-node="${index}"]`);
+          if (element instanceof SVGCircleElement) {
+            element.setAttribute('cx', String(235 + node / 1.8 * 165));
+            element.classList.remove('dwt-node--hidden');
+          }
+        });
+      } else if (phase.phase === 'critical') {
+        root.querySelector('[data-dwt-node="critical"]')?.classList.remove('dwt-node--hidden');
+      }
+      const cursor = root.querySelector('[data-dwt-cursor]');
+      if (cursor instanceof SVGCircleElement) {
+        cursor.setAttribute('cx', String(495 + mass / 1.5 * 180));
+        cursor.setAttribute('cy', String(285 - zeeman / 1.5 * 180));
+      }
+      setText('[data-dw-mass-out]', mass.toFixed(2));
+      setText('[data-dw-zeeman-out]', zeeman.toFixed(2));
+      setText('[data-dwt-phase]', `phase = ${phase.phase}`);
+      setText('[data-dwt-nodes]', phase.phase === 'weyl'
+        ? `nodes kz = ±${Math.abs(phase.nodes[1]).toFixed(3)}`
+        : phase.phase === 'critical' ? 'node kz = 0 (critical)' : 'nodes = none');
+      setText('[data-dwt-separation]', `node separation = ${phase.nodeSeparation.toFixed(3)}`);
+      setText('[data-dwt-status]', phase.phase === 'weyl'
+        ? 'Time reversal is broken and the two Weyl nodes carry opposite chirality.'
+        : phase.phase === 'critical'
+          ? 'The bulk gap closes at the transition b=m.'
+          : `The declared continuum model is gapped by ${phase.bulkGap.toFixed(3)}.`);
+    };
+    [massInput, zeemanInput].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .dirac-weyl svg { width: 100%; max-height: 29rem; }
+  .dirac-weyl text { fill: currentColor; font-size: 13px; }
+  .dwt-axis { stroke: var(--sl-color-gray-3); stroke-width: 1.5; }
+  .dwt-band { fill: none; stroke-width: 2.5; }
+  .dwt-band--inner { stroke: var(--sl-color-text-accent); }
+  .dwt-band--outer { stroke: var(--sl-color-gray-3); }
+  .dwt-node { fill: var(--sl-color-red-high, #b42318); }
+  .dwt-node--hidden { display: none; }
+  .dwt-panel { fill: var(--sl-color-gray-7); stroke: var(--sl-color-gray-4); }
+  .dwt-boundary { stroke: var(--sl-color-red-high, #b42318); stroke-dasharray: 6 5; stroke-width: 2; }
+  .dwt-cursor { fill: var(--sl-color-accent-high); stroke: var(--sl-color-gray-7); stroke-width: 2; }
+</style>
