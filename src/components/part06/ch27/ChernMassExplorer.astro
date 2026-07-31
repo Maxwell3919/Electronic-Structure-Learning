@@ -1,0 +1,146 @@
+---
+import { chernTrimMasses, sampleChernModel } from '../../../data/part06/ch27TeachingModels.mjs';
+const xiInitial = 1;
+const V = -0.75;
+const v = Math.SQRT1_2 / 2;
+const massesInitial = chernTrimMasses(xiInitial, V);
+const topologyInitial = sampleChernModel(xiInitial, V, v, 31);
+const barHeight = (value) => 52 * Math.min(Math.abs(value), 2.8) / 2.8;
+---
+
+<figure class="chapter-visual chern-mass" data-chern-mass>
+  <figcaption>
+    <strong>原创交互模型：TRIM mass、闭隙点与 Chern 相</strong>
+    <span lang="en">Original interactive model: TRIM masses, gap closings, and Chern phases</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>轨道能级参数 ξ | orbital-level parameter</span>
+      <input type="range" min="-2.25" max="2.25" step="0.05" value={xiInitial} data-cm-xi />
+      <output data-cm-xi-out>{xiInitial.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 360" role="img" aria-labelledby="cm-title cm-desc">
+    <title id="cm-title">Chern-model masses at four time-reversal-invariant momenta</title>
+    <desc id="cm-desc">The left panel shows the square Brillouin zone and signed masses at Gamma, X, Y, and M. The right panel shows the phase sequence as xi crosses three gap-closing values.</desc>
+
+    <g aria-label="square Brillouin zone and TRIM masses">
+      <rect x="65" y="55" width="250" height="250" class="cm-bz" />
+      <line x1="190" y1="55" x2="190" y2="305" class="cm-guide" />
+      <line x1="65" y1="180" x2="315" y2="180" class="cm-guide" />
+      <g data-cm-trim="gamma">
+        <circle cx="190" cy="180" r="7" class="cm-trim" />
+        <rect x="180" y={180 - barHeight(massesInitial.gamma)} width="20" height={barHeight(massesInitial.gamma)} class:list={['cm-mass', massesInitial.gamma < 0 && 'cm-mass--negative']} data-cm-bar="gamma" />
+        <text x="204" y="174">Γ</text>
+      </g>
+      <g data-cm-trim="x">
+        <circle cx="315" cy="180" r="7" class="cm-trim" />
+        <rect x="305" y={180 - barHeight(massesInitial.x)} width="20" height={barHeight(massesInitial.x)} class:list={['cm-mass', massesInitial.x < 0 && 'cm-mass--negative']} data-cm-bar="x" />
+        <text x="328" y="174">X</text>
+      </g>
+      <g data-cm-trim="y">
+        <circle cx="190" cy="55" r="7" class="cm-trim" />
+        <rect x="180" y={55 - barHeight(massesInitial.y)} width="20" height={barHeight(massesInitial.y)} class:list={['cm-mass', massesInitial.y < 0 && 'cm-mass--negative']} data-cm-bar="y" />
+        <text x="204" y="49">Y</text>
+      </g>
+      <g data-cm-trim="m">
+        <circle cx="315" cy="55" r="7" class="cm-trim" />
+        <rect x="305" y={55 - barHeight(massesInitial.m)} width="20" height={barHeight(massesInitial.m)} class:list={['cm-mass', massesInitial.m < 0 && 'cm-mass--negative']} data-cm-bar="m" />
+        <text x="328" y="49">M</text>
+      </g>
+      <text x="82" y="332">mass bars: above = positive, below/marked = negative</text>
+    </g>
+
+    <g aria-label="Chern phase line">
+      <line x1="410" y1="180" x2="715" y2="180" class="cm-phase-axis" />
+      {[-1.5, 0, 1.5].map((critical) => (
+        <g><line x1={562 + critical * 68} y1="112" x2={562 + critical * 68} y2="248" class="cm-critical" /><text x={548 + critical * 68} y="270">{critical.toFixed(1)}</text></g>
+      ))}
+      <text x="405" y="276">ξ</text>
+      <text x="422" y="145">C−=0</text>
+      <text x="478" y="145">C−=+1</text>
+      <text x="575" y="145">C−=−1</text>
+      <text x="674" y="145">C−=0</text>
+      <circle cx={562 + xiInitial * 68} cy="180" r="9" class="cm-cursor" data-cm-cursor />
+      <text x="430" y="65">V = −0.75, v = √2/4</text>
+      <text x="430" y="92">critical ξ: −1.5, 0, +1.5</text>
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-cm-masses>mΓ={massesInitial.gamma.toFixed(2)}, mX=mY={massesInitial.x.toFixed(2)}, mM={massesInitial.m.toFixed(2)}</span>
+    <span data-cm-gap>sampled minimum gap = {topologyInitial.minimumGap.toFixed(3)}</span>
+    <span data-cm-chern>lower-band C− = {topologyInitial.lowerBandChern}; |C−| = {topologyInitial.absoluteChern}</span>
+    <strong data-cm-status>One inverted TRIM relative to the others; one chiral branch per edge in the declared model.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> ξ=1、V=−0.75 时，Γ mass 为负，X/Y/M mass 为正；声明的 $(k_x,k_y)$ 与 Pauli convention 给出低能带 C−=−1，因此 |C−|=1。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>h=(v sin ky, v sin kx, ξ+V(cos kx+cos ky))</code>，对应 Martin Eq. 27.1–27.2 的两带 Chern precursor。四个 TRIM mass 分别为 <code>ξ+2V</code>、<code>ξ</code>、<code>ξ</code>、<code>ξ−2V</code>。</p>
+    <p lang="en"><strong>Model:</strong> <code>h=(v sin ky, v sin kx, ξ+V(cos kx+cos ky))</code>, the two-band Chern precursor of Martin Eqs. 27.1–27.2. The four TRIM masses are <code>ξ+2V</code>, <code>ξ</code>, <code>ξ</code>, and <code>ξ−2V</code>.</p>
+    <p><strong>计算：</strong>页面把归一化 h 向量在每个 BZ 网格 plaquette 上分成两个球面三角形，累计有向固角得到 mapping degree，并按本站 occupied-band convention 取 <code>C−=−degree</code>。在 ξ=−1.5、0、+1.5 处至少一个 TRIM mass 为零，不变量标记为 undefined。</p>
+    <p lang="en"><strong>Computation:</strong> each Brillouin-zone plaquette is split into two spherical triangles of the normalized h vector. Their oriented solid angles give the mapping degree, and the declared occupied-band convention sets <code>C−=−degree</code>. At ξ=−1.5, 0, or +1.5 at least one TRIM mass vanishes, so the invariant is reported as undefined.</p>
+    <p><strong>边界：</strong>Chern 符号随 momentum orientation、Pauli 轴与带标签改变；|C| 和同一 convention 下的相变差更稳健。该 spinless block 明确破坏 time reversal。它是后续 topological-insulator block picture 的前驱，不是 time-reversal-symmetric 材料的完整模型。</p>
+    <p lang="en"><strong>Boundary:</strong> the Chern sign changes with momentum orientation, Pauli axes, and band labels; |C| and phase differences within one convention are more robust. This spinless block explicitly breaks time reversal. It is a precursor to the later block picture, not a complete time-reversal-symmetric material model.</p>
+  </div>
+</figure>
+
+<script>
+  import { chernTrimMasses, sampleChernModel } from '../../../data/part06/ch27TeachingModels.mjs';
+  document.querySelectorAll('[data-chern-mass]').forEach((root) => {
+    const xiInput = root.querySelector('[data-cm-xi]');
+    if (!(xiInput instanceof HTMLInputElement)) return;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLElement || element instanceof SVGTextElement) element.textContent = value;
+    };
+    const update = () => {
+      const xi = Number(xiInput.value);
+      const masses = chernTrimMasses(xi, -0.75);
+      const topology = sampleChernModel(xi, -0.75, Math.SQRT1_2 / 2, 25);
+      const cursor = root.querySelector('[data-cm-cursor]');
+      if (cursor instanceof SVGCircleElement) cursor.setAttribute('cx', String(562 + xi * 68));
+      Object.entries(masses).forEach(([key, value]) => {
+        const bar = root.querySelector(`[data-cm-bar="${key}"]`);
+        if (!(bar instanceof SVGRectElement)) return;
+        const height = 52 * Math.min(Math.abs(value), 2.8) / 2.8;
+        const baseline = key === 'gamma' || key === 'x' ? 180 : 55;
+        bar.setAttribute('height', height.toFixed(2));
+        bar.setAttribute('y', (value >= 0 ? baseline - height : baseline).toFixed(2));
+        bar.classList.toggle('cm-mass--negative', value < 0);
+      });
+      setText('[data-cm-xi-out]', xi.toFixed(2));
+      setText('[data-cm-masses]', `mΓ=${masses.gamma.toFixed(2)}, mX=mY=${masses.x.toFixed(2)}, mM=${masses.m.toFixed(2)}`);
+      if (topology.gapClosed) {
+        setText('[data-cm-gap]', 'minimum gap = 0 at a TRIM');
+        setText('[data-cm-chern]', 'lower-band C− undefined');
+        setText('[data-cm-status]', 'Bulk gap closed: adjacent Chern phases meet.');
+        return;
+      }
+      setText('[data-cm-gap]', `sampled minimum gap = ${topology.minimumGap.toFixed(3)}`);
+      setText('[data-cm-chern]', `lower-band C− = ${topology.lowerBandChern}; |C−| = ${topology.absoluteChern}`);
+      const status = topology.absoluteChern === 1
+        ? 'One inverted TRIM sector; one chiral branch per edge in the declared model.'
+        : 'No net sphere wrapping; the declared lower band is Chern-trivial.';
+      setText('[data-cm-status]', status);
+    };
+    xiInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .chern-mass svg { width: 100%; max-height: 27rem; }
+  .chern-mass text { fill: currentColor; font-size: 13px; }
+  .cm-bz { fill: none; stroke: var(--sl-color-gray-3); stroke-width: 2; }
+  .cm-guide { stroke: var(--sl-color-gray-5); stroke-dasharray: 5 5; }
+  .cm-trim { fill: var(--sl-color-gray-2); }
+  .cm-mass { fill: var(--sl-color-text-accent); }
+  .cm-mass--negative { fill: var(--sl-color-red-high, #b42318); }
+  .cm-phase-axis { stroke: var(--sl-color-gray-3); stroke-width: 2; }
+  .cm-critical { stroke: var(--sl-color-red-high, #b42318); stroke-width: 2; stroke-dasharray: 6 5; }
+  .cm-cursor { fill: var(--sl-color-accent-high); stroke: var(--sl-color-gray-7); stroke-width: 2; }
+</style>
