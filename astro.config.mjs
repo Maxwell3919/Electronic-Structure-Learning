@@ -12,6 +12,8 @@ const createMarkdownProcessor = () =>
   });
 
 export default defineConfig({
+  site: 'https://maxwell3919.github.io',
+  base: '/Electronic-Structure-Learning',
   integrations: [
     starlight({
       title: 'Electronic Structure Learning',
