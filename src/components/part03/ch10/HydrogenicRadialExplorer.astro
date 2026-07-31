@@ -1,0 +1,216 @@
+---
+const states = [
+  { value: '1,0', label: '1s' },
+  { value: '2,0', label: '2s' },
+  { value: '2,1', label: '2p' },
+  { value: '3,0', label: '3s' },
+  { value: '3,1', label: '3p' },
+  { value: '3,2', label: '3d' },
+];
+
+const factorial = (n) => {
+  let value = 1;
+  for (let k = 2; k <= n; k += 1) value *= k;
+  return value;
+};
+const associatedLaguerre = (p, alpha, x) => {
+  if (p === 0) return 1;
+  if (p === 1) return 1 + alpha - x;
+  let lm2 = 1;
+  let lm1 = 1 + alpha - x;
+  for (let k = 2; k <= p; k += 1) {
+    const current = ((2 * k - 1 + alpha - x) * lm1 - (k - 1 + alpha) * lm2) / k;
+    lm2 = lm1;
+    lm1 = current;
+  }
+  return lm1;
+};
+const radialR = (n, l, z, r) => {
+  const rho = (2 * z * r) / n;
+  const prefactor = Math.pow((2 * z) / n, 1.5)
+    * Math.sqrt(factorial(n - l - 1) / (2 * n * factorial(n + l)));
+  return prefactor * Math.exp(-rho / 2) * Math.pow(rho, l)
+    * associatedLaguerre(n - l - 1, 2 * l + 1, rho);
+};
+const defaultRMax = 80;
+const defaultPoints = Array.from({ length: 801 }, (_, index) => {
+  const r = defaultRMax * index / 800;
+  const u = r * radialR(2, 0, 1, r);
+  return { r, value: u * u };
+});
+const defaultMax = Math.max(...defaultPoints.map((point) => point.value)) * 1.08;
+const defaultX = (r) => 58 + (r / defaultRMax) * 678;
+const defaultY = (value) => 24 + ((defaultMax - value) / defaultMax) * 268;
+const defaultPath = defaultPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${defaultX(point.r).toFixed(2)} ${defaultY(point.value).toFixed(2)}`).join(' ');
+---
+
+<figure class="chapter-visual hydrogenic-radial" data-hydrogenic-radial>
+  <figcaption>
+    <strong>原创解析可视化：氢样径向函数 | Original analytic visualization: hydrogenic radial functions</strong>
+    <span>选择解析态、核电荷与要显示的对象。横轴为 Bohr；纵轴单位随 $R$、$u$ 或 $P=|u|^2$ 改变。</span>
+    <span lang="en">Select an analytic state, nuclear charge, and displayed observable. The horizontal axis is in Bohr; the vertical unit changes for $R$, $u$, or $P=|u|^2$.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>
+      <span>态 | State</span>
+      <select data-state aria-label="Hydrogenic state">
+        {states.map((state) => <option value={state.value} selected={state.value === '2,0'}>{state.label}</option>)}
+      </select>
+    </label>
+    <label>
+      <span>核电荷 | Nuclear charge $Z$: <output data-z-output>1</output></span>
+      <input data-z type="range" min="1" max="6" step="1" value="1" aria-label="Hydrogenic nuclear charge Z" />
+    </label>
+    <label>
+      <span>显示量 | Observable</span>
+      <select data-observable aria-label="Radial observable">
+        <option value="R">$R_{nl}(r)$</option>
+        <option value="u">$u_{nl}(r)=rR_{nl}(r)$</option>
+        <option value="P" selected>$P_{nl}(r)=|u_{nl}(r)|^2$</option>
+      </select>
+    </label>
+  </div>
+
+  <svg viewBox="0 0 760 340" role="img" aria-labelledby="hydrogenic-title hydrogenic-desc">
+    <title id="hydrogenic-title">Hydrogenic radial observable</title>
+    <desc id="hydrogenic-desc">Analytic hydrogenic radial function, reduced radial function, or radial probability on a finite radial interval.</desc>
+    <line class="plot-axis" x1="58" y1="292" x2="736" y2="292" />
+    <line class="plot-axis" x1="58" y1="24" x2="58" y2="292" />
+    <line class="plot-guide" data-zero-line x1="58" y1="292" x2="736" y2="292" />
+    <path data-curve class="hydrogenic-radial__curve" d={defaultPath} />
+    <text x="397" y="330" text-anchor="middle">$r$ (Bohr)</text>
+    <text data-y-label x="16" y="165" transform="rotate(-90 16 165)" text-anchor="middle">$P$ (Bohr⁻¹)</text>
+    <text data-r-max x="726" y="310" text-anchor="end">$r_{max}=80$</text>
+  </svg>
+
+  <p class="chapter-visual__readout" aria-live="polite">
+    <span>态：<strong data-state-readout>2s</strong></span>
+    <span>径向节点：<strong data-nodes>1</strong></span>
+    <span>数值归一化 $\int_0^{r_{max}}|u|^2dr=$ <strong data-norm>1.000000</strong></span>
+    <span>解析能量：<strong data-energy>-0.125000</strong> Ha</span>
+  </p>
+
+  <div class="chapter-visual__contract">
+    <p><strong>验收：</strong>节点数必须为 $n-l-1$；把积分上限取为 $40n/Z$ Bohr 并使用密集梯形积分时，显示态的径向范数应接近 1。</p>
+    <p lang="en"><strong>Acceptance:</strong> the radial node count must be $n-l-1$; with an upper limit $40n/Z$ Bohr and dense trapezoidal quadrature, the displayed radial norm should approach unity.</p>
+    <p><strong>边界：</strong>模型采用非相对论点核 Coulomb 势。多电子原子中的屏蔽、量子缺陷和自洽势会改变能量与径向形状。</p>
+    <p lang="en"><strong>Boundary:</strong> the model uses a nonrelativistic point-nucleus Coulomb potential. Screening, quantum defects, and self-consistent potentials modify both energies and radial shapes in many-electron atoms.</p>
+  </div>
+
+  <noscript>
+    <p>无 JavaScript 时显示默认 2s 径向概率；解析定义、节点规则和归一化验收仍完整保留。</p>
+  </noscript>
+</figure>
+
+<script>
+  const factorial = (n) => {
+    let value = 1;
+    for (let k = 2; k <= n; k += 1) value *= k;
+    return value;
+  };
+
+  const associatedLaguerre = (p, alpha, x) => {
+    if (p === 0) return 1;
+    if (p === 1) return 1 + alpha - x;
+    let lm2 = 1;
+    let lm1 = 1 + alpha - x;
+    for (let k = 2; k <= p; k += 1) {
+      const current = ((2 * k - 1 + alpha - x) * lm1 - (k - 1 + alpha) * lm2) / k;
+      lm2 = lm1;
+      lm1 = current;
+    }
+    return lm1;
+  };
+
+  const radialR = (n, l, z, r) => {
+    const rho = (2 * z * r) / n;
+    const prefactor = Math.pow((2 * z) / n, 1.5)
+      * Math.sqrt(factorial(n - l - 1) / (2 * n * factorial(n + l)));
+    return prefactor * Math.exp(-rho / 2) * Math.pow(rho, l)
+      * associatedLaguerre(n - l - 1, 2 * l + 1, rho);
+  };
+
+  const labelFor = (n, l) => `${n}${['s', 'p', 'd', 'f'][l] ?? `l${l}`}`;
+
+  document.querySelectorAll('[data-hydrogenic-radial]').forEach((root) => {
+    const stateInput = root.querySelector('[data-state]');
+    const zInput = root.querySelector('[data-z]');
+    const observableInput = root.querySelector('[data-observable]');
+
+    const update = () => {
+      const [n, l] = stateInput.value.split(',').map(Number);
+      const z = Number(zInput.value);
+      const observable = observableInput.value;
+      const rMax = (40 * n) / z;
+      const count = 1600;
+      const points = [];
+      let norm = 0;
+      let previousProbability = 0;
+      for (let index = 0; index <= count; index += 1) {
+        const r = (rMax * index) / count;
+        const R = radialR(n, l, z, r);
+        const u = r * R;
+        const probability = u * u;
+        const value = observable === 'R' ? R : observable === 'u' ? u : probability;
+        points.push({ r, value });
+        if (index > 0) norm += 0.5 * (previousProbability + probability) * (rMax / count);
+        previousProbability = probability;
+      }
+
+      let minValue = Math.min(...points.map((point) => point.value));
+      let maxValue = Math.max(...points.map((point) => point.value));
+      if (Math.abs(maxValue - minValue) < 1e-14) {
+        minValue -= 1;
+        maxValue += 1;
+      }
+      if (observable === 'P') minValue = 0;
+      const pad = 0.08 * (maxValue - minValue);
+      const yMin = minValue - (observable === 'P' ? 0 : pad);
+      const yMax = maxValue + pad;
+      const x = (r) => 58 + (r / rMax) * 678;
+      const y = (value) => 24 + ((yMax - value) / (yMax - yMin)) * 268;
+      const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${x(point.r).toFixed(2)} ${y(point.value).toFixed(2)}`).join(' ');
+      root.querySelector('[data-curve]').setAttribute('d', path);
+      const zeroY = y(0);
+      root.querySelector('[data-zero-line]').setAttribute('y1', String(zeroY));
+      root.querySelector('[data-zero-line]').setAttribute('y2', String(zeroY));
+      root.querySelector('[data-z-output]').textContent = String(z);
+      root.querySelector('[data-state-readout]').textContent = labelFor(n, l);
+      root.querySelector('[data-nodes]').textContent = String(n - l - 1);
+      root.querySelector('[data-norm]').textContent = norm.toFixed(6);
+      root.querySelector('[data-energy]').textContent = (-z * z / (2 * n * n)).toFixed(6);
+      root.querySelector('[data-r-max]').textContent = `r_max=${rMax.toFixed(1)}`;
+      const unit = observable === 'R' ? 'Bohr⁻³ᐟ²' : observable === 'u' ? 'Bohr⁻¹ᐟ²' : 'Bohr⁻¹';
+      root.querySelector('[data-y-label]').textContent = `${observable} (${unit})`;
+    };
+
+    stateInput.addEventListener('change', update);
+    zInput.addEventListener('input', update);
+    observableInput.addEventListener('change', update);
+    update();
+  });
+</script>
+
+<style>
+  .hydrogenic-radial select {
+    min-height: 2.25rem;
+  }
+
+  .hydrogenic-radial svg {
+    width: 100%;
+    min-height: 17rem;
+    margin-top: 1rem;
+  }
+
+  .hydrogenic-radial svg text {
+    fill: currentColor;
+    font-size: 13px;
+  }
+
+  .hydrogenic-radial__curve {
+    fill: none;
+    stroke: var(--sl-color-accent-high);
+    stroke-width: 3;
+  }
+</style>
