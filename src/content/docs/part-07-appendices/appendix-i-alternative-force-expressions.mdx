@@ -1,0 +1,20 @@
+---
+title: "Appendix I · Alternative Force Expressions"
+description: "Martin Appendix I 的目录级阅读骨架；正文待填充。"
+sidebar:
+  order: 9
+  label: "Appendix I · Alternative Force Expressions"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[6].units[8].label}
+  sourcePage={catalog.parts[6].units[8].page}
+  sections={catalog.parts[6].units[8].sections}
+  exercisesPage={catalog.parts[6].units[8].exercisesPage ?? null}
+/>

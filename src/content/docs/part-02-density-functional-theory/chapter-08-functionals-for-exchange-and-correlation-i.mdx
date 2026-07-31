@@ -1,0 +1,20 @@
+---
+title: "Chapter 8 · Functionals for Exchange and Correlation I"
+description: "Martin Chapter 8 的目录级阅读骨架；正文待填充。"
+sidebar:
+  order: 3
+  label: "Chapter 8 · Functionals for Exchange and Correlation I"
+---
+
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
+
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[1].units[2].label}
+  sourcePage={catalog.parts[1].units[2].page}
+  sections={catalog.parts[1].units[2].sections}
+  exercisesPage={catalog.parts[1].units[2].exercisesPage ?? null}
+/>

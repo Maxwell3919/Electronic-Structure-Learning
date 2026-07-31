@@ -1,48 +1,20 @@
 ---
 title: "Chapter 1 · Introduction"
-description: "Martin Chapter 1 的阅读与可视化骨架；当前不包含教材正文。"
+description: "Martin Chapter 1 的目录级阅读骨架；正文待填充。"
 sidebar:
   order: 1
   label: "Chapter 1 · Introduction"
 ---
 
-import SourceNote from '../../../components/SourceNote.astro';
-import VisualizationPlaceholder from '../../../components/VisualizationPlaceholder.astro';
+import ReadingOutline from '../../../components/ReadingOutline.astro';
+import catalog from '../../../data/martin/index.mjs';
 
-<SourceNote
-  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
-  locator="Chapter 1, 起始页 1；本页仅保留章节导航标题。"
-  status="outline"
+<ReadingOutline
+  sourceTitle={catalog.source.title}
+  sourceAuthor={catalog.source.author}
+  sourceRole={catalog.source.role}
+  unitLabel={catalog.parts[0].units[0].label}
+  sourcePage={catalog.parts[0].units[0].page}
+  sections={catalog.parts[0].units[0].sections}
+  exercisesPage={catalog.parts[0].units[0].exercisesPage ?? null}
 />
-
-## 学习定位
-
-本章用于回答：电子结构理论从哪些量子问题出发，为什么独立电子图像在许多材料中有效，电子相互作用与关联为何仍是核心困难，以及 DFT 在整个方法体系中处于什么位置。
-
-## 分节骨架
-
-1. Quantum Theory and the Origins of Electronic Structure
-2. Why Is the Independent-Electron Picture So Successful?
-3. Emergence of Quantitative Calculations
-4. The Greatest Challenge: Electron Interaction and Correlation
-5. Density Functional Theory
-6. Electronic Structure Is Now an Essential Part of Research
-7. Materials by Design
-8. Topology of Electronic Structure
-
-这些标题只用于阅读定位。后续正文必须采用原创解释，并逐节标出来源页码、推导前提和可视化验收标准。
-
-## 第一项可视化候选
-
-<VisualizationPlaceholder
-  title="独立电子图像与相互作用修正"
-  model="两个可调耦合粒子的低维教学模型"
-  controls={['相互作用强度', '外势形状', '粒子数']}
-  observables={['基态能量', '密度分布', '独立粒子近似误差']}
-  validation={['零相互作用极限恢复独立粒子结果', '能量与密度单位一致']}
-  boundary="低维教学模型只能展示近似失效的机制，不能代表真实材料中的交换关联误差。"
-/>
-
-## 数值与验证边界
-
-程序正常运行、SCF 收敛和物理近似成立是不同问题。本章后续内容需要把理论近似、离散误差和目标 observable 的收敛分别讨论。
