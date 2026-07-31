@@ -79,18 +79,24 @@ export const sampleDampedSignal = ({
   if (!Array.isArray(modes) || modes.length === 0) {
     throw new TypeError('modes must be a non-empty array');
   }
-  for (const mode of modes) {
+
+  const normalizedModes = modes.map((mode) => {
     positive('mode frequency', mode.frequency);
     finite('mode amplitude', mode.amplitude);
-    if (mode.damping === undefined) mode.damping = 0;
-    finite('mode damping', mode.damping);
-    if (mode.damping < 0) throw new RangeError('mode damping must be non-negative');
-  }
+    const damping = mode.damping ?? 0;
+    finite('mode damping', damping);
+    if (damping < 0) throw new RangeError('mode damping must be non-negative');
+    return {
+      frequency: mode.frequency,
+      amplitude: mode.amplitude,
+      damping,
+    };
+  });
 
   const steps = Math.floor(totalTime / timeStep);
   return Array.from({ length: steps + 1 }, (_, index) => {
     const time = index * timeStep;
-    const value = modes.reduce(
+    const value = normalizedModes.reduce(
       (sum, mode) => sum
         + mode.amplitude * Math.sin(mode.frequency * time) * Math.exp(-mode.damping * time),
       0,
