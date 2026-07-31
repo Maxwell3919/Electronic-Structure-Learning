@@ -1,6 +1,7 @@
 import BilingualSection from '../BilingualSection.astro';
 import BilingualCallout from '../BilingualCallout.astro';
 import DerivationBlock from '../DerivationBlock.astro';
+import StonerConventionAudit from './Chapter02StonerConventionAudit.mdx';
 
 <h2 id="section-2-7">2.7 磁性与电子—电子相互作用 | Magnetism and Electron–Electron Interactions</h2>
 
@@ -21,49 +22,51 @@ Mean-field or spin-density-functional calculations can represent exchange–corr
   </div>
 </BilingualSection>
 
+<StonerConventionAudit />
+
 <DerivationBlock
   title="补充推导 | Supplemental derivation: Stoner susceptibility"
   assumptions={[
-    '从未相互作用或独立准粒子静态自旋响应 χ0 出发；',
-    '交换—关联有效场在线性范围写成 Vm = Vext + I m；',
+    '从未相互作用或独立准粒子对显式定义的共轭磁化场 h 的静态响应 χ0 出发；',
+    '增强正磁化的自洽场在线性范围写成 h_eff = h_ext + I m，其中 I 的符号与 h 的定义配套；',
     '忽略空间非局域性、频率依赖和高阶磁化项。',
   ]}
 >
 
-线性响应定义为
+为避免与原书 $V_m$ 的带符号势约定混用，这里把促进正磁化的共轭场单独记为 $h$。线性响应定义为
 
 $$
-m=\chi_0 V_m.
+m=\chi_0 h_{\mathrm{eff}}.
 $$
 
-将自洽有效场 $V_m=V_{\mathrm{ext}}+I m$ 代入：
+将自洽有效场 $h_{\mathrm{eff}}=h_{\mathrm{ext}}+I m$ 代入：
 
 $$
-m=\chi_0(V_{\mathrm{ext}}+I m).
+m=\chi_0(h_{\mathrm{ext}}+I m).
 $$
 
 移项得
 
 $$
-(1-I\chi_0)m=\chi_0 V_{\mathrm{ext}},
+(1-I\chi_0)m=\chi_0 h_{\mathrm{ext}},
 $$
 
 因此相互作用修正后的磁化率为
 
 $$
-\chi\equiv\frac{m}{V_{\mathrm{ext}}}
+\chi_h\equiv\frac{m}{h_{\mathrm{ext}}}
 =\frac{\chi_0}{1-I\chi_0}.
 $$
 
-在简化金属图像中 $\chi_0\propto N(E_F)$，采用 Martin 的记号可写成
+在 Martin 式 (2.3) 使用的简化金属归一化中，可写 $\chi_0=N(E_F)$，于是
 
 $$
-\chi=\frac{N(E_F)}{1-I N(E_F)}.
+\chi_h=\frac{N(E_F)}{1-I N(E_F)}.
 $$
 
-当 $I N(E_F)\to1$ 时，线性顺磁态响应发散，提示 $m=0$ 状态失稳。这只是平均场不稳定判据：它不决定最终磁结构、转变温度或量子涨落，也不能从一个 DOS 峰单独推导铁磁性。
+这里的 $N(E_F)$、$I$ 与 $\chi_h$ 必须采用同一自旋计数、磁矩和场单位。当 $I N(E_F)\to1$ 时，线性顺磁态响应发散，提示 $m=0$ 状态失稳。这只是平均场不稳定判据：它不决定最终磁结构、转变温度或量子涨落，也不能从一个 DOS 峰单独推导铁磁性。
 
-<p lang="en">Starting from $m=\chi_0V_m$ and the self-consistent field $V_m=V_{\mathrm{ext}}+Im$ gives $\chi=\chi_0/(1-I\chi_0)$. In a simplified metal $\chi_0$ is proportional to the density of states at the Fermi level, producing the Stoner form. The denominator approaching zero signals a mean-field instability of the paramagnetic state; it does not determine the final magnetic structure, transition temperature, or fluctuation corrections.</p>
+<p lang="en">To avoid mixing signed-potential conventions, let $h$ denote a separately declared field that favours positive magnetization. Starting from $m=\chi_0h_{\mathrm{eff}}$ and $h_{\mathrm{eff}}=h_{\mathrm{ext}}+Im$ gives $\chi_h=\chi_0/(1-I\chi_0)$. With the simplified normalization used around Martin Eq. (2.3), $\chi_0=N(E_F)$ gives the Stoner form. The DOS, $I$, magnetic-moment factors, and field units must belong to one matched convention. A vanishing denominator signals only a mean-field instability of the paramagnetic reference state; it does not determine the final magnetic structure, transition temperature, or fluctuation corrections.</p>
 
 </DerivationBlock>
 

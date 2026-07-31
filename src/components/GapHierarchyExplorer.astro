@@ -37,9 +37,10 @@
     <text x="364" y="217" data-gap-optical-label>1.70 eV</text>
   </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
+  <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-gap-regime="physical">
     <strong data-gap-equation>Efund = 2.00 eV; Eopt = 1.70 eV</strong>
-    <span lang="en" data-gap-note>The optical gap lies below the fundamental gap by the exciton binding energy.</span>
+    <span data-gap-note-zh>光学 gap 比基本 gap 低一个激子结合能。</span>
+    <span lang="en" data-gap-note-en>The optical gap lies below the fundamental gap by the exciton binding energy.</span>
   </div>
 
   <div class="chapter-visual__contract">
@@ -47,8 +48,8 @@
     <p lang="en"><strong>Model:</strong> <code>E_fund = E_KS + Δ_xc</code> and <code>E_opt = max(0, E_fund − E_b)</code>. Inputs are independent teaching parameters, not material data.</p>
     <p><strong>验收：</strong>EKS=1.1、Δxc=0.7、Eb=0.3 eV 时，基本和光学 gap 分别为 1.8 与 1.5 eV。</p>
     <p lang="en"><strong>Acceptance:</strong> EKS=1.1, Δxc=0.7, and Eb=0.3 eV give fundamental and optical gaps of 1.8 and 1.5 eV.</p>
-    <p><strong>边界：</strong>实际 gap 不能通过三个可任意调节参数预测；直接/间接跃迁、选择定则、暗激子、声子和温度均未包含。</p>
-    <p lang="en"><strong>Boundary:</strong> real gaps cannot be predicted from three adjustable parameters; direct/indirect transitions, selection rules, dark excitons, phonons, and temperature are omitted.</p>
+    <p><strong>边界：</strong>实际 gap 不能通过三个可任意调节参数预测；直接/间接跃迁、选择定则、暗激子、声子和温度均未包含。当 <code>E_b &gt; E_fund</code> 时，零值仅是绘图截断，表示该简化模型已经离开适用区，而不是预测真实光学 gap 为零。</p>
+    <p lang="en"><strong>Boundary:</strong> real gaps cannot be predicted from three adjustable parameters; direct/indirect transitions, selection rules, dark excitons, phonons, and temperature are omitted. When <code>E_b &gt; E_fund</code>, zero is only a plotting clamp indicating that the simplified model has left its domain, not a prediction of a real zero optical gap.</p>
   </div>
 </figure>
 
@@ -68,8 +69,10 @@
     const ksLabel = root.querySelector('[data-gap-ks-label]');
     const fundamentalLabel = root.querySelector('[data-gap-fundamental-label]');
     const opticalLabel = root.querySelector('[data-gap-optical-label]');
+    const readout = root.querySelector('[data-gap-regime]');
     const equation = root.querySelector('[data-gap-equation]');
-    const note = root.querySelector('[data-gap-note]');
+    const noteZh = root.querySelector('[data-gap-note-zh]');
+    const noteEn = root.querySelector('[data-gap-note-en]');
     if (!(ksInput instanceof HTMLInputElement) || !(correctionInput instanceof HTMLInputElement) || !(bindingInput instanceof HTMLInputElement)) return;
     if (!(ksBar instanceof SVGRectElement) || !(fundamentalBar instanceof SVGRectElement) || !(opticalBar instanceof SVGRectElement)) return;
 
@@ -95,8 +98,12 @@
       if (correctionOutput instanceof HTMLOutputElement) correctionOutput.value = `${result.derivativeCorrection.toFixed(1)} eV`;
       if (bindingOutput instanceof HTMLOutputElement) bindingOutput.value = `${result.excitonBinding.toFixed(2)} eV`;
       if (equation instanceof HTMLElement) equation.textContent = `Efund = ${result.fundamentalGap.toFixed(2)} eV; Eopt = ${result.opticalGap.toFixed(2)} eV`;
-      if (note instanceof HTMLElement) note.textContent = result.bindingClamped
-        ? 'The selected binding exceeds the continuum gap; the model clamps the optical energy at zero and has left its physical regime.'
+      if (readout instanceof HTMLElement) readout.dataset.gapRegime = result.bindingClamped ? 'outside-model-regime' : 'physical';
+      if (noteZh instanceof HTMLElement) noteZh.textContent = result.bindingClamped
+        ? '所选结合能超过连续谱 gap；零值只是绘图截断，当前参数已经离开该教学模型的物理适用区。'
+        : '光学 gap 比基本 gap 低一个激子结合能。';
+      if (noteEn instanceof HTMLElement) noteEn.textContent = result.bindingClamped
+        ? 'The selected binding exceeds the continuum gap; zero is only a plotting clamp and the parameters have left the physical regime of this teaching model.'
         : 'The optical gap lies below the fundamental gap by the exciton binding energy.';
     };
 
