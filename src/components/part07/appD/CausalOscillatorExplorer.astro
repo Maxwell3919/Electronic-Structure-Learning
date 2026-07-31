@@ -1,0 +1,162 @@
+---
+import {
+  oscillatorResponse,
+  responseModelDefaults,
+  sampleOscillator,
+} from '../../../data/part07/responseGreenModel.mjs';
+
+const width = 650;
+const height = 300;
+const left = 58;
+const right = 620;
+const top = 36;
+const bottom = 252;
+const xMap = (omega) => left + (right - left) * omega / 2.5;
+const yMap = (value) => bottom - (value + 4.5) * (bottom - top) / 9;
+const pathFor = (samples, key) => samples
+  .map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.omega).toFixed(2)} ${yMap(point[key]).toFixed(2)}`)
+  .join(' ');
+
+const defaults = sampleOscillator({ damping: responseModelDefaults.damping });
+const realPath = pathFor(defaults, 'real');
+const imaginaryPath = pathFor(defaults, 'imaginary');
+const fallbackCases = [0.4, 1.0, 1.6].map((omega) => ({
+  omega,
+  ...oscillatorResponse({
+    omega,
+    omega0: responseModelDefaults.oscillatorFrequency,
+    damping: responseModelDefaults.damping,
+  }),
+}));
+---
+
+<figure class="chapter-visual oscillator-explorer" data-oscillator-explorer>
+  <figcaption>
+    <strong>原创交互模型：因果阻尼振子的频率响应</strong>
+    <span lang="en">Original interactive model: causal frequency response of a damped oscillator</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls oscillator-explorer__controls">
+    <label>
+      <span>damping Γ/M | 阻尼</span>
+      <input type="range" min="0.04" max="0.40" step="0.02" value={responseModelDefaults.damping} data-oscillator-damping />
+      <output data-oscillator-damping-output>{responseModelDefaults.damping.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>probe frequency ω | 探测频率</span>
+      <input type="range" min="0" max="2.5" step="0.02" value="1.00" data-oscillator-omega />
+      <output data-oscillator-omega-output>1.00</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="oscillator-title oscillator-desc">
+    <title id="oscillator-title">Real and imaginary parts of a causal damped oscillator response</title>
+    <desc id="oscillator-desc">
+      The real and imaginary parts of chi of omega are plotted for a damped oscillator with natural frequency one. Damping and a probe frequency are controlled by keyboard-operable sliders. Positive damping moves poles below the real axis and gives a positive loss peak under the stated convention.
+    </desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={yMap(0)} x2={right} y2={yMap(0)} class="plot-guide" />
+    <line x1={xMap(1)} y1={top} x2={xMap(1)} y2={bottom} class="plot-guide" />
+    <path d={realPath} class="oscillator-explorer__real" data-oscillator-real-path />
+    <path d={imaginaryPath} class="oscillator-explorer__imag" data-oscillator-imag-path />
+    <line x1={xMap(1)} y1={top} x2={xMap(1)} y2={bottom} class="oscillator-explorer__probe" data-oscillator-probe />
+    <text x={right} y="282" text-anchor="end">ω/ω₀</text>
+    <text x="20" y="48">χ</text>
+    <text x={right - 80} y="52" class="oscillator-explorer__legend-real">Re χ</text>
+    <text x={right - 80} y="74" class="oscillator-explorer__legend-imag">Im χ</text>
+  </svg>
+
+  <div class="chapter-visual__readout oscillator-explorer__readout" aria-live="polite">
+    <span>Re χ</span><strong data-oscillator-real>{oscillatorResponse({ omega: 1, omega0: 1, damping: responseModelDefaults.damping }).real.toFixed(4)}</strong>
+    <span>Im χ</span><strong data-oscillator-imag>{oscillatorResponse({ omega: 1, omega0: 1, damping: responseModelDefaults.damping }).imaginary.toFixed(4)}</strong>
+    <span>|χ|</span><strong data-oscillator-mag>{oscillatorResponse({ omega: 1, omega0: 1, damping: responseModelDefaults.damping }).magnitude.toFixed(4)}</strong>
+  </div>
+
+  <div class="oscillator-explorer__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>ω</th><th>Re χ</th><th>Im χ</th></tr></thead>
+      <tbody>
+        {fallbackCases.map((entry) => (
+          <tr><td>{entry.omega.toFixed(1)}</td><td>{entry.real.toFixed(4)}</td><td>{entry.imaginary.toFixed(4)}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>χ(ω)=1/[ω₀²−ω²−iγω]</code>，取 <code>ω₀=1</code>、<code>e^{-iωt}</code>。所有量均为无量纲教学变量。</p>
+    <p lang="en"><strong>Model:</strong> <code>χ(ω)=1/[ω₀²−ω²−iγω]</code> with <code>ω₀=1</code> and <code>e^{-iωt}</code>. All quantities are dimensionless teaching variables.</p>
+    <p><strong>验收：</strong><code>γ&gt;0</code> 时实轴响应有限、<code>Imχ(ω&gt;0)&gt;0</code>；减小阻尼使 resonance peak 变窄变高；时间域 impulse 在 <code>t&lt;0</code> 严格为零。</p>
+    <p lang="en"><strong>Acceptance:</strong> for <code>γ&gt;0</code> the real-axis response is finite and <code>Imχ(ω&gt;0)&gt;0</code>; reducing damping narrows and raises the resonance; the time-domain impulse is exactly zero for <code>t&lt;0</code>.</p>
+    <p><strong>边界：</strong>常数阻尼只是因果极点结构的教学模型。Martin 指出频率无关阻尼不满足所有高频 moment 约束；不能把滑块值解释为真实材料寿命。</p>
+    <p lang="en"><strong>Boundary:</strong> constant damping is only a teaching model for causal pole structure. Martin notes that frequency-independent damping violates general high-frequency moment constraints; the slider value is not a material lifetime.</p>
+  </div>
+</figure>
+
+<script>
+  import {
+    oscillatorResponse,
+    sampleOscillator,
+  } from '../../../data/part07/responseGreenModel.mjs';
+
+  document.querySelectorAll('[data-oscillator-explorer]').forEach((root) => {
+    const damping = root.querySelector('[data-oscillator-damping]');
+    const omega = root.querySelector('[data-oscillator-omega]');
+    const dampingOutput = root.querySelector('[data-oscillator-damping-output]');
+    const omegaOutput = root.querySelector('[data-oscillator-omega-output]');
+    const realOutput = root.querySelector('[data-oscillator-real]');
+    const imagOutput = root.querySelector('[data-oscillator-imag]');
+    const magOutput = root.querySelector('[data-oscillator-mag]');
+    const realPath = root.querySelector('[data-oscillator-real-path]');
+    const imagPath = root.querySelector('[data-oscillator-imag-path]');
+    const probe = root.querySelector('[data-oscillator-probe]');
+    if (!(damping instanceof HTMLInputElement) || !(omega instanceof HTMLInputElement)) return;
+
+    const left = 58;
+    const right = 620;
+    const top = 36;
+    const bottom = 252;
+    const xMap = (value) => left + (right - left) * value / 2.5;
+    const yMap = (value) => bottom - (value + 4.5) * (bottom - top) / 9;
+    const pathFor = (samples, key) => samples
+      .map((point, index) => `${index === 0 ? 'M' : 'L'} ${xMap(point.omega).toFixed(2)} ${yMap(point[key]).toFixed(2)}`)
+      .join(' ');
+
+    const update = () => {
+      const gamma = Number(damping.value);
+      const probeOmega = Number(omega.value);
+      const samples = sampleOscillator({ damping: gamma });
+      const value = oscillatorResponse({ omega: probeOmega, omega0: 1, damping: gamma });
+      if (realPath instanceof SVGPathElement) realPath.setAttribute('d', pathFor(samples, 'real'));
+      if (imagPath instanceof SVGPathElement) imagPath.setAttribute('d', pathFor(samples, 'imaginary'));
+      if (probe instanceof SVGLineElement) {
+        probe.setAttribute('x1', xMap(probeOmega).toFixed(2));
+        probe.setAttribute('x2', xMap(probeOmega).toFixed(2));
+      }
+      if (dampingOutput instanceof HTMLOutputElement) dampingOutput.value = gamma.toFixed(2);
+      if (omegaOutput instanceof HTMLOutputElement) omegaOutput.value = probeOmega.toFixed(2);
+      if (realOutput instanceof HTMLElement) realOutput.textContent = value.real.toFixed(4);
+      if (imagOutput instanceof HTMLElement) imagOutput.textContent = value.imaginary.toFixed(4);
+      if (magOutput instanceof HTMLElement) magOutput.textContent = value.magnitude.toFixed(4);
+    };
+    damping.addEventListener('input', update);
+    omega.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .oscillator-explorer { overflow-x: auto; }
+  .oscillator-explorer svg { width: 100%; min-width: 38rem; }
+  .oscillator-explorer text { fill: currentColor; font-size: 13px; }
+  .oscillator-explorer__real { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 3; }
+  .oscillator-explorer__imag { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-dasharray: 7 4; }
+  .oscillator-explorer__probe { stroke: var(--sl-color-gray-2); stroke-width: 1.5; }
+  .oscillator-explorer__legend-real { fill: var(--sl-color-accent-high); }
+  .oscillator-explorer__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+  .oscillator-explorer__controls label { display: grid; gap: 0.35rem; }
+  .oscillator-explorer__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 0.4rem 1rem; }
+  .oscillator-explorer__fallback { max-width: 32rem; }
+</style>
