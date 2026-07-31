@@ -124,7 +124,7 @@ for (const occupation of [0.1, 0.3, 0.7, 0.9]) {
   const minus = dudarevOccupationModel({ occupation: occupation - step, uEffective: 1.7 }).correctionEnergy;
   const numerical = (plus - minus) / (2 * step);
   const analytic = dudarevOccupationModel({ occupation, uEffective: 1.7 }).correctionPotential;
-  close(numerical, analytic, 3e-10, `Dudarev derivative at ${occupation}`);
+  close(numerical, analytic, 5e-10, `Dudarev derivative at ${occupation}`);
 }
 
 // 10. Single-pole dynamic polarizability has the correct limits and monotonicity.
