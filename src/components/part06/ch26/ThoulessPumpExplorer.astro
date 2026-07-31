@@ -1,0 +1,133 @@
+---
+import { pumpWannierFlow, samplePumpTopology } from '../../../data/part06/ch26TeachingModels.mjs';
+const centerInitial = 1;
+const radius = 0.65;
+const v = 1;
+const w = 1;
+const topologyInitial = samplePumpTopology(centerInitial, radius, v, w, 31);
+const flowInitial = pumpWannierFlow(centerInitial, radius, v, w, 65, 181);
+const loopPoints = Array.from({ length: 65 }, (_, index) => {
+  const lambda = (2 * Math.PI * index) / 64;
+  const t1 = centerInitial + radius * Math.cos(lambda);
+  const delta = radius * Math.sin(lambda);
+  return `${190 + 70 * t1},${170 - 70 * delta}`;
+}).join(' ');
+const flowPoints = flowInitial.centers.map((value, index) => `${430 + (285 * index) / (flowInitial.centers.length - 1)},${285 - 210 * value}`).join(' ');
+---
+
+<figure class="chapter-visual pump-explorer" data-pump-explorer>
+  <figcaption>
+    <strong>原创交互模型：参数环路、Chern 数与 Wannier-center 流</strong>
+    <span lang="en">Original interactive model: parameter loop, Chern number, and Wannier-centre flow</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label><span>环路中心 c | loop centre</span><input type="range" min="0.10" max="2.20" step="0.05" value={centerInitial} data-pump-center /><output data-pump-center-out>{centerInitial.toFixed(2)}</output></label>
+  </div>
+
+  <svg viewBox="0 0 760 360" role="img" aria-labelledby="pump-title pump-desc">
+    <title id="pump-title">Rice-Mele-type pump loop and Wannier-centre flow</title>
+    <desc id="pump-desc">The left panel shows a closed loop in hopping and sublattice-offset parameter space relative to two gap-closing points. The right panel shows the lower-band Wannier centre through one cycle.</desc>
+
+    <g aria-label="parameter loop">
+      <line x1="45" y1="170" x2="405" y2="170" class="pump-axis" />
+      <line x1="190" y1="45" x2="190" y2="305" class="pump-axis" />
+      <text x="368" y="157">t₁</text><text x="200" y="58">Δ</text>
+      <circle cx={190 + 70 * v} cy="170" r="6" class="pump-singularity" />
+      <circle cx={190 - 70 * v} cy="170" r="6" class="pump-singularity pump-singularity--secondary" />
+      <text x={198 + 70 * v} y="194">k=π</text>
+      <text x={198 - 70 * v} y="194">k=0</text>
+      <polyline points={loopPoints} class="pump-loop" data-pump-loop />
+      <text x="65" y="330">R=0.65, t₂=v=1</text>
+    </g>
+
+    <g aria-label="Wannier centre flow">
+      <line x1="430" y1="285" x2="720" y2="285" class="pump-axis" />
+      <line x1="430" y1="55" x2="430" y2="285" class="pump-axis" />
+      <line x1="430" y1="75" x2="720" y2="75" class="pump-guide" />
+      <text x="422" y="303">0</text><text x="694" y="303">2π λ</text>
+      <text x="402" y="80">1</text><text x="405" y="290">0</text>
+      <text x="470" y="42">Wannier centre / lattice constant</text>
+      <polyline points={flowPoints} class="pump-flow" data-pump-flow />
+    </g>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span data-pump-gap>sampled minimum gap = {topologyInitial.minimumGap.toFixed(3)}</span>
+    <span data-pump-chern>lower-band C = {topologyInitial.lowerBandChern}</span>
+    <span data-pump-shift>net centre shift = {flowInitial.netShift.toFixed(3)} a</span>
+    <strong data-pump-status>The loop encloses one gap-closing point: one particle is pumped per filled lower band and adiabatic cycle.</strong>
+  </div>
+
+  <noscript><p><strong>无 JavaScript 回退 | No-JavaScript fallback:</strong> c=1、R=0.65 的环路包围 $t_1=t_2,\Delta=0$，离散球面固角给出低能带 $C=1$，Wilson-loop Berry phase 在一周期内展开 $2\pi$。</p></noscript>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>$\mathbf d(k,\lambda)=(c+R\cos\lambda+v\cos k,\ w\sin k,\ R\sin\lambda)$。Martin 的平滑 pump 对应 $c=v$。左图还标出 $k=0$ 的第二个闭隙点，以避免把过大的参数环路误判为只包围一个奇点。</p>
+    <p lang="en"><strong>Model:</strong> $\mathbf d(k,\lambda)=(c+R\cos\lambda+v\cos k,\ w\sin k,\ R\sin\lambda)$. Martin's smooth pump is the case $c=v$. The second $k=0$ gap-closing point is also displayed so that an excessively large loop is not mistaken for a loop around only one singularity.</p>
+    <p><strong>计算：</strong>页面用规范不变的球面三角形固角求 $\hat{\mathbf d}:T^2\to S^2$ 的 degree，并取低能带 $C_-=-\deg\hat{\mathbf d}$；每个 $\lambda$ 的 Wannier center 由闭合 $k$ 回路的归一化 overlap product 求 Berry phase，再沿周期展开相位。</p>
+    <p lang="en"><strong>Computation:</strong> the page uses gauge-invariant spherical-triangle solid angles to obtain the degree of $\hat{\mathbf d}:T^2\to S^2$ and sets $C_-=-\deg\hat{\mathbf d}$. At each $\lambda$, the Wannier centre comes from the Berry phase of a normalized closed-loop overlap product in $k$, followed by phase unwrapping over the cycle.</p>
+    <p><strong>边界：</strong>整数输运要求 occupied manifold 在整个 $(k,\lambda)$ torus 上有隙、循环闭合、演化相对于最小能隙足够绝热，并完整填充目标带。有限速率、部分填充、耗散或穿过闭隙点时不能直接使用 $N_{\rm pump}=C$。</p>
+    <p lang="en"><strong>Boundary:</strong> integer transport requires a gapped occupied manifold over the full $(k,\lambda)$ torus, a closed cycle, evolution adiabatic relative to the minimum gap, and complete filling of the target band. A finite-rate scan, partial filling, dissipation, or a path through a gap closing does not justify $N_{\rm pump}=C$.</p>
+  </div>
+</figure>
+
+<script>
+  import { pumpWannierFlow, samplePumpTopology } from '../../../data/part06/ch26TeachingModels.mjs';
+  document.querySelectorAll('[data-pump-explorer]').forEach((root) => {
+    const centerInput = root.querySelector('[data-pump-center]');
+    if (!(centerInput instanceof HTMLInputElement)) return;
+    const setText = (selector, value) => {
+      const element = root.querySelector(selector);
+      if (element instanceof HTMLElement || element instanceof SVGTextElement) element.textContent = value;
+    };
+    const update = () => {
+      const center = Number(centerInput.value);
+      const radius = 0.65;
+      const topology = samplePumpTopology(center, radius, 1, 1, 25);
+      const critical = [1 - radius, 1 + radius].some((value) => Math.abs(center - value) < 1e-9);
+      const flow = critical ? null : pumpWannierFlow(center, radius, 1, 1, 49, 121);
+      const loop = root.querySelector('[data-pump-loop]');
+      if (loop instanceof SVGPolylineElement) {
+        const points = Array.from({ length: 65 }, (_, index) => {
+          const lambda = (2 * Math.PI * index) / 64;
+          const t1 = center + radius * Math.cos(lambda);
+          const delta = radius * Math.sin(lambda);
+          return `${190 + 70 * t1},${170 - 70 * delta}`;
+        });
+        loop.setAttribute('points', points.join(' '));
+      }
+      const flowLine = root.querySelector('[data-pump-flow]');
+      if (flowLine instanceof SVGPolylineElement) {
+        const points = flow ? flow.centers.map((value, index) => `${430 + (285 * index) / (flow.centers.length - 1)},${285 - 210 * value}`) : [];
+        flowLine.setAttribute('points', points.join(' '));
+      }
+      setText('[data-pump-center-out]', center.toFixed(2));
+      if (critical) {
+        setText('[data-pump-gap]', 'minimum gap = 0 at the transition');
+        setText('[data-pump-chern]', 'lower-band C undefined');
+        setText('[data-pump-shift]', 'net centre shift undefined');
+        setText('[data-pump-status]', 'The parameter torus crosses a band degeneracy; no pump invariant is defined.');
+        return;
+      }
+      setText('[data-pump-gap]', `sampled minimum gap = ${topology.minimumGap.toFixed(3)}`);
+      setText('[data-pump-chern]', `lower-band C = ${topology.lowerBandChern}`);
+      setText('[data-pump-shift]', `net centre shift = ${flow.netShift.toFixed(3)} a`);
+      setText('[data-pump-status]', topology.lowerBandChern === 1
+        ? 'The loop encloses one gap-closing point: one particle is pumped per filled lower band and adiabatic cycle.'
+        : 'The loop encloses no net singular charge: the Wannier centre returns without an integer-cell translation.');
+    };
+    centerInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .pump-explorer svg { width: 100%; max-height: 27rem; }
+  .pump-explorer text { fill: currentColor; font-size: 13px; }
+  .pump-axis { stroke: var(--sl-color-gray-4); stroke-width: 1.5; }
+  .pump-guide { stroke: var(--sl-color-gray-5); stroke-dasharray: 5 5; }
+  .pump-loop { fill: none; stroke: var(--sl-color-text-accent); stroke-width: 4; }
+  .pump-flow { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 4; }
+  .pump-singularity { fill: var(--sl-color-red-high, #b42318); }
+  .pump-singularity--secondary { opacity: 0.55; }
+</style>
