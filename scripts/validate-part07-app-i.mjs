@@ -15,11 +15,14 @@ const close = (actual, expected, tolerance = 1e-11, label = 'value') => {
 
 const derivative = (fn, x, step = 1e-6) => (fn(x + step) - fn(x - step)) / (2 * step);
 const secondDerivative = (fn, x, step = 1e-4) => (fn(x + step) - 2 * fn(x) + fn(x - step)) / step ** 2;
-const trapezoid = (fn, start, end, intervals = 20000) => {
-  const step = (end - start) / intervals;
-  let total = 0.5 * (fn(start) + fn(end));
-  for (let index = 1; index < intervals; index += 1) total += fn(start + index * step);
-  return total * step;
+const simpson = (fn, start, end, intervals = 4000) => {
+  const count = intervals % 2 === 0 ? intervals : intervals + 1;
+  const step = (end - start) / count;
+  let total = fn(start) + fn(end);
+  for (let index = 1; index < count; index += 1) {
+    total += (index % 2 === 0 ? 2 : 4) * fn(start + index * step);
+  }
+  return total * step / 3;
 };
 
 // Variational path freedom: first derivative invariant, curvature and finite-step error path dependent.
@@ -58,7 +61,7 @@ assert.throws(
   'teaching regime with nonpositive relaxed density must fail closed',
 );
 
-// Pressure: analytic derivative, equilibrium, bulk modulus, and independent pressure quadrature.
+// Pressure: analytic derivative, equilibrium, bulk modulus, and independent Simpson quadrature.
 for (const attractionCoefficient of [3, 4, 5.5]) {
   const equilibrium = pressureEquationOfState({ attractionCoefficient, volume: 10 }).equilibriumVolume;
   const equilibriumModel = pressureEquationOfState({ attractionCoefficient, volume: equilibrium });
@@ -70,8 +73,8 @@ for (const attractionCoefficient of [3, 4, 5.5]) {
     close(numericalPressure, model.pressure, 3e-10, `pressure derivative at V=${volume}`);
     const numericalBulk = -volume * derivative(model.pressureAt, volume, 1e-5);
     close(numericalBulk, model.bulkModulus, 5e-10, `bulk derivative at V=${volume}`);
-    const integral = -trapezoid(model.pressureAt, model.referenceVolume, volume, 24000);
-    close(integral, model.energyDifference, 2e-9, `pressure integral at V=${volume}`);
+    const integral = -simpson(model.pressureAt, model.referenceVolume, volume, 4000);
+    close(integral, model.energyDifference, 2e-11, `pressure integral at V=${volume}`);
   }
 }
 assert.throws(() => pressureEquationOfState({ volume: 0 }), RangeError, 'zero volume must fail closed');
