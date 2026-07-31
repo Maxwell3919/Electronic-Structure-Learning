@@ -1,0 +1,273 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import EnergyDecompositionExplorer from './EnergyDecompositionExplorer.astro';
+import Chapter07SCFExplorer from './Chapter07SCFExplorer.astro';
+
+<span id="section-7-3" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.3 自洽耦合 Kohn–Sham 方程的求解 | Solving the Coupled Self-Consistent Kohn–Sham Equations
+
+<BilingualSection titleZh="密度—势—轨道—密度的固定点" titleEn="The density–potential–orbital–density fixed point">
+  <div class="bilingual-section__zh">
+
+Kohn–Sham 方程对给定有效势是线性单粒子本征值问题，但有效势又依赖由本征轨道得到的密度。因此完整问题是非线性固定点：
+
+$$
+n^{\mathrm{in}}
+\xrightarrow{\;v_s[n^{\mathrm{in}}]\;}
+v_s^{\mathrm{in}}
+\xrightarrow{\;\hat h_s\phi_i=\epsilon_i\phi_i\;}
+\{\phi_i,\epsilon_i\}
+\xrightarrow{\;\sum_i f_i|\phi_i|^2\;}
+n^{\mathrm{out}}.
+$$
+
+自洽解满足
+
+$$
+R[n]\equiv n^{\mathrm{out}}[n]-n=0.
+$$
+
+实际程序还需离散空间或基组、选择边界条件和 $k$ 点、确定占据、计算 Hartree 和交换—关联势，并解有限维本征问题。这些步骤是在 Kohn–Sham 理论之上的数值实现；不同离散可以逼近同一连续方程，也可以因未收敛而给出不同结果。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a specified effective potential, the Kohn–Sham equation is a linear one-particle eigenproblem. The effective potential, however, depends on the density reconstructed from its eigenorbitals. The full problem is therefore a nonlinear fixed point,
+
+$$
+n^{\mathrm{in}}\to v_s^{\mathrm{in}}\to\{\phi_i,\epsilon_i\}\to n^{\mathrm{out}},
+$$
+
+with self-consistency condition
+
+$$
+R[n]\equiv n^{\mathrm{out}}[n]-n=0.
+$$
+
+A program must additionally discretize space or choose a basis, impose boundary conditions and $k$ points, determine occupations, evaluate Hartree and exchange–correlation potentials, and solve a finite-dimensional eigenproblem. These are numerical realizations layered on top of Kohn–Sham theory. Different discretizations can approximate the same continuum equation or disagree because they are not converged.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="本征值和与总能的双计数修正 | Eigenvalue sum and total-energy double counting"
+  assumptions={[
+    '轨道和密度已满足同一个 Kohn–Sham 势；若尚未自洽，必须明确使用的输入势和输出密度。',
+    '占据数固定，或采用与自由能泛函一致的有限温度占据。',
+    '采用局域乘法 vxc；generalized Kohn–Sham 的非局域项需重新推导。',
+  ]}
+>
+
+对每条规范 Kohn–Sham 方程取期望值并按占据求和：
+
+$$
+\sum_{i\sigma}f_{i\sigma}\epsilon_{i\sigma}
+=T_s[n]+\int n(\mathbf r)
+\bigl[v_{\mathrm{ext}}(\mathbf r)+v_H(\mathbf r)\bigr]d\mathbf r
++\sum_\sigma\int n_\sigma(\mathbf r)v_{\mathrm{xc}}^\sigma(\mathbf r)d\mathbf r.
+$$
+
+Hartree 势积分满足
+
+$$
+\int n(\mathbf r)v_H(\mathbf r)d\mathbf r
+=\iint\frac{n(\mathbf r)n(\mathbf r')}{|\mathbf r-\mathbf r'|}d\mathbf r d\mathbf r'
+=2E_H[n].
+$$
+
+将 $T_s+\int v_{\mathrm{ext}}n$ 从本征值和中解出并代入总能：
+
+$$
+E_{\mathrm{tot}}
+=\sum_{i\sigma}f_{i\sigma}\epsilon_{i\sigma}
+-E_H[n]+E_{\mathrm{xc}}[n]
+-\sum_\sigma\int n_\sigma v_{\mathrm{xc}}^\sigma d\mathbf r
++E_{II}.
+$$
+
+本征值和已经包含两次 Hartree pair 积分以及一次 $\int n_\sigma v_{\mathrm{xc}}^\sigma$，所以必须减去相应双计数，再加回能量泛函 $E_H$ 与 $E_{\mathrm{xc}}$。该关系不意味着每个 $\epsilon_i$ 是总能的一部分或可单独观测；它只是把同一总能重新组织成便于计算的形式。
+
+Summing the one-particle eigenvalue equations includes $2E_H$ and the integral of the exchange–correlation potential. Subtracting the double counts and adding the exchange–correlation energy yields the total-energy expression above. This algebra does not make each eigenvalue an independently observable piece of the total energy.
+
+</DerivationBlock>
+
+<EnergyDecompositionExplorer />
+
+<BilingualSection titleZh="离开固定点时，能量公式需要一致输入" titleEn="Away from the fixed point, the energy formula needs consistent inputs">
+  <div class="bilingual-section__zh">
+
+在一次迭代中，本征值和由输入势 $v_s^{\mathrm{in}}$ 决定，而密度是对应输出 $n^{\mathrm{out}}$。若把不一致的 $n^{\mathrm{in}}$、$n^{\mathrm{out}}$ 和势能项任意拼接，所得数值可能失去变分性质。Martin 讨论了以输入势、输入密度或二者共同为变量的不同泛函；它们在自洽点给出同一能量，但离开固定点时误差阶次和上下界性质不同。
+
+因此实际输出中“SCF energy”“one-electron energy”“band energy”“free energy”和“extrapolated zero-temperature energy”不能只按名称比较。必须确认每个量使用的占据、熵项、输入/输出密度以及双计数约定。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+During an iteration, the eigenvalue sum is determined by the input potential $v_s^{\mathrm{in}}$, while the corresponding density is an output $n^{\mathrm{out}}$. Arbitrarily combining inconsistent input and output densities with potential terms can destroy variational properties. Martin discusses functionals of the input potential, input density, or both. They agree at self-consistency but have different error orders and bound properties away from the fixed point.
+
+Consequently, output labels such as “SCF energy,” “one-electron energy,” “band energy,” “free energy,” and “extrapolated zero-temperature energy” cannot be compared by name alone. Their occupations, entropy terms, input/output densities, and double-counting conventions must be identified.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="有限温度占据与变分量 | Finite-temperature occupations and the variational quantity"
+  assumptions={[
+    '采用有限电子温度 T 与 Fermi–Dirac 占据；化学势由粒子数约束确定。',
+    '交换—关联泛函是否具有显式温度依赖必须单独声明。',
+    '数值 smearing 只有在与所用自由能和外推公式一致时才可解释。',
+  ]}
+>
+
+Fermi–Dirac 占据为
+
+$$
+f_i=\frac{1}{1+\exp[(\epsilon_i-\mu)/(k_BT)]},
+\qquad
+\sum_i f_i=N.
+$$
+
+独立粒子熵
+
+$$
+S_s=-k_B\sum_i\left[f_i\ln f_i+(1-f_i)\ln(1-f_i)\right]
+$$
+
+进入 Helmholtz 自由能 $\mathcal F=E-TS_s$。有限温度迭代中真正驻定的量通常是相应自由能或 grand potential，而不是简单的零温内能。若 smearing 只为数值积分稳定性服务，必须报告外推到零温的定义和对目标能量差、力、声子或应力的收敛性。
+
+The Fermi–Dirac occupations and independent-particle entropy make the free energy, rather than the bare zero-temperature internal energy, the relevant stationary quantity. Numerical smearing must be paired with a consistent free-energy or extrapolation convention and converged for the target observable.
+
+</DerivationBlock>
+
+<span id="section-7-4" class="chapter-07-anchor" aria-hidden="true"></span>
+
+## 7.4 达到自洽 | Achieving Self-Consistency
+
+<BilingualSection titleZh="线性混合与响应" titleEn="Linear mixing and response">
+  <div class="bilingual-section__zh">
+
+最简单的密度混合为
+
+$$
+n_{k+1}^{\mathrm{in}}
+=n_k^{\mathrm{in}}+\alpha
+\left(n_k^{\mathrm{out}}-n_k^{\mathrm{in}}\right)
+=n_k^{\mathrm{in}}+\alpha R_k,
+$$
+
+其中 $0<\alpha\le1$ 常见但不是普适稳定范围。在线性化固定点附近，
+
+$$
+\delta n_k^{\mathrm{out}}
+=\mathcal M\,\delta n_k^{\mathrm{in}},
+$$
+
+所以混合误差传播算符为
+
+$$
+\mathcal Q=(1-\alpha)I+\alpha\mathcal M
+=I+\alpha(\mathcal M-I).
+$$
+
+收敛要求 $\mathcal Q$ 在相关误差子空间的谱半径小于 1。一个标量 $\alpha$ 无法同时优化所有响应模；金属、长波电荷摆动、大超胞和真空界面常包含非常不同的特征尺度。预条件通过近似逆介电响应缩放各个模，Pulay/DIIS、Broyden 和 quasi-Newton 方法则用迭代历史近似 Jacobian 或其逆。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The simplest density mixing is
+
+$$
+n_{k+1}^{\mathrm{in}}=n_k^{\mathrm{in}}+\alpha R_k,
+\qquad
+R_k=n_k^{\mathrm{out}}-n_k^{\mathrm{in}}.
+$$
+
+Near a fixed point, $\delta n^{\mathrm{out}}=\mathcal M\delta n^{\mathrm{in}}$, so the mixed error propagator is
+
+$$
+\mathcal Q=(1-\alpha)I+\alpha\mathcal M.
+$$
+
+Convergence requires a spectral radius below one in the relevant error subspace. A single scalar $\alpha$ cannot optimize all response modes. Metals, long-wavelength charge sloshing, large cells, and vacuum interfaces can contain widely separated scales. Preconditioners approximate inverse dielectric response, while Pulay/DIIS, Broyden, and quasi-Newton methods infer a Jacobian or its inverse from iteration history.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="标量线性化模型的稳定区间 | Stability interval of the scalar linearized model"
+  assumptions={[
+    '只保留一个密度误差模；固定点为 x*。',
+    '未混合输出映射在固定点附近线性：F(x)=x*+s(x−x*)。',
+    '混合参数 α 在迭代中固定。',
+  ]}
+>
+
+混合更新为
+
+$$
+x_{k+1}=x_k+\alpha[F(x_k)-x_k].
+$$
+
+令 $e_k=x_k-x^*$，则
+
+$$
+\begin{aligned}
+e_{k+1}
+&=e_k+\alpha(se_k-e_k)\\
+&=\left[1-\alpha(1-s)\right]e_k
+\equiv q e_k.
+\end{aligned}
+$$
+
+因此 $|q|<1$ 才线性收敛。若 $s<1$，稳定区间为
+
+$$
+0<\alpha<\frac{2}{1-s}.
+$$
+
+$q>0$ 时误差同号衰减，$q<0$ 时误差交替衰减，$|q|>1$ 发散，$s=1$ 时残差在该模型中不能唯一定位固定点。多维 SCF 中 $s$ 被响应算符本征值替代，稳定条件必须对所有相关模成立。
+
+The scalar error evolves as $e_{k+1}=q e_k$ with $q=1-\alpha(1-s)$. Linear convergence requires $|q|<1$. The scalar result becomes a mode-by-mode spectral condition in a multidimensional SCF problem.
+
+</DerivationBlock>
+
+<Chapter07SCFExplorer />
+
+<BilingualSection titleZh="停止条件与验证层级" titleEn="Stopping criteria and validation layers">
+  <div class="bilingual-section__zh">
+
+常见 SCF 停止量包括密度或势残差范数、总能变化、band energy 变化和最大本征值变化。它们不等价：能量在驻点附近常对波函数误差呈二阶，而力、未占据态、本征值和响应量可能保留一阶敏感性。仅观察连续两步能量差很小，可能掩盖缓慢电荷摆动、占据切换或误差在不同模之间迁移。
+
+最低充分检查应按当前任务选择：
+
+1. 证明所报告的残差定义和阈值确实达到；
+2. 检查能量、力、应力或目标 observable 对更严格 SCF 阈值稳定；
+3. 再检查基组/截断、$k$ 网格、超胞、赝势、smearing 等外部数值参数；
+4. 最后判断交换—关联近似和物理模型是否适用于目标结论。
+
+更好的初始密度可以减少迭代，但不会改变最终解的科学接受标准。若不同初始磁矩、占据或对称性约束收敛到不同固定点，这些是候选局域解，不能只按“先收敛者”选取。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Common stopping quantities include density or potential residual norms, total-energy changes, band-energy changes, and eigenvalue changes. They are not equivalent. Energy is often second-order in wavefunction error near stationarity, whereas forces, unoccupied states, eigenvalues, and response quantities can retain first-order sensitivity. A small energy change between two iterations can hide slow charge sloshing, occupation switching, or redistribution of error among modes.
+
+A minimum sufficient check is task-dependent: verify the reported residual and threshold; test the target energy, force, stress, or observable against a tighter SCF threshold; then converge basis/cutoff, $k$ mesh, cell, pseudopotential, smearing, and other external parameters; finally assess whether the exchange–correlation approximation and physical model support the conclusion. Different fixed points reached from different magnetic, occupation, or symmetry initializations are candidate local solutions, not automatically ranked by which converged first.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="实践连接：软件输出中的“converged”" titleEn="Practical connection: “converged” in program output" kind="practice">
+  <div class="bilingual-section__zh">
+
+Sholl–Steckel 将实际总能计算解释为迭代优化问题，并建议确认所用软件的 SCF 算法和输出中的自洽判据。本站进一步限定其证据上限：日志中的 `converged` 只说明某个实现的某个内部停止条件已满足；必须读取阈值、量的定义、最后残差和警告，并对目标 observable 做更严格复算。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Sholl–Steckel presents a practical total-energy calculation as an iterative optimization problem and recommends identifying the code's SCF algorithm and convergence test. The evidence ceiling remains limited: a `converged` message states only that one implementation's internal stopping condition was met. The threshold, definition, final residual, warnings, and stability of the target observable under tighter settings must still be checked.
+
+  </div>
+</BilingualCallout>
