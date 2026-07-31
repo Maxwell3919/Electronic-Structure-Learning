@@ -14,8 +14,8 @@ const pathFor = (key) => samples.map((point, index) =>
 
 <figure class="chapter-visual dftu-curvature" data-dftu-curvature>
   <figcaption>
-    <strong>原创交互模型：fractional occupation、曲率与 Dudarev 型 $U_{\rm eff}$</strong>
-    <span lang="en">Original interactive model: fractional occupation, curvature, and Dudarev-type $U_{\rm eff}$</span>
+    <strong>原创交互模型：fractional occupation、曲率与 Dudarev 型 Ueff</strong>
+    <span lang="en">Original interactive model: fractional occupation, curvature, and Dudarev-type Ueff</span>
   </figcaption>
 
   <div class="chapter-visual__controls">
@@ -62,12 +62,12 @@ const pathFor = (key) => samples.map((point, index) =>
   </div>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>直线目标为 $E_{\rm lin}=\Delta f$。近似能量取 $E_{\rm app}=\Delta f-\kappa f(1-f)/2$，具有正二阶导数 $\kappa$。Dudarev 型修正 $E_U=U_{\rm eff}f(1-f)/2$ 给出 $V_U=U_{\rm eff}(1/2-f)$，使曲率变为 $\kappa-U_{\rm eff}$。</p>
-    <p lang="en"><strong>Model:</strong> a convex fractional-occupation error is corrected by $E_U=U_{\rm eff}f(1-f)/2$. The correction potential is $U_{\rm eff}(1/2-f)$ and the model curvature becomes $\kappa-U_{\rm eff}$.</p>
-    <p><strong>验收：</strong>整数占据 $f=0,1$ 时修正能为零；$f=1/2$ 时最大；$U_{\rm eff}=\kappa$ 时模型恢复直线；$U_{\rm eff}>\kappa$ 会过度修正并产生相反曲率。</p>
-    <p lang="en"><strong>Acceptance:</strong> the correction vanishes at integer occupations, is maximal at one half, restores linearity at $U_{\rm eff}=\kappa$, and overcorrects beyond that point.</p>
-    <p><strong>边界：</strong>单一标量占据不表示真实 d/f subspace。真实 DFT+U 依赖 projector、occupation matrix、double-counting、spin、$U/J$ 定义和结构响应；直线化一个模型占据不证明谱、总能或氧化态准确。</p>
-    <p lang="en"><strong>Boundary:</strong> one scalar occupation is not a physical correlated subspace. Projectors, occupation matrices, double counting, spin, $U/J$, and structural response remain essential.</p>
+    <p><strong>模型：</strong>直线目标为 Elinear = Δf。近似能量取 Eapprox = Δf − κf(1−f)/2，具有正二阶导数 κ。Dudarev 型修正 EU = Ueff·f(1−f)/2 给出 VU = Ueff·(1/2−f)，使曲率变为 κ−Ueff。</p>
+    <p lang="en"><strong>Model:</strong> a convex fractional-occupation error is corrected by EU = Ueff·f(1−f)/2. The correction potential is Ueff·(1/2−f) and the model curvature becomes κ−Ueff.</p>
+    <p><strong>验收：</strong>整数占据 f=0,1 时修正能为零；f=1/2 时最大；Ueff=κ 时模型恢复直线；Ueff&gt;κ 会过度修正并产生相反曲率。</p>
+    <p lang="en"><strong>Acceptance:</strong> the correction vanishes at integer occupations, is maximal at one half, restores linearity at Ueff=κ, and overcorrects beyond that point.</p>
+    <p><strong>边界：</strong>单一标量占据不表示真实 d/f subspace。真实 DFT+U 依赖 projector、occupation matrix、double-counting、spin、U/J 定义和结构响应；直线化一个模型占据不证明谱、总能或氧化态准确。</p>
+    <p lang="en"><strong>Boundary:</strong> one scalar occupation is not a physical correlated subspace. Projectors, occupation matrices, double counting, spin, U/J, and structural response remain essential.</p>
   </div>
 </figure>
 
