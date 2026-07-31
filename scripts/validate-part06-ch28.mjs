@@ -152,7 +152,10 @@ for (const visual of [
 ]) {
   const source = readFileSync(new URL(visual, import.meta.url), 'utf8');
   assert.ok(source.includes('chapter-visual__contract'), `${visual} lacks an evidence contract`);
-  assert.ok(source.includes('<noscript>'), `${visual} lacks a no-JavaScript fallback`);
+  assert.ok(
+    source.includes('<noscript>') || source.includes('chapter-visual__fallback'),
+    `${visual} lacks a static/no-JavaScript fallback`,
+  );
   assert.ok(source.includes('<svg'), `${visual} lacks a static SVG`);
 }
 
