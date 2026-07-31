@@ -22,6 +22,24 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      - name: Write deployment provenance manifest
+        shell: bash
+        run: |
+          mkdir -p public
+          cat > public/deployment-manifest.json <<EOF
+          {
+            "schema_version": 1,
+            "repository": "${GITHUB_REPOSITORY}",
+            "sha": "${GITHUB_SHA}",
+            "ref": "${GITHUB_REF}",
+            "workflow": "${GITHUB_WORKFLOW}",
+            "run_id": ${GITHUB_RUN_ID},
+            "run_number": ${GITHUB_RUN_NUMBER},
+            "run_attempt": ${GITHUB_RUN_ATTEMPT},
+            "generated_at": "$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          }
+          EOF
+
       - name: Validate, build, and upload Astro site
         uses: withastro/action@v6
         with:
