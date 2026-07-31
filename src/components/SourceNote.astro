@@ -1,17 +1,27 @@
 ---
+type PageStatus = 'outline' | 'draft' | 'review' | 'validated';
+
 interface Props {
   source: string;
   locator: string;
-  status?: 'outline' | 'draft' | 'review' | 'validated';
+  status?: PageStatus;
 }
 
-const { source, locator, status = 'outline' } = Astro.props;
+const allowedStatuses = new Set<PageStatus>(['outline', 'draft', 'review', 'validated']);
+const rawStatus = Astro.props.status ?? 'outline';
+
+if (!allowedStatuses.has(rawStatus)) {
+  throw new Error(`Invalid SourceNote status: ${rawStatus}`);
+}
+
+const { source, locator } = Astro.props;
+const status = rawStatus;
 ---
 
-<aside class="source-note" aria-label="来源定位">
+<aside class="source-note" aria-label="来源定位 / Source locator">
   <div class="source-note__header">
-    <strong>来源定位</strong>
-    <span class="source-note__status">{status}</span>
+    <strong>来源定位 / Source locator</strong>
+    <span class="source-note__status" aria-label={`页面状态 / Page status: ${status}`}>{status}</span>
   </div>
   <div>{source}</div>
   <div>{locator}</div>
