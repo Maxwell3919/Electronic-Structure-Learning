@@ -1,0 +1,49 @@
+---
+import catalog from '../../data/martin/index.mjs';
+
+const treatments = {
+  '4.1': '平移群、primitive/Wigner–Seitz cell、cell volume、basis、fractional coordinates、常见 2D/3D 与 close-packed structures | Translation group, primitive/Wigner–Seitz cells, volume, basis, fractional coordinates, and representative structures',
+  '4.2': '倒格子定义、Fourier 支撑、Brillouin 区、lattice/cartesian coordinates 与 metric tensor | Reciprocal lattice, Fourier support, Brillouin zone, coordinate systems, and metric tensors',
+  '4.3': '任意周期算符的平移表象、Bloch theorem、bands、crystal momentum、k-space counting 与拓扑边界 | Translation representations, Bloch theorem, bands, crystal momentum, k-space counting, and topology boundary',
+  '4.4': 'spinless/spinful time reversal、inversion、Kramers degeneracy、TRIM 与 magnetic-field boundary | Spinless/spinful time reversal, inversion, Kramers degeneracy, TRIM, and magnetic-field boundary',
+  '4.5': 'point group、little group、irreducible representations、degeneracy 与 selection-rule boundary | Point groups, little groups, irreducible representations, degeneracy, and selection-rule boundary',
+  '4.6': 'BZ average、symmetry reduction、special-point meshes、metallic Fermi-surface sampling 与 tetrahedron interpolation | BZ averages, symmetry reduction, special points, Fermi-surface sampling, and tetrahedron interpolation',
+  '4.7': 'DOS 定义、dimensional scaling、critical points、van Hove singularities 与 joint-DOS boundary | DOS definition, dimensional scaling, critical points, van Hove singularities, and joint-DOS boundary',
+};
+
+const chapter = catalog.parts[0].units[3];
+---
+
+<h2 id="source-map">原书结构与来源定位 | Source Map</h2>
+
+<div class="chapter-source-map">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">节 | Section</th>
+        <th scope="col">原书标题 | Martin title</th>
+        <th scope="col">印刷页 | Print page</th>
+        <th scope="col">本站处理 | Website treatment</th>
+        <th scope="col">状态 | Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {chapter.sections.map((section) => (
+        <tr>
+          <td><code>{section.id}</code></td>
+          <td>{section.title}</td>
+          <td>{section.page}</td>
+          <td>{treatments[section.id]}</td>
+          <td>{section.id === '4.1' ? 'draft' : 'source-mapped'}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Martin Chapter 4 begins on printed page 81. Section 4.7 and selected further reading occupy pages 105–106, source exercises begin on page 106 and continue through page 108, and Chapter 5 starts on page 109. This website follows §§4.1–4.7 in directory order and does not reproduce the textbook's figure layouts, captions, exercise wording, answers, or selected-reading prose.
+</p>
+<p lang="en">
+  Martin Chapter 4 begins on printed page 81. Section 4.7 and selected further reading occupy pages 105–106, source exercises begin on page 106 and continue through page 108, and Chapter 5 starts on page 109. The website follows §§4.1–4.7 in directory order and does not reproduce the textbook's figure layouts, captions, exercise wording, answers, or selected-reading prose.
+</p>
