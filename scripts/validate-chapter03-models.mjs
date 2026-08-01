@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   exchangeCorrelationHole,
   holeAnalyticIntegrals,
@@ -14,6 +15,7 @@ const close = (actual, expected, tolerance = 1e-10, label = '') => {
     `${label || 'value'}: ${actual} != ${expected} within ${tolerance}`,
   );
 };
+const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 const uncoupled = twoLevelAdiabatic(2, 0, 1);
 close(uncoupled.lowerEnergy, -2, 1e-12, 'uncoupled lower energy');
@@ -94,4 +96,45 @@ assert.throws(() => twoLevelAdiabatic(0, -1), RangeError);
 assert.throws(() => twoLevelCanonical(-1, 1), RangeError);
 assert.throws(() => normalizedGaussian(0, 0), RangeError);
 
-console.log('Chapter 3 teaching-model validation passed: avoided crossing, two-level density matrix, and exchange-correlation-hole sum rules checked.');
+const chapterBody = read('src/components/chapter03/Chapter03Body.astro');
+assert.match(chapterBody, /Chapter03StressTraceAudit/);
+assert.ok(
+  chapterBody.indexOf('<ForcesStress />') < chapterBody.indexOf('<StressTraceAudit />')
+  && chapterBody.indexOf('<StressTraceAudit />') < chapterBody.indexOf('<GeneralizedForce />'),
+  'The stress-trace audit must follow Section 3.3 and precede Section 3.4',
+);
+
+const stressAudit = read('src/components/chapter03/Chapter03StressTraceAudit.mdx');
+assert.match(stressAudit, /data-ch3-stress-trace-audit/);
+assert.match(stressAudit, /data-pressure-trace-factor="-one-third"/);
+for (const locator of ['3.23', '3.24', 'G.4']) {
+  assert.ok(stressAudit.includes(locator), `Stress audit must identify ${locator}`);
+}
+assert.ok(stressAudit.includes('-\\frac13'), 'Stress audit must retain P = -(1/3) Tr sigma');
+assert.match(stressAudit, /归一化不一致|normalization inconsistency/);
+assert.match(stressAudit, /不推断作者|No claim is made/);
+assert.match(stressAudit, /压缩应力定义为正值|compressive stress as positive/);
+
+const avoidedExplorer = read('src/components/AvoidedCrossingExplorer.astro');
+assert.match(avoidedExplorer, /aria-live="polite" aria-atomic="true" data-ch03-avoided-status/);
+for (const marker of ['data-ch03-force-zh', 'data-ch03-force-en', 'data-ch03-weights-zh', 'data-ch03-weights-en']) {
+  assert.ok(avoidedExplorer.includes(marker), `Avoided-crossing readout is missing ${marker}`);
+}
+assert.match(avoidedExplorer, /低能绝热面力/);
+assert.match(avoidedExplorer, /Lower-surface force/);
+
+const densityMatrixExplorer = read('src/components/DensityMatrixExplorer.astro');
+assert.match(densityMatrixExplorer, /aria-live="polite" aria-atomic="true" data-ch03-dm-status/);
+assert.match(densityMatrixExplorer, /data-ch03-dm-summary-zh/);
+assert.match(densityMatrixExplorer, /data-ch03-dm-summary-en/);
+assert.match(densityMatrixExplorer, /简并子空间等权 Gibbs 极限/);
+assert.match(densityMatrixExplorer, /equal-weight Gibbs limit/);
+
+const holeExplorer = read('src/components/ExchangeCorrelationHoleExplorer.astro');
+assert.match(holeExplorer, /aria-live="polite" aria-atomic="true" data-ch03-hole-status/);
+assert.match(holeExplorer, /data-ch03-hole-interpretation-zh/);
+assert.match(holeExplorer, /data-ch03-hole-interpretation-en/);
+assert.match(holeExplorer, /关联重排幅度为零/);
+assert.match(holeExplorer, /zero correlation amplitude/);
+
+console.log('Chapter 3 validation passed: avoided crossing, density matrix, xc-hole sum rules, hydrostatic stress-trace normalization, and bilingual atomic live-status contracts checked.');
