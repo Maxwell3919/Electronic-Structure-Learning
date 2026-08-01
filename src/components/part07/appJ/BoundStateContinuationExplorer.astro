@@ -1,0 +1,141 @@
+---
+import { squareWellBoundStates } from '../../../data/part07/scatteringPhaseModel.mjs';
+
+const defaultRadius = 1.5;
+const defaultDepth = 1.0;
+const defaults = squareWellBoundStates({ radius: defaultRadius, wellDepth: defaultDepth, samples: 700 });
+const width = 760;
+const height = 350;
+const left = 62;
+const right = 700;
+const top = 42;
+const bottom = 270;
+const clip = 8;
+const xMap = (binding) => left + (right - left) * binding / defaults.wellDepth;
+const yMap = (value) => (top + bottom) / 2 - Math.max(-clip, Math.min(clip, value)) * (bottom - top) * 0.42 / clip;
+const residualPath = defaults.grid
+  .filter((entry) => Number.isFinite(entry.residual))
+  .map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.bindingEnergy).toFixed(2)} ${yMap(entry.residual).toFixed(2)}`)
+  .join(' ');
+const fallbackRows = [0.4, 0.7, 1.0].map((wellDepth) => squareWellBoundStates({ radius: defaultRadius, wellDepth, samples: 700 }));
+---
+
+<figure class="chapter-visual bound-state-continuation" data-bound-state-continuation>
+  <figcaption>
+    <strong>原创交互模型：负能解析延拓与 s 波束缚态条件</strong>
+    <span lang="en">Original interactive model: negative-energy continuation and the s-wave bound-state condition</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls bound-state-continuation__controls">
+    <label>
+      <span>V<sub>0</sub> | 方阱深度</span>
+      <input type="range" min="0.2" max="1.2" step="0.02" value={defaultDepth} data-bound-depth />
+      <output data-bound-depth-output>{defaultDepth.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>a | 方阱半径</span>
+      <input type="range" min="1.0" max="2.0" step="0.02" value={defaultRadius} data-bound-radius />
+      <output data-bound-radius-output>{defaultRadius.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="bound-state-title bound-state-desc">
+    <title id="bound-state-title">Residual of the finite-square-well s-wave bound-state equation</title>
+    <desc id="bound-state-desc">
+      The residual q cot(q a) plus kappa is plotted against binding energy. Zero crossings below the well depth identify decaying exterior bound states in the restricted one-pole-free teaching interval.
+    </desc>
+    <line x1={left} y1={(top + bottom) / 2} x2={right} y2={(top + bottom) / 2} class="plot-guide" />
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <path d={residualPath} class="plot-curve" data-bound-path />
+    <g data-bound-roots>
+      {defaults.roots.map((root) => <circle cx={xMap(root)} cy={yMap(0)} r="5" class="bound-state-continuation__root" />)}
+    </g>
+    <text x={right} y="302" text-anchor="end">binding energy B</text>
+    <text x="14" y="54">q cot(qa)+κ</text>
+  </svg>
+
+  <div class="chapter-visual__readout bound-state-continuation__readout" aria-live="polite">
+    <span>first-state threshold V<sub>c</sub></span><strong data-bound-threshold>{defaults.thresholdDepth.toFixed(7)}</strong>
+    <span>bound-state count</span><strong data-bound-count>{defaults.count}</strong>
+    <span>largest binding B</span><strong data-bound-root>{defaults.roots[0]?.toFixed(7) ?? 'none'}</strong>
+    <span>qa at B→0</span><strong data-bound-qa>{(Math.sqrt(2 * defaultDepth) * defaultRadius).toFixed(6)}</strong>
+  </div>
+
+  <div class="bound-state-continuation__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>V0</th><th>Vc</th><th>count</th><th>largest B</th></tr></thead>
+      <tbody>
+        {fallbackRows.map((entry) => (
+          <tr>
+            <td>{entry.wellDepth.toFixed(2)}</td>
+            <td>{entry.thresholdDepth.toFixed(6)}</td>
+            <td>{entry.count}</td>
+            <td>{entry.roots[0]?.toFixed(6) ?? 'none'}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>s 波有限球方阱，束缚能写成 <code>E=−B</code>；内部 <code>q=sqrt(2(V0−B))</code>，外部衰减常数 <code>κ=sqrt(2B)</code>，匹配 reduced radial function 得到 <code>q cot(qa)+κ=0</code>。</p>
+    <p lang="en"><strong>Model:</strong> an s-wave finite spherical well with <code>E=−B</code>; the inner wave number is <code>q=sqrt(2(V0−B))</code>, the exterior decay constant is <code>κ=sqrt(2B)</code>, and matching the reduced radial function gives <code>q cot(qa)+κ=0</code>.</p>
+    <p><strong>验收：</strong>第一个 s 波束缚态在 <code>V0&gt;π²/(8a²)</code> 后出现；零点必须位于 <code>0&lt;B&lt;V0</code>，对应外部指数衰减而不是正能振荡解。</p>
+    <p lang="en"><strong>Acceptance:</strong> the first s-wave bound state appears when <code>V0&gt;π²/(8a²)</code>; a root must lie in <code>0&lt;B&lt;V0</code> and correspond to an exponentially decaying exterior solution rather than a positive-energy oscillatory wave.</p>
+    <p><strong>边界：</strong>交互区限制为第一 <code>cot</code> 极点之前，避免把极点两侧的符号翻转误判为根。模型只覆盖 l=0；正能截面峰、相移接近 π/2 或 <code>tanδ</code> 变大都不单独证明束缚态。</p>
+    <p lang="en"><strong>Boundary:</strong> the interactive range remains below the first <code>cot</code> pole so that a sign flip across a pole is not mistaken for a root. The model covers l=0 only; a positive-energy cross-section peak, phase near π/2, or large <code>tanδ</code> does not alone establish a bound state.</p>
+  </div>
+</figure>
+
+<script>
+  import { squareWellBoundStates } from '../../../data/part07/scatteringPhaseModel.mjs';
+
+  document.querySelectorAll('[data-bound-state-continuation]').forEach((root) => {
+    const depthInput = root.querySelector('[data-bound-depth]');
+    const radiusInput = root.querySelector('[data-bound-radius]');
+    if (!(depthInput instanceof HTMLInputElement) || !(radiusInput instanceof HTMLInputElement)) return;
+    const path = root.querySelector('[data-bound-path]');
+    const rootsGroup = root.querySelector('[data-bound-roots]');
+    const outputs = {
+      depth: root.querySelector('[data-bound-depth-output]'), radius: root.querySelector('[data-bound-radius-output]'), threshold: root.querySelector('[data-bound-threshold]'), count: root.querySelector('[data-bound-count]'), root: root.querySelector('[data-bound-root]'), qa: root.querySelector('[data-bound-qa]'),
+    };
+    const left = 62; const right = 700; const top = 42; const bottom = 270; const clip = 8;
+    const update = () => {
+      const wellDepth = Number(depthInput.value);
+      const radius = Number(radiusInput.value);
+      const result = squareWellBoundStates({ wellDepth, radius, samples: 700 });
+      const xMap = (binding) => left + (right - left) * binding / result.wellDepth;
+      const yMap = (value) => (top + bottom) / 2 - Math.max(-clip, Math.min(clip, value)) * (bottom - top) * 0.42 / clip;
+      const curve = result.grid.filter((entry) => Number.isFinite(entry.residual)).map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.bindingEnergy).toFixed(2)} ${yMap(entry.residual).toFixed(2)}`).join(' ');
+      if (path instanceof SVGPathElement) path.setAttribute('d', curve);
+      if (rootsGroup instanceof SVGGElement) {
+        rootsGroup.innerHTML = '';
+        result.roots.forEach((binding) => {
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', xMap(binding).toFixed(2)); circle.setAttribute('cy', yMap(0).toFixed(2)); circle.setAttribute('r', '5'); circle.setAttribute('class', 'bound-state-continuation__root'); rootsGroup.appendChild(circle);
+        });
+      }
+      if (outputs.depth instanceof HTMLOutputElement) outputs.depth.value = result.wellDepth.toFixed(2);
+      if (outputs.radius instanceof HTMLOutputElement) outputs.radius.value = result.radius.toFixed(2);
+      if (outputs.threshold instanceof HTMLElement) outputs.threshold.textContent = result.thresholdDepth.toFixed(7);
+      if (outputs.count instanceof HTMLElement) outputs.count.textContent = String(result.count);
+      if (outputs.root instanceof HTMLElement) outputs.root.textContent = result.roots[0]?.toFixed(7) ?? 'none';
+      if (outputs.qa instanceof HTMLElement) outputs.qa.textContent = (Math.sqrt(2 * result.wellDepth) * result.radius).toFixed(6);
+    };
+    [depthInput, radiusInput].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .bound-state-continuation { overflow-x: auto; }
+  .bound-state-continuation svg { width: 100%; min-width: 44rem; }
+  .bound-state-continuation text { fill: currentColor; font-size: 13px; }
+  .bound-state-continuation__root { fill: var(--sl-color-accent-high); }
+  .bound-state-continuation__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.8rem; }
+  .bound-state-continuation__controls label { display: grid; gap: 0.35rem; }
+  .bound-state-continuation__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.4rem 1rem; }
+  .bound-state-continuation__fallback { max-width: 44rem; }
+</style>

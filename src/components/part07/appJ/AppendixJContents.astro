@@ -1,0 +1,85 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[9];
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-j-contents-title">
+  <h2 id="appendix-j-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、单位与相位约定 | Objects and conventions</a></li>
+    <li><a href="#partial-wave-expansion">平面波的部分波展开 | Partial-wave expansion</a></li>
+    <li><a href="#radial-matching">径向匹配与对数导数 | Radial matching and logarithmic derivative</a></li>
+    <li><a href="#phase-shift-cross-sections">相移与散射截面 | Phase shifts and cross sections</a></li>
+    <li><a href="#negative-energy-bound-states">负能与束缚态极限 | Negative energy and bound-state limit</a></li>
+    <li><a href="#review">交叉引用、误判、练习与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-j-source-title">
+  <h2 id="appendix-j-source-title">来源地图 | Source map</h2>
+  <p>
+    Martin Appendix J 仅含一个原书分节。网站内部学习单元按 J.1 的公式链重新组织，但不把这些单元伪装成新的原书节号。正文、推导、图形、数值模型与练习均为原创。
+  </p>
+  <p lang="en">
+    Martin Appendix J contains one source section only. The website reorganizes the equation chain of J.1 into internal learning units without presenting them as additional source sections. Exposition, derivations, diagrams, numerical models, and exercises are original.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed pp. 644–646</td>
+          <td>{section.title}</td>
+          <td>plane-wave partial-wave expansion; spherical radial functions; logarithmic-derivative matching; phase shifts; differential and total cross sections; negative-energy Hankel and bound-state limits</td>
+          <td>substantive; validation pending</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Figure J.1, printed p. 645</td>
+        <td>Plane-wave scattering schematic</td>
+        <td>来源图不复制；以原创部分波、相移和角分布可视化替代 | Source figure not reproduced; replaced by original partial-wave, phase-shift, and angular-distribution visuals</td>
+        <td>original replacement complete</td>
+      </tr>
+      <tr>
+        <td>Select Further Reading, printed p. 646</td>
+        <td>Source bibliography not transcribed</td>
+        <td>网站保留书目边界与 Chapters 11, 16–17 / Appendix K 的交叉引用 | Bibliographic boundary and cross-references only</td>
+        <td>source boundary recorded</td>
+      </tr>
+      <tr>
+        <td>End of Appendix J, printed p. 646</td>
+        <td>No source exercise section</td>
+        <td>原创部分波匹配、截面、共振和束缚态诊断练习 | Original matching, cross-section, resonance, and bound-state exercises</td>
+        <td>original assessment complete</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 { margin-top: 0; }
+  .appendix-contents ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
+  .appendix-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol { columns: 1; }
+  }
+</style>
