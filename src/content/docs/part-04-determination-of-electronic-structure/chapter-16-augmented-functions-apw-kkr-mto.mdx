@@ -1,20 +1,18 @@
 ---
-title: "Chapter 16 · Augmented Functions: APW, KKR, MTO"
-description: "Martin Chapter 16 的目录级阅读骨架；正文待填充。"
+title: "Chapter 16 · Augmented Functions: APW, KKR, MTO | 增强函数"
+description: "从 muffin-tin 分区与 nonlinear APW matching，进入 KKR multiple scattering、CPA、MTO、canonical bands、screened locality 与 all-electron derivatives."
 sidebar:
   order: 5
   label: "Chapter 16 · Augmented Functions: APW, KKR, MTO"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter16Body from '../../../components/part04/ch16/Chapter16Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[3].units[4].label}
-  sourcePage={catalog.parts[3].units[4].page}
-  sections={catalog.parts[3].units[4].sections}
-  exercisesPage={catalog.parts[3].units[4].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 16, printed pp. 332–361; sections 16.1–16.8. Exercises begin p. 362 and are not reproduced."
+  status="review"
 />
+
+<Chapter16Body />
