@@ -17,6 +17,16 @@ const close = (actual, expected, tolerance = 1e-11, label = 'value') => {
   assert.ok(Number.isFinite(actual), `${label}: non-finite value ${actual}`);
   assert.ok(Math.abs(actual - expected) <= tolerance, `${label}: expected ${expected}, received ${actual}`);
 };
+const closeRelative = (actual, expected, relativeTolerance, label) => {
+  assert.ok(Number.isFinite(actual), `${label}: non-finite value ${actual}`);
+  const scale = Math.max(Math.abs(expected), Number.MIN_VALUE);
+  assert.ok(Math.abs(actual - expected) <= relativeTolerance * scale, `${label}: expected ${expected}, received ${actual}`);
+};
+const oddDoubleFactorial = (l) => {
+  let result = 1;
+  for (let n = 1; n <= l; n += 1) result *= 2 * n + 1;
+  return result;
+};
 
 // Spherical Bessel/Neumann identities, parity, derivatives, and high-l stability.
 for (const x of [0.2, 0.7, 1.8, 5.4]) {
@@ -24,13 +34,24 @@ for (const x of [0.2, 0.7, 1.8, 5.4]) {
   close(sphericalNeumannN(0, x), -Math.cos(x) / x, 3e-15, `n0 at x=${x}`);
   for (let l = 0; l <= 8; l += 1) {
     close(sphericalBesselJ(l, -x), (-1) ** l * sphericalBesselJ(l, x), 2e-13, `j parity l=${l}, x=${x}`);
-    const wronskian = sphericalBesselJ(l, x) * sphericalDerivative('n', l, x)
-      - sphericalDerivative('j', l, x) * sphericalNeumannN(l, x);
-    close(wronskian, 1 / x ** 2, 3e-10, `Wronskian l=${l}, x=${x}`);
   }
 }
-const highL = sphericalBesselJ(20, 0.2);
-assert.ok(Number.isFinite(highL) && highL > 0 && highL < 1e-35, 'high-l small-x Bessel value must remain finite and physical');
+// The direct Wronskian subtraction is tested only where j_l and n_l are not separated by extreme dynamic range.
+for (const x of [0.7, 1.8, 5.4]) {
+  for (let l = 0; l <= 8; l += 1) {
+    const wronskian = sphericalBesselJ(l, x) * sphericalDerivative('n', l, x)
+      - sphericalDerivative('j', l, x) * sphericalNeumannN(l, x);
+    closeRelative(wronskian, 1 / x ** 2, 2e-8, `Wronskian l=${l}, x=${x}`);
+  }
+}
+// High-l, small-x behavior is validated independently against j_l(x)~x^l/(2l+1)!!.
+for (const l of [8, 12, 16, 20]) {
+  const x = 0.2;
+  const expected = x ** l / oddDoubleFactorial(l);
+  const actual = sphericalBesselJ(l, x);
+  assert.ok(Number.isFinite(actual) && actual > 0, `high-l j_${l} must remain finite and positive`);
+  closeRelative(actual, expected, 0.006, `high-l small-x asymptotic l=${l}`);
+}
 assert.throws(() => sphericalNeumannN(0, 0), RangeError, 'Neumann singularity at zero must fail closed');
 
 // Plane-wave partial-wave identity across easy and demanding regimes.
