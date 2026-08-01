@@ -1,0 +1,293 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import OverlapBranchExplorer from './OverlapBranchExplorer.astro';
+
+<span id="section-23-3" className="chapter23-anchor" aria-hidden="true"></span>
+
+## 23.3 最大局域化 Wannier 函数 | Maximally Localized Wannier Functions
+
+<BilingualSection titleZh="局域化目标：最小化二阶中心矩" titleEn="Localization objective: minimize the quadratic spread" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+对原胞中的 $J$ 个正交 Wannier 函数，Marzari–Vanderbilt 目标函数为
+
+$$
+\Omega
+=
+\sum_{n=1}^{J}
+\left[
+\langle w_{n0}|r^2|w_{n0}\rangle
+-
+|\langle w_{n0}|\mathbf r|w_{n0}\rangle|^2
+\right].
+$$
+
+它衡量每个函数相对于自身中心的二阶 spread。目标只在固定 band subspace 内改变 gauge；若先做 disentanglement，子空间选择是另一层优化。小 $\Omega$ 说明当前 frame 的二阶尾较短，不自动说明该 frame 具有目标化学 character、空间对称性或 transferability。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For $J$ orthonormal Wannier functions in the home cell, the Marzari–Vanderbilt objective is
+
+$$
+\Omega
+=
+\sum_{n=1}^{J}
+\left[
+\langle w_{n0}|r^2|w_{n0}\rangle
+-
+|\langle w_{n0}|\mathbf r|w_{n0}\rangle|^2
+\right].
+$$
+
+It measures the quadratic spread of each function about its own centre. The optimization changes only the gauge inside a fixed band subspace; if disentanglement precedes it, subspace selection is a separate optimization layer. A small $\Omega$ means short quadratic tails in the chosen frame, not automatic chemical character, symmetry fidelity, or transferability.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="spread 的 gauge-invariant 分解 | Gauge-invariant decomposition of the spread"
+  assumptions={[
+    'J 个 Wannier 函数构成固定正交 band subspace；',
+    'P 是该子空间在整个晶体上的 projector，Q=1−P；',
+    '位置矩阵元在完整空间中定义。',
+  ]}
+>
+
+在 Wannier 基中插入 $1=P+Q$：
+
+$$
+\langle w_n|r^2|w_n\rangle
+=
+\sum_{m\mathbf R}
+|\langle w_{m\mathbf R}|\mathbf r|w_{n0}\rangle|^2
++
+\langle w_{n0}|\mathbf rQ\mathbf r|w_{n0}\rangle.
+$$
+
+把同一函数自身中心项从第一部分分离，得到
+
+$$
+\Omega=\Omega_I+\widetilde\Omega,
+$$
+
+其中
+
+$$
+\boxed{
+\Omega_I
+=
+\sum_{n,\alpha}
+\langle w_{n0}|r_\alpha Qr_\alpha|w_{n0}\rangle
+\ge0
+}
+$$
+
+只依赖 projector $P$，因此对固定子空间内的幺正 gauge 不变；而
+
+$$
+\widetilde\Omega
+=
+\sum_{n}
+\sum_{(m,\mathbf R)\ne(n,0)}
+|\langle w_{m\mathbf R}|\mathbf r|w_{n0}\rangle|^2
+\ge0
+$$
+
+依赖具体 frame。最大局域化只最小化 $\widetilde\Omega$。$Q$ 项可解释为位置算符把目标子空间耦合到被排除空间的量子涨落；它是该子空间本身无法通过 gauge 消除的局域化下限。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="为什么有限差分必须尊重晶格平移" titleEn="Why finite differences must respect lattice translations" eyebrow="Discrete k-space formulation">
+  <div className="bilingual-section__zh">
+
+连续中心公式含 $\langle u_{n\mathbf k}|\nabla_{\mathbf k}|u_{n\mathbf k}\rangle$。直接用线性有限差分近似会在有限网格上破坏“Wannier 函数整体平移一个晶格矢量时 spread 不变”的要求。实用公式改用相邻 k 点 overlap
+
+$$
+M_{mn}^{(\mathbf k,\mathbf b)}
+=
+\langle u_{m\mathbf k}|u_{n,\mathbf k+\mathbf b}\rangle,
+$$
+
+并由复对数的 phase 构造中心。复对数在小 $\mathbf b$ 极限还原导数，同时保留 phase modulo $2\pi$ 的周期结构。中心 branch 需要沿连续参数或路径跟踪，不能只独立读取每个 k loop 的 principal value。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The continuous centre contains $\langle u_{n\mathbf k}|\nabla_{\mathbf k}|u_{n\mathbf k}\rangle$. A naive linear finite difference violates, on a finite mesh, the requirement that translating a Wannier function by a lattice vector leave its spread unchanged. Practical formulas instead use neighbour overlaps
+
+$$
+M_{mn}^{(\mathbf k,\mathbf b)}
+=
+\langle u_{m\mathbf k}|u_{n,\mathbf k+\mathbf b}\rangle
+$$
+
+and construct centres from complex-log phases. The logarithm recovers the derivative at small $\mathbf b$ while retaining the phase modulo $2\pi$. A continuous parameter path requires branch tracking rather than independent principal values at each loop.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="离散中心、二阶矩与不变 spread | Discrete centre, second moment, and invariant spread"
+  assumptions={[
+    '均匀或带有限差分权重 w_b 的 k 网格；',
+    '相邻点属于同一平滑 J 维 frame；',
+    'overlap matrix 的 phase branch 在目标路径上连续选择。',
+  ]}
+>
+
+对单个 Wannier function，离散中心可写为
+
+$$
+\bar{\mathbf r}_n
+=
+-\frac{1}{N_k}
+\sum_{\mathbf k,\mathbf b}
+w_{\mathbf b}\,\mathbf b\,
+\operatorname{Im}\ln M_{nn}^{(\mathbf k,\mathbf b)},
+$$
+
+符号取决于 Fourier convention。相应二阶矩的一类平移协变形式为
+
+$$
+\langle r^2\rangle_n
+=
+\frac{1}{N_k}
+\sum_{\mathbf k,\mathbf b}
+w_{\mathbf b}
+\left[
+1-|M_{nn}|^2
++
+(\operatorname{Im}\ln M_{nn})^2
+\right].
+$$
+
+固定 composite subspace 的 gauge-invariant 部分为
+
+$$
+\boxed{
+\Omega_I
+=
+\frac{1}{N_k}
+\sum_{\mathbf k,\mathbf b}
+w_{\mathbf b}
+\left[
+J-
+\sum_{mn}|M_{mn}^{(\mathbf k,\mathbf b)}|^2
+\right].
+}
+$$
+
+括号测量相邻目标子空间的 projector mismatch。若 $M$ 的奇异值很小，frame 或 subspace 在网格上变化过快；简单增加 localization 迭代不能替代 k 网格、窗口或投影修正。
+
+</DerivationBlock>
+
+<OverlapBranchExplorer />
+
+<BilingualSection titleZh="幺正更新与最速下降" titleEn="Unitary updates and steepest descent" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+固定子空间内的 frame 更新写成
+
+$$
+U^{(\mathbf k)}=e^{W^{(\mathbf k)}},
+\qquad
+W^{(\mathbf k)\dagger}=-W^{(\mathbf k)}.
+$$
+
+反厄米生成元保证更新后仍幺正。相邻 overlap 随之变换为
+
+$$
+M^{(\mathbf k,\mathbf b)}
+\rightarrow
+U^{(\mathbf k)\dagger}
+M^{(\mathbf k,\mathbf b)}
+U^{(\mathbf k+\mathbf b)}.
+$$
+
+对 infinitesimal $\delta W$ 展开 $\widetilde\Omega$，可得到每个 k 点的 gradient $G^{(\mathbf k)}$；沿 $-G$ 更新并控制步长即可降低 spread。收敛条件至少包括 spread change、gradient norm、中心稳定性和对初始 projections 的敏感性。数值到达 stationary point 不保证全局唯一最小值；对称性约束与局域极小值可能产生不同但等价或不同目的的 gauges。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A frame update inside a fixed subspace is written
+
+$$
+U^{(\mathbf k)}=e^{W^{(\mathbf k)}},
+\qquad
+W^{(\mathbf k)\dagger}=-W^{(\mathbf k)},
+$$
+
+so anti-Hermiticity preserves unitarity. Neighbour overlaps transform as
+
+$$
+M^{(\mathbf k,\mathbf b)}
+\rightarrow
+U^{(\mathbf k)\dagger}
+M^{(\mathbf k,\mathbf b)}
+U^{(\mathbf k+\mathbf b)}.
+$$
+
+Expanding $\widetilde\Omega$ for infinitesimal $\delta W$ gives a gradient at each k point; a controlled step along its negative lowers the spread. Acceptance should include spread change, gradient norm, centre stability, and sensitivity to starting projections. A stationary point is not automatically a unique global minimum; symmetry constraints and local minima can produce different gauges serving different purposes.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="无序体系与实空间位置矩阵" titleEn="Disordered systems and real-space position matrices" eyebrow="Source boundary">
+  <div className="bilingual-section__zh">
+
+分子、无序超胞或仅取 Γ 点的大尺度模拟没有可用的密集 k 网格，但仍可在目标正交子空间内最小化实空间 spread。令
+
+$$
+X_{ij}=\langle w_i|x|w_j\rangle,
+\qquad
+X'=X-X_D,
+$$
+
+其中 $X_D$ 只保留对角元；$Y,Z$ 同理，则 gauge-dependent spread 可写成
+
+$$
+\widetilde\Omega
+=\operatorname{Tr}(X'^2+Y'^2+Z'^2).
+$$
+
+对正交轨道作 infinitesimal unitary rotation，gradient 由位置矩阵的 commutator 构成。该 real-space route 与 k-space overlap route 解决同一 frame optimization，但边界、有限超胞和 Γ-only sampling 的误差仍需按目标 dipole、局域性或动力学量验证。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Molecules, disordered supercells, and large Gamma-only simulations may lack a useful dense k mesh, yet the real-space spread can still be minimized inside a target orthogonal subspace. With
+
+$$
+X_{ij}=\langle w_i|x|w_j\rangle,
+\qquad
+X'=X-X_D,
+$$
+
+and analogous $Y,Z$, the gauge-dependent spread becomes
+
+$$
+\widetilde\Omega
+=\operatorname{Tr}(X'^2+Y'^2+Z'^2).
+$$
+
+An infinitesimal unitary rotation gives gradients built from commutators of the position matrices. This real-space route and the k-space overlap route optimize the same type of frame, while finite-cell, boundary, and Gamma-only errors still require validation for the target dipole, locality, or dynamical observable.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="最大局域化的结论上限 | Claim ceiling of maximal localization" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+
+最小 spread 只在已选子空间和目标函数下定义。它不能证明 trial orbitals 正确、entangled subspace 唯一、Wannier functions 保持全部晶体对称、interaction parameters 可转移，或插值 matrix elements 已收敛。
+
+    </div>
+    <div lang="en">
+
+A minimum spread is defined only for the selected subspace and objective. It does not prove that the trial orbitals are correct, the entangled subspace is unique, all crystalline symmetries are retained, interaction parameters are transferable, or interpolated matrix elements are converged.
+
+    </div>
+  </div>
+</BilingualCallout>
