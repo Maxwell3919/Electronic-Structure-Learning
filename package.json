@@ -30,6 +30,7 @@
     "validate:part04-ch13": "node scripts/validate-part04-ch13.mjs",
     "validate:part04-ch14": "node scripts/validate-part04-ch14.mjs",
     "validate:part04-ch15": "node scripts/validate-part04-ch15.mjs",
+    "validate:part04-ch16": "node scripts/validate-part04-ch16.mjs",
     "validate:part05-ch19": "node scripts/validate-part05-ch19.mjs",
     "validate:part05-ch20": "node scripts/validate-part05-ch20.mjs",
     "validate:part05-ch21": "node scripts/validate-part05-ch21.mjs",
@@ -48,7 +49,7 @@
     "validate:part07-app-h": "node scripts/validate-part07-app-h.mjs",
     "validate:part07-app-i": "node scripts/validate-part07-app-i.mjs",
     "validate:part07-app-j": "node scripts/validate-part07-app-j.mjs",
-    "check": "npm run validate:framework && npm run validate:scf && npm run validate:part01-closure && npm run validate:part01-ch02 && npm run validate:part01-ch03 && npm run validate:part01-ch04 && npm run validate:part01-ch05 && npm run validate:part02-ch06 && npm run validate:part02-ch07 && npm run validate:part02-ch08 && npm run validate:part02-ch09 && npm run validate:part03 && npm run validate:part03-ch11 && npm run validate:part04-ch12 && npm run validate:part04-ch13 && npm run validate:part04-ch14 && npm run validate:part04-ch15 && npm run validate:part05-ch19 && npm run validate:part05-ch20 && npm run validate:part05-ch21 && npm run validate:part05-ch22 && npm run validate:part06-ch25 && npm run validate:part06-ch26 && npm run validate:part06-ch27 && npm run validate:part06-ch28 && npm run validate:part07-app-a && npm run validate:part07-app-b && npm run validate:part07-app-c && npm run validate:part07-app-d && npm run validate:part07-app-e && npm run validate:part07-app-f && npm run validate:part07-app-g && npm run validate:part07-app-h && npm run validate:part07-app-i && npm run validate:part07-app-j && npm run build"
+    "check": "npm run validate:framework && npm run validate:scf && npm run validate:part01-closure && npm run validate:part01-ch02 && npm run validate:part01-ch03 && npm run validate:part01-ch04 && npm run validate:part01-ch05 && npm run validate:part02-ch06 && npm run validate:part02-ch07 && npm run validate:part02-ch08 && npm run validate:part02-ch09 && npm run validate:part03 && npm run validate:part03-ch11 && npm run validate:part04-ch12 && npm run validate:part04-ch13 && npm run validate:part04-ch14 && npm run validate:part04-ch15 && npm run validate:part04-ch16 && npm run validate:part05-ch19 && npm run validate:part05-ch20 && npm run validate:part05-ch21 && npm run validate:part05-ch22 && npm run validate:part06-ch25 && npm run validate:part06-ch26 && npm run validate:part06-ch27 && npm run validate:part06-ch28 && npm run validate:part07-app-a && npm run validate:part07-app-b && npm run validate:part07-app-c && npm run validate:part07-app-d && npm run validate:part07-app-e && npm run validate:part07-app-f && npm run validate:part07-app-g && npm run validate:part07-app-h && npm run validate:part07-app-i && npm run validate:part07-app-j && npm run build"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.2.1",
