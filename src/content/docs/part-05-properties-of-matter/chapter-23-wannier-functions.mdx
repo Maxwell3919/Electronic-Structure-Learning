@@ -1,20 +1,20 @@
 ---
-title: "Chapter 23 · Wannier Functions"
-description: "Martin Chapter 23 的目录级阅读骨架；正文待填充。"
+title: "Chapter 23 · Wannier Functions | Wannier 函数"
+description: "从 Bloch 子空间与规范自由度出发，推导投影和最大局域化 Wannier 函数、非正交局域表示、纠缠能带的子空间选择、hybrid Wannier functions，以及插值和低能模型的验证边界。"
 sidebar:
   order: 5
   label: "Chapter 23 · Wannier Functions"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter23Contents from '../../../components/part05/ch23/Chapter23Contents.astro';
+import Chapter23Body from '../../../components/part05/ch23/Chapter23Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[4].units[4].label}
-  sourcePage={catalog.parts[4].units[4].page}
-  sections={catalog.parts[4].units[4].sections}
-  exercisesPage={catalog.parts[4].units[4].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 23, printed pages 481–496; sections 23.1–23.7 and numbered equations (23.1)–(23.37). Current official Wannier90 documentation is used only for declared software-interface cross-references."
+  status="draft"
 />
+
+<Chapter23Contents />
+<Chapter23Body />
