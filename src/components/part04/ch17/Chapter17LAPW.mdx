@@ -1,0 +1,135 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import LAPWMatchingExplorer from './LAPWMatchingExplorer.astro';
+
+<span id="section-17-4" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.4 Linearized Augmented Plane Waves (LAPWs) | 线性化增强平面波
+
+<BilingualCallout titleZh="来源定位" titleEn="Source locator" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 370–372 构造 LAPW：interstitial plane wave 在 sphere 内由 $u_l$ 与 $\dot u_l$ 组合替代，并匹配 value 与 first radial derivative。下面补充 boundary linear algebra、cutoff hierarchy 与 local-orbital gate。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 370–372 construct LAPW by replacing each interstitial plane wave inside a sphere with a combination of $u_l$ and $\dot u_l$ matched in value and first radial derivative. Boundary linear algebra, cutoff hierarchy, and the local-orbital gate are developed below.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="piecewise basis" titleEn="Piecewise basis">
+  <div class="bilingual-section__zh">
+    <p>对 Bloch vector k 和 reciprocal vector G，interstitial 部分为</p>
+
+$$
+\chi_{\mathbf{kG}}(\mathbf r)=
+\frac{1}{\sqrt\Omega}e^{i(\mathbf k+\mathbf G)\cdot\mathbf r}.
+$$
+
+    <p>以 atom I 为中心展开 plane wave，sphere 内写成</p>
+
+$$
+\chi_{\mathbf{kG}}(\mathbf r)=
+\sum_{lm}\left[A_{lm}^{I}(\mathbf{kG})u_l^I(E_l,r_I)
++B_{lm}^{I}(\mathbf{kG})\dot u_l^I(E_l,r_I)\right]Y_{lm}(\widehat{\mathbf r_I}).
+$$
+
+    <p>$A$ 与 $B$ 对每个 sphere、l,m 和 plane wave 决定；它们不是独立 variational coefficients。真正 eigenvector unknowns 仍是 plane-wave labels 上的 coefficients。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For Bloch vector k and reciprocal vector G, the interstitial part is</p>
+
+$$
+\chi_{\mathbf{kG}}(\mathbf r)=
+\frac{1}{\sqrt\Omega}e^{i(\mathbf k+\mathbf G)\cdot\mathbf r}.
+$$
+
+    <p>After expanding the plane wave about atom I, the sphere part is written as</p>
+
+$$
+\chi_{\mathbf{kG}}(\mathbf r)=
+\sum_{lm}\left[A_{lm}^{I}(\mathbf{kG})u_l^I(E_l,r_I)
++B_{lm}^{I}(\mathbf{kG})\dot u_l^I(E_l,r_I)\right]Y_{lm}(\widehat{\mathbf r_I}).
+$$
+
+    <p>$A$ and $B$ are determined for every sphere, l,m, and plane wave; they are not independent variational coefficients. The eigenvector unknowns remain coefficients indexed by the plane-wave labels.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock title="value-and-slope matching | value 与 slope 同时匹配" assumptions={['one angular component at sphere radius S；','u_l and u-dot are linearly independent at the boundary；','the interstitial radial component has boundary value f and derivative f-prime。']}>
+
+The two equations are
+
+$$
+A u_l(S)+B\dot u_l(S)=f(S),
+$$
+
+$$
+A u_l'(S)+B\dot u_l'(S)=f'(S).
+$$
+
+Therefore
+
+$$
+\begin{pmatrix}A\\B\end{pmatrix}
+=
+\begin{pmatrix}
+u_l(S)&\dot u_l(S)\\
+u_l'(S)&\dot u_l'(S)
+\end{pmatrix}^{-1}
+\begin{pmatrix}f(S)\\f'(S)\end{pmatrix}.
+$$
+
+The determinant measures boundary conditioning. A small determinant signals a poor reference energy or a nearby radial-node problem. Adding more plane waves does not repair an ill-conditioned radial matching pair.
+
+</DerivationBlock>
+
+<LAPWMatchingExplorer />
+
+<BilingualSection titleZh="cutoff hierarchy" titleEn="Cutoff hierarchy">
+  <div class="bilingual-section__zh"><ul>
+    <li><strong>interstitial cutoff：</strong>$|\mathbf k+\mathbf G|\le G_{\max}$ controls smooth-region resolution。</li>
+    <li><strong>wavefunction angular cutoff：</strong>plane-wave expansion inside a sphere requires roughly $l_{\max}\gtrsim S G_{\max}$, then an explicit convergence margin。</li>
+    <li><strong>density cutoff：</strong>products of wavefunctions can require angular content up to about twice the wavefunction channel range。</li>
+    <li><strong>potential cutoff：</strong>full-potential coupling requires its own $L_{\max}$ and interstitial Fourier/grid resolution。</li>
+    <li><strong>radial mesh：</strong>core/semicore oscillations and relativistic equations require independent radial convergence。</li>
+  </ul><p>这些 cutoffs 不能压缩成一个“basis size”数字。相同 plane-wave count 在不同 sphere radii、cell shapes 与 species 上具有不同 angular demand。</p></div>
+  <div class="bilingual-section__en" lang="en"><ul>
+    <li><strong>Interstitial cutoff:</strong> $|\mathbf k+\mathbf G|\le G_{\max}$ controls smooth-region resolution.</li>
+    <li><strong>Wavefunction angular cutoff:</strong> expansion inside a sphere requires roughly $l_{\max}\gtrsim S G_{\max}$ plus an explicit convergence margin.</li>
+    <li><strong>Density cutoff:</strong> wavefunction products can require angular content up to roughly twice the wavefunction channel range.</li>
+    <li><strong>Potential cutoff:</strong> full-potential coupling needs its own $L_{\max}$ and interstitial Fourier or grid resolution.</li>
+    <li><strong>Radial mesh:</strong> core and semicore oscillations and relativistic equations need independent radial convergence.</li>
+  </ul><p>These cutoffs cannot be compressed into one basis-size number. The same plane-wave count produces different angular demands for different sphere radii, cell shapes, and species.</p></div>
+</BilingualSection>
+
+<BilingualSection titleZh="semicore 与 local orbitals" titleEn="Semicore states and local orbitals">
+  <div class="bilingual-section__zh"><p>一个 $u_l(E_l),\dot u_l(E_l)$ pair 适合有限 energy window。当同一 l channel 同时包含 spatially compact semicore 与 valence states 时，单一 $E_l$ 可能使两者至少一个发生明显 linearization error。常见修复是增加 confined local orbital：</p>
+
+$$
+\chi_{lo}=a u_l(E_l)+b\dot u_l(E_l)+c u_l(E_{lo}),
+$$
+
+<p>并令它在 sphere boundary 的 value 与 slope 消失，使其不改变 interstitial basis。local orbital 是 basis enrichment，不是把 semicore 自动冻结为 core，也不保证去除所有 high-energy error。</p></div>
+  <div class="bilingual-section__en" lang="en"><p>One $u_l(E_l),\dot u_l(E_l)$ pair covers a finite energy window. If one l channel contains both compact semicore and valence states, a single $E_l$ can leave substantial linearization error in at least one set. A common repair is a confined local orbital:</p>
+
+$$
+\chi_{lo}=a u_l(E_l)+b\dot u_l(E_l)+c u_l(E_{lo}),
+$$
+
+<p>with value and slope constrained to vanish at the sphere boundary so that the interstitial basis is unchanged. A local orbital is basis enrichment; it neither automatically freezes semicore states into the core nor removes every high-energy error.</p></div>
+</BilingualSection>
+
+<span id="section-17-5" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.5 Applications of the LAPW Method | LAPW 方法的应用边界
+
+<BilingualSection titleZh="可支持的 capability categories" titleEn="Capability categories that can be supported">
+  <div class="bilingual-section__zh"><p>full-potential LAPW 适合需要核附近 all-electron resolution、relativity、nonspherical density/potential 与 systematic interstitial convergence 的 periodic systems。应用可以按 evidence objects 分类：</p><ul><li>ground-state energy、equation of state 与 structural competition；</li><li>electric field gradient、hyperfine/contact quantities 与 core-sensitive observables；</li><li>spin-polarized、spin-orbit 与 orbital-resolved states；</li><li>surfaces/interfaces via supercells；</li><li>response、forces 与 phonons when method-specific derivatives are implemented and validated。</li></ul></div>
+  <div class="bilingual-section__en" lang="en"><p>Full-potential LAPW is suitable for periodic systems requiring all-electron resolution near nuclei, relativity, nonspherical densities and potentials, and systematic interstitial convergence. Applications can be classified by evidence objects:</p><ul><li>ground-state energies, equations of state, and structural competition;</li><li>electric-field gradients, hyperfine or contact quantities, and other core-sensitive observables;</li><li>spin-polarized, spin-orbit, and orbital-resolved states;</li><li>surfaces and interfaces through supercells;</li><li>response, forces, and phonons when method-specific derivatives are implemented and validated.</li></ul></div>
+</BilingualSection>
+
+<BilingualCallout titleZh="all-electron 与 benchmark 的限制" titleEn="Limits of all-electron and benchmark labels" kind="boundary">
+  <div class="bilingual-section__zh">all-electron 表示 core 与 valence 在声明的 relativistic/frozen-core convention 下显式处理；它不自动等于 exact。benchmark 声明仍需 exchange-correlation、structure、core partition、basis cutoffs、linearization/local orbitals、k mesh、SCF、relativity 与 target observable 全部可比较。</div>
+  <div class="bilingual-section__en" lang="en">All-electron means that core and valence are treated explicitly under a declared relativistic and frozen-core convention; it does not mean exact. A benchmark claim still requires comparable exchange-correlation, structure, core partition, basis cutoffs, linearization or local orbitals, k sampling, SCF, relativity, and target-observable convergence.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="最低 LAPW convergence matrix" titleEn="Minimum LAPW convergence matrix">
+  <div class="bilingual-section__zh"><table><thead><tr><th>维度</th><th>需要扫描</th><th>不能替代的 evidence</th></tr></thead><tbody><tr><td>interstitial</td><td>sphere radii、Gmax 或 RKmax</td><td>total-energy difference、force、target state</td></tr><tr><td>sphere angular</td><td>wavefunction/density/potential cutoffs</td><td>boundary continuity 与 observable stability</td></tr><tr><td>linearization</td><td>reference energies、local orbitals</td><td>wide-window eigenvalues、charge、force</td></tr><tr><td>sampling</td><td>k mesh、smearing/occupations</td><td>metallic energy/DOS/Fermi-surface quantities</td></tr><tr><td>derivatives</td><td>SCF threshold、finite differences</td><td>force/stress/phonon acceptance</td></tr></tbody></table></div>
+  <div class="bilingual-section__en" lang="en"><table><thead><tr><th>Dimension</th><th>Scan</th><th>Required evidence</th></tr></thead><tbody><tr><td>Interstitial</td><td>sphere radii, Gmax or RKmax</td><td>energy differences, forces, target states</td></tr><tr><td>Sphere angular</td><td>wavefunction, density, and potential cutoffs</td><td>boundary continuity and observable stability</td></tr><tr><td>Linearization</td><td>reference energies and local orbitals</td><td>wide-window eigenvalues, charge, and forces</td></tr><tr><td>Sampling</td><td>k mesh and smearing or occupations</td><td>metallic energy, DOS, and Fermi-surface quantities</td></tr><tr><td>Derivatives</td><td>SCF threshold and finite differences</td><td>force, stress, and phonon acceptance</td></tr></tbody></table></div>
+</BilingualSection>
