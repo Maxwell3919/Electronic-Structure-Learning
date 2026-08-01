@@ -35,6 +35,14 @@ const multiply2 = (left, right) => [
     left[1][0] * right[0][1] + left[1][1] * right[1][1],
   ],
 ];
+const add2 = (left, right) => [
+  [left[0][0] + right[0][0], left[0][1] + right[0][1]],
+  [left[1][0] + right[1][0], left[1][1] + right[1][1]],
+];
+const quadratic2 = (vector, matrix) => (
+  vector[0] * (matrix[0][0] * vector[0] + matrix[0][1] * vector[1])
+  + vector[1] * (matrix[1][0] * vector[0] + matrix[1][1] * vector[1])
+);
 const isSymmetric2 = (matrix, tolerance = 1e-13) => Math.abs(matrix[0][1] - matrix[1][0]) <= tolerance;
 
 // Exterior matching and norm-conservation teaching model.
@@ -104,6 +112,31 @@ assert.ok(hardnessSvgY(1e-6) < hardnessSvgY(1e-12), 'The log-tail axis must rema
 for (const [smooth, correction] of [[0.82, 0.18], [1.1, -0.1], [0.6, 0.4]]) {
   close(augmentationNorm(smooth, correction), 1, 1e-14, 'Augmented norm');
 }
+
+// USPP unscreening identity. The derivative of the bare-ion one-particle
+// contribution plus the Hartree-XC response equals the screened effective
+// coefficient. Adding the response to the screened form a second time is a
+// reproducible double-counting error.
+const bareLocal = -5.4;
+const hxcLocal = 1.25;
+const screenedLocal = bareLocal + hxcLocal;
+const bareProjector = [[1.8, 0.25], [0.25, 1.1]];
+const hxcProjector = [[0.35, -0.08], [-0.08, 0.22]];
+const screenedProjector = add2(bareProjector, hxcProjector);
+const projectorCoefficients = [0.72, -0.31];
+const bareContribution = bareLocal + quadratic2(projectorCoefficients, bareProjector);
+const hxcContribution = hxcLocal + quadratic2(projectorCoefficients, hxcProjector);
+const screenedContribution = screenedLocal + quadratic2(projectorCoefficients, screenedProjector);
+close(
+  bareContribution + hxcContribution,
+  screenedContribution,
+  1e-13,
+  'Bare-ion plus Hartree-XC response must equal the screened USPP operator',
+);
+assert.ok(
+  Math.abs((screenedContribution + hxcContribution) - screenedContribution) > 0.1,
+  'Adding Hartree-XC to the screened USPP operator must be detected as double counting',
+);
 
 // Multiprojector algebra has separate reproduction and Hermiticity gates.
 // A symmetric, invertible B has a symmetric inverse and can define a Hermitian
@@ -192,6 +225,39 @@ assert.doesNotMatch(
   'The old invertibility-only acceptance statement must not remain',
 );
 
+const ultrasoftPaw = await readFile(
+  new URL('../src/components/part03/ch11/Chapter11UltrasoftPAW.mdx', import.meta.url),
+  'utf8',
+);
+assert.match(ultrasoftPaw, /data-uspp-unscreening-audit/);
+assert.match(ultrasoftPaw, /data-energy-functional-convention="bare-ion"/);
+assert.match(ultrasoftPaw, /data-generalized-eigenproblem-convention="screened-effective"/);
+assert.match(ultrasoftPaw, /data-source-locators="11\.57,11\.58,11\.59"/);
+for (const equationNumber of ['11.57', '11.58', '11.59']) {
+  assert.ok(
+    ultrasoftPaw.includes(equationNumber),
+    `USPP convention audit must identify Eq. (${equationNumber})`,
+  );
+}
+assert.match(ultrasoftPaw, /V_\{\\mathrm\{loc\}\}\^\{\\mathrm\{ion\}\}/);
+assert.match(ultrasoftPaw, /D_\{ij\}\^\{\\mathrm\{ion\}\}/);
+assert.match(ultrasoftPaw, /D_\{ij\}\^\{Hxc\}/);
+assert.match(ultrasoftPaw, /\\hat H_\{\\mathrm\{eff\}\}\^\{US\}/);
+assert.match(
+  ultrasoftPaw,
+  /重复计数|double count/,
+  'USPP convention audit must state the Hartree-XC double-counting boundary',
+);
+assert.match(
+  ultrasoftPaw,
+  /bare-ion 还是 screened representation|bare-ion or screened representation/,
+  'USPP convention audit must require coefficient-role provenance',
+);
+assert.ok(
+  !ultrasoftPaw.includes('+V_H[n]+V_{xc}[n].'),
+  'The old ambiguous screened-plus-explicit-Hxc Hamiltonian must not remain',
+);
+
 const contentsPath = new URL('../src/components/part03/ch11/Chapter11Contents.astro', import.meta.url);
 const contents = await readFile(contentsPath, 'utf8');
 for (let section = 1; section <= 13; section += 1) {
@@ -231,4 +297,4 @@ for (const label of ['>0</text>', '>−6</text>', '>−12</text>']) {
   assert.ok(hardnessComponent.includes(label), `Hardness explorer is missing the ${label} axis tick`);
 }
 
-console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, norm-conservation source convention, hardness axis, augmentation, multiprojector reproduction and Hermiticity, route, source map, and visualization contracts.');
+console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, norm-conservation source convention, hardness axis, augmentation, USPP unscreening, multiprojector reproduction and Hermiticity, route, source map, and visualization contracts.');
