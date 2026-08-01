@@ -1,20 +1,18 @@
 ---
-title: "Chapter 17 · Augmented Functions: Linear Methods"
-description: "Martin Chapter 17 的目录级阅读骨架；正文待填充。"
+title: "Chapter 17 · Augmented Functions: Linear Methods | 增强函数的线性方法"
+description: "从能量依赖 partial waves 与能量导数出发，进入 LAPW、LMTO、NMTO、downfolding 与 full-potential augmented methods。"
 sidebar:
   order: 6
   label: "Chapter 17 · Augmented Functions: Linear Methods"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import Chapter17Body from '../../../components/part04/ch17/Chapter17Body.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[3].units[5].label}
-  sourcePage={catalog.parts[3].units[5].page}
-  sections={catalog.parts[3].units[5].sections}
-  exercisesPage={catalog.parts[3].units[5].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Chapter 17, printed pp. 365–384; sections 17.1–17.10. Exercises begin p. 385 and are not reproduced."
+  status="draft"
 />
+
+<Chapter17Body />
