@@ -1,0 +1,321 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import DisentanglementWindowExplorer from './DisentanglementWindowExplorer.astro';
+
+<span id="section-23-4" className="chapter23-anchor" aria-hidden="true"></span>
+
+## 23.4 非正交局域函数 | Nonorthogonal Localized Functions
+
+<BilingualSection titleZh="正交性与最短空间范围并非同一目标" titleEn="Orthonormality and shortest spatial range are different objectives" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+正交 Wannier 函数需要与所有晶格平移副本正交，这一全局约束常在实空间产生较长的补偿尾。若目标是线性标度、稀疏 Hamiltonian 或局域化学轨道，可以放松正交性，用更短的非正交函数换取显式 overlap matrix。表示仍可完备，但 Schrödinger 方程、密度矩阵和算符迹都必须使用对偶基或广义矩阵公式。
+
+从一组正交 Wannier 函数 $|w_j\rangle$ 出发，定义
+
+$$
+|\widetilde w_i\rangle
+=
+\sum_j |w_j\rangle A_{ji},
+$$
+
+其中 $A$ 只需非奇异，不必幺正。若 $A$ 失去 rank，函数集合不再张成原子目标空间；若条件数很大，数值上虽非奇异，求逆和对偶基仍可能不稳定。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Orthogonal Wannier functions must remain orthogonal to every lattice translate, a global constraint that can generate compensating real-space tails. Linear-scaling methods, sparse Hamiltonians, or chemically local orbitals may instead trade orthogonality for shorter range and an explicit overlap matrix. The representation can remain complete, but Schrödinger equations, density matrices, and operator traces then require dual-basis or generalized-matrix formulas.
+
+Starting from orthonormal Wannier functions $|w_j\rangle$, define
+
+$$
+|\widetilde w_i\rangle
+=
+\sum_j |w_j\rangle A_{ji},
+$$
+
+where $A$ need only be nonsingular, not unitary. If $A$ loses rank, the functions no longer span the target space; if it is severely ill-conditioned, formal invertibility does not prevent unstable inversion and dual-basis construction.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="overlap、对偶基与广义本征问题 | Overlap, dual basis, and generalized eigenproblem"
+  assumptions={[
+    '原始 Wannier basis 正交；',
+    'A 为方阵且非奇异；',
+    '所有矩阵使用同一列向量 convention。',
+  ]}
+>
+
+新 basis 的 overlap 为
+
+$$
+S_{ij}
+=
+\langle\widetilde w_i|\widetilde w_j\rangle
+=(A^\dagger A)_{ij}.
+$$
+
+定义对偶函数 $|\widetilde w^i\rangle$ 满足
+
+$$
+\langle\widetilde w^i|\widetilde w_j\rangle=\delta^i_j,
+$$
+
+则
+
+$$
+|\widetilde w^i\rangle
+=
+\sum_j|\widetilde w_j\rangle(S^{-1})_{ji}.
+$$
+
+在非正交 basis 中，系数满足广义本征方程
+
+$$
+H\mathbf c=E\,S\mathbf c,
+\qquad
+H_{ij}=\langle\widetilde w_i|\hat H|\widetilde w_j\rangle.
+$$
+
+projector 写成
+
+$$
+\hat P
+=
+\sum_{ij}|\widetilde w_i\rangle(S^{-1})_{ij}
+\langle\widetilde w_j|.
+$$
+
+忽略 $S^{-1}$ 会改变 projector、电子数和 observable；“轨道更局域”不能作为省略 overlap bookkeeping 的理由。
+
+</DerivationBlock>
+
+<BilingualSection titleZh="非正交 spread 与 rank 约束" titleEn="Nonorthogonal spread and the rank constraint" eyebrow="Supplemental derivation">
+  <div className="bilingual-section__zh">
+
+可对每个非正交函数单独归一化，定义
+
+$$
+\Omega_{\rm NO}
+=
+\sum_i
+\frac{
+\langle\widetilde w_i|r^2|\widetilde w_i\rangle
+}{
+\langle\widetilde w_i|\widetilde w_i\rangle
+}
+-
+\sum_i
+\frac{
+|\langle\widetilde w_i|\mathbf r|\widetilde w_i\rangle|^2
+}{
+\langle\widetilde w_i|\widetilde w_i\rangle^2
+}.
+$$
+
+优化变量不再受幺正约束，搜索空间更大，因此可以获得比正交 MLWF 更短的个体 tails。代价是必须对 $A$ 的最小奇异值或 $S$ 的条件数施加门槛，防止优化通过让多个函数近乎线性相关来虚假降低 spread。实际验收应同时报告 localization、condition number、reconstruction error 和稀疏截断误差。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+After normalizing each nonorthogonal function individually, one may minimize
+
+$$
+\Omega_{\rm NO}
+=
+\sum_i
+\frac{
+\langle\widetilde w_i|r^2|\widetilde w_i\rangle
+}{
+\langle\widetilde w_i|\widetilde w_i\rangle
+}
+-
+\sum_i
+\frac{
+|\langle\widetilde w_i|\mathbf r|\widetilde w_i\rangle|^2
+}{
+\langle\widetilde w_i|\widetilde w_i\rangle^2
+}.
+$$
+
+The optimization is no longer restricted to unitary transformations, so individual functions may become shorter ranged than orthogonal MLWFs. The price is an explicit lower bound on singular values or an upper bound on the condition number of $S$, preventing a spurious spread reduction through near-linear dependence. Acceptance should combine localization, conditioning, reconstruction error, and sparse-truncation error.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="非正交表示的结论边界 | Claim boundary for nonorthogonal representations" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+
+较短 tails 只说明某个非正交 representation 更稀疏；不说明它更接近唯一“真实原子轨道”。Hamiltonian、density matrix、forces、transport 和 interaction parameters 都必须在同一 overlap/dual convention 下计算。
+
+    </div>
+    <div lang="en">
+
+Shorter tails indicate a sparser nonorthogonal representation, not a uniquely more physical atomic orbital. Hamiltonians, density matrices, forces, transport, and interaction parameters must all use the same overlap and dual-basis convention.
+
+    </div>
+  </div>
+</BilingualCallout>
+
+<span id="section-23-5" className="chapter23-anchor" aria-hidden="true"></span>
+
+## 23.5 纠缠能带的 Wannier 函数 | Wannier Functions for Entangled Bands
+
+<BilingualSection titleZh="isolated bands 与 entangled bands 的差别" titleEn="The difference between isolated and entangled bands" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+若目标 $J$ 条 bands 在每个 $\mathbf k$ 都与其余谱有能隙分离，projector $P(\mathbf k)$ 由本征态唯一确定，Wannier 问题只剩 gauge 选择。金属或高能 conduction manifold 中，目标 character 常与其他 bands 交叉、避免交叉或交换排序；固定 band index 不再定义平滑 $J$ 维子空间。此时必须先从更大的候选空间中选择 $P(\mathbf k)$，再在该子空间内做 localization。
+
+Martin 讨论两类思想：用指定局域轨道投影并 downfold 到较小空间；或在给定能量范围内选择使相邻 k 点 projector 尽量平滑、随后 spread 尽量小的子空间。两类方法都依赖目标 orbitals 和能窗，所得 reduced space 不是谱的唯一属性。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+If $J$ target bands are separated from all other bands by a gap at every $\mathbf k$, their projector is fixed by the eigenstates and only the gauge remains to be chosen. In metals or high-lying conduction manifolds, target character crosses, anticrosses, and exchanges order with other bands; a fixed band index no longer defines a smooth $J$-dimensional space. The task must first select $P(\mathbf k)$ from a larger candidate space and only then localize a frame inside it.
+
+Martin discusses two broad ideas: project specified local orbitals and downfold into a smaller space, or choose a subspace inside an energy range that varies smoothly between neighbouring k points and is then localized. Both depend on target orbitals and energy windows; the reduced space is not a unique property of the eigenvalue spectrum alone.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="候选空间中的固定维 projector 选择 | Fixed-rank projector selection inside a candidate space"
+  assumptions={[
+    '每个 k 点 outer window 内有 N_k^win 个候选本征态，且 N_k^win≥J；',
+    '目标 reduced space 在所有 k 点维数固定为 J；',
+    '候选本征态在各 k 点正交。',
+  ]}
+>
+
+记候选矩阵为
+
+$$
+\Psi_{\rm win}(\mathbf k)
+=
+\left(|\psi_{1\mathbf k}\rangle,\ldots,
+|\psi_{N_{\mathbf k}^{\rm win}\mathbf k}\rangle\right).
+$$
+
+选择一个半幺正矩阵 $V(\mathbf k)$，满足
+
+$$
+V^\dagger V=I_J,
+$$
+
+并定义
+
+$$
+|\phi_{n\mathbf k}\rangle
+=\sum_{m\in\rm win}|\psi_{m\mathbf k}\rangle V_{mn}(\mathbf k),
+$$
+
+$$
+P(\mathbf k)
+=\Phi(\mathbf k)\Phi^\dagger(\mathbf k).
+$$
+
+相邻子空间的 mismatch 可由
+
+$$
+D(\mathbf k,\mathbf b)
+=J-\operatorname{Tr}
+\left[P(\mathbf k)P(\mathbf k+\mathbf b)\right]
+\ge0
+$$
+
+度量。disentanglement 可最小化 $\sum w_{\mathbf b}D$，同时要求 inner/frozen window 中指定本征态精确包含在 $P(\mathbf k)$ 内。outer window 定义候选空间，inner window 定义不可丢失的谱；它们是补充的现代实现术语，而不是 Martin 章节标题本身。
+
+</DerivationBlock>
+
+<DisentanglementWindowExplorer />
+
+<BilingualSection titleZh="投影 fidelity、窗口与模型有效范围" titleEn="Projection fidelity, windows, and model validity" eyebrow="Evidence contract">
+  <div className="bilingual-section__zh">
+
+对某个目标 trial orbital $|g_{\mathbf k}\rangle$，候选空间能否表示它可由
+
+$$
+F(\mathbf k)
+=
+\langle g_{\mathbf k}|P_{\rm win}(\mathbf k)|g_{\mathbf k}\rangle
+$$
+
+检查。若 $F<1$，outer window 已漏掉必要 character，后续任何 $J$ 维 subspace 都无法完全恢复它。即使 $F=1$，仍需选择在 k 上平滑且满足 frozen bands 的 $P(\mathbf k)$。窗口边界附近的 eigenvalue reorder、SOC splitting 和 accidental degeneracy 都可能使结果敏感。
+
+一个 reduced model 的有效范围不能仅用“outer window 数值”声明。需要在独立 k 网格比较目标 bands、orbital/projector fidelity、Fermi surface、velocity 和计划使用的 matrix elements。窗外 bands 被省略，模型原则上不支持窗外谱或由窗外虚跃迁主导的 observable。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+For a target trial orbital $|g_{\mathbf k}\rangle$, candidate-space completeness can be checked through
+
+$$
+F(\mathbf k)
+=
+\langle g_{\mathbf k}|P_{\rm win}(\mathbf k)|g_{\mathbf k}\rangle.
+$$
+
+If $F<1$, the outer window omits necessary character and no later $J$-dimensional subspace can recover it completely. Even when $F=1$, the selected $P(\mathbf k)$ must still vary smoothly and include all frozen states. Eigenvalue reorderings, SOC splittings, and accidental degeneracies near a window boundary can make the result sensitive.
+
+A reduced model is not validated merely by quoting an outer-window range. An independent mesh must compare target bands, orbital/projector fidelity, Fermi surface, velocities, and the matrix elements intended for use. Omitted bands lie outside the model by construction, so spectra or virtual-transition observables dominated by them are unsupported.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="downfolding 与能量依赖" titleEn="Downfolding and energy dependence" eyebrow="Method boundary">
+  <div className="bilingual-section__zh">
+
+把 Hilbert space 分为目标 $P$ 与被消去 $Q$，精确 Löwdin downfolding 给出能量依赖的有效 Hamiltonian：
+
+$$
+H_{\rm eff}(E)
+=H_{PP}
++H_{PQ}(E-H_{QQ})^{-1}H_{QP}.
+$$
+
+固定能量、线性化或有限 window 的 Wannier Hamiltonian 把这种能量依赖近似为有限维、常用情况下近似静态的矩阵。离被消去 bands 越近，该近似越敏感；扩大 outer window 或增加 Wannier 数目常可改善，但也改变模型自由度。不能在不说明 window 和 downfolding 误差的情况下把参数称为材料常数。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Partitioning Hilbert space into target $P$ and eliminated $Q$ sectors gives the exact energy-dependent Löwdin Hamiltonian
+
+$$
+H_{\rm eff}(E)
+=H_{PP}
++H_{PQ}(E-H_{QQ})^{-1}H_{QP}.
+$$
+
+A fixed-energy, linearized, or finite-window Wannier Hamiltonian approximates this dependence by a finite-dimensional, often effectively static matrix. The approximation becomes more sensitive near eliminated bands. Enlarging the outer window or increasing the number of Wannier functions may improve fidelity while changing the model degrees of freedom. Parameters are not material constants without their window and downfolding contract.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="纠缠能带构造的最低检查 | Minimum checks for an entangled-band construction" tone="warning">
+  <div className="bilingual-callout__grid">
+    <div>
+      <ul>
+        <li>outer/inner window、Wannier 数目和 trial projections；</li>
+        <li>每个 k 点候选态数与 projection rank；</li>
+        <li>frozen states 是否逐点精确包含；</li>
+        <li>相邻 projector mismatch 与对初始投影/窗口的敏感性；</li>
+        <li>独立 mesh 上的 band、Fermi surface 和目标 matrix elements；</li>
+        <li>明确禁止把窗外结论归因于 reduced model。</li>
+      </ul>
+    </div>
+    <div lang="en">
+      <ul>
+        <li>outer and inner windows, Wannier count, and trial projections;</li>
+        <li>candidate-state count and projection rank at every k point;</li>
+        <li>pointwise exact inclusion of frozen states;</li>
+        <li>neighbour-projector mismatch and sensitivity to projections/windows;</li>
+        <li>bands, Fermi surface, and target matrix elements on an independent mesh;</li>
+        <li>an explicit prohibition on claims outside the validated window.</li>
+      </ul>
+    </div>
+  </div>
+</BilingualCallout>

@@ -1,0 +1,40 @@
+---
+const items = [
+  ['source-map', '来源地图 | Source Map'],
+  ['reading-orientation', '阅读定位与对象层级 | Orientation and Object Hierarchy'],
+  ['section-23-1', '23.1 Definition and Properties'],
+  ['section-23-2', '23.2 Maximally Projected Wannier Functions'],
+  ['section-23-3', '23.3 Maximally Localized Wannier Functions'],
+  ['section-23-4', '23.4 Nonorthogonal Localized Functions'],
+  ['section-23-5', '23.5 Wannier Functions for Entangled Bands'],
+  ['section-23-6', '23.6 Hybrid Wannier Functions'],
+  ['section-23-7', '23.7 Applications'],
+  ['calculation-connection', '实际计算与验证 | Computational Connection'],
+  ['evidence-matrix', '科学证据矩阵 | Scientific Evidence Matrix'],
+  ['exercises', '原创练习 | Original Exercises'],
+  ['sources-and-boundaries', '来源与边界 | Sources and Boundaries'],
+];
+---
+
+<nav class="chapter-contents chapter23-contents" aria-labelledby="chapter23-contents-title">
+  <h2 id="chapter23-contents-title">本章导航 | Chapter Contents</h2>
+  <ol>
+    {items.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}
+  </ol>
+</nav>
+
+<style>
+  .chapter23-contents {
+    margin-block: 1.4rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.15rem;
+    background: var(--sl-color-gray-7);
+  }
+  .chapter23-contents h2 { margin-top: 0; }
+  .chapter23-contents ol { columns: 2; column-gap: 2rem; }
+  .chapter23-contents li { break-inside: avoid; margin-block: 0.35rem; }
+  @media (max-width: 50rem) {
+    .chapter23-contents ol { columns: 1; }
+  }
+</style>

@@ -1,0 +1,205 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import NMTOInterpolationExplorer from './NMTOInterpolationExplorer.astro';
+
+<span id="section-17-9" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.9 Beyond Linear Methods: NMTO | 超越一阶线性化的 NMTO
+
+<BilingualCallout titleZh="来源定位" titleEn="Source locator" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 381–383 将 linear methods 推广到多个 chosen energies，并讨论 target-band downfolding。网站只保留 interpolation/error structure 与 claim boundaries，不复制源图或材料案例。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 381–383 extend linear methods to several chosen energies and discuss target-band downfolding. The website retains the interpolation and error structure and claim boundaries without reproducing source figures or material examples.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="energy mesh 与 polynomial exactness" titleEn="Energy mesh and polynomial exactness">
+  <div class="bilingual-section__zh">
+    <p>一阶 LMTO 用一个 reference energy 与 first derivative 描述 local energy window。NMTO 选择 $N+1$ 个 mesh energies</p>
+
+$$
+E_0,E_1,\ldots,E_N,
+$$
+
+    <p>并构造在这些 energies 具有 exact phase-shift/secular information 的 energy-independent orbitals。对 smooth target eigenfunction，误差具有 interpolation product：</p>
+
+$$
+\delta\psi(\varepsilon)
+=\mathcal O\!\left[
+\prod_{n=0}^{N}(\varepsilon-E_n)
+\right].
+$$
+
+    <p>stationary eigenvalue error 通常具有 squared product structure。mesh energies 的位置与 target window 同等重要；增加 N 但把 nodes 放在不相关 energy range 不能保证改进。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>First-order LMTO uses one reference energy and a first derivative to describe a local energy window. NMTO selects $N+1$ mesh energies</p>
+
+$$
+E_0,E_1,\ldots,E_N,
+$$
+
+    <p>and constructs energy-independent orbitals that reproduce exact phase-shift or secular information at those energies. For a smooth target eigenfunction, the error has an interpolation product:</p>
+
+$$
+\delta\psi(\varepsilon)
+=\mathcal O\!\left[
+\prod_{n=0}^{N}(\varepsilon-E_n)
+\right].
+$$
+
+    <p>A stationary eigenvalue error normally has the squared product structure. Node placement matters as much as N; adding nodes outside the target energy range does not guarantee improvement.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock title="three-energy interpolation error | 三个 energy nodes 的误差" assumptions={['a smooth scalar target f(E)；','distinct mesh energies E0,E1,E2；','quadratic interpolation through exact mesh values。']}>
+
+The Lagrange interpolant is
+
+$$
+P_2(E)=\sum_{i=0}^{2}f(E_i)
+\prod_{j\ne i}\frac{E-E_j}{E_i-E_j}.
+$$
+
+For a cubic target with constant third derivative,
+
+$$
+f(E)-P_2(E)=\frac{f^{(3)}}{3!}
+(E-E_0)(E-E_1)(E-E_2).
+$$
+
+The zeros at the mesh energies are exact interpolation constraints. Between or beyond them, the product and the higher derivative jointly control the error. A visually smooth interpolant is not an error estimate unless this information is supplied.
+
+</DerivationBlock>
+
+<NMTOInterpolationExplorer />
+
+<BilingualSection titleZh="downfolding 与 target bands" titleEn="Downfolding and target bands">
+  <div class="bilingual-section__zh">
+    <p>把 basis 分成 active A 与 eliminated B channels，block equation 可写为</p>
+
+$$
+\begin{pmatrix}H_{AA}&H_{AB}\\H_{BA}&H_{BB}\end{pmatrix}
+\begin{pmatrix}c_A\\c_B\end{pmatrix}
+=E
+\begin{pmatrix}S_{AA}&S_{AB}\\S_{BA}&S_{BB}\end{pmatrix}
+\begin{pmatrix}c_A\\c_B\end{pmatrix}.
+$$
+
+    <p>消去 B 后，A-space effective operator 通常 energy dependent；NMTO interpolation 把该 dependence 压缩进 multi-energy fixed basis。得到的 orbital 会包含 neighbouring-site/other-channel tails，因此“centered on atom/orbital symmetry”不等于 isolated atomic orbital。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Partition the basis into active A and eliminated B channels:</p>
+
+$$
+\begin{pmatrix}H_{AA}&H_{AB}\\H_{BA}&H_{BB}\end{pmatrix}
+\begin{pmatrix}c_A\\c_B\end{pmatrix}
+=E
+\begin{pmatrix}S_{AA}&S_{AB}\\S_{BA}&S_{BB}\end{pmatrix}
+\begin{pmatrix}c_A\\c_B\end{pmatrix}.
+$$
+
+    <p>Eliminating B generally produces an energy-dependent effective operator in A. NMTO interpolation compresses that dependence into a fixed multi-energy basis. The resulting orbital contains neighbouring-site and other-channel tails, so being centred on one atom or symmetry channel does not make it an isolated atomic orbital.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="orbital nonuniqueness" titleEn="Orbital nonuniqueness" kind="boundary">
+  <div class="bilingual-section__zh">target subspace 内仍可进行 unitary/gauge transformations；mesh、active channels、screening、orthogonalization 与 localization criterion 也会改变 NMTO shape。可验证对象是 subspace、interpolated bands、projected observables 与 declared gauge 下的 matrix elements，不是唯一“真实 orbital”。</div>
+  <div class="bilingual-section__en" lang="en">Unitary or gauge transformations remain possible inside the target subspace, and the mesh, active channels, screening, orthogonalization, and localization criterion alter NMTO shapes. Verifiable objects are the subspace, interpolated bands, projected observables, and matrix elements in a declared gauge—not a unique “real orbital.”</div>
+</BilingualCallout>
+
+<span id="section-17-10" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.10 Full Potential in Augmented Methods | 增强方法中的 full potential
+
+<BilingualSection titleZh="sphere 作为 representation boundary" titleEn="A sphere as a representation boundary">
+  <div class="bilingual-section__zh">
+    <p>full-potential formulation 中，sphere 不再声明 potential 必须 spherical 或 interstitial 必须 constant。它只划分两种高效 representations：</p>
+
+$$
+V(\mathbf r)=
+\begin{cases}
+\sum_{LM}V_{LM}^{I}(r_I)Y_{LM}(\widehat{\mathbf r_I}),&\mathbf r\in\Omega_I,\\
+\sum_{\mathbf G}V_{\mathbf G}e^{i\mathbf G\cdot\mathbf r}\ \text{or a real-space grid},&\mathbf r\in\Omega_{int}.
+\end{cases}
+$$
+
+    <p>basis functions 仍可由 spherical reference potential 生成，但 full nonspherical $\Delta V$ 通过 matrix elements coupling different angular channels。sphere choice 在 converged limit 只应影响 numerical efficiency。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>In a full-potential formulation, a sphere no longer declares the potential to be spherical or the interstitial to be constant. It only separates two efficient representations:</p>
+
+$$
+V(\mathbf r)=
+\begin{cases}
+\sum_{LM}V_{LM}^{I}(r_I)Y_{LM}(\widehat{\mathbf r_I}),&\mathbf r\in\Omega_I,\\
+\sum_{\mathbf G}V_{\mathbf G}e^{i\mathbf G\cdot\mathbf r}\ \text{or a real-space grid},&\mathbf r\in\Omega_{int}.
+\end{cases}
+$$
+
+    <p>Basis functions can still be generated from a spherical reference potential, while the full nonspherical $\Delta V$ couples different angular channels through matrix elements. In the converged limit, sphere choice should affect numerical efficiency rather than physical observables.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock title="angular coupling inside a sphere | sphere 内的 angular coupling" assumptions={['wavefunctions expanded through l_max；','potential expanded through L_max；','radial and angular conventions declared consistently。']}>
+
+For sphere basis components
+
+$$
+\phi_{lm}(\mathbf r)=u_l(r)Y_{lm}(\hat{\mathbf r}),
+$$
+
+and potential
+
+$$
+V(\mathbf r)=\sum_{LM}V_{LM}(r)Y_{LM}(\hat{\mathbf r}),
+$$
+
+matrix elements are
+
+$$
+\langle lm|V|l'm'\rangle
+=\sum_{LM}
+\left[\int dr\,r^2u_l(r)V_{LM}(r)u_{l'}(r)\right]
+\mathcal G_{lm,LM,l'm'},
+$$
+
+where $\mathcal G$ is a Gaunt coefficient. Angular selection rules restrict nonzero couplings, but convergence still requires explicit tests of wavefunction, density, and potential angular cutoffs.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="density 与 Poisson equation" titleEn="Density and the Poisson equation">
+  <div class="bilingual-section__zh">
+
+self-consistency 还需要由 density 构造 Coulomb potential。sphere 内 sharply varying density 用 multipoles 表示；interstitial 用 smooth Fourier/grid representation；boundary values 与 multipole fields 必须连接。常用 bookkeeping 是
+
+$$
+n(\mathbf r)=\tilde n(\mathbf r)+
+\sum_I[n_I^1(\mathbf r)-\tilde n_I^1(\mathbf r)],
+$$
+
+即 everywhere smooth part 加 sphere-confined corrections。它与 PAW-like organization 有相似 algebra intuition，但 basis、transformation、overlap operator 与 frozen-core definitions 必须分别声明。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Self-consistency also requires construction of the Coulomb potential from the density. Sharply varying sphere densities are represented by multipoles, the interstitial by a smooth Fourier or grid representation, and boundary values and multipole fields must be connected. A common bookkeeping form is
+
+$$
+n(\mathbf r)=\tilde n(\mathbf r)+
+\sum_I[n_I^1(\mathbf r)-\tilde n_I^1(\mathbf r)],
+$$
+
+an everywhere-smooth part plus sphere-confined corrections. This shares an algebraic intuition with PAW-like organization, but the basis, transformation, overlap operator, and frozen-core definitions must be distinguished.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="LAPW 与 LMTO 的 angular demand" titleEn="Angular demands in LAPW and LMTO">
+  <div class="bilingual-section__zh"><p>LAPW 用许多 interstitial plane waves；每个 plane wave 在 sphere boundary 的 angular expansion 需要较高 $l_{\max}$ 才能保持 continuity。minimal LMTO basis 只保留 primary orbital channels，wavefunction angular range 较小，但 nonspherical potential/density coupling 仍可达到 channel products 所需的更高 L。</p><p>因此不能把一个 method 的 $l_{\max}$ 直接复制到另一 method。应分别收敛 wavefunction、density、potential 与 observable。</p></div>
+  <div class="bilingual-section__en" lang="en"><p>LAPW uses many interstitial plane waves, and the angular expansion of each plane wave at a sphere boundary needs a relatively high $l_{\max}$ to maintain continuity. A minimal LMTO basis retains only primary orbital channels and has a smaller wavefunction angular range, while nonspherical potential and density couplings can still require higher L from channel products.</p><p>An $l_{\max}$ from one method cannot be copied directly to the other. Wavefunction, density, potential, and observable cutoffs must be converged separately.</p></div>
+</BilingualSection>
+
+<BilingualCallout titleZh="full potential claim ceiling" titleEn="Full-potential claim ceiling" kind="boundary">
+  <div class="bilingual-section__zh">full potential 表示未施加 muffin-tin/ASA potential-shape approximation。它不证明 radial/angular/interstitial basis complete，不删除 linearization error、core/relativity choices、SCF residual、finite k mesh 或 exchange-correlation error。</div>
+  <div class="bilingual-section__en" lang="en">Full potential means that no muffin-tin or ASA potential-shape approximation is imposed. It does not prove radial, angular, or interstitial basis completeness, nor remove linearization error, core or relativity choices, SCF residuals, finite k sampling, or exchange-correlation error.</div>
+</BilingualCallout>

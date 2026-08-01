@@ -1,0 +1,117 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="method-comparison" class="chapter-anchor" aria-hidden="true"></span>
+
+## 方法比较、收敛协议与计算连接 | Method comparison, convergence, and computational connections
+
+<BilingualSection titleZh="linear augmented methods comparison" titleEn="Comparison of linear augmented methods">
+  <div class="bilingual-section__zh">
+
+| 方法 | fixed basis construction | 主要优势 | 独立误差 |
+| --- | --- | --- | --- |
+| LAPW | interstitial plane waves + sphere `u_l, u-dot_l` value/slope matching | systematic interstitial convergence、full potential、all-electron resolution | G cutoff、angular cutoffs、linearization/local orbitals、core/relativity |
+| LMTO | minimal augmented heads/tails + linearized potential functions | compact physical representation、interpretation、screened short range | ASA/interstitial、minimal-basis completeness、screening/downfolding、linearization |
+| NMTO | multi-energy interpolation and downfolded target channels | wide target window、isolated target bands、compact effective Hamiltonians | mesh placement/order、active-subspace choice、gauge/nonuniqueness、force implementation |
+| full-potential augmented | sphere angular + interstitial smooth representations | removes potential-shape approximation | radial/angular/interstitial truncation and all method-specific errors remain |
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+| Method | Fixed-basis construction | Main strengths | Independent errors |
+| --- | --- | --- | --- |
+| LAPW | interstitial plane waves plus sphere `u_l, u-dot_l` value and slope matching | systematic interstitial convergence, full potential, all-electron resolution | G cutoff, angular cutoffs, linearization or local orbitals, core and relativity |
+| LMTO | minimal augmented heads and tails plus linearized potential functions | compact physical representation, interpretation, screened short range | ASA or interstitial treatment, minimal-basis completeness, screening, downfolding, linearization |
+| NMTO | multi-energy interpolation and downfolded target channels | wide target windows, isolated target bands, compact effective Hamiltonians | mesh placement and order, active-subspace choice, gauge nonuniqueness, force implementation |
+| Full-potential augmented | sphere angular plus interstitial smooth representations | removal of the potential-shape approximation | radial, angular, and interstitial truncations and all method-specific errors remain |
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="最低收敛协议" titleEn="Minimum convergence protocol">
+  <div class="bilingual-section__zh"><ol>
+    <li>固定 structure、functional、spin、relativity、core/semicore 与 occupation conventions。</li>
+    <li>对每个 l channel 扫描 linearization energies、local orbitals 或 NMTO mesh。</li>
+    <li>分别收敛 radial mesh、sphere radii、wavefunction/density/potential angular cutoffs。</li>
+    <li>LAPW 收敛 interstitial cutoff；LMTO 收敛 envelopes、screening、basis channels 与 ASA/full-potential choice；NMTO 收敛 energy mesh/order 与 downfolding。</li>
+    <li>收敛 k mesh、smearing、SCF residual、energy differences 与 target observable。</li>
+    <li>forces/stress/phonons 用 finite differences、symmetry、sum rules 与 alternative sphere partitions 验证。</li>
+    <li>在第二个合理 representation 或 independent implementation 上复核高影响结论。</li>
+  </ol></div>
+  <div class="bilingual-section__en" lang="en"><ol>
+    <li>Fix structure, functional, spin, relativity, core or semicore, and occupation conventions.</li>
+    <li>Scan linearization energies, local orbitals, or NMTO meshes for every l channel.</li>
+    <li>Converge radial mesh, sphere radii, and wavefunction, density, and potential angular cutoffs separately.</li>
+    <li>Converge the LAPW interstitial cutoff; LMTO envelopes, screening, basis channels, and ASA or full-potential choice; and NMTO energy mesh, order, and downfolding.</li>
+    <li>Converge k sampling, smearing, SCF residual, energy differences, and the target observable.</li>
+    <li>Validate forces, stress, and phonons with finite differences, symmetry, sum rules, and alternative sphere partitions.</li>
+    <li>Cross-check high-impact conclusions with a second reasonable representation or independent implementation.</li>
+  </ol></div>
+</BilingualSection>
+
+<BilingualCallout titleZh="常见误判" titleEn="Recurrent misjudgments" kind="boundary">
+  <div class="bilingual-section__zh"><ol>
+    <li>把 numerical linearization 当成 Schrödinger equation 从 nonlinear 变 linear。</li>
+    <li>把 dot 误读成 time derivative。</li>
+    <li>把 reference energy 当作固定 physical orbital energy。</li>
+    <li>认为 $u_l$ 与 $\dot u_l$ 会自动使 basis dimension 翻倍。</li>
+    <li>只增加 plane waves，不检查 radial matching conditioning 或 linearization window。</li>
+    <li>用一个 $E_l$ 同时覆盖 distant semicore 与 conduction states，却不加 local orbitals。</li>
+    <li>把 all-electron/full-potential 标签当作无 basis、functional 或 relativistic error。</li>
+    <li>把 minimal LMTO basis 的可解释性当作 completeness。</li>
+    <li>把 screened/tight-binding LMTO parameter 当作 unique transferable hopping。</li>
+    <li>把 NMTO/downfolded orbital 当作唯一真实 orbital。</li>
+    <li>因 mesh energies 上 exact 就忽略 mesh 之间与 window 外 error。</li>
+    <li>只比较 bands，不检查 density、energy、force 与 sphere/representation invariance。</li>
+  </ol></div>
+  <div class="bilingual-section__en" lang="en"><ol>
+    <li>Confusing numerical linearization with changing a nonlinear Schrödinger equation into a linear one.</li>
+    <li>Reading the dot as a time derivative.</li>
+    <li>Treating a reference energy as a fixed physical orbital energy.</li>
+    <li>Assuming $u_l$ and $\dot u_l$ automatically double the basis dimension.</li>
+    <li>Adding plane waves without checking radial-matching conditioning or the linearization window.</li>
+    <li>Using one $E_l$ for distant semicore and conduction states without local orbitals.</li>
+    <li>Treating all-electron or full-potential labels as absence of basis, functional, or relativistic error.</li>
+    <li>Equating interpretability of a minimal LMTO basis with completeness.</li>
+    <li>Treating a screened tight-binding LMTO parameter as a unique transferable hopping.</li>
+    <li>Treating an NMTO or downfolded orbital as the unique real orbital.</li>
+    <li>Ignoring between-node and outside-window error because the mesh energies are exact.</li>
+    <li>Comparing bands without density, energy, force, and sphere or representation invariance.</li>
+  </ol></div>
+</BilingualCallout>
+
+<span id="exercises" class="chapter-anchor" aria-hidden="true"></span>
+
+## 原创练习与来源边界 | Original exercises and source boundary
+
+<BilingualSection titleZh="十道原创练习" titleEn="Ten original exercises">
+  <div class="bilingual-section__zh"><ol>
+    <li><strong>derivative equation：</strong>从 $(H_l-E)u_l(E)=0$ 推导 u-dot equation，并说明 normalization gauge。</li>
+    <li><strong>orthogonality：</strong>对 fixed sphere norm 推导 inner product(u,u-dot)=0，并比较 fixed boundary-value convention。</li>
+    <li><strong>error scaling：</strong>对 analytic radial family 验证 first-order state error 随 ΔE² 缩放。</li>
+    <li><strong>LAPW matching：</strong>解 value/slope 2×2 system，扫描 determinant 与 reference energy。</li>
+    <li><strong>semicore：</strong>构造 valence/semicore 两个 target energies，比较 one-reference basis 与 local-orbital enrichment。</li>
+    <li><strong>angular cutoffs：</strong>用 spherical-harmonic product rules 估计 wavefunction、density 与 potential cutoffs。</li>
+    <li><strong>LMTO range：</strong>扫描 screening 与 neighbour cutoff，比较 band、energy 与 force surrogate errors。</li>
+    <li><strong>ASA sensitivity：</strong>改变 sphere radii/empty-sphere filling，区分 representation changes 与 physical trends。</li>
+    <li><strong>NMTO interpolation：</strong>用三个 energy nodes 重建 cubic target，验证 product error 与 outside-window growth。</li>
+    <li><strong>full potential：</strong>列出 sphere/interstitial density、potential、Poisson 与 matrix-element cutoffs，并设计独立 convergence matrix。</li>
+  </ol></div>
+  <div class="bilingual-section__en" lang="en"><ol>
+    <li><strong>Derivative equation:</strong> derive the u-dot equation and identify the normalization gauge.</li>
+    <li><strong>Orthogonality:</strong> derive the zero inner product for fixed sphere norm and compare a fixed-boundary-value convention.</li>
+    <li><strong>Error scaling:</strong> verify ΔE² state-error scaling for an analytic radial family.</li>
+    <li><strong>LAPW matching:</strong> solve the value and slope system and scan determinant conditioning versus reference energy.</li>
+    <li><strong>Semicore:</strong> compare one reference with local-orbital enrichment for separated valence and semicore targets.</li>
+    <li><strong>Angular cutoffs:</strong> estimate wavefunction, density, and potential cutoffs from spherical-harmonic products.</li>
+    <li><strong>LMTO range:</strong> scan screening and neighbour cutoff and compare band, energy, and force-surrogate errors.</li>
+    <li><strong>ASA sensitivity:</strong> vary sphere radii and empty-sphere filling and distinguish representation changes from physical trends.</li>
+    <li><strong>NMTO interpolation:</strong> reconstruct a cubic target from three energy nodes and verify product error and outside-window growth.</li>
+    <li><strong>Full potential:</strong> list sphere and interstitial density, potential, Poisson, and matrix-element cutoffs and design a convergence matrix.</li>
+  </ol></div>
+</BilingualSection>
+
+<BilingualCallout titleZh="来源与版权边界" titleEn="Source and copyright boundary" kind="source">
+  <div class="bilingual-section__zh">本页只使用 bibliographic identity、目录标题、印刷页定位与公式语境。公开叙述、推导组织、表格、五个教学模型、验收代码、误判列表与练习均为原创。未提交教材 PDF、扫描、source figures/captions、source numerical examples、source exercise wording、答案或长篇翻译。</div>
+  <div class="bilingual-section__en" lang="en">This page uses only bibliographic identity, directory titles, printed-page locators, and equation context. The exposition, derivation organization, tables, five teaching models, acceptance code, misconception list, and exercises are original. No textbook PDF, scan, source figure or caption, source numerical example, source exercise wording, answer, or long translation is committed.</div>
+</BilingualCallout>

@@ -1,0 +1,97 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="reference-orientation"></span>
+
+## 使用定位 | Reference Orientation
+
+<BilingualSection titleZh="公式表也需要约定审计" titleEn="A formula collection still requires a convention audit" eyebrow="【Martin Appendix K | Martin Appendix K】">
+  <div class="bilingual-section__zh">
+
+Appendix K 集中列出正文反复调用的 special functions、angular basis 与 polynomial basis。它的主要风险不是公式数量，而是同名对象可能采用不同 normalization、phase、index ordering 或 domain mapping。一个正确的公式若与另一处使用不同 convention，仍会产生错误的 projector、Gaunt coefficient、orbital label 或 operator expansion。
+
+本页因而把每组公式组织成四层：definition、recurrence/selection rule、deterministic identity、implementation boundary。书中公式编号用于来源定位；网站推导、数值核、图形和练习均为原创。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Appendix K collects special functions, angular bases, and polynomial bases repeatedly used in the main text. Its principal risk is not the number of formulas but the fact that identically named objects can use different normalizations, phases, index orderings, or domain maps. A correct formula combined with another convention can still produce an incorrect projector, Gaunt coefficient, orbital label, or operator expansion.
+
+The website therefore organizes each group into four layers: definition, recurrence or selection rule, deterministic identity, and implementation boundary. Source equation numbers provide locators; derivations, kernels, diagrams, and exercises are original.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="完成本附录后应能判断" titleEn="Judgements enabled by this Appendix" kind="practice">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>判断球 Bessel/Neumann 递推在给定 <code>(l,x)</code> 区域是否数值稳定。</li>
+      <li>从 <code>P_l^m</code>、normalization 和 <code>e^(imφ)</code> 重建同一 convention 的 <code>Y_lm</code>。</li>
+      <li>写出复球谐与 Martin K.11 实球谐之间的可逆变换，并识别代码间 sign/order 差异。</li>
+      <li>在计算 3j、Clebsch–Gordan 或 Gaunt 前先应用 triangle、magnetic 和 parity gates。</li>
+      <li>把任意有限谱区间映射到 <code>[−1,1]</code> 后再使用 Chebyshev recursion。</li>
+      <li>区分公式恒等式验证、浮点稳定性、截断收敛和真实电子结构计算验证。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Decide whether a spherical-Bessel or Neumann recurrence is numerically stable for a given <code>(l,x)</code> regime.</li>
+      <li>Reconstruct <code>Y_lm</code> from <code>P_l^m</code>, its normalization, and <code>e^(imφ)</code> under one consistent convention.</li>
+      <li>Write an invertible transformation between complex harmonics and the Martin K.11 real basis, and detect code-dependent signs or ordering.</li>
+      <li>Apply triangle, magnetic, and parity gates before evaluating a 3j, Clebsch–Gordan, or Gaunt coefficient.</li>
+      <li>Map a finite spectral interval to <code>[−1,1]</code> before applying a Chebyshev recurrence.</li>
+      <li>Distinguish algebraic-identity validation, floating-point stability, truncation convergence, and validation of a real electronic-structure calculation.</li>
+    </ol>
+  </div>
+</BilingualCallout>
+
+<span id="objects-and-conventions"></span>
+
+## 对象、归一化与相位约定 | Objects, Normalizations, and Phase Conventions
+
+<BilingualSection titleZh="统一对象表" titleEn="Unified object table" eyebrow="【符号审计 | Notation audit】">
+  <div class="bilingual-section__zh">
+
+网站采用：球 Bessel <code>j_l</code>、球 Neumann <code>n_l</code>、Hankel <code>h_l^(1,2)=j_l±in_l</code>；Condon–Shortley associated Legendre <code>P_l^m</code>；单位球面归一的复球谐 <code>Y_lm</code>；Martin K.11 的正 <code>m</code> 实通道 <code>√2 ReY_lm</code>、<code>√2 ImY_lm</code>；标准 Wigner 3j/Clebsch–Gordan 名称；标准复球谐三重积 Gaunt coefficient；type-I Chebyshev polynomial <code>T_n</code>。
+
+<code>l,m</code> 是 orbital angular momentum 的整数指标。数值 3j kernel 限制在整数 <code>j</code>，不冒充完整 half-integer spin-coupling library。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The website uses spherical Bessel <code>j_l</code>, spherical Neumann <code>n_l</code>, Hankel <code>h_l^(1,2)=j_l±in_l</code>, Condon–Shortley associated Legendre functions <code>P_l^m</code>, unit-sphere-normalized complex harmonics <code>Y_lm</code>, the positive-<code>m</code> Martin K.11 real channels <code>√2 ReY_lm</code> and <code>√2 ImY_lm</code>, the standard Wigner 3j and Clebsch–Gordan names, standard complex-harmonic Gaunt integrals, and type-I Chebyshev polynomials <code>T_n</code>.
+
+The indices <code>l,m</code> are integer orbital-angular-momentum labels. The deterministic 3j kernel is deliberately restricted to integer <code>j</code> and is not presented as a complete half-integer spin-coupling library.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Source-title 与 phase audit" titleEn="Source-title and phase audit" eyebrow="【来源约定 | Source convention】">
+  <div class="bilingual-section__zh">
+
+Martin K.2 的脚注明确指出：有些文献把 <code>(−1)^m</code> 放在 <code>Y_lm</code> 定义中，有些放在 <code>P_l^m</code> 中；最终球谐可相同，但中间公式必须一致。本网站把 Condon–Shortley factor 放入 <code>P_l^m</code>，与 K.6 一致。
+
+Martin K.4 的标题印作 “Clebsch–Gordon”，而标准术语是 “Clebsch–Gordan”。来源地图保留原节标题；正文采用标准名称并明确记录这一拼写差异。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The footnote in Martin K.2 explicitly notes that some references attach <code>(−1)^m</code> to the definition of <code>Y_lm</code>, while others attach it to <code>P_l^m</code>. The final harmonic can be identical, but intermediate formulas must remain consistent. The website includes the Condon–Shortley factor in <code>P_l^m</code>, matching K.6.
+
+The heading of Martin K.4 is printed as “Clebsch–Gordon”, whereas the standard name is “Clebsch–Gordan”. The source map preserves the printed section title; the exposition uses the standard name and records the discrepancy.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="与相邻内容的边界" titleEn="Boundary with neighbouring content" eyebrow="【课程接口 | Course interface】">
+  <div class="bilingual-section__zh">
+
+Appendix J 使用 K.1–K.2 的球函数和角函数处理单中心散射；Chapters 10、11、14、16–18 使用这些对象构造 radial solutions、projectors、multipoles、augmented bases 和 polynomial propagation；Appendix O 继续完整 angular-momentum operator algebra；Appendix Q 处理 group representations。K 只提供一致的公式与诊断，不替代这些章节的物理推导。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Appendix J uses the radial and angular functions of K.1–K.2 for single-centre scattering. Chapters 10, 11, 14, and 16–18 use them in radial solutions, projectors, multipoles, augmented bases, and polynomial propagation. Appendix O develops angular-momentum operators, and Appendix Q develops group representations. Appendix K provides consistent formulas and diagnostics; it does not replace those physical derivations.
+
+  </div>
+</BilingualSection>

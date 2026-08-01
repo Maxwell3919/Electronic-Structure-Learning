@@ -98,12 +98,6 @@ for (const item of contentStatus) {
   }
 }
 
-for (const id of ['martin-chapter-17', 'martin-chapter-23']) {
-  const item = contentStatus.find((entry) => entry.id === id);
-  assert(item?.structuralState === 'outline', `${id} must remain outline until its content PR is merged`);
-  assert(item?.technicalState === 'not-registered', `${id} must not be registered from an unmerged content PR`);
-}
-
 for (const item of [...labs, ...cases]) {
   assert(catalogStatuses.includes(item.status), `catalog item must remain planned: ${item.id}`);
   assert(routeExists(item.route), `catalog route does not exist: ${item.route}`);
