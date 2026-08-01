@@ -88,7 +88,7 @@ for (const [l, m] of [[1, 1], [2, 1], [3, 2], [4, 3]]) {
   const positive = sphericalHarmonic(l, m, theta, phi);
   const negative = sphericalHarmonic(l, -m, theta, phi);
   close(negative.re, (-1) ** m * positive.re, 3e-14, `Y negative-m real l=${l},m=${m}`);
-  close(negative.im, -(-1) ** m * positive.im, 3e-14, `Y negative-m imag l=${l},m=${m}`);
+  close(negative.im, -(((-1) ** m) * positive.im), 3e-14, `Y negative-m imag l=${l},m=${m}`);
   close(sourceRealSphericalHarmonic(l, m, theta, phi, 'cos'), Math.SQRT2 * positive.re, 3e-14, 'real cosine channel');
   close(sourceRealSphericalHarmonic(l, m, theta, phi, 'sin'), Math.SQRT2 * positive.im, 3e-14, 'real sine channel');
 }
