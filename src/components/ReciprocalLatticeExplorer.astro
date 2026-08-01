@@ -48,8 +48,8 @@
 
   <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-ch04-live-contract="bilingual-atomic">
     <strong data-ch04-duality>aᵢ·bⱼ = 2πδᵢⱼ</strong>
-    <span data-ch04-areas>实空间原胞面积 Acell = 0.866；倒空间原胞面积 ABZ = 45.586</span>
-    <span lang="en" data-ch04-areas-en>Direct-cell area Acell = 0.866; reciprocal-cell area ABZ = 45.586</span>
+    <span data-ch04-areas>原始矢量夹角 θ = 60°；实空间原胞面积 Acell = 0.866；倒空间原胞面积 ABZ = 45.586</span>
+    <span lang="en" data-ch04-areas-en>Primitive-vector angle θ = 60°; direct-cell area Acell = 0.866; reciprocal-cell area ABZ = 45.586</span>
     <span data-ch04-product>面积乘积 Acell ABZ = 39.478 = (2π)²</span>
     <span lang="en" data-ch04-product-en>Area product Acell ABZ = 39.478 = (2π)²</span>
   </div>
@@ -129,11 +129,12 @@
       if (duality instanceof HTMLElement) {
         duality.textContent = `a1·b1 = ${lattice.dualityMatrix[0][0].toFixed(3)}; a1·b2 = ${lattice.dualityMatrix[0][1].toFixed(3)}; a2·b1 = ${lattice.dualityMatrix[1][0].toFixed(3)}; a2·b2 = ${lattice.dualityMatrix[1][1].toFixed(3)}`;
       }
+      const angleLabel = `${angleDegrees.toFixed(0)}°`;
       const directArea = lattice.directArea.toFixed(3);
       const reciprocalArea = lattice.reciprocalArea.toFixed(3);
       const areaProduct = lattice.areaProduct.toFixed(3);
-      if (areas instanceof HTMLElement) areas.textContent = `实空间原胞面积 Acell = ${directArea}；倒空间原胞面积 ABZ = ${reciprocalArea}`;
-      if (areasEn instanceof HTMLElement) areasEn.textContent = `Direct-cell area Acell = ${directArea}; reciprocal-cell area ABZ = ${reciprocalArea}`;
+      if (areas instanceof HTMLElement) areas.textContent = `原始矢量夹角 θ = ${angleLabel}；实空间原胞面积 Acell = ${directArea}；倒空间原胞面积 ABZ = ${reciprocalArea}`;
+      if (areasEn instanceof HTMLElement) areasEn.textContent = `Primitive-vector angle θ = ${angleLabel}; direct-cell area Acell = ${directArea}; reciprocal-cell area ABZ = ${reciprocalArea}`;
       if (product instanceof HTMLElement) product.textContent = `面积乘积 Acell ABZ = ${areaProduct} = (2π)²`;
       if (productEn instanceof HTMLElement) productEn.textContent = `Area product Acell ABZ = ${areaProduct} = (2π)²`;
     };
