@@ -1,0 +1,100 @@
+---
+import { compositeGaugeRotation } from '../../../data/part05/ch23WannierModels.mjs';
+
+const componentId = 'ch23-composite-gauge';
+const defaults = { theta: 0.45, separation: 0.7 };
+const result = compositeGaugeRotation(defaults);
+const width = 820;
+const height = 330;
+const x0 = 100;
+const x1 = 720;
+const xScale = (x) => x0 + x / defaults.separation * (x1 - x0);
+---
+
+<figure class="chapter-visual composite-gauge" id={componentId}>
+  <figcaption>
+    <strong>复合带幺正旋转：projector 不变，单个中心改变 | Composite-band rotation: fixed projector, moving individual centres</strong>
+    <span>原创二轨道模型：固定完整二维子空间，只旋转其中的正交 frame。</span>
+    <span lang="en">Original two-orbital model: retain the complete two-dimensional subspace while rotating its orthonormal frame.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>旋转角 θ (rad) <input data-theta type="range" min="0" max="1.5708" step="0.02" value={defaults.theta} /></label>
+    <label>轨道间距 d (cell) <input data-separation type="range" min="0.2" max="1" step="0.02" value={defaults.separation} /></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>两个局域基函数经幺正旋转后的中心</title>
+    <desc id={`${componentId}-desc`}>端点 A 和 B 是原始轨道中心，两个彩色标记是旋转后 Wannier 函数中心，其总和保持不变。</desc>
+    <line class="axis" x1={x0} x2={x1} y1="180" y2="180" />
+    <circle class="basis" cx={xScale(0)} cy="180" r="12" />
+    <circle class="basis" cx={xScale(defaults.separation)} cy="180" r="12" />
+    <text x={xScale(0)} y="215" text-anchor="middle">A: x=0</text>
+    <text data-b-label x={xScale(defaults.separation)} y="215" text-anchor="middle">B: x=d</text>
+    <circle data-center-1 class="centre centre-1" cx={xScale(result.centers[0])} cy="125" r="11" />
+    <circle data-center-2 class="centre centre-2" cx={xScale(result.centers[1])} cy="245" r="11" />
+    <line data-link-1 class="mix-link" x1={xScale(0)} y1="180" x2={xScale(result.centers[0])} y2="125" />
+    <line data-link-2 class="mix-link" x1={xScale(defaults.separation)} y1="180" x2={xScale(result.centers[1])} y2="245" />
+    <text data-centre-1-label x={xScale(result.centers[0])} y="102" text-anchor="middle">w₁</text>
+    <text data-centre-2-label x={xScale(result.centers[1])} y="278" text-anchor="middle">w₂</text>
+    <text x="410" y="38" text-anchor="middle">P = |A⟩⟨A| + |B⟩⟨B| = |w₁⟩⟨w₁| + |w₂⟩⟨w₂|</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>x̄₁ = <output data-x1>{result.centers[0].toFixed(3)}</output></span>
+    <span>x̄₂ = <output data-x2>{result.centers[1].toFixed(3)}</output></span>
+    <span>x̄₁+x̄₂ = <output data-sum>{result.centerSum.toFixed(3)}</output></span>
+    <span>Ω = <output data-spread>{result.totalSpread.toFixed(4)}</output></span>
+    <span>P₀₁ = <output data-projector>{result.projector[0][1].toExponential(1)}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>两个正交局域轨道位于 x=0 与 x=d，以实幺正矩阵 U(θ) 旋转。完整两维 projector 始终为单位矩阵。</p>
+    <p><strong>验收：</strong>任意 θ 下 P₀₁=0、Tr P=2，两个中心之和恒为 d；θ=0 时中心位于 A/B 且 spread=0；混合后单个中心和 spread 改变。</p>
+    <p><strong>边界：</strong>该模型只展示固定 composite subspace 内的 gauge 非唯一性。真实 k-dependent rotation 还会产生跨晶胞 tails，并受对称性和拓扑约束。</p>
+  </div>
+
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认旋转角下的两个中心、projector 恒等式和读数仍可见。</p></noscript>
+</figure>
+
+<script>
+  import { compositeGaugeRotation } from '../../../data/part05/ch23WannierModels.mjs';
+  const root = document.getElementById('ch23-composite-gauge');
+  if (root) {
+    const theta = root.querySelector('[data-theta]'); const separation = root.querySelector('[data-separation]');
+    const c1 = root.querySelector('[data-center-1]'); const c2 = root.querySelector('[data-center-2]');
+    const link1 = root.querySelector('[data-link-1]'); const link2 = root.querySelector('[data-link-2]');
+    const bLabel = root.querySelector('[data-b-label]');
+    const outputs = { x1:root.querySelector('[data-x1]'), x2:root.querySelector('[data-x2]'), sum:root.querySelector('[data-sum]'), spread:root.querySelector('[data-spread]'), projector:root.querySelector('[data-projector]') };
+    if ([theta,separation].every((item)=>item instanceof HTMLInputElement)
+      && [c1,c2].every((item)=>item instanceof SVGCircleElement)
+      && [link1,link2].every((item)=>item instanceof SVGLineElement)
+      && bLabel instanceof SVGTextElement
+      && Object.values(outputs).every((item)=>item instanceof HTMLOutputElement)) {
+      const x0=100; const x1=720;
+      const update=()=>{
+        const d=Number(separation.value); const result=compositeGaugeRotation({theta:Number(theta.value),separation:d});
+        const scale=(x)=>x0+x/d*(x1-x0);
+        c1.setAttribute('cx',String(scale(result.centers[0]))); c2.setAttribute('cx',String(scale(result.centers[1])));
+        link1.setAttribute('x2',String(scale(result.centers[0]))); link2.setAttribute('x1',String(scale(d))); link2.setAttribute('x2',String(scale(result.centers[1])));
+        bLabel.setAttribute('x',String(scale(d)));
+        outputs.x1.value=result.centers[0].toFixed(3); outputs.x2.value=result.centers[1].toFixed(3);
+        outputs.sum.value=result.centerSum.toFixed(3); outputs.spread.value=result.totalSpread.toFixed(4);
+        outputs.projector.value=result.projector[0][1].toExponential(1);
+      };
+      [theta,separation].forEach((input)=>input.addEventListener('input',update)); update();
+    }
+  }
+</script>
+
+<style>
+  .composite-gauge { width:100%; min-width:0; max-width:100%; margin-inline:0; overflow-x:auto; }
+  .composite-gauge svg { display:block; width:100%; min-width:40rem; height:auto; }
+  .axis { stroke:currentColor; stroke-width:2; }
+  .basis { fill:var(--sl-color-gray-5); stroke:currentColor; }
+  .centre { stroke:currentColor; stroke-width:1.5; }
+  .centre-1 { fill:var(--sl-color-accent-high); }
+  .centre-2 { fill:var(--sl-color-gray-3); }
+  .mix-link { stroke:var(--sl-color-gray-3); stroke-dasharray:5 4; }
+  text { fill:currentColor; font-size:14px; }
+</style>

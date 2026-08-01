@@ -1,0 +1,45 @@
+---
+const rows = [
+  ['23.1', 'Definition and Properties', 481, 'Bloch gauge, periodic gauge, Fourier transforms, composite-band unitary frame, orthonormality, centres and moments'],
+  ['23.2', 'Maximally Projected Wannier Functions', 485, 'Trial projections, atom/bond centres, order-N connection and Si example'],
+  ['23.3', 'Maximally Localized Wannier Functions', 487, 'Spread decomposition, projectors, discrete overlaps, translation-covariant formulas and minimization'],
+  ['23.4', 'Nonorthogonal Localized Functions', 491, 'Nonsingular nonunitary transform, overlap/rank constraint and localization advantage'],
+  ['23.5', 'Wannier Functions for Entangled Bands', 492, 'Reduced subspace, downfolding, energy-window dependence and interpolation boundary'],
+  ['23.6', 'Hybrid Wannier Functions', 494, 'One-direction transform, transverse momentum and hybrid centres'],
+  ['23.7', 'Applications', 495, 'Interpolation, fine band features, linear scaling, transport and many-body models'],
+  ['Exercises', 'Original source exercises not reproduced', 496, 'Website exercises are independently written'],
+];
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter23-source-map-title">
+  <h2 id="chapter23-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    Martin 第 2 版 Chapter 23，印刷页 481–496；编号公式 (23.1)–(23.37)。源图 23.1–23.5、图注、原书练习和答案不进入仓库。
+  </p>
+  <p lang="en">
+    Martin 2nd ed., Chapter 23, printed pp. 481–496; numbered equations (23.1)–(23.37). Source Figures 23.1–23.5, captions, source exercises, and answers are not reproduced.
+  </p>
+  <div class="chapter-source-map__scroll" tabindex="0" aria-label="Chapter 23 source map table">
+    <table>
+      <thead>
+        <tr><th>Section</th><th>Martin title</th><th>Printed page</th><th>Website treatment</th></tr>
+      </thead>
+      <tbody>
+        {rows.map(([section, title, page, treatment]) => (
+          <tr><td>{section}</td><td>{title}</td><td>{page}</td><td>{treatment}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-boundary">
+    【来源记录】章节标题、页码和编号公式范围来自所附 Martin PDF。正文、推导、图形、数据内核和练习为原创重建。
+  </p>
+</section>
+
+<style>
+  .chapter-source-map__scroll { max-width: 100%; overflow-x: auto; }
+  table { min-width: 52rem; width: 100%; border-collapse: collapse; }
+  th, td { border: 1px solid var(--sl-color-gray-5); padding: 0.55rem; vertical-align: top; }
+  th { text-align: left; background: var(--sl-color-gray-6); }
+  .source-boundary { font-size: 0.92rem; }
+</style>
