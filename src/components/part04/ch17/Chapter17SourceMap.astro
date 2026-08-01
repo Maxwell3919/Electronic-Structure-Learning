@@ -1,0 +1,34 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const unit = catalog.parts[3].units[5];
+const anchorFor = (sectionId) => `#section-${sectionId.replace('.', '-')}`;
+---
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="chapter17-source-map-title">
+  <h2 id="chapter17-source-map-title">来源地图 | Source Map</h2>
+  <p>
+    下表只记录 Martin 第 2 版目录定位与网站覆盖状态，不转录教材正文、图表、数值案例或习题。
+    <span lang="en">The table records second-edition locators and site coverage without reproducing textbook prose, figures, numerical examples, or exercises.</span>
+  </p>
+  <table>
+    <thead><tr><th>节 | Section</th><th>Martin 标题 | Martin title</th><th>印刷页 | Printed page</th><th>网站位置 | Site position</th><th>状态 | Status</th></tr></thead>
+    <tbody>
+      {unit.sections.map((section) => (
+        <tr>
+          <td>{section.id}</td>
+          <td lang="en">{section.title}</td>
+          <td>{section.page}</td>
+          <td><a href={anchorFor(section.id)}>本页对应段落 | matching section</a></td>
+          <td>正文、推导与边界已填充 | body, derivations, and boundaries filled</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="chapter-source-map__supplement"><strong>补充定位：</strong>Chapter 10（radial equations）、Chapters 11/13（pseudopotential、PAW 与 plane-wave comparison）、Chapter 16（nonlinear augmented methods）、Appendix D（variational/2n+1 relations）、Appendices F–I（electrostatics、stress、local densities 与 forces）和 Chapter 18（locality/O(N) boundary）。</p>
+  <p class="chapter-source-map__supplement" lang="en"><strong>Supplemental locators:</strong> Chapter 10 for radial equations; Chapters 11 and 13 for pseudopotential, PAW, and plane-wave comparisons; Chapter 16 for nonlinear augmented methods; Appendix D for variational and 2n+1 relations; Appendices F–I for electrostatics, stress, local densities, and forces; and Chapter 18 for the locality and O(N) boundary.</p>
+</section>
+
+<style>
+  .chapter-source-map__supplement { margin-top: 0.8rem; border-left: 0.25rem solid var(--sl-color-accent); padding: 0.65rem 0.8rem; background: var(--sl-color-gray-6); }
+</style>
