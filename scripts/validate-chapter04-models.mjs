@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   dot2,
   foldedFreeElectronBand,
@@ -16,6 +17,7 @@ const close = (actual, expected, tolerance = 1e-10, label = 'value') => {
   assert.ok(Number.isFinite(actual), `${label} must be finite, received ${actual}`);
   assert.ok(Math.abs(actual - expected) <= tolerance, `${label}: ${actual} != ${expected}`);
 };
+const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 const square = reciprocalLattice2D({ a1: [2, 0], a2: [0, 2] });
 close(square.b1[0], Math.PI, 1e-12, 'square b1x');
@@ -90,4 +92,52 @@ assert.throws(() => parabolicDOS({ dimension: 4, energy: 1 }), RangeError);
 assert.throws(() => regularizedParabolicDOS({ dimension: 2, energy: 1, eta: 0 }), RangeError);
 assert.throws(() => monkhorstPack1D({ count: 0 }), RangeError);
 
-console.log('Chapter 4 teaching-model validation passed: reciprocal-lattice duality, zone folding, parabolic DOS scaling, and k-grid weights checked.');
+const body = read('src/components/chapter04/Chapter04Body.astro');
+assert.match(body, /Chapter04DOSNormalizationAudit/);
+assert.ok(
+  body.indexOf('<IntegrationDOS />') < body.indexOf('<DOSNormalizationAudit />')
+    && body.indexOf('<DOSNormalizationAudit />') < body.indexOf('<Visualizations />'),
+  'The DOS normalization audit must follow Section 4.7 and precede the teaching models',
+);
+
+const audit = read('src/components/chapter04/Chapter04DOSNormalizationAudit.mdx');
+assert.match(audit, /data-ch4-dos-normalization-audit/);
+assert.match(audit, /data-source-locators="4\.34,4\.35,4\.46"/);
+assert.match(audit, /data-cell-dos-prefactor="Omega-cell-over-2pi-d"/);
+assert.match(audit, /data-volume-dos-prefactor="one-over-2pi-d"/);
+for (const equation of ['4.34', '4.35', '4.46']) {
+  assert.ok(audit.includes(equation), `DOS normalization audit must identify Eq. (${equation})`);
+}
+assert.ok(audit.includes('\\rho_{\\mathrm{cell}}'), 'Audit must define the per-cell DOS');
+assert.ok(audit.includes('\\rho_{\\mathrm{vol}}'), 'Audit must define the per-volume DOS');
+assert.ok(audit.includes('\\Omega_{\\mathrm{cell}}'), 'Audit must expose the primitive-cell volume factor');
+assert.match(audit, /归一化不一致|normalization mismatch/);
+assert.match(audit, /不推断作者|without claiming which expression/);
+assert.match(audit, /每原胞一个 state|one state per spin-resolved band per primitive cell/);
+
+const integrationDOS = read('src/components/chapter04/Chapter04IntegrationDOS.mdx');
+assert.ok(
+  integrationDOS.includes('\\frac{1}{(2\\pi)^d}'),
+  'Chapter 4 must retain the explicit per-volume DOS prefactor',
+);
+assert.ok(
+  integrationDOS.includes('E_c+\\frac12\\sum_{ij}H_{ij}q_iq_j'),
+  'The van Hove quadratic expansion must retain its one-half factor',
+);
+
+const visualFiles = [
+  ['src/components/ReciprocalLatticeExplorer.astro', ['data-ch04-areas-en', 'data-ch04-product-en']],
+  ['src/components/BlochBandFoldingExplorer.astro', ['data-ch04-fold-unfolded-en', 'data-ch04-fold-periodicity-en']],
+  ['src/components/DOSDimensionalityExplorer.astro', ['data-ch04-dos-edge-en', 'data-ch04-dos-note-en']],
+];
+for (const [path, markers] of visualFiles) {
+  const source = read(path);
+  assert.match(source, /aria-live="polite" aria-atomic="true" data-ch04-live-contract="bilingual-atomic"/);
+  for (const marker of markers) {
+    assert.ok(source.includes(marker), `${path} must contain ${marker}`);
+  }
+  assert.match(source, /[一-鿿]/, `${path} must retain Chinese live-status text`);
+  assert.match(source, /lang="en"/, `${path} must retain English live-status text`);
+}
+
+console.log('Chapter 4 validation passed: reciprocal duality, zone folding, DOS scaling, k-grid weights, Eq. (4.46) cell/volume normalization, and three bilingual atomic live regions checked.');
