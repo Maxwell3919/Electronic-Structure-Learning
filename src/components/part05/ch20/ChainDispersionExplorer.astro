@@ -160,6 +160,7 @@ const selected = diatomicFrequencies({ q: defaultQ, ...defaults });
       massInput.addEventListener('input', update);
       qInput.addEventListener('input', update);
       update();
+      root.dataset.interactionReady = 'true';
     }
   }
 </script>
