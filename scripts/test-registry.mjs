@@ -37,6 +37,14 @@ export const testRegistry = [
     category: 'performance',
   },
   {
+    id: 'runtime-lifecycle',
+    route: '/part-01-overview-and-background/chapter-03-theoretical-background/',
+    validator: 'scripts/validate-runtime-lifecycle.mjs',
+    smokeScript: 'scripts/smoke-runtime-soak.py',
+    status: 'active',
+    category: 'performance',
+  },
+  {
     id: 'unit-reading-frame',
     route: '/theory/atlas/',
     validator: 'scripts/validate-unit-reading-frame.mjs',

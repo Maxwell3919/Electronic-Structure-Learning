@@ -27,6 +27,8 @@ import BilingualModeControl from '../design/BilingualModeControl.astro';
       control.dataset.active = index === 0 ? 'true' : 'false';
       control.querySelectorAll('[data-reading-mode]').forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.readingMode === saved));
+        if (button.dataset.bound === 'true') return;
+        button.dataset.bound = 'true';
         button.addEventListener('click', () => {
           const mode = button.dataset.readingMode;
           if (!allowed.has(mode)) return;

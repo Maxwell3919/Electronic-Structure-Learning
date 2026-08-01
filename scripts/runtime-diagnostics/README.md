@@ -19,3 +19,7 @@ Scenarios:
 Environment controls are `RUNTIME_SOAK_SECONDS`, `RUNTIME_SAMPLE_SECONDS`, `RUNTIME_ROUTE_ITERATIONS`, `RUNTIME_MODE_CYCLES`, `RUNTIME_INTERACTION_CYCLES`, and `RUNTIME_EVIDENCE_DIR`. Raw evidence belongs in CI artifacts; only compact summaries belong in Git.
 
 `Performance.getMetrics`, `Memory.getDOMCounters`, `Runtime.getHeapUsage`, and the injected lifecycle counters are recorded. Detached nodes are reported as `unknown-current-tool` because this setup does not expose a reliable detached-node count without retaining inspection references.
+
+The accepted bounded diagnosis and the interpretation of process-wide browser
+counters are recorded in `docs/runtime-diagnostics-2026-08.md`; lifecycle rules
+are in `docs/runtime-performance-contract.md`.

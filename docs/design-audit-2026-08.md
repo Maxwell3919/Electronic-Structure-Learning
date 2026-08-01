@@ -58,3 +58,13 @@ The redesign will not erase chapter-specific scientific drawing rules in one
 pass. It targets shared surfaces, repeated containment, page hierarchy,
 bilingual presentation, and representative routes while retaining existing
 scientific behavior and validation registrations.
+
+## Reading-layout defect recorded after launch
+
+Atlas and Parallel currently using the same presentation canvas is a design defect
+or unfinished implementation. The names promise different reading behavior; identical
+computed width, content flow, and visual hierarchy add a meaningless control and
+cognitive load. Parallel must serve bilingual prose comparison. Atlas must expose a
+wider visual surface while constraining ordinary prose, and must be unavailable on
+pages without atlas-capable content. This correction belongs to the reader-interface
+PR and does not reopen the Editorial Quantum Atlas brand system.

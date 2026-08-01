@@ -119,6 +119,8 @@ The Martin and Sholl–Steckel modules remain the source-structure authority. `s
 - `scripts/validate-source-semantics.mjs`: catalog/source-layer and bounded heading audit;
 - `scripts/validate-terminology.mjs`: terminology registry contract;
 - `scripts/validate-literature-layer.mjs`: empty-first literature schema and route checks;
+- `scripts/validate-runtime-lifecycle.mjs`: timer, RAF, observer, global-listener, and idempotent-controller ownership checks;
+- `scripts/runtime-diagnostics/`: test-only Chrome/CDP idle, route, mode, and interaction probes; never imported by production source;
 - `npm run build`: MDX imports, routes, formulas and static-site output.
 
 These gates do not validate future scientific explanations or real DFT calculations.
