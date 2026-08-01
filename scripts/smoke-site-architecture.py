@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import urljoin, urlparse
 from urllib.request import urlopen
 
@@ -84,8 +85,13 @@ def inspect_routes(driver, mode):
 def main():
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     manifest_url = urljoin(BASE_URL, "deployment-manifest.json")
-    with urlopen(manifest_url, timeout=30) as response:
-        manifest = json.load(response)
+    try:
+        with urlopen(manifest_url, timeout=30) as response:
+            manifest = json.load(response)
+    except HTTPError:
+        if DEPLOYED_SHA:
+            raise
+        manifest = None
     if DEPLOYED_SHA and manifest.get("sha") != DEPLOYED_SHA:
         raise AssertionError(
             f"Deployment SHA mismatch: expected {DEPLOYED_SHA}, observed {manifest.get('sha')}"
@@ -138,4 +144,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
