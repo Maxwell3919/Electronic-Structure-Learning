@@ -1,0 +1,88 @@
+---
+import { angularCouplingAudit } from '../../../data/part07/usefulRelationsModel.mjs';
+
+const defaults = angularCouplingAudit();
+const fallback = [0, 1, 2, 3, 4].map((l3) => angularCouplingAudit({ l3, m3: 0 }));
+const barScale = 220;
+const gauntWidth = Math.min(barScale, Math.abs(defaults.gaunt) * 700);
+const clebschWidth = Math.min(barScale, Math.abs(defaults.clebsch) * 220);
+---
+
+<figure class="chapter-visual angular-coupling" data-k-coupling>
+  <figcaption>
+    <strong>原创交互模型：Wigner 3j、Clebsch–Gordan 与 Gaunt selection rules</strong>
+    <span lang="en">Original interactive model: Wigner 3j, Clebsch–Gordan, and Gaunt selection rules</span>
+  </figcaption>
+
+  <p class="angular-coupling__fixed">固定输入 | fixed inputs: (l₁,m₁)=(2,0), (l₂,m₂)=(2,0)</p>
+  <div class="chapter-visual__controls angular-coupling__controls">
+    <label><span>l₃</span><input type="range" min="0" max="6" step="1" value="2" data-k-coupling-l3 /><output data-k-coupling-l3-output>2</output></label>
+    <label><span>m₃</span><input type="range" min="-6" max="6" step="1" value="0" data-k-coupling-m3 /><output data-k-coupling-m3-output>0</output></label>
+  </div>
+
+  <svg viewBox="0 0 760 310" role="img" aria-labelledby="k-coupling-title k-coupling-desc">
+    <title id="k-coupling-title">Selection-rule gates and coefficient magnitudes for angular coupling</title>
+    <desc id="k-coupling-desc">Triangle, magnetic, and parity gates determine whether the Gaunt coefficient can be nonzero. Bars display signed Gaunt and Clebsch-Gordan values for the integer-orbital subset.</desc>
+    <line x1="370" y1="60" x2="370" y2="245" class="plot-axis" />
+    <text x="40" y="70">triangle</text><rect x="150" y="48" width="120" height="28" rx="5" class="angular-coupling__gate" data-k-coupling-triangle /><text x="210" y="68" text-anchor="middle" data-k-coupling-triangle-text>{defaults.triangleAllowed ? 'allowed' : 'forbidden'}</text>
+    <text x="40" y="115">m sum</text><rect x="150" y="93" width="120" height="28" rx="5" class="angular-coupling__gate" data-k-coupling-magnetic /><text x="210" y="113" text-anchor="middle" data-k-coupling-magnetic-text>{defaults.magneticAllowed ? 'allowed' : 'forbidden'}</text>
+    <text x="40" y="160">parity</text><rect x="150" y="138" width="120" height="28" rx="5" class="angular-coupling__gate" data-k-coupling-parity /><text x="210" y="158" text-anchor="middle" data-k-coupling-parity-text>{defaults.parityAllowed ? 'allowed' : 'forbidden'}</text>
+    <text x="390" y="80">Gaunt</text><rect x={defaults.gaunt >= 0 ? 470 : 470 - gauntWidth} y="60" width={gauntWidth} height="28" class="plot-curve-fill" data-k-coupling-gaunt-bar />
+    <text x="390" y="145">Clebsch</text><rect x={defaults.clebsch >= 0 ? 470 : 470 - clebschWidth} y="125" width={clebschWidth} height="28" class="angular-coupling__clebsch" data-k-coupling-clebsch-bar />
+    <line x1="470" y1="40" x2="470" y2="180" class="plot-guide" />
+    <text x="370" y="280" text-anchor="middle">selection rules → coefficient</text>
+  </svg>
+
+  <div class="chapter-visual__readout angular-coupling__readout" aria-live="polite">
+    <span>(l₃,m₃)</span><strong data-k-coupling-lm>(2,0)</strong>
+    <span>Gaunt</span><strong data-k-coupling-gaunt>{defaults.gaunt.toExponential(6)}</strong>
+    <span>Clebsch–Gordan</span><strong data-k-coupling-clebsch>{defaults.clebsch.toExponential(6)}</strong>
+    <span>gate</span><strong data-k-coupling-gate>{defaults.triangleAllowed && defaults.magneticAllowed && defaults.parityAllowed ? 'allowed' : 'forbidden'}</strong>
+  </div>
+
+  <div class="angular-coupling__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table><thead><tr><th>l₃</th><th>triangle</th><th>parity</th><th>Gaunt</th></tr></thead><tbody>{fallback.map((entry) => <tr><td>{entry.l3}</td><td>{entry.triangleAllowed ? 'yes' : 'no'}</td><td>{entry.parityAllowed ? 'yes' : 'no'}</td><td>{entry.gaunt.toExponential(4)}</td></tr>)}</tbody></table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>K.12–K.17 的整数 orbital-angular-momentum 子集。Gaunt 使用标准复球谐三重积；Clebsch–Gordan 由 Wigner 3j 转换。</p>
+    <p lang="en"><strong>Model:</strong> the nonnegative-integer orbital-angular-momentum subset of K.12–K.17. The Gaunt value is the standard complex-harmonic triple integral; Clebsch–Gordan is obtained from a Wigner 3j symbol.</p>
+    <p><strong>验收：</strong>triangle、<code>m₁+m₂+m₃=0</code> 与偶 parity 是非零 Gaunt 的必要条件；3j 对称性与归一化在 validator 中独立核验。</p>
+    <p lang="en"><strong>Acceptance:</strong> the triangle rule, <code>m₁+m₂+m₃=0</code>, and even parity are necessary for a nonzero Gaunt coefficient; 3j symmetry and normalization are validated separately.</p>
+    <p><strong>边界：</strong>数值核只实现整数 <code>j</code>。自旋的半整数耦合需要 doubled-integer 或 gamma-function 实现。来源标题写作 “Clebsch–Gordon”；标准术语为 “Clebsch–Gordan”，网站保留这一 source-title audit。</p>
+    <p lang="en"><strong>Boundary:</strong> the kernel implements integer <code>j</code> only. Half-integer spin coupling requires a doubled-integer or gamma-function implementation. The source heading says “Clebsch–Gordon”; the standard name is “Clebsch–Gordan”, and the website records that source-title discrepancy.</p>
+  </div>
+</figure>
+
+<script>
+  import { angularCouplingAudit } from '../../../data/part07/usefulRelationsModel.mjs';
+  document.querySelectorAll('[data-k-coupling]').forEach((root) => {
+    const l3Input = root.querySelector('[data-k-coupling-l3]'); const m3Input = root.querySelector('[data-k-coupling-m3]');
+    if (!(l3Input instanceof HTMLInputElement) || !(m3Input instanceof HTMLInputElement)) return;
+    const outputs = { l3: root.querySelector('[data-k-coupling-l3-output]'), m3: root.querySelector('[data-k-coupling-m3-output]'), lm: root.querySelector('[data-k-coupling-lm]'), gaunt: root.querySelector('[data-k-coupling-gaunt]'), clebsch: root.querySelector('[data-k-coupling-clebsch]'), gate: root.querySelector('[data-k-coupling-gate]') };
+    const gates = { triangle: root.querySelector('[data-k-coupling-triangle-text]'), magnetic: root.querySelector('[data-k-coupling-magnetic-text]'), parity: root.querySelector('[data-k-coupling-parity-text]') };
+    const bars = { gaunt: root.querySelector('[data-k-coupling-gaunt-bar]'), clebsch: root.querySelector('[data-k-coupling-clebsch-bar]') };
+    const update = () => {
+      const l3 = Number(l3Input.value); const rawM = Number(m3Input.value); const m3 = Math.max(-l3, Math.min(l3, rawM)); if (m3 !== rawM) m3Input.value = String(m3); m3Input.min = String(-l3); m3Input.max = String(l3);
+      const result = angularCouplingAudit({ l1: 2, m1: 0, l2: 2, m2: 0, l3, m3 }); const allowed = result.triangleAllowed && result.magneticAllowed && result.parityAllowed;
+      if (outputs.l3 instanceof HTMLOutputElement) outputs.l3.value = String(l3); if (outputs.m3 instanceof HTMLOutputElement) outputs.m3.value = String(m3); if (outputs.lm instanceof HTMLElement) outputs.lm.textContent = `(${l3},${m3})`; if (outputs.gaunt instanceof HTMLElement) outputs.gaunt.textContent = result.gaunt.toExponential(6); if (outputs.clebsch instanceof HTMLElement) outputs.clebsch.textContent = result.clebsch.toExponential(6); if (outputs.gate instanceof HTMLElement) outputs.gate.textContent = allowed ? 'allowed' : 'forbidden';
+      if (gates.triangle instanceof HTMLElement) gates.triangle.textContent = result.triangleAllowed ? 'allowed' : 'forbidden'; if (gates.magnetic instanceof HTMLElement) gates.magnetic.textContent = result.magneticAllowed ? 'allowed' : 'forbidden'; if (gates.parity instanceof HTMLElement) gates.parity.textContent = result.parityAllowed ? 'allowed' : 'forbidden';
+      const setBar = (element, value, scale) => { if (!(element instanceof SVGRectElement)) return; const width = Math.min(220, Math.abs(value) * scale); element.setAttribute('width', width.toFixed(2)); element.setAttribute('x', (value >= 0 ? 470 : 470 - width).toFixed(2)); };
+      setBar(bars.gaunt, result.gaunt, 700); setBar(bars.clebsch, result.clebsch, 220);
+    };
+    [l3Input, m3Input].forEach((input) => input.addEventListener('input', update)); update();
+  });
+</script>
+
+<style>
+  .angular-coupling { overflow-x: auto; }
+  .angular-coupling svg { width: 100%; min-width: 44rem; }
+  .angular-coupling text { fill: currentColor; font-size: 13px; }
+  .angular-coupling__gate { fill: var(--sl-color-gray-5); stroke: currentColor; stroke-width: 1; }
+  .angular-coupling__clebsch { fill: var(--sl-color-gray-2); }
+  .angular-coupling__fixed { font-family: var(--__sl-font-mono); font-size: 0.9rem; }
+  .angular-coupling__controls, .angular-coupling__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.5rem 1rem; }
+  .angular-coupling__controls label { display: grid; gap: 0.35rem; }
+  .angular-coupling__fallback { max-width: 44rem; }
+</style>
