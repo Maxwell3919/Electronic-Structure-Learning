@@ -217,7 +217,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         move_control_and_expect_change(
             driver,
             "#ch23-disentanglement-window [data-min]",
-            "#ch23-disentanglement-window [data-min-fidelity]",
+            "#ch23-disentanglement-window [data-missing]",
         )
         move_control_and_expect_change(
             driver,
