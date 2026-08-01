@@ -1,0 +1,72 @@
+---
+import Chapter23OrientationAndTerms from './Chapter23OrientationAndTerms.mdx';
+import Chapter23SourceMap from './Chapter23SourceMap.astro';
+import Chapter23DefinitionsProjected from './Chapter23DefinitionsProjected.mdx';
+import Chapter23Localization from './Chapter23Localization.mdx';
+import Chapter23NonorthogonalEntangled from './Chapter23NonorthogonalEntangled.mdx';
+import Chapter23HybridApplications from './Chapter23HybridApplications.mdx';
+import Chapter23Closing from './Chapter23Closing.mdx';
+---
+
+<div class="chapter23-root">
+  <Chapter23OrientationAndTerms />
+  <Chapter23SourceMap />
+  <Chapter23DefinitionsProjected />
+  <Chapter23Localization />
+  <Chapter23NonorthogonalEntangled />
+  <Chapter23HybridApplications />
+  <Chapter23Closing />
+</div>
+
+<style is:global>
+  .chapter23-root,
+  .chapter23-root > *,
+  .chapter23-root .bilingual-section,
+  .chapter23-root .bilingual-section__grid,
+  .chapter23-root .bilingual-section__zh,
+  .chapter23-root .bilingual-section__en,
+  .chapter23-root .bilingual-callout,
+  .chapter23-root .derivation-block,
+  .chapter23-root .chapter-visual {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chapter23-root .chapter-visual {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .chapter23-root .chapter-source-map,
+  .chapter23-root .katex-display,
+  .chapter23-root pre {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .chapter23-root .chapter23-workflow-table table,
+  .chapter23-root .chapter23-evidence-table table {
+    min-width: 60rem;
+  }
+
+  .chapter23-root .chapter23-misjudgments li,
+  .chapter23-root .chapter23-exercises li {
+    margin-block: 0.65rem;
+  }
+
+  .chapter23-root p,
+  .chapter23-root li,
+  .chapter23-root th,
+  .chapter23-root td {
+    overflow-wrap: anywhere;
+  }
+
+  .chapter23-anchor {
+    display: block;
+    position: relative;
+    top: -5rem;
+    visibility: hidden;
+  }
+</style>
