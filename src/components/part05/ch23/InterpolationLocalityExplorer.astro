@@ -56,8 +56,8 @@ const errorPath = result.samples.map((item, index) => `${index === 0 ? 'M' : 'L'
   </div>
 
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$H(k)=2\sum_{R=1}^{12}t_R\cos(kR)$，$t_R=t_1e^{-(R-1)/\xi}/R$；插值只保留 $R\le R_{cut}$。</p>
-    <p><strong>验收：</strong>$R_{cut}=12$ 时 max/RMS error 为零；固定 ξ 时增加 cutoff 不增大误差；更长 ξ 产生更慢 hopping 衰减，通常需要更大 cutoff。</p>
+    <p><strong>模型：</strong><code>H(k)=2∑ t_R cos(kR)</code>（R=1…12），<code>t_R=t_1 exp[-(R-1)/ξ]/R</code>；插值只保留 <code>R≤R_cut</code>。</p>
+    <p><strong>验收：</strong><code>R_cut=12</code> 时 max/RMS error 为零；固定 ξ 时增加 cutoff 不增大误差；更长 ξ 产生更慢 hopping 衰减，通常需要更大 cutoff。</p>
     <p><strong>边界：</strong>真实多带插值还依赖子空间、matrix-valued hoppings、Wigner–Seitz 距离、简并和 coarse k mesh。沿一条路径小误差不代表 full-BZ、velocity 或其他 matrix element 已验证。</p>
   </div>
 

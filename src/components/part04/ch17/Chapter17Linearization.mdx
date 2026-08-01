@@ -237,20 +237,28 @@ This algebra does not ensure $S>0$. Redundant local orbitals, nearby reference e
 </DerivationBlock>
 
 <BilingualSection titleZh="linear solve 不等于 one-shot calculation" titleEn="A linear solve is not a one-shot calculation">
-  <div class="bilingual-section__zh"><p>在一次 fixed-potential step 中，多个 eigenpairs 可由 linear algebra 一起获得。但 Kohn–Sham potential 仍依赖 density，radial functions、reference energies、core states 与 full-potential components 也可能在 SCF iteration 之间更新。因此完整 calculation 仍是 nonlinear fixed-point problem：</p>
+  <div class="bilingual-section__zh">
+
+在一次 fixed-potential step 中，多个 eigenpairs 可由 linear algebra 一起获得。但 Kohn–Sham potential 仍依赖 density，radial functions、reference energies、core states 与 full-potential components 也可能在 SCF iteration 之间更新。因此完整 calculation 仍是 nonlinear fixed-point problem：
 
 $$
 n^{(m)}\to V_{\mathrm{eff}}^{(m)}\to
 \{u_l,\dot u_l,H,S\}^{(m)}\to n^{(m+1)}.
 $$
 
-<p>“linear method”只描述 inner eigenproblem/basis construction，不表示 total calculation 无 SCF nonlinearity。</p></div>
-  <div class="bilingual-section__en" lang="en"><p>For one fixed-potential step, many eigenpairs can be obtained together by linear algebra. The Kohn–Sham potential still depends on the density, and radial functions, reference energies, core states, and full-potential components may be updated between SCF iterations. The complete calculation remains a nonlinear fixed-point problem:</p>
+“linear method”只描述 inner eigenproblem/basis construction，不表示 total calculation 无 SCF nonlinearity。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For one fixed-potential step, many eigenpairs can be obtained together by linear algebra. The Kohn–Sham potential still depends on the density, and radial functions, reference energies, core states, and full-potential components may be updated between SCF iterations. The complete calculation remains a nonlinear fixed-point problem:
 
 $$
 n^{(m)}\to V_{\mathrm{eff}}^{(m)}\to
 \{u_l,\dot u_l,H,S\}^{(m)}\to n^{(m+1)}.
 $$
 
-<p>“Linear method” describes the inner eigenproblem and basis construction, not the absence of SCF nonlinearity.</p></div>
+“Linear method” describes the inner eigenproblem and basis construction, not the absence of SCF nonlinearity.
+
+  </div>
 </BilingualSection>

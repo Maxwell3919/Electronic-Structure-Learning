@@ -6,18 +6,26 @@ import BilingualCallout from '../../BilingualCallout.astro';
 ## 方法比较、收敛协议与计算连接 | Method comparison, convergence, and computational connections
 
 <BilingualSection titleZh="linear augmented methods comparison" titleEn="Comparison of linear augmented methods">
-  <div class="bilingual-section__zh"><table><thead><tr><th>方法</th><th>fixed basis construction</th><th>主要优势</th><th>独立误差</th></tr></thead><tbody>
-    <tr><td>LAPW</td><td>interstitial plane waves + sphere $u_l,\dot u_l$ value/slope matching</td><td>systematic interstitial convergence、full potential、all-electron resolution</td><td>G cutoff、angular cutoffs、linearization/local orbitals、core/relativity</td></tr>
-    <tr><td>LMTO</td><td>minimal augmented heads/tails + linearized potential functions</td><td>compact physical representation、interpretation、screened short range</td><td>ASA/interstitial、minimal-basis completeness、screening/downfolding、linearization</td></tr>
-    <tr><td>NMTO</td><td>multi-energy interpolation and downfolded target channels</td><td>wide target window、isolated target bands、compact effective Hamiltonians</td><td>mesh placement/order、active-subspace choice、gauge/nonuniqueness、force implementation</td></tr>
-    <tr><td>full-potential augmented</td><td>sphere angular + interstitial smooth representations</td><td>removes potential-shape approximation</td><td>radial/angular/interstitial truncation and all method-specific errors remain</td></tr>
-  </tbody></table></div>
-  <div class="bilingual-section__en" lang="en"><table><thead><tr><th>Method</th><th>Fixed-basis construction</th><th>Main strengths</th><th>Independent errors</th></tr></thead><tbody>
-    <tr><td>LAPW</td><td>interstitial plane waves plus sphere $u_l,\dot u_l$ value and slope matching</td><td>systematic interstitial convergence, full potential, all-electron resolution</td><td>G cutoff, angular cutoffs, linearization or local orbitals, core and relativity</td></tr>
-    <tr><td>LMTO</td><td>minimal augmented heads and tails plus linearized potential functions</td><td>compact physical representation, interpretation, screened short range</td><td>ASA or interstitial treatment, minimal-basis completeness, screening, downfolding, linearization</td></tr>
-    <tr><td>NMTO</td><td>multi-energy interpolation and downfolded target channels</td><td>wide target windows, isolated target bands, compact effective Hamiltonians</td><td>mesh placement and order, active-subspace choice, gauge nonuniqueness, force implementation</td></tr>
-    <tr><td>Full-potential augmented</td><td>sphere angular plus interstitial smooth representations</td><td>removal of the potential-shape approximation</td><td>radial, angular, and interstitial truncations and all method-specific errors remain</td></tr>
-  </tbody></table></div>
+  <div class="bilingual-section__zh">
+
+| 方法 | fixed basis construction | 主要优势 | 独立误差 |
+| --- | --- | --- | --- |
+| LAPW | interstitial plane waves + sphere `u_l, u-dot_l` value/slope matching | systematic interstitial convergence、full potential、all-electron resolution | G cutoff、angular cutoffs、linearization/local orbitals、core/relativity |
+| LMTO | minimal augmented heads/tails + linearized potential functions | compact physical representation、interpretation、screened short range | ASA/interstitial、minimal-basis completeness、screening/downfolding、linearization |
+| NMTO | multi-energy interpolation and downfolded target channels | wide target window、isolated target bands、compact effective Hamiltonians | mesh placement/order、active-subspace choice、gauge/nonuniqueness、force implementation |
+| full-potential augmented | sphere angular + interstitial smooth representations | removes potential-shape approximation | radial/angular/interstitial truncation and all method-specific errors remain |
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+| Method | Fixed-basis construction | Main strengths | Independent errors |
+| --- | --- | --- | --- |
+| LAPW | interstitial plane waves plus sphere `u_l, u-dot_l` value and slope matching | systematic interstitial convergence, full potential, all-electron resolution | G cutoff, angular cutoffs, linearization or local orbitals, core and relativity |
+| LMTO | minimal augmented heads and tails plus linearized potential functions | compact physical representation, interpretation, screened short range | ASA or interstitial treatment, minimal-basis completeness, screening, downfolding, linearization |
+| NMTO | multi-energy interpolation and downfolded target channels | wide target windows, isolated target bands, compact effective Hamiltonians | mesh placement and order, active-subspace choice, gauge nonuniqueness, force implementation |
+| Full-potential augmented | sphere angular plus interstitial smooth representations | removal of the potential-shape approximation | radial, angular, and interstitial truncations and all method-specific errors remain |
+
+  </div>
 </BilingualSection>
 
 <BilingualSection titleZh="最低收敛协议" titleEn="Minimum convergence protocol">

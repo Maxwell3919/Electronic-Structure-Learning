@@ -82,37 +82,51 @@ The determinant measures boundary conditioning. A small determinant signals a po
 <LAPWMatchingExplorer />
 
 <BilingualSection titleZh="cutoff hierarchy" titleEn="Cutoff hierarchy">
-  <div class="bilingual-section__zh"><ul>
+  <div class="bilingual-section__zh">
+  <ul>
     <li><strong>interstitial cutoff：</strong>$|\mathbf k+\mathbf G|\le G_{\max}$ controls smooth-region resolution。</li>
     <li><strong>wavefunction angular cutoff：</strong>plane-wave expansion inside a sphere requires roughly $l_{\max}\gtrsim S G_{\max}$, then an explicit convergence margin。</li>
     <li><strong>density cutoff：</strong>products of wavefunctions can require angular content up to about twice the wavefunction channel range。</li>
     <li><strong>potential cutoff：</strong>full-potential coupling requires its own $L_{\max}$ and interstitial Fourier/grid resolution。</li>
     <li><strong>radial mesh：</strong>core/semicore oscillations and relativistic equations require independent radial convergence。</li>
-  </ul><p>这些 cutoffs 不能压缩成一个“basis size”数字。相同 plane-wave count 在不同 sphere radii、cell shapes 与 species 上具有不同 angular demand。</p></div>
-  <div class="bilingual-section__en" lang="en"><ul>
+  </ul>
+  <p>这些 cutoffs 不能压缩成一个“basis size”数字。相同 plane-wave count 在不同 sphere radii、cell shapes 与 species 上具有不同 angular demand。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+  <ul>
     <li><strong>Interstitial cutoff:</strong> $|\mathbf k+\mathbf G|\le G_{\max}$ controls smooth-region resolution.</li>
     <li><strong>Wavefunction angular cutoff:</strong> expansion inside a sphere requires roughly $l_{\max}\gtrsim S G_{\max}$ plus an explicit convergence margin.</li>
     <li><strong>Density cutoff:</strong> wavefunction products can require angular content up to roughly twice the wavefunction channel range.</li>
     <li><strong>Potential cutoff:</strong> full-potential coupling needs its own $L_{\max}$ and interstitial Fourier or grid resolution.</li>
     <li><strong>Radial mesh:</strong> core and semicore oscillations and relativistic equations need independent radial convergence.</li>
-  </ul><p>These cutoffs cannot be compressed into one basis-size number. The same plane-wave count produces different angular demands for different sphere radii, cell shapes, and species.</p></div>
+  </ul>
+  <p>These cutoffs cannot be compressed into one basis-size number. The same plane-wave count produces different angular demands for different sphere radii, cell shapes, and species.</p>
+  </div>
 </BilingualSection>
 
 <BilingualSection titleZh="semicore 与 local orbitals" titleEn="Semicore states and local orbitals">
-  <div class="bilingual-section__zh"><p>一个 $u_l(E_l),\dot u_l(E_l)$ pair 适合有限 energy window。当同一 l channel 同时包含 spatially compact semicore 与 valence states 时，单一 $E_l$ 可能使两者至少一个发生明显 linearization error。常见修复是增加 confined local orbital：</p>
+  <div class="bilingual-section__zh">
+
+一个 $u_l(E_l),\dot u_l(E_l)$ pair 适合有限 energy window。当同一 l channel 同时包含 spatially compact semicore 与 valence states 时，单一 $E_l$ 可能使两者至少一个发生明显 linearization error。常见修复是增加 confined local orbital：
 
 $$
 \chi_{lo}=a u_l(E_l)+b\dot u_l(E_l)+c u_l(E_{lo}),
 $$
 
-<p>并令它在 sphere boundary 的 value 与 slope 消失，使其不改变 interstitial basis。local orbital 是 basis enrichment，不是把 semicore 自动冻结为 core，也不保证去除所有 high-energy error。</p></div>
-  <div class="bilingual-section__en" lang="en"><p>One $u_l(E_l),\dot u_l(E_l)$ pair covers a finite energy window. If one l channel contains both compact semicore and valence states, a single $E_l$ can leave substantial linearization error in at least one set. A common repair is a confined local orbital:</p>
+并令它在 sphere boundary 的 value 与 slope 消失，使其不改变 interstitial basis。local orbital 是 basis enrichment，不是把 semicore 自动冻结为 core，也不保证去除所有 high-energy error。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+One $u_l(E_l),\dot u_l(E_l)$ pair covers a finite energy window. If one l channel contains both compact semicore and valence states, a single $E_l$ can leave substantial linearization error in at least one set. A common repair is a confined local orbital:
 
 $$
 \chi_{lo}=a u_l(E_l)+b\dot u_l(E_l)+c u_l(E_{lo}),
 $$
 
-<p>with value and slope constrained to vanish at the sphere boundary so that the interstitial basis is unchanged. A local orbital is basis enrichment; it neither automatically freezes semicore states into the core nor removes every high-energy error.</p></div>
+with value and slope constrained to vanish at the sphere boundary so that the interstitial basis is unchanged. A local orbital is basis enrichment; it neither automatically freezes semicore states into the core nor removes every high-energy error.
+
+  </div>
 </BilingualSection>
 
 <span id="section-17-5" class="chapter-anchor" aria-hidden="true"></span>
@@ -130,6 +144,10 @@ $$
 </BilingualCallout>
 
 <BilingualSection titleZh="最低 LAPW convergence matrix" titleEn="Minimum LAPW convergence matrix">
-  <div class="bilingual-section__zh"><table><thead><tr><th>维度</th><th>需要扫描</th><th>不能替代的 evidence</th></tr></thead><tbody><tr><td>interstitial</td><td>sphere radii、Gmax 或 RKmax</td><td>total-energy difference、force、target state</td></tr><tr><td>sphere angular</td><td>wavefunction/density/potential cutoffs</td><td>boundary continuity 与 observable stability</td></tr><tr><td>linearization</td><td>reference energies、local orbitals</td><td>wide-window eigenvalues、charge、force</td></tr><tr><td>sampling</td><td>k mesh、smearing/occupations</td><td>metallic energy/DOS/Fermi-surface quantities</td></tr><tr><td>derivatives</td><td>SCF threshold、finite differences</td><td>force/stress/phonon acceptance</td></tr></tbody></table></div>
-  <div class="bilingual-section__en" lang="en"><table><thead><tr><th>Dimension</th><th>Scan</th><th>Required evidence</th></tr></thead><tbody><tr><td>Interstitial</td><td>sphere radii, Gmax or RKmax</td><td>energy differences, forces, target states</td></tr><tr><td>Sphere angular</td><td>wavefunction, density, and potential cutoffs</td><td>boundary continuity and observable stability</td></tr><tr><td>Linearization</td><td>reference energies and local orbitals</td><td>wide-window eigenvalues, charge, and forces</td></tr><tr><td>Sampling</td><td>k mesh and smearing or occupations</td><td>metallic energy, DOS, and Fermi-surface quantities</td></tr><tr><td>Derivatives</td><td>SCF threshold and finite differences</td><td>force, stress, and phonon acceptance</td></tr></tbody></table></div>
+  <div class="bilingual-section__zh">
+  <table><thead><tr><th>维度</th><th>需要扫描</th><th>不能替代的 evidence</th></tr></thead><tbody><tr><td>interstitial</td><td>sphere radii、Gmax 或 RKmax</td><td>total-energy difference、force、target state</td></tr><tr><td>sphere angular</td><td>wavefunction/density/potential cutoffs</td><td>boundary continuity 与 observable stability</td></tr><tr><td>linearization</td><td>reference energies、local orbitals</td><td>wide-window eigenvalues、charge、force</td></tr><tr><td>sampling</td><td>k mesh、smearing/occupations</td><td>metallic energy/DOS/Fermi-surface quantities</td></tr><tr><td>derivatives</td><td>SCF threshold、finite differences</td><td>force/stress/phonon acceptance</td></tr></tbody></table>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+  <table><thead><tr><th>Dimension</th><th>Scan</th><th>Required evidence</th></tr></thead><tbody><tr><td>Interstitial</td><td>sphere radii, Gmax or RKmax</td><td>energy differences, forces, target states</td></tr><tr><td>Sphere angular</td><td>wavefunction, density, and potential cutoffs</td><td>boundary continuity and observable stability</td></tr><tr><td>Linearization</td><td>reference energies and local orbitals</td><td>wide-window eigenvalues, charge, and forces</td></tr><tr><td>Sampling</td><td>k mesh and smearing or occupations</td><td>metallic energy, DOS, and Fermi-surface quantities</td></tr><tr><td>Derivatives</td><td>SCF threshold and finite differences</td><td>force, stress, and phonon acceptance</td></tr></tbody></table>
+  </div>
 </BilingualSection>

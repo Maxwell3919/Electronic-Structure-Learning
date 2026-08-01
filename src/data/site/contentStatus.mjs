@@ -20,10 +20,12 @@ const registrations = new Map([
   ['14', ['scripts/validate-part04-ch14.mjs', 'scripts/smoke-part04-ch14.py']],
   ['15', ['scripts/validate-part04-ch15.mjs', 'scripts/smoke-part04-ch15.py']],
   ['16', ['scripts/validate-part04-ch16.mjs', 'scripts/smoke-part04-ch16.py']],
+  ['17', ['scripts/validate-part04-ch17.mjs', 'scripts/smoke-part04-ch17.py']],
   ['19', ['scripts/validate-part05-ch19.mjs', 'scripts/smoke-pages-ch19.py']],
   ['20', ['scripts/validate-part05-ch20.mjs', 'scripts/smoke-part05-ch20.py']],
   ['21', ['scripts/validate-part05-ch21.mjs', 'scripts/smoke-part05-ch21.py']],
   ['22', ['scripts/validate-part05-ch22.mjs', 'scripts/smoke-part05-ch22.py']],
+  ['23', ['scripts/validate-part05-ch23.mjs', 'scripts/smoke-part05-ch23.py']],
   ['25', ['scripts/validate-part06-ch25.mjs', 'scripts/smoke-part06-ch25.py']],
   ['26', ['scripts/validate-part06-ch26.mjs', 'scripts/smoke-part06-ch26.py']],
   ['27', ['scripts/validate-part06-ch27.mjs', 'scripts/smoke-part06-ch27.py']],
@@ -38,6 +40,7 @@ const registrations = new Map([
   ['H', ['scripts/validate-part07-app-h.mjs', 'scripts/smoke-part07-app-h.py']],
   ['I', ['scripts/validate-part07-app-i.mjs', 'scripts/smoke-part07-app-i.py']],
   ['J', ['scripts/validate-part07-app-j.mjs', 'scripts/smoke-part07-app-j.py']],
+  ['K', ['scripts/validate-part07-app-k.mjs', 'scripts/smoke-part07-app-k.py']],
 ]);
 
 const martinStatuses = martin.parts.flatMap((part) =>
@@ -98,4 +101,3 @@ export const contentStatusSummary = contentStatus.reduce(
 );
 
 export default contentStatus;
-
