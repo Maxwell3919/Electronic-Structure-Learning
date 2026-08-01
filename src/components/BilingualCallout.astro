@@ -10,9 +10,12 @@ const {
   titleEn,
   kind = 'source',
 } = Astro.props;
+const layer = kind === 'derivation' ? 'supplemental-derivation'
+  : kind === 'practice' ? 'practical-mapping'
+    : kind === 'boundary' ? 'numerical-interpretation' : 'original-exposition';
 ---
 
-<aside class:list={['bilingual-callout', `bilingual-callout--${kind}`]}>
+<aside class:list={['bilingual-callout', `bilingual-callout--${kind}`]} data-content-layer={layer}>
   <header>
     <strong>{titleZh}</strong>
     <span lang="en">{titleEn}</span>

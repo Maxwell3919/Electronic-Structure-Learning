@@ -1,0 +1,41 @@
+---
+import BilingualModeControl from '../design/BilingualModeControl.astro';
+---
+
+<aside class="esl-reading-toolbar print:hidden" aria-label="阅读显示设置 | Reading display settings">
+  <BilingualModeControl />
+  <div class="esl-reading-mode-control" data-reading-mode-control data-active="false" role="group" aria-label="阅读宽度模式 | Reading width mode">
+    <span class="esl-reading-mode-control__label">阅读画布</span>
+    <button type="button" class="esl-mode-button" data-reading-mode="parallel" aria-pressed="true">Parallel</button>
+    <button type="button" class="esl-mode-button" data-reading-mode="focus" aria-pressed="false">Focus</button>
+    <button type="button" class="esl-mode-button" data-reading-mode="atlas" aria-pressed="false">Atlas</button>
+  </div>
+</aside>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const allowed = new Set(['parallel', 'focus', 'atlas']);
+    let saved = 'parallel';
+    try {
+      const candidate = localStorage.getItem('esl-reading-mode');
+      if (allowed.has(candidate)) saved = candidate;
+    } catch {}
+    root.dataset.eslReading = saved;
+    document.querySelectorAll('[data-reading-mode-control]').forEach((control, index) => {
+      control.dataset.active = index === 0 ? 'true' : 'false';
+      control.querySelectorAll('[data-reading-mode]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.readingMode === saved));
+        button.addEventListener('click', () => {
+          const mode = button.dataset.readingMode;
+          if (!allowed.has(mode)) return;
+          root.dataset.eslReading = mode;
+          try { localStorage.setItem('esl-reading-mode', mode); } catch {}
+          document.querySelectorAll('[data-reading-mode]').forEach((item) => {
+            item.setAttribute('aria-pressed', String(item.dataset.readingMode === mode));
+          });
+        });
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,18 @@
+---
+import UnitTile from './UnitTile.astro';
+const { part, units, semanticsById, pathNamesByRoute, labsByRoute, casesByRoute, literatureByUnit } = Astro.props;
+---
+<section class="esl-part-band" data-part={part.number}>
+  <header><p class="esl-eyebrow">Part {part.roman}</p><h2>{part.title}</h2><p>{part.titleZh}</p></header>
+  <div class="esl-part-band__units">
+    {units.map((unit, index) => <UnitTile
+      unit={unit}
+      semantic={semanticsById.get(unit.unitId)}
+      previous={index > 0 ? units[index - 1].title : null}
+      paths={pathNamesByRoute.get(unit.route) ?? []}
+      labs={labsByRoute.get(unit.route) ?? []}
+      cases={casesByRoute.get(unit.route) ?? []}
+      literatureCount={literatureByUnit.get(unit.unitId) ?? 0}
+    />)}
+  </div>
+</section>

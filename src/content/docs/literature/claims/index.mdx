@@ -1,0 +1,13 @@
+---
+title: "主张账本"
+description: "区分来源报告、争议、开放问题和当前评估。"
+---
+
+import ClaimLedgerEntry from '../../../../components/literature/ClaimLedgerEntry.astro';
+import claims from '../../../../data/literature/claimLedger.mjs';
+
+# 主张账本
+
+主张不会因为进入 bibliography 自动获得“已证实”状态。
+
+{claims.length ? claims.map((claim) => <ClaimLedgerEntry claim={claim} />) : <p>当前没有已评估主张。</p>}

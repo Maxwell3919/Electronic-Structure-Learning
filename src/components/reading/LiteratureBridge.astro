@@ -1,0 +1,14 @@
+---
+import registry from '../../data/literature/registry.mjs';
+import { withBasePath } from '../../data/site/schema.mjs';
+const { unitId } = Astro.props;
+const entries = registry.filter((entry) => entry.relatedUnits.includes(unitId));
+const base = import.meta.env.BASE_URL;
+---
+<section class="esl-literature-bridge" data-content-layer="later-literature" aria-label="后续文献 | Later literature">
+  {entries.length > 0 ? (
+    <><h2>后续文献</h2><ul>{entries.map((entry) => <li><a href={withBasePath(`/literature/?entry=${entry.id}`, base)}>{entry.title}</a></li>)}</ul></>
+  ) : (
+    <p><a href={withBasePath('/literature/topics/', base)}>查看与本章相关的后续文献</a></p>
+  )}
+</section>

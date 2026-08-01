@@ -1,0 +1,16 @@
+---
+title: "术语与符号"
+description: "全站术语边界与使用约定。"
+sidebar:
+  label: "术语与符号"
+---
+
+import terminology from '../../../data/site/terminology.mjs';
+
+# 术语与符号
+
+本页登记首选术语和需要保留的对象差异；它不通过全局字符串替换改写历史正文。
+
+<dl class="esl-terminology-list">
+  {terminology.map((item) => <><dt id={`term-${item.id}`}>{item.termEn} · {item.termZh}</dt><dd>{item.preferredUsage}{item.distinction && ` ${item.distinction}`}</dd></>)}
+</dl>

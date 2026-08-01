@@ -1,0 +1,28 @@
+---
+const { unit, semantic } = Astro.props;
+const author = unit.source.author ?? unit.source.authors?.join(' and ');
+const sourceLabel = unit.sourceFamily === 'martin' ? '教材基线 | Textbook baseline' : '实践来源 | Practice source';
+const sectionAnchor = (id) => `catalog-section-${String(id).toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+---
+
+<section class="esl-unit-source" data-content-layer="textbook-baseline" aria-labelledby="esl-unit-source-title">
+  <div class="esl-unit-source__identity">
+    <p class="esl-eyebrow" id="esl-unit-source-title">{sourceLabel}</p>
+    <p><strong>{author}</strong>, <cite>{unit.source.title}</cite></p>
+    <p>{semantic?.sourcePageRange ?? `printed p. ${unit.page}`} · {unit.sections.length} catalog section{unit.sections.length === 1 ? '' : 's'}</p>
+  </div>
+  <details class="esl-unit-source__sections">
+    <summary>教材原分节 / Source sections</summary>
+    {unit.sections.length > 0 ? (
+      <ol>
+        {unit.sections.map((section) => (
+          <li id={sectionAnchor(section.id)}>
+            <span>{section.id}</span>
+            <span lang="en">{section.title}</span>
+            <small>p. {section.page}</small>
+          </li>
+        ))}
+      </ol>
+    ) : <p>目录未列出下一级分节。<span lang="en">No lower-level catalog section is listed.</span></p>}
+  </details>
+</section>

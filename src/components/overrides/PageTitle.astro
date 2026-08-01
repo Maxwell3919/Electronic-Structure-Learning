@@ -1,0 +1,21 @@
+---
+import UnitSourceHeader from '../reading/UnitSourceHeader.astro';
+import UnitReadingToolbar from '../reading/UnitReadingToolbar.astro';
+import UnitLayerLegend from '../reading/UnitLayerLegend.astro';
+import UnitSectionNavigator from '../reading/UnitSectionNavigator.astro';
+import sourceSemanticStatus from '../../data/site/sourceSemanticStatus.mjs';
+import { resolveUnit, unitDisplayTitle } from '../../lib/unitCatalog.mjs';
+const route = Astro.locals.starlightRoute;
+const unit = resolveUnit(`/${route.id}/`);
+const semantic = unit ? sourceSemanticStatus.find((item) => item.unitId === unit.unitId) : null;
+const title = unit ? unitDisplayTitle(unit) : route.entry.data.title;
+---
+<h1 id="_top">{title}</h1>
+{unit && semantic?.sourceTitleZh && <p class="esl-unit-title-zh">{semantic.sourceTitleZh}</p>}
+<UnitReadingToolbar />
+{unit && <><UnitSourceHeader unit={unit} semantic={semantic} /><UnitLayerLegend /></>}
+{unit && <details class="esl-inline-semantic-nav"><summary>本页语义目录 | Semantic contents</summary><UnitSectionNavigator unit={unit} toc={route.toc?.items ?? []} compact /></details>}
+
+<style>
+  h1 { margin-top: 1rem; color: var(--esl-ink); font-family: var(--esl-font-display); font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 600; line-height: 1.08; }
+</style>

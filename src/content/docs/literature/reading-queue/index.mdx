@@ -1,0 +1,13 @@
+---
+title: "阅读队列"
+description: "已登记文献的静态阅读状态。"
+---
+
+import LiteratureLayer from '../../../../components/literature/LiteratureLayer.astro';
+import queue from '../../../../data/literature/readingQueue.mjs';
+
+# 阅读队列
+
+队列状态只描述阅读工作流，不表示论文主张已接受或已独立验证。
+
+<LiteratureLayer entries={queue} />

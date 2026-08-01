@@ -1,11 +1,10 @@
 ---
-import BilingualModeControl from './design/BilingualModeControl.astro';
-
 interface Props {
   titleZh?: string;
   titleEn?: string;
   eyebrow?: string;
   compact?: boolean;
+  layer?: 'textbook-baseline' | 'original-exposition' | 'supplemental-derivation' | 'numerical-interpretation' | 'practical-mapping' | 'later-literature' | 'open-discussion';
 }
 
 const {
@@ -13,11 +12,11 @@ const {
   titleEn,
   eyebrow,
   compact = false,
+  layer = 'original-exposition',
 } = Astro.props;
 ---
 
-<section class:list={['bilingual-section', { 'bilingual-section--compact': compact }]}>
-  <BilingualModeControl />
+<section class:list={['bilingual-section', { 'bilingual-section--compact': compact }]} data-content-layer={layer}>
   {(eyebrow || titleZh || titleEn) && (
     <header class="bilingual-section__header">
       {eyebrow && <p class="bilingual-section__eyebrow">{eyebrow}</p>}

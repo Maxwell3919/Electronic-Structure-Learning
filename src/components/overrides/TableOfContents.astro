@@ -1,0 +1,8 @@
+---
+import DefaultTableOfContents from '@astrojs/starlight/components/TableOfContents.astro';
+import UnitSectionNavigator from '../reading/UnitSectionNavigator.astro';
+import { resolveUnit } from '../../lib/unitCatalog.mjs';
+const route = Astro.locals.starlightRoute;
+const unit = resolveUnit(`/${route.id}/`);
+---
+{unit ? <UnitSectionNavigator unit={unit} toc={route.toc?.items ?? []} /> : <DefaultTableOfContents />}

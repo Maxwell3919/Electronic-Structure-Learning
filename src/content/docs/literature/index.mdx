@@ -1,0 +1,13 @@
+---
+title: "文献层"
+description: "教材基线之后的阅读、主张和讨论基础设施。"
+---
+
+import LiteratureLayer from '../../../components/literature/LiteratureLayer.astro';
+import registry from '../../../data/literature/registry.mjs';
+
+# 文献层
+
+Martin 教材基线与后续文献分开维护。当前只建立 bibliographic、claim 和 discussion 契约，不包含论文摘要或由标题推断的结论。
+
+<LiteratureLayer entries={registry} />
