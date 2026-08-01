@@ -1,0 +1,105 @@
+---
+import { harmonicProfile, usefulRelationsDefaults } from '../../../data/part07/usefulRelationsModel.mjs';
+
+const defaults = harmonicProfile();
+const width = 760;
+const height = 350;
+const left = 62;
+const right = 700;
+const top = 42;
+const bottom = 270;
+const maxAbs = Math.max(...defaults.samples.flatMap((entry) => [Math.abs(entry.real), Math.abs(entry.imaginary), entry.density]), 1e-12);
+const xMap = (theta) => left + (right - left) * theta / Math.PI;
+const yMap = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.42 / maxAbs;
+const densityMap = (value) => bottom - value * (bottom - top) * 0.82 / maxAbs;
+const pathFor = (key, mapper = yMap) => defaults.samples.map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.theta).toFixed(2)} ${mapper(entry[key]).toFixed(2)}`).join(' ');
+const fallback = [[1, 0], [2, 1], [3, 2], [4, 3]].map(([l, m]) => harmonicProfile({ l, m, phi: usefulRelationsDefaults.harmonic.phi }));
+---
+
+<figure class="chapter-visual harmonic-convention" data-k-harmonic>
+  <figcaption>
+    <strong>原创交互模型：Condon–Shortley 复球谐与 Martin K.11 实基</strong>
+    <span lang="en">Original interactive model: Condon–Shortley complex harmonics and the Martin K.11 real basis</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls harmonic-convention__controls">
+    <label><span>l</span><input type="range" min="0" max="6" step="1" value={usefulRelationsDefaults.harmonic.l} data-k-harmonic-l /><output data-k-harmonic-l-output>{usefulRelationsDefaults.harmonic.l}</output></label>
+    <label><span>m≥0</span><input type="range" min="0" max="6" step="1" value={usefulRelationsDefaults.harmonic.m} data-k-harmonic-m /><output data-k-harmonic-m-output>{usefulRelationsDefaults.harmonic.m}</output></label>
+    <label><span>φ/π</span><input type="range" min="0" max="2" step="0.05" value={(usefulRelationsDefaults.harmonic.phi / Math.PI).toFixed(2)} data-k-harmonic-phi /><output data-k-harmonic-phi-output>{(usefulRelationsDefaults.harmonic.phi / Math.PI).toFixed(2)}</output></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="k-harmonic-title k-harmonic-desc">
+    <title id="k-harmonic-title">Real, imaginary, and density profiles of a normalized spherical harmonic along theta</title>
+    <desc id="k-harmonic-desc">The complex harmonic follows the Condon–Shortley associated-Legendre convention. Martin's real cosine and sine channels are square-root-two times its real and imaginary parts for positive m.</desc>
+    <line x1={left} y1={(top + bottom) / 2} x2={right} y2={(top + bottom) / 2} class="plot-guide" />
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <path d={pathFor('real')} class="plot-curve" data-k-harmonic-real />
+    <path d={pathFor('imaginary')} class="harmonic-convention__imag" data-k-harmonic-imag />
+    <path d={pathFor('density', densityMap)} class="harmonic-convention__density" data-k-harmonic-density />
+    <text x={right} y="302" text-anchor="end">θ/π</text>
+    <text x="16" y="52">profile</text>
+    <text x={right - 145} y="58">Re Y_lm</text>
+    <text x={right - 145} y="80" class="harmonic-convention__imag-label">Im Y_lm</text>
+    <text x={right - 145} y="102" class="harmonic-convention__density-label">|Y_lm|²</text>
+  </svg>
+
+  <div class="chapter-visual__readout harmonic-convention__readout" aria-live="polite">
+    <span>(l,m)</span><strong data-k-harmonic-lm>({defaults.l},{defaults.m})</strong>
+    <span>φ/π</span><strong data-k-harmonic-phi-readout>{(defaults.phi / Math.PI).toFixed(3)}</strong>
+    <span>max conjugation error</span><strong data-k-harmonic-conjugation>{Math.max(Math.abs(defaults.conjugationCheck.re), Math.abs(defaults.conjugationCheck.im)).toExponential(2)}</strong>
+    <span>real-basis scale</span><strong>√2 Re/Im</strong>
+  </div>
+
+  <div class="harmonic-convention__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table><thead><tr><th>(l,m)</th><th>max |Y|²</th><th>conjugation error</th><th>basis</th></tr></thead><tbody>{fallback.map((entry) => <tr><td>({entry.l},{entry.m})</td><td>{Math.max(...entry.samples.map((item) => item.density)).toExponential(3)}</td><td>{Math.max(Math.abs(entry.conjugationCheck.re), Math.abs(entry.conjugationCheck.im)).toExponential(2)}</td><td>√2 Re/Im</td></tr>)}</tbody></table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>K.4–K.10 的 Condon–Shortley convention；<code>Y_lm=N_lm P_l^m(cosθ)e^(imφ)</code>，且 <code>Y_l,-m=(-1)^mY_lm*</code>。K.11 实基取 <code>√2 ReY_lm</code> 与 <code>√2 ImY_lm</code>。</p>
+    <p lang="en"><strong>Model:</strong> the Condon–Shortley convention of K.4–K.10, with <code>Y_lm=N_lm P_l^m(cosθ)e^(imφ)</code>, <code>Y_l,-m=(-1)^mY_lm*</code>, and the K.11 real channels <code>√2 ReY_lm</code> and <code>√2 ImY_lm</code>.</p>
+    <p><strong>验收：</strong>复球谐在球面正交归一；负 <code>m</code> 满足共轭关系；实基变换保持范数。</p>
+    <p lang="en"><strong>Acceptance:</strong> complex harmonics are orthonormal on the sphere, negative <code>m</code> obeys the conjugation identity, and the real-basis transformation preserves norm.</p>
+    <p><strong>边界：</strong>不同软件可能改变实球谐顺序、轨道标签或额外 <code>(−1)^m</code>；应比较完整 transformation matrix。实球谐通常不是 <code>L_z</code> 本征态。</p>
+    <p lang="en"><strong>Boundary:</strong> codes may reorder real harmonics, relabel orbitals, or attach extra <code>(−1)^m</code> factors. Compare the full transformation matrix. Real harmonics are generally not <code>L_z</code> eigenfunctions.</p>
+  </div>
+</figure>
+
+<script>
+  import { harmonicProfile } from '../../../data/part07/usefulRelationsModel.mjs';
+  document.querySelectorAll('[data-k-harmonic]').forEach((root) => {
+    const lInput = root.querySelector('[data-k-harmonic-l]'); const mInput = root.querySelector('[data-k-harmonic-m]'); const phiInput = root.querySelector('[data-k-harmonic-phi]');
+    if (!(lInput instanceof HTMLInputElement) || !(mInput instanceof HTMLInputElement) || !(phiInput instanceof HTMLInputElement)) return;
+    const paths = { real: root.querySelector('[data-k-harmonic-real]'), imaginary: root.querySelector('[data-k-harmonic-imag]'), density: root.querySelector('[data-k-harmonic-density]') };
+    const outputs = { l: root.querySelector('[data-k-harmonic-l-output]'), m: root.querySelector('[data-k-harmonic-m-output]'), phi: root.querySelector('[data-k-harmonic-phi-output]'), lm: root.querySelector('[data-k-harmonic-lm]'), phiReadout: root.querySelector('[data-k-harmonic-phi-readout]'), conjugation: root.querySelector('[data-k-harmonic-conjugation]') };
+    const left = 62; const right = 700; const top = 42; const bottom = 270;
+    const update = () => {
+      const l = Number(lInput.value); if (Number(mInput.value) > l) mInput.value = String(l); mInput.max = String(l);
+      const m = Number(mInput.value); const phi = Number(phiInput.value) * Math.PI; const result = harmonicProfile({ l, m, phi, points: 241 });
+      const maxAbs = Math.max(...result.samples.flatMap((entry) => [Math.abs(entry.real), Math.abs(entry.imaginary), entry.density]), 1e-12);
+      const xMap = (theta) => left + (right - left) * theta / Math.PI;
+      const yMap = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.42 / maxAbs;
+      const densityMap = (value) => bottom - value * (bottom - top) * 0.82 / maxAbs;
+      const makePath = (key, mapper) => result.samples.map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.theta).toFixed(2)} ${mapper(entry[key]).toFixed(2)}`).join(' ');
+      if (paths.real instanceof SVGPathElement) paths.real.setAttribute('d', makePath('real', yMap));
+      if (paths.imaginary instanceof SVGPathElement) paths.imaginary.setAttribute('d', makePath('imaginary', yMap));
+      if (paths.density instanceof SVGPathElement) paths.density.setAttribute('d', makePath('density', densityMap));
+      if (outputs.l instanceof HTMLOutputElement) outputs.l.value = String(l); if (outputs.m instanceof HTMLOutputElement) outputs.m.value = String(m); if (outputs.phi instanceof HTMLOutputElement) outputs.phi.value = (phi / Math.PI).toFixed(2);
+      if (outputs.lm instanceof HTMLElement) outputs.lm.textContent = `(${l},${m})`; if (outputs.phiReadout instanceof HTMLElement) outputs.phiReadout.textContent = (phi / Math.PI).toFixed(3); if (outputs.conjugation instanceof HTMLElement) outputs.conjugation.textContent = Math.max(Math.abs(result.conjugationCheck.re), Math.abs(result.conjugationCheck.im)).toExponential(2);
+    };
+    [lInput, mInput, phiInput].forEach((input) => input.addEventListener('input', update)); update();
+  });
+</script>
+
+<style>
+  .harmonic-convention { overflow-x: auto; }
+  .harmonic-convention svg { width: 100%; min-width: 44rem; }
+  .harmonic-convention text { fill: currentColor; font-size: 13px; }
+  .harmonic-convention__imag { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 2; stroke-dasharray: 7 4; }
+  .harmonic-convention__density { fill: none; stroke: var(--sl-color-gray-3); stroke-width: 1.8; stroke-dasharray: 2 4; }
+  .harmonic-convention__imag-label { fill: var(--sl-color-gray-2); } .harmonic-convention__density-label { fill: var(--sl-color-gray-3); }
+  .harmonic-convention__controls, .harmonic-convention__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.5rem 1rem; }
+  .harmonic-convention__controls label { display: grid; gap: 0.35rem; }
+  .harmonic-convention__fallback { max-width: 44rem; }
+</style>

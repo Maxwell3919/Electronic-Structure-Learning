@@ -162,7 +162,11 @@ for (const required of ['κ²=ε', 'ε=k²/2', 'modulo', 'optical theorem', 'sin
 }
 assert.ok((content.review.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
 assert.match(content.index, /\| I · Alternative Force Expressions \| complete and deployed \|/, 'Part VII index must retain Appendix I deployed state');
-assert.match(content.index, /\| J · Scattering and Phase Shifts \| content complete;/, 'Part VII index must expose Appendix J content-complete state');
-assert.match(content.index, /\| K–R \| outline \|/, 'Part VII index must preserve K–R as outlines');
+assert.match(
+  content.index,
+  /\| J · Scattering and Phase Shifts \| (?:content complete(?:; deployment identity follows the site manifest)?|complete and deployed) \|/,
+  'Part VII index must expose Appendix J as content-complete or deployed',
+);
+assert.doesNotMatch(content.index, /\| J · Scattering and Phase Shifts \| outline \|/, 'Appendix J must never regress to outline state');
 
 console.log('Part VII Appendix J validation passed: stable spherical functions, plane-wave expansion, radial matching, phase branches, optical theorem, hard-sphere limit, bound-state threshold, and route assembly.');
