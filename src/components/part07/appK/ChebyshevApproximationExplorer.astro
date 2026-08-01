@@ -1,0 +1,97 @@
+---
+import { chebyshevApproximationProfile, usefulRelationsDefaults } from '../../../data/part07/usefulRelationsModel.mjs';
+
+const defaults = chebyshevApproximationProfile();
+const width = 760;
+const height = 350;
+const left = 62;
+const right = 700;
+const top = 42;
+const bottom = 270;
+const minY = Math.min(...defaults.samples.flatMap((entry) => [entry.exact, entry.chebyshev, entry.taylor]));
+const maxY = Math.max(...defaults.samples.flatMap((entry) => [entry.exact, entry.chebyshev, entry.taylor]));
+const xMap = (value) => left + (right - left) * (value - defaults.intervalMin) / (defaults.intervalMax - defaults.intervalMin);
+const yMap = (value) => bottom - (value - minY) * (bottom - top) * 0.9 / Math.max(maxY - minY, 1e-12);
+const pathFor = (key) => defaults.samples.map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.value).toFixed(2)} ${yMap(entry[key]).toFixed(2)}`).join(' ');
+const fallback = [2, 4, 8, 12].map((order) => chebyshevApproximationProfile({ order, intervalMin: -1, intervalMax: 1 }));
+---
+
+<figure class="chapter-visual chebyshev-approximation" data-k-chebyshev>
+  <figcaption>
+    <strong>原创交互模型：Chebyshev 递推、区间映射与 Taylor 对照</strong>
+    <span lang="en">Original interactive model: Chebyshev recurrence, interval mapping, and Taylor comparison</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls chebyshev-approximation__controls">
+    <label><span>M | 截断阶数</span><input type="range" min="1" max="20" step="1" value={usefulRelationsDefaults.chebyshev.order} data-k-cheb-order /><output data-k-cheb-order-output>{usefulRelationsDefaults.chebyshev.order}</output></label>
+    <label><span>a | 原区间 [−a,a]</span><input type="range" min="0.5" max="3" step="0.25" value="1" data-k-cheb-width /><output data-k-cheb-width-output>1.00</output></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="k-cheb-title k-cheb-desc">
+    <title id="k-cheb-title">Exponential function approximated by a Chebyshev expansion and a Taylor polynomial</title>
+    <desc id="k-cheb-desc">Both approximations use the same polynomial order. Chebyshev coefficients are computed after mapping the full target interval to minus one through one.</desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <path d={pathFor('exact')} class="chebyshev-approximation__exact" data-k-cheb-exact />
+    <path d={pathFor('chebyshev')} class="plot-curve" data-k-cheb-chebyshev />
+    <path d={pathFor('taylor')} class="chebyshev-approximation__taylor" data-k-cheb-taylor />
+    <text x={right} y="302" text-anchor="end">x</text>
+    <text x="16" y="52">exp(x)</text>
+    <text x={right - 155} y="58">exact</text>
+    <text x={right - 155} y="80" class="chebyshev-approximation__cheb-label">Chebyshev</text>
+    <text x={right - 155} y="102" class="chebyshev-approximation__taylor-label">Taylor</text>
+  </svg>
+
+  <div class="chapter-visual__readout chebyshev-approximation__readout" aria-live="polite">
+    <span>order M</span><strong data-k-cheb-order-readout>{defaults.order}</strong>
+    <span>mapped interval</span><strong>[−1,1]</strong>
+    <span>max Chebyshev error</span><strong data-k-cheb-error>{defaults.maxChebyshevError.toExponential(3)}</strong>
+    <span>max Taylor error</span><strong data-k-taylor-error>{defaults.maxTaylorError.toExponential(3)}</strong>
+  </div>
+
+  <div class="chebyshev-approximation__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table><thead><tr><th>M</th><th>interval</th><th>max Chebyshev error</th><th>max Taylor error</th></tr></thead><tbody>{fallback.map((entry) => <tr><td>{entry.order}</td><td>[−1,1]</td><td>{entry.maxChebyshevError.toExponential(3)}</td><td>{entry.maxTaylorError.toExponential(3)}</td></tr>)}</tbody></table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>K.18–K.20 的 type-I Chebyshev expansion，<code>T_0=1</code>、<code>T_1=x</code>、<code>T_(n+1)=2xT_n−T_(n−1)</code>。系数由 Chebyshev nodes 上的离散 cosine quadrature 得到。</p>
+    <p lang="en"><strong>Model:</strong> the type-I Chebyshev expansion of K.18–K.20, with <code>T_0=1</code>, <code>T_1=x</code>, and <code>T_(n+1)=2xT_n−T_(n−1)</code>. Coefficients use discrete cosine quadrature at Chebyshev nodes.</p>
+    <p><strong>验收：</strong>目标区间先线性映射到 <code>[−1,1]</code>；Clenshaw evaluation 与直接递推一致；随阶数增加，光滑函数的全区间误差下降。</p>
+    <p lang="en"><strong>Acceptance:</strong> the target interval is mapped to <code>[−1,1]</code>; Clenshaw evaluation agrees with direct recurrence; the global error of the smooth target decreases with order.</p>
+    <p><strong>边界：</strong><code>|x|&gt;1</code> 时 <code>T_n</code> 可指数增长。多项式截断误差不等于时间步长、basis、谱界或矩阵函数误差；operator expansion 必须先给出可信 spectral bounds。</p>
+    <p lang="en"><strong>Boundary:</strong> <code>T_n</code> can grow exponentially for <code>|x|&gt;1</code>. Polynomial truncation error does not replace time-step, basis, spectral-bound, or matrix-function convergence; an operator expansion needs reliable spectral bounds first.</p>
+  </div>
+</figure>
+
+<script>
+  import { chebyshevApproximationProfile } from '../../../data/part07/usefulRelationsModel.mjs';
+  document.querySelectorAll('[data-k-chebyshev]').forEach((root) => {
+    const orderInput = root.querySelector('[data-k-cheb-order]'); const widthInput = root.querySelector('[data-k-cheb-width]');
+    if (!(orderInput instanceof HTMLInputElement) || !(widthInput instanceof HTMLInputElement)) return;
+    const paths = { exact: root.querySelector('[data-k-cheb-exact]'), chebyshev: root.querySelector('[data-k-cheb-chebyshev]'), taylor: root.querySelector('[data-k-cheb-taylor]') };
+    const outputs = { order: root.querySelector('[data-k-cheb-order-output]'), width: root.querySelector('[data-k-cheb-width-output]'), orderReadout: root.querySelector('[data-k-cheb-order-readout]'), chebError: root.querySelector('[data-k-cheb-error]'), taylorError: root.querySelector('[data-k-taylor-error]') };
+    const left = 62; const right = 700; const top = 42; const bottom = 270;
+    const update = () => {
+      const order = Number(orderInput.value); const halfWidth = Number(widthInput.value); const result = chebyshevApproximationProfile({ order, intervalMin: -halfWidth, intervalMax: halfWidth, points: 241 });
+      const minY = Math.min(...result.samples.flatMap((entry) => [entry.exact, entry.chebyshev, entry.taylor])); const maxY = Math.max(...result.samples.flatMap((entry) => [entry.exact, entry.chebyshev, entry.taylor]));
+      const xMap = (value) => left + (right - left) * (value + halfWidth) / (2 * halfWidth); const yMap = (value) => bottom - (value - minY) * (bottom - top) * 0.9 / Math.max(maxY - minY, 1e-12);
+      const makePath = (key) => result.samples.map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.value).toFixed(2)} ${yMap(entry[key]).toFixed(2)}`).join(' ');
+      for (const key of Object.keys(paths)) if (paths[key] instanceof SVGPathElement) paths[key].setAttribute('d', makePath(key));
+      if (outputs.order instanceof HTMLOutputElement) outputs.order.value = String(order); if (outputs.width instanceof HTMLOutputElement) outputs.width.value = halfWidth.toFixed(2); if (outputs.orderReadout instanceof HTMLElement) outputs.orderReadout.textContent = String(order); if (outputs.chebError instanceof HTMLElement) outputs.chebError.textContent = result.maxChebyshevError.toExponential(3); if (outputs.taylorError instanceof HTMLElement) outputs.taylorError.textContent = result.maxTaylorError.toExponential(3);
+    };
+    [orderInput, widthInput].forEach((input) => input.addEventListener('input', update)); update();
+  });
+</script>
+
+<style>
+  .chebyshev-approximation { overflow-x: auto; }
+  .chebyshev-approximation svg { width: 100%; min-width: 44rem; }
+  .chebyshev-approximation text { fill: currentColor; font-size: 13px; }
+  .chebyshev-approximation__exact { fill: none; stroke: currentColor; stroke-width: 2.3; }
+  .chebyshev-approximation__taylor { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 1.9; stroke-dasharray: 7 4; }
+  .chebyshev-approximation__cheb-label { fill: var(--sl-color-accent-high); } .chebyshev-approximation__taylor-label { fill: var(--sl-color-gray-2); }
+  .chebyshev-approximation__controls, .chebyshev-approximation__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.5rem 1rem; }
+  .chebyshev-approximation__controls label { display: grid; gap: 0.35rem; }
+  .chebyshev-approximation__fallback { max-width: 44rem; }
+</style>
