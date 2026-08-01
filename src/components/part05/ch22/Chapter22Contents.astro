@@ -1,0 +1,45 @@
+---
+const items = [
+  ['source-map', '来源地图 | Source Map'],
+  ['reading-orientation', '阅读定位与对象层级 | Orientation and Object Hierarchy'],
+  ['section-22-1', '22.1 Overview'],
+  ['section-22-2', '22.2 Potential at a Surface or Interface'],
+  ['section-22-3', '22.3 Surface States: Tamm and Shockley'],
+  ['section-22-4', '22.4 Shockley States on Metals: Gold (111) Surface'],
+  ['section-22-5', '22.5 Surface States on Semiconductors'],
+  ['section-22-6', '22.6 Interfaces: Semiconductors'],
+  ['section-22-7', '22.7 Interfaces: Oxides'],
+  ['section-22-8', '22.8 Layer Materials'],
+  ['section-22-9', '22.9 One-Dimensional Systems'],
+  ['calculation-connection', '计算实践与收敛链 | Computational Connection'],
+  ['evidence-matrix', '科学证据矩阵 | Scientific Evidence Matrix'],
+  ['exercises', '原创练习 | Original Exercises'],
+];
+---
+
+<nav class="chapter-contents" aria-label="Chapter 22 contents">
+  <h2>本章导航 | Chapter Contents</h2>
+  <ol>
+    {items.map(([id, label]) => (
+      <li><a href={`#${id}`}>{label}</a></li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .chapter-contents {
+    margin-block: 1.4rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.15rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .chapter-contents h2 { margin-top: 0; }
+  .chapter-contents ol { columns: 2; column-gap: 2rem; }
+  .chapter-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .chapter-contents ol { columns: 1; }
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import { polarDiscontinuityProfile } from '../../../data/part05/ch22TeachingModels.mjs';
+
+const componentId = 'ch22-polar-discontinuity';
+const width = 820;
+const height = 360;
+const pad = { left: 64, right: 28, top: 32, bottom: 62 };
+const defaults = { layers: 12, compensation: 0, layerCharge: 1 };
+const result = polarDiscontinuityProfile(defaults);
+const yMin = -7;
+const yMax = 2;
+const xScale = (plane) => pad.left + plane / defaults.layers * (width - pad.left - pad.right);
+const yScale = (potential) => pad.top + (yMax - potential) / (yMax - yMin) * (height - pad.top - pad.bottom);
+const points = result.profile.map(({ plane, potential }) => `${xScale(plane).toFixed(2)},${yScale(potential).toFixed(2)}`).join(' ');
+---
+
+<figure class="chapter-visual polar-discontinuity" id={componentId}>
+  <figcaption>
+    <strong>极性层序、电势累积与补偿 | Polar layer sequence, potential buildup, and compensation</strong>
+    <span>原创离散电容模型：交替 ±σ 平面在未补偿时产生随厚度增长的宏观势；界面补偿电荷改变平均场。</span>
+    <span lang="en">Original discrete-capacitor model: alternating ±σ planes generate a thickness-growing macroscopic potential unless an interface compensation charge changes the average field.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>极性层数 N <input data-layers type="range" min="4" max="30" step="2" value={defaults.layers} /></label>
+    <label>界面补偿电荷 c/|σ| <input data-compensation type="range" min="0" max="1" step="0.05" value={defaults.compensation} /></label>
+    <label>层电荷 |σ| <input data-charge type="range" min="0.4" max="1.6" step="0.05" value={defaults.layerCharge} /></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>交替带电平面和宏观电势</title>
+    <desc id={`${componentId}-desc`}>横轴为层序，圆点交替表示正负形式层电荷，折线显示电子势能的离散累积。</desc>
+    <line class="axis" x1={pad.left} y1={height - pad.bottom} x2={width - pad.right} y2={height - pad.bottom} />
+    <line class="axis" x1={pad.left} y1={pad.top} x2={pad.left} y2={height - pad.bottom} />
+    <polyline data-potential class="potential-curve" points={points} />
+    <g data-planes>
+      {result.profile.slice(1).map(({ plane, charge }) => (
+        <circle class:list={['charge-plane', charge > 0 ? 'charge-plane--positive' : 'charge-plane--negative']} cx={xScale(plane)} cy={height - pad.bottom + 18} r="6" />
+      ))}
+    </g>
+    <text x={(pad.left + width - pad.right) / 2} y={height - 8} text-anchor="middle">layer index; symbols mark formal ±σ planes</text>
+    <text transform={`translate(20 ${(height + pad.top - pad.bottom) / 2}) rotate(-90)`} text-anchor="middle">electron potential energy (model units)</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>平均势斜率 = <output data-slope>{result.averageSlope.toFixed(3)}</output></span>
+    <span>势范围 = <output data-range>{result.potentialRange.toFixed(3)}</output></span>
+    <span>末端场 = <output data-field>{result.finalField.toFixed(3)}</output></span>
+    <span data-state>未补偿：宏观势随厚度增长</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>把每个原子层视为无限均匀带电平面，跨平面场跳变 σ/ε，层间势差为 −E d。界面加入 −c 的补偿面电荷。默认 ε=d=1。</p>
+    <p><strong>验收：</strong>c=0 时每两个极性层的平均势线性变化；c=|σ|/2 时偶数层平台的平均斜率为零；固定 c≠|σ|/2 时势范围随层数增长。</p>
+    <p><strong>边界：</strong>形式层电荷与真实载流子/缺陷电荷不同。模型不识别电子重构、氧空位、互扩散、表面吸附或有限带宽；“半电子”是理想静电极限，不是对真实界面载流子来源的唯一证明。</p>
+  </div>
+
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认未补偿的锯齿微观势与线性宏观累积仍可见；控件不更新。</p></noscript>
+</figure>
+
+<script>
+  import { polarDiscontinuityProfile } from '../../../data/part05/ch22TeachingModels.mjs';
+  const root = document.getElementById('ch22-polar-discontinuity');
+  if (root) {
+    const layers = root.querySelector('[data-layers]'); const compensation = root.querySelector('[data-compensation]'); const charge = root.querySelector('[data-charge]');
+    const curve = root.querySelector('[data-potential]'); const planes = root.querySelector('[data-planes]'); const state = root.querySelector('[data-state]');
+    const outputs = { slope: root.querySelector('[data-slope]'), range: root.querySelector('[data-range]'), field: root.querySelector('[data-field]') };
+    if ([layers, compensation, charge].every((item) => item instanceof HTMLInputElement)
+      && curve instanceof SVGPolylineElement && planes instanceof SVGGElement && state instanceof HTMLElement
+      && Object.values(outputs).every((item) => item instanceof HTMLOutputElement)) {
+      const width = 820; const height = 360; const pad = { left: 64, right: 28, top: 32, bottom: 62 };
+      const update = () => {
+        const params = { layers: Number(layers.value), compensation: Number(compensation.value), layerCharge: Number(charge.value) };
+        const result = polarDiscontinuityProfile(params);
+        const values = result.profile.map((item) => item.potential); const low = Math.min(...values); const high = Math.max(...values);
+        const margin = Math.max((high - low) * 0.15, 0.5); const yMin = low - margin; const yMax = high + margin;
+        const xScale = (plane) => pad.left + plane / params.layers * (width - pad.left - pad.right);
+        const yScale = (potential) => pad.top + (yMax - potential) / (yMax - yMin) * (height - pad.top - pad.bottom);
+        curve.setAttribute('points', result.profile.map(({ plane, potential }) => `${xScale(plane).toFixed(2)},${yScale(potential).toFixed(2)}`).join(' '));
+        planes.replaceChildren(...result.profile.slice(1).map(({ plane, charge: layerCharge }) => {
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', String(xScale(plane))); circle.setAttribute('cy', String(height - pad.bottom + 18)); circle.setAttribute('r', '6');
+          circle.setAttribute('class', `charge-plane ${layerCharge > 0 ? 'charge-plane--positive' : 'charge-plane--negative'}`); return circle;
+        }));
+        outputs.slope.value = result.averageSlope.toFixed(3); outputs.range.value = result.potentialRange.toFixed(3); outputs.field.value = result.finalField.toFixed(3);
+        const half = params.layerCharge / 2;
+        state.textContent = Math.abs(params.compensation - half) < 1e-9
+          ? '半补偿：偶数层宏观势斜率为零'
+          : '非半补偿：宏观势随厚度累积';
+      };
+      [layers, compensation, charge].forEach((input) => input.addEventListener('input', update)); update();
+    }
+  }
+</script>
+
+<style>
+  .polar-discontinuity { width: 100%; min-width: 0; max-width: 100%; margin-inline: 0; overflow-x: auto; }
+  .polar-discontinuity svg { display: block; width: 100%; min-width: 38rem; height: auto; }
+  .axis { stroke: currentColor; stroke-width: 1.4; }
+  .potential-curve { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 2.7; }
+  .charge-plane { stroke: currentColor; stroke-width: 1.5; }
+  .charge-plane--positive { fill: var(--sl-color-accent-high); }
+  .charge-plane--negative { fill: var(--sl-color-gray-6); }
+  text { fill: currentColor; font-size: 14px; }
+</style>

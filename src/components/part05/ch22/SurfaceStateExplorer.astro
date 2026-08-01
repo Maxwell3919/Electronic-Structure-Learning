@@ -1,0 +1,113 @@
+---
+import { tammAmplitudes } from '../../../data/part05/ch22TeachingModels.mjs';
+
+const componentId = 'ch22-surface-state';
+const width = 820;
+const height = 360;
+const defaults = { hopping: -1, boundaryShift: 1.8, sites: 20 };
+const state = tammAmplitudes(defaults);
+const bandMin = state.bandMin;
+const bandMax = state.bandMax;
+const energyY = (energy) => 40 + (3 - energy) / 6 * 250;
+const amplitudeX = (site) => 420 + (site - 1) / (defaults.sites - 1) * 360;
+const amplitudeY = (probability) => 300 - probability * 220;
+const amplitudePoints = state.amplitudes.map(({ site, probability }) => `${amplitudeX(site).toFixed(2)},${amplitudeY(probability).toFixed(2)}`).join(' ');
+---
+
+<figure class="chapter-visual surface-state-explorer" id={componentId}>
+  <figcaption>
+    <strong>边界势产生的 Tamm 束缚态 | Tamm bound state from a boundary potential</strong>
+    <span>原创解析模型：一维最近邻链的第一个站点能量移动 Δ，比较体带连续谱、束缚态阈值和向体内的指数衰减。</span>
+    <span lang="en">Original analytic model: shift the first-site energy of a nearest-neighbour chain and compare the bulk continuum, bound-state threshold, and exponential decay into the bulk.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>边界能量移动 Δ/|t| <input data-boundary type="range" min="-3" max="3" step="0.05" value={defaults.boundaryShift} /></label>
+    <label>跃迁幅 |t| <input data-hopping type="range" min="0.4" max="1.6" step="0.05" value={Math.abs(defaults.hopping)} /></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>Tamm 边界态的能量和局域概率</title>
+    <desc id={`${componentId}-desc`}>左侧显示从负二倍跃迁到正二倍跃迁的体连续谱和边界态能量，右侧显示束缚态概率向体内衰减。</desc>
+    <rect data-continuum class="continuum" x="76" y={energyY(bandMax)} width="220" height={energyY(bandMin) - energyY(bandMax)} />
+    <text x="186" y={energyY(0)} text-anchor="middle">projected bulk continuum</text>
+    <line class="axis" x1="76" y1="40" x2="76" y2="300" />
+    <text transform="translate(26 170) rotate(-90)" text-anchor="middle">energy / |t|</text>
+    <line data-state-line class="bound-state-line" x1="66" x2="306" y1={state.hasBoundState ? energyY(state.energy) : energyY(0)} y2={state.hasBoundState ? energyY(state.energy) : energyY(0)} />
+    <text data-state-label x="186" y={state.hasBoundState ? energyY(state.energy) - 8 : 30} text-anchor="middle">{state.hasBoundState ? 'bound state' : 'no discrete bound state'}</text>
+
+    <line class="axis" x1="420" y1="300" x2="780" y2="300" />
+    <line class="axis" x1="420" y1="72" x2="420" y2="300" />
+    <polyline data-amplitude class="amplitude-curve" points={amplitudePoints} />
+    <text x="600" y="338" text-anchor="middle">site index into bulk</text>
+    <text transform="translate(382 186) rotate(-90)" text-anchor="middle">probability</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>体带 = [<output data-band-min>{bandMin.toFixed(2)}</output>, <output data-band-max>{bandMax.toFixed(2)}</output>]</span>
+    <span>阈值 |Δ| = |t|</span>
+    <span>状态 = <output data-status>{state.hasBoundState ? 'bound' : 'continuum only'}</output></span>
+    <span>能量 = <output data-energy>{state.hasBoundState ? state.energy.toFixed(3) : '—'}</output></span>
+    <span>衰减比 |t/Δ| = <output data-decay>{state.hasBoundState ? state.decayRatio.toFixed(3) : '—'}</output></span>
+    <span>局域长度 ξ/a = <output data-length>{state.hasBoundState ? state.localizationLength.toFixed(3) : '—'}</output></span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>半无限最近邻链，体 onsite 为 0、跃迁为 t，边界 onsite 为 Δ。体带为 [−2|t|,2|t|]；当 |Δ|&gt;|t| 时，解析束缚态满足 E=Δ+t²/Δ，概率按 |t/Δ|²ⁿ 衰减。</p>
+    <p><strong>验收：</strong>|Δ|=|t| 为带边阈值；|Δ| 增大时能量移出连续谱且局域长度减小；Δ&gt;0 产生带上方态，Δ&lt;0 产生带下方态；归一化概率和为 1。</p>
+    <p><strong>边界：</strong>这是 Tamm 边界势模型。它没有第二条体带、带角色交换、表面共振寿命、SOC 或拓扑不变量；不能用来把任意 slab gap state 分类为 Shockley 或拓扑态。</p>
+  </div>
+
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认 Δ=1.8|t| 的带外束缚态和指数概率分布仍可见；控件不更新。</p></noscript>
+</figure>
+
+<script>
+  import { tammAmplitudes } from '../../../data/part05/ch22TeachingModels.mjs';
+  const root = document.getElementById('ch22-surface-state');
+  if (root) {
+    const boundary = root.querySelector('[data-boundary]'); const hopping = root.querySelector('[data-hopping]');
+    const continuum = root.querySelector('[data-continuum]'); const line = root.querySelector('[data-state-line]');
+    const label = root.querySelector('[data-state-label]'); const curve = root.querySelector('[data-amplitude]');
+    const outputs = {
+      bandMin: root.querySelector('[data-band-min]'), bandMax: root.querySelector('[data-band-max]'), status: root.querySelector('[data-status]'),
+      energy: root.querySelector('[data-energy]'), decay: root.querySelector('[data-decay]'), length: root.querySelector('[data-length]'),
+    };
+    if ([boundary, hopping].every((item) => item instanceof HTMLInputElement)
+      && continuum instanceof SVGRectElement && line instanceof SVGLineElement
+      && label instanceof SVGTextElement && curve instanceof SVGPolylineElement
+      && Object.values(outputs).every((item) => item instanceof HTMLOutputElement)) {
+      const energyY = (energy) => 40 + (3 - energy) / 6 * 250;
+      const amplitudeX = (site) => 420 + (site - 1) / 19 * 360;
+      const amplitudeY = (probability) => 300 - probability * 220;
+      const update = () => {
+        const result = tammAmplitudes({ hopping: -Number(hopping.value), boundaryShift: Number(boundary.value), sites: 20 });
+        continuum.setAttribute('y', String(energyY(result.bandMax)));
+        continuum.setAttribute('height', String(energyY(result.bandMin) - energyY(result.bandMax)));
+        if (result.hasBoundState) {
+          const y = energyY(result.energy); line.setAttribute('y1', String(y)); line.setAttribute('y2', String(y));
+          line.style.display = ''; label.textContent = result.side === 'above' ? 'bound state above band' : 'bound state below band';
+          label.setAttribute('y', String(y - 8));
+          curve.setAttribute('points', result.amplitudes.map(({ site, probability }) => `${amplitudeX(site).toFixed(2)},${amplitudeY(probability).toFixed(2)}`).join(' '));
+        } else {
+          line.style.display = 'none'; label.textContent = 'no discrete bound state'; label.setAttribute('y', '30'); curve.setAttribute('points', '');
+        }
+        outputs.bandMin.value = result.bandMin.toFixed(2); outputs.bandMax.value = result.bandMax.toFixed(2);
+        outputs.status.value = result.hasBoundState ? 'bound' : 'continuum only';
+        outputs.energy.value = result.hasBoundState ? result.energy.toFixed(3) : '—';
+        outputs.decay.value = result.hasBoundState ? result.decayRatio.toFixed(3) : '—';
+        outputs.length.value = result.hasBoundState ? result.localizationLength.toFixed(3) : '—';
+      };
+      [boundary, hopping].forEach((input) => input.addEventListener('input', update)); update();
+    }
+  }
+</script>
+
+<style>
+  .surface-state-explorer { width: 100%; min-width: 0; max-width: 100%; margin-inline: 0; overflow-x: auto; }
+  .surface-state-explorer svg { display: block; width: 100%; min-width: 38rem; height: auto; }
+  .axis { stroke: currentColor; stroke-width: 1.4; }
+  .continuum { fill: var(--sl-color-gray-5); opacity: 0.75; }
+  .bound-state-line { stroke: var(--sl-color-accent-high); stroke-width: 3; }
+  .amplitude-curve { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 2.7; }
+  text { fill: currentColor; font-size: 14px; }
+</style>
