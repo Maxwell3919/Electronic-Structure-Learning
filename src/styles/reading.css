@@ -26,7 +26,7 @@
 }
 
 .esl-reading-toolbar {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -35,6 +35,8 @@
   padding-block: var(--esl-space-3);
   border-block: var(--esl-border-width) solid var(--esl-border);
 }
+
+.esl-reading-toolbar[data-active='true'] { display: flex; }
 
 .esl-reading-toolbar .esl-bilingual-control {
   margin: 0;

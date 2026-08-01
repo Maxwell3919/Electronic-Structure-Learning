@@ -2,7 +2,7 @@
 import BilingualModeControl from '../design/BilingualModeControl.astro';
 ---
 
-<aside class="esl-reading-toolbar print:hidden" aria-label="阅读显示设置 | Reading display settings">
+<aside class="esl-reading-toolbar print:hidden" data-reading-toolbar data-active="false" aria-label="阅读显示设置 | Reading display settings">
   <BilingualModeControl />
   <div class="esl-reading-mode-control" data-reading-mode-control data-active="false" role="group" aria-label="阅读宽度模式 | Reading width mode">
     <span class="esl-reading-mode-control__label">阅读画布</span>
@@ -22,6 +22,7 @@ import BilingualModeControl from '../design/BilingualModeControl.astro';
       if (allowed.has(candidate)) saved = candidate;
     } catch {}
     root.dataset.eslReading = saved;
+    document.querySelectorAll('[data-reading-toolbar]').forEach((toolbar) => { toolbar.dataset.active = 'true'; });
     document.querySelectorAll('[data-reading-mode-control]').forEach((control, index) => {
       control.dataset.active = index === 0 ? 'true' : 'false';
       control.querySelectorAll('[data-reading-mode]').forEach((button) => {

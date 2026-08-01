@@ -4,13 +4,22 @@ import UnitReadingToolbar from '../reading/UnitReadingToolbar.astro';
 import UnitLayerLegend from '../reading/UnitLayerLegend.astro';
 import UnitSectionNavigator from '../reading/UnitSectionNavigator.astro';
 import sourceSemanticStatus from '../../data/site/sourceSemanticStatus.mjs';
-import { resolveUnit, unitDisplayTitle } from '../../lib/unitCatalog.mjs';
+import { resolveUnit, unitDisplayTitle, martinUnits } from '../../lib/unitCatalog.mjs';
 const route = Astro.locals.starlightRoute;
 const unit = resolveUnit(`/${route.id}/`);
 const semantic = unit ? sourceSemanticStatus.find((item) => item.unitId === unit.unitId) : null;
 const title = unit ? unitDisplayTitle(unit) : route.entry.data.title;
+const manualComponentTitleRoutes = new Set([
+  '', 'index', 'cases', 'interactive-labs', 'labs', 'learning-paths',
+  'learning-paths/dft-foundations', 'learning-paths/first-real-calculation',
+  'learning-paths/properties-and-advanced-topics', 'reference', 'reference/design-system',
+  'start-here', 'theory',
+  ...martinUnits.map((item) => item.part.slug), 'practice-sholl-steckel',
+]);
+const contentProvidesH1 = manualComponentTitleRoutes.has(route.id)
+  || route.headings.some((heading) => heading.depth === 1);
 ---
-<h1 id="_top">{title}</h1>
+{!contentProvidesH1 && <h1 id="_top">{title}</h1>}
 {unit && semantic?.sourceTitleZh && <p class="esl-unit-title-zh">{semantic.sourceTitleZh}</p>}
 <UnitReadingToolbar />
 {unit && <><UnitSourceHeader unit={unit} semantic={semantic} /><UnitLayerLegend /></>}

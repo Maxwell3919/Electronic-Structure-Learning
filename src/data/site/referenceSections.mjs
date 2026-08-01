@@ -11,8 +11,8 @@ export const referenceSections = [
   titleZh,
   titleEn,
   status: id === 'appendices' ? 'available' : 'planned',
-  route: id === 'appendices' ? '/part-07-appendices/' : `/reference/#${id}`,
+  route: id === 'appendices' ? '/part-07-appendices/'
+    : id === 'glossary' ? '/reference/terminology-and-symbols/' : `/reference/#${id}`,
 }));
 
 export default referenceSections;
-

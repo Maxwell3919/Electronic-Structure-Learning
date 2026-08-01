@@ -62,3 +62,13 @@ Do not describe a source claim or a teaching model as independent validation.
 ## 5. Writing form
 
 The information requirements above do not require mechanical repetition of many short headings. A finished chapter should read as a coherent textbook unit, while still making source, assumptions, numerical conditions and evidence boundaries easy to locate.
+
+## 6. Source-semantic layers
+
+Unit pages distinguish `textbook-baseline`, `original-exposition`, `supplemental-derivation`, `numerical-interpretation`, `practical-mapping`, `later-literature`, and `open-discussion`. Catalog titles and sections remain source locators; website prose and derivations do not become Martin text through proximity or styling.
+
+All 46 Martin units are registered in `src/data/site/sourceSemanticStatus.mjs`. `body-review-needed` queues a later bounded review and does not authorize an automated rewrite.
+
+## 7. Literature boundary
+
+Bibliographic metadata, a source-reported claim, a cross-source assessment, and independent validation are separate objects. Literature records may extend or challenge a textbook baseline, but they must not silently replace it. Empty registries render compact status text rather than empty Chapter cards.

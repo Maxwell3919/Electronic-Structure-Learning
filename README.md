@@ -34,6 +34,12 @@ src/data/site/contentStatus.mjs
 
 当前状态由网站首页和“开始学习”页从注册表读取，不在 README 手工维护整章清单。
 
+## 阅读系统与文献层
+
+全部 Martin 与 Sholl–Steckel 单元通过共享 reading frame 获得 Parallel、Focus 和 Atlas 三种阅读画布。左侧导航默认折叠非当前 Part；[完整 Chapter 图谱](https://maxwell3919.github.io/Electronic-Structure-Learning/theory/atlas/) 平铺显示全部单元及相互独立的结构、技术、科学审查和文献状态。
+
+`src/data/site/sourceSemanticStatus.mjs` 区分教材原分节、网站原创解释和补充推导。`src/data/literature/` 是空数据起步的后续文献、主张和讨论基础设施；新论文不会静默覆盖 Martin 教材基线，bibliographic registration 也不表示科学主张已经成立。
+
 ## 本地验证
 
 要求 Node.js 22.12 或更高版本。
