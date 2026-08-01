@@ -214,6 +214,11 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         if len(contents_links) != 13:
             fail(f"Chapter 20 contents must contain thirteen links, found {len(contents_links)}")
 
+        WebDriverWait(driver, 20).until(
+            lambda active: active.find_element(
+                By.CSS_SELECTOR, "#ch20-chain-dispersion"
+            ).get_attribute("data-interaction-ready") == "true"
+        )
         move_slider_and_expect_change(
             driver,
             "#ch20-chain-dispersion [data-mass-ratio]",
