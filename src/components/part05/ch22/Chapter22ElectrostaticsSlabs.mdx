@@ -1,0 +1,256 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import SlabWorkFunctionExplorer from './SlabWorkFunctionExplorer.astro';
+
+<span id="section-22-1" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.1 概述 | Overview
+
+<BilingualSection titleZh="降维来自边界条件，而不只是超胞形状" titleEn="Dimensional reduction is a boundary condition, not merely a supercell shape" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+表面、界面、二维层和一维线的共同点是：电子在至少一个方向上不再经历无限重复的同一体势。对理想平面表面，平行方向仍有二维平移对称，波函数可写为
+
+$$
+\psi_{n\mathbf k_\parallel}(\mathbf r)
+=
+e^{i\mathbf k_\parallel\cdot\mathbf r_\parallel}
+ u_{n\mathbf k_\parallel}(\mathbf r_\parallel,z),
+$$
+
+其中 $\mathbf k_\parallel$ 是表面 Brillouin 区波矢，$z$ 是法向坐标。每个固定的 $\mathbf k_\parallel$ 都定义一个有效的一维边界问题。体能带在固定 $\mathbf k_\parallel$ 下允许不同 $k_z$，形成投影体连续谱；只有在该投影谱的能隙中，表面态才可作为严格离散束缚态存在。若其能量与投影体谱重叠，表面权重仍可能增强，但对象变成表面共振。
+
+对界面，法向两侧是不同材料，波函数可分别衰减、传播或形成量子阱子带。对孤立二维层或一维线，真空超胞只是数值表示；真实对象的筛选、Coulomb 核、DOS 和单位应按物理维度解释，而不能把超胞总体积当作材料体积。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+Surfaces, interfaces, two-dimensional layers, and one-dimensional wires share the loss of an infinitely repeated bulk potential in at least one direction. For an ideal planar surface, two-dimensional translation symmetry survives parallel to the boundary, so
+
+$$
+\psi_{n\mathbf k_\parallel}(\mathbf r)
+=
+e^{i\mathbf k_\parallel\cdot\mathbf r_\parallel}
+ u_{n\mathbf k_\parallel}(\mathbf r_\parallel,z),
+$$
+
+where $\mathbf k_\parallel$ belongs to the surface Brillouin zone and $z$ is the normal coordinate. Each fixed $\mathbf k_\parallel$ defines an effective one-dimensional boundary problem. Bulk bands with all allowed $k_z$ form a projected bulk continuum. A strict discrete surface bound state can lie only in a gap of that projected spectrum; overlap with the continuum changes the object into a surface resonance even when the surface weight remains enhanced.
+
+At an interface the two normal half-spaces are different materials, and a state may decay, propagate, or form a quantum-well subband on either side. For an isolated two-dimensional layer or one-dimensional wire, vacuum is a numerical representation. Screening, Coulomb kernels, density of states, and units must follow the physical dimensionality rather than treating the total supercell volume as material volume.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="半无限体系、有限 slab 与周期镜像" titleEn="Semi-infinite systems, finite slabs, and periodic images" eyebrow="Numerical representation">
+  <div className="bilingual-section__zh">
+
+理论表面通常指单个半无限晶体；平面波程序常把它替换为“有限 slab + 真空”的三维周期超胞。有限 slab 含两个表面。若两侧终止相同且结构对称，净偶极常因对称性消失，两个表面态会形成偶/奇组合，其劈裂随 slab 厚度增加而衰减。若两侧不同，超胞带有净偶极，周期边界会在真空中产生人工电场；需要增大真空、构造对称 slab、加入偶极修正或采用截断 Coulomb 边界。
+
+slab 厚度和真空厚度解决不同误差。前者控制两表面量子耦合以及 slab 中央能否恢复体样结构和势；后者控制相邻周期镜像的波函数、静电和范德华相互作用。增加真空不能修复 slab 太薄；增加层数也不能自动消除不对称偶极造成的周期场。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A theoretical surface usually means one semi-infinite crystal. A plane-wave calculation commonly replaces it by a finite slab plus vacuum in a three-dimensionally periodic supercell. A finite slab has two surfaces. Identical symmetric terminations often cancel the net dipole; the two surface states form even/odd combinations whose splitting decays with slab thickness. Different terminations create a net cell dipole and an artificial vacuum field under periodic boundary conditions. Remedies include more vacuum, a symmetric slab, a dipole correction, or a truncated-Coulomb boundary.
+
+Slab thickness and vacuum thickness address different errors. The former controls coupling between opposite surfaces and whether the centre becomes bulk-like. The latter controls wavefunction, electrostatic, and dispersion interactions between periodic images. More vacuum does not repair an undersized slab, and more layers do not automatically remove the periodic field of an asymmetric dipole.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="slab 计算中的三种‘收敛’ | Three kinds of slab convergence" tone="note">
+  <div className="bilingual-callout__grid">
+    <div>
+
+1. **局部结构收敛**：表面层间距、重构和吸附几何对固定/放松层数稳定。  
+2. **电子局域收敛**：中央层势与密度体样化；两侧表面态劈裂足够小。  
+3. **目标量收敛**：功函数、表面能、带阶或吸附能分别对 slab、真空、k 网格和修正方案稳定。
+
+三者的最慢尺度可能不同。
+
+    </div>
+    <div lang="en">
+
+1. **Local structural convergence**: interlayer spacings, reconstruction, and adsorption geometry are stable to the number of fixed/relaxed layers.  
+2. **Electronic localization convergence**: central layers recover bulk-like potential/density and opposite-surface splitting is negligible.  
+3. **Target-observable convergence**: work function, surface energy, offset, or adsorption energy is separately stable to slab, vacuum, k mesh, and correction scheme.
+
+The slowest scale need not be the same for all three.
+
+    </div>
+  </div>
+</BilingualCallout>
+
+<span id="section-22-2" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.2 表面或界面的势 | Potential at a Surface or Interface
+
+<BilingualSection titleZh="体势零点与真空参考" titleEn="Bulk potential zero and vacuum reference" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+周期体 Hamiltonian 的势可以整体加常数，能带只会刚性移动。表面把体区连接到真空，使远离表面的平台提供外部参考，但该平台相对于体平均势的差由表面电荷重排和偶极决定。因此“某材料的绝对能带位置”不是纯体性质；它还依赖晶面、终止、吸附、重构、缺陷、外场和电荷状态。
+
+金属达到平衡时费米能在整个连通体系中统一，功函数定义为
+
+$$
+\boxed{\Phi=V_{\mathrm{vac}}-E_F.}
+$$
+
+对绝缘体和半导体，费米能可由掺杂、缺陷、表面态和温度决定；因此常需分别报告真空相对价带顶/导带底的电离能和电子亲和势，并说明是否存在带弯曲。一个有限 slab 的 Kohn–Sham 带边还可能受量子限域、两表面耦合和近似带隙误差影响。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+The potential of a periodic bulk Hamiltonian can be shifted by a constant, moving every band rigidly. A surface connects a bulk-like region to vacuum and thereby supplies an external plateau, but the plateau relative to the bulk average is set by surface charge rearrangement and the dipole. An “absolute band position” is therefore not a purely bulk property; it depends on facet, termination, adsorption, reconstruction, defects, external field, and charge state.
+
+In an equilibrated connected metal the Fermi level is uniform and the work function is
+
+$$
+\boxed{\Phi=V_{\mathrm{vac}}-E_F.}
+$$
+
+In an insulator or semiconductor the Fermi level may be controlled by doping, defects, surface states, and temperature. Ionization energy and electron affinity relative to vacuum are often more useful, together with a statement about band bending. A finite-slab Kohn–Sham edge may also contain quantum confinement, opposite-surface coupling, and approximate-gap errors.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="平面平均与宏观平均 | Planar and macroscopic averages"
+  assumptions={[
+    '表面平行方向具有二维周期性；',
+    'A 是表面晶胞面积；',
+    '宏观平均窗口按体周期或声明的平滑核选取。',
+  ]}
+>
+
+对任意局域标量 $f(\mathbf r)$，平面平均定义为
+
+$$
+\bar f(z)
+=
+\frac{1}{A}\int_A f(x,y,z)\,dx\,dy.
+$$
+
+它删除平行方向的微观结构，但仍保留沿 $z$ 的原子层振荡。若体区在 $z$ 方向的周期为 $d$，最简单的宏观平均为
+
+$$
+\overline{\bar f}(z)
+=
+\frac{1}{d}
+\int_{z-d/2}^{z+d/2}\bar f(z')\,dz'.
+$$
+
+界面两侧周期不同或存在多周期时，可使用连续窗口、双窗口或低通滤波；窗口必须在复现中声明。若 slab 中央的 $\overline{\bar V}(z)$ 仍有系统斜率或不随厚度稳定，则不能把一个局部值称为体平台。真空区若未形成平台，$V_{\mathrm{vac}}$ 也未定义为收敛 observable。
+
+Planar averaging removes the in-plane microscopic structure but retains atomic-layer oscillations. Macroscopic averaging smooths those oscillations over a declared bulk repeat length or kernel. A sloped or thickness-dependent slab centre is not a bulk plateau; a vacuum region without a plateau does not yet define a converged vacuum level.
+
+</DerivationBlock>
+
+<DerivationBlock
+  title="偶极片引起的势阶 | Potential step of a dipole sheet"
+  assumptions={[
+    '平面平均电荷局域在薄表面区；',
+    '远离表面两侧电场为零；',
+    '采用一维 Poisson 方程并声明单位制。',
+  ]}
+>
+
+令平面平均电荷密度为 $\bar\rho(z)$，净电荷为零：
+
+$$
+\int_{-\infty}^{\infty}\bar\rho(z)\,dz=0.
+$$
+
+在 Gaussian 单位中，一维 Poisson 方程为
+
+$$
+\frac{d^2\bar V}{dz^2}=-4\pi\bar\rho(z).
+$$
+
+对 $z$ 积分一次并使用两侧无场边界，得到电场只在电荷重排区变化。再次积分，势的左右平台差为
+
+$$
+\Delta \bar V
+=
+4\pi\int_{-\infty}^{\infty}z\,\bar\rho(z)\,dz
+=
+\frac{4\pi p_z}{A},
+$$
+
+符号取决于 $\rho$ 是电荷密度还是电子数密度及势的定义。SI 单位中相应出现 $1/\epsilon_0$。物理连接是：表面法向偶极矩每面积决定真空平台相对于体参考的移动，因此同一体材料的不同终止可具有不同功函数。
+
+这一关系不允许从任意局部 Bader 电荷直接计算功函数。必须包含连续电荷重排、离子电荷、参考原点和周期边界；对中性分布，偶极矩对原点平移不变，但对带电 slab 则需额外边界条件。
+
+Integrating the planar Poisson equation twice connects the plateau step to the dipole moment per area. The sign depends on the charge and electron-energy convention. A local static charge partition is not a substitute for the complete planar charge rearrangement, ionic charge, and periodic boundary condition.
+
+</DerivationBlock>
+
+<SlabWorkFunctionExplorer />
+
+<BilingualSection titleZh="界面中的共同参考与费米能平衡" titleEn="Common references and Fermi-level equilibrium at an interface" eyebrow="Interface electrostatics">
+  <div className="bilingual-section__zh">
+
+两个金属接触并达到平衡后，电子转移直到电化学势一致；界面偶极使两侧体样平均势发生相对移动。单独把两个孤立材料的费米能或真空能级画在一起，只描述接触前的起点，不等于接触后的自洽 lineup。
+
+半导体界面还可能有耗尽层、积累层和带弯曲。常规原子尺度超胞通常无法同时容纳实验尺度的空间电荷区；它更适合求局域界面偶极和无宏观场条件下的自然带阶。若要描述掺杂、偏压或长程弯曲，需要 Poisson—载流子模型、更大尺度嵌入或显式电边界。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+When two metals contact and equilibrate, charge transfers until the electrochemical potential is common; the interface dipole shifts the two bulk-like averaged potentials relative to one another. Aligning the Fermi or vacuum levels of two isolated materials describes a pre-contact starting point, not the self-consistent contacted lineup.
+
+A semiconductor interface may additionally contain depletion, accumulation, and band bending. An atomistic periodic supercell rarely contains an experimental-scale space-charge region; it is better suited to the local interface dipole and natural offset under a declared zero-field condition. Doping, bias, and long-range bending require Poisson–carrier modelling, multiscale embedding, or an explicit electrical boundary.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="对称 slab 的表面能与非对称边界 | Surface energy of a symmetric slab and the asymmetric boundary"
+  assumptions={[
+    'slab 与体参考使用相同方法、应变和原子化学势；',
+    '对称 slab 有两个等价表面；',
+    '总能、k 网格、基组和结构已针对目标差值收敛。',
+  ]}
+>
+
+含 $N$ 个体化学式单元、面积为 $A$ 的对称 slab，其两个等价表面的表面能为
+
+$$
+\boxed{
+\gamma
+=
+\frac{E_{\mathrm{slab}}-N E_{\mathrm{bulk}}}{2A}.
+}
+$$
+
+分母的 2 来自两个表面。若 slab 含不同终止，只能从同一个总能得到
+
+$$
+\gamma_1+\gamma_2
+=
+\frac{E_{\mathrm{slab}}-\sum_i N_i\mu_i}{A},
+$$
+
+不能无附加信息唯一拆分 $\gamma_1$ 与 $\gamma_2$。多组分、非化学计量或吸附表面还需要化学势范围和稳定相约束。表面能的 slab 厚度收敛与功函数收敛可不同；直接用分别计算的巨大 slab/体总能相减还会放大 k 网格、基组和赝势不一致。
+
+For a symmetric slab the excess energy is divided by two surfaces. An asymmetric slab gives only the sum of the two surface excesses unless additional reference constructions are supplied. Multicomponent or nonstoichiometric surfaces require chemical-potential constraints. Work-function convergence and surface-energy convergence are distinct observables.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="来自实践章节的数值检查" titleEn="Numerical checks from the practical chapter" eyebrow="【Sholl–Steckel practical cross-reference】">
+  <div className="bilingual-section__zh">
+
+表面计算应记录：晶面和面内晶格矢量；slab 层数与每层原子数；真空厚度；对称还是非对称；固定与弛豫的层；面内 k 网格及法向 k 点；smearing；dipole correction/Coulomb truncation；表面重构或吸附覆盖度。表面晶胞增大时，k 点密度应按倒易面积缩放，不能机械保留同一网格。
+
+Sholl–Steckel 的核心实践结论是：不同 observable 的层数收敛不同，表面弛豫、表面能和吸附能应各自扫描；对称 slab 可消除净偶极并提供两个等价表面，但计算成本更高；非对称 slab 便于固定底层模拟基底，却需要处理偶极和底面终止。所有固定参数都只是某一材料和方法下的示例，不能升级为通用推荐值。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A surface calculation should record the facet and in-plane lattice vectors; slab layers and atoms per layer; vacuum; symmetric or asymmetric construction; fixed and relaxed layers; in-plane k mesh and normal-direction sampling; smearing; dipole correction or Coulomb truncation; reconstruction; and adsorption coverage. When the surface cell grows, k-point density should scale with reciprocal area rather than retaining the same grid mechanically.
+
+The practical lesson from Sholl–Steckel is that layer convergence is observable dependent: relaxation, surface energy, and adsorption energy require separate scans. A symmetric slab removes a net dipole and gives two equivalent surfaces at higher cost. An asymmetric slab conveniently fixes lower layers as a substrate but requires explicit treatment of the dipole and bottom termination. Numerical examples for one material and method are not universal parameter recommendations.
+
+  </div>
+</BilingualSection>
