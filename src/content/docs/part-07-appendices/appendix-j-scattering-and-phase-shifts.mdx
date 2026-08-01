@@ -1,20 +1,18 @@
 ---
-title: "Appendix J · Scattering and Phase Shifts"
-description: "Martin Appendix J 的目录级阅读骨架；正文待填充。"
+title: "Appendix J · Scattering and Phase Shifts | 散射与相移"
+description: "从球对称部分波展开、对数导数匹配与相移，到微分/总截面、光学定理和负能束缚态极限的双语参考附录。"
 sidebar:
   order: 10
   label: "Appendix J · Scattering and Phase Shifts"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixJBody from '../../../components/part07/appJ/AppendixJBody.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[9].label}
-  sourcePage={catalog.parts[6].units[9].page}
-  sections={catalog.parts[6].units[9].sections}
-  exercisesPage={catalog.parts[6].units[9].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix J, printed pages 644–646; section J.1; equations J.1–J.10. Source Figure J.1 and Select Further Reading are not reproduced; the source Appendix contains no exercise section."
+  status="appendix-content-complete"
 />
+
+<AppendixJBody />

@@ -1,0 +1,141 @@
+---
+import { partialWaveCrossSection, scatteringDefaults } from '../../../data/part07/scatteringPhaseModel.mjs';
+
+const defaults = partialWaveCrossSection();
+const width = 760;
+const height = 350;
+const left = 62;
+const right = 700;
+const top = 42;
+const bottom = 270;
+const maxDifferential = Math.max(...defaults.angular.map((entry) => entry.differential), 1e-12);
+const xMap = (theta) => left + (right - left) * theta / Math.PI;
+const yMap = (value) => bottom - value * (bottom - top) * 0.88 / maxDifferential;
+const angularPath = defaults.angular.map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.theta).toFixed(2)} ${yMap(entry.differential).toFixed(2)}`).join(' ');
+const fallbackRows = [0, 2, 4, 6].map((lMax) => partialWaveCrossSection({
+  k: scatteringDefaults.crossSection.k,
+  radius: scatteringDefaults.crossSection.radius,
+  lMax,
+  points: 181,
+}));
+---
+
+<figure class="chapter-visual cross-section-explorer" data-cross-section-explorer>
+  <figcaption>
+    <strong>原创交互模型：硬球部分波角分布、总截面与光学定理</strong>
+    <span lang="en">Original interactive model: hard-sphere angular distribution, total cross section, and optical theorem</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls cross-section-explorer__controls">
+    <label>
+      <span>k | 波数</span>
+      <input type="range" min="0.25" max="3" step="0.05" value={scatteringDefaults.crossSection.k} data-cross-k />
+      <output data-cross-k-output>{scatteringDefaults.crossSection.k.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>a | 硬球半径</span>
+      <input type="range" min="0.6" max="2.2" step="0.05" value={scatteringDefaults.crossSection.radius} data-cross-radius />
+      <output data-cross-radius-output>{scatteringDefaults.crossSection.radius.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>l<sub>max</sub> | 通道截断</span>
+      <input type="range" min="0" max="10" step="1" value={scatteringDefaults.crossSection.lMax} data-cross-lmax />
+      <output data-cross-lmax-output>{scatteringDefaults.crossSection.lMax}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="cross-section-title cross-section-desc">
+    <title id="cross-section-title">Differential cross section from a truncated hard-sphere partial-wave expansion</title>
+    <desc id="cross-section-desc">
+      The angular distribution is computed from elastic phase shifts. The integrated partial-wave total agrees with the optical theorem when the same channel truncation is used.
+    </desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <path d={angularPath} class="plot-curve" data-cross-path />
+    <text x={right} y="302" text-anchor="end">θ/π</text>
+    <text x="16" y="52">dσ/dΩ</text>
+    <text x={xMap(0)} y="292" text-anchor="middle">0</text>
+    <text x={xMap(Math.PI / 2)} y="292" text-anchor="middle">1/2</text>
+    <text x={xMap(Math.PI)} y="292" text-anchor="middle">1</text>
+  </svg>
+
+  <div class="chapter-visual__readout cross-section-explorer__readout" aria-live="polite">
+    <span>ka</span><strong data-cross-ka>{(defaults.k * defaults.radius).toFixed(5)}</strong>
+    <span>σ<sub>total</sub></span><strong data-cross-total>{defaults.total.toFixed(7)}</strong>
+    <span>optical theorem</span><strong data-cross-optical>{defaults.opticalTheoremTotal.toFixed(7)}</strong>
+    <span>difference</span><strong data-cross-error>{defaults.opticalTheoremError.toExponential(2)}</strong>
+    <span>σ<sub>transport</sub></span><strong data-cross-transport>{defaults.transport.toFixed(7)}</strong>
+    <span>max ||S<sub>l</sub>|²−1|</span><strong data-cross-unitarity>{defaults.unitarityError.toExponential(2)}</strong>
+  </div>
+
+  <div class="cross-section-explorer__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>lmax</th><th>σtotal</th><th>optical</th><th>σtransport</th></tr></thead>
+      <tbody>
+        {fallbackRows.map((entry) => (
+          <tr>
+            <td>{entry.lMax}</td>
+            <td>{entry.total.toFixed(6)}</td>
+            <td>{entry.opticalTheoremTotal.toFixed(6)}</td>
+            <td>{entry.transport.toFixed(6)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>不可穿透球面边界 <code>ψ_l(a)=0</code> 给出 <code>tanδ_l=j_l(ka)/n_l(ka)</code>；角振幅采用 <code>f(θ)=k⁻¹Σ(2l+1)e^{iδ_l}sinδ_l P_l(cosθ)</code>。</p>
+    <p lang="en"><strong>Model:</strong> the impenetrable boundary <code>ψ_l(a)=0</code> gives <code>tanδ_l=j_l(ka)/n_l(ka)</code>; the angular amplitude is <code>f(θ)=k⁻¹Σ(2l+1)e^{iδ_l}sinδ_l P_l(cosθ)</code>.</p>
+    <p><strong>验收：</strong>同一通道截断下，J.10 的部分波总和与 <code>4π Im f(0)/k</code> 一致；每个 <code>S_l=e^{2iδ_l}</code> 满足幺正性。</p>
+    <p lang="en"><strong>Acceptance:</strong> with the same channel truncation, the J.10 partial-wave sum agrees with <code>4π Im f(0)/k</code>, and every <code>S_l=e^{2iδ_l}</code> is unitary.</p>
+    <p><strong>边界：</strong>这是单中心、弹性、球对称截面。<code>σtotal</code> 不等于输运截面、散射寿命或电阻率；后者还需要散射体密度、费米面平均和动力学模型。</p>
+    <p lang="en"><strong>Boundary:</strong> this is a single-centre elastic spherical cross section. <code>σtotal</code> is not a transport cross section, scattering lifetime, or resistivity; those require scatterer density, Fermi-surface averaging, and kinetic theory.</p>
+  </div>
+</figure>
+
+<script>
+  import { partialWaveCrossSection } from '../../../data/part07/scatteringPhaseModel.mjs';
+
+  document.querySelectorAll('[data-cross-section-explorer]').forEach((root) => {
+    const kInput = root.querySelector('[data-cross-k]');
+    const radiusInput = root.querySelector('[data-cross-radius]');
+    const lMaxInput = root.querySelector('[data-cross-lmax]');
+    if (!(kInput instanceof HTMLInputElement) || !(radiusInput instanceof HTMLInputElement) || !(lMaxInput instanceof HTMLInputElement)) return;
+    const path = root.querySelector('[data-cross-path]');
+    const outputs = {
+      k: root.querySelector('[data-cross-k-output]'), radius: root.querySelector('[data-cross-radius-output]'), lMax: root.querySelector('[data-cross-lmax-output]'), ka: root.querySelector('[data-cross-ka]'), total: root.querySelector('[data-cross-total]'), optical: root.querySelector('[data-cross-optical]'), error: root.querySelector('[data-cross-error]'), transport: root.querySelector('[data-cross-transport]'), unitarity: root.querySelector('[data-cross-unitarity]'),
+    };
+    const left = 62; const right = 700; const top = 42; const bottom = 270;
+    const update = () => {
+      const result = partialWaveCrossSection({ k: Number(kInput.value), radius: Number(radiusInput.value), lMax: Number(lMaxInput.value), points: 181 });
+      const maxDifferential = Math.max(...result.angular.map((entry) => entry.differential), 1e-12);
+      const xMap = (theta) => left + (right - left) * theta / Math.PI;
+      const yMap = (value) => bottom - value * (bottom - top) * 0.88 / maxDifferential;
+      const curve = result.angular.map((entry, index) => `${index === 0 ? 'M' : 'L'} ${xMap(entry.theta).toFixed(2)} ${yMap(entry.differential).toFixed(2)}`).join(' ');
+      if (path instanceof SVGPathElement) path.setAttribute('d', curve);
+      if (outputs.k instanceof HTMLOutputElement) outputs.k.value = result.k.toFixed(2);
+      if (outputs.radius instanceof HTMLOutputElement) outputs.radius.value = result.radius.toFixed(2);
+      if (outputs.lMax instanceof HTMLOutputElement) outputs.lMax.value = String(result.lMax);
+      if (outputs.ka instanceof HTMLElement) outputs.ka.textContent = (result.k * result.radius).toFixed(5);
+      if (outputs.total instanceof HTMLElement) outputs.total.textContent = result.total.toFixed(7);
+      if (outputs.optical instanceof HTMLElement) outputs.optical.textContent = result.opticalTheoremTotal.toFixed(7);
+      if (outputs.error instanceof HTMLElement) outputs.error.textContent = result.opticalTheoremError.toExponential(2);
+      if (outputs.transport instanceof HTMLElement) outputs.transport.textContent = result.transport.toFixed(7);
+      if (outputs.unitarity instanceof HTMLElement) outputs.unitarity.textContent = result.unitarityError.toExponential(2);
+    };
+    [kInput, radiusInput, lMaxInput].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .cross-section-explorer { overflow-x: auto; }
+  .cross-section-explorer svg { width: 100%; min-width: 44rem; }
+  .cross-section-explorer text { fill: currentColor; font-size: 13px; }
+  .cross-section-explorer__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.8rem; }
+  .cross-section-explorer__controls label { display: grid; gap: 0.35rem; }
+  .cross-section-explorer__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.4rem 1rem; }
+  .cross-section-explorer__fallback { max-width: 44rem; }
+</style>
