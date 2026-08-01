@@ -64,24 +64,6 @@ q_{ij}^{a}|\beta_i^{a}\rangle\langle\beta_j^{a}|
 }.
 $$
 
-因此 Kohn–Sham 型方程成为
-
-$$
-\boxed{
-\hat H^{US}|\widetilde\psi_n\rangle
-=\varepsilon_n\hat S|\widetilde\psi_n\rangle
-}.
-$$
-
-非局域 Hamiltonian 可写成局域部分加有限投影子矩阵：
-
-$$
-\hat H^{US}=
--\frac12\nabla^2+V_{loc}
-+\sum_{aij}D_{ij}^{a}|\beta_i^{a}\rangle\langle\beta_j^{a}|
-+V_H[n]+V_{xc}[n].
-$$
-
 平滑轨道的普通密度为
 
 $$
@@ -117,9 +99,149 @@ $$
 
 这说明 generalized overlap 与 augmentation density 是同一缺失范数的两个表达。若所有 $q_{ij}=0$，$\hat S\to1$，并恢复普通范数守恒结构。
 
-<p lang="en">The product difference between all-electron and smooth partial waves defines a localized augmentation function. Its integral enters the overlap operator. The smooth states are normalized with that operator and solve a generalized eigenproblem. The same projector occupation matrix weights the spatial augmentation functions in the density. Integrating the reconstructed density reproduces the generalized norm. Setting every augmentation integral to zero recovers ordinary norm-conserving structure.</p>
+<p lang="en">The product difference between all-electron and smooth partial waves defines a localized augmentation function. Its integral enters the overlap operator. The same projector occupation matrix weights the spatial augmentation functions in the density. Integrating the reconstructed density reproduces the generalized norm. Setting every augmentation integral to zero recovers ordinary norm-conserving structure.</p>
 
 </DerivationBlock>
+
+<div
+  data-uspp-unscreening-audit
+  data-energy-functional-convention="bare-ion"
+  data-generalized-eigenproblem-convention="screened-effective"
+  data-source-locators="11.57,11.58,11.59"
+>
+<BilingualCallout
+  titleZh="方法审计：bare-ion 总能与 screened 本征问题不能混写"
+  titleEn="Method audit: do not mix the bare-ion energy and screened eigenproblem"
+  kind="boundary"
+>
+  <div class="bilingual-section__zh">
+
+Martin 式 (11.57)–(11.59) 使用两套彼此等价、但记号角色不同的分解。总能泛函中的单粒子离子项必须使用已经去除 Hartree–XC 屏蔽的 bare-ion 系数：
+
+$$
+V_{\mathrm{loc}}^{\mathrm{ion}}(\mathbf r)
+=V_{\mathrm{loc}}(\mathbf r)-V_{Hxc}(\mathbf r),
+$$
+
+$$
+D_{ij}^{\mathrm{ion}}
+=D_{ij}-D_{ij}^{Hxc},
+\qquad
+D_{ij}^{Hxc}
+=\int d\mathbf r\,V_{Hxc}(\mathbf r)Q_{ij}(\mathbf r),
+$$
+
+其中 $V_{Hxc}=V_H+V_{xc}$。因此总能的结构应写成
+
+$$
+\begin{aligned}
+E[\{\widetilde\psi_n\},n]
+={}&\sum_n f_n\left\langle\widetilde\psi_n\left|
+-\frac12\nabla^2+V_{\mathrm{loc}}^{\mathrm{ion}}
++\sum_{aij}D_{ij}^{a,\mathrm{ion}}
+|\beta_i^a\rangle\langle\beta_j^a|
+\right|\widetilde\psi_n\right\rangle\\
+&+E_H[n]+E_{xc}[n]+E_{II}.
+\end{aligned}
+$$
+
+对该泛函变分以后，$V_{Hxc}$ 的局域贡献以及 $\int V_{Hxc}Q_{ij}$ 的投影子贡献被吸收到 screened effective coefficients 中：
+
+$$
+V_{\mathrm{loc}}
+=V_{\mathrm{loc}}^{\mathrm{ion}}+V_{Hxc},
+\qquad
+D_{ij}=D_{ij}^{\mathrm{ion}}
++\int d\mathbf r\,V_{Hxc}(\mathbf r)Q_{ij}(\mathbf r).
+$$
+
+于是自洽广义本征问题使用
+
+$$
+\boxed{
+\hat H_{\mathrm{eff}}^{US}
+=-\frac12\nabla^2+V_{\mathrm{loc}}
++\sum_{aij}D_{ij}^{a}|\beta_i^a\rangle\langle\beta_j^a|
+}
+$$
+
+以及
+
+$$
+\boxed{
+\hat H_{\mathrm{eff}}^{US}|\widetilde\psi_n\rangle
+=\varepsilon_n\hat S|\widetilde\psi_n\rangle.
+}
+$$
+
+不能在同一 Hamiltonian 表达中使用已经 screened 的 $V_{\mathrm{loc}}$、$D_{ij}$，又额外显式加入 $V_H+V_{xc}$；那会把局域和增广投影子中的 Hartree–XC 响应重复计数。实现可以选择不同的内部记号，但必须声明每个系数属于 bare-ion 还是 screened representation。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin Eqs. (11.57)–(11.59) use two equivalent decompositions whose symbols play different roles. The one-particle ionic terms in the total-energy functional must use bare-ion coefficients from which Hartree–XC screening has been removed:
+
+$$
+V_{\mathrm{loc}}^{\mathrm{ion}}(\mathbf r)
+=V_{\mathrm{loc}}(\mathbf r)-V_{Hxc}(\mathbf r),
+$$
+
+$$
+D_{ij}^{\mathrm{ion}}
+=D_{ij}-D_{ij}^{Hxc},
+\qquad
+D_{ij}^{Hxc}
+=\int d\mathbf r\,V_{Hxc}(\mathbf r)Q_{ij}(\mathbf r),
+$$
+
+where $V_{Hxc}=V_H+V_{xc}$. The total energy therefore has the structure
+
+$$
+\begin{aligned}
+E[\{\widetilde\psi_n\},n]
+={}&\sum_n f_n\left\langle\widetilde\psi_n\left|
+-\frac12\nabla^2+V_{\mathrm{loc}}^{\mathrm{ion}}
++\sum_{aij}D_{ij}^{a,\mathrm{ion}}
+|\beta_i^a\rangle\langle\beta_j^a|
+\right|\widetilde\psi_n\right\rangle\\
+&+E_H[n]+E_{xc}[n]+E_{II}.
+\end{aligned}
+$$
+
+After variation, the local $V_{Hxc}$ term and the projector contribution $\int V_{Hxc}Q_{ij}$ are absorbed into screened effective coefficients:
+
+$$
+V_{\mathrm{loc}}
+=V_{\mathrm{loc}}^{\mathrm{ion}}+V_{Hxc},
+\qquad
+D_{ij}=D_{ij}^{\mathrm{ion}}
++\int d\mathbf r\,V_{Hxc}(\mathbf r)Q_{ij}(\mathbf r).
+$$
+
+The self-consistent generalized eigenproblem then uses
+
+$$
+\boxed{
+\hat H_{\mathrm{eff}}^{US}
+=-\frac12\nabla^2+V_{\mathrm{loc}}
++\sum_{aij}D_{ij}^{a}|\beta_i^a\rangle\langle\beta_j^a|
+}
+$$
+
+and
+
+$$
+\boxed{
+\hat H_{\mathrm{eff}}^{US}|\widetilde\psi_n\rangle
+=\varepsilon_n\hat S|\widetilde\psi_n\rangle.
+}
+$$
+
+Screened $V_{\mathrm{loc}}$ and $D_{ij}$ must not be combined in the same Hamiltonian expression with an additional explicit $V_H+V_{xc}$ term. That would double count the local and augmentation-projector Hartree–XC response. Implementations may choose different internal symbols, but they must declare whether each coefficient belongs to the bare-ion or screened representation.
+
+  </div>
+</BilingualCallout>
+</div>
 
 <BilingualCallout titleZh="力、应力和响应中的附加项" titleEn="Additional terms in forces, stress, and response" kind="boundary">
   <div class="bilingual-section__zh">
