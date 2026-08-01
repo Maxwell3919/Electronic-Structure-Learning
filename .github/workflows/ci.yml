@@ -51,6 +51,7 @@ jobs:
           scripts/smoke-pages-ch19.py
           scripts/smoke-part05-ch20.py
           scripts/smoke-part05-ch21.py
+          scripts/smoke-part05-ch22.py
           scripts/smoke-part06-ch25.py
           scripts/smoke-part06-ch26.py
           scripts/smoke-part06-ch27.py
