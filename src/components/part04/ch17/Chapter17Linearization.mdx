@@ -1,0 +1,256 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import LinearizationErrorExplorer from './LinearizationErrorExplorer.astro';
+import EnergyDerivativeExplorer from './EnergyDerivativeExplorer.astro';
+
+<span id="section-17-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.1 Linearization of Equations and Linear Methods | 方程线性化与线性方法
+
+<BilingualCallout titleZh="来源定位" titleEn="Source locator" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 365–366 区分 Schrödinger equation 的基本线性与 augmented basis 的 numerical nonlinearity，并以 $u_l$、$\dot u_l$ 说明 reference-energy linearization。下面展开误差、basis 与 solver 层级。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 365–366 distinguish the fundamental linearity of the Schrödinger equation from numerical nonlinearity caused by an energy-dependent augmented basis, and introduce reference-energy linearization through $u_l$ and $\dot u_l$. The error, basis, and solver layers are developed below.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="三种不同的 linearity" titleEn="Three distinct meanings of linearity">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>differential equation：</strong>给定 effective potential 时，$\hat H\psi=E\psi$ 对 wavefunction 是线性的。</li>
+      <li><strong>basis expansion：</strong>对固定 basis，$\psi_n=\sum_i c_{in}\chi_i$ 导致 ordinary/generalized matrix eigenproblem。</li>
+      <li><strong>secular dependence：</strong>若 $\chi_i(E)$ 随 trial energy 改变，则 matrix $K(E)$ 的 determinant root problem 对 E 是 nonlinear。</li>
+    </ol>
+    <p>linearized augmented method 保留第一层线性，改变第三层：把 energy-dependent radial functions 在固定 $E_l$ 附近展开，使 basis 对未知 eigenenergy 固定。它不是把 exchange-correlation functional、SCF map 或 many-body problem “线性化”。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Differential equation:</strong> for a fixed effective potential, $\hat H\psi=E\psi$ is linear in the wavefunction.</li>
+      <li><strong>Basis expansion:</strong> a fixed basis, $\psi_n=\sum_i c_{in}\chi_i$, produces an ordinary or generalized matrix eigenproblem.</li>
+      <li><strong>Secular dependence:</strong> if $\chi_i(E)$ changes with trial energy, the determinant equation for $K(E)$ is nonlinear in E.</li>
+    </ol>
+    <p>A linearized augmented method preserves the first meaning and changes the third: energy-dependent radial functions are expanded near fixed $E_l$, making the basis independent of the unknown eigenenergy. It does not linearize the exchange-correlation functional, the SCF map, or the many-body problem.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock title="first-order radial linearization | 一阶 radial linearization" assumptions={['u_l(E,r) is differentiable in energy in a node-free local window；','the spherical reference potential is fixed during the derivative；','one normalization convention is used at all nearby energies。']}>
+
+For $E=E_l+\Delta E$,
+
+$$
+u_l(E,r)=u_l(E_l,r)+\Delta E\,\dot u_l(E_l,r)
++\frac{(\Delta E)^2}{2}\ddot u_l(\xi,r),
+$$
+
+for some $\xi$ between $E_l$ and E. The first-order basis therefore has state error
+
+$$
+\delta u_l=\mathcal O((\Delta E)^2).
+$$
+
+This statement is local in energy. It does not guarantee accuracy for a distant semicore state, a high conduction band, or a channel crossing a radial node. The appropriate evidence is an energy-window scan or basis enrichment, not the smallness of one coefficient.
+
+</DerivationBlock>
+
+<LinearizationErrorExplorer />
+
+<BilingualSection titleZh="误差阶数与 variational statement" titleEn="Error order and variational statements">
+  <div class="bilingual-section__zh">
+    <p>若 normalized eigenfunction 的 error 为 $\delta\psi=\mathcal O((\Delta E)^2)$，stationary Rayleigh quotient 的 leading energy error 至少 quadratic in state error，具体 order 取决于所用 functional、normalization、是否完全 self-consistent 以及哪些 response terms 被保留。</p>
+    <p>Martin 用 2n+1 关系说明：在适用的 variational framework 中，一阶 wavefunction information 可以支持更高阶的 energy-like quantities。网站只保留该层级，不把它扩展成“所有 observable 都自动三阶准确”。forces、stress、response 与 unoccupied-state quantities 需要各自 derivative/basis tests。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>If a normalized eigenfunction has error $\delta\psi=\mathcal O((\Delta E)^2)$, stationarity of a Rayleigh quotient suppresses the leading energy error. The exact order depends on the functional, normalization, self-consistency, and retained response terms.</p>
+    <p>Martin invokes a 2n+1 relationship to show that first-order wavefunction information can support higher-order energy-like quantities within an applicable variational framework. This does not mean every observable becomes third-order accurate. Forces, stress, response, and unoccupied-state quantities require their own derivative and basis tests.</p>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="reference-energy window" titleEn="Reference-energy window" kind="practice">
+  <div class="bilingual-section__zh">对每个 angular channel，至少应报告 $E_l$、target band window、semicore separation、local-orbital choices 与 eigenvalue/charge/force 随这些 choices 的变化。只报告一个“default linearization energy”不能建立 transferable accuracy。</div>
+  <div class="bilingual-section__en" lang="en">For each angular channel, report $E_l$, the target band window, semicore separation, local-orbital choices, and changes in eigenvalues, charge, and forces. One default linearization energy does not establish transferable accuracy.</div>
+</BilingualCallout>
+
+<span id="section-17-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.2 Energy Derivative of the Wavefunction: ψ and ψ-dot | 波函数的能量导数
+
+<BilingualSection titleZh="radial equation 与 energy derivative" titleEn="Radial equation and its energy derivative">
+  <div class="bilingual-section__zh">
+    <p>对固定 spherical potential 和 angular channel l，把 radial operator 记作 $\hat H_l$。reference function 满足</p>
+
+$$
+(\hat H_l-E_l)u_l(E_l,r)=0.
+$$
+
+    <p>定义</p>
+
+$$
+\dot u_l(E_l,r)=\left.\frac{\partial u_l(E,r)}{\partial E}\right|_{E_l}.
+$$
+
+    <p>dot 是 energy derivative，单位为 wavefunction per energy。它不是 time derivative，也不是额外 eigenstate。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For a fixed spherical potential and angular channel l, write the radial operator as $\hat H_l$. The reference function satisfies</p>
+
+$$
+(\hat H_l-E_l)u_l(E_l,r)=0.
+$$
+
+    <p>Define</p>
+
+$$
+\dot u_l(E_l,r)=\left.\frac{\partial u_l(E,r)}{\partial E}\right|_{E_l}.
+$$
+
+    <p>The dot denotes an energy derivative, with units of wavefunction per energy. It is neither a time derivative nor an additional eigenstate.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock title="inhomogeneous equation for u-dot | u-dot 的非齐次方程" assumptions={['H_l is held fixed in the partial energy derivative；','u_l(E,r) is differentiable in the selected window。']}>
+
+Differentiate
+
+$$
+(\hat H_l-E)u_l(E)=0
+$$
+
+with respect to E:
+
+$$
+-(u_l)+(\hat H_l-E)\dot u_l=0.
+$$
+
+At $E=E_l$,
+
+$$
+(\hat H_l-E_l)\dot u_l=u_l.
+$$
+
+Thus $\dot u_l$ is obtained from an inhomogeneous radial equation with source $u_l$. A solver must also impose a normalization or boundary convention because adding a homogeneous multiple of $u_l$ changes $\dot u_l$ without changing the inhomogeneous equation.
+
+</DerivationBlock>
+
+<DerivationBlock title="orthogonality from fixed normalization | 固定 normalization 导出的正交性" assumptions={['the sphere norm is fixed to one for nearby energies；','real radial functions for notational simplicity。']}>
+
+If
+
+$$
+\langle u_l(E)|u_l(E)\rangle_{S}=1,
+$$
+
+then differentiation gives
+
+$$
+\langle\dot u_l|u_l\rangle_S+
+\langle u_l|\dot u_l\rangle_S=0.
+$$
+
+For real functions,
+
+$$
+\langle u_l|\dot u_l\rangle_S=0.
+$$
+
+Changing to a fixed-boundary-value convention generally changes this overlap. Therefore an implementation or paper must state its convention before comparing $\dot u_l$, matrix elements, or logarithmic-derivative formulas.
+
+</DerivationBlock>
+
+<EnergyDerivativeExplorer />
+
+<BilingualSection titleZh="logarithmic derivative 连接 boundary physics" titleEn="The logarithmic derivative connects to boundary physics">
+  <div class="bilingual-section__zh">
+    <p>在 sphere radius S 处定义</p>
+
+$$
+D_l(E)=S\frac{u_l'(E,S)}{u_l(E,S)}.
+$$
+
+    <p>$D_l$ 把 radial solution 压缩为 boundary value/slope ratio，是 APW matching、KKR phase shift 与 MTO potential-function construction 的共同接口。接近 $u_l(E,S)=0$ 时，$D_l$ 可出现 pole；这通常是 representation singularity，需要换 reference energy、local orbital 或等价 formulation，而不能直接解释为 divergent physical state。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>At sphere radius S define</p>
+
+$$
+D_l(E)=S\frac{u_l'(E,S)}{u_l(E,S)}.
+$$
+
+    <p>$D_l$ compresses a radial solution into a boundary value-to-slope ratio and provides a common interface for APW matching, KKR phase shifts, and MTO potential functions. A pole near $u_l(E,S)=0$ is normally a representation singularity that calls for a different reference energy, a local orbital, or an equivalent formulation—not a divergent physical state.</p>
+  </div>
+</BilingualSection>
+
+<span id="section-17-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 17.3 General Form of Linearized Equations | 线性化方程的一般形式
+
+<BilingualSection titleZh="从 energy-dependent basis 到 fixed basis" titleEn="From an energy-dependent basis to a fixed basis">
+  <div class="bilingual-section__zh">
+    <p>设 nonlinear augmented function 为 $\chi_i(E)$。在 reference energies 附近，</p>
+
+$$
+\chi_i(E)\approx\phi_i+(E-E_i)\dot\phi_i.
+$$
+
+    <p>通过 boundary conditions 把 $\phi_i$ 与 $\dot\phi_i$ 的 coefficients 绑定后，每个 envelope 仍对应一个 basis function；basis dimension 不因写出两个 radial functions 自动加倍。所有 states 使用同一 fixed set $\{\chi_i\}$，于是</p>
+
+$$
+\sum_j H_{ij}c_{jn}=E_n\sum_j S_{ij}c_{jn}.
+$$
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Let the nonlinear augmented function be $\chi_i(E)$. Near selected reference energies,</p>
+
+$$
+\chi_i(E)\approx\phi_i+(E-E_i)\dot\phi_i.
+$$
+
+    <p>Boundary conditions tie the coefficients of $\phi_i$ and $\dot\phi_i$, so each envelope still defines one basis function; writing two radial functions does not automatically double the basis dimension. All states use the same fixed set $\{\chi_i\}$, producing</p>
+
+$$
+\sum_j H_{ij}c_{jn}=E_n\sum_j S_{ij}c_{jn}.
+$$
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock title="matrix organization with u and u-dot | 用 u 与 u-dot 组织矩阵" assumptions={['fixed reference functions and derivatives；','Hermitian H and a positive-definite overlap after removing linear dependencies。']}>
+
+Write a fixed basis schematically as
+
+$$
+|\chi_i\rangle=|\phi_i\rangle+
+\sum_L h_{Li}|\dot\phi_L\rangle.
+$$
+
+Then
+
+$$
+S_{ij}=\langle\chi_i|\chi_j\rangle,
+\qquad
+H_{ij}=\langle\chi_i|\hat H|\chi_j\rangle.
+$$
+
+Using $(\hat H-E_L)|\dot\phi_L\rangle=|\phi_L\rangle$ reorganizes matrix elements into fixed radial integrals and boundary/envelope coefficients. The apparent energy dependence is absorbed into an overlap-metric problem rather than retained as a nonlinear determinant in the unknown E.
+
+This algebra does not ensure $S>0$. Redundant local orbitals, nearby reference energies, or an overcomplete envelope set can create small overlap eigenvalues and must be diagnosed separately.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="linear solve 不等于 one-shot calculation" titleEn="A linear solve is not a one-shot calculation">
+  <div class="bilingual-section__zh"><p>在一次 fixed-potential step 中，多个 eigenpairs 可由 linear algebra 一起获得。但 Kohn–Sham potential 仍依赖 density，radial functions、reference energies、core states 与 full-potential components 也可能在 SCF iteration 之间更新。因此完整 calculation 仍是 nonlinear fixed-point problem：</p>
+
+$$
+n^{(m)}\to V_{\mathrm{eff}}^{(m)}\to
+\{u_l,\dot u_l,H,S\}^{(m)}\to n^{(m+1)}.
+$$
+
+<p>“linear method”只描述 inner eigenproblem/basis construction，不表示 total calculation 无 SCF nonlinearity。</p></div>
+  <div class="bilingual-section__en" lang="en"><p>For one fixed-potential step, many eigenpairs can be obtained together by linear algebra. The Kohn–Sham potential still depends on the density, and radial functions, reference energies, core states, and full-potential components may be updated between SCF iterations. The complete calculation remains a nonlinear fixed-point problem:</p>
+
+$$
+n^{(m)}\to V_{\mathrm{eff}}^{(m)}\to
+\{u_l,\dot u_l,H,S\}^{(m)}\to n^{(m+1)}.
+$$
+
+<p>“Linear method” describes the inner eigenproblem and basis construction, not the absence of SCF nonlinearity.</p></div>
+</BilingualSection>
