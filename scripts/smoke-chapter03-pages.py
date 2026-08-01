@@ -135,6 +135,41 @@ def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
         pass
 
 
+def assert_stress_audit(driver: webdriver.Chrome, context: str) -> WebElement:
+    audits = driver.find_elements(By.CSS_SELECTOR, "[data-ch3-stress-trace-audit]")
+    if len(audits) != 1:
+        fail(f"{context} should contain one stress-trace audit, found {len(audits)}")
+    audit = audits[0]
+    if not audit.is_displayed():
+        fail(f"{context} hides the stress-trace audit")
+    if audit.get_attribute("data-pressure-trace-factor") != "-one-third":
+        fail(f"{context} lost the pressure-trace factor")
+    if audit.get_attribute("data-source-locators") != "3.23,3.24,G.4":
+        fail(f"{context} lost the source locators")
+    text = " ".join(audit.text.split())
+    for marker in ("3.23", "3.24", "G.4"):
+        if marker not in text:
+            fail(f"{context} stress audit is missing {marker}")
+    if "normalization inconsistency" not in text and "归一化不一致" not in text:
+        fail(f"{context} stress audit does not label the source inconsistency")
+    return audit
+
+
+def assert_atomic_bilingual_status(driver: webdriver.Chrome, selector: str, zh_selector: str, en_selector: str, context: str) -> tuple[WebElement, WebElement, WebElement]:
+    status = driver.find_element(By.CSS_SELECTOR, selector)
+    if status.get_attribute("aria-live") != "polite":
+        fail(f"{context} is not a polite live region")
+    if status.get_attribute("aria-atomic") != "true":
+        fail(f"{context} is not atomic")
+    zh = driver.find_element(By.CSS_SELECTOR, zh_selector)
+    en = driver.find_element(By.CSS_SELECTOR, en_selector)
+    if not zh.is_displayed() or not en.is_displayed():
+        fail(f"{context} hides one bilingual status line")
+    if en.get_attribute("lang") != "en":
+        fail(f"{context} English status lacks lang=en")
+    return status, zh, en
+
+
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
@@ -165,6 +200,20 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             if "/Electronic-Structure-Learning/" not in href:
                 fail(f"Chapter link escaped the Pages base path: {href}")
 
+        stress_audit = assert_stress_audit(driver, "Chapter 3 desktop page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            stress_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-03-stress-trace-audit-desktop.png"))
+
+        _, force_zh, force_en = assert_atomic_bilingual_status(
+            driver,
+            "[data-ch03-avoided-status]",
+            "[data-ch03-force-zh]",
+            "[data-ch03-force-en]",
+            "avoided-crossing status",
+        )
         coupling = driver.find_element(By.CSS_SELECTOR, "[data-ch03-coupling]")
         energies = driver.find_element(By.CSS_SELECTOR, "[data-ch03-energies]")
         upper_curve = driver.find_element(By.CSS_SELECTOR, "[data-ch03-upper-curve]")
@@ -178,8 +227,17 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             lambda _: coupling.get_attribute("value") == "1.5"
             and energies.text != uncoupled_text
             and upper_curve.get_attribute("d") != uncoupled_curve
+            and "低能绝热面力" in force_zh.text
+            and "Lower-surface force" in force_en.text
         )
 
+        _, dm_summary_zh, dm_summary_en = assert_atomic_bilingual_status(
+            driver,
+            "[data-ch03-dm-status]",
+            "[data-ch03-dm-summary-zh]",
+            "[data-ch03-dm-summary-en]",
+            "density-matrix status",
+        )
         temperature = driver.find_element(By.CSS_SELECTOR, "[data-ch03-dm-temperature]")
         probabilities = driver.find_element(By.CSS_SELECTOR, "[data-ch03-dm-probabilities]")
         purity = driver.find_element(By.CSS_SELECTOR, "[data-ch03-dm-purity]")
@@ -189,6 +247,8 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             lambda _: temperature.get_attribute("value") == "0"
             and "p0 = 1.000" in probabilities.text
             and "1.000" in purity.text
+            and "零温非简并极限" in dm_summary_zh.text
+            and "Zero-temperature nondegenerate limit" in dm_summary_en.text
         )
         pure_text = purity.text
         temperature.send_keys(Keys.END)
@@ -196,11 +256,19 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             lambda _: temperature.get_attribute("value") == "3"
             and purity.text != pure_text
             and "p1 = 0.000" not in probabilities.text
+            and "热混合态" in dm_summary_zh.text
+            and "thermally mixed" in dm_summary_en.text
         )
 
+        _, hole_interpretation_zh, hole_interpretation_en = assert_atomic_bilingual_status(
+            driver,
+            "[data-ch03-hole-status]",
+            "[data-ch03-hole-interpretation-zh]",
+            "[data-ch03-hole-interpretation-en]",
+            "exchange-correlation-hole status",
+        )
         amplitude = driver.find_element(By.CSS_SELECTOR, "[data-ch03-hole-amplitude]")
         origin = driver.find_element(By.CSS_SELECTOR, "[data-ch03-hole-origin]")
-        interpretation = driver.find_element(By.CSS_SELECTOR, "[data-ch03-hole-interpretation]")
         correlation_curve = driver.find_element(By.CSS_SELECTOR, "[data-ch03-hole-correlation]")
         integrals = driver.find_element(By.CSS_SELECTOR, "[data-ch03-hole-integrals]")
         focus_for_keyboard(driver, amplitude)
@@ -208,7 +276,8 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         WebDriverWait(driver, 10).until(
             lambda _: amplitude.get_attribute("value") == "0"
             and "nc = 0.000" in origin.text
-            and "zero correlation amplitude" in interpretation.text
+            and "关联重排幅度为零" in hole_interpretation_zh.text
+            and "zero correlation amplitude" in hole_interpretation_en.text
         )
         zero_curve = correlation_curve.get_attribute("d")
         amplitude.send_keys(Keys.END)
@@ -216,16 +285,25 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             lambda _: amplitude.get_attribute("value") == "0.8"
             and "nc = 0.000" not in origin.text
             and correlation_curve.get_attribute("d") != zero_curve
+            and "加深短程耗尽" in hole_interpretation_zh.text
+            and "deepens the short-range depletion" in hole_interpretation_en.text
         )
         if "Ix = -1; Ic = 0; Ixc = -1" not in integrals.text:
             fail(f"Unexpected hole-integral declaration: {integrals.text}")
 
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-03-desktop.png"))
         report["desktop"] = {
             "title": title,
             "katex_count": katex_count,
             "source_map_rows": source_rows,
             "contents_links": len(contents_links),
+            "stress_trace_audit": {
+                "displayed": True,
+                "pressure_trace_factor": "-one-third",
+                "source_locators": ["3.23", "3.24", "G.4"],
+            },
+            "bilingual_atomic_statuses": ["avoided_crossing", "density_matrix", "xc_hole"],
             "keyboard_controls": ["avoided_crossing_coupling", "density_matrix_temperature", "hole_amplitude"],
         }
 
@@ -236,16 +314,32 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         )
         if grid_column_count(driver, ".chapter03-root .bilingual-section__grid") != 1:
             fail("Narrow-screen Chapter 3 bilingual layout is not one column")
+        narrow_audit = assert_stress_audit(driver, "Chapter 3 narrow page")
+        for selector in (
+            "[data-ch03-force-zh]", "[data-ch03-force-en]",
+            "[data-ch03-dm-summary-zh]", "[data-ch03-dm-summary-en]",
+            "[data-ch03-hole-interpretation-zh]", "[data-ch03-hole-interpretation-en]",
+        ):
+            if not driver.find_element(By.CSS_SELECTOR, selector).is_displayed():
+                fail(f"Narrow Chapter 3 page hides {selector}")
         overflow = driver.execute_script(
             "return document.documentElement.scrollWidth - window.innerWidth;"
         )
         if float(overflow) > 1:
             fail(f"Chapter 3 creates narrow-screen horizontal overflow of {overflow}px")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            narrow_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-03-stress-trace-audit-narrow.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-03-narrow.png"))
         report["narrow"] = {
             "viewport": [390, 844],
             "bilingual_columns": 1,
             "horizontal_overflow_px": float(overflow),
+            "stress_trace_audit": True,
+            "bilingual_atomic_statuses": 3,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-03-desktop-failure.png")
@@ -278,12 +372,28 @@ def no_javascript_smoke(report: dict) -> None:
         if source_rows != 7:
             fail("No-JavaScript Chapter 3 page lost source-map sections")
 
+        no_js_audit = assert_stress_audit(driver, "Chapter 3 no-JavaScript page")
+        for status, zh, en, context in (
+            ("[data-ch03-avoided-status]", "[data-ch03-force-zh]", "[data-ch03-force-en]", "no-JavaScript avoided-crossing status"),
+            ("[data-ch03-dm-status]", "[data-ch03-dm-summary-zh]", "[data-ch03-dm-summary-en]", "no-JavaScript density-matrix status"),
+            ("[data-ch03-hole-status]", "[data-ch03-hole-interpretation-zh]", "[data-ch03-hole-interpretation-en]", "no-JavaScript xc-hole status"),
+        ):
+            assert_atomic_bilingual_status(driver, status, zh, en, context)
+
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            no_js_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-03-stress-trace-audit-no-javascript.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-03-no-javascript.png"))
         report["no_javascript"] = {
             "visualization_contracts": len(contracts),
             "static_svg_count": len(svgs),
             "native_range_controls": len(controls),
             "source_map_rows": source_rows,
+            "stress_trace_audit": True,
+            "bilingual_atomic_statuses": 3,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-03-no-javascript-failure.png")

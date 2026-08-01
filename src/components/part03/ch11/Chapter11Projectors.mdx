@@ -122,79 +122,155 @@ $$
 
 单投影子 NCPP 在参考能量处匹配函数和一阶响应；离开该能量后，高阶相移误差可能迅速增长，尤其当浅芯态、semicore 与价态同时需要描述时。一条路线是直接约束对数导数关于能量的更高阶展开；另一条更易实现的路线是在同一 $l$ 通道选取多个参考能量和多个投影子，使若干参考态都成为同一赝 Hamiltonian 的解。
 
-多投影子扩大了声明的能量范围，但并不自动覆盖任意高能散射。投影子之间形成有限矩阵，必须检查线性独立性、条件数和目标窗口内的谱。
+多投影子扩大了声明的能量范围，但并不自动覆盖任意高能散射。投影子之间形成有限矩阵，必须分别检查线性独立性、条件数、Hermiticity 和目标窗口内的谱。
 
   </div>
   <div class="bilingual-section__en" lang="en">
 
 A one-projector NCPP matches the function and first response at one reference energy. Higher-order phase-shift errors may grow away from that point, especially when shallow core, semicore, and valence states must all be represented. One route constrains higher derivatives of the energy expansion directly. A more practical route uses several reference energies and projectors in the same $l$ channel so multiple reference states are solutions of one pseudo-Hamiltonian.
 
-Multiple projectors enlarge the declared energy range but do not provide arbitrary high-energy scattering accuracy. The projectors form a finite matrix whose linear independence, conditioning, and spectrum in the target window must be checked.
+Multiple projectors enlarge the declared energy range but do not provide arbitrary high-energy scattering accuracy. The finite matrix must be checked separately for linear independence, conditioning, Hermiticity, and its spectrum in the target window.
 
   </div>
 </BilingualSection>
+
+<div
+  data-multiprojector-hermiticity-audit
+  data-reference-reproduction="separate-gate"
+  data-hermiticity-condition="B-Hermitian"
+>
+<BilingualCallout
+  titleZh="方法审计：广义范数守恒是 Hermiticity 条件"
+  titleEn="Method audit: generalized norm conservation supplies the Hermiticity condition"
+  kind="boundary"
+>
+  <div class="bilingual-section__zh">
+
+Martin §11.9 给出扩展范数守恒的物理目标；下面的有限矩阵细节采用 generalized norm-conserving / ONCV 多投影子构造。对同一 $l$ 通道的每一对参考态，都要求芯区交叉重叠满足
+
+$$
+\langle\phi_i|\phi_j\rangle_{r_c}
+=\langle\psi_i|\psi_j\rangle_{r_c}.
+$$
+
+这比逐个态只匹配对角范数更强：任意线性组合在芯区的积分电荷也与全电子组合一致。定义
+
+$$
+|\chi_i\rangle=(\varepsilon_i-\hat H_0)|\phi_i\rangle,
+\qquad
+B_{ij}=\langle\phi_i|\chi_j\rangle.
+$$
+
+在非相对论构造中，广义范数守恒足以证明 $B=B^\dagger$（实径向函数时为对称矩阵），从而使 $\chi B^{-1}\chi^\dagger$ 成为 Hermitian 算符。仅有“$B$ 可逆”只能支持有限维求逆；它不能保证能量期望值为实，也不能替代 Hermiticity。
+
+参考态复现、矩阵 Hermiticity、数值条件数和 ghost-state 扫描是四个独立验收门。不能因为多个参考本征值被复现，就跳过其余三项。实际相对论生成器可能对很小的残余不对称做显式 symmetrization；这属于具体实现及误差记录，不能作为通用代数恒等式。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin §11.9 states the physical goal of extended norm conservation; the finite-matrix details below follow the generalized norm-conserving / ONCV multiprojector construction. For every pair of reference states in one $l$ channel, the core overlaps satisfy
+
+$$
+\langle\phi_i|\phi_j\rangle_{r_c}
+=\langle\psi_i|\psi_j\rangle_{r_c}.
+$$
+
+This is stronger than matching only each diagonal norm: the integrated core charge of every linear combination also matches its all-electron counterpart. Define
+
+$$
+|\chi_i\rangle=(\varepsilon_i-\hat H_0)|\phi_i\rangle,
+\qquad
+B_{ij}=\langle\phi_i|\chi_j\rangle.
+$$
+
+For the nonrelativistic construction, generalized norm conservation is sufficient to prove $B=B^\dagger$ (a symmetric matrix for real radial functions), making $\chi B^{-1}\chi^\dagger$ Hermitian. Invertibility alone permits a finite-dimensional inverse; it does not ensure real expectation values and does not replace Hermiticity.
+
+Reference-state reproduction, matrix Hermiticity, numerical conditioning, and ghost-state scans are four separate acceptance gates. Reproducing several reference eigenvalues does not waive the other three. A practical relativistic generator may explicitly symmetrize a small residual asymmetry; that is an implementation-specific operation with a recorded error, not a general algebraic identity.
+
+  </div>
+</BilingualCallout>
+</div>
 
 <DerivationBlock
   title="补充推导 | Supplemental derivation: 多投影子有限矩阵"
   assumptions={[
     '同一 l 通道有参考态 |phi_s> 与能量 epsilon_s | Several reference states and energies are available in one l channel.',
     '选择一个公共 local Hamiltonian H0 | A common local Hamiltonian H0 is selected.',
-    '重叠矩阵 B 可逆 | The finite overlap matrix B is invertible.',
+    '广义范数守恒使 B=B^dagger | Generalized norm conservation makes B Hermitian.',
+    'B 可逆且条件良好 | B is invertible and well conditioned.',
   ]}
 >
 
-定义 residual functions
+定义 residual functions 和有限矩阵
 
 $$
 |\chi_s\rangle=(\varepsilon_s-\hat H_0)|\phi_s\rangle,
-$$
-
-以及有限矩阵
-
-$$
+\qquad
 B_{ss'}=\langle\phi_s|\chi_{s'}\rangle.
 $$
 
-构造对偶投影子
+标准有限秩非局域修正写为
 
 $$
-|\beta_s\rangle=\sum_{s'}|\chi_{s'}\rangle(B^{-1})_{s's}.
+\boxed{
+\Delta\hat V_{NL}
+=\sum_{ss'}|\chi_s\rangle(B^{-1})_{ss'}\langle\chi_{s'}|
+}.
 $$
 
-于是
+由于 $B=B^\dagger$，也有 $(B^{-1})^\dagger=B^{-1}$，因此
 
 $$
-\langle\phi_t|\beta_s\rangle
-=\sum_{s'}B_{ts'}(B^{-1})_{s's}=\delta_{ts}.
+(\Delta\hat V_{NL})^\dagger
+=\sum_{ss'}|\chi_s\rangle
+\big[(B^{-1})^\dagger\big]_{ss'}
+\langle\chi_{s'}|
+=\Delta\hat V_{NL}.
 $$
 
-一种等价的非局域修正写为
+对任意参考态 $|\phi_t\rangle$，Hermiticity 给出
+
+$$
+\langle\chi_{s'}|\phi_t\rangle
+=B_{ts'}^*=B_{s't},
+$$
+
+所以
+
+$$
+\begin{aligned}
+\Delta\hat V_{NL}|\phi_t\rangle
+&=\sum_{ss'}|\chi_s\rangle(B^{-1})_{ss'}B_{s't}\\
+&=|\chi_t\rangle.
+\end{aligned}
+$$
+
+于是全部选定参考态满足
+
+$$
+(\hat H_0+\Delta\hat V_{NL})|\phi_t\rangle
+=\varepsilon_t|\phi_t\rangle.
+$$
+
+也可以定义对偶投影子
+
+$$
+|\beta_s\rangle
+=\sum_{s'}|\chi_{s'}\rangle(B^{-1})_{s's},
+\qquad
+\langle\phi_t|\beta_s\rangle=\delta_{ts},
+$$
+
+并在 $B=B^\dagger$ 的同一条件下写成等价形式
 
 $$
 \Delta\hat V_{NL}
 =\sum_{ss'}|\beta_s\rangle B_{ss'}\langle\beta_{s'}|.
 $$
 
-作用在任意参考态 $|\phi_t\rangle$：
+该推导同时建立了两件不同的事：$B^{-1}B=I$ 保证参考 residual 被复现，而 $B=B^\dagger$ 保证非局域算符 Hermitian。近线性相关投影子仍会放大数值误差；即使上述代数成立，也必须继续检查对数导数、目标能量窗口和 ghost states。
 
-$$
-\Delta\hat V_{NL}|\phi_t\rangle
-=\sum_{ss'}|\beta_s\rangle B_{ss'}\delta_{s't}
-=\sum_s|\beta_s\rangle B_{st}
-=|\chi_t\rangle.
-$$
-
-因此
-
-$$
-(\hat H_0+\Delta\hat V_{NL})|\phi_t\rangle
-=\hat H_0|\phi_t\rangle+|\chi_t\rangle
-=\varepsilon_t|\phi_t\rangle.
-$$
-
-该推导说明多个参考态可以被同一有限秩算符精确复现。它依赖 $B$ 可逆；近线性相关投影子会放大数值误差。实际形式可能采用不同但等价的矩阵规范，必须以具体生成器和文件格式定义为准。
-
-<p lang="en">Residual functions are defined relative to a common local Hamiltonian. Inverting their finite overlap matrix produces dual projectors. The resulting finite-rank correction returns the appropriate residual for every reference state, so all selected states solve the same pseudo-Hamiltonian. The construction requires an invertible, well-conditioned finite matrix; equivalent implementations may use different projector normalizations.</p>
+<p lang="en">The standard finite-rank operator is built as chi times the inverse of B times chi dagger. Generalized norm conservation makes B Hermitian, so its inverse is Hermitian and the nonlocal operator has real expectation values. Matrix inversion reproduces the selected residuals, while Hermiticity is a separate condition. Dual-projector notation is equivalent only under the same declared matrix convention; conditioning and ghost-state validation remain independent.</p>
 
 </DerivationBlock>
 
