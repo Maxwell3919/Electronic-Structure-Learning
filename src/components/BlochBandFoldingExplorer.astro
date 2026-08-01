@@ -41,10 +41,12 @@
     <circle cx="534" cy="55" r="7" data-ch04-fold-point="2" />
   </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
-    <strong data-ch04-fold-energy>m = 1: E/E₀ = 5.523</strong>
-    <span data-ch04-fold-unfolded>unfolded reduced wavevector = 2.350</span>
-    <span data-ch04-fold-periodicity>Eₘ(k+G) = Eₘ₊₁(k)</span>
+  <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-ch04-live-contract="bilingual-atomic">
+    <strong data-ch04-fold-energy>m = 1：E/E₀ = 5.523</strong>
+    <span data-ch04-fold-unfolded>展开后的约化波矢 = 2.350</span>
+    <span lang="en" data-ch04-fold-unfolded-en>Unfolded reduced wavevector = 2.350</span>
+    <span data-ch04-fold-periodicity>倒格矢平移只重新标记分支：Eₘ(k+G) = Eₘ₊₁(k)</span>
+    <span lang="en" data-ch04-fold-periodicity-en>A reciprocal-vector shift only relabels the branch: Eₘ(k+G) = Eₘ₊₁(k)</span>
   </div>
 
   <div class="chapter-visual__contract">
@@ -68,7 +70,9 @@
     const cursor = root.querySelector('[data-ch04-fold-cursor]');
     const energyReadout = root.querySelector('[data-ch04-fold-energy]');
     const unfoldedReadout = root.querySelector('[data-ch04-fold-unfolded]');
+    const unfoldedReadoutEn = root.querySelector('[data-ch04-fold-unfolded-en]');
     const periodicityReadout = root.querySelector('[data-ch04-fold-periodicity]');
+    const periodicityReadoutEn = root.querySelector('[data-ch04-fold-periodicity-en]');
     const paths = Array.from(root.querySelectorAll('[data-ch04-fold-band]'));
     const points = Array.from(root.querySelectorAll('[data-ch04-fold-point]'));
     if (!(kInput instanceof HTMLInputElement) || !(bandInput instanceof HTMLInputElement)) return;
@@ -108,13 +112,14 @@
       });
       if (kOutput instanceof HTMLOutputElement) kOutput.value = reducedK.toFixed(2);
       if (bandOutput instanceof HTMLOutputElement) bandOutput.value = String(bandIndex);
-      if (energyReadout instanceof HTMLElement) energyReadout.textContent = `m = ${bandIndex}: E/E₀ = ${selected.energy.toFixed(3)}`;
-      if (unfoldedReadout instanceof HTMLElement) unfoldedReadout.textContent = `unfolded reduced wavevector = ${selected.unfoldedReducedK.toFixed(3)}`;
-      if (periodicityReadout instanceof HTMLElement) {
-        const shifted = foldedFreeElectronBand({ reducedK: reducedK + 2, bandIndex });
-        const relabelled = foldedFreeElectronBand({ reducedK, bandIndex: bandIndex + 1 });
-        periodicityReadout.textContent = `E_m(k+G) = ${shifted.energy.toFixed(3)}; E_(m+1)(k) = ${relabelled.energy.toFixed(3)}`;
-      }
+      if (energyReadout instanceof HTMLElement) energyReadout.textContent = `m = ${bandIndex}：E/E₀ = ${selected.energy.toFixed(3)}`;
+      const unfolded = selected.unfoldedReducedK.toFixed(3);
+      if (unfoldedReadout instanceof HTMLElement) unfoldedReadout.textContent = `展开后的约化波矢 = ${unfolded}`;
+      if (unfoldedReadoutEn instanceof HTMLElement) unfoldedReadoutEn.textContent = `Unfolded reduced wavevector = ${unfolded}`;
+      const shifted = foldedFreeElectronBand({ reducedK: reducedK + 2, bandIndex });
+      const relabelled = foldedFreeElectronBand({ reducedK, bandIndex: bandIndex + 1 });
+      if (periodicityReadout instanceof HTMLElement) periodicityReadout.textContent = `倒格矢平移只重新标记分支：E_m(k+G) = ${shifted.energy.toFixed(3)}；E_(m+1)(k) = ${relabelled.energy.toFixed(3)}`;
+      if (periodicityReadoutEn instanceof HTMLElement) periodicityReadoutEn.textContent = `A reciprocal-vector shift only relabels the branch: E_m(k+G) = ${shifted.energy.toFixed(3)}; E_(m+1)(k) = ${relabelled.energy.toFixed(3)}`;
     };
 
     kInput.addEventListener('input', update);
