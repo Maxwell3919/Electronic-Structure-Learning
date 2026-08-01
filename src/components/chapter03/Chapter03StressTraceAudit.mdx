@@ -1,0 +1,83 @@
+import BilingualCallout from '../BilingualCallout.astro';
+
+<div
+  id="section-3-3-stress-trace-audit"
+  data-ch3-stress-trace-audit
+  data-pressure-trace-factor="-one-third"
+  data-source-locators="3.23,3.24,G.4"
+>
+
+<BilingualCallout
+  titleZh="来源约定审计：静水压力与应力 trace 的 1/3 因子"
+  titleEn="Source-convention audit: the one-third factor between pressure and the stress trace"
+  kind="boundary"
+>
+  <div class="bilingual-section__zh">
+
+Martin 第 2 版在 Chapter 3 式 (3.23) 后把压力印作
+
+$$
+P=-\sum_{\alpha}\sigma_{\alpha\alpha}.
+$$
+
+但同一页紧接的 Coulomb virial 式 (3.24) 为
+
+$$
+3P\Omega=2E_{\mathrm{kin}}+E_{\mathrm{pot}},
+$$
+
+而 Appendix G 在式 (G.4) 后明确写出三维静水关系
+
+$$
+\boxed{P=-\frac13\sum_{\alpha}\sigma_{\alpha\alpha}
+=-\frac13\operatorname{Tr}\boldsymbol\sigma}.
+$$
+
+对本站采用的 virial tensor，取 trace 得
+
+$$
+\operatorname{Tr}\boldsymbol\sigma
+=-\frac{2E_{\mathrm{kin}}+E_{\mathrm{pot}}}{\Omega},
+$$
+
+只有乘以 $-1/3$ 才与式 (3.24) 一致。因此本站把 Chapter 3 的相邻印刷关系记录为<strong>缺少三维平均因子 $1/3$ 的归一化不一致</strong>，并采用 Appendix G 的显式关系。这里不推断作者原本希望修改哪一处。
+
+该关系依赖已声明的应力符号约定。若某程序把压缩应力定义为正值，则 trace 与压力的符号会相反；比较代码输出前必须先核对张量符号，而不能只比较绝对值。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Immediately after Eq. (3.23), the printed second edition writes the pressure as
+
+$$
+P=-\sum_{\alpha}\sigma_{\alpha\alpha}.
+$$
+
+The Coulomb virial relation printed immediately afterwards, Eq. (3.24), is
+
+$$
+3P\Omega=2E_{\mathrm{kin}}+E_{\mathrm{pot}},
+$$
+
+whereas the paragraph following Appendix G Eq. (G.4) explicitly gives the three-dimensional hydrostatic relation
+
+$$
+\boxed{P=-\frac13\sum_{\alpha}\sigma_{\alpha\alpha}
+=-\frac13\operatorname{Tr}\boldsymbol\sigma}.
+$$
+
+Taking the trace of the virial tensor used on this site gives
+
+$$
+\operatorname{Tr}\boldsymbol\sigma
+=-\frac{2E_{\mathrm{kin}}+E_{\mathrm{pot}}}{\Omega}.
+$$
+
+Only the factor $-1/3$ makes this result consistent with Eq. (3.24). The site therefore records the adjacent Chapter 3 statement as a <strong>normalization inconsistency missing the three-dimensional averaging factor $1/3$</strong> and follows the explicit Appendix G relation. No claim is made about which printed expression the author intended to revise.
+
+The sign still depends on the declared stress convention. Codes that take compressive stress as positive use the opposite trace sign, so tensor conventions must be checked before comparing numerical values.
+
+  </div>
+</BilingualCallout>
+
+</div>
