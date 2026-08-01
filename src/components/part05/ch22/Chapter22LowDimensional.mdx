@@ -1,0 +1,218 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import DimensionalDOSExplorer from './DimensionalDOSExplorer.astro';
+
+<span id="section-22-8" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.8 层状材料 | Layer Materials
+
+<BilingualSection titleZh="从体层状晶体到孤立单层" titleEn="From a layered bulk crystal to an isolated monolayer" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+层状体材料保留面内强键而层间耦合较弱，但“弱”并不等于零。去除相邻层会同时改变：层间跃迁与成键/反键劈裂；法向介电筛选；离子位置和晶格常数；SOC 与晶场；准粒子自能和电子—空穴相互作用。Martin 以 MoS₂ 为例说明，体材料的间接带隙可在单层中变为直接带隙：对层间重叠敏感的硫 $p_z$ 成分显著移动，而主要局域于层内的 Mo $d$ 边界态变化较小。
+
+这类结论需要比较匹配结构和方法下的完整布里渊区极值，不能只查看一条高对称路径上的某两个点。单层弛豫、SOC、应变和真空会改变谷序；半局域 Kohn–Sham gap、hybrid/GW quasiparticle gap 和光学 gap 是不同对象。光致发光增强还涉及直接/间接选择规则、激子、声子辅助过程和非辐射通道，不能仅由“带隙变直接”完整解释。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A layered bulk material combines strong in-plane bonding with weaker interlayer coupling, but weak is not zero. Removing neighbouring layers changes interlayer hopping and bonding–antibonding splitting, out-of-plane dielectric screening, ionic positions and lattice constants, SOC and crystal fields, quasiparticle self-energy, and electron–hole interaction. Martin’s MoS₂ example shows how an indirect bulk gap may become direct in a monolayer: sulfur $p_z$ states sensitive to interlayer overlap shift strongly, whereas Mo $d$ states largely confined to one layer change less.
+
+Such a conclusion requires the full Brillouin-zone extrema at matched structures and methods, not two points on one high-symmetry path. Monolayer relaxation, SOC, strain, and vacuum can reorder valleys. A semilocal Kohn–Sham gap, hybrid/GW quasiparticle gap, and optical gap are distinct objects. Enhanced photoluminescence also depends on selection rules, excitons, phonon assistance, and nonradiative channels; a direct-gap label is not the complete explanation.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="孤立层的真空参考与堆叠后的 lineup" titleEn="Vacuum reference of an isolated layer and lineup after stacking" eyebrow="Energy-reference boundary">
+  <div className="bilingual-section__zh">
+
+中性、无宏观场的孤立二维层在足够真空中可形成两侧平台，因此电离能、电子亲和势和真空相对带边可定义。它们仍依赖表面偶极、终止、吸附、应变、SOC、功能和准粒子修正。对不对称 Janus 层，两侧真空平台不同，必须报告方向；周期超胞需处理净偶极。
+
+把两种孤立层的真空带边重叠，可作为弱耦合异质结构的预筛选，但堆叠后会发生电荷重排、Pauli pushback、界面偶极、层间杂化、应变和极化。因此最终 lineup 必须来自显式结构或经验证的弱耦合近似。若体系金属化，孤立层 Type-I/II/III 标签只能描述接触前参考；不能替代显式异质结的层分谱和自洽电势。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A neutral isolated two-dimensional layer without a macroscopic field can produce vacuum plateaus on both sides, allowing ionization energy, electron affinity, and vacuum-referenced band edges to be defined. They still depend on dipoles, termination, adsorption, strain, SOC, functional, and quasiparticle correction. An asymmetric Janus layer has different plateaus on its two sides and requires a directional report and periodic dipole treatment.
+
+Overlaying the vacuum levels of two isolated layers is a useful weak-coupling prescreen, not the final heterostructure lineup. Stacking introduces charge rearrangement, Pauli pushback, an interface dipole, interlayer hybridization, strain, and polarization. The final alignment requires the explicit structure or a validated weak-coupling approximation. If the stack metallizes, isolated-layer Type-I/II/III labels describe a pre-contact reference and do not replace the self-consistent potential and layer-resolved spectrum.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="二维极化率与任意真空体积 | Two-dimensional polarizability and arbitrary vacuum volume"
+  assumptions={[
+    '单层位于面积 A、超胞高度 Lz 的真空超胞；',
+    '平行均匀电场处在线性响应；',
+    '超胞间镜像相互作用已可忽略或截断。',
+  ]}
+>
+
+程序常输出三维超胞 susceptibility $\chi^{3D}$，定义
+
+$$
+P^{3D}_\parallel
+=\chi^{3D}_\parallel E_\parallel.
+$$
+
+但单层的总面偶极每面积为
+
+$$
+P^{2D}_\parallel
+=L_zP^{3D}_\parallel.
+$$
+
+因此内禀面极化率为
+
+$$
+\boxed{
+\alpha^{2D}_\parallel
+=L_z\chi^{3D}_\parallel.
+}
+$$
+
+若用 Gaussian convention，超胞介电常数满足 $\epsilon^{3D}=1+4\pi\chi^{3D}$，则
+
+$$
+\alpha^{2D}_\parallel
+=
+\frac{L_z}{4\pi}\left(\epsilon^{3D}_\parallel-1\right).
+$$
+
+当真空增大时 $\epsilon^{3D}-1\propto1/L_z$，而 $\alpha^{2D}$ 应趋于常数。SI convention 的常数不同。这个换算不修复镜像 Coulomb 耦合、有限厚度定义或法向去极化场；需要配合 vacuum/Coulomb truncation 收敛。
+
+A supercell dielectric constant approaches one as vacuum increases and is therefore not an intrinsic monolayer material number. Multiplying the supercell susceptibility by the cell height yields an areal polarizability in the declared convention, provided image interactions and electrical boundary conditions are controlled.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="范德华堆叠的结构与电子不确定性" titleEn="Structural and electronic uncertainty in van der Waals stacks" eyebrow="Computational connection">
+  <div className="bilingual-section__zh">
+
+异质层堆叠需要同时扫描面内匹配、扭转/取向、registry、层间距和可能的重构。层间能量差可小于功能、色散修正和有限超胞误差；一个 registry 的弛豫结果不能代表全部堆叠。电子结构对层间距和局域 registry 的敏感性也可能比总能排序更大。
+
+计算记录应包含：单层和显式 stack 的结构来源；失配/应变张量；超胞与原子数；色散方法；SOC；真空和 dipole/Coulomb truncation；层间距与 registry；层分/轨道投影定义；带边、功函数、界面偶极和电荷分析的独立收敛。Bader 或差分电荷接近零不能排除 Pauli 重排、hybridization 或动量空间电荷转移；反之一个小净电荷也不自动决定带阶或 EPC。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A heterolayer stack requires scans over in-plane matching, twist/orientation, registry, layer separation, and possible reconstruction. Registry energy differences may be smaller than functional, dispersion-correction, and finite-cell errors, so one relaxed stacking is not exhaustive. Electronic structure may be more sensitive to distance and local registry than the total-energy ordering.
+
+The record should include monolayer and stack structure provenance; mismatch/strain tensor; cell and atom count; dispersion method; SOC; vacuum and dipole/Coulomb truncation; distance and registry; layer/orbital projection; and independent convergence of edges, work function, interface dipole, and charge analyses. Near-zero Bader or difference charge does not exclude Pauli rearrangement, hybridization, or momentum-space transfer, while a small net transfer does not determine the offset or electron–phonon coupling.
+
+  </div>
+</BilingualSection>
+
+<span id="section-22-9" className="chapter22-anchor" aria-hidden="true"></span>
+
+## 22.9 一维体系 | One-Dimensional Systems
+
+<BilingualSection titleZh="曲率把‘卷起的二维带’变成新的轨道问题" titleEn="Curvature turns a rolled two-dimensional band picture into a new orbital problem" eyebrow="【Martin 原书 | Martin source】">
+  <div className="bilingual-section__zh">
+
+碳纳米管的 zone-folding 图像从石墨烯允许的环向量子化线判断金属/半导体，但小直径曲率改变局域法向，使 $\pi$ 与 $\sigma$ 轨道混合，键长和键角重排，某些带显著移动。Martin 的小直径 zigzag 管例子中，一个简单卷曲模型预期绝缘的体系因曲率混合而出现金属带；该带电荷密度在管外侧更强，直接显示它不再是内外对称的纯径向 $p_z$ 状态。
+
+这说明通用基组可发现超出简化成键图像的态，但“plane wave 算出新态”不是独立科学验证。需要对截断、真空、轴向 k 网格、管间镜像、结构弛豫、SOC/磁性和功能收敛，并与对称性允许的局域轨道模型或不同实现交叉检查。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A zone-folding picture classifies a carbon nanotube by the allowed circumferential lines through graphene bands. In a small-radius tube, curvature changes the local normal, mixes $\pi$ and $\sigma$ orbitals, and reorganizes bond lengths and angles, shifting selected bands strongly. Martin’s small zigzag example becomes metallic although a simple rolled-sheet model predicts an insulator; the relevant charge density is larger on the outside of the tube, showing that it is no longer an inside–outside symmetric radial $p_z$ state.
+
+A general basis can reveal states beyond a simplified bonding picture, but “a plane-wave calculation found a new state” is not independent scientific validation. Cutoff, vacuum, axial k mesh, tube-image coupling, structural relaxation, SOC/magnetism, and functional must be converged and cross-checked with symmetry-compatible localized models or an independent implementation.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="抛物带边的维度态密度 | Density of states of a parabolic edge in d dimensions"
+  assumptions={[
+    '单一各向同性抛物极值；',
+    '非相互作用、零温度计数；',
+    '忽略自旋/谷简并和归一化常数。',
+  ]}
+>
+
+令
+
+$$
+E(\mathbf k)=E_0+\frac{\hbar^2k^2}{2m^*}.
+$$
+
+$d$ 维半径为 $k$ 的球内状态数标度为 $N(k)\propto k^d$。由于
+
+$$
+k\propto(E-E_0)^{1/2},
+$$
+
+积分态数为
+
+$$
+N(E)\propto(E-E_0)^{d/2}\Theta(E-E_0).
+$$
+
+求导得到
+
+$$
+\boxed{
+g_d(E)
+=\frac{dN}{dE}
+\propto
+(E-E_0)^{d/2-1}\Theta(E-E_0).
+}
+$$
+
+于是 1D 在带边按 $(E-E_0)^{-1/2}$ 发散，2D 为常数阶跃，3D 按 $(E-E_0)^{1/2}$ 起始。有限温度、寿命或数值展宽会平滑奇点；非抛物色散、多个谷、鞍点和边界态产生其他 van Hove 结构。DOS 的单位应按每长度、每面积或每体积报告；含任意真空的超胞“每体积 DOS”不具低维内禀意义。
+
+The phase-space volume scales as $k^d$, yielding $g_d(E)\propto(E-E_0)^{d/2-1}$. One dimension diverges, two dimensions steps to a constant, and three dimensions begins as a square root. Broadening smooths the ideal singularity but does not become a physical lifetime by definition.
+
+</DerivationBlock>
+
+<DimensionalDOSExplorer />
+
+<BilingualSection titleZh="一维和二维的周期边界与 Coulomb 处理" titleEn="Periodic boundaries and Coulomb treatment in one and two dimensions" eyebrow="Numerical boundary">
+  <div className="bilingual-section__zh">
+
+对二维层，k 点只需在面内采样；对一维线，只沿轴向采样；非周期方向通常取 Γ。这个设置避免对平坦真空方向过采样，但不消除周期镜像的长程 Coulomb、偶极或带电相互作用。带电、极性、激子/响应或慢衰减密度尤其需要二维/一维 Coulomb truncation、补偿背景和有限尺寸外推。
+
+真空收敛也应针对 observable：总能差可能先收敛，而功函数、极化率、带电缺陷、激子和声子长波极限更慢。横向真空增大时，若结果按超胞体积归一化，数值会人为趋零；应转换为每长度/面积量并检查镜像耦合。
+
+  </div>
+  <div className="bilingual-section__en" lang="en">
+
+A two-dimensional layer needs k sampling only in-plane; a one-dimensional wire only along its axis, with Γ commonly used in nonperiodic directions. This avoids oversampling flat vacuum directions but does not remove long-range Coulomb, dipole, or charged-image coupling. Charged, polar, excitonic/response, and slowly decaying densities particularly require lower-dimensional Coulomb truncation, compensating backgrounds, and finite-size extrapolation.
+
+Vacuum convergence is observable specific. Total-energy differences may converge before work functions, polarizabilities, charged defects, excitons, or long-wavelength phonons. Quantities normalized by total supercell volume artificially vanish as transverse vacuum grows; convert them to per-length or per-area objects and verify image decoupling.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout title="低维结果的最低证据记录 | Minimum evidence record for a lower-dimensional result" tone="note">
+  <div className="bilingual-callout__grid">
+    <div>
+      <ul>
+        <li>物理维度与数值周期方向；</li>
+        <li>真空、Coulomb truncation、dipole/background；</li>
+        <li>k 网格只在哪些方向取样及其密度；</li>
+        <li>每长度/面积/体积的归一化；</li>
+        <li>结构、应变、层间距/曲率和 SOC；</li>
+        <li>全 BZ 极值或完整目标动量范围；</li>
+        <li>quasiparticle、optical、transport 等 observable 层级；</li>
+        <li>对真空、超胞横截面和相邻镜像的收敛。</li>
+      </ul>
+    </div>
+    <div lang="en">
+      <ul>
+        <li>physical dimensionality and numerical periodic directions;</li>
+        <li>vacuum, Coulomb truncation, dipole/background treatment;</li>
+        <li>directions and density of k sampling;</li>
+        <li>normalization per length, area, or volume;</li>
+        <li>structure, strain, spacing/curvature, and SOC;</li>
+        <li>full-BZ extrema or complete target momentum range;</li>
+        <li>quasiparticle, optical, transport, or other observable level;</li>
+        <li>convergence to vacuum, transverse cell size, and image coupling.</li>
+      </ul>
+    </div>
+  </div>
+</BilingualCallout>
