@@ -46,6 +46,28 @@ import Chapter23Closing from './Chapter23Closing.mdx';
     overflow-y: hidden;
   }
 
+  .chapter23-root .chapter23-terms dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 0.8rem;
+  }
+
+  .chapter23-root .chapter23-terms dl > div {
+    min-width: 0;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.55rem;
+    padding: 0.8rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .chapter23-root .chapter23-terms dt {
+    font-weight: 700;
+  }
+
+  .chapter23-root .chapter23-terms dd {
+    margin: 0.3rem 0 0;
+  }
+
   .chapter23-root .chapter23-workflow-table table,
   .chapter23-root .chapter23-evidence-table table {
     min-width: 60rem;
