@@ -33,10 +33,12 @@
     <circle cx="247" cy="97" r="7" data-ch03-upper-point />
   </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
+  <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-ch03-avoided-status>
     <strong data-ch03-energies>E− = −1.30; E+ = 1.30; gap = 2.60</strong>
-    <span data-ch03-force>lower-surface force = −0.92</span>
-    <span data-ch03-weights>lower-state weights: |1⟩ 96.2%, |2⟩ 3.8%</span>
+    <span data-ch03-force data-ch03-force-zh>低能绝热面力 = −0.92</span>
+    <span lang="en" data-ch03-force-en>Lower-surface force = −0.92</span>
+    <span data-ch03-weights data-ch03-weights-zh>低能态权重：|1⟩ 96.2%，|2⟩ 3.8%</span>
+    <span lang="en" data-ch03-weights-en>Lower-state weights: |1⟩ 96.2%, |2⟩ 3.8%</span>
   </div>
 
   <div class="ch03-avoided__weights" aria-hidden="true">
@@ -68,8 +70,10 @@
     const lowerPoint = root.querySelector('[data-ch03-lower-point]');
     const upperPoint = root.querySelector('[data-ch03-upper-point]');
     const energies = root.querySelector('[data-ch03-energies]');
-    const force = root.querySelector('[data-ch03-force]');
-    const weights = root.querySelector('[data-ch03-weights]');
+    const forceZh = root.querySelector('[data-ch03-force-zh]');
+    const forceEn = root.querySelector('[data-ch03-force-en]');
+    const weightsZh = root.querySelector('[data-ch03-weights-zh]');
+    const weightsEn = root.querySelector('[data-ch03-weights-en]');
     const weightOne = root.querySelector('[data-ch03-weight-one]');
     const weightTwo = root.querySelector('[data-ch03-weight-two]');
     if (!(positionInput instanceof HTMLInputElement) || !(couplingInput instanceof HTMLInputElement)) return;
@@ -101,10 +105,12 @@
       if (positionOutput instanceof HTMLOutputElement) positionOutput.value = position.toFixed(2);
       if (couplingOutput instanceof HTMLOutputElement) couplingOutput.value = coupling.toFixed(2);
       if (energies instanceof HTMLElement) energies.textContent = `E− = ${selected.lowerEnergy.toFixed(3)}; E+ = ${selected.upperEnergy.toFixed(3)}; gap = ${selected.gap.toFixed(3)}`;
-      if (force instanceof HTMLElement) force.textContent = `lower-surface force = ${selected.lowerForce.toFixed(3)}`;
+      if (forceZh instanceof HTMLElement) forceZh.textContent = `低能绝热面力 = ${selected.lowerForce.toFixed(3)}`;
+      if (forceEn instanceof HTMLElement) forceEn.textContent = `Lower-surface force = ${selected.lowerForce.toFixed(3)}`;
       const one = 100 * selected.lowerState1Weight;
       const two = 100 * selected.lowerState2Weight;
-      if (weights instanceof HTMLElement) weights.textContent = `lower-state weights: |1⟩ ${one.toFixed(1)}%, |2⟩ ${two.toFixed(1)}%`;
+      if (weightsZh instanceof HTMLElement) weightsZh.textContent = `低能态权重：|1⟩ ${one.toFixed(1)}%，|2⟩ ${two.toFixed(1)}%`;
+      if (weightsEn instanceof HTMLElement) weightsEn.textContent = `Lower-state weights: |1⟩ ${one.toFixed(1)}%, |2⟩ ${two.toFixed(1)}%`;
       if (weightOne instanceof HTMLElement) {
         weightOne.style.width = `${one}%`;
         weightOne.textContent = one >= 8 ? '|1⟩' : '';
