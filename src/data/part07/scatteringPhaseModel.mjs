@@ -18,6 +18,12 @@ const integerInRange = (value, label, min, max) => {
   return value;
 };
 
+const oddDoubleFactorial = (l) => {
+  let value = 1;
+  for (let n = 1; n <= l; n += 1) value *= 2 * n + 1;
+  return value;
+};
+
 const complex = (re = 0, im = 0) => ({ re, im });
 const add = (a, b) => complex(a.re + b.re, a.im + b.im);
 const multiply = (a, b) => complex(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re);
@@ -47,22 +53,36 @@ export function sphericalBesselJ(l, x) {
   if (ax < 1e-8) {
     if (l === 0) return 1 - x ** 2 / 6;
     if (l === 1) return x / 3;
-    let doubleFactorial = 1;
-    for (let n = 1; n <= l; n += 1) doubleFactorial *= 2 * n + 1;
-    return x ** l / doubleFactorial;
+    return x ** l / oddDoubleFactorial(l);
   }
   const j0 = Math.sin(x) / x;
   if (l === 0) return j0;
   const j1 = Math.sin(x) / x ** 2 - Math.cos(x) / x;
   if (l === 1) return j1;
-  let previous = j0;
-  let current = j1;
-  for (let n = 1; n < l; n += 1) {
-    const next = ((2 * n + 1) / x) * current - previous;
-    previous = current;
-    current = next;
+
+  // Upward recursion follows the physical solution when l is not far above |x|.
+  if (l <= ax + 4) {
+    let previous = j0;
+    let current = j1;
+    for (let n = 1; n < l; n += 1) {
+      const next = ((2 * n + 1) / x) * current - previous;
+      previous = current;
+      current = next;
+    }
+    return current;
   }
-  return current;
+
+  // For l >> |x|, upward recursion amplifies the complementary solution.
+  // Use the convergent power series instead:
+  // j_l(x)=x^l/(2l+1)!! * sum_m (-x^2)^m/[2^m m! product_s(2l+2s+1)].
+  let term = 1;
+  let sum = 1;
+  for (let m = 1; m <= 100; m += 1) {
+    term *= -x ** 2 / (2 * m * (2 * l + 2 * m + 1));
+    sum += term;
+    if (Math.abs(term) < Math.max(1, Math.abs(sum)) * 1e-16) break;
+  }
+  return (x ** l / oddDoubleFactorial(l)) * sum;
 }
 
 export function sphericalNeumannN(l, x) {
