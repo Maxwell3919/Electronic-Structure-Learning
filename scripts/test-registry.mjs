@@ -20,6 +20,22 @@ export const testRegistry = [
     status: 'active',
     category: 'site-architecture',
   },
+  {
+    id: 'editorial-quantum-atlas',
+    route: '/reference/design-system/',
+    validator: 'scripts/validate-design-system.mjs',
+    smokeScript: 'scripts/smoke-site-visual-system.py',
+    status: 'active',
+    category: 'visual-system',
+  },
+  {
+    id: 'site-build-budget',
+    route: '/',
+    validator: 'scripts/validate-build-budget.mjs',
+    smokeScript: null,
+    status: 'active',
+    category: 'performance',
+  },
   ...contentTests,
   {
     id: 'part-01-index',
@@ -40,4 +56,3 @@ export const testRegistry = [
 ];
 
 export default testRegistry;
-

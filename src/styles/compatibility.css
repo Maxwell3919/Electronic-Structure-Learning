@@ -41,12 +41,16 @@
   color: var(--esl-ink-muted);
 }
 
-.main-pane:has(.esl-editorial-hero) > .content-panel:first-child,
-.main-pane:has(.esl-part-cover) > .content-panel:first-child {
+main:has(.esl-editorial-hero) > .content-panel:first-child,
+main:has(.esl-part-cover) > .content-panel:first-child {
   display: none;
 }
 
 @media (max-width: 50rem) {
+  .site-title span {
+    font-size: 0.92rem;
+    letter-spacing: -0.02em;
+  }
   .bilingual-section__grid,
   .bilingual-callout__grid { grid-template-columns: minmax(0, 1fr); }
   .bilingual-section__en { border-inline-start: 0; padding-inline-start: 0; }

@@ -44,6 +44,7 @@
 }
 
 .esl-progress-meter {
+  --esl-progress: 0%;
   width: 100%;
   height: 0.45rem;
   overflow: hidden;

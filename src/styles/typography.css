@@ -13,6 +13,7 @@
 .sl-markdown-content h1,
 .esl-display-title {
   font-family: var(--esl-font-display);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.05;

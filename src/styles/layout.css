@@ -49,6 +49,14 @@
   overflow-y: hidden;
 }
 
+.sl-markdown-content .katex-error {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
+}
+
 .esl-reading-grid {
   display: grid;
   grid-template-columns: minmax(0, var(--esl-reading-width)) minmax(10rem, 15rem);
