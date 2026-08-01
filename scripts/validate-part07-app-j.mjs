@@ -157,7 +157,7 @@ const combined = Object.values(content).join('\n');
 assert.doesNotMatch(combined, /目录级阅读骨架|outline · 正文待填充|TODO/i, 'Appendix J must not retain outline or TODO markers');
 assert.ok((combined.match(/bilingual-section__zh/g) ?? []).length >= 20, 'substantive Chinese bilingual coverage');
 assert.ok((combined.match(/bilingual-section__en/g) ?? []).length >= 20, 'substantive English bilingual coverage');
-for (const required of ['κ²=ε', 'ε=k²/2', 'modulo', 'optical theorem', 'closed surface', 'Figure J.1', 'no exercise section']) {
+for (const required of ['κ²=ε', 'ε=k²/2', 'modulo', 'optical theorem', 'single-centre', 'Figure J.1', 'no exercise section']) {
   assert.ok(combined.includes(required), `required Appendix J boundary missing: ${required}`);
 }
 assert.ok((content.review.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
