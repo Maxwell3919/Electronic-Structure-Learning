@@ -18,15 +18,14 @@ The Martin structure is the primary theory spine. Sholl–Steckel is an auxiliar
 
 ## Current content state
 
-Every generated unit is `outline` only. The framework stores:
+The framework still provides all 56 catalog-backed routes, but their content maturity is no longer uniform. `src/data/site/contentStatus.mjs` is the status authority and records four independent dimensions:
 
-- source bibliographic identity;
-- Part/chapter/appendix numbering;
-- directory titles;
-- printed-page locators;
-- empty content slots for later original writing.
+- structural state;
+- technical validation;
+- scientific review;
+- learner testing.
 
-It does not store textbook prose, scans, figures, exercise text, answers, or other copyrighted body content.
+An accepted deterministic validator does not promote scientific review or learner testing. Outline pages retain source identity, titles, page locators and future content slots without copied textbook body.
 
 ## Authoritative files
 
