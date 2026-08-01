@@ -1,0 +1,29 @@
+---
+interface Props {
+  number: number;
+  titleZh: string;
+  titleEn: string;
+  objectChain: string;
+  status: string;
+  previous?: string;
+  next?: string;
+  motif?: 'wave' | 'lattice' | 'sphere' | 'response' | 'boundary' | 'topology' | 'reference-grid';
+}
+const { number, titleZh, titleEn, objectChain, status, previous, next, motif = 'wave' } = Astro.props;
+---
+<header class="esl-part-cover" data-part={number} data-motif={motif}>
+  <div>
+    <p class="esl-eyebrow">Part {number}</p>
+    <h1>{titleZh}</h1>
+    <p class="esl-title-en" lang="en">{titleEn}</p>
+    <p>{objectChain}</p>
+    <p class="esl-card__meta">{status}</p>
+    {(previous || next) && <p class="esl-card__meta">{previous && `← ${previous}`} {next && ` · ${next} →`}</p>}
+  </div>
+  <svg class="esl-part-cover__motif" viewBox="0 0 360 220" role="img" aria-label={`Part ${number} 原创 ${motif} 科学意象，不是计算数据`}>
+    <title>Part {number} scientific motif</title>
+    <path d="M12 126 C72 30 122 198 184 104 S292 22 348 112" fill="none" stroke="currentColor" stroke-width="2" />
+    <path d="M14 176 C92 132 140 148 210 178 S302 186 346 148" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55" />
+    {Array.from({ length: 20 }, (_, index) => <circle cx={28 + (index % 5) * 70 + (Math.floor(index / 5) % 2) * 12} cy={24 + Math.floor(index / 5) * 52} r="3" fill="currentColor" />)}
+  </svg>
+</header>

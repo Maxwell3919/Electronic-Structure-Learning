@@ -1,0 +1,5 @@
+---
+interface Props { title?: string; kind?: string; }
+const { title, kind = '原创示意' } = Astro.props;
+---
+<figcaption class="esl-figure-caption"><span>{title}<slot /></span><small>{kind}</small></figcaption>

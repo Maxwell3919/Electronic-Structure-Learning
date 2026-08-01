@@ -1,0 +1,5 @@
+---
+interface Props { label?: string; }
+const { label = '继续阅读' } = Astro.props;
+---
+<footer class="esl-reading-footer" aria-label={label}><slot /></footer>

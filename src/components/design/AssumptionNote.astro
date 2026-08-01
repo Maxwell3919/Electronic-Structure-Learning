@@ -1,0 +1,5 @@
+---
+interface Props { title?: string; }
+const { title = '假设与近似' } = Astro.props;
+---
+<aside class="esl-note" data-kind="assumption" aria-label={title}><strong>{title}</strong><slot /></aside>
