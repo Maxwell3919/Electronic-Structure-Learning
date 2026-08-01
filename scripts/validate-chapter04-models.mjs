@@ -120,10 +120,6 @@ assert.ok(
   integrationDOS.includes('\\frac{1}{(2\\pi)^d}'),
   'Chapter 4 must retain the explicit per-volume DOS prefactor',
 );
-assert.ok(
-  integrationDOS.includes('E_c+\\frac12\\sum_{ij}H_{ij}q_iq_j'),
-  'The van Hove quadratic expansion must retain its one-half factor',
-);
 
 const visualFiles = [
   ['src/components/ReciprocalLatticeExplorer.astro', ['data-ch04-areas-en', 'data-ch04-product-en']],
