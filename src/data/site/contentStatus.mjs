@@ -38,26 +38,32 @@ const registrations = new Map([
   ['H', ['scripts/validate-part07-app-h.mjs', 'scripts/smoke-part07-app-h.py']],
   ['I', ['scripts/validate-part07-app-i.mjs', 'scripts/smoke-part07-app-i.py']],
   ['J', ['scripts/validate-part07-app-j.mjs', 'scripts/smoke-part07-app-j.py']],
+  ['K', ['scripts/validate-part07-app-k.mjs', 'scripts/smoke-part07-app-k.py']],
 ]);
+
+const registeredButUnaccepted = new Set(['K']);
 
 const martinStatuses = martin.parts.flatMap((part) =>
   part.units.map((unit) => {
     const registration = registrations.get(unit.id);
     const isAppendix = part.number === 7;
     const normalizedId = isAppendix ? unit.id.toLowerCase() : unit.id.padStart(2, '0');
+    const pendingAcceptance = registeredButUnaccepted.has(unit.id);
     return {
       id: `martin-${isAppendix ? 'appendix' : 'chapter'}-${normalizedId}`,
       route: `/${part.slug}/${unit.slug}/`,
       track: `martin-part-${String(part.number).padStart(2, '0')}`,
       structuralState: registration ? 'content-complete' : 'outline',
-      technicalState: registration ? 'validated' : 'not-registered',
+      technicalState: registration ? (pendingAcceptance ? 'registered' : 'validated') : 'not-registered',
       scientificReviewState: registration ? 'review-needed' : 'not-reviewed',
       learnerTestState: 'not-tested',
       validator: registration?.[0] ?? null,
       smokeTest: registration?.[1] ?? null,
-      lastAcceptedSha: registration ? acceptedMainBaseline : null,
+      lastAcceptedSha: registration && !pendingAcceptance ? acceptedMainBaseline : null,
       notes: registration
-        ? 'A deterministic validator is registered on the accepted baseline; scientific review and learner testing remain separate.'
+        ? pendingAcceptance
+          ? 'A deterministic validator and browser smoke are registered in the active content PR; exact-SHA Pages acceptance has not yet been recorded.'
+          : 'A deterministic validator is registered on the accepted baseline; scientific review and learner testing remain separate.'
         : 'The accepted baseline contains the catalog-backed route skeleton only.',
     };
   }),
@@ -98,4 +104,3 @@ export const contentStatusSummary = contentStatus.reduce(
 );
 
 export default contentStatus;
-
