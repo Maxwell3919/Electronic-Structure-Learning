@@ -1,0 +1,35 @@
+---
+import { withBasePath } from '../../data/site/schema.mjs';
+
+interface LearningPath {
+  id: string;
+  titleZh: string;
+  titleEn: string;
+  summaryZh: string;
+  summaryEn: string;
+  milestones: unknown[];
+  status: string;
+}
+
+interface Props {
+  paths: LearningPath[];
+}
+
+const { paths } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="esl-card-grid" aria-label="学习路线 | Learning paths">
+  {paths.map((path) => (
+    <article class="esl-card" data-status={path.status}>
+      <h2>
+        <a href={withBasePath(`/learning-paths/${path.id}/`, base)}>{path.titleZh}</a>
+      </h2>
+      <p class="esl-card__title-en" lang="en">{path.titleEn}</p>
+      <p>{path.summaryZh}</p>
+      <p class="esl-card__secondary" lang="en">{path.summaryEn}</p>
+      <p class="esl-card__meta">{path.milestones.length} 个里程碑 · {path.status}</p>
+    </article>
+  ))}
+</section>
+
