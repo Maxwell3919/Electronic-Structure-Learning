@@ -9,6 +9,8 @@ sidebar:
 import SourceNote from '../../../components/SourceNote.astro';
 import DerivationBlock from '../../../components/DerivationBlock.astro';
 import SCFIterationVisualizer from '../../../components/SCFIterationVisualizer.astro';
+import InteractiveExplanation from '../../../components/interaction/InteractiveExplanation.astro';
+import MotionControl from '../../../components/interaction/MotionControl.astro';
 
 <SourceNote
   source="原创固定点教学模型；概念对应电子结构计算中的自洽迭代与线性 mixing。"
@@ -57,7 +59,13 @@ $$
   因而这个模型中的局部判定完全由 $q=1-\alpha(1-s)$ 决定：$0<q<1$ 时单调衰减，$-1<q<0$ 时符号交替但绝对值衰减，$|q|>1$ 时误差放大。$s=1$ 是退化情形，因为此时 $F(x)=x$，零残差不能选出唯一固定点。
 </DerivationBlock>
 
-<SCFIterationVisualizer />
+<InteractiveExplanation
+  title="SCF fixed-point explorer | SCF 不动点探索器"
+  question="调节已有模型参数，观察迭代轨迹与收敛读数。"
+>
+  <MotionControl />
+  <SCFIterationVisualizer />
+</InteractiveExplanation>
 
 ## 如何解释结果
 
