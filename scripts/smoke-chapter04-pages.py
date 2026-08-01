@@ -133,6 +133,62 @@ def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
         pass
 
 
+def assert_dos_normalization_audit(driver: webdriver.Chrome, context: str) -> WebElement:
+    audits = driver.find_elements(By.CSS_SELECTOR, "[data-ch4-dos-normalization-audit]")
+    if len(audits) != 1:
+        fail(f"{context} should contain exactly one Chapter 4 DOS normalization audit, found {len(audits)}")
+    audit = audits[0]
+    if not audit.is_displayed():
+        fail(f"{context} hides the Chapter 4 DOS normalization audit")
+    if audit.get_attribute("data-source-locators") != "4.34,4.35,4.46":
+        fail(f"{context} lost the Chapter 4 DOS source locators")
+    if audit.get_attribute("data-cell-dos-prefactor") != "Omega-cell-over-2pi-d":
+        fail(f"{context} lost the per-cell DOS prefactor declaration")
+    if audit.get_attribute("data-volume-dos-prefactor") != "one-over-2pi-d":
+        fail(f"{context} lost the per-volume DOS prefactor declaration")
+    text = " ".join(audit.text.split())
+    for locator in ("4.34", "4.35", "4.46"):
+        if locator not in text:
+            fail(f"{context} DOS normalization audit is missing Eq. ({locator})")
+    if "每原胞" not in text and "per primitive cell" not in text:
+        fail(f"{context} DOS normalization audit does not identify the per-cell quantity")
+    if "每物理体积" not in text and "per physical volume" not in text:
+        fail(f"{context} DOS normalization audit does not identify the per-volume quantity")
+    return audit
+
+
+def assert_bilingual_atomic_readouts(driver: webdriver.Chrome, context: str) -> int:
+    regions = driver.find_elements(
+        By.CSS_SELECTOR,
+        "[data-ch04-live-contract='bilingual-atomic']",
+    )
+    if len(regions) != 3:
+        fail(f"{context} should contain three bilingual atomic live regions, found {len(regions)}")
+    for region in regions:
+        if not region.is_displayed():
+            fail(f"{context} hides a Chapter 4 live region")
+        if region.get_attribute("aria-live") != "polite":
+            fail(f"{context} live region lost aria-live=polite")
+        if region.get_attribute("aria-atomic") != "true":
+            fail(f"{context} live region lost aria-atomic=true")
+
+    pairs = (
+        ("[data-ch04-areas]", "[data-ch04-areas-en]"),
+        ("[data-ch04-fold-unfolded]", "[data-ch04-fold-unfolded-en]"),
+        ("[data-ch04-dos-edge]", "[data-ch04-dos-edge-en]"),
+    )
+    for zh_selector, en_selector in pairs:
+        zh = driver.find_element(By.CSS_SELECTOR, zh_selector)
+        en = driver.find_element(By.CSS_SELECTOR, en_selector)
+        if not zh.is_displayed() or not en.is_displayed():
+            fail(f"{context} hides one language of a Chapter 4 live readout")
+        if not zh.text.strip() or not en.text.strip():
+            fail(f"{context} contains an empty Chapter 4 live readout")
+        if en.get_attribute("lang") != "en":
+            fail(f"{context} English live readout is missing lang=en")
+    return len(regions)
+
+
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
@@ -160,16 +216,30 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             if "/Electronic-Structure-Learning/" not in href:
                 fail(f"Chapter link escaped the Pages base path: {href}")
 
+        audit = assert_dos_normalization_audit(driver, "Chapter 4 desktop page")
+        live_region_count = assert_bilingual_atomic_readouts(driver, "Chapter 4 desktop page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            audit,
+        )
+        driver.save_screenshot(
+            str(ARTIFACT_DIR / "chapter-04-dos-normalization-audit-desktop.png")
+        )
+
         angle = driver.find_element(By.CSS_SELECTOR, "[data-ch04-angle]")
         direct_cell = driver.find_element(By.CSS_SELECTOR, "[data-ch04-direct-cell]")
         product = driver.find_element(By.CSS_SELECTOR, "[data-ch04-product]")
+        areas_en = driver.find_element(By.CSS_SELECTOR, "[data-ch04-areas-en]")
         focus_for_keyboard(driver, angle)
         angle.send_keys(Keys.HOME)
         WebDriverWait(driver, 10).until(lambda _: angle.get_attribute("value") == "35")
         low_angle_path = direct_cell.get_attribute("d")
+        low_angle_areas_en = areas_en.text
         angle.send_keys(Keys.END)
         WebDriverWait(driver, 10).until(
-            lambda _: angle.get_attribute("value") == "145" and direct_cell.get_attribute("d") != low_angle_path
+            lambda _: angle.get_attribute("value") == "145"
+            and direct_cell.get_attribute("d") != low_angle_path
+            and areas_en.text != low_angle_areas_en
         )
         if "(2π)²" not in product.text:
             fail(f"Reciprocal area-product declaration changed: {product.text}")
@@ -177,40 +247,58 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         k_input = driver.find_element(By.CSS_SELECTOR, "[data-ch04-k]")
         cursor = driver.find_element(By.CSS_SELECTOR, "[data-ch04-fold-cursor]")
         fold_energy = driver.find_element(By.CSS_SELECTOR, "[data-ch04-fold-energy]")
+        fold_unfolded_en = driver.find_element(By.CSS_SELECTOR, "[data-ch04-fold-unfolded-en]")
         focus_for_keyboard(driver, k_input)
         k_input.send_keys(Keys.HOME)
         WebDriverWait(driver, 10).until(lambda _: k_input.get_attribute("value") == "-1")
         left_cursor = cursor.get_attribute("x1")
         left_energy = fold_energy.text
+        left_unfolded_en = fold_unfolded_en.text
         k_input.send_keys(Keys.END)
         WebDriverWait(driver, 10).until(
             lambda _: k_input.get_attribute("value") == "1"
             and cursor.get_attribute("x1") != left_cursor
             and fold_energy.text != left_energy
+            and fold_unfolded_en.text != left_unfolded_en
         )
 
         dimension = driver.find_element(By.CSS_SELECTOR, "[data-ch04-dos-dimension]")
         dos_path = driver.find_element(By.CSS_SELECTOR, "[data-ch04-dos-active]")
         dos_law = driver.find_element(By.CSS_SELECTOR, "[data-ch04-dos-law]")
+        dos_edge = driver.find_element(By.CSS_SELECTOR, "[data-ch04-dos-edge]")
+        dos_edge_en = driver.find_element(By.CSS_SELECTOR, "[data-ch04-dos-edge-en]")
         focus_for_keyboard(driver, dimension)
         dimension.send_keys(Keys.HOME)
         WebDriverWait(driver, 10).until(
-            lambda _: dimension.get_attribute("value") == "1" and "ρ₁D" in dos_law.text
+            lambda _: dimension.get_attribute("value") == "1"
+            and "ρ₁D" in dos_law.text
+            and "反平方根" in dos_edge.text
+            and "inverse-square-root" in dos_edge_en.text
         )
         one_d_path = dos_path.get_attribute("d")
         dimension.send_keys(Keys.END)
         WebDriverWait(driver, 10).until(
             lambda _: dimension.get_attribute("value") == "3"
             and "ρ₃D" in dos_law.text
+            and "平方根开启" in dos_edge.text
+            and "square-root onset" in dos_edge_en.text
             and dos_path.get_attribute("d") != one_d_path
         )
 
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-04-desktop.png"))
         report["desktop"] = {
             "title": title,
             "katex_count": katex_count,
             "source_map_rows": source_rows,
             "contents_links": len(contents_links),
+            "dos_normalization_audit": {
+                "displayed": True,
+                "source_locators": ["4.34", "4.35", "4.46"],
+                "cell_prefactor": "Omega-cell-over-2pi-d",
+                "volume_prefactor": "one-over-2pi-d",
+            },
+            "bilingual_atomic_live_regions": live_region_count,
             "keyboard_controls": ["reciprocal_angle", "folded_k", "dos_dimension"],
         }
 
@@ -223,15 +311,27 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Narrow-screen Chapter 4 bilingual layout is not one column")
         if grid_column_count(driver, ".chapter04-root .chapter-visual__controls") != 1:
             fail("Narrow-screen Chapter 4 controls are not one column")
+        narrow_audit = assert_dos_normalization_audit(driver, "Chapter 4 narrow page")
+        narrow_live_regions = assert_bilingual_atomic_readouts(driver, "Chapter 4 narrow page")
         overflow = float(driver.execute_script("return document.documentElement.scrollWidth - window.innerWidth;"))
         if overflow > 1:
             fail(f"Chapter 4 creates narrow-screen horizontal overflow of {overflow}px")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            narrow_audit,
+        )
+        driver.save_screenshot(
+            str(ARTIFACT_DIR / "chapter-04-dos-normalization-audit-narrow.png")
+        )
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-04-narrow.png"))
         report["narrow"] = {
             "viewport": [390, 844],
             "bilingual_columns": 1,
             "control_columns": 1,
             "horizontal_overflow_px": overflow,
+            "dos_normalization_audit": True,
+            "bilingual_atomic_live_regions": narrow_live_regions,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-04-desktop-failure.png")
@@ -260,12 +360,24 @@ def no_javascript_smoke(report: dict) -> None:
         source_rows = len(driver.find_elements(By.CSS_SELECTOR, ".chapter04-root .chapter-source-map tbody tr"))
         if source_rows != 7:
             fail("No-JavaScript Chapter 4 page lost source-map rows")
+        audit = assert_dos_normalization_audit(driver, "Chapter 4 no-JavaScript page")
+        live_region_count = assert_bilingual_atomic_readouts(driver, "Chapter 4 no-JavaScript page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            audit,
+        )
+        driver.save_screenshot(
+            str(ARTIFACT_DIR / "chapter-04-dos-normalization-audit-no-javascript.png")
+        )
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-04-no-javascript.png"))
         report["no_javascript"] = {
             "visualization_contracts": len(contracts),
             "static_svg_count": len(svgs),
             "native_range_controls": len(controls),
             "source_map_rows": source_rows,
+            "dos_normalization_audit": True,
+            "bilingual_atomic_live_regions": live_region_count,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-04-no-javascript-failure.png")

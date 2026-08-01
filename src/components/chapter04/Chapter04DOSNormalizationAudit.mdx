@@ -1,0 +1,110 @@
+import BilingualCallout from '../BilingualCallout.astro';
+
+<div
+  id="section-4-7-dos-normalization-audit"
+  data-ch4-dos-normalization-audit
+  data-source-locators="4.34,4.35,4.46"
+  data-cell-dos-prefactor="Omega-cell-over-2pi-d"
+  data-volume-dos-prefactor="one-over-2pi-d"
+>
+
+<BilingualCallout
+  titleZh="来源约定审计：式 (4.46) 的每原胞与每体积 DOS"
+  titleEn="Source-convention audit: per-cell and per-volume DOS in Eq. (4.46)"
+  kind="boundary"
+>
+  <div class="bilingual-section__zh">
+
+Martin 在式 (4.34)–(4.35) 中先定义每原胞的 $\mathbf k$ 平均：
+
+$$
+\frac1{N_k}\sum_{\mathbf k}f_n(\mathbf k)
+\longrightarrow
+\frac{\Omega_{\mathrm{cell}}}{(2\pi)^d}
+\int_{\mathrm{BZ}}d^dk\,f_n(\mathbf k).
+$$
+
+式 (4.46) 沿用同一前因子，印作
+
+$$
+\rho_{\mathrm{cell}}(E)
+=\frac1{N_k}\sum_{n\mathbf k}
+\delta(E-\varepsilon_{n\mathbf k})
+=\frac{\Omega_{\mathrm{cell}}}{(2\pi)^d}
+\sum_n\int_{\mathrm{BZ}}d^dk\,
+\delta(E-\varepsilon_n(\mathbf k)).
+$$
+
+该式对能量积分后，每个 spin-resolved band 给出每原胞一个 state，因此它是<strong>每原胞、每能量</strong>的 DOS。原书紧邻文字同时提到“每体积”，但显示公式没有除以 $\Omega_{\mathrm{cell}}$。本站把这记录为文字与公式之间的归一化不一致，不推断作者希望修改哪一处。
+
+每物理体积的 DOS 必须再除以原胞体积：
+
+$$
+\boxed{
+\rho_{\mathrm{vol}}(E)
+=\frac{\rho_{\mathrm{cell}}(E)}{\Omega_{\mathrm{cell}}}
+=\frac1{(2\pi)^d}
+\sum_n\int_{\mathrm{BZ}}d^dk\,
+\delta(E-\varepsilon_n(\mathbf k))}.
+$$
+
+因此，对单个完整 band，
+
+$$
+\int dE\,\rho_{\mathrm{cell}}(E)=1,
+\qquad
+\int dE\,\rho_{\mathrm{vol}}(E)=\frac1{\Omega_{\mathrm{cell}}},
+$$
+
+随后再乘实际 spin、valley 或其他简并度。有限晶体的总 DOS 则由每原胞 DOS 乘 $N_{\mathrm{cell}}$ 得到。比较不同原胞、超胞或二维真空模型时，必须先说明采用 per cell、per atom、per area 还是 per volume；否则 DOS 峰高与积分电子数不可直接比较。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Eqs. (4.34)–(4.35) first define a Brillouin-zone average per primitive cell,
+
+$$
+\frac1{N_k}\sum_{\mathbf k}f_n(\mathbf k)
+\longrightarrow
+\frac{\Omega_{\mathrm{cell}}}{(2\pi)^d}
+\int_{\mathrm{BZ}}d^dk\,f_n(\mathbf k).
+$$
+
+Eq. (4.46) retains this prefactor:
+
+$$
+\rho_{\mathrm{cell}}(E)
+=\frac1{N_k}\sum_{n\mathbf k}
+\delta(E-\varepsilon_{n\mathbf k})
+=\frac{\Omega_{\mathrm{cell}}}{(2\pi)^d}
+\sum_n\int_{\mathrm{BZ}}d^dk\,
+\delta(E-\varepsilon_n(\mathbf k)).
+$$
+
+Its energy integral gives one state per spin-resolved band per primitive cell, so the displayed expression is a DOS per cell and per energy. The adjacent source prose also refers to a quantity per unit volume, but the displayed equation has not divided by $\Omega_{\mathrm{cell}}$. The site records this as a normalization mismatch between prose and formula without claiming which expression the author intended to revise.
+
+The DOS per physical volume is
+
+$$
+\boxed{
+\rho_{\mathrm{vol}}(E)
+=\frac{\rho_{\mathrm{cell}}(E)}{\Omega_{\mathrm{cell}}}
+=\frac1{(2\pi)^d}
+\sum_n\int_{\mathrm{BZ}}d^dk\,
+\delta(E-\varepsilon_n(\mathbf k))}.
+$$
+
+For one complete band,
+
+$$
+\int dE\,\rho_{\mathrm{cell}}(E)=1,
+\qquad
+\int dE\,\rho_{\mathrm{vol}}(E)=\frac1{\Omega_{\mathrm{cell}}},
+$$
+
+before applying spin, valley, or other multiplicities. A finite crystal's total DOS is the per-cell DOS multiplied by $N_{\mathrm{cell}}$. Comparisons across primitive cells, supercells, or two-dimensional vacuum cells must declare whether the normalization is per cell, atom, area, or volume.
+
+  </div>
+</BilingualCallout>
+
+</div>

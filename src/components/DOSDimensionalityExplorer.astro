@@ -32,10 +32,12 @@
     <text x="620" y="85" data-ch04-dos-label>2D: constant step</text>
   </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
+  <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-ch04-live-contract="bilingual-atomic">
     <strong data-ch04-dos-law>ρ₂D(E) ∝ (E−E₀)⁰</strong>
-    <span data-ch04-dos-edge>band-edge behavior: finite constant step</span>
-    <span data-ch04-dos-note>η regularizes the plotted curve; it is not a material lifetime.</span>
+    <span data-ch04-dos-edge>带边行为：有限常数台阶</span>
+    <span lang="en" data-ch04-dos-edge-en>Band-edge behaviour: finite constant step</span>
+    <span data-ch04-dos-note>η = 0.05 只对绘图曲线作数值正则化，不是材料寿命。</span>
+    <span lang="en" data-ch04-dos-note-en>η = 0.05 only regularizes the plotted curve; it is not a material lifetime.</span>
   </div>
 
   <div class="chapter-visual__contract">
@@ -60,7 +62,9 @@
     const label = root.querySelector('[data-ch04-dos-label]');
     const law = root.querySelector('[data-ch04-dos-law]');
     const edge = root.querySelector('[data-ch04-dos-edge]');
+    const edgeEn = root.querySelector('[data-ch04-dos-edge-en]');
     const note = root.querySelector('[data-ch04-dos-note]');
+    const noteEn = root.querySelector('[data-ch04-dos-note-en]');
     const references = Array.from(root.querySelectorAll('[data-ch04-dos-reference]'));
     if (!(dimensionInput instanceof HTMLInputElement) || !(etaInput instanceof HTMLInputElement)) return;
     if (!(activePath instanceof SVGPathElement)) return;
@@ -68,9 +72,24 @@
     const xMap = (energy) => 85 + energy / 4 * 665;
     const yMap = (density, maximum) => 325 - Math.min(maximum, density) / maximum * 270;
     const descriptors = {
-      1: { law: 'ρ₁D(E) ∝ (E−E₀)⁻¹ᐟ²', edge: 'band-edge behavior: inverse-square-root divergence', label: '1D: inverse-square-root edge' },
-      2: { law: 'ρ₂D(E) ∝ (E−E₀)⁰', edge: 'band-edge behavior: finite constant step', label: '2D: constant step' },
-      3: { law: 'ρ₃D(E) ∝ (E−E₀)¹ᐟ²', edge: 'band-edge behavior: square-root onset', label: '3D: square-root onset' },
+      1: {
+        law: 'ρ₁D(E) ∝ (E−E₀)⁻¹ᐟ²',
+        edgeZh: '带边行为：反平方根发散',
+        edgeEn: 'Band-edge behaviour: inverse-square-root divergence',
+        label: '1D: inverse-square-root edge',
+      },
+      2: {
+        law: 'ρ₂D(E) ∝ (E−E₀)⁰',
+        edgeZh: '带边行为：有限常数台阶',
+        edgeEn: 'Band-edge behaviour: finite constant step',
+        label: '2D: constant step',
+      },
+      3: {
+        law: 'ρ₃D(E) ∝ (E−E₀)¹ᐟ²',
+        edgeZh: '带边行为：平方根开启',
+        edgeEn: 'Band-edge behaviour: square-root onset',
+        label: '3D: square-root onset',
+      },
     };
 
     const update = () => {
@@ -87,9 +106,11 @@
       if (etaOutput instanceof HTMLOutputElement) etaOutput.value = eta.toFixed(2);
       const descriptor = descriptors[dimension];
       if (law instanceof HTMLElement) law.textContent = descriptor.law;
-      if (edge instanceof HTMLElement) edge.textContent = descriptor.edge;
+      if (edge instanceof HTMLElement) edge.textContent = descriptor.edgeZh;
+      if (edgeEn instanceof HTMLElement) edgeEn.textContent = descriptor.edgeEn;
       if (label instanceof SVGTextElement) label.textContent = descriptor.label;
-      if (note instanceof HTMLElement) note.textContent = `η = ${eta.toFixed(2)} regularizes the plotted curve; it is not a material lifetime.`;
+      if (note instanceof HTMLElement) note.textContent = `η = ${eta.toFixed(2)} 只对绘图曲线作数值正则化，不是材料寿命。`;
+      if (noteEn instanceof HTMLElement) noteEn.textContent = `η = ${eta.toFixed(2)} only regularizes the plotted curve; it is not a material lifetime.`;
     };
 
     dimensionInput.addEventListener('input', update);
