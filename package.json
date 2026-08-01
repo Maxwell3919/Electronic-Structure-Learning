@@ -22,6 +22,7 @@
     "validate:source-semantics": "node scripts/validate-source-semantics.mjs",
     "validate:terminology": "node scripts/validate-terminology.mjs",
     "validate:literature-layer": "node scripts/validate-literature-layer.mjs",
+    "validate:runtime-lifecycle": "node scripts/validate-runtime-lifecycle.mjs",
     "validate:registered": "node scripts/run-registered-validators.mjs",
     "list:smoke": "node scripts/list-smoke-tests.mjs",
     "validate:part01-closure": "node scripts/validate-part01-closure.mjs",

@@ -4,6 +4,16 @@
   display: contents;
 }
 
+/* Long bilingual units contain thousands of server-rendered KaTeX nodes.
+   Keep off-screen sections out of style/layout/paint work while retaining the
+   complete static DOM for search, no-JS reading, and accessibility. */
+@supports (content-visibility: auto) {
+  .esl-unit-page-frame .bilingual-section {
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto 42rem;
+  }
+}
+
 :root[data-esl-reading='parallel'] .esl-unit-page-frame,
 :root[data-esl-reading='atlas'] .esl-unit-page-frame {
   --sl-content-width: var(--esl-full-width);
@@ -235,6 +245,7 @@
 @media print {
   .esl-reading-toolbar, .esl-unit-navigator { display: none !important; }
   .esl-unit-page-frame { --sl-content-width: 100%; }
+  .esl-unit-page-frame .bilingual-section { content-visibility: visible; contain-intrinsic-size: none; }
   .esl-unit-source details { display: block; }
   .esl-unit-source details > * { display: block; }
 }
