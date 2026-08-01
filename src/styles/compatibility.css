@@ -41,8 +41,8 @@
   color: var(--esl-ink-muted);
 }
 
-.sl-markdown-content > header:first-child:not(.esl-editorial-hero):has(+ .esl-editorial-hero),
-.sl-markdown-content > h1:first-child:has(+ .esl-part-cover) {
+.main-pane:has(.esl-editorial-hero) > .content-panel:first-child,
+.main-pane:has(.esl-part-cover) > .content-panel:first-child {
   display: none;
 }
 

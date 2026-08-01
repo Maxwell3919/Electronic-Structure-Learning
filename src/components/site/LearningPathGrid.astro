@@ -20,16 +20,16 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <section class="esl-card-grid" aria-label="学习路线 | Learning paths">
-  {paths.map((path) => (
+  {paths.map((path, index) => (
     <article class="esl-card" data-status={path.status}>
+      <p class="esl-eyebrow">Route {String(index + 1).padStart(2, '0')}</p>
       <h2>
         <a href={withBasePath(`/learning-paths/${path.id}/`, base)}>{path.titleZh}</a>
       </h2>
       <p class="esl-card__title-en" lang="en">{path.titleEn}</p>
       <p>{path.summaryZh}</p>
       <p class="esl-card__secondary" lang="en">{path.summaryEn}</p>
-      <p class="esl-card__meta">{path.milestones.length} 个里程碑 · {path.status}</p>
+      <p class="esl-card__meta">{path.milestones.length} 个里程碑 · {path.status} · 无账户</p>
     </article>
   ))}
 </section>
-

@@ -4,9 +4,10 @@ description: "现有 SCF 教学模型与未来通用交互组件入口。"
 ---
 
 import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
+import NextStepCard from '../../../components/learning/NextStepCard.astro';
 
-<SiteSectionHero titleZh="交互实验室" titleEn="Interactive laboratory" description="保留无需生产计算即可检查的教学模型；交互验证不等于真实 DFT 或材料结论验证。" />
+<SiteSectionHero titleZh="交互实验室" titleEn="Interactive laboratory" description="直接操控、逐步解释和静态回退共用同一容器；交互验证不等于真实 DFT 或材料结论验证。" descriptionEn="Direct manipulation, stepwise narrative, and static fallback share one shell without claiming material validation." pageType="lab" />
 
-- [SCF 固定点与 mixing 实验](../labs/scf-fixed-point-and-mixing/)
+<NextStepCard href="../labs/scf-fixed-point-and-mixing/" title="SCF 固定点与 mixing 实验" description="当前可用的代表性交互；数学模型保持不变。" />
 
-未来通用交互组件将在独立任务中登记和实现。
+旗舰科学交互仍未实现；本阶段只统一解释容器和视觉语言。

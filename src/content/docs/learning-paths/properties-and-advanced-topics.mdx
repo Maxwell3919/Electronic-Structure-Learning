@@ -11,9 +11,8 @@ import learningPaths from '../../../data/site/learningPaths.mjs';
 
 export const path = learningPaths.find((item) => item.id === 'properties-and-advanced-topics');
 
-<SiteSectionHero titleZh={path.titleZh} titleEn={path.titleEn} description={path.summaryZh} />
+<SiteSectionHero titleZh={path.titleZh} titleEn={path.titleEn} description={path.summaryZh} descriptionEn={path.summaryEn} pageType="learning" />
 
 <LearningPathTimeline path={path} />
 
 未完成单元保持 outline；进阶内容将在后续独立任务完成。
-

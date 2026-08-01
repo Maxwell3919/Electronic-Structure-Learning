@@ -1,5 +1,6 @@
 ---
 import { withBasePath } from '../../data/site/schema.mjs';
+import ProgressOverview from '../learning/ProgressOverview.astro';
 
 interface Milestone {
   id: string;
@@ -10,6 +11,7 @@ interface Milestone {
 }
 
 interface LearningPath {
+  id: string;
   audience: string[];
   prerequisites: string[];
   milestones: Milestone[];
@@ -24,6 +26,7 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <section class="esl-path-timeline">
+  <ProgressOverview pathId={path.id} total={path.milestones.length} />
   <div class="esl-path-timeline__context">
     <div>
       <h2>适合读者</h2>
@@ -36,12 +39,59 @@ const base = import.meta.env.BASE_URL;
   </div>
   <ol class="esl-path-timeline__list">
     {path.milestones.map((item) => (
-      <li id={item.id}>
-        <a href={withBasePath(item.href, base)}>{item.titleZh}</a>
-        <span lang="en">{item.titleEn}</span>
+      <li id={item.id} data-milestone={item.id}>
+        <span>
+          <a href={withBasePath(item.href, base)} data-milestone-link>{item.titleZh}</a>
+          <span lang="en">{item.titleEn}</span>
+        </span>
+        <button class="esl-mode-button" type="button" data-milestone-complete aria-pressed="false">标记完成</button>
         <small>{item.status}</small>
       </li>
     ))}
   </ol>
 </section>
 
+<script is:inline define:vars={{ pathId: path.id }}>
+  (() => {
+    const key = `esl-learning-progress:${pathId}`;
+    const root = document.querySelector(`[data-learning-progress="${pathId}"]`)?.closest('.esl-path-timeline');
+    if (!root || root.dataset.bound === 'true') return;
+    root.dataset.bound = 'true';
+    let state = { visited: [], completed: [], current: null };
+    try { state = { ...state, ...JSON.parse(localStorage.getItem(key) || '{}') }; } catch {}
+    const save = () => { try { localStorage.setItem(key, JSON.stringify(state)); } catch {} };
+    const render = () => {
+      const items = [...root.querySelectorAll('[data-milestone]')];
+      items.forEach((item) => {
+        const done = state.completed.includes(item.dataset.milestone);
+        item.dataset.completed = String(done);
+        const button = item.querySelector('[data-milestone-complete]');
+        button?.setAttribute('aria-pressed', String(done));
+        if (button) button.textContent = done ? '已完成' : '标记完成';
+      });
+      const overview = root.querySelector('[data-learning-progress]');
+      const label = overview?.querySelector('[data-progress-label]');
+      const meter = overview?.querySelector('[role="progressbar"]');
+      const bar = meter?.querySelector('span');
+      const count = state.completed.length;
+      if (label) label.textContent = `${count} / ${items.length}`;
+      meter?.setAttribute('aria-valuenow', String(count));
+      if (bar) bar.style.setProperty('--esl-progress', `${items.length ? (count / items.length) * 100 : 0}%`);
+    };
+    root.querySelectorAll('[data-milestone-link]').forEach((link) => link.addEventListener('click', () => {
+      const id = link.closest('[data-milestone]')?.dataset.milestone;
+      if (id && !state.visited.includes(id)) state.visited.push(id);
+      state.current = id || state.current;
+      save();
+    }));
+    root.querySelectorAll('[data-milestone-complete]').forEach((button) => button.addEventListener('click', () => {
+      const id = button.closest('[data-milestone]')?.dataset.milestone;
+      if (!id) return;
+      state.completed = state.completed.includes(id) ? state.completed.filter((item) => item !== id) : [...state.completed, id];
+      state.current = id;
+      save();
+      render();
+    }));
+    render();
+  })();
+</script>

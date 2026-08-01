@@ -8,9 +8,10 @@ sidebar:
 
 import TrackOverview from '../../../components/TrackOverview.astro';
 import BilingualSection from '../../../components/BilingualSection.astro';
+import PartCover from '../../../components/design/PartCover.astro';
 import catalog from '../../../data/martin/index.mjs';
 
-# 概览与背景主题 | Overview and Background Topics
+<PartCover number={1} titleZh="概览与背景主题" titleEn="Overview and Background Topics" objectChain="量子态 → 多电子问题 → 周期固体 → 均匀电子气" status="5 个 Chapter · 当前内容状态见统一 registry" next="Part II · DFT" motif="wave" />
 
 <BilingualSection titleZh="Part I 的阅读任务" titleEn="The task of Part I" eyebrow="Part I complete">
   <div class="bilingual-section__zh">
@@ -30,9 +31,9 @@ The order is dependency-driven. Chapter 1 explains how the electronic-structure 
 </BilingualSection>
 
 <BilingualSection titleZh="五章对象链" titleEn="Object chain across the five chapters" eyebrow="Objects">
-  <div class="bilingual-section__zh" style={{ minWidth: 0 }}>
+  <div class="bilingual-section__zh">
 
-<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>量子态、Hamiltonian 与测量
+<pre><code>量子态、Hamiltonian 与测量
         ↓
 电子结构问题、性质路线与证据层级
         ↓
@@ -53,9 +54,9 @@ The order is dependency-driven. Chapter 1 explains how the electronic-structure 
 </ol>
 
   </div>
-  <div class="bilingual-section__en" lang="en" style={{ minWidth: 0 }}>
+  <div class="bilingual-section__en" lang="en">
 
-<pre style={{ maxWidth: '100%', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>Quantum states, Hamiltonians, and measurement
+<pre><code>Quantum states, Hamiltonians, and measurement
         ↓
 Electronic-structure questions, property routes, and evidence levels
         ↓

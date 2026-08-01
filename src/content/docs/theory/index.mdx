@@ -12,7 +12,7 @@ export const theoryLinks = [
   ...martin.parts.map((part) => ({ id: `part-${part.number}`, titleZh: part.titleZh, titleEn: part.label, descriptionZh: `${part.units.length} 个目录单元`, href: `/${part.slug}/`, status: 'available' })),
 ];
 
-<SiteSectionHero titleZh="理论课程" titleEn="Theory course" description="Martin Part I–VII 的现有 URL、内部顺序和章节正文均保持不变；内容状态按四个维度独立记录。" />
+<SiteSectionHero titleZh="理论课程" titleEn="Theory course" description="Martin Part I–VII 的现有 URL、内部顺序和章节正文均保持不变；内容状态按四个维度独立记录。" descriptionEn="The complete Martin spine remains stable while structural, technical, review, and learner states stay separate." pageType="theory" />
 
 <SectionNavigationGrid items={theoryLinks} heading="Martin 理论课程" />
 

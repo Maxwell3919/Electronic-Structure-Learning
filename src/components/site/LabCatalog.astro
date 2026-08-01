@@ -22,8 +22,8 @@ const base = import.meta.env.BASE_URL;
       <h2><a href={withBasePath(lab.route, base)}>{lab.titleZh}</a></h2>
       <p class="esl-card__title-en" lang="en">{lab.titleEn}</p>
       <p>{lab.objective}</p>
-      <p class="esl-card__meta">{lab.software.join(' · ')} · {lab.status}</p>
+      <p class="esl-card__meta">{lab.software.join(' · ')} · 状态：{lab.status}</p>
+      <p class="esl-boundary-note">课程界面已登记；实验正文、输入和验收尚未发布。</p>
     </article>
   ))}
 </section>
-
