@@ -1,0 +1,53 @@
+---
+import AppendixJContents from './AppendixJContents.astro';
+import AppendixJOrientation from './AppendixJOrientation.mdx';
+import AppendixJMatching from './AppendixJMatching.mdx';
+import AppendixJCrossBoundReview from './AppendixJCrossBoundReview.mdx';
+---
+
+<div class="appendix-j-root">
+  <AppendixJContents />
+  <AppendixJOrientation />
+  <AppendixJMatching />
+  <AppendixJCrossBoundReview />
+</div>
+
+<style is:global>
+  .appendix-j-root,
+  .appendix-j-root > *,
+  .appendix-j-root .bilingual-section,
+  .appendix-j-root .bilingual-section__grid,
+  .appendix-j-root .bilingual-section__zh,
+  .appendix-j-root .bilingual-section__en,
+  .appendix-j-root .bilingual-callout,
+  .appendix-j-root .bilingual-callout__grid {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appendix-j-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .appendix-j-root .chapter-source-map,
+  .appendix-j-root .katex-display,
+  .appendix-j-root pre,
+  .appendix-j-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .appendix-j-root p,
+  .appendix-j-root li,
+  .appendix-j-root th,
+  .appendix-j-root td,
+  .appendix-j-root code {
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -144,7 +144,11 @@ for (const required of ['variational residual', 'same reference', 'closed surfac
 }
 assert.ok((content.review.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
 assert.match(content.index, /\| H · Energy and Stress Densities \| complete and deployed \|/, 'Part VII index must retain Appendix H deployed state');
-assert.match(content.index, /\| I · Alternative Force Expressions \| content complete;/, 'Part VII index must expose Appendix I content-complete state');
-assert.match(content.index, /\| J–R \| outline \|/, 'Part VII index must preserve J–R as outlines');
+assert.match(
+  content.index,
+  /\| I · Alternative Force Expressions \| (?:content complete(?:; deployment identity follows the site manifest)?|complete and deployed) \|/,
+  'Part VII index must expose Appendix I as content-complete or deployed',
+);
+assert.doesNotMatch(content.index, /\| I · Alternative Force Expressions \| outline \|/, 'Appendix I must never regress to outline state');
 
 console.log('Part VII Appendix I validation passed: variational path freedom, frozen-reference error order, pressure integration, closed-surface force, rigid-region bookkeeping, and route assembly.');

@@ -1,0 +1,194 @@
+---
+import { scatteringDefaults, squareWellPhaseShift } from '../../../data/part07/scatteringPhaseModel.mjs';
+
+const defaults = squareWellPhaseShift();
+const width = 760;
+const height = 365;
+const left = 62;
+const right = 705;
+const top = 42;
+const bottom = 275;
+const maxRadius = defaults.grid.at(-1);
+const values = [...defaults.inner.filter((value) => value != null), ...defaults.exterior.filter((value) => value != null)];
+const maxAbs = Math.max(...values.map(Math.abs), 1e-9);
+const xMap = (value) => left + (right - left) * value / maxRadius;
+const yMap = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.43 / maxAbs;
+const pathFor = (series) => {
+  let started = false;
+  return series.map((value, index) => {
+    if (value == null) return '';
+    const command = started ? 'L' : 'M';
+    started = true;
+    return `${command} ${xMap(defaults.grid[index]).toFixed(2)} ${yMap(value).toFixed(2)}`;
+  }).filter(Boolean).join(' ');
+};
+const innerPath = pathFor(defaults.inner);
+const exteriorPath = pathFor(defaults.exterior);
+const fallbackRows = [0, 1, 2].map((l) => squareWellPhaseShift({
+  l,
+  k: scatteringDefaults.matching.k,
+  radius: scatteringDefaults.matching.radius,
+  wellDepth: scatteringDefaults.matching.wellDepth,
+}));
+---
+
+<figure class="chapter-visual phase-shift-matching" data-phase-shift-matching>
+  <figcaption>
+    <strong>原创交互模型：方阱内外径向函数与相移匹配</strong>
+    <span lang="en">Original interactive model: radial matching and the phase shift of a spherical square well</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls phase-shift-matching__controls">
+    <label>
+      <span>l | 部分波通道</span>
+      <input type="range" min="0" max="3" step="1" value={scatteringDefaults.matching.l} data-match-l />
+      <output data-match-l-output>{scatteringDefaults.matching.l}</output>
+    </label>
+    <label>
+      <span>k | 外部波数</span>
+      <input type="range" min="0.25" max="2.4" step="0.05" value={scatteringDefaults.matching.k} data-match-k />
+      <output data-match-k-output>{scatteringDefaults.matching.k.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>V<sub>0</sub> | 阱深</span>
+      <input type="range" min="0.2" max="5" step="0.1" value={scatteringDefaults.matching.wellDepth} data-match-depth />
+      <output data-match-depth-output>{scatteringDefaults.matching.wellDepth.toFixed(1)}</output>
+    </label>
+    <label>
+      <span>a | 匹配半径</span>
+      <input type="range" min="0.8" max="2.4" step="0.05" value={scatteringDefaults.matching.radius} data-match-radius />
+      <output data-match-radius-output>{scatteringDefaults.matching.radius.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="phase-match-title phase-match-desc">
+    <title id="phase-match-title">Inner and exterior radial square-well solutions matched at the potential radius</title>
+    <desc id="phase-match-desc">
+      The regular inner spherical Bessel solution and the exterior Bessel-Neumann combination meet in value and derivative at the radius. The mixing coefficient defines a phase shift modulo pi.
+    </desc>
+    <line x1={left} y1={(top + bottom) / 2} x2={right} y2={(top + bottom) / 2} class="plot-guide" />
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <line x1={xMap(scatteringDefaults.matching.radius)} y1={top} x2={xMap(scatteringDefaults.matching.radius)} y2={bottom} class="phase-shift-matching__boundary" data-match-boundary />
+    <path d={innerPath} class="phase-shift-matching__inner" data-match-inner-path />
+    <path d={exteriorPath} class="plot-curve" data-match-exterior-path />
+    <circle cx={xMap(defaults.radius)} cy={yMap(defaults.innerValueAtBoundary)} r="5" class="phase-shift-matching__point" data-match-point />
+    <text x={right} y="308" text-anchor="end">r</text>
+    <text x="18" y="55">ψl(r)</text>
+    <text x={right - 170} y="60" class="phase-shift-matching__inner-label">inner jl(qr)</text>
+    <text x={right - 170} y="82" class="phase-shift-matching__outer-label">outer jl(kr)−tanδ nl(kr)</text>
+    <text x={xMap(defaults.radius) + 8} y={top + 18}>r=a</text>
+  </svg>
+
+  <div class="chapter-visual__readout phase-shift-matching__readout" aria-live="polite">
+    <span>E=k²/2</span><strong data-match-energy>{defaults.energy.toFixed(6)}</strong>
+    <span>q</span><strong data-match-q>{defaults.q.toFixed(6)}</strong>
+    <span>D<sub>l</sub>(a)</span><strong data-match-log-derivative>{defaults.logDerivative.toFixed(6)}</strong>
+    <span>δ<sub>l</sub>/π</span><strong data-match-phase>{(defaults.phase / Math.PI).toFixed(6)}</strong>
+    <span>value mismatch</span><strong data-match-value-error>{defaults.valueMismatch.toExponential(2)}</strong>
+    <span>slope mismatch</span><strong data-match-slope-error>{defaults.derivativeMismatch.toExponential(2)}</strong>
+  </div>
+
+  <div class="phase-shift-matching__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>l</th><th>D_l(a)</th><th>δ_l/π</th><th>sin²δ_l</th></tr></thead>
+      <tbody>
+        {fallbackRows.map((entry) => (
+          <tr>
+            <td>{entry.l}</td>
+            <td>{entry.logDerivative.toFixed(6)}</td>
+            <td>{(entry.phase / Math.PI).toFixed(6)}</td>
+            <td>{entry.invariantSinSquared.toFixed(6)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>有限球方阱 <code>V(r&lt;a)=−V0</code>，外部势为零；固定 Hartree 原子单位 <code>H=−½∇²+V</code>、<code>E=k²/2</code>，内部波数 <code>q=sqrt(k²+2V0)</code>。</p>
+    <p lang="en"><strong>Model:</strong> a finite spherical square well with <code>V(r&lt;a)=−V0</code> and zero exterior potential; Hartree atomic units are fixed by <code>H=−½∇²+V</code>, <code>E=k²/2</code>, and <code>q=sqrt(k²+2V0)</code>.</p>
+    <p><strong>验收：</strong>内解与 <code>jl(kr)−tanδ_l nl(kr)</code> 的外解在 <code>a</code> 处值和斜率一致；由同一 <code>ψ_l</code> 定义的 <code>D_l=aψ'_l/ψ_l</code> 代入 J.6 恢复相移。</p>
+    <p lang="en"><strong>Acceptance:</strong> the inner solution and the exterior <code>jl(kr)−tanδ_l nl(kr)</code> combination agree in value and slope at <code>a</code>; the logarithmic derivative <code>D_l=aψ'_l/ψ_l</code> inserted in J.6 recovers the phase shift.</p>
+    <p><strong>来源约定审计：</strong>J.4 附近印刷为 <code>κ²=ε</code>，J.7 附近又写 <code>ε=k²/2</code>。本模型只采用后者的 Hartree convention，不把两种比例静默混入同一曲线。</p>
+    <p lang="en"><strong>Source-convention audit:</strong> the text near J.4 prints <code>κ²=ε</code>, while the text near J.7 uses <code>ε=k²/2</code>. This model adopts the latter Hartree convention only and does not silently mix the two scalings.</p>
+    <p><strong>边界：</strong>单中心、球对称、弹性、非相对论模型。匹配半径必须位于常势区；内解节点处的对数导数奇点不是数值失败，而是需要分支处理的物理/表示边界。</p>
+    <p lang="en"><strong>Boundary:</strong> single-centre, spherical, elastic, nonrelativistic model. The matching radius must lie in a constant-potential region; a logarithmic-derivative pole at an inner node is a branch boundary rather than an ordinary smooth point.</p>
+  </div>
+</figure>
+
+<script>
+  import { squareWellPhaseShift } from '../../../data/part07/scatteringPhaseModel.mjs';
+
+  document.querySelectorAll('[data-phase-shift-matching]').forEach((root) => {
+    const lInput = root.querySelector('[data-match-l]');
+    const kInput = root.querySelector('[data-match-k]');
+    const depthInput = root.querySelector('[data-match-depth]');
+    const radiusInput = root.querySelector('[data-match-radius]');
+    if (!(lInput instanceof HTMLInputElement) || !(kInput instanceof HTMLInputElement) || !(depthInput instanceof HTMLInputElement) || !(radiusInput instanceof HTMLInputElement)) return;
+    const innerPath = root.querySelector('[data-match-inner-path]');
+    const exteriorPath = root.querySelector('[data-match-exterior-path]');
+    const boundary = root.querySelector('[data-match-boundary]');
+    const point = root.querySelector('[data-match-point]');
+    const outputs = {
+      l: root.querySelector('[data-match-l-output]'), k: root.querySelector('[data-match-k-output]'), depth: root.querySelector('[data-match-depth-output]'), radius: root.querySelector('[data-match-radius-output]'),
+      energy: root.querySelector('[data-match-energy]'), q: root.querySelector('[data-match-q]'), d: root.querySelector('[data-match-log-derivative]'), phase: root.querySelector('[data-match-phase]'), value: root.querySelector('[data-match-value-error]'), slope: root.querySelector('[data-match-slope-error]'),
+    };
+    const left = 62; const right = 705; const top = 42; const bottom = 275;
+    const update = () => {
+      let result;
+      try {
+        result = squareWellPhaseShift({ l: Number(lInput.value), k: Number(kInput.value), radius: Number(radiusInput.value), wellDepth: Number(depthInput.value) });
+      } catch (error) {
+        if (outputs.d instanceof HTMLElement) outputs.d.textContent = 'singular';
+        if (outputs.phase instanceof HTMLElement) outputs.phase.textContent = 'branch boundary';
+        return;
+      }
+      const maxRadius = result.grid.at(-1) ?? 1;
+      const values = [...result.inner.filter((value) => value != null), ...result.exterior.filter((value) => value != null)];
+      const maxAbs = Math.max(...values.map(Math.abs), 1e-9);
+      const xMap = (value) => left + (right - left) * value / maxRadius;
+      const yMap = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.43 / maxAbs;
+      const makePath = (series) => {
+        let started = false;
+        return series.map((value, index) => {
+          if (value == null) return '';
+          const command = started ? 'L' : 'M'; started = true;
+          return `${command} ${xMap(result.grid[index]).toFixed(2)} ${yMap(value).toFixed(2)}`;
+        }).filter(Boolean).join(' ');
+      };
+      if (innerPath instanceof SVGPathElement) innerPath.setAttribute('d', makePath(result.inner));
+      if (exteriorPath instanceof SVGPathElement) exteriorPath.setAttribute('d', makePath(result.exterior));
+      if (boundary instanceof SVGLineElement) { const x = xMap(result.radius); boundary.setAttribute('x1', x.toFixed(2)); boundary.setAttribute('x2', x.toFixed(2)); }
+      if (point instanceof SVGCircleElement) { point.setAttribute('cx', xMap(result.radius).toFixed(2)); point.setAttribute('cy', yMap(result.innerValueAtBoundary).toFixed(2)); }
+      if (outputs.l instanceof HTMLOutputElement) outputs.l.value = String(result.l);
+      if (outputs.k instanceof HTMLOutputElement) outputs.k.value = result.k.toFixed(2);
+      if (outputs.depth instanceof HTMLOutputElement) outputs.depth.value = result.wellDepth.toFixed(1);
+      if (outputs.radius instanceof HTMLOutputElement) outputs.radius.value = result.radius.toFixed(2);
+      if (outputs.energy instanceof HTMLElement) outputs.energy.textContent = result.energy.toFixed(6);
+      if (outputs.q instanceof HTMLElement) outputs.q.textContent = result.q.toFixed(6);
+      if (outputs.d instanceof HTMLElement) outputs.d.textContent = result.logDerivative.toFixed(6);
+      if (outputs.phase instanceof HTMLElement) outputs.phase.textContent = (result.phase / Math.PI).toFixed(6);
+      if (outputs.value instanceof HTMLElement) outputs.value.textContent = result.valueMismatch.toExponential(2);
+      if (outputs.slope instanceof HTMLElement) outputs.slope.textContent = result.derivativeMismatch.toExponential(2);
+    };
+    [lInput, kInput, depthInput, radiusInput].forEach((input) => input.addEventListener('input', update));
+    update();
+  });
+</script>
+
+<style>
+  .phase-shift-matching { overflow-x: auto; }
+  .phase-shift-matching svg { width: 100%; min-width: 44rem; }
+  .phase-shift-matching text { fill: currentColor; font-size: 13px; }
+  .phase-shift-matching__inner { fill: none; stroke: currentColor; stroke-width: 2.4; }
+  .phase-shift-matching__boundary { stroke: var(--sl-color-gray-2); stroke-width: 1.7; stroke-dasharray: 6 4; }
+  .phase-shift-matching__point { fill: var(--sl-color-accent-high); }
+  .phase-shift-matching__inner-label { fill: currentColor; }
+  .phase-shift-matching__outer-label { fill: var(--sl-color-accent-high); }
+  .phase-shift-matching__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.8rem; }
+  .phase-shift-matching__controls label { display: grid; gap: 0.35rem; }
+  .phase-shift-matching__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.4rem 1rem; }
+  .phase-shift-matching__fallback { max-width: 44rem; }
+</style>
