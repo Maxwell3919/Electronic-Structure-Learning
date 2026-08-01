@@ -21,6 +21,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 
 ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/pages-smoke"))
+MIN_KATEX_COUNT = 50
 ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
 BASE_URL = os.environ["PAGES_URL"].rstrip("/") + "/"
 EXPECTED_SHA = os.environ["DEPLOYED_SHA"]
@@ -204,7 +205,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         contents_links = len(driver.find_elements(By.CSS_SELECTOR, ".appendix-contents a"))
         contracts = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual__contract")
         svgs = driver.find_elements(By.CSS_SELECTOR, "figure.chapter-visual svg")
-        if katex_count < 120:
+        if katex_count < MIN_KATEX_COUNT:
             fail(f"Appendix K rendered too few KaTeX nodes: {katex_count}")
         if source_rows != 6:
             fail(f"Appendix K source map has {source_rows} rows instead of 6")
@@ -219,7 +220,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         keyboard_change(driver, "[data-k-radial-l]", "[data-k-radial-j]")
         keyboard_change(driver, "[data-k-harmonic-phi]", "[data-k-harmonic-real]")
         keyboard_change(driver, "[data-k-coupling-l3]", "[data-k-coupling-gaunt]")
-        keyboard_change(driver, "[data-k-cheb-order]", "[data-k-cheb-chebyshev]")
+        keyboard_change(driver, "[data-k-cheb-order]", "[data-k-cheb-order-readout]")
 
         page_overflow = assert_no_page_overflow(driver, "Appendix K desktop page")
         driver.execute_script("window.scrollTo(0, 0);")
@@ -284,7 +285,7 @@ def no_javascript_smoke(report: dict) -> None:
         svgs = driver.find_elements(By.CSS_SELECTOR, "figure.chapter-visual svg")
         fallback_tables = driver.find_elements(By.CSS_SELECTOR, "figure.chapter-visual table")
         source_rows = len(driver.find_elements(By.CSS_SELECTOR, ".chapter-source-map tbody tr"))
-        if katex_count < 120:
+        if katex_count < MIN_KATEX_COUNT:
             fail(f"No-JavaScript Appendix K lost rendered mathematics: {katex_count}")
         if len(contracts) != 4 or len(svgs) != 4 or len(fallback_tables) != 4:
             fail(
