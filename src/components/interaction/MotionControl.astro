@@ -1,0 +1,13 @@
+<button class="esl-interaction-button" type="button" data-motion-control aria-pressed="false" aria-label="暂停或恢复非必要动画">暂停动画</button>
+<script is:inline>
+  document.querySelectorAll('[data-motion-control]').forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.dataset.bound = 'true';
+    button.addEventListener('click', () => {
+      const paused = document.documentElement.dataset.eslMotion !== 'paused';
+      document.documentElement.dataset.eslMotion = paused ? 'paused' : 'running';
+      button.setAttribute('aria-pressed', String(paused));
+      button.textContent = paused ? '恢复动画' : '暂停动画';
+    });
+  });
+</script>

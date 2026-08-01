@@ -1,0 +1,9 @@
+---
+interface Props { pathId: string; total: number; }
+const { pathId, total } = Astro.props;
+---
+<section class="esl-progress-overview" data-learning-progress={pathId} data-total={total}>
+  <p><strong>本地路线进度</strong> <span data-progress-label>0 / {total}</span></p>
+  <div class="esl-progress-meter" role="progressbar" aria-valuemin="0" aria-valuemax={total} aria-valuenow="0"><span></span></div>
+  <p class="esl-card__meta">只保存在当前浏览器；无账户、无服务端记录。</p>
+</section>

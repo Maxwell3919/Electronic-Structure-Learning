@@ -1,0 +1,5 @@
+---
+interface Props { label?: string; }
+const { label = '交互控制' } = Astro.props;
+---
+<div class="esl-interaction-controls" role="group" aria-label={label}><slot /></div>

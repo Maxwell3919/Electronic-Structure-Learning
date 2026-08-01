@@ -1,0 +1,5 @@
+---
+interface Props { label?: string; }
+const { label = '直接操控区域' } = Astro.props;
+---
+<div class="esl-interaction-stage" aria-label={label}><slot /></div>
