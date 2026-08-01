@@ -34,10 +34,11 @@
     </g>
   </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
+  <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-ch03-hole-status>
     <strong data-ch03-hole-integrals>analytic integrals: Ix = −1; Ic = 0; Ixc = −1</strong>
     <span data-ch03-hole-origin>at x′−x=0: nx = −0.399; nc = −0.176; nxc = −0.575</span>
-    <span data-ch03-hole-interpretation>Correlation deepens the short-range depletion and returns the same probability in a broader positive tail.</span>
+    <span data-ch03-hole-interpretation-zh>关联 hole 加深短程耗尽，并在更宽的正尾部归还相同概率。</span>
+    <span lang="en" data-ch03-hole-interpretation data-ch03-hole-interpretation-en>Correlation deepens the short-range depletion and returns the same probability in a broader positive tail.</span>
   </div>
 
   <div class="chapter-visual__contract">
@@ -67,7 +68,8 @@
     const xcPath = root.querySelector('[data-ch03-hole-xc]');
     const integrals = root.querySelector('[data-ch03-hole-integrals]');
     const origin = root.querySelector('[data-ch03-hole-origin]');
-    const interpretation = root.querySelector('[data-ch03-hole-interpretation]');
+    const interpretationZh = root.querySelector('[data-ch03-hole-interpretation-zh]');
+    const interpretationEn = root.querySelector('[data-ch03-hole-interpretation-en]');
     if (!(widthInput instanceof HTMLInputElement) || !(amplitudeInput instanceof HTMLInputElement)) return;
     if (!(exchangePath instanceof SVGPathElement) || !(correlationPath instanceof SVGPathElement) || !(xcPath instanceof SVGPathElement)) return;
 
@@ -94,7 +96,10 @@
       if (amplitudeOutput instanceof HTMLOutputElement) amplitudeOutput.value = correlationAmplitude.toFixed(2);
       if (integrals instanceof HTMLElement) integrals.textContent = `analytic integrals: Ix = ${exact.exchange}; Ic = ${exact.correlation}; Ixc = ${exact.exchangeCorrelation}`;
       if (origin instanceof HTMLElement) origin.textContent = `at x′−x=0: nx = ${central.exchange.toFixed(3)}; nc = ${central.correlation.toFixed(3)}; nxc = ${central.exchangeCorrelation.toFixed(3)}`;
-      if (interpretation instanceof HTMLElement) interpretation.textContent = correlationAmplitude === 0
+      if (interpretationZh instanceof HTMLElement) interpretationZh.textContent = correlationAmplitude === 0
+        ? '关联重排幅度为零时，exchange-correlation hole 与 exchange hole 完全相同。'
+        : '关联 hole 加深短程耗尽，并在更宽的正尾部归还相同概率。';
+      if (interpretationEn instanceof HTMLElement) interpretationEn.textContent = correlationAmplitude === 0
         ? 'With zero correlation amplitude, the exchange-correlation hole equals the exchange hole.'
         : 'Correlation deepens the short-range depletion and returns the same probability in a broader positive tail.';
     };
