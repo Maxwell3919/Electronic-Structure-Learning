@@ -167,10 +167,14 @@ for (const required of [
 assert.ok((content.elfReview.match(/<li><strong>/g) ?? []).length >= 10, 'ten original exercises must be present');
 assert.match(
   content.index,
-  /\| H · Energy and Stress Densities \| content complete;/,
-  'Part VII index must expose Appendix H content-complete state',
+  /\| H · Energy and Stress Densities \| (?:content complete;[^|]*|complete and deployed) \|/,
+  'Part VII index must keep Appendix H at a non-outline completion state',
 );
-assert.match(content.index, /\| I–R \| outline \|/, 'Part VII index must preserve later appendices as outlines');
+assert.doesNotMatch(
+  content.index,
+  /\| H · Energy and Stress Densities \| outline \|/,
+  'Part VII index must not regress Appendix H to outline',
+);
 assert.match(
   content.index,
   /\| G · Stress from Electronic Structure \| complete and deployed \|/,

@@ -1,0 +1,133 @@
+---
+import { alternativeForceDefaults, stationaryPathModel } from '../../../data/part07/alternativeForceModel.mjs';
+
+const defaults = alternativeForceDefaults.stationary;
+const samples = Array.from({ length: 121 }, (_, index) => -0.35 + index * 0.7 / 120);
+const paths = [
+  { key: 'fixed', label: 'fixed electronic coordinate', slope: 0 },
+  { key: 'rigid', label: 'stationary/rigid response', slope: defaults.electronicResponse },
+  { key: 'trial', label: 'selected trial path', slope: defaults.pathSlope },
+];
+const width = 720; const height = 340; const left = 62; const right = 680; const top = 42; const bottom = 260;
+const energies = paths.flatMap((path) => samples.map((lambda) => stationaryPathModel({ ...defaults, pathSlope: path.slope, lambda }).pathEnergy));
+const minE = Math.min(...energies); const maxE = Math.max(...energies); const span = Math.max(maxE - minE, 1e-9);
+const xMap = (value) => left + (right - left) * (value + 0.35) / 0.7;
+const yMap = (value) => bottom - (bottom - top) * (value - minE) / span;
+const pathData = (slope) => samples.map((lambda, index) => {
+  const value = stationaryPathModel({ ...defaults, pathSlope: slope, lambda }).pathEnergy;
+  return `${index === 0 ? 'M' : 'L'} ${xMap(lambda).toFixed(2)} ${yMap(value).toFixed(2)}`;
+}).join(' ');
+const fallback = [-0.2, 0, 0.2].map((lambda) => ({
+  lambda,
+  fixed: stationaryPathModel({ ...defaults, pathSlope: 0, lambda }).pathEnergy,
+  rigid: stationaryPathModel({ ...defaults, pathSlope: defaults.electronicResponse, lambda }).pathEnergy,
+}));
+---
+
+<figure class="chapter-visual variational-path" data-variational-path>
+  <figcaption>
+    <strong>原创交互模型：驻定点允许无限条一阶等价路径</strong>
+    <span lang="en">Original interactive model: infinitely many first-order-equivalent paths through a stationary point</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls variational-path__controls">
+    <label>
+      <span>trial path slope s | 试探路径斜率</span>
+      <input type="range" min="-0.8" max="1.6" step="0.05" value={defaults.pathSlope} data-i-path-slope />
+      <output data-i-path-slope-output>{defaults.pathSlope.toFixed(2)}</output>
+    </label>
+    <label>
+      <span>parameter λ | 参数</span>
+      <input type="range" min="-0.30" max="0.30" step="0.01" value={defaults.lambda} data-i-path-lambda />
+      <output data-i-path-lambda-output>{defaults.lambda.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="variational-path-title variational-path-desc">
+    <title id="variational-path-title">Energy along fixed, stationary-response, and arbitrary trial electronic paths</title>
+    <desc id="variational-path-desc">Every path through the stationary reference has the same tangent at lambda zero, while curvature and finite-lambda errors differ.</desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={xMap(0)} y1={top} x2={xMap(0)} y2={bottom} class="plot-guide" />
+    <path d={pathData(0)} class="variational-path__fixed" />
+    <path d={pathData(defaults.electronicResponse)} class="variational-path__rigid" />
+    <path d={pathData(defaults.pathSlope)} class="plot-curve" data-i-path-curve />
+    <circle cx={xMap(defaults.lambda)} cy={yMap(stationaryPathModel(defaults).pathEnergy)} r="5" class="variational-path__marker" data-i-path-marker />
+    <text x={right} y="294" text-anchor="end">λ</text>
+    <text x="14" y="54">E</text>
+    <text x={right - 188} y="58">fixed x</text>
+    <text x={right - 188} y="80" class="variational-path__rigid-label">stationary x*(λ)</text>
+    <text x={right - 188} y="102" class="variational-path__trial-label">trial x=sλ</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>first derivative at λ=0</span><strong data-i-path-first>{defaults.directSlope.toFixed(6)}</strong>
+    <span>generalized force −dE/dλ</span><strong data-i-path-force>{(-defaults.directSlope).toFixed(6)}</strong>
+    <span>trial second derivative</span><strong data-i-path-second>{stationaryPathModel(defaults).pathSecondDerivative.toFixed(6)}</strong>
+    <span>finite-λ path error</span><strong data-i-path-error>{stationaryPathModel(defaults).pathError.toExponential(3)}</strong>
+  </div>
+
+  <div class="variational-path__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>λ</th><th>fixed-path E</th><th>stationary-path E</th></tr></thead>
+      <tbody>{fallback.map((row) => <tr><td>{row.lambda.toFixed(2)}</td><td>{row.fixed.toFixed(5)}</td><td>{row.rigid.toFixed(5)}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>E(x,λ)=bλ+cλ²/2+k(x−aλ)²/2</code>，参考点 <code>(x,λ)=(0,0)</code> 对电子变量驻定。fixed、rigid-response 与任意 <code>x=sλ</code> 路径均穿过该点。</p>
+    <p lang="en"><strong>Model:</strong> <code>E(x,λ)=bλ+cλ²/2+k(x−aλ)²/2</code>, stationary in the electronic coordinate at <code>(x,λ)=(0,0)</code>. Fixed, rigid-response, and arbitrary <code>x=sλ</code> paths all pass through that point.</p>
+    <p><strong>验收：</strong>所有路径在原点的 first derivative 都是 <code>b</code>，但二阶曲率为 <code>c+k(s−a)²</code>，有限步长误差随路径改变。</p>
+    <p lang="en"><strong>Acceptance:</strong> every path has first derivative <code>b</code> at the origin, while the curvature is <code>c+k(s−a)²</code> and the finite-step error is path dependent.</p>
+    <p><strong>边界：</strong>若 SCF/variational residual 不为零，路径项会重新进入一阶导数；此图不证明任意未收敛波函数、moving basis 或 constrained state 满足 force theorem。</p>
+    <p lang="en"><strong>Boundary:</strong> a nonzero SCF or variational residual restores path dependence at first order. The figure does not validate an unconverged wavefunction, moving basis, or constrained state.</p>
+  </div>
+</figure>
+
+<script>
+  import { alternativeForceDefaults, stationaryPathModel } from '../../../data/part07/alternativeForceModel.mjs';
+  document.querySelectorAll('[data-variational-path]').forEach((root) => {
+    const slope = root.querySelector('[data-i-path-slope]');
+    const lambdaInput = root.querySelector('[data-i-path-lambda]');
+    if (!(slope instanceof HTMLInputElement) || !(lambdaInput instanceof HTMLInputElement)) return;
+    const curve = root.querySelector('[data-i-path-curve]'); const marker = root.querySelector('[data-i-path-marker]');
+    const slopeOut = root.querySelector('[data-i-path-slope-output]'); const lambdaOut = root.querySelector('[data-i-path-lambda-output]');
+    const first = root.querySelector('[data-i-path-first]'); const force = root.querySelector('[data-i-path-force]');
+    const second = root.querySelector('[data-i-path-second]'); const error = root.querySelector('[data-i-path-error]');
+    const left = 62; const right = 680; const top = 42; const bottom = 260;
+    const samples = Array.from({ length: 121 }, (_, index) => -0.35 + index * 0.7 / 120);
+    const xMap = (value) => left + (right - left) * (value + 0.35) / 0.7;
+    const update = () => {
+      const pathSlope = Number(slope.value); const lambda = Number(lambdaInput.value);
+      const values = samples.map((parameter) => stationaryPathModel({ ...alternativeForceDefaults.stationary, pathSlope, lambda: parameter }).pathEnergy);
+      const fixed = samples.map((parameter) => stationaryPathModel({ ...alternativeForceDefaults.stationary, pathSlope: 0, lambda: parameter }).pathEnergy);
+      const rigid = samples.map((parameter) => stationaryPathModel({ ...alternativeForceDefaults.stationary, pathSlope: alternativeForceDefaults.stationary.electronicResponse, lambda: parameter }).pathEnergy);
+      const all = [...values, ...fixed, ...rigid]; const min = Math.min(...all); const max = Math.max(...all); const span = Math.max(max - min, 1e-9);
+      const yMap = (value) => bottom - (bottom - top) * (value - min) / span;
+      const makePath = (array) => array.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(samples[index]).toFixed(2)} ${yMap(value).toFixed(2)}`).join(' ');
+      if (curve instanceof SVGPathElement) curve.setAttribute('d', makePath(values));
+      const result = stationaryPathModel({ ...alternativeForceDefaults.stationary, pathSlope, lambda });
+      if (marker instanceof SVGCircleElement) { marker.setAttribute('cx', xMap(lambda).toFixed(2)); marker.setAttribute('cy', yMap(result.pathEnergy).toFixed(2)); }
+      if (slopeOut instanceof HTMLOutputElement) slopeOut.value = pathSlope.toFixed(2);
+      if (lambdaOut instanceof HTMLOutputElement) lambdaOut.value = lambda.toFixed(2);
+      if (first instanceof HTMLElement) first.textContent = result.firstDerivativeAtOrigin.toFixed(6);
+      if (force instanceof HTMLElement) force.textContent = result.generalizedForce.toFixed(6);
+      if (second instanceof HTMLElement) second.textContent = result.pathSecondDerivative.toFixed(6);
+      if (error instanceof HTMLElement) error.textContent = result.pathError.toExponential(3);
+    };
+    slope.addEventListener('input', update); lambdaInput.addEventListener('input', update); update();
+  });
+</script>
+
+<style>
+  .variational-path { overflow-x: auto; }
+  .variational-path svg { width: 100%; min-width: 42rem; }
+  .variational-path text { fill: currentColor; font-size: 13px; }
+  .variational-path__fixed { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 6 4; }
+  .variational-path__rigid { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 2.3; }
+  .variational-path__marker { fill: var(--sl-color-accent-high); }
+  .variational-path__rigid-label { fill: var(--sl-color-gray-2); }
+  .variational-path__trial-label { fill: var(--sl-color-accent-high); }
+  .variational-path__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.8rem; }
+  .variational-path__controls label { display: grid; gap: 0.35rem; }
+</style>

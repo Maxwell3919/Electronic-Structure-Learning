@@ -135,6 +135,77 @@ def save_failure_screenshot(driver: webdriver.Chrome, filename: str) -> None:
         pass
 
 
+def horizontal_overflow_px(driver: webdriver.Chrome) -> float:
+    return float(
+        driver.execute_script(
+            "return document.documentElement.scrollWidth - window.innerWidth;"
+        )
+    )
+
+
+def assert_no_horizontal_overflow(driver: webdriver.Chrome, context: str) -> float:
+    overflow = horizontal_overflow_px(driver)
+    if overflow > 2:
+        fail(f"{context} has horizontal page overflow of {overflow}px")
+    return overflow
+
+
+def assert_soc_unit_convention(driver: webdriver.Chrome, context: str) -> tuple[WebElement, WebElement]:
+    audits = driver.find_elements(By.CSS_SELECTOR, "[data-spin-orbit-unit-convention]")
+    if len(audits) != 1:
+        fail(f"{context} should contain exactly one spin-orbit unit audit, received {len(audits)}")
+    audit = audits[0]
+    if not audit.is_displayed():
+        fail(f"{context} hides the spin-orbit unit audit")
+    if audit.get_attribute("data-normalized-operator") != "LdotS-over-hbar2":
+        fail(f"{context} spin-orbit audit lost the normalized operator declaration")
+    if audit.get_attribute("data-xi-unit") != "energy":
+        fail(f"{context} spin-orbit audit lost the xi energy-unit declaration")
+    text = " ".join(audit.text.split())
+    if "10.14" not in text:
+        fail(f"{context} spin-orbit audit is missing Martin Eq. (10.14)")
+    if "potential energy" not in text and "电子势能" not in text:
+        fail(f"{context} spin-orbit audit is missing the potential-energy convention")
+
+    model = driver.find_element(By.CSS_SELECTOR, "[data-spin-orbit]")
+    if model.get_attribute("data-normalized-operator") != "LdotS-over-hbar2":
+        fail(f"{context} spin-orbit model does not use L dot S over hbar squared")
+    if model.get_attribute("data-xi-unit") != "energy":
+        fail(f"{context} spin-orbit model does not declare xi as an energy")
+    return audit, model
+
+
+def assert_soc_math_scrollers(driver: webdriver.Chrome, context: str) -> dict:
+    scrollers = driver.find_elements(By.CSS_SELECTOR, "[data-soc-math-scroll]")
+    if len(scrollers) != 6:
+        fail(f"{context} should contain six SOC equation scrollers, received {len(scrollers)}")
+    if not all(item.is_displayed() for item in scrollers):
+        fail(f"{context} hides one or more SOC equation scrollers")
+
+    locally_scrollable = 0
+    for item in scrollers:
+        if item.get_attribute("role") != "region":
+            fail(f"{context} SOC equation scroller lost its region role")
+        if item.get_attribute("tabindex") != "0":
+            fail(f"{context} SOC equation scroller is not keyboard focusable")
+        if not (item.get_attribute("aria-label") or "").strip():
+            fail(f"{context} SOC equation scroller is missing an accessible label")
+        scroll_width, client_width = driver.execute_script(
+            "return [arguments[0].scrollWidth, arguments[0].clientWidth];",
+            item,
+        )
+        if client_width <= 0:
+            fail(f"{context} SOC equation scroller has no rendered width")
+        if scroll_width > client_width + 1:
+            locally_scrollable += 1
+
+    return {
+        "count": len(scrollers),
+        "keyboard_focusable": True,
+        "locally_scrollable": locally_scrollable,
+    }
+
+
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
@@ -159,6 +230,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail(f"Unexpected Chapter 10 page title: {driver.title}")
         if grid_column_count(driver, ".bilingual-section__grid") != 2:
             fail("Chapter 10 desktop bilingual layout is not two columns")
+        desktop_overflow = assert_no_horizontal_overflow(driver, "Chapter 10 desktop page")
 
         katex_count = len(driver.find_elements(By.CSS_SELECTOR, ".katex"))
         if katex_count < 35:
@@ -170,6 +242,14 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             href = link.get_attribute("href") or ""
             if "/Electronic-Structure-Learning/" not in href:
                 fail(f"Chapter link escaped the Pages base path: {href}")
+
+        soc_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 desktop page")
+        soc_scrollers = assert_soc_math_scrollers(driver, "Chapter 10 desktop page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            soc_audit,
+        )
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-desktop.png"))
 
         visuals = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual")
         contracts = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual__contract")
@@ -226,13 +306,23 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         minus_input.send_keys("-98.0")
         WebDriverWait(driver, 10).until(lambda _: i_output.text != i_before)
 
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-desktop.png"))
         report["desktop"] = {
             "title": driver.title,
             "katex_count": katex_count,
             "contents_links": len(contents_links),
+            "horizontal_overflow_px": desktop_overflow,
             "visuals": len(visuals),
             "visualization_contracts": len(contracts),
+            "soc_math_scrollers": soc_scrollers,
+            "spin_orbit_unit_convention": {
+                "displayed": True,
+                "normalized_operator": "LdotS-over-hbar2",
+                "xi_unit": "energy",
+                "martin_equation": "10.14",
+                "potential_energy_convention": True,
+            },
             "keyboard_controls": [
                 "radial_l", "radial_z", "hydrogenic_state", "hydrogenic_z",
                 "soc_l", "soc_xi", "delta_energy",
@@ -248,8 +338,23 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Chapter 10 narrow-screen bilingual layout is not a single column")
         if not driver.find_element(By.CSS_SELECTOR, ".chapter-contents").is_displayed():
             fail("Chapter 10 contents is hidden on the narrow viewport")
+        narrow_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 narrow page")
+        narrow_scrollers = assert_soc_math_scrollers(driver, "Chapter 10 narrow page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            narrow_audit,
+        )
+        narrow_overflow = assert_no_horizontal_overflow(driver, "Chapter 10 narrow page")
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-narrow.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-narrow.png"))
-        report["narrow"] = {"viewport": [390, 844], "bilingual_columns": 1}
+        report["narrow"] = {
+            "viewport": [390, 844],
+            "bilingual_columns": 1,
+            "horizontal_overflow_px": narrow_overflow,
+            "soc_math_scrollers": narrow_scrollers,
+            "spin_orbit_unit_convention": True,
+        }
     except Exception:
         save_failure_screenshot(driver, "chapter-10-desktop-failure.png")
         raise
@@ -271,10 +376,22 @@ def no_javascript_smoke(report: dict) -> None:
             fail("No-JavaScript fallbacks are incomplete")
         if len(driver.find_elements(By.CSS_SELECTOR, ".katex")) < 35:
             fail("No-JavaScript page lost rendered formulas")
+        no_js_audit, _ = assert_soc_unit_convention(driver, "Chapter 10 no-JavaScript page")
+        no_js_scrollers = assert_soc_math_scrollers(driver, "Chapter 10 no-JavaScript page")
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});",
+            no_js_audit,
+        )
+        no_js_overflow = assert_no_horizontal_overflow(driver, "Chapter 10 no-JavaScript page")
+        driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-soc-unit-audit-no-javascript.png"))
+        driver.execute_script("window.scrollTo(0, 0);")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-10-no-javascript.png"))
         report["no_javascript"] = {
+            "horizontal_overflow_px": no_js_overflow,
             "visualization_contracts": len(contracts),
             "static_svg_count": len(static_svgs),
+            "soc_math_scrollers": no_js_scrollers,
+            "spin_orbit_unit_convention": True,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-10-no-javascript-failure.png")

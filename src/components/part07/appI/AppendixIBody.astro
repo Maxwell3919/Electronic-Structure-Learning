@@ -1,0 +1,55 @@
+---
+import AppendixIContents from './AppendixIContents.astro';
+import AppendixIOrientation from './AppendixIOrientation.mdx';
+import AppendixIVariationalEnergy from './AppendixIVariationalEnergy.mdx';
+import AppendixIPressureSurface from './AppendixIPressureSurface.mdx';
+import AppendixIApwReview from './AppendixIApwReview.mdx';
+---
+
+<div class="appendix-i-root">
+  <AppendixIContents />
+  <AppendixIOrientation />
+  <AppendixIVariationalEnergy />
+  <AppendixIPressureSurface />
+  <AppendixIApwReview />
+</div>
+
+<style is:global>
+  .appendix-i-root,
+  .appendix-i-root > *,
+  .appendix-i-root .bilingual-section,
+  .appendix-i-root .bilingual-section__grid,
+  .appendix-i-root .bilingual-section__zh,
+  .appendix-i-root .bilingual-section__en,
+  .appendix-i-root .bilingual-callout,
+  .appendix-i-root .bilingual-callout__grid {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appendix-i-root .chapter-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .appendix-i-root .chapter-source-map,
+  .appendix-i-root .katex-display,
+  .appendix-i-root pre,
+  .appendix-i-root table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .appendix-i-root p,
+  .appendix-i-root li,
+  .appendix-i-root th,
+  .appendix-i-root td,
+  .appendix-i-root code {
+    overflow-wrap: anywhere;
+  }
+</style>

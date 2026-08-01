@@ -1,0 +1,127 @@
+---
+import { alternativeForceDefaults, pressureEquationOfState } from '../../../data/part07/alternativeForceModel.mjs';
+
+const defaults = alternativeForceDefaults.pressure;
+const initial = pressureEquationOfState(defaults);
+const volumes = Array.from({ length: 121 }, (_, index) => 3 + index * 24 / 120);
+const energies = volumes.map((volume) => pressureEquationOfState({ ...defaults, volume }).energy);
+const pressures = volumes.map((volume) => pressureEquationOfState({ ...defaults, volume }).pressure);
+const width = 720; const height = 350; const left = 62; const right = 680; const top = 42; const bottom = 270;
+const xMap = (value) => left + (right - left) * (value - 3) / 24;
+const eMin = Math.min(...energies); const eMax = Math.max(...energies); const eSpan = Math.max(eMax - eMin, 1e-9);
+const pAbs = Math.max(...pressures.map(Math.abs), 1e-9);
+const energyY = (value) => bottom - (bottom - top) * (value - eMin) / eSpan;
+const pressureY = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.44 / pAbs;
+const energyPath = energies.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(volumes[index]).toFixed(2)} ${energyY(value).toFixed(2)}`).join(' ');
+const pressurePath = pressures.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(volumes[index]).toFixed(2)} ${pressureY(value).toFixed(2)}`).join(' ');
+const fallback = [6, 12, initial.equilibriumVolume, 24].map((volume) => ({ volume, ...pressureEquationOfState({ ...defaults, volume }) }));
+---
+
+<figure class="chapter-visual pressure-eos" data-pressure-eos>
+  <figcaption>
+    <strong>原创交互模型：压力、体积导数与能量重建</strong>
+    <span lang="en">Original interactive model: pressure, volume derivative, and energy reconstruction</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls pressure-eos__controls">
+    <label>
+      <span>volume V | 体积</span>
+      <input type="range" min="3" max="27" step="0.2" value={defaults.volume} data-i-pressure-volume />
+      <output data-i-pressure-volume-output>{defaults.volume.toFixed(1)}</output>
+    </label>
+    <label>
+      <span>attraction B | 吸引系数</span>
+      <input type="range" min="2.5" max="6.5" step="0.1" value={defaults.attractionCoefficient} data-i-pressure-attraction />
+      <output data-i-pressure-attraction-output>{defaults.attractionCoefficient.toFixed(1)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="pressure-eos-title pressure-eos-desc">
+    <title id="pressure-eos-title">Energy and pressure versus volume for a spherical power-law equation of state</title>
+    <desc id="pressure-eos-desc">The energy minimum coincides with zero pressure, and energy differences equal minus the pressure integral.</desc>
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={(top + bottom) / 2} x2={right} y2={(top + bottom) / 2} class="plot-guide" />
+    <path d={energyPath} class="plot-curve" data-i-pressure-energy-path />
+    <path d={pressurePath} class="pressure-eos__pressure" data-i-pressure-pressure-path />
+    <circle cx={xMap(defaults.volume)} cy={energyY(initial.energy)} r="5" class="pressure-eos__energy-marker" data-i-pressure-energy-marker />
+    <circle cx={xMap(defaults.volume)} cy={pressureY(initial.pressure)} r="5" class="pressure-eos__pressure-marker" data-i-pressure-pressure-marker />
+    <text x={right} y="307" text-anchor="end">V</text>
+    <text x="12" y="54">E / P</text>
+    <text x={right - 140} y="58" class="pressure-eos__energy-label">E(V)</text>
+    <text x={right - 140} y="80" class="pressure-eos__pressure-label">P(V)</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>equilibrium volume V₀</span><strong data-i-pressure-equilibrium>{initial.equilibriumVolume.toFixed(5)}</strong>
+    <span>pressure P</span><strong data-i-pressure-value>{initial.pressure.toExponential(4)}</strong>
+    <span>bulk modulus Bₜ</span><strong data-i-pressure-bulk>{initial.bulkModulus.toExponential(4)}</strong>
+    <span>ΔE + ∫P dV error</span><strong data-i-pressure-integral>{(initial.energyDifference - initial.pressureIntegralDifference).toExponential(3)}</strong>
+  </div>
+
+  <div class="pressure-eos__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>V</th><th>E</th><th>P</th><th>Bₜ</th></tr></thead>
+      <tbody>{fallback.map((row) => <tr><td>{row.volume.toFixed(4)}</td><td>{row.energy.toFixed(6)}</td><td>{row.pressure.toExponential(3)}</td><td>{row.bulkModulus.toExponential(3)}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>E(V)=A V^(−2/3)−B V^(−1/3)</code>，<code>P=−dE/dV</code>，<code>Bₜ=−V dP/dV</code>。</p>
+    <p lang="en"><strong>Model:</strong> <code>E(V)=A V^(−2/3)−B V^(−1/3)</code>, with <code>P=−dE/dV</code> and <code>Bₜ=−V dP/dV</code>.</p>
+    <p><strong>验收：</strong><code>V₀=(2A/B)³</code> 同时满足能量驻点和零压力；任意两体积间 <code>ΔE=−∫P dV</code>。</p>
+    <p lang="en"><strong>Acceptance:</strong> <code>V₀=(2A/B)³</code> is both the energy stationary point and zero-pressure volume; between any two volumes <code>ΔE=−∫P dV</code>.</p>
+    <p><strong>边界：</strong>这是 spherical/ASA-inspired teaching EOS，不代表任意晶体的真实 pressure、anisotropic stress、phase transition 或 converged material equation of state。</p>
+    <p lang="en"><strong>Boundary:</strong> this is a spherical or ASA-inspired teaching EOS, not a real pressure, anisotropic stress, phase transition, or converged material equation of state.</p>
+  </div>
+</figure>
+
+<script>
+  import { alternativeForceDefaults, pressureEquationOfState } from '../../../data/part07/alternativeForceModel.mjs';
+  document.querySelectorAll('[data-pressure-eos]').forEach((root) => {
+    const volumeInput = root.querySelector('[data-i-pressure-volume]');
+    const attractionInput = root.querySelector('[data-i-pressure-attraction]');
+    if (!(volumeInput instanceof HTMLInputElement) || !(attractionInput instanceof HTMLInputElement)) return;
+    const volumeOut = root.querySelector('[data-i-pressure-volume-output]'); const attractionOut = root.querySelector('[data-i-pressure-attraction-output]');
+    const energyPath = root.querySelector('[data-i-pressure-energy-path]'); const pressurePath = root.querySelector('[data-i-pressure-pressure-path]');
+    const energyMarker = root.querySelector('[data-i-pressure-energy-marker]'); const pressureMarker = root.querySelector('[data-i-pressure-pressure-marker]');
+    const outputs = { eq: root.querySelector('[data-i-pressure-equilibrium]'), p: root.querySelector('[data-i-pressure-value]'), bulk: root.querySelector('[data-i-pressure-bulk]'), integral: root.querySelector('[data-i-pressure-integral]') };
+    const left = 62; const right = 680; const top = 42; const bottom = 270;
+    const volumes = Array.from({ length: 121 }, (_, index) => 3 + index * 24 / 120);
+    const xMap = (value) => left + (right - left) * (value - 3) / 24;
+    const update = () => {
+      const volume = Number(volumeInput.value); const attractionCoefficient = Number(attractionInput.value);
+      const rows = volumes.map((value) => pressureEquationOfState({ ...alternativeForceDefaults.pressure, attractionCoefficient, volume: value }));
+      const energies = rows.map((row) => row.energy); const pressures = rows.map((row) => row.pressure);
+      const eMin = Math.min(...energies); const eMax = Math.max(...energies); const eSpan = Math.max(eMax - eMin, 1e-9); const pAbs = Math.max(...pressures.map(Math.abs), 1e-9);
+      const energyY = (value) => bottom - (bottom - top) * (value - eMin) / eSpan;
+      const pressureY = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.44 / pAbs;
+      const makePath = (values, mapper) => values.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(volumes[index]).toFixed(2)} ${mapper(value).toFixed(2)}`).join(' ');
+      if (energyPath instanceof SVGPathElement) energyPath.setAttribute('d', makePath(energies, energyY));
+      if (pressurePath instanceof SVGPathElement) pressurePath.setAttribute('d', makePath(pressures, pressureY));
+      const result = pressureEquationOfState({ ...alternativeForceDefaults.pressure, attractionCoefficient, volume });
+      if (energyMarker instanceof SVGCircleElement) { energyMarker.setAttribute('cx', xMap(volume).toFixed(2)); energyMarker.setAttribute('cy', energyY(result.energy).toFixed(2)); }
+      if (pressureMarker instanceof SVGCircleElement) { pressureMarker.setAttribute('cx', xMap(volume).toFixed(2)); pressureMarker.setAttribute('cy', pressureY(result.pressure).toFixed(2)); }
+      if (volumeOut instanceof HTMLOutputElement) volumeOut.value = volume.toFixed(1);
+      if (attractionOut instanceof HTMLOutputElement) attractionOut.value = attractionCoefficient.toFixed(1);
+      if (outputs.eq instanceof HTMLElement) outputs.eq.textContent = result.equilibriumVolume.toFixed(5);
+      if (outputs.p instanceof HTMLElement) outputs.p.textContent = result.pressure.toExponential(4);
+      if (outputs.bulk instanceof HTMLElement) outputs.bulk.textContent = result.bulkModulus.toExponential(4);
+      if (outputs.integral instanceof HTMLElement) outputs.integral.textContent = (result.energyDifference - result.pressureIntegralDifference).toExponential(3);
+    };
+    volumeInput.addEventListener('input', update); attractionInput.addEventListener('input', update); update();
+  });
+</script>
+
+<style>
+  .pressure-eos { overflow-x: auto; }
+  .pressure-eos svg { width: 100%; min-width: 42rem; }
+  .pressure-eos text { fill: currentColor; font-size: 13px; }
+  .pressure-eos__pressure { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 2.2; stroke-dasharray: 7 4; }
+  .pressure-eos__energy-marker { fill: var(--sl-color-accent-high); }
+  .pressure-eos__pressure-marker { fill: var(--sl-color-gray-2); }
+  .pressure-eos__energy-label { fill: var(--sl-color-accent-high); }
+  .pressure-eos__pressure-label { fill: var(--sl-color-gray-2); }
+  .pressure-eos__controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.8rem; }
+  .pressure-eos__controls label { display: grid; gap: 0.35rem; }
+</style>
