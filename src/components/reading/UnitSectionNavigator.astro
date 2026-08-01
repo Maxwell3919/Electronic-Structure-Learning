@@ -1,0 +1,24 @@
+---
+const { unit, toc = [], compact = false } = Astro.props;
+import { withBasePath } from '../../data/site/schema.mjs';
+const base = import.meta.env.BASE_URL;
+const flatten = (items) => items.flatMap((item) => [item, ...flatten(item.children ?? [])]);
+const items = flatten(toc);
+const isOpen = (item) => /(开放|问题|复盘|open question|review)/i.test(item.text);
+const isSupplement = (item) => /(推导|证明|数值|边界|audit|derivation|numerical|evidence)/i.test(item.text);
+const authored = items.filter((item) => !item.slug.startsWith('section-') && !isOpen(item) && !isSupplement(item)).slice(0, 12);
+const supplements = items.filter(isSupplement).slice(0, 8);
+const open = items.filter(isOpen).slice(0, 6);
+const anchor = (id) => `catalog-section-${String(id).toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+---
+
+<nav class:list={['esl-unit-navigator', { 'esl-unit-navigator--compact': compact }]} aria-label="本页语义目录 | Semantic page contents">
+  <section data-toc-layer="textbook-baseline">
+    <h2>教材原分节</h2>
+    {unit.sections.length > 0 ? <ol>{unit.sections.map((section) => <li><a href={`#${anchor(section.id)}`}>{section.id} · {section.title}</a></li>)}</ol> : <p>无下级分节</p>}
+  </section>
+  {authored.length > 0 && <section data-toc-layer="original-exposition"><h2>原创解释小节</h2><ol>{authored.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol></section>}
+  {supplements.length > 0 && <section data-toc-layer="supplemental-derivation"><h2>补充推导与边界</h2><ol>{supplements.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol></section>}
+  <section data-toc-layer="later-literature"><h2>后续文献</h2><p><a href={withBasePath('/literature/topics/', base)}>相关文献入口</a></p></section>
+  {open.length > 0 && <section data-toc-layer="open-discussion"><h2>开放问题</h2><ol>{open.map((item) => <li><a href={`#${item.slug}`}>{item.text}</a></li>)}</ol></section>}
+</nav>

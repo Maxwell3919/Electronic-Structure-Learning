@@ -7,7 +7,9 @@ Machine-readable source maps and site registries
         │
         ├── Martin: 7 Parts / 46 units
         ├── Sholl–Steckel: 10 practice units
-        └── navigation, paths, status, labs, cases, reference
+        ├── navigation, paths, status, labs, cases, reference
+        ├── 46-unit source-semantic audit and terminology registry
+        └── empty-first literature, claim, queue, and discussion contracts
                     │
                     ▼
           MDX route skeletons
@@ -43,7 +45,17 @@ src/data/
     ├── contentStatus.mjs
     ├── labs.mjs
     ├── cases.mjs
-    └── referenceSections.mjs
+    ├── referenceSections.mjs
+    ├── sourceSemanticStatus.mjs
+    └── terminology.mjs
+
+src/data/literature/
+├── registry.mjs
+├── topics.mjs
+├── readingQueue.mjs
+├── claimLedger.mjs
+├── discussions.mjs
+└── schema.mjs
 
 src/content/docs/
 ├── index.mdx
@@ -56,6 +68,7 @@ src/content/docs/
 ├── cases/
 ├── interactive-labs/
 ├── reference/
+├── literature/
 ├── part-01-overview-and-background/
 ├── part-02-density-functional-theory/
 ├── part-03-important-preliminaries-on-atoms/
@@ -90,6 +103,10 @@ The Martin and Sholl–Steckel modules remain the source-structure authority. `s
 - `VisualizationPlaceholder.astro`: pre-implementation visualization contract;
 - `SCFIterationVisualizer.astro`: existing affine fixed-point teaching experiment.
 - `src/components/site/`: neutral learning-path, catalog, status and navigation interfaces.
+- `src/components/reading/`: route-aware unit frame, source header, display toolbar, semantic contents and literature bridge;
+- `src/components/overrides/`: Starlight integration shared by all routes;
+- `src/components/theory/`: static-first complete Theory Atlas;
+- `src/components/literature/`: bibliography, claim and discussion presentation contracts.
 
 ## 5. Validation
 
@@ -98,6 +115,10 @@ The Martin and Sholl–Steckel modules remain the source-structure authority. `s
 - `scripts/test-registry.mjs`: stable validator and browser-smoke registration;
 - `scripts/validate-site-architecture.mjs`: routes, statuses, references and publication boundaries;
 - `scripts/run-registered-validators.mjs`: fail-closed deterministic registry runner;
+- `scripts/validate-unit-reading-frame.mjs`: all-unit and built-HTML reading-frame audit;
+- `scripts/validate-source-semantics.mjs`: catalog/source-layer and bounded heading audit;
+- `scripts/validate-terminology.mjs`: terminology registry contract;
+- `scripts/validate-literature-layer.mjs`: empty-first literature schema and route checks;
 - `npm run build`: MDX imports, routes, formulas and static-site output.
 
 These gates do not validate future scientific explanations or real DFT calculations.

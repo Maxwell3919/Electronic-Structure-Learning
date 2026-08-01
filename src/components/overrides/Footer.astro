@@ -1,0 +1,8 @@
+---
+import DefaultFooter from '@astrojs/starlight/components/Footer.astro';
+import UnitPageFooter from '../reading/UnitPageFooter.astro';
+import { resolveUnit } from '../../lib/unitCatalog.mjs';
+const unit = resolveUnit(`/${Astro.locals.starlightRoute.id}/`);
+---
+{unit && <UnitPageFooter unit={unit} />}
+<DefaultFooter />

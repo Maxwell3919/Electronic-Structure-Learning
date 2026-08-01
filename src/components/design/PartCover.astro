@@ -19,6 +19,7 @@ const { number, titleZh, titleEn, objectChain, status, previous, next, motif = '
     <p>{objectChain}</p>
     <p class="esl-card__meta">{status}</p>
     {(previous || next) && <p class="esl-card__meta">{previous && `← ${previous}`} {next && ` · ${next} →`}</p>}
+    <h2 class="esl-part-cover__section-label">分册阅读图 | <span lang="en">Part reading map</span></h2>
   </div>
   <svg class="esl-part-cover__motif" viewBox="0 0 360 220" role="img" aria-label={`Part ${number} 原创 ${motif} 科学意象，不是计算数据`}>
     <title>Part {number} scientific motif</title>

@@ -302,7 +302,7 @@ A correct implementation must satisfy three checks: after real- and reciprocal-s
   </div>
 </BilingualSection>
 
-<BilingualSection titleZh="DFT stress 是所选 total-energy representation 的完整导数" titleEn="DFT stress is the complete derivative of the chosen total-energy representation" eyebrow="【Martin G.3 + implementation boundary | Martin G.3 + implementation boundary】">
+<BilingualSection titleZh="DFT stress 是所选 total-energy representation 的全导数" titleEn="DFT stress is the total derivative of the chosen total-energy representation" eyebrow="【Martin G.3 + implementation boundary | Martin G.3 + implementation boundary】">
   <div class="bilingual-section__zh">
 
 Kohn–Sham potential 不是由可辨认的“另一粒子位置”直接生成，因此不能把全部 DFT stress 都压缩成 classical pair virial。实际方法是逐项 differentiate total-energy functional：kinetic、Hartree、exchange–correlation、local ionic、nonlocal projector、ion–ion/Ewald、augmentation、entropy/occupation，以及 basis/grid dependence。

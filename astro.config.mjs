@@ -13,6 +13,7 @@ const createMarkdownProcessor = () =>
 
 const part = (label, directory) => ({
   label,
+  collapsed: true,
   items: [{ autogenerate: { directory } }],
 });
 
@@ -30,12 +31,20 @@ export default defineConfig({
         baseUrl:
           'https://github.com/Maxwell3919/Electronic-Structure-Learning/edit/main/',
       },
+      components: {
+        PageFrame: './src/components/overrides/PageFrame.astro',
+        PageTitle: './src/components/overrides/PageTitle.astro',
+        TableOfContents: './src/components/overrides/TableOfContents.astro',
+        TwoColumnContent: './src/components/overrides/TwoColumnContent.astro',
+        Footer: './src/components/overrides/Footer.astro',
+      },
       customCss: [
         './src/styles/tokens.css',
         './src/styles/themes.css',
         './src/styles/reset-overrides.css',
         './src/styles/typography.css',
         './src/styles/layout.css',
+        './src/styles/reading.css',
         './src/styles/components.css',
         './src/styles/learning.css',
         './src/styles/figures.css',
@@ -59,6 +68,7 @@ export default defineConfig({
           label: '理论课程',
           items: [
             'theory',
+            { label: '完整 Chapter 图谱', link: '/theory/atlas/' },
             'book-map',
             part('Part I · Overview and Background', 'part-01-overview-and-background'),
             part('Part II · Density Functional Theory', 'part-02-density-functional-theory'),
@@ -76,6 +86,17 @@ export default defineConfig({
           items: ['interactive-labs', 'labs/scf-fixed-point-and-mixing'],
         },
         part('实践交叉参考 · Sholl–Steckel', 'practice-sholl-steckel'),
+        {
+          label: '文献层',
+          collapsed: true,
+          items: [
+            'literature',
+            'literature/topics',
+            'literature/reading-queue',
+            'literature/claims',
+            'literature/discussions',
+          ],
+        },
         { label: '参考手册', items: ['reference'] },
       ],
     }),

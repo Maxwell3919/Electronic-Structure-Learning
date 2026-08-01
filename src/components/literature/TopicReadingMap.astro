@@ -1,0 +1,6 @@
+---
+const { topics = [] } = Astro.props;
+---
+<section class="esl-topic-reading-map" aria-label="文献主题图 | Literature topic map">
+  {topics.length > 0 ? <ul>{topics.map((topic) => <li>{topic.title}</li>)}</ul> : <p>主题图等待已核验的 bibliographic records。</p>}
+</section>

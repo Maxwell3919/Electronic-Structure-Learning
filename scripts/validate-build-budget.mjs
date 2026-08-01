@@ -9,13 +9,17 @@ const limits = {
   homeJsBytes: 12_000,
   theoryJsBytes: 25_000,
   largestAssetBytes: 1_600_000,
-  assetCount: 450,
+  assetCount: 470,
 };
 const baseline = {
   observedAt: '2026-08-01',
-  totalBytes: 33_527_461,
-  largestAssetBytes: 1_389_295,
-  note: 'Pre-redesign main build; JS route sums were measured after shared shell integration.',
+  sha: '6b1dee8e0517e03c99542fc01697ddf3fd9785e6',
+  totalBytes: 35_073_983,
+  homeJsBytes: 6_168,
+  theoryJsBytes: 13_643,
+  largestAssetBytes: 1_433_139,
+  assetCount: 422,
+  note: 'Fresh Editorial Quantum Atlas main build measured before the reading-semantics changes.',
 };
 
 if (!fs.existsSync(dist)) {

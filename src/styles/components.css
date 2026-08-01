@@ -195,6 +195,15 @@
   font-weight: 600;
 }
 
+.esl-part-cover__section-label {
+  margin: var(--esl-space-4) 0 0;
+  color: var(--esl-ink-muted);
+  font-family: var(--esl-font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .esl-part-cover svg { width: 100%; height: auto; color: var(--part-motif); }
 .esl-part-cover svg :where(path, line, circle) { vector-effect: non-scaling-stroke; }
 
