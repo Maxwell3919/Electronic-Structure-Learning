@@ -1,0 +1,81 @@
+---
+import catalog from '../../../data/martin/index.mjs';
+
+const appendix = catalog.parts[6].units[10];
+const coverage = {
+  'K.1': '球 Bessel/Neumann/Hankel 函数、低阶显式式、递推/渐近与束缚态外解',
+  'K.2': '复球谐、Condon–Shortley phase、associated Legendre、Rodrigues 与正交归一',
+  'K.3': '复球谐到实球谐的幺正变换、正负 m 约定与 Chapter 14 接口',
+  'K.4': 'Clebsch–Gordan、Wigner 3j、Gaunt 系数、selection rules 与乘积展开',
+  'K.5': 'Chebyshev 递推、区间映射、正交权、系数与 operator expansion 边界',
+};
+---
+
+<nav class="appendix-contents" aria-labelledby="appendix-k-contents-title">
+  <h2 id="appendix-k-contents-title">附录目录 | Appendix contents</h2>
+  <ol>
+    <li><a href="#reference-orientation">使用定位 | Reference orientation</a></li>
+    <li><a href="#source-map">来源地图 | Source map</a></li>
+    <li><a href="#objects-and-conventions">对象、归一化与相位约定 | Objects and conventions</a></li>
+    <li><a href="#section-k-1">K.1 Bessel、Neumann 与 Hankel 函数</a></li>
+    <li><a href="#section-k-2">K.2 球谐与 Legendre 多项式</a></li>
+    <li><a href="#section-k-3">K.3 实球谐</a></li>
+    <li><a href="#section-k-4">K.4 Clebsch–Gordan 与 Gaunt 系数</a></li>
+    <li><a href="#section-k-5">K.5 Chebyshev 多项式</a></li>
+    <li><a href="#review">误判、练习、交叉引用与来源 | Review and sources</a></li>
+  </ol>
+</nav>
+
+<section id="source-map" class="chapter-source-map" aria-labelledby="appendix-k-source-title">
+  <h2 id="appendix-k-source-title">来源地图 | Source map</h2>
+  <p>
+    下表记录 Martin Appendix K 的原节标题、印刷页和公式范围。网站正文、推导、数值核、图形和练习均为原创；本附录不含来源图、进一步阅读段落或来源练习。
+  </p>
+  <p lang="en">
+    The table records the source section titles, printed-page locators, and equation range of Martin Appendix K. Website exposition, derivations, numerical kernels, diagrams, and exercises are original. This Appendix contains no source figure, separate further-reading section, or source exercise section.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>原书位置 | Source locator</th>
+        <th>原节标题 | Source section</th>
+        <th>网站覆盖 | Website coverage</th>
+        <th>状态 | State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {appendix.sections.map((section) => (
+        <tr>
+          <td>{section.id}, printed p. {section.page}</td>
+          <td>{section.title}</td>
+          <td>{coverage[section.id] ?? 'source-mapped reference coverage'}</td>
+          <td>source mapped;正文待完成 | source mapped; content pending</td>
+        </tr>
+      ))}
+      <tr>
+        <td>Appendix K end, printed p. 650</td>
+        <td>Eqs. K.1–K.20; Appendix L begins on printed p. 651</td>
+        <td>原创 special-function、angular-coupling 与 polynomial-expansion 练习 | Original replacement exercises</td>
+        <td>source boundary recorded</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .appendix-contents {
+    margin-block: 1.5rem 2rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.65rem;
+    padding: 1rem 1.1rem;
+    background: var(--sl-color-gray-7);
+  }
+
+  .appendix-contents h2 { margin-top: 0; }
+  .appendix-contents ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
+  .appendix-contents li { break-inside: avoid; margin-block: 0.35rem; }
+
+  @media (max-width: 50rem) {
+    .appendix-contents ol { columns: 1; }
+  }
+</style>
