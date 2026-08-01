@@ -1,0 +1,26 @@
+:root[data-theme='dark'] {
+  --esl-page: #111318;
+  --esl-surface: #181c23;
+  --esl-surface-muted: #20252e;
+  --esl-ink: #edf0f5;
+  --esl-ink-muted: #aab2bf;
+  --esl-border: #343b48;
+  --esl-accent: #a5adff;
+  --esl-accent-soft: #252b4b;
+  --esl-science: #68c4b7;
+  --esl-science-soft: #193b38;
+  --esl-warning: #e2b45e;
+  --esl-warning-soft: #44351d;
+  --esl-danger: #ed8a8a;
+  --esl-danger-soft: #492527;
+  --esl-focus: #c0c6ff;
+  --esl-shadow-float: 0 0.75rem 2rem rgb(0 0 0 / 24%);
+}
+
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

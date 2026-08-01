@@ -1,0 +1,77 @@
+.esl-learning-shell {
+  display: grid;
+  gap: var(--esl-space-6);
+}
+
+.esl-path-timeline__context {
+  padding-block: var(--esl-space-5);
+  border-block: var(--esl-border-width) solid var(--esl-border);
+}
+
+.esl-path-timeline__list {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  counter-reset: milestone;
+  list-style: none;
+}
+
+.esl-path-timeline__list > li,
+.esl-learning-milestone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  gap: var(--esl-space-4);
+  align-items: start;
+  padding: var(--esl-space-5) 0;
+  border-top: var(--esl-border-width) solid var(--esl-border);
+  counter-increment: milestone;
+}
+
+.esl-path-timeline__list > li::before,
+.esl-learning-milestone::before {
+  content: counter(milestone, decimal-leading-zero);
+  color: var(--esl-accent);
+  font-family: var(--esl-font-code);
+  font-size: 0.78rem;
+}
+
+.esl-progress-overview {
+  padding: var(--esl-space-5);
+  border: var(--esl-border-width) solid var(--esl-border);
+  border-radius: var(--esl-radius-md);
+  background: var(--esl-surface);
+}
+
+.esl-progress-meter {
+  width: 100%;
+  height: 0.45rem;
+  overflow: hidden;
+  border-radius: var(--esl-radius-sm);
+  background: var(--esl-surface-muted);
+}
+
+.esl-progress-meter > span {
+  display: block;
+  width: var(--esl-progress, 0%);
+  height: 100%;
+  background: var(--esl-science);
+}
+
+.esl-task,
+.esl-checkpoint,
+.esl-hint {
+  margin-block: var(--esl-space-5);
+  padding: var(--esl-space-5);
+  border-top: var(--esl-rule-width) solid var(--esl-accent);
+  background: var(--esl-surface);
+}
+
+.esl-hint { border-color: var(--esl-warning); }
+.esl-checkpoint { border-color: var(--esl-science); }
+
+@media (max-width: 42rem) {
+  .esl-path-timeline__list > li,
+  .esl-learning-milestone { grid-template-columns: 2rem minmax(0, 1fr); }
+  .esl-path-timeline__list > li > small { grid-column: 2; }
+}
