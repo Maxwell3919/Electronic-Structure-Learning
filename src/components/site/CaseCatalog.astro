@@ -1,0 +1,25 @@
+---
+interface CaseItem {
+  id: string;
+  title: string;
+  material: string;
+  learningGoals: string[];
+  availableAssets: string[];
+  status: string;
+}
+
+interface Props { cases: CaseItem[]; }
+const { cases } = Astro.props;
+---
+
+<section class="esl-catalog" aria-label="案例项目目录">
+  {cases.map((item) => (
+    <article class="esl-catalog__item" id={item.id}>
+      <h2>{item.title}</h2>
+      <p>{item.material} · {item.status}</p>
+      <ul>{item.learningGoals.map((goal) => <li>{goal}</li>)}</ul>
+      <p class="esl-card__meta">可发布资产：{item.availableAssets.length}</p>
+    </article>
+  ))}
+</section>
+

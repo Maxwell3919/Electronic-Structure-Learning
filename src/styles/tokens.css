@@ -1,0 +1,22 @@
+:root {
+  --esl-surface: var(--sl-color-bg);
+  --esl-surface-muted: var(--sl-color-gray-7);
+  --esl-text: var(--sl-color-text);
+  --esl-text-muted: var(--sl-color-gray-2);
+  --esl-border: var(--sl-color-gray-5);
+  --esl-accent: var(--sl-color-accent);
+  --esl-success: var(--sl-color-accent-high);
+  --esl-warning: var(--sl-color-text-accent);
+  --esl-danger: var(--sl-color-text-accent);
+  --esl-reading-width: 48rem;
+  --esl-visual-width: 72rem;
+  --esl-radius-small: 0.25rem;
+  --esl-radius-medium: 0.6rem;
+  --esl-space-1: 0.25rem;
+  --esl-space-2: 0.5rem;
+  --esl-space-3: 0.75rem;
+  --esl-space-4: 1rem;
+  --esl-space-5: 1.5rem;
+  --esl-space-6: 2rem;
+}
+

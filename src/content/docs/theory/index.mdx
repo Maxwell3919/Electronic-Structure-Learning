@@ -1,0 +1,19 @@
+---
+title: "理论课程"
+description: "Martin Part I–VII 理论主线与课程地图。"
+---
+
+import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
+import SectionNavigationGrid from '../../../components/site/SectionNavigationGrid.astro';
+import martin from '../../../data/martin/index.mjs';
+
+export const theoryLinks = [
+  { id: 'book-map', titleZh: '完整课程地图', titleEn: 'Complete course map', descriptionZh: '查看 7 Parts、46 单元及页码结构。', href: '/book-map/', status: 'available' },
+  ...martin.parts.map((part) => ({ id: `part-${part.number}`, titleZh: part.titleZh, titleEn: part.label, descriptionZh: `${part.units.length} 个目录单元`, href: `/${part.slug}/`, status: 'available' })),
+];
+
+<SiteSectionHero titleZh="理论课程" titleEn="Theory course" description="Martin Part I–VII 的现有 URL、内部顺序和章节正文均保持不变；内容状态按四个维度独立记录。" />
+
+<SectionNavigationGrid items={theoryLinks} heading="Martin 理论课程" />
+
+Appendices 同时可从 [参考手册](../reference/) 进入；本页不改写任何章节或附录正文。

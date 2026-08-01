@@ -29,44 +29,10 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Validate Python smoke-test syntax
-        run: >-
-          python3 -m py_compile
-          scripts/smoke-pages.py
-          scripts/smoke-chapter02-pages.py
-          scripts/smoke-chapter03-pages.py
-          scripts/smoke-chapter04-pages.py
-          scripts/smoke-chapter05-pages.py
-          scripts/smoke-part01-index.py
-          scripts/smoke-part02-index.py
-          scripts/smoke-part02-ch06.py
-          scripts/smoke-part02-ch07.py
-          scripts/smoke-part02-ch08.py
-          scripts/smoke-part02-ch09.py
-          scripts/smoke-part03-ch10.py
-          scripts/smoke-part03-ch11.py
-          scripts/smoke-part04-ch12.py
-          scripts/smoke-part04-ch13.py
-          scripts/smoke-part04-ch14.py
-          scripts/smoke-part04-ch15.py
-          scripts/smoke-part04-ch16.py
-          scripts/smoke-pages-ch19.py
-          scripts/smoke-part05-ch20.py
-          scripts/smoke-part05-ch21.py
-          scripts/smoke-part05-ch22.py
-          scripts/smoke-part06-ch25.py
-          scripts/smoke-part06-ch26.py
-          scripts/smoke-part06-ch27.py
-          scripts/smoke-part06-ch28.py
-          scripts/smoke-part07-app-a.py
-          scripts/smoke-part07-app-b.py
-          scripts/smoke-part07-app-c.py
-          scripts/smoke-part07-app-d.py
-          scripts/smoke-part07-app-e.py
-          scripts/smoke-part07-app-f.py
-          scripts/smoke-part07-app-g.py
-          scripts/smoke-part07-app-h.py
-          scripts/smoke-part07-app-i.py
-          scripts/smoke-part07-app-j.py
+        shell: bash
+        run: |
+          mapfile -t smoke_tests < <(node scripts/list-smoke-tests.mjs --paths)
+          python3 -m py_compile "${smoke_tests[@]}"
 
       - name: Validate models and build static site
         run: npm run check

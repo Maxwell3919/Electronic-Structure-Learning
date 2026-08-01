@@ -1,0 +1,46 @@
+---
+import ContentStatusBadge from './ContentStatusBadge.astro';
+
+interface Summary {
+  total: number;
+  structural: Record<string, number>;
+  technical: Record<string, number>;
+  scientificReview: Record<string, number>;
+  learnerTest: Record<string, number>;
+}
+
+interface Props {
+  summary: Summary;
+}
+
+const { summary } = Astro.props;
+---
+
+<section class="esl-progress-summary" aria-labelledby="content-progress-heading">
+  <h2 id="content-progress-heading">当前内容状态</h2>
+  <p>注册单元共 {summary.total} 个。四个维度分别记录，不合并为含义模糊的 Complete。</p>
+  <div class="esl-progress-summary__grid">
+    <div>
+      <ContentStatusBadge dimension="structural" value="content-complete" />
+      <strong>{summary.structural['content-complete']}</strong>
+    </div>
+    <div>
+      <ContentStatusBadge dimension="structural" value="outline" />
+      <strong>{summary.structural.outline}</strong>
+    </div>
+    <div>
+      <ContentStatusBadge dimension="technical" value="validated" />
+      <strong>{summary.technical.validated}</strong>
+    </div>
+    <div>
+      <ContentStatusBadge dimension="scientific-review" value="reviewed" />
+      <strong>{summary.scientificReview.reviewed}</strong>
+    </div>
+    <div>
+      <ContentStatusBadge dimension="learner-test" value="tested" />
+      <strong>{summary.learnerTest.tested}</strong>
+    </div>
+  </div>
+  <p class="esl-boundary-note">技术验证只覆盖已登记的确定性检查；它不自动构成科学审查或真实学习者测试。</p>
+</section>
+

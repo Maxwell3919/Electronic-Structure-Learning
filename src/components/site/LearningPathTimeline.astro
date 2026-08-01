@@ -1,0 +1,47 @@
+---
+import { withBasePath } from '../../data/site/schema.mjs';
+
+interface Milestone {
+  id: string;
+  titleZh: string;
+  titleEn: string;
+  href: string;
+  status: string;
+}
+
+interface LearningPath {
+  audience: string[];
+  prerequisites: string[];
+  milestones: Milestone[];
+}
+
+interface Props {
+  path: LearningPath;
+}
+
+const { path } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="esl-path-timeline">
+  <div class="esl-path-timeline__context">
+    <div>
+      <h2>适合读者</h2>
+      <ul>{path.audience.map((item) => <li>{item}</li>)}</ul>
+    </div>
+    <div>
+      <h2>前置条件</h2>
+      <ul>{path.prerequisites.map((item) => <li>{item}</li>)}</ul>
+    </div>
+  </div>
+  <ol class="esl-path-timeline__list">
+    {path.milestones.map((item) => (
+      <li id={item.id}>
+        <a href={withBasePath(item.href, base)}>{item.titleZh}</a>
+        <span lang="en">{item.titleEn}</span>
+        <small>{item.status}</small>
+      </li>
+    ))}
+  </ol>
+</section>
+

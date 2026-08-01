@@ -1,13 +1,27 @@
 ---
 title: "Electronic Structure Learning"
-description: "Martin 全书结构、DFT 实践交叉参考与可视化学习入口。"
+description: "从学习路线进入电子结构理论、计算实验、案例、交互与参考手册。"
 ---
 
-网站已经建立完整的目录级框架：
+import SiteSectionHero from '../../components/site/SiteSectionHero.astro';
+import LearningPathGrid from '../../components/site/LearningPathGrid.astro';
+import SectionNavigationGrid from '../../components/site/SectionNavigationGrid.astro';
+import ContentProgressSummary from '../../components/site/ContentProgressSummary.astro';
+import DesignDecisionNotice from '../../components/site/DesignDecisionNotice.astro';
+import learningPaths from '../../data/site/learningPaths.mjs';
+import navigation from '../../data/site/navigation.mjs';
+import { contentStatusSummary } from '../../data/site/contentStatus.mjs';
 
-- Martin 第 2 版：7 个 Part、28 章、18 个附录；
-- Sholl–Steckel：10 章实践交叉参考；
-- 所有页面当前均为结构骨架，正文待后续逐单元编写；
-- 已实现的 SCF 固定点交互实验继续作为独立教学模型保留。
+<SiteSectionHero
+  titleZh="电子结构学习系统"
+  titleEn="Electronic Structure Learning"
+  description="以 Martin 理论主线为基础，通过学习路线连接现有理论内容、未来计算实验、案例、交互模型与参考入口。"
+/>
 
-从 [开始阅读](./start-here/) 或 [完整课程地图](./book-map/) 进入。
+<LearningPathGrid paths={learningPaths} />
+
+<SectionNavigationGrid items={navigation.filter((item) => !['start', 'learning-paths'].includes(item.id))} heading="网站主要入口" />
+
+<ContentProgressSummary summary={contentStatusSummary} />
+
+<DesignDecisionNotice compact />

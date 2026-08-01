@@ -1,0 +1,21 @@
+---
+interface Props {
+  dimension: 'structural' | 'technical' | 'scientific-review' | 'learner-test';
+  value: string;
+}
+
+const labels = {
+  structural: '结构状态',
+  technical: '技术验证',
+  'scientific-review': '科学审查',
+  'learner-test': '学习者测试',
+};
+
+const { dimension, value } = Astro.props;
+---
+
+<span class="esl-status-badge" data-dimension={dimension} data-value={value}>
+  <span class="esl-status-badge__label">{labels[dimension]}</span>
+  <span>{value}</span>
+</span>
+

@@ -1,0 +1,35 @@
+---
+import { withBasePath } from '../../data/site/schema.mjs';
+
+interface NavigationItem {
+  id: string;
+  titleZh: string;
+  titleEn: string;
+  descriptionZh?: string;
+  descriptionEn?: string;
+  href: string;
+  status?: string;
+}
+
+interface Props {
+  items: NavigationItem[];
+  heading?: string;
+}
+
+const { items, heading = '学习入口' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<nav class="esl-navigation" aria-label={heading}>
+  <div class="esl-card-grid">
+    {items.map((item) => (
+      <article class="esl-card" data-status={item.status}>
+        <h2><a href={withBasePath(item.href, base)}>{item.titleZh}</a></h2>
+        <p class="esl-card__title-en" lang="en">{item.titleEn}</p>
+        {item.descriptionZh && <p>{item.descriptionZh}</p>}
+        {item.descriptionEn && <p class="esl-card__secondary" lang="en">{item.descriptionEn}</p>}
+      </article>
+    ))}
+  </div>
+</nav>
+

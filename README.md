@@ -2,93 +2,37 @@
 
 面向电子结构与密度泛函理论学习的结构化、可视化网站。
 
-公开站点：
+- 公开站点：<https://maxwell3919.github.io/Electronic-Structure-Learning/>
+- 部署身份：<https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.json>
 
-```text
-https://maxwell3919.github.io/Electronic-Structure-Learning/
-```
+本项目以原创解释、可检查推导、教学模型、轻量派生数据和明确证据边界组织学习内容，不搬运教材正文或受限制材料。
 
-当前 Pages 部署来源记录：
+## 学习系统入口
 
-```text
-https://maxwell3919.github.io/Electronic-Structure-Learning/deployment-manifest.json
-```
+网站同时支持：
 
-本项目不搬运教材正文，而是把原创解释、可检查推导、交互教学模型、轻量 DFT 派生数据、数值边界和练习组织为连续学习系统。
+- 开始学习与三条学习路线；
+- Martin Part I–VII 理论课程；
+- 计划中的计算实验和案例项目；
+- 现有及未来交互实验；
+- Sholl–Steckel 实践交叉参考；
+- Appendices、术语、参数映射、收敛与诊断参考入口。
 
-## 当前框架
+现有 Martin Part、Chapter、Appendix 和 Sholl–Steckel URL 保持稳定。信息架构见 [`docs/site-information-architecture.md`](docs/site-information-architecture.md)。
 
-主理论线以 Richard M. Martin 的 *Electronic Structure: Basic Theory and Practical Methods*, 2nd edition 为结构来源：
+## 框架与状态权威
 
-- 7 个 Part；
-- 28 个编号章节；
-- Appendix A–R，共 18 个附录；
-- 46 个章节/附录页面；
-- 315 个目录级分节定位。
-
-实践交叉参考以 Sholl–Steckel 的 *Density Functional Theory: A Practical Introduction* 为结构来源：
-
-- 10 个实践章节页面；
-- 93 个目录级分节/小节定位。
-
-## 内容状态
-
-当前已合并到 `main` 的 substantive 单元包括：
-
-- Part I · [Chapter 1 · Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-01-introduction/)
-- Part I · [Chapter 2 · Overview](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-02-overview/)
-- Part I · [Chapter 3 · Theoretical Background](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-03-theoretical-background/)
-- Part I · [Chapter 4 · Periodic Solids and Electron Bands](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-04-periodic-solids-and-electron-bands/)
-- Part I · [Chapter 5 · Uniform Electron Gas and sp-Bonded Metals](https://maxwell3919.github.io/Electronic-Structure-Learning/part-01-overview-and-background/chapter-05-uniform-electron-gas-and-sp-bonded-metals/)
-- Part II · [Chapter 6 · Density Functional Theory: Foundations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-06-density-functional-theory-foundations/)
-- Part II · [Chapter 7 · The Kohn–Sham Auxiliary System](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-07-the-kohn-sham-auxiliary-system/)
-- Part II · [Chapter 8 · Functionals for Exchange and Correlation I](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-08-functionals-for-exchange-and-correlation-i/)
-- Part II · [Chapter 9 · Functionals for Exchange and Correlation II](https://maxwell3919.github.io/Electronic-Structure-Learning/part-02-density-functional-theory/chapter-09-functionals-for-exchange-and-correlation-ii/)
-- Part III · [Chapter 10 · Electronic Structure of Atoms](https://maxwell3919.github.io/Electronic-Structure-Learning/part-03-important-preliminaries-on-atoms/chapter-10-electronic-structure-of-atoms/)
-- Part III · [Chapter 11 · Pseudopotentials](https://maxwell3919.github.io/Electronic-Structure-Learning/part-03-important-preliminaries-on-atoms/chapter-11-pseudopotentials/)
-- Part IV · [Chapter 12 · Plane Waves and Grids: Basics](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-12-plane-waves-and-grids-basics/)
-- Part IV · [Chapter 13 · Plane Waves and Real-Space Methods: Full Calculations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-13-plane-waves-and-real-space-methods-full-calculations/)
-- Part IV · [Chapter 14 · Localized Orbitals: Tight-Binding](https://maxwell3919.github.io/Electronic-Structure-Learning/part-04-determination-of-electronic-structure/chapter-14-localized-orbitals-tight-binding/)
-- Part V · [Chapter 19 · Quantum Molecular Dynamics (QMD)](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-19-quantum-molecular-dynamics-qmd/)
-- Part V · [Chapter 20 · Response Functions: Phonons and Magnons](https://maxwell3919.github.io/Electronic-Structure-Learning/part-05-properties-of-matter/chapter-20-response-functions-phonons-and-magnons/)
-- Part VI · [Chapter 25 · Topology of the Electronic Structure of a Crystal: Introduction](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-25-topology-of-the-electronic-structure-of-a-crystal-introduction/)
-- Part VI · [Chapter 26 · Two-Band Models: Berry Phase, Winding, and Topology](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-26-two-band-models-berry-phase-winding-and-topology/)
-- Part VI · [Chapter 27 · Topological Insulators I: Two Dimensions](https://maxwell3919.github.io/Electronic-Structure-Learning/part-06-electronic-structure-and-topology/chapter-27-topological-insulators-i-two-dimensions/)
-- Part VII · [Appendix A · Functional Equations](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-a-functional-equations/)
-- Part VII · [Appendix B · LSDA and GGA Functionals](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-b-lsda-and-gga-functionals/)
-- Part VII · [Appendix C · Adiabatic Approximation](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-c-adiabatic-approximation/)
-- Part VII · [Appendix D · Perturbation Theory, Response Functions, and Green’s Functions](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-d-perturbation-theory-response-functions-and-green-s-functions/)
-- Part VII · [Appendix E · Dielectric Functions and Optical Properties](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-e-dielectric-functions-and-optical-properties/)
-- Part VII · [Appendix F · Coulomb Interactions in Extended Systems](https://maxwell3919.github.io/Electronic-Structure-Learning/part-07-appendices/appendix-f-coulomb-interactions-in-extended-systems/)
-
-Part I Chapters 1–5 和 Part II Chapters 6–9 已形成完整 Part 级综合入口。其他页面仍处于 `outline` 或独立 PR 编写状态。每个 substantive 单元包含其适用范围内的双语正文、推导、来源定位、原创练习或教学可视化，并通过相应的静态构建与 chapter-local validation 门槛。
-
-任何单元的 `complete` 状态只说明网站内容、来源定位、声明的教学模型和部署门槛已经完成，不自动验证其中涉及的真实材料、计算方法或科学结论。
-
-## 结构权威
+Martin 结构保留 7 Parts、28 Chapters、18 Appendices、46 单元和 315 个目录级定位；Sholl–Steckel 保留 10 个实践单元和 93 个定位。
 
 ```text
 src/data/martin/index.mjs
 src/data/shollSteckelStructure.mjs
+src/data/site/contentStatus.mjs
 ```
 
-页面从上述目录读取结构信息，避免在 56 个单元页面中重复维护分节列表。
+前两项定义教材结构；`contentStatus.mjs` 分开记录结构状态、技术验证、科学审查和学习者测试。网站不再用一个含义模糊的 `complete` 代表全部层级。
 
-主要内容目录：
-
-```text
-src/content/docs/
-├── book-map.mdx
-├── part-01-overview-and-background/
-├── part-02-density-functional-theory/
-├── part-03-important-preliminaries-on-atoms/
-├── part-04-determination-of-electronic-structure/
-├── part-05-properties-of-matter/
-├── part-06-electronic-structure-and-topology/
-├── part-07-appendices/
-├── practice-sholl-steckel/
-└── labs/
-```
+当前状态由网站首页和“开始学习”页从注册表读取，不在 README 手工维护整章清单。
 
 ## 本地验证
 
@@ -99,24 +43,12 @@ npm ci --no-audit --no-fund
 npm run check
 ```
 
-`npm run check` 依次执行：
+`npm run check` 依次执行 framework、SCF、机器可读 registry 中的 deterministic validators，以及 Astro/MDX/KaTeX 静态构建。浏览器 smoke 清单同样来自 `scripts/test-registry.mjs`，现有测试不得静默丢失。
 
-1. 完整框架计数、文件、slug 和页码一致性验证；
-2. SCF 教学模型的确定性验证；
-3. 所有已注册 substantive 单元的 chapter-local deterministic validators；
-4. Astro/MDX/KaTeX 静态构建。
+验证通过只支持各检查明确覆盖的网站结构、有限模型和浏览器行为，不自动构成真实材料计算、科学审查或学习者测试。
 
-部署 workflow 还会在实际 GitHub Pages URL 上运行 exact-SHA Chrome smoke，覆盖已注册章节、附录和 Part 级综合入口的桌面、窄屏、键盘交互和无 JavaScript fallback。任何验证通过都只支持其声明的内容与网站行为，不证明真实材料计算或科学主张正确。
+## 维护边界
 
-## 维护入口
+开始修改前阅读 `AGENTS.md` 和 `docs/` 中的架构、内容、来源、版权及可视化契约。仓库与 Pages 均为公开状态；持续性修改使用短期分支和 PR。
 
-开始修改前阅读：
-
-1. [`AGENTS.md`](AGENTS.md)
-2. [`docs/architecture.md`](docs/architecture.md)
-3. [`docs/content-contract.md`](docs/content-contract.md)
-4. [`docs/framework-map.md`](docs/framework-map.md)
-5. [`docs/visualization-and-data-contract.md`](docs/visualization-and-data-contract.md)
-6. [`docs/source-and-copyright-policy.md`](docs/source-and-copyright-policy.md)
-
-所有持续性修改使用短期分支和 PR。仓库与 Pages 均为公开状态，任何提交必须满足公开发布与版权边界。
+真实 DFT raw/restart/WFC、教材 PDF、受限制材料、凭据以及本地参考仓库 clone 不进入本仓库。

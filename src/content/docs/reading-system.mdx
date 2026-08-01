@@ -28,11 +28,11 @@ import SourceNote from '../../components/SourceNote.astro';
 ```
 
 <DerivationBlock
-  title="从 outline 到 validated"
-  assumptions={['页面状态只描述已经完成的内容层级', '来源主张、教学模型和独立验证必须区分']}
+  title="从 outline 到多维状态"
+  assumptions={['结构、技术、科学审查和学习者测试必须分别记录', '来源主张、教学模型和独立验证必须区分']}
 >
 
-`outline` 只表示结构已经建立。正文写入后仍需逐项补齐来源、推导、可视化规格、数值边界与验收证据，才能进入 `draft`、`review` 或更高状态。
+`outline` 只表示结构已经建立。正文、deterministic validator、科学审查和真实学习者测试各有独立证据门，前一项不能自动提升后一项。
 
 </DerivationBlock>
 
@@ -40,3 +40,4 @@ import SourceNote from '../../components/SourceNote.astro';
 
 - `src/data/martin/index.mjs`
 - `src/data/shollSteckelStructure.mjs`
+- `src/data/site/contentStatus.mjs`

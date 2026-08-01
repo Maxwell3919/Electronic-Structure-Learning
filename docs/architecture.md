@@ -3,10 +3,11 @@
 ## 1. Static-first structure
 
 ```text
-Machine-readable source maps
+Machine-readable source maps and site registries
         │
         ├── Martin: 7 Parts / 46 units
-        └── Sholl–Steckel: 10 practice units
+        ├── Sholl–Steckel: 10 practice units
+        └── navigation, paths, status, labs, cases, reference
                     │
                     ▼
           MDX route skeletons
@@ -35,13 +36,26 @@ src/data/
 ├── martin/
 │   ├── index.mjs
 │   └── part01.mjs … part07.mjs
-└── shollSteckelStructure.mjs
+├── shollSteckelStructure.mjs
+└── site/
+    ├── navigation.mjs
+    ├── learningPaths.mjs
+    ├── contentStatus.mjs
+    ├── labs.mjs
+    ├── cases.mjs
+    └── referenceSections.mjs
 
 src/content/docs/
 ├── index.mdx
 ├── start-here.mdx
 ├── reading-system.mdx
 ├── book-map.mdx
+├── learning-paths/
+├── theory/
+├── labs/
+├── cases/
+├── interactive-labs/
+├── reference/
 ├── part-01-overview-and-background/
 ├── part-02-density-functional-theory/
 ├── part-03-important-preliminaries-on-atoms/
@@ -53,7 +67,7 @@ src/content/docs/
 └── labs/
 ```
 
-The JavaScript data modules are the structural authority. Unit pages are intentionally thin route files that resolve their source metadata from a catalog and render `ReadingOutline.astro`.
+The Martin and Sholl–Steckel modules remain the source-structure authority. `src/data/site/` supplies learner-facing navigation and four-dimensional content status. Framework routes stay thin and data-driven.
 
 ## 3. Authority boundary
 
@@ -75,11 +89,15 @@ The JavaScript data modules are the structural authority. Unit pages are intenti
 - `DerivationBlock.astro`: assumptions and derivation container;
 - `VisualizationPlaceholder.astro`: pre-implementation visualization contract;
 - `SCFIterationVisualizer.astro`: existing affine fixed-point teaching experiment.
+- `src/components/site/`: neutral learning-path, catalog, status and navigation interfaces.
 
 ## 5. Validation
 
 - `scripts/validate-framework.mjs`: structural counts, files, slugs and page ordering;
 - `scripts/validate-scf-model.mjs`: five deterministic teaching-model regimes;
+- `scripts/test-registry.mjs`: stable validator and browser-smoke registration;
+- `scripts/validate-site-architecture.mjs`: routes, statuses, references and publication boundaries;
+- `scripts/run-registered-validators.mjs`: fail-closed deterministic registry runner;
 - `npm run build`: MDX imports, routes, formulas and static-site output.
 
 These gates do not validate future scientific explanations or real DFT calculations.

@@ -1,0 +1,17 @@
+---
+interface Props {
+  titleZh: string;
+  titleEn: string;
+  description: string;
+  eyebrow?: string;
+}
+
+const { titleZh, titleEn, description, eyebrow = 'Electronic Structure Learning' } = Astro.props;
+---
+
+<header class="esl-section-hero">
+  <p class="esl-section-hero__eyebrow">{eyebrow}</p>
+  <h1>{titleZh} <span lang="en">| {titleEn}</span></h1>
+  <p class="esl-section-hero__description">{description}</p>
+</header>
+

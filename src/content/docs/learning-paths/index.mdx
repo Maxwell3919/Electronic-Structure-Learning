@@ -1,0 +1,21 @@
+---
+title: "学习路线"
+description: "三条跨章节的电子结构与 DFT 学习路线。"
+sidebar:
+  order: 0
+---
+
+import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
+import LearningPathGrid from '../../../components/site/LearningPathGrid.astro';
+import learningPaths from '../../../data/site/learningPaths.mjs';
+
+<SiteSectionHero
+  titleZh="学习路线"
+  titleEn="Learning paths"
+  description="路线只组织已有章节链接和未来实验接口，不替代 Martin 原书顺序，也不新增章节正文。"
+/>
+
+<LearningPathGrid paths={learningPaths} />
+
+路线正文、实验与学习者验收将在后续独立任务完成。
+

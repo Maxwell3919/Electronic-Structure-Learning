@@ -1,13 +1,15 @@
 # Content Contract
 
-## 1. Page states
+## 1. Content states
 
-- `outline`: structure, source locator and empty content slots only;
-- `draft`: original body exists but one or more source, derivation, visualization or boundary checks remain incomplete;
-- `review`: the minimum information structure is present and awaits independent review or learner testing;
-- `validated`: explicitly listed checks were actually executed and passed.
+`src/data/site/contentStatus.mjs` records four independent dimensions for every Martin and Sholl–Steckel unit:
 
-A status applies only to its declared object. It does not automatically validate the source, physical model or scientific conclusion.
+- structural: `outline`, `draft`, `content-complete`;
+- technical: `not-registered`, `registered`, `validated`;
+- scientific review: `not-reviewed`, `review-needed`, `reviewed`;
+- learner testing: `not-tested`, `planned`, `tested`.
+
+These dimensions must not be collapsed into one `complete` label. A deterministic validator supports only its declared implementation checks; it does not automatically validate the source, physical model, scientific conclusion or learner outcome.
 
 ## 2. Framework-generated outline pages
 
