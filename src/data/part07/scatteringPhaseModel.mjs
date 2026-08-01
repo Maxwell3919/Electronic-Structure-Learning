@@ -78,7 +78,7 @@ export function sphericalBesselJ(l, x) {
   let term = 1;
   let sum = 1;
   for (let m = 1; m <= 100; m += 1) {
-    term *= -x ** 2 / (2 * m * (2 * l + 2 * m + 1));
+    term *= -(x ** 2) / (2 * m * (2 * l + 2 * m + 1));
     sum += term;
     if (Math.abs(term) < Math.max(1, Math.abs(sum)) * 1e-16) break;
   }
