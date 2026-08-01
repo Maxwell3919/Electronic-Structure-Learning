@@ -1,33 +1,24 @@
 ---
 title: "开始阅读"
-description: "完整框架、两条学习线与当前内容状态。"
+description: "根据当前内容状态和三条学习路线选择入口。"
 sidebar:
   order: 1
 ---
 
-## 当前框架
+import LearningPathGrid from '../../components/site/LearningPathGrid.astro';
+import ContentProgressSummary from '../../components/site/ContentProgressSummary.astro';
+import SiteSectionHero from '../../components/site/SiteSectionHero.astro';
+import learningPaths from '../../data/site/learningPaths.mjs';
+import { contentStatusSummary } from '../../data/site/contentStatus.mjs';
 
-Martin 理论主线已经建立完整导航：
+<SiteSectionHero
+  titleZh="开始学习"
+  titleEn="Start learning"
+  description="先查看四维内容状态，再按理论基础、首次真实计算准备或进阶专题选择路线。目录骨架、技术验证、科学审查和学习者测试不会被合并为一个状态。"
+/>
 
-- Part I–VI：28 个编号章节；
-- Part VII：Appendix A–R，共 18 个附录；
-- 合计 46 个章节/附录单元；
-- 每个单元保留原书分节标题与印刷页定位。
+<ContentProgressSummary summary={contentStatusSummary} />
 
-辅助实践线同时建立 Sholl–Steckel 的 10 章导航，用于后续把理论内容连接到实际 DFT 工作流。
+<LearningPathGrid paths={learningPaths} />
 
-## 当前状态
-
-所有新建单元均为 `outline`：
-
-- 已有：目录结构、章节标题、分节标题、页码和统一内容插槽；
-- 尚无：教材式正文、完整推导、图形、真实计算数据、练习解析；
-- 不会提交：教材 PDF、扫描页、原图或大段转录。
-
-## 推荐入口
-
-1. 阅读 [阅读系统](../reading-system/)；
-2. 查看 [完整课程地图](../book-map/)；
-3. 从 [Part I](../part-01-overview-and-background/) 开始；
-4. 需要计算实践对照时进入 [Sholl–Steckel 实践交叉参考](../practice-sholl-steckel/)；
-5. 查看现有 [SCF 固定点与 mixing 实验](../labs/scf-fixed-point-and-mixing/)。
+现有理论内容从 [理论课程](../theory/) 或 [完整课程地图](../book-map/) 进入；[阅读系统](../reading-system/) 说明单元升级边界。计划实验、案例和参考条目只表示结构已登记，正文或实验将在后续独立任务完成。

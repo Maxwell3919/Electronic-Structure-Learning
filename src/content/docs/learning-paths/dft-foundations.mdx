@@ -1,0 +1,19 @@
+---
+title: "DFT 理论入门"
+description: "从量子态、多电子问题进入 DFT、SCF 与周期体系。"
+sidebar:
+  order: 1
+---
+
+import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
+import LearningPathTimeline from '../../../components/site/LearningPathTimeline.astro';
+import learningPaths from '../../../data/site/learningPaths.mjs';
+
+export const path = learningPaths.find((item) => item.id === 'dft-foundations');
+
+<SiteSectionHero titleZh={path.titleZh} titleEn={path.titleEn} description={path.summaryZh} />
+
+<LearningPathTimeline path={path} />
+
+本页只连接现有理论单元；路线正文将在后续独立任务完成。
+

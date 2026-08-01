@@ -1,0 +1,17 @@
+---
+title: "计算实验"
+description: "未来 QE/VASP 实验课程的计划目录。"
+sidebar:
+  order: 0
+---
+
+import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
+import LabCatalog from '../../../components/site/LabCatalog.astro';
+import labs from '../../../data/site/labs.mjs';
+
+<SiteSectionHero titleZh="计算实验" titleEn="Computational labs" description="当前只登记实验目标、软件范围和理论依赖，不提供输入、参数、输出或伪造计算结果。" />
+
+<LabCatalog labs={labs} />
+
+全部实验均为 `planned`，正文与真实验收将在后续独立任务完成。
+
