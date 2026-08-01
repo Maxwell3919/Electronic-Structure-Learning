@@ -198,6 +198,47 @@
 .esl-part-cover svg { width: 100%; height: auto; color: var(--part-motif); }
 .esl-part-cover svg :where(path, line, circle) { vector-effect: non-scaling-stroke; }
 
+.esl-token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: var(--esl-space-3);
+  margin-block: var(--esl-space-5);
+}
+
+.esl-token-swatch {
+  min-height: 7rem;
+  padding: var(--esl-space-3);
+  border: var(--esl-border-width) solid var(--esl-border);
+  border-radius: var(--esl-radius-sm);
+  background: var(--swatch, var(--esl-surface));
+  color: var(--swatch-ink, var(--esl-ink));
+}
+
+.esl-token-swatch[data-token='page'] { --swatch: var(--esl-page); }
+.esl-token-swatch[data-token='surface'] { --swatch: var(--esl-surface); }
+.esl-token-swatch[data-token='accent'] { --swatch: var(--esl-accent); --swatch-ink: var(--esl-surface); }
+.esl-token-swatch[data-token='science'] { --swatch: var(--esl-science); --swatch-ink: var(--esl-surface); }
+.esl-token-swatch[data-token='warning'] { --swatch: var(--esl-warning-soft); }
+.esl-token-swatch[data-token='danger'] { --swatch: var(--esl-danger-soft); }
+
+.esl-control-sample {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--esl-space-3);
+}
+
+.esl-control-sample label { display: grid; gap: var(--esl-space-1); }
+.esl-control-sample input,
+.esl-control-sample select {
+  min-height: 2.75rem;
+  padding-inline: var(--esl-space-3);
+  border: var(--esl-border-width) solid var(--esl-border);
+  border-radius: var(--esl-radius-sm);
+  color: var(--esl-ink);
+  background: var(--esl-surface);
+}
+
 @media (max-width: 48rem) {
   .esl-quantum-motif { width: 72%; opacity: 0.24; }
   .esl-part-cover { grid-template-columns: minmax(0, 1fr); }

@@ -21,6 +21,21 @@
   line-height: 1.55;
 }
 
+.esl-specimen-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--esl-accent);
+}
+
+.esl-specimen-figure path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.esl-specimen-figure circle { fill: var(--esl-science); }
+
 .esl-margin-note,
 .esl-source-margin {
   padding-inline-start: var(--esl-space-4);

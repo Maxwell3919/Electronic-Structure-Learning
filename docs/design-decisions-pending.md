@@ -1,21 +1,13 @@
-# Design decisions pending
+# Design decisions pending after Editorial Quantum Atlas
 
-The following decisions remain open for the user and web GPT:
+The academic visual direction, system font stacks, semantic palette, page widths, bilingual modes, and restrained motion baseline are now established. The following decisions remain outside this phase:
 
-- brand positioning and Logo;
-- primary and secondary colors;
-- light and dark theme details;
-- Chinese, English, and code fonts;
-- homepage Hero;
-- illustration style;
+- a future project Logo or wordmark refinement;
 - placement and role of the Talos tuxedo cat;
-- floral and scientific elements;
-- card radius and shadows;
-- gradients and background textures;
-- graphic line width;
-- animation intensity;
-- bilingual display mode;
-- mobile visual strategy.
+- whether floral elements belong in the public site;
+- the first flagship scientific interaction and its authored model;
+- whether later Part covers receive commissioned illustrations;
+- optional reader testing changes to bilingual defaults;
+- animation intensity beyond the current restrained baseline.
 
-No item in this list is decided by the current information-architecture work.
-
+Mascot, floral, and flagship-interaction decisions require separate discussion and implementation; none is silently implied by the current CSS/SVG motifs.
