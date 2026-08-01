@@ -1,0 +1,27 @@
+---
+import { mtoScreening } from '../../../data/part04/ch16TeachingModels.mjs';
+const initial = mtoScreening({ distance: 6, power: 2, screening: 0.5 });
+const distances = Array.from({ length: 240 }, (_, i) => 1 + 7 * i / 239);
+const toPoints = (screening) => distances.map((distance, i) => { const value = mtoScreening({ distance, power: 2, screening }).screenedTail; return `${58 + i * 638 / 239},${24 + (1 - Math.min(1, value)) * 248}`; }).join(' ');
+---
+<figure class="chapter-visual mto-screening" id="ch16-mto-screening">
+  <figcaption><strong>原创交互模型：MTO tail screening 与 locality</strong><span lang="en">Original interactive model: MTO tail screening and locality</span></figcaption>
+  <div class="chapter-visual__controls"><label>screening α<input data-mto-screening type="range" min="0" max="1.2" step="0.05" value="0.5" /><output data-mto-screening-output>0.50</output></label></div>
+  <svg viewBox="0 0 720 330" role="img" aria-label="Bare algebraic and screened MTO-like envelope tails">
+    <line class="axis" x1="58" y1="272" x2="696" y2="272" /><line class="axis" x1="58" y1="24" x2="58" y2="272" />
+    <polyline class="tail bare" points={toPoints(0)} /><polyline class="tail screened" data-mto-tail-path points={toPoints(0.5)} />
+    <text x="377" y="320" text-anchor="middle">distance R</text><text transform="translate(18 148) rotate(-90)" text-anchor="middle">tail amplitude</text>
+  </svg>
+  <div class="chapter-visual__readout" aria-live="polite"><span>bare at R=6=<output data-mto-bare>{initial.bareTail.toExponential(4)}</output></span><span>screened=<output data-mto-tail>{initial.screenedTail.toExponential(4)}</output></span><span>ratio=<output data-mto-ratio>{initial.ratio.toExponential(4)}</output></span></div>
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong><code>R^-2</code> envelope 乘以 <code>exp(-α R)</code> screening factor。</p><p lang="en"><strong>Model:</strong> an <code>R^-2</code> envelope multiplied by <code>exp(-α R)</code>.</p>
+    <p><strong>验收：</strong>α=0 回到 bare tail；α 增大时固定 R 的 amplitude 单调下降。</p><p lang="en"><strong>Acceptance:</strong> α=0 recovers the bare tail and increasing α decreases the amplitude at fixed R.</p>
+    <p><strong>边界：</strong>screening 改善 representation locality，不自动证明 Hamiltonian、density matrix 或完整算法为 O(N)。</p><p lang="en"><strong>Boundary:</strong> screening improves representational locality but does not prove O(N) scaling.</p>
+  </div>
+  <noscript><p>无 JavaScript fallback：静态图使用 α=0.5，并显示 bare 与 screened tails。</p></noscript>
+</figure>
+<script>
+  import { mtoScreening } from '../../../data/part04/ch16TeachingModels.mjs';
+  const root=document.getElementById('ch16-mto-screening');if(root){const control=root.querySelector('[data-mto-screening]'),path=root.querySelector('[data-mto-tail-path]'),sout=root.querySelector('[data-mto-screening-output]'),tail=root.querySelector('[data-mto-tail]'),ratio=root.querySelector('[data-mto-ratio]');if(control instanceof HTMLInputElement&&path instanceof SVGPolylineElement){const distances=Array.from({length:240},(_,i)=>1+7*i/239);const update=()=>{const screening=Number(control.value),values=distances.map((distance)=>mtoScreening({distance,power:2,screening}).screenedTail);path.setAttribute('points',values.map((value,i)=>`${58+i*638/239},${24+(1-Math.min(1,value))*248}`).join(' '));const r=mtoScreening({distance:6,power:2,screening});if(sout instanceof HTMLOutputElement)sout.value=screening.toFixed(2);if(tail instanceof HTMLOutputElement)tail.value=r.screenedTail.toExponential(4);if(ratio instanceof HTMLOutputElement)ratio.value=r.ratio.toExponential(4)};control.addEventListener('input',update);update()}}
+</script>
+<style>.mto-screening input,.mto-screening svg{width:100%}.mto-screening label{display:grid;gap:.35rem}.axis{stroke:currentColor;stroke-width:1.4}.tail{fill:none;stroke-width:2.4}.bare{stroke:currentColor;stroke-dasharray:7 5}.screened{stroke:var(--sl-color-accent-high)}.mto-screening svg text{fill:currentColor;font-size:13px}</style>

@@ -1,0 +1,193 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import MuffinTinPartitionExplorer from './MuffinTinPartitionExplorer.astro';
+import APWMatchingExplorer from './APWMatchingExplorer.astro';
+
+<span id="section-16-1" class="chapter-anchor" aria-hidden="true"></span>
+
+## 16.1 Augmented Plane Waves 与 muffin-tin 分区 | Augmented Plane Waves and the muffin-tin partition
+
+<BilingualCallout titleZh="来源定位" titleEn="Source locator" kind="source">
+  <div class="bilingual-section__zh">【Martin 原书 | Martin source】印刷页 332–337 建立 sphere/interstitial 分区、APW basis、plane-wave Rayleigh expansion、boundary matching、slope kink、surface term 与 energy-dependent matching operator。下述符号和推导经过重组，并加入显式验收边界。</div>
+  <div class="bilingual-section__en" lang="en">【Martin source】Printed pp. 332–337 establish the sphere/interstitial partition, APW basis, plane-wave Rayleigh expansion, boundary matching, slope kink, surface term, and energy-dependent matching operator. The notation and derivations below are reorganized and supplied with explicit acceptance boundaries.</div>
+</BilingualCallout>
+
+<BilingualSection titleZh="分区不等于 potential approximation" titleEn="A partition is not the same as a potential approximation">
+  <div class="bilingual-section__zh">
+    <p>令 unit cell 分成 nonoverlapping spheres $\Omega_s$ 与 interstitial $I$：</p>
+
+$$
+\Omega=I\cup\bigcup_s\Omega_s,
+\qquad
+\Omega_s\cap\Omega_{s'}=\varnothing\;(s\ne s').
+$$
+
+    <p><strong>augmentation</strong> 只要求不同区域采用不同表示并通过 boundary data 连接。<strong>muffin-tin potential</strong> 进一步把 sphere 内 potential 近似为 spherical，interstitial 中近似为 constant。full-potential augmented method 可以保留空间分区而不施加后一近似。</p>
+    <p>sphere radii 不是无关紧要的绘图参数。过小会把快速变化留在 interstitial，增加 smooth-basis cost；过大可能 overlap，破坏 nonoverlapping derivation；不同 radii 还改变 partial-wave amplitudes、matching conditioning 与 numerical derivative。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>Divide a unit cell into nonoverlapping spheres $\Omega_s$ and an interstitial region $I$:</p>
+
+$$
+\Omega=I\cup\bigcup_s\Omega_s,
+\qquad
+\Omega_s\cap\Omega_{s'}=\varnothing\;(s\ne s').
+$$
+
+    <p><strong>Augmentation</strong> only requires different representations in different regions connected by boundary data. A <strong>muffin-tin potential</strong> adds the approximation that the potential is spherical inside each sphere and constant in the interstitial. A full-potential augmented method can retain the partition without imposing that potential approximation.</p>
+    <p>Sphere radii are not harmless drawing parameters. Small spheres leave rapid variation in the interstitial and increase the smooth-basis cost; large spheres may overlap and invalidate a nonoverlapping derivation. The radii also alter partial-wave amplitudes, matching conditioning, and numerical derivatives.</p>
+  </div>
+</BilingualSection>
+
+<MuffinTinPartitionExplorer />
+
+<BilingualSection titleZh="APW basis 的 piecewise 定义" titleEn="Piecewise definition of an APW basis function">
+  <div class="bilingual-section__zh">
+    <p>对 Bloch vector $\mathbf k$ 与 reciprocal vector $\mathbf G$，记 $\mathbf K=\mathbf k+\mathbf G$。一个 APW basis function 在 interstitial 中是单一 plane wave，在 site $s$ 的 sphere 中是 radial partial-wave expansion：</p>
+
+$$
+\chi_{\mathbf K}^{\mathrm{APW}}(\mathbf r;E)=
+\begin{cases}
+\Omega^{-1/2}e^{i\mathbf K\cdot\mathbf r}, & \mathbf r\in I,\\[4pt]
+\displaystyle\sum_{L}A_{Ls}(\mathbf K,E)
+ u_{ls}(r_s,E)Y_L(\widehat{\mathbf r_s}), & \mathbf r\in\Omega_s.
+\end{cases}
+$$
+
+    <p>这里 $r_s=|\mathbf r-\boldsymbol\tau_s|$，$L=(l,m)$，$u_{ls}$ 是在 trial energy $E$ 下 regular-at-origin 的 radial solution。basis 本身依赖 $E$，这正是 original APW secular problem 非线性的根源。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>For Bloch vector $\mathbf k$ and reciprocal vector $\mathbf G$, write $\mathbf K=\mathbf k+\mathbf G$. An APW basis function is a single plane wave in the interstitial and a radial partial-wave expansion inside sphere $s$:</p>
+
+$$
+\chi_{\mathbf K}^{\mathrm{APW}}(\mathbf r;E)=
+\begin{cases}
+\Omega^{-1/2}e^{i\mathbf K\cdot\mathbf r}, & \mathbf r\in I,\\[4pt]
+\displaystyle\sum_{L}A_{Ls}(\mathbf K,E)
+ u_{ls}(r_s,E)Y_L(\widehat{\mathbf r_s}), & \mathbf r\in\Omega_s.
+\end{cases}
+$$
+
+    <p>Here $r_s=|\mathbf r-\boldsymbol\tau_s|$, $L=(l,m)$, and $u_{ls}$ is the solution regular at the origin at trial energy $E$. The basis itself depends on $E$, which is the origin of the nonlinear secular problem in the original APW method.</p>
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="plane-wave expansion 与 boundary-value matching | Plane-wave expansion and boundary-value matching"
+  assumptions={[
+    'nonoverlapping sphere of radius S_s centred at τ_s；',
+    'spherical-harmonic convention is fixed；',
+    'the radial boundary value u_ls(S_s,E) is nonzero。',
+  ]}
+>
+
+Around site $s$,
+
+$$
+e^{i\mathbf K\cdot\mathbf r}
+=e^{i\mathbf K\cdot\boldsymbol\tau_s}
+4\pi\sum_L i^l j_l(Kr_s)
+Y_L^*(\widehat{\mathbf K})Y_L(\widehat{\mathbf r_s}).
+$$
+
+Value continuity at $r_s=S_s$ requires each spherical-harmonic coefficient to agree:
+
+$$
+A_{Ls}(\mathbf K,E)u_{ls}(S_s,E)
+=\frac{4\pi}{\sqrt\Omega}
+ i^l e^{i\mathbf K\cdot\boldsymbol\tau_s}
+ j_l(KS_s)Y_L^*(\widehat{\mathbf K}).
+$$
+
+Hence
+
+$$
+A_{Ls}(\mathbf K,E)=
+\frac{4\pi}{\sqrt\Omega}
+ i^l e^{i\mathbf K\cdot\boldsymbol\tau_s}
+Y_L^*(\widehat{\mathbf K})
+\frac{j_l(KS_s)}{u_{ls}(S_s,E)}.
+$$
+
+The denominator exposes an important numerical boundary: when $u_{ls}(S_s,E)$ approaches a node, the matching coefficient becomes ill conditioned and the logarithmic derivative has a pole. That pole is not a divergent physical wavefunction; it is a singular coordinate choice for this boundary representation.
+
+</DerivationBlock>
+
+<BilingualSection titleZh="value continuity 与 slope continuity 是不同条件" titleEn="Value continuity and slope continuity are different conditions">
+  <div class="bilingual-section__zh">
+    <p>APW construction enforces</p>
+
+$$
+\chi(S_s^-)=\chi(S_s^+),
+$$
+
+    <p>但一般不强制</p>
+
+$$
+\partial_r\chi(S_s^-)=\partial_r\chi(S_s^+).
+$$
+
+    <p>用 dimensionless logarithmic derivative</p>
+
+$$
+D_{ls}(E)=S_s\frac{u'_{ls}(S_s,E)}{u_{ls}(S_s,E)},
+\qquad
+D_l^{0}(K)=S_sK\frac{j_l'(KS_s)}{j_l(KS_s)},
+$$
+
+    <p>可把 kink 写成 $\Delta D_l=D_l^0-D_{ls}$。当最终 eigenfunction 的 plane-wave combination 满足完整 boundary condition 时，各 basis kinks 在组合中被消除到 secular precision；单个 APW basis function 无需 smooth in slope。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>The APW construction enforces</p>
+
+$$
+\chi(S_s^-)=\chi(S_s^+),
+$$
+
+    <p>but generally not</p>
+
+$$
+\partial_r\chi(S_s^-)=\partial_r\chi(S_s^+).
+$$
+
+    <p>With the dimensionless logarithmic derivatives</p>
+
+$$
+D_{ls}(E)=S_s\frac{u'_{ls}(S_s,E)}{u_{ls}(S_s,E)},
+\qquad
+D_l^{0}(K)=S_sK\frac{j_l'(KS_s)}{j_l(KS_s)},
+$$
+
+    <p>the kink is $\Delta D_l=D_l^0-D_{ls}$. When the final eigenfunction is a plane-wave combination satisfying the full boundary condition, the basis kinks cancel to the secular precision. An individual APW basis function need not be smooth in slope.</p>
+  </div>
+</BilingualSection>
+
+<APWMatchingExplorer />
+
+<DerivationBlock
+  title="为什么 kinetic operator 产生 surface term | Why the kinetic operator produces a surface term"
+  assumptions={[
+    'the piecewise function is continuous in value；',
+    'its normal derivative has a finite jump at the sphere surface；',
+    'surface orientation and atomic-unit convention are declared。',
+  ]}
+>
+
+For piecewise smooth $\chi$ and test function $\varphi$, integrate the Laplacian separately over the sphere and interstitial. Green's identity gives
+
+$$
+\int_{\Omega_s\cup I}\varphi^*(-\nabla^2)\chi\,d^3r
+=\int_{\Omega_s\cup I}\nabla\varphi^*\cdot\nabla\chi\,d^3r
+-\oint_{\partial\Omega_s}\varphi^*
+\left(\partial_n\chi\big|_{+}-\partial_n\chi\big|_{-}\right)dS.
+$$
+
+The second term is the boundary-kink contribution. Treating the APW as if it were globally twice differentiable discards this term and changes the secular matrix. The exact prefactor depends on whether Hartree or Rydberg atomic units are used; the unit convention must therefore accompany any literature formula.
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="muffin-tin 与 full potential" titleEn="Muffin-tin and full potential" kind="boundary">
+  <div class="bilingual-section__zh">sphere/interstitial augmentation survives beyond a spherical-inside/constant-outside potential. What changes is the angular coupling and the evaluation of potential, density and Poisson terms. “APW” therefore does not uniquely specify the potential approximation, basis cutoff, core treatment or modern implementation.</div>
+  <div class="bilingual-section__en" lang="en">Sphere/interstitial augmentation survives beyond a spherical-inside and constant-outside potential. What changes is the angular coupling and the evaluation of potential, density, and Poisson terms. “APW” therefore does not uniquely specify the potential approximation, basis cutoff, core treatment, or modern implementation.</div>
+</BilingualCallout>
