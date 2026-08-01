@@ -1,0 +1,239 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import DerivationBlock from '../../DerivationBlock.astro';
+import SurfaceDomainWallExplorer from './SurfaceDomainWallExplorer.astro';
+
+<span id="sec-28-2" class="chapter-anchor" aria-hidden="true"></span>
+
+## 28.2 三维 tight-binding 实例 | Tight-Binding Example in 3D
+
+<BilingualSection titleZh="三维模型必须保留轨道、子晶格与真实自旋" titleEn="A three-dimensional model must retain orbital, sublattice, and physical-spin structure" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 从 Chapter 27 的二维 $s,p_x,p_y$ 逻辑扩展到三维。三维晶体中，完整 $p_x,p_y,p_z$ manifold 与真实 spin 通过
+
+$$
+H_{\rm SO}=\zeta\,\mathbf L\cdot\mathbf S
+$$
+
+耦合。Chapter 27 的 diagonal approximation 只保留 $L_zS_z$，可把问题拆成两个 spin-conserving Chern blocks；在三维一般体系中，这种分块通常不成立，因为 $L_xS_x+L_yS_y$ 把不同 orbital 与 spin components 混合。可靠的 tight-binding model 因而需要完整 orbital basis、晶体 hopping geometry、真实 spin、inversion/time-reversal representation 以及所有允许的 SOC matrix elements。
+
+Martin 讨论的三维模型与 diamond/two-site lattice 和 Bi$_2$Se$_3$-type effective description 相联系。共同结构是：两组 opposite-parity orbital sectors 在某个 TRIM 附近形成低能 Dirac basis，SOC 与 hopping 控制其相对次序。若参数变化使 mass-like orbital ordering 反号，同时完整三维 gap 保持开放，可能发生 trivial/strong topological transition。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin extends the two-dimensional $s,p_x,p_y$ logic of Chapter 27 to three dimensions. In a three-dimensional crystal, the complete $p_x,p_y,p_z$ manifold couples to physical spin through
+
+$$
+H_{\rm SO}=\zeta\,\mathbf L\cdot\mathbf S.
+$$
+
+The diagonal approximation of Chapter 27 retains only $L_zS_z$ and can split the problem into two spin-conserving Chern blocks. That block decomposition generally fails in three dimensions because $L_xS_x+L_yS_y$ mixes different orbital and spin components. A reliable tight-binding model therefore needs the complete orbital basis, the crystal hopping geometry, physical spin, representations of inversion and time reversal, and all symmetry-allowed SOC matrix elements.
+
+Martin relates the three-dimensional construction to diamond/two-site lattices and to a Bi$_2$Se$_3$-type effective description. The common structure is that two opposite-parity orbital sectors form a low-energy Dirac basis near a TRIM, while SOC and hopping control their relative ordering. If a parameter change reverses the mass-like orbital ordering while the complete three-dimensional gap remains open away from the transition, a trivial-to-strong topological transition can occur.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="一个受控的 lattice Dirac regularization | A controlled lattice-Dirac regularization"
+  assumptions={[
+    '四分量低能 basis 含两个 opposite-parity orbital sectors 与一个 Kramers spin pair；',
+    'inversion 由 orbital Pauli matrix Γ0 表示，time reversal 满足 Θ²=−1；',
+    '该模型是本站教学 regularization，不宣称等于某个材料的完整 Hamiltonian。',
+  ]}
+>
+
+取五个互相反对易的 Dirac matrices，令
+
+$$
+H(\mathbf k)=
+A\sum_{i=x,y,z}\sin k_i\,\Gamma_i
++M(\mathbf k)\Gamma_0,
+$$
+
+其中
+
+$$
+M(\mathbf k)=m+B\sum_i(1-\cos k_i),
+\qquad B>0.
+$$
+
+由 Clifford algebra $\{\Gamma_\mu,\Gamma_\nu\}=2\delta_{\mu\nu}$，能谱为
+
+$$
+E_\pm(\mathbf k)=
+\pm\sqrt{A^2\sum_i\sin^2k_i+M^2(\mathbf k)}.
+$$
+
+每个 level 由 Kramers degeneracy 成对出现。gap closing 要求所有 $\sin k_i=0$ 且 $M(\mathbf K)=0$，因此相变只能发生在八个 TRIM。若 inversion eigenvalue 与 occupied Dirac mass sign 一一对应，则比较八个 $M(\mathbf K)$ 的符号可得到 parity pattern；但在真实多带体系中，仍必须把所有 occupied Kramers pairs 纳入乘积。
+
+在长波极限，$\sin k_i\approx k_i$、$1-\cos k_i\approx k_i^2/2$，得到
+
+$$
+H\approx A\,\mathbf k\cdot\boldsymbol\Gamma
++\left(m+\frac{B}{2}k^2\right)\Gamma_0.
+$$
+
+$Bk^2$ term 是 lattice/ultraviolet regularization 的低能痕迹；只看 continuum $m$ 的符号而不声明远离 $\Gamma$ 的 regularization，不能完整确定三维拓扑类。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="为什么只写一个 continuum Dirac cone 不够" titleEn="Why one continuum Dirac cone is not enough" kind="boundary">
+  <div class="bilingual-section__zh">
+
+continuum expansion 只描述一个局部 momentum patch。强/弱 indices 是整个 compact BZ 上 occupied manifold 的性质。不同 lattice regularizations 可共享同一个 $\Gamma$ 点低能 Dirac form，却在其他 TRIM 具有不同 mass signs，最终得到不同 $(\nu_0;\nu_1\nu_2\nu_3)$。因此低能 fit 必须与完整 tight-binding/first-principles bands、对称表示和 full-BZ gap 一起使用。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A continuum expansion describes only one local momentum patch. Strong and weak indices belong to the occupied manifold over the entire compact BZ. Distinct lattice regularizations can share the same low-energy Dirac form near $\Gamma$ while having different mass signs at the other TRIM, and therefore different $(\nu_0;\nu_1\nu_2\nu_3)$. A low-energy fit must consequently be used together with complete tight-binding or first-principles bands, symmetry representations, and a full-BZ gap.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="bulk mass domain wall 产生 surface Dirac theory" titleEn="A bulk-mass domain wall produces the surface Dirac theory" eyebrow="【本站推导 | Site derivation】">
+  <div class="bilingual-section__zh">
+
+把表面法向取为 $z$，令晶体与 vacuum reference 的 Dirac mass 在 $z=0$ 反号：
+
+$$
+H=-iA\Gamma_z\partial_z
++A(k_x\Gamma_x+k_y\Gamma_y)
++m(z)\Gamma_0.
+$$
+
+先令 $k_x=k_y=0$。零能方程可化为
+
+$$
+\partial_z\psi(z)
+=-\frac{m(z)}{A}\,Q\psi(z),
+\qquad Q=i\Gamma_z\Gamma_0,
+$$
+
+其中 $Q^2=1$。选择使波函数在两侧都衰减的 $Q$ eigenstate，只有当 $m(z)$ 改变符号时存在 normalizable interface solution。将 $k_x,k_y$ 项投影到该 Kramers doublet，得到表面 Dirac Hamiltonian
+
+$$
+H_{\rm surf}=v(k_xs_y-k_ys_x).
+$$
+
+若表面显式破坏 time reversal，可加入 $m_s s_z$ 并开 gap $2|m_s|$。若 slab 很薄，两个相反表面也可通过 overlap 产生 thickness-dependent hybridization gap；它与磁性 mass 的对称性来源不同。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Take the surface normal along $z$ and let the Dirac mass reverse sign between the crystal and a vacuum reference at $z=0$:
+
+$$
+H=-iA\Gamma_z\partial_z
++A(k_x\Gamma_x+k_y\Gamma_y)
++m(z)\Gamma_0.
+$$
+
+First set $k_x=k_y=0$. The zero-energy equation can be written
+
+$$
+\partial_z\psi(z)
+=-\frac{m(z)}{A}\,Q\psi(z),
+\qquad Q=i\Gamma_z\Gamma_0,
+$$
+
+where $Q^2=1$. A normalizable interface solution exists only when the sign of $m(z)$ changes, allowing one $Q$ eigenstate to decay on both sides. Projecting the $k_x,k_y$ terms onto this Kramers doublet yields the surface Dirac Hamiltonian
+
+$$
+H_{\rm surf}=v(k_xs_y-k_ys_x).
+$$
+
+Explicit time-reversal breaking at the surface permits $m_s s_z$ and opens a gap $2|m_s|$. In a thin slab, overlap between opposite surfaces can instead produce a thickness-dependent hybridization gap. Its symmetry origin differs from a magnetic mass.
+
+  </div>
+</BilingualSection>
+
+<SurfaceDomainWallExplorer />
+
+<span id="sec-28-3" class="chapter-anchor" aria-hidden="true"></span>
+
+## 28.3 三维 normal/topological insulators：Sb₂Se₃ 与 Bi₂Se₃ | Normal and Topological Insulators in Three Dimensions: Sb₂Se₃ and Bi₂Se₃
+
+<BilingualSection titleZh="同构材料中的 SOC-driven ordering change" titleEn="An SOC-driven ordering change in isostructural materials" eyebrow="【Martin 原书 | Martin source】">
+  <div class="bilingual-section__zh">
+
+Martin 以层状 Sb$_2$Se$_3$ 与 Bi$_2$Se$_3$ 为三维 normal/topological insulator 的对照。两者具有相近的晶体结构与 chemical bonding framework，但 Bi 的原子 SOC 更强。靠近 $\Gamma$ 的低能 conduction/valence states 来自不同 orbital combinations，并具有相反 inversion parity。随着 SOC 增强，Bi$_2$Se$_3$ 的这两组 Kramers-degenerate states 在 $\Gamma$ 附近交换次序；在保持其他 TRIM parity pattern 与完整 bulk gap 的条件下，这个交换翻转 strong index。
+
+对 Sb$_2$Se$_3$，Martin 的对照属于 normal ordering；对 Bi$_2$Se$_3$，SOC-induced inversion 对应 strong topological ordering，并在表面 projected bulk gap 中产生 surface band connectivity。这里“band inversion”是机制语言：它只有与八个 TRIM 的全部 occupied parity products、或等价的 full-BZ Wilson-loop result 一起，才构成 bulk classification。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Martin contrasts layered Sb$_2$Se$_3$ and Bi$_2$Se$_3$ as three-dimensional normal and topological insulators. They share a similar crystal structure and chemical-bonding framework, but the atomic SOC of Bi is stronger. Near $\Gamma$, the low-energy conduction and valence states arise from different orbital combinations and have opposite inversion parity. As SOC increases, these two Kramers-degenerate sectors exchange order near $\Gamma$ in Bi$_2$Se$_3$. If the parity pattern at the other TRIM and the complete bulk gap remain controlled, this exchange flips the strong index.
+
+In Martin's comparison, Sb$_2$Se$_3$ has the normal ordering, whereas the SOC-induced inversion in Bi$_2$Se$_3$ corresponds to strong topological ordering and produces surface-band connectivity inside the projected bulk gap. “Band inversion” is mechanism language: it becomes a bulk classification only when combined with the parity products of all occupied pairs at all eight TRIM, or with an equivalent full-BZ Wilson-loop result.
+
+  </div>
+</BilingualSection>
+
+<DerivationBlock
+  title="一个 opposite-parity Kramers pair 在 Γ 交换时为何翻转 ν₀ | Why exchanging one opposite-parity Kramers pair at Γ flips ν₀"
+  assumptions={[
+    'inversion 与 time reversal 保持；',
+    '交换只发生在 Γ-like 000 TRIM；',
+    '交换的 occupied/unoccupied Kramers pairs 具有相反 parity；',
+    '其他 occupied pairs 与其他 TRIM 的 parity products 不变。',
+  ]}
+>
+
+相变前令 $\delta_{000}^{\rm old}$ 为 Γ 点全部 occupied-pair parity product。若一对 parity $+1$ 的 occupied states 与一对 parity $-1$ 的 unoccupied states 交换，则相变后
+
+$$
+\delta_{000}^{\rm new}=-\delta_{000}^{\rm old}.
+$$
+
+其他七个 $\delta$ 不变，因此
+
+$$
+\frac{(-1)^{\nu_0^{\rm new}}}{(-1)^{\nu_0^{\rm old}}}
+=\frac{\prod_{\mathbf K}\delta_{\mathbf K}^{\rm new}}
+{\prod_{\mathbf K}\delta_{\mathbf K}^{\rm old}}
+=-1.
+$$
+
+故 $\nu_0$ 翻转。三个 weak products 都只包含 $n_i=1$ 平面，不含 000，因此在该理想化单点交换中 $(\nu_1\nu_2\nu_3)$ 不变。参数路径必须在交换时闭合 Γ 点 bulk gap；若实际计算中其他位置先金属化，则绝缘体分类在该区间失效。
+
+</DerivationBlock>
+
+<BilingualCallout titleZh="从教学材料对照到可核验材料结论" titleEn="From a teaching comparison to a verifiable material claim" kind="boundary">
+  <div class="bilingual-section__zh">
+
+对具体 Sb$_2$Se$_3$/Bi$_2$Se$_3$ 计算，至少要记录结构相与原子位置、交换关联方法、SOC 处理、k 网格、目标 gap、八个 TRIM 的完整 occupied parity table 或 Wilson loop、bulk direct/indirect gap、slab orientation/termination/thickness、surface projection 与 orbital/spin localization。高对称线 bands 只能发现候选 inversion；它们不能排除 off-path pocket，也不能单独证明 full-BZ insulator 或 surface state。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A material calculation for Sb$_2$Se$_3$ or Bi$_2$Se$_3$ should record at least the structural phase and atomic positions, exchange-correlation method, SOC treatment, k mesh, target gap, the complete occupied parity table at all eight TRIM or a Wilson loop, the bulk direct and indirect gaps, slab orientation, termination and thickness, surface projection, and orbital/spin localization. High-symmetry-line bands can reveal a candidate inversion, but they cannot exclude off-path pockets or independently establish a full-BZ insulator or surface state.
+
+  </div>
+</BilingualCallout>
+
+<BilingualSection titleZh="材料证据阶梯" titleEn="Material evidence ladder" eyebrow="【判断合同 | Judgment contract】">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>来源层：</strong>确认所讨论的结构、相、SOC 与实验/计算来源。</li>
+      <li><strong>bulk spectrum 层：</strong>验证 full-BZ direct gap，并检查 indirect gap 与 Fermi level。</li>
+      <li><strong>symmetry/topology 层：</strong>在适用时计算八个 TRIM 的完整 parity products；否则计算 Wilson-loop/Wannier-center flow。</li>
+      <li><strong>boundary 层：</strong>对声明的 surface termination 计算 slab 或 surface Green function，并区分 surface-localized states 与 projected bulk continuum。</li>
+      <li><strong>convergence 层：</strong>检查 k mesh、basis/cutoff、SOC、slab thickness、vacuum、surface relaxation 与 energy window。</li>
+      <li><strong>实验连接层：</strong>ARPES、transport 或 spin texture 只能与匹配的 surface orientation、doping、temperature 和 resolution 比较。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Source layer:</strong> establish the structure, phase, SOC treatment, and experimental or computational source.</li>
+      <li><strong>Bulk-spectrum layer:</strong> verify the full-BZ direct gap and inspect the indirect gap and Fermi level.</li>
+      <li><strong>Symmetry/topology layer:</strong> compute the complete parity products at all eight TRIM when applicable; otherwise compute a Wilson-loop or Wannier-centre flow.</li>
+      <li><strong>Boundary layer:</strong> calculate a slab or surface Green function for the declared termination and distinguish surface-localized states from the projected bulk continuum.</li>
+      <li><strong>Convergence layer:</strong> check the k mesh, basis or cutoff, SOC, slab thickness, vacuum, surface relaxation, and energy window.</li>
+      <li><strong>Experimental-connection layer:</strong> compare ARPES, transport, or spin texture only for matching surface orientation, doping, temperature, and resolution.</li>
+    </ol>
+  </div>
+</BilingualSection>

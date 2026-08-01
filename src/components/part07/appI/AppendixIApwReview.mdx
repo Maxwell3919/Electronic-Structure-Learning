@@ -1,0 +1,200 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+
+<span id="section-i-5"></span>
+
+## I.5 APW 类方法中的力 | Force in APW-Type Methods
+
+<BilingualSection titleZh="Muffin-tin sphere 随原子刚性移动" titleEn="A muffin-tin sphere moves rigidly with the atom" eyebrow="【Martin I.5 | Martin I.5】">
+  <div class="bilingual-section__zh">
+
+APW、LAPW、LMTO 等 augmented-region methods 把空间分成原子中心 sphere 与 interstitial。移动原子时，可以选择让目标 sphere、其 radial core solution、nuclear potential 和 sphere 内 coordinate frame 刚性共移。这样 sphere 内纯内部项的平移导数可以消去，force 被重新组织为 sphere boundary 与 interstitial 中的 crossing contributions。
+
+这种构造与 I.1 的区域 $A/B/C$ bookkeeping 相同：sphere interior 对应 $A$，interstitial 与其他 spheres 对应 $B$，boundary matching、electrostatic coupling、basis augmentation 与 nonlocal interaction 对应 $C$。它不把 sphere 内部从总能中删除，而是把 rigid internal translation 与真正改变的 boundary data 分离。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Augmented-region methods such as APW, LAPW, and LMTO partition space into atom-centred spheres and an interstitial region. When an atom moves, one can choose a path in which the target sphere, its radial core solution, nuclear potential, and internal coordinate frame translate rigidly. Purely internal terms inside the sphere then have cancelling translation derivatives, and the force is reorganized into crossing contributions at the sphere boundary and in the interstitial.
+
+This construction is the $A/B/C$ bookkeeping of I.1: the sphere interior is $A$, the interstitial and other spheres are $B$, and boundary matching, electrostatic coupling, basis augmentation, and nonlocal interaction form $C$. The sphere interior has not been removed from the total energy; rigid internal translation has been separated from the boundary data that actually change.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Boundary-condition derivative 是 force 的组成" titleEn="The derivative of the boundary condition is part of the force" eyebrow="【APW/LAPW boundary audit | APW/LAPW boundary audit】">
+  <div class="bilingual-section__zh">
+
+APW 类 basis 在 sphere boundary 上连接 interstitial plane wave 与 radial solutions。原子移动会改变：
+
+$$
+\phi_{\mathbf k+\mathbf G}(\mathbf r-R_I),
+\qquad
+u_l(r_I,E_l),
+\qquad
+\dot u_l(r_I,E_l),
+$$
+
+以及 matching coefficients、surface normal、sphere phase factors 和 overlap/Hamiltonian matrix elements。即使 electronic coefficients 已满足 generalized eigenproblem，basis 本身的参数依赖仍产生 Pulay-like boundary contribution。
+
+在 ideal complete-basis limit，这些 terms 可与其他 derivatives 合并成 compact surface expression；有限 angular-momentum cutoff、linearization energy、local orbitals、sphere radius 或 interstitial cutoff 下，残余必须显式计算并收敛。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+An APW-type basis matches an interstitial plane wave to radial solutions at a sphere boundary. Moving the atom changes quantities such as
+
+$$
+\phi_{\mathbf k+\mathbf G}(\mathbf r-R_I),
+\qquad
+u_l(r_I,E_l),
+\qquad
+\dot u_l(r_I,E_l),
+$$
+
+as well as matching coefficients, the surface normal, sphere phase factors, and overlap and Hamiltonian matrix elements. Even when the electronic coefficients solve the generalized eigenproblem, the parameter dependence of the basis produces a Pulay-like boundary contribution.
+
+In an ideal complete-basis limit these terms can combine with other derivatives into a compact surface expression. With finite angular-momentum cutoff, linearization energy, local orbitals, sphere radius, or interstitial cutoff, the residual must be evaluated explicitly and converged.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Core、electrostatic 与 non-spherical terms" titleEn="Core, electrostatic, and nonspherical terms" eyebrow="【完整实现边界 | Complete implementation boundary】">
+  <div class="bilingual-section__zh">
+
+rigid-core cancellation 需要 core density 与 nuclear potential 在 sphere 内按同一坐标共移。若使用 relativistic core、semicore local orbitals、overlapping core tails 或 environment-dependent core treatment，必须重新审计 cancellation。electrostatic force 还依赖 sphere multipoles、interstitial potential、nuclear self/reference terms 和 sphere boundary 的 potential/normal derivative matching。
+
+full-potential calculation 中，sphere 内非球形 density/potential components 不可由 spherical pressure 代替。ASA 中有效的 compact formula 不能直接提升为 full-potential LAPW 的完整 force。自旋、SOC、noncollinear magnetism、DFT+$U$、hybrid 或 orbital-dependent terms 会增加相应 projector/response derivatives。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Rigid-core cancellation requires the core density and nuclear potential to co-move in the same internal coordinates. A relativistic core, semicore local orbitals, overlapping core tails, or an environment-dependent core treatment requires the cancellation to be audited again. The electrostatic force also depends on sphere multipoles, the interstitial potential, nuclear self and reference terms, and matching of the potential and normal derivative at the sphere boundary.
+
+In a full-potential calculation, nonspherical density and potential components inside the sphere cannot be replaced by a spherical pressure. A compact formula valid in the ASA is not automatically the complete force of a full-potential LAPW method. Spin, SOC, noncollinear magnetism, DFT+$U$, hybrid, or orbital-dependent terms add the corresponding projector and response derivatives.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="Force implementation 的四层验收" titleEn="Four acceptance layers for a force implementation" eyebrow="【验证路线 | Validation route】">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>解析恒等式：</strong>完整 force expression 与 energy derivative 的 algebraic sign、factor、sphere/boundary convention 一致。</li>
+      <li><strong>数值有限差分：</strong>对同一 SCF、basis、$k$ mesh 和 symmetry setting，analytic force 与 central finite difference 在线性区一致。</li>
+      <li><strong>参数收敛：</strong>增加 $l_{\max}$、plane-wave cutoff、local orbitals、sphere/interstitial grids 与 SCF accuracy 后 force plateau。</li>
+      <li><strong>物理接受：</strong>用该 force 得到的平衡结构、phonons 或 dynamics 对方法选择稳定，并与独立证据相容。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Analytic identity:</strong> signs, factors, and sphere and boundary conventions of the complete force expression match the energy derivative.</li>
+      <li><strong>Numerical finite difference:</strong> for the same SCF, basis, $k$ mesh, and symmetry setting, the analytic force agrees with a central finite difference in the linear regime.</li>
+      <li><strong>Parameter convergence:</strong> the force reaches a plateau as $l_{\max}$, plane-wave cutoff, local orbitals, sphere and interstitial grids, and SCF accuracy are increased.</li>
+      <li><strong>Physical acceptance:</strong> equilibrium structures, phonons, or dynamics obtained from the force are stable to method choices and compatible with independent evidence.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<span id="review"></span>
+
+## 交叉引用、常见误判、原创练习与来源 | Cross-References, Misjudgments, Original Exercises, and Sources
+
+<BilingualSection titleZh="与主章和附录的接口" titleEn="Interfaces to chapters and Appendices" eyebrow="【课程交叉引用 | Course cross-reference】">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>Chapter 3：Born–Oppenheimer energy surface、Hellmann–Feynman theorem 与 total-energy derivatives。</li>
+      <li>Chapter 7：Kohn–Sham stationarity、double counting 与 eigenvalue sum。</li>
+      <li>Chapters 13–15：plane-wave/local-orbital force、Pulay terms 与 finite basis。</li>
+      <li>Chapters 16–17：APW、KKR、LMTO、LAPW 与 augmented boundary matching。</li>
+      <li>Appendix F：Coulomb reference、pseudocharge、self/background terms。</li>
+      <li>Appendix G：macroscopic stress、pressure 与 strain derivative。</li>
+      <li>Appendix H：stress-density gauge、surface traction 与 integrated quantities。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>Chapter 3: the Born–Oppenheimer energy surface, Hellmann–Feynman theorem, and total-energy derivatives.</li>
+      <li>Chapter 7: Kohn–Sham stationarity, double counting, and eigenvalue sums.</li>
+      <li>Chapters 13–15: plane-wave and localized-orbital forces, Pulay terms, and finite bases.</li>
+      <li>Chapters 16–17: APW, KKR, LMTO, LAPW, and augmented boundary matching.</li>
+      <li>Appendix F: Coulomb references, pseudocharges, self terms, and backgrounds.</li>
+      <li>Appendix G: macroscopic stress, pressure, and strain derivatives.</li>
+      <li>Appendix H: stress-density gauges, surface traction, and integrated quantities.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="十二个高频误判" titleEn="Twelve recurrent misjudgments" eyebrow="【诊断清单 | Diagnostic checklist】">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>把驻定点的一阶路径自由误写成有限位移下所有路径能量相同。</li>
+      <li>SCF residual 未收敛，却仍删除 $\langle\delta E/\delta x,dx/d\lambda\rangle$。</li>
+      <li>把 rigid-region path 当成冻结或忽略 core energy。</li>
+      <li>区域 boundary 穿过 nonlocal projector，却遗漏 crossing derivative。</li>
+      <li>从两个不同 self-consistent potentials 直接相减 occupied eigenvalue sums。</li>
+      <li>忽略 occupation、Fermi level 或 potential zero 的变化。</li>
+      <li>把 ASA spherical pressure 当成一般 anisotropic stress tensor。</li>
+      <li>用单个 pressure point 声称 EOS 或 bulk modulus 已收敛。</li>
+      <li>只积分 open surface patch，称其为 closed-surface atomic force。</li>
+      <li>只保留 Maxwell 或 kinetic flux 中的一项，称其为总力。</li>
+      <li>在 LAPW 中忽略 sphere-motion、matching 或 overlap derivatives。</li>
+      <li>analytic force 与 finite difference 不一致时，只增大位移而不检查线性区和 SCF noise。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Treating first-order path freedom at a stationary point as equality of all finite-displacement path energies.</li>
+      <li>Dropping $\langle\delta E/\delta x,dx/d\lambda\rangle$ with an unconverged SCF residual.</li>
+      <li>Treating a rigid-region path as freezing or omitting the core energy.</li>
+      <li>Letting the boundary cut a nonlocal projector while omitting its crossing derivative.</li>
+      <li>Subtracting occupied eigenvalue sums from two different self-consistent potentials.</li>
+      <li>Ignoring changes in occupations, Fermi level, or potential zero.</li>
+      <li>Using an ASA spherical pressure as a general anisotropic stress tensor.</li>
+      <li>Claiming a converged EOS or bulk modulus from one pressure point.</li>
+      <li>Calling an open surface patch a closed-surface atomic force.</li>
+      <li>Keeping only a Maxwell or kinetic flux and calling it the total force.</li>
+      <li>Ignoring sphere-motion, matching, or overlap derivatives in LAPW.</li>
+      <li>Increasing the finite displacement when analytic and finite-difference forces disagree, without checking the linear regime and SCF noise.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="十道原创练习" titleEn="Ten original exercises" eyebrow="【原创 assessment | Original assessment】">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>路径导数：</strong>对 $E(x,\lambda)=b\lambda+c\lambda^2/2+k(x-a\lambda)^2/2$，证明任意 $x=s\lambda$ 的一阶导数相同并求二阶差。</li>
+      <li><strong>Residual contamination：</strong>令参考点存在小 residual $r=\partial E/\partial x$，推导 trial path slope 对 force error 的线性贡献。</li>
+      <li><strong>Rigid-region bookkeeping：</strong>把 pair interactions 分成 A–A、B–B、A–B，证明 rigid translation 时只有 crossing pairs 贡献。</li>
+      <li><strong>Frozen reference：</strong>对二次 density functional 推导 relaxed correction $-(\lambda q)^2/(2K)$。</li>
+      <li><strong>Occupation crossing：</strong>构造两能级 crossing，说明为什么 occupied eigenvalue sum 的普通 Taylor expansion 失效。</li>
+      <li><strong>Pressure integral：</strong>从给定 analytic $P(V)$ 重建 $E(V_2)-E(V_1)$，并用有限差分检查符号。</li>
+      <li><strong>Bulk stability：</strong>找出一个满足 $P=0$ 但 $B_T<0$ 的模型 stationary point。</li>
+      <li><strong>Closed surface：</strong>对线性二维 stress tensor 逐面计算 traction，验证与体积 divergence 积分一致。</li>
+      <li><strong>Open patch error：</strong>删去一个 face，证明误差等于该 face 的 omitted flux。</li>
+      <li><strong>APW audit：</strong>为一个 moving muffin-tin sphere 列出 radial、matching、phase、overlap、electrostatic、core 与 nonlocal derivatives，并设计 finite-difference convergence matrix。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Path derivative:</strong> for $E(x,\lambda)=b\lambda+c\lambda^2/2+k(x-a\lambda)^2/2$, prove that every $x=s\lambda$ has the same first derivative and derive the second-order difference.</li>
+      <li><strong>Residual contamination:</strong> introduce a small reference residual $r=\partial E/\partial x$ and derive the trial-path-slope contribution to the force error.</li>
+      <li><strong>Rigid-region bookkeeping:</strong> divide pair interactions into A–A, B–B, and A–B sets and prove that only crossing pairs contribute under rigid translation.</li>
+      <li><strong>Frozen reference:</strong> derive the relaxed correction $-(\lambda q)^2/(2K)$ for a quadratic density functional.</li>
+      <li><strong>Occupation crossing:</strong> construct a two-level crossing and show why the ordinary Taylor expansion of the occupied eigenvalue sum fails.</li>
+      <li><strong>Pressure integral:</strong> reconstruct $E(V_2)-E(V_1)$ from a given analytic $P(V)$ and check the sign by finite differences.</li>
+      <li><strong>Bulk stability:</strong> find a model stationary point with $P=0$ but $B_T<0$.</li>
+      <li><strong>Closed surface:</strong> calculate traction face by face for a linear two-dimensional stress tensor and verify equality with the volume divergence integral.</li>
+      <li><strong>Open-patch error:</strong> remove one face and prove that the error equals its omitted flux.</li>
+      <li><strong>APW audit:</strong> list radial, matching, phase, overlap, electrostatic, core, and nonlocal derivatives for a moving muffin-tin sphere and design a finite-difference convergence matrix.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="来源与版权边界" titleEn="Source and copyright boundary" kind="note">
+  <div class="bilingual-section__zh">
+    <p>主要来源为 Richard M. Martin, <em>Electronic Structure: Basic Theory and Practical Methods</em>, 2nd ed., Appendix I, printed pp. 637–643，分节 I.1–I.5、方程 I.1–I.11。网站使用书目身份、节标题、页码定位和公式对象作为来源地图；正文、推导、数值核、图形和练习均为原创。来源 Figure I.1、caption、further-reading prose、Exercises I.1–I.2 和答案未复制。</p>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <p>The primary source is Richard M. Martin, <em>Electronic Structure: Basic Theory and Practical Methods</em>, 2nd ed., Appendix I, printed pp. 637–643, sections I.1–I.5 and equations I.1–I.11. Bibliographic identity, section titles, page locators, and equation objects provide the source map; exposition, derivations, numerical kernels, diagrams, and exercises are original. Source Figure I.1, its caption, further-reading prose, Exercises I.1–I.2, and answers are not reproduced.</p>
+  </div>
+</BilingualCallout>

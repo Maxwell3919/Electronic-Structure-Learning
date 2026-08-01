@@ -1,0 +1,138 @@
+---
+import { densityModelDefaults, periodicKineticGauge } from '../../../data/part07/energyStressDensityModel.mjs';
+
+const defaults = periodicKineticGauge();
+const width = 720;
+const height = 340;
+const left = 60;
+const right = 680;
+const top = 42;
+const bottom = 270;
+const xMap = (x) => left + (right - left) * x / (2 * Math.PI);
+const maxAbs = Math.max(...defaults.tLaplacian.map(Math.abs), ...defaults.tGradient.map(Math.abs), ...defaults.gaugeDifference.map(Math.abs));
+const yMap = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.42 / maxAbs;
+const pathFor = (values) => values.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(defaults.grid[index]).toFixed(2)} ${yMap(value).toFixed(2)}`).join(' ');
+const t1Path = pathFor(defaults.tLaplacian);
+const t2Path = pathFor(defaults.tGradient);
+const differencePath = pathFor(defaults.gaugeDifference);
+const fallbackRows = [0.2, 0.55, 0.8].map((amplitude) => ({ amplitude, ...periodicKineticGauge({ amplitude }) }));
+---
+
+<figure class="chapter-visual kinetic-gauge" data-kinetic-gauge>
+  <figcaption>
+    <strong>原创交互模型：两种 kinetic-energy density 与 density Laplacian</strong>
+    <span lang="en">Original interactive model: two kinetic-energy densities and the density Laplacian</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls kinetic-gauge__controls">
+    <label>
+      <span>orbital modulation a | 轨道调制</span>
+      <input type="range" min="0.05" max="0.90" step="0.05" value={densityModelDefaults.kineticGauge.amplitude} data-kinetic-amplitude />
+      <output data-kinetic-amplitude-output>{densityModelDefaults.kineticGauge.amplitude.toFixed(2)}</output>
+    </label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="kinetic-gauge-title kinetic-gauge-desc">
+    <title id="kinetic-gauge-title">Laplacian and positive kinetic energy densities for one periodic orbital</title>
+    <desc id="kinetic-gauge-desc">
+      For a normalized real periodic orbital, minus one half psi times its second derivative and one half the squared first derivative differ pointwise by one quarter of the density second derivative. Their full-period integrals agree.
+    </desc>
+    <line x1={left} y1={(top + bottom) / 2} x2={right} y2={(top + bottom) / 2} class="plot-guide" />
+    <line x1={left} y1={bottom} x2={right} y2={bottom} class="plot-axis" />
+    <line x1={left} y1={top} x2={left} y2={bottom} class="plot-axis" />
+    <path d={t1Path} class="kinetic-gauge__t1" data-kinetic-t1-path />
+    <path d={t2Path} class="kinetic-gauge__t2" data-kinetic-t2-path />
+    <path d={differencePath} class="kinetic-gauge__difference" data-kinetic-difference-path />
+    <text x={right} y="302" text-anchor="end">x</text>
+    <text x="15" y="54">t(x)</text>
+    <text x={right - 165} y="58" class="kinetic-gauge__label-t1">t(1)=−½ψψ″</text>
+    <text x={right - 165} y="80" class="kinetic-gauge__label-t2">t(2)=½|ψ′|²</text>
+    <text x={right - 165} y="102" class="kinetic-gauge__label-difference">t(2)−t(1)=¼n″</text>
+  </svg>
+
+  <div class="chapter-visual__readout kinetic-gauge__readout" aria-live="polite">
+    <span>orbital norm</span><strong data-kinetic-norm>{defaults.orbitalNorm.toFixed(9)}</strong>
+    <span>∫t(1) dx</span><strong data-kinetic-integral-t1>{defaults.integralLaplacianGauge.toFixed(9)}</strong>
+    <span>∫t(2) dx</span><strong data-kinetic-integral-t2>{defaults.integralGradientGauge.toFixed(9)}</strong>
+    <span>∫n″ dx</span><strong data-kinetic-integral-laplacian>{defaults.integralDensityLaplacian.toExponential(3)}</strong>
+    <span>max identity error</span><strong data-kinetic-identity-error>0.00e+0</strong>
+  </div>
+
+  <div class="kinetic-gauge__fallback">
+    <p><strong>无 JavaScript 参考表 | No-JavaScript reference table</strong></p>
+    <table>
+      <thead><tr><th>a</th><th>orbital norm</th><th>∫t(1)</th><th>∫t(2)</th></tr></thead>
+      <tbody>
+        {fallbackRows.map((entry) => (
+          <tr>
+            <td>{entry.amplitude.toFixed(2)}</td>
+            <td>{entry.orbitalNorm.toFixed(7)}</td>
+            <td>{entry.integralLaplacianGauge.toFixed(7)}</td>
+            <td>{entry.integralGradientGauge.toFixed(7)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>normalized real periodic orbital <code>ψ=N(1+a cos x)</code>。比较 Martin H.8 的 <code>t(1)=−½ψψ″</code> 与 <code>t(2)=½|ψ′|²</code>。</p>
+    <p lang="en"><strong>Model:</strong> a normalized real periodic orbital <code>ψ=N(1+a cos x)</code>. The two densities are Martin H.8 forms <code>t(1)=−½ψψ″</code> and <code>t(2)=½|ψ′|²</code>.</p>
+    <p><strong>验收：</strong>逐点满足 <code>t(2)−t(1)=¼n″</code>；周期积分满足 <code>∫t(1)=∫t(2)</code> 与 <code>∫n″=0</code>。两条曲线可显著不同，且 <code>t(1)</code> 不要求处处为正。</p>
+    <p lang="en"><strong>Acceptance:</strong> pointwise, <code>t(2)−t(1)=¼n″</code>; over the period, <code>∫t(1)=∫t(2)</code> and <code>∫n″=0</code>. The two curves can differ strongly, and <code>t(1)</code> need not be positive everywhere.</p>
+    <p><strong>边界：</strong>积分等价依赖 periodic cancellation 或 bound-state decay。有限 region、截断 grid、非光滑 basis、pseudopotential core region 或不匹配 boundary 会留下 surface/discretization term。</p>
+    <p lang="en"><strong>Boundary:</strong> integral equivalence requires periodic cancellation or bound-state decay. A finite region, truncated grid, nonsmooth basis, pseudopotential core region, or mismatched boundary leaves a surface or discretization term.</p>
+  </div>
+</figure>
+
+<script>
+  import { periodicKineticGauge } from '../../../data/part07/energyStressDensityModel.mjs';
+
+  document.querySelectorAll('[data-kinetic-gauge]').forEach((root) => {
+    const amplitudeInput = root.querySelector('[data-kinetic-amplitude]');
+    if (!(amplitudeInput instanceof HTMLInputElement)) return;
+    const amplitudeOutput = root.querySelector('[data-kinetic-amplitude-output]');
+    const t1Path = root.querySelector('[data-kinetic-t1-path]');
+    const t2Path = root.querySelector('[data-kinetic-t2-path]');
+    const differencePath = root.querySelector('[data-kinetic-difference-path]');
+    const outputs = {
+      norm: root.querySelector('[data-kinetic-norm]'), t1: root.querySelector('[data-kinetic-integral-t1]'), t2: root.querySelector('[data-kinetic-integral-t2]'), laplacian: root.querySelector('[data-kinetic-integral-laplacian]'), error: root.querySelector('[data-kinetic-identity-error]'),
+    };
+    const left = 60; const right = 680; const top = 42; const bottom = 270;
+    const xMap = (x) => left + (right - left) * x / (2 * Math.PI);
+    const update = () => {
+      const amplitude = Number(amplitudeInput.value);
+      const result = periodicKineticGauge({ amplitude });
+      const maxAbs = Math.max(...result.tLaplacian.map(Math.abs), ...result.tGradient.map(Math.abs), ...result.gaugeDifference.map(Math.abs), 1e-12);
+      const yMap = (value) => (top + bottom) / 2 - value * (bottom - top) * 0.42 / maxAbs;
+      const makePath = (values) => values.map((value, index) => `${index === 0 ? 'M' : 'L'} ${xMap(result.grid[index]).toFixed(2)} ${yMap(value).toFixed(2)}`).join(' ');
+      if (t1Path instanceof SVGPathElement) t1Path.setAttribute('d', makePath(result.tLaplacian));
+      if (t2Path instanceof SVGPathElement) t2Path.setAttribute('d', makePath(result.tGradient));
+      if (differencePath instanceof SVGPathElement) differencePath.setAttribute('d', makePath(result.gaugeDifference));
+      const error = Math.max(...result.gaugeDifference.map((value, index) => Math.abs(value - 0.25 * result.densityLaplacian[index])));
+      if (amplitudeOutput instanceof HTMLOutputElement) amplitudeOutput.value = amplitude.toFixed(2);
+      if (outputs.norm instanceof HTMLElement) outputs.norm.textContent = result.orbitalNorm.toFixed(9);
+      if (outputs.t1 instanceof HTMLElement) outputs.t1.textContent = result.integralLaplacianGauge.toFixed(9);
+      if (outputs.t2 instanceof HTMLElement) outputs.t2.textContent = result.integralGradientGauge.toFixed(9);
+      if (outputs.laplacian instanceof HTMLElement) outputs.laplacian.textContent = result.integralDensityLaplacian.toExponential(3);
+      if (outputs.error instanceof HTMLElement) outputs.error.textContent = error.toExponential(2);
+    };
+    amplitudeInput.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .kinetic-gauge { overflow-x: auto; }
+  .kinetic-gauge svg { width: 100%; min-width: 42rem; }
+  .kinetic-gauge text { fill: currentColor; font-size: 13px; }
+  .kinetic-gauge__t1 { fill: none; stroke: currentColor; stroke-width: 2.3; }
+  .kinetic-gauge__t2 { fill: none; stroke: var(--sl-color-accent-high); stroke-width: 2.6; }
+  .kinetic-gauge__difference { fill: none; stroke: var(--sl-color-gray-2); stroke-width: 2; stroke-dasharray: 7 4; }
+  .kinetic-gauge__label-t1 { fill: currentColor; }
+  .kinetic-gauge__label-t2 { fill: var(--sl-color-accent-high); }
+  .kinetic-gauge__label-difference { fill: var(--sl-color-gray-2); }
+  .kinetic-gauge__controls label { display: grid; gap: 0.35rem; max-width: 24rem; }
+  .kinetic-gauge__readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.4rem 1rem; }
+  .kinetic-gauge__fallback { max-width: 42rem; }
+</style>

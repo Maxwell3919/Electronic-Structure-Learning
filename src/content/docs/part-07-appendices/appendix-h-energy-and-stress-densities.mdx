@@ -1,20 +1,18 @@
 ---
-title: "Appendix H · Energy and Stress Densities"
-description: "Martin Appendix H 的目录级阅读骨架；正文待填充。"
+title: "Appendix H · Energy and Stress Densities | 能量与应力密度"
+description: "从局域 energy/stress gauge、Coulomb 与 kinetic density、surface integrals，到 fermionic excess kinetic energy 与 ELF 的双语参考附录。"
 sidebar:
   order: 8
   label: "Appendix H · Energy and Stress Densities"
 ---
 
-import ReadingOutline from '../../../components/ReadingOutline.astro';
-import catalog from '../../../data/martin/index.mjs';
+import SourceNote from '../../../components/SourceNote.astro';
+import AppendixHBody from '../../../components/part07/appH/AppendixHBody.astro';
 
-<ReadingOutline
-  sourceTitle={catalog.source.title}
-  sourceAuthor={catalog.source.author}
-  sourceRole={catalog.source.role}
-  unitLabel={catalog.parts[6].units[7].label}
-  sourcePage={catalog.parts[6].units[7].page}
-  sections={catalog.parts[6].units[7].sections}
-  exercisesPage={catalog.parts[6].units[7].exercisesPage ?? null}
+<SourceNote
+  source="Richard M. Martin, Electronic Structure: Basic Theory and Practical Methods, 2nd ed."
+  locator="Appendix H, printed pages 627–636; sections H.1–H.4; equations H.1–H.21. Source figures, further-reading prose, and exercises are not reproduced."
+  status="appendix-content-complete"
 />
+
+<AppendixHBody />

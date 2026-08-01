@@ -76,12 +76,21 @@ for (let r = 0.25; r <= 8; r += 0.25) {
   }
 }
 
+// The model coupling xi is an energy multiplying the dimensionless operator
+// Lambda_LS = (L dot S) / hbar^2. The angular eigenvalues therefore carry no
+// additional units, and the degeneracy-weighted energy trace must vanish.
 for (let l = 1; l <= 6; l += 1) {
-  const xi = 0.37;
-  const ePlus = xi * l / 2;
-  const eMinus = -xi * (l + 1) / 2;
+  const xiEnergy = 0.37;
+  const lambdaPlus = l / 2;
+  const lambdaMinus = -(l + 1) / 2;
+  const ePlus = xiEnergy * lambdaPlus;
+  const eMinus = xiEnergy * lambdaMinus;
   const trace = (2 * l + 2) * ePlus + (2 * l) * eMinus;
   assert.ok(Math.abs(trace) < 1e-12, `spin-orbit trace failed for l=${l}`);
+  assert.ok(
+    Math.abs((ePlus - eMinus) - xiEnergy * (2 * l + 1) / 2) < 1e-12,
+    `spin-orbit splitting failed for l=${l}`,
+  );
 }
 
 const energies = { minus: -98.6, neutral: -100.0, plus: -99.3 };
@@ -106,10 +115,92 @@ const chapterPath = 'src/content/docs/part-03-important-preliminaries-on-atoms/c
 const chapter = readFileSync(chapterPath, 'utf8');
 assert.ok(!chapter.includes('outline · 正文待填充'), 'Chapter 10 still contains the generated outline marker');
 assert.ok(!chapter.includes('TODO'), 'Chapter 10 still contains TODO');
+assert.match(chapter, /Chapter10ResponsiveRoot/);
+assert.match(chapter, /<Chapter10ResponsiveRoot>[\s\S]*<Chapter10Contents/);
+assert.match(chapter, /<Chapter10Review \/>[\s\S]*<\/Chapter10ResponsiveRoot>/);
 assert.match(chapter, /Chapter10Radial/);
 assert.match(chapter, /Chapter10SphericalAtom/);
+assert.match(chapter, /SpinOrbitConventionAudit/);
 assert.match(chapter, /Chapter10RelativityOpenShell/);
 assert.match(chapter, /Chapter10EnergeticsASA/);
 assert.match(chapter, /Chapter10Review/);
 
-console.log('Part III Chapter 10 deterministic validation passed.');
+const responsiveRoot = readFileSync(
+  'src/components/part03/ch10/Chapter10ResponsiveRoot.astro',
+  'utf8',
+);
+assert.match(responsiveRoot, /data-chapter10-responsive-root/);
+assert.match(responsiveRoot, /\.chapter10-root[\s\S]*min-width:\s*0/);
+assert.match(responsiveRoot, /\.chapter10-root[\s\S]*max-width:\s*100%/);
+assert.match(responsiveRoot, /\.chapter10-root \.bilingual-section__grid/);
+assert.match(responsiveRoot, /\.chapter10-root \.bilingual-section__zh/);
+assert.match(responsiveRoot, /\.chapter10-root \.bilingual-section__en/);
+assert.match(responsiveRoot, /\.chapter10-root \.katex-display/);
+assert.match(responsiveRoot, /overflow-x:\s*auto/);
+assert.match(responsiveRoot, /overflow-y:\s*hidden/);
+assert.match(responsiveRoot, /\[data-soc-math-scroll\] \.katex-display/);
+assert.match(responsiveRoot, /overflow:\s*visible/);
+assert.match(responsiveRoot, /overflow-wrap:\s*anywhere/);
+
+const conventionAudit = readFileSync(
+  'src/components/part03/ch10/SpinOrbitConventionAudit.mdx',
+  'utf8',
+);
+assert.match(conventionAudit, /data-spin-orbit-unit-convention/);
+assert.match(conventionAudit, /data-normalized-operator="LdotS-over-hbar2"/);
+assert.match(conventionAudit, /data-xi-unit="energy"/);
+assert.ok(conventionAudit.includes('10.14'), 'Spin-orbit convention audit must identify Martin Eq. (10.14)');
+assert.match(conventionAudit, /potential energy|电子势能/);
+assert.match(conventionAudit, /energy divided by \$\\hbar\^2\$|能量除以 \$\\hbar\^2\$/);
+assert.match(conventionAudit, /cannot be mixed under one operator definition|不能在同一算符定义下混用/);
+assert.match(conventionAudit, /SpinOrbitMathScroll/);
+assert.equal(
+  [...conventionAudit.matchAll(/<SpinOrbitMathScroll\b/g)].length,
+  6,
+  'The bilingual SOC convention audit must contain six local equation scrollers',
+);
+
+const mathScroll = readFileSync(
+  'src/components/part03/ch10/SpinOrbitMathScroll.astro',
+  'utf8',
+);
+assert.match(mathScroll, /data-soc-math-scroll/);
+assert.match(mathScroll, /role="region"/);
+assert.match(mathScroll, /tabindex="0"/);
+assert.match(mathScroll, /overflow-x:\s*auto/);
+assert.match(mathScroll, /overflow-y:\s*hidden/);
+assert.match(mathScroll, /max-width:\s*100%/);
+assert.match(mathScroll, /width:\s*max-content/);
+assert.match(mathScroll, /min-width:\s*100%/);
+
+const relativity = readFileSync(
+  'src/components/part03/ch10/Chapter10RelativityOpenShell.mdx',
+  'utf8',
+);
+assert.match(relativity, /\\hat\\Lambda_\{LS\}/);
+assert.match(relativity, /\\frac\{\\mathbf L\\cdot\\mathbf S\}\{\\hbar\^2\}/);
+assert.match(relativity, /electron potential energy|电子势能/);
+assert.doesNotMatch(
+  relativity,
+  /represented by ξ_nl L·S|写成 ξ_nl L·S/,
+  'Chapter 10 must not assign an energy-valued xi directly to the dimensional L dot S operator',
+);
+
+const spinOrbitExplorer = readFileSync(
+  'src/components/part03/ch10/SpinOrbitExplorer.astro',
+  'utf8',
+);
+assert.match(spinOrbitExplorer, /data-normalized-operator="LdotS-over-hbar2"/);
+assert.match(spinOrbitExplorer, /data-xi-unit="energy"/);
+assert.ok(
+  spinOrbitExplorer.includes('H_SO(model)=ξ(L·S/ℏ²)'),
+  'Spin-orbit explorer must display the normalized model Hamiltonian',
+);
+assert.ok(spinOrbitExplorer.includes('eV/ℏ²'), 'Spin-orbit explorer must state direct-operator coefficient units');
+assert.doesNotMatch(
+  spinOrbitExplorer,
+  /The model Hamiltonian is H_SO = ξ L·S|模型 Hamiltonian 为 H_SO = ξ L·S/,
+  'Spin-orbit explorer retains the dimensionally ambiguous model caption',
+);
+
+console.log('Part III Chapter 10 deterministic validation passed: radial models, spin-orbit unit convention, chapter-root formula containment, local equation containment, Delta-SCF arithmetic, and route registration.');

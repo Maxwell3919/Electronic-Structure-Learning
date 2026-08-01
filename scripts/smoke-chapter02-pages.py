@@ -165,6 +165,19 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             if "/Electronic-Structure-Learning/" not in href:
                 fail(f"Chapter link escaped the Pages base path: {href}")
 
+        stoner_audit = driver.find_element(By.CSS_SELECTOR, "[data-ch2-stoner-convention-audit]")
+        if not stoner_audit.is_displayed():
+            fail("Stoner source-convention audit is hidden")
+        stoner_text = stoner_audit.text
+        for marker in (
+            "positive magnetization",
+            "per-spin or two-spin DOS",
+            "comparable only after",
+            "confirmed erratum",
+        ):
+            if marker not in stoner_text:
+                fail(f"Stoner source-convention audit lost marker: {marker}")
+
         pressure_slider = driver.find_element(By.CSS_SELECTOR, "[data-eos-pressure]")
         stable_phase = driver.find_element(By.CSS_SELECTOR, "[data-eos-stable]")
         focus_for_keyboard(driver, pressure_slider)
@@ -180,8 +193,18 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         )
 
         ks_slider = driver.find_element(By.CSS_SELECTOR, "[data-gap-ks]")
+        correction_slider = driver.find_element(By.CSS_SELECTOR, "[data-gap-correction]")
+        binding_slider = driver.find_element(By.CSS_SELECTOR, "[data-gap-binding]")
         gap_equation = driver.find_element(By.CSS_SELECTOR, "[data-gap-equation]")
         ks_bar = driver.find_element(By.CSS_SELECTOR, "[data-gap-ks-bar]")
+        gap_readout = driver.find_element(By.CSS_SELECTOR, "[data-gap-regime]")
+        gap_note_zh = driver.find_element(By.CSS_SELECTOR, "[data-gap-note-zh]")
+        gap_note_en = driver.find_element(By.CSS_SELECTOR, "[data-gap-note-en]")
+        if gap_readout.get_attribute("aria-live") != "polite":
+            fail("Gap status is not an aria-live region")
+        if gap_readout.get_attribute("aria-atomic") != "true":
+            fail("Gap status is not announced atomically")
+
         old_equation = gap_equation.text
         old_width = ks_bar.get_attribute("width")
         focus_for_keyboard(driver, ks_slider)
@@ -189,6 +212,18 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         WebDriverWait(driver, 10).until(
             lambda _: gap_equation.text != old_equation
             and ks_bar.get_attribute("width") != old_width
+        )
+
+        focus_for_keyboard(driver, ks_slider)
+        ks_slider.send_keys(Keys.HOME)
+        focus_for_keyboard(driver, correction_slider)
+        correction_slider.send_keys(Keys.HOME)
+        focus_for_keyboard(driver, binding_slider)
+        binding_slider.send_keys(Keys.END)
+        WebDriverWait(driver, 10).until(
+            lambda _: gap_readout.get_attribute("data-gap-regime") == "outside-model-regime"
+            and "绘图截断" in gap_note_zh.text
+            and "plotting clamp" in gap_note_en.text
         )
 
         route_select = driver.find_element(By.CSS_SELECTOR, "[data-property-select]")
@@ -210,7 +245,9 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             "katex_count": katex_count,
             "source_map_rows": source_rows,
             "contents_links": len(contents_links),
-            "keyboard_controls": ["eos_pressure", "ks_gap", "property_route"],
+            "stoner_convention_audit": True,
+            "bilingual_gap_live_status": True,
+            "keyboard_controls": ["eos_pressure", "ks_gap", "gap_regime", "property_route"],
         }
 
         driver.set_window_size(390, 844)
@@ -222,11 +259,14 @@ def desktop_and_interaction_smoke(report: dict) -> None:
             fail("Narrow-screen bilingual layout is not a single column")
         if grid_column_count(driver, ".property-router__grid") != 1:
             fail("Narrow-screen property router is not a single column")
+        if not driver.find_element(By.CSS_SELECTOR, "[data-ch2-stoner-convention-audit]").is_displayed():
+            fail("Narrow-screen Stoner convention audit is hidden")
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-02-narrow.png"))
         report["narrow"] = {
             "viewport": [390, 844],
             "bilingual_columns": 1,
             "property_router_columns": 1,
+            "stoner_convention_audit": True,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-02-desktop-failure.png")
@@ -256,12 +296,27 @@ def no_javascript_smoke(report: dict) -> None:
         if len(driver.find_elements(By.CSS_SELECTOR, ".chapter-source-map tbody tr")) != 17:
             fail("No-JavaScript page lost one or more source-map sections")
 
+        stoner_audit = driver.find_element(By.CSS_SELECTOR, "[data-ch2-stoner-convention-audit]")
+        if not stoner_audit.is_displayed():
+            fail("No-JavaScript page hides the Stoner source-convention audit")
+        gap_note_zh = driver.find_element(By.CSS_SELECTOR, "[data-gap-note-zh]")
+        gap_note_en = driver.find_element(By.CSS_SELECTOR, "[data-gap-note-en]")
+        if not gap_note_zh.is_displayed() or not gap_note_en.is_displayed():
+            fail("No-JavaScript page lost one bilingual gap-status line")
+        gap_contract = driver.find_element(
+            By.CSS_SELECTOR, "[data-gap-explorer] .chapter-visual__contract"
+        )
+        if "绘图截断" not in gap_contract.text or "plotting clamp" not in gap_contract.text:
+            fail("Gap contract lost the outside-model plotting-clamp boundary")
+
         driver.save_screenshot(str(ARTIFACT_DIR / "chapter-02-no-javascript.png"))
         report["no_javascript"] = {
             "visualization_contracts": len(contracts),
             "static_svg_count": len(static_svgs),
             "property_route_cards": len(route_cards),
             "source_map_rows": 17,
+            "stoner_convention_audit": True,
+            "bilingual_gap_status": True,
         }
     except Exception:
         save_failure_screenshot(driver, "chapter-02-no-javascript-failure.png")

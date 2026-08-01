@@ -1,0 +1,272 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import ElfExplorer from './ElfExplorer.astro';
+
+<span id="section-h-4"></span>
+
+## H.4 电子局域函数 | Electron Localization Function
+
+<BilingualSection titleZh="ELF 使用 unique fermionic excess kinetic density" titleEn="ELF uses the unique fermionic excess kinetic density" eyebrow="【Martin Eq. H.21 | Martin Eq. H.21】">
+  <div class="bilingual-section__zh">
+
+对每个 spin channel $\sigma$，Martin 采用 Becke–Edgecombe 定义
+
+$$
+\mathrm{ELF}_\sigma(\mathbf r)
+=\frac{1}{1+\chi_\sigma(\mathbf r)^2},
+\qquad
+\chi_\sigma
+=\frac{t_{x\sigma}}{t_{\mathrm{TF},\sigma}}.
+$$
+
+$t_{x\sigma}=n_\sigma\tau_{x\sigma}$ 是 H.13/H.16 的 fermionic excess kinetic-energy density；$t_{\mathrm{TF},\sigma}$ 是在同一 local spin density 下 homogeneous spin gas 的 Thomas–Fermi kinetic density。三维 atomic units 中常用
+
+$$
+t_{\mathrm{TF},\sigma}
+=\frac{3}{10}(6\pi^2)^{2/3}n_\sigma^{5/3}.
+$$
+
+normalization 使 ELF dimensionless 且 bounded。必须对每个 spin 分量单独构造后再声明所展示的 spin-resolved、spin-averaged 或 combined quantity；不同软件的 combined ELF convention 需查文档。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For each spin channel $\sigma$, Martin adopts the Becke-Edgecombe definition
+
+$$
+\mathrm{ELF}_\sigma(\mathbf r)
+=\frac{1}{1+\chi_\sigma(\mathbf r)^2},
+\qquad
+\chi_\sigma
+=\frac{t_{x\sigma}}{t_{\mathrm{TF},\sigma}}.
+$$
+
+Here $t_{x\sigma}=n_\sigma\tau_{x\sigma}$ is the fermionic excess kinetic-energy density of H.13 and H.16, while $t_{\mathrm{TF},\sigma}$ is the Thomas-Fermi kinetic density of a homogeneous spin gas at the same local spin density. In three-dimensional atomic units, the common expression is
+
+$$
+t_{\mathrm{TF},\sigma}
+=\frac{3}{10}(6\pi^2)^{2/3}n_\sigma^{5/3}.
+$$
+
+This normalization makes ELF dimensionless and bounded. It must first be constructed separately for each spin component, after which the reported spin-resolved, spin-averaged, or combined quantity must be stated. Combined-ELF conventions can differ among software packages and require documentation.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="三个解析极限固定数值尺度" titleEn="Three analytic limits fix the numerical scale" eyebrow="【Martin H.4 | Martin H.4】">
+  <div class="bilingual-section__zh">
+
+H.21 立即给出
+
+$$
+0<\mathrm{ELF}\le1
+\quad\text{for finite }\chi\ge0.
+$$
+
+三个 reference limits 是：
+
+1. 单个 occupied spatial orbital 的 spin channel：$t_x=0$，所以 $\chi=0$、ELF$=1$；
+2. homogeneous metal/reference gas：$t_x=t_{\mathrm{TF}}$，所以 $\chi=1$、ELF$=1/2$；
+3. excess same-spin kinetic density 远大于 local TF reference：$\chi\gg1$、ELF$\to0$。
+
+ELF$=1$ 不是“电子完全静止”，ELF$=1/2$ 不是“没有 bonding”，ELF$\to0$ 也不是“没有电子”。它们只描述相对于 same-density homogeneous reference 的 excess same-spin kinetic curvature。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Equation H.21 immediately gives
+
+$$
+0<\mathrm{ELF}\le1
+\quad\text{for finite }\chi\ge0.
+$$
+
+Three reference limits fix the scale:
+
+1. one occupied spatial orbital in a spin channel: $t_x=0$, so $\chi=0$ and ELF$=1$;
+2. a homogeneous metal or reference gas: $t_x=t_{\mathrm{TF}}$, so $\chi=1$ and ELF$=1/2$;
+3. excess same-spin kinetic density much larger than the local TF reference: $\chi\gg1$ and ELF$\to0$.
+
+ELF$=1$ does not mean that electrons are motionless, ELF$=1/2$ does not mean the absence of bonding, and ELF$\to0$ does not mean the absence of electrons. The values describe excess same-spin kinetic curvature relative to a homogeneous reference at the same density.
+
+  </div>
+</BilingualSection>
+
+<ElfExplorer />
+
+<BilingualSection titleZh="shell、bonding 与 nonbonding interpretation 是 pattern evidence" titleEn="Shell, bonding, and nonbonding interpretations are pattern evidence" eyebrow="【Martin H.4 interpretation | Martin H.4 interpretation】">
+  <div class="bilingual-section__zh">
+
+原书用 atomic radial ELF 说明：monotonic density 中不明显的 shell separation 可在 ELF minima 中显现。对 molecules/solids，high-ELF basins 常与 core、covalent pair、lone pair 或 localized region 对应；basin topology、population integration 与 symmetry 可进一步组织化学解释。
+
+这些是 pattern-based descriptors，不是唯一 quantum observable。相同 ELF topology 可能来自不同 orbital decompositions；metallic/interstitial high ELF 不自动等于 two-center bond；ELF basin population 依赖 basin boundary、grid、spin、core reconstruction 和 chosen density. 强 claim 应同时检查 charge density、orbitals/Wannier functions、bond orders、DOS/PDOS、symmetry、response 或 experiment，而不是单独依赖一张 ELF isosurface。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The source uses radial atomic ELF to show that shell separation, which can be difficult to see in a monotonic density, can appear as minima of ELF. In molecules and solids, high-ELF basins are often associated with cores, covalent pairs, lone pairs, or localized regions. Basin topology, integrated population, and symmetry can further organize a chemical interpretation.
+
+These are pattern-based descriptors rather than unique quantum observables. The same ELF topology can arise from different orbital decompositions; a high ELF in a metallic or interstitial region is not automatically a two-centre bond; and an ELF-basin population depends on basin boundary, grid, spin, core reconstruction, and the selected density. Stronger claims should also inspect charge density, orbitals or Wannier functions, bond orders, DOS or PDOS, symmetry, response, or experiment rather than relying on one ELF isosurface.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="low-density、nodes 与 pseudopotential core 需要数值门禁" titleEn="Low density, nodes, and pseudopotential cores require numerical gates" eyebrow="【补充实现边界 | Supplemental implementation boundary】">
+  <div class="bilingual-section__zh">
+
+ELF 计算含
+
+$$
+\tau_W\propto\frac{|\nabla n_\sigma|^2}{n_\sigma^2},
+\qquad
+t_{\mathrm{TF},\sigma}\propto n_\sigma^{5/3},
+$$
+
+所以 vacuum、spin-density node 与极低 density 区域可能出现 catastrophic ratio、roundoff 或 negative Pauli excess from discretization。实现通常需要 density threshold、consistent derivative stencil、nonnegative tolerance 与 masked vacuum；这些 choices 必须报告，不能把 numerical clipping 解释成物理 ELF$=0$ 或 1。
+
+pseudopotential valence-only ELF 缺少 core orbitals，near-core topology 与 all-electron ELF 不同。PAW/all-electron reconstruction、frozen-core treatment 和 grid refinement 会改变 core basins。跨代码比较前必须匹配这些设置。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+ELF contains
+
+$$
+\tau_W\propto\frac{|\nabla n_\sigma|^2}{n_\sigma^2},
+\qquad
+t_{\mathrm{TF},\sigma}\propto n_\sigma^{5/3},
+$$
+
+so vacuum, spin-density nodes, and very-low-density regions can generate catastrophic ratios, roundoff, or a negative Pauli excess from discretization. Implementations commonly need a density threshold, consistent derivative stencil, nonnegative tolerance, and masked vacuum. These choices must be reported rather than interpreting numerical clipping as physical ELF$=0$ or 1.
+
+A valence-only pseudopotential ELF lacks core orbitals and has a different near-core topology from an all-electron ELF. PAW or all-electron reconstruction, frozen-core treatment, and grid refinement can change core basins. These settings must be matched before comparing codes.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="ELF 与 meta-GGA 共享 kinetic ingredient，但任务不同" titleEn="ELF and meta-GGA share a kinetic ingredient but serve different tasks" eyebrow="【Martin H.1/H.4 + Chapter 9 | Martin H.1/H.4 + Chapter 9】">
+  <div class="bilingual-section__zh">
+
+H.16 的 excess kinetic density 也是 meta-GGA 的关键 ingredient，因为它区分 single-orbital、slowly varying 与 multi-orbital regions。ELF 对该 ratio 施加 bounded monotonic transformation，便于 visualization；meta-GGA 则把相关 dimensionless variables 输入 approximate exchange–correlation functional。
+
+一个 functional 使用 $	au$ 不意味着其 self-consistent ELF 就是 accuracy proof；一个漂亮 ELF basin 也不证明该 functional 的 energy、force、gap 或 response 准确。descriptor 与 approximation quality 必须分开验证。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The excess kinetic density of H.16 is also a central meta-GGA ingredient because it distinguishes single-orbital, slowly varying, and multi-orbital regions. ELF applies a bounded monotonic transformation to the ratio for visualization, whereas a meta-GGA uses related dimensionless variables inside an approximate exchange-correlation functional.
+
+The use of $\tau$ by a functional does not make its self-consistent ELF a proof of accuracy, and an appealing ELF basin does not establish accurate energies, forces, gaps, or response. The descriptor and the quality of the approximation require separate validation.
+
+  </div>
+</BilingualSection>
+
+<span id="review"></span>
+
+## 交叉引用、常见误判、原创练习与来源 | Cross-References, Misjudgments, Original Exercises, and Sources
+
+<BilingualSection titleZh="与主章和其他附录的接口" titleEn="Interfaces to chapters and other appendices" eyebrow="【课程交叉引用 | Course cross-reference】">
+  <div class="bilingual-section__zh">
+    <ul>
+      <li>Chapter 3：many-electron energy、pair density、virial 与 observable/integrand distinction。</li>
+      <li>Chapters 7–9：Kohn–Sham total energy、XC hole、meta-GGA kinetic ingredients。</li>
+      <li>Chapters 13–15：plane-wave/local-orbital energy decomposition、pseudopotential/core reconstruction。</li>
+      <li>Chapter 20：force constants、stress response 与 local force balance。</li>
+      <li>Chapter 22：surface energy、vacuum/bulk matching 与 interface-localized analysis。</li>
+      <li>Appendix F：Coulomb energy gauges、self/background/reference consistency。</li>
+      <li>Appendix G：macroscopic stress as homogeneous metric derivative。</li>
+      <li>Appendix I：surface-integral forces、pressure 与 alternative variational expressions。</li>
+    </ul>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ul>
+      <li>Chapter 3: many-electron energy, pair density, virial relations, and the distinction between an observable and an integrand.</li>
+      <li>Chapters 7–9: Kohn-Sham total energy, the XC hole, and meta-GGA kinetic ingredients.</li>
+      <li>Chapters 13–15: plane-wave or local-orbital energy decomposition and pseudopotential or core reconstruction.</li>
+      <li>Chapter 20: force constants, stress response, and local force balance.</li>
+      <li>Chapter 22: surface energy, vacuum or bulk matching, and interface-localized analysis.</li>
+      <li>Appendix F: Coulomb energy gauges and consistent self, background, and reference terms.</li>
+      <li>Appendix G: macroscopic stress as a homogeneous metric derivative.</li>
+      <li>Appendix I: surface-integral forces, pressure, and alternative variational expressions.</li>
+    </ul>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="十二个高频误判" titleEn="Twelve recurrent misjudgments" eyebrow="【诊断清单 | Diagnostic checklist】">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li>把任意积分为总能的 integrand 称为唯一 energy density。</li>
+      <li>认为 field-form 与 charge-form Coulomb densities 必须逐点相等。</li>
+      <li>因 $t^{(1)}$ 局域为负而判断 kinetic energy 不稳定。</li>
+      <li>忽略 $t^{(2)}-t^{(1)}=\frac14\nabla^2n$ 的 boundary term。</li>
+      <li>把 fermionic excess kinetic density $t_x$ 与 exchange energy density $e_x$ 混为一谈。</li>
+      <li>直接使用 H.17 而不检查 per-volume/per-particle normalization mismatch。</li>
+      <li>从 force density 唯一反演多维 stress density。</li>
+      <li>认为 arbitrary atomic-basin energy 因 total reconstruction 良好就 gauge invariant。</li>
+      <li>只积分 cell face 的一部分却声称得到 gauge-invariant macroscopic traction。</li>
+      <li>把 ELF$=1$ 解释为无 kinetic energy，或 ELF$=1/2$ 解释为无 bonding。</li>
+      <li>用 valence pseudopotential ELF 与 all-electron core ELF 直接比较。</li>
+      <li>从单张 ELF isosurface 推断唯一 bond type、oxidation state、topology 或 superconductivity。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li>Calling any integrand that yields the total energy the unique energy density.</li>
+      <li>Expecting field-form and charge-form Coulomb densities to agree pointwise.</li>
+      <li>Inferring kinetic instability because $t^{(1)}$ is locally negative.</li>
+      <li>Ignoring the boundary term in $t^{(2)}-t^{(1)}=\frac14\nabla^2n$.</li>
+      <li>Confusing the fermionic excess kinetic density $t_x$ with the exchange energy density $e_x$.</li>
+      <li>Using H.17 without auditing its per-volume versus per-particle normalization mismatch.</li>
+      <li>Uniquely reconstructing a multidimensional stress density from force density.</li>
+      <li>Calling an arbitrary atomic-basin energy gauge invariant merely because the total reconstructs accurately.</li>
+      <li>Integrating only part of a cell face and claiming a gauge-invariant macroscopic traction.</li>
+      <li>Interpreting ELF$=1$ as zero kinetic energy or ELF$=1/2$ as no bonding.</li>
+      <li>Comparing a valence-pseudopotential ELF directly with an all-electron core ELF.</li>
+      <li>Inferring a unique bond type, oxidation state, topology, or superconductivity from one ELF isosurface.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="十道原创练习" titleEn="Ten original exercises" eyebrow="【原创替代练习 | Original replacement exercises】">
+  <div class="bilingual-section__zh">
+    <ol>
+      <li><strong>divergence gauge：</strong>在 periodic cube 中构造 $e'=e+\nabla\cdot\mathbf A$，证明完整 cell integral 不变，并给出半 cell integral 的 boundary term。</li>
+      <li><strong>Coulomb forms：</strong>从 Poisson equation 与 integration by parts 推导 field/charge Coulomb energies 的等价条件，并列出 charged-cell 失败项。</li>
+      <li><strong>kinetic identity：</strong>对 complex orbital 推导 Hermitian real kinetic densities 的差异，说明 current-dependent term 是否出现。</li>
+      <li><strong>factorization：</strong>从 $\psi_i=\sqrt n\phi_i$ 与 $\sum_i|\phi_i|^2=1$ 推导 cross-term cancellation 和 H.13。</li>
+      <li><strong>one-orbital limit：</strong>证明一个 real occupied orbital 的 positive kinetic density 等于 Weizsäcker density，故 same-spin excess 为零。</li>
+      <li><strong>H.17 audit：</strong>分别写出 dimensionally consistent per-volume 与 per-particle versions，并解释 Hartree/XC corrections。</li>
+      <li><strong>stress gauge：</strong>用 Airy function 构造一个 nonzero divergence-free symmetric tensor，验证 force density 不变。</li>
+      <li><strong>surface flux：</strong>证明完整 periodic cut 的 gauge traction integral 为零，并构造一个有限 patch 使其不为零。</li>
+      <li><strong>surface energy：</strong>给定 slab/bulk planar energy densities，检查 vacuum 与 bulk endpoints，估计未达到 bulk-like plateau 的误差。</li>
+      <li><strong>ELF diagnosis：</strong>给定 $n_\sigma$、$\nabla n_\sigma$ 与 positive kinetic density，计算 $\tau_W,t_x,t_{TF},\chi,ELF$，并识别 low-density numerical failure。</li>
+    </ol>
+  </div>
+  <div class="bilingual-section__en" lang="en">
+    <ol>
+      <li><strong>Divergence gauge:</strong> construct $e'=e+\nabla\cdot\mathbf A$ in a periodic cube, prove invariance of the full-cell integral, and derive the boundary term for half the cell.</li>
+      <li><strong>Coulomb forms:</strong> derive the conditions for equality of field and charge Coulomb energies from the Poisson equation and integration by parts, then list charged-cell failure terms.</li>
+      <li><strong>Kinetic identity:</strong> derive the difference between Hermitian real kinetic densities for a complex orbital and determine whether a current-dependent term appears.</li>
+      <li><strong>Factorization:</strong> use $\psi_i=\sqrt n\phi_i$ and $\sum_i|\phi_i|^2=1$ to derive cross-term cancellation and H.13.</li>
+      <li><strong>One-orbital limit:</strong> prove that the positive kinetic density of one real occupied orbital equals the Weizsäcker density, giving zero same-spin excess.</li>
+      <li><strong>H.17 audit:</strong> write dimensionally consistent per-volume and per-particle versions and explain the Hartree and XC corrections.</li>
+      <li><strong>Stress gauge:</strong> use an Airy function to construct a nonzero divergence-free symmetric tensor and verify unchanged force density.</li>
+      <li><strong>Surface flux:</strong> prove that gauge traction integrates to zero on a complete periodic cut and construct a finite patch for which it does not.</li>
+      <li><strong>Surface energy:</strong> inspect slab and bulk planar energy densities, test vacuum and bulk endpoints, and estimate error when no bulk-like plateau is reached.</li>
+      <li><strong>ELF diagnosis:</strong> from $n_\sigma$, $\nabla n_\sigma$, and a positive kinetic density, calculate $\tau_W,t_x,t_{TF},\chi,$ and ELF and identify a low-density numerical failure.</li>
+    </ol>
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="来源与版权边界" titleEn="Source and copyright boundary" kind="source">
+  <div class="bilingual-section__zh">
+
+主结构依据 Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Appendix H，印刷页 627–636，H.1–H.4 与 Eqs. H.1–H.21。网站只保留 bibliographic identity、原节标题、页码和 equation locators。正文、推导、模型、SVG、诊断清单和练习均为原创。教材 Figures H.1–H.2、进一步阅读段落、原练习及答案均未复制或翻译。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The structural source is Richard M. Martin, *Electronic Structure: Basic Theory and Practical Methods*, 2nd ed., Appendix H, printed pp. 627–636, sections H.1–H.4 and Eqs. H.1–H.21. The website retains only bibliographic identity, section titles, page locators, and equation locators. The exposition, derivations, models, SVGs, diagnostic list, and exercises are original. Textbook Figures H.1–H.2, further-reading prose, source exercises, and answers are neither copied nor translated.
+
+  </div>
+</BilingualCallout>

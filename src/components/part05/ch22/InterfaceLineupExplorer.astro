@@ -1,0 +1,107 @@
+---
+import { interfaceBandOffsets } from '../../../data/part05/ch22TeachingModels.mjs';
+
+const componentId = 'ch22-interface-lineup';
+const defaults = { lineup: 0.25, strainValenceB: -0.12, strainConductionB: 0.18 };
+const result = interfaceBandOffsets(defaults);
+const width = 820;
+const height = 390;
+const yMin = -1.8;
+const yMax = 2;
+const yScale = (energy) => 45 + (yMax - energy) / (yMax - yMin) * 270;
+const valenceA = -1.2;
+const conductionA = 1.1;
+const valenceBAligned = valenceA + result.valenceOffset;
+const conductionBAligned = conductionA + result.conductionOffset;
+---
+
+<figure class="chapter-visual interface-lineup" id={componentId}>
+  <figcaption>
+    <strong>半导体界面带阶分解 | Semiconductor interface band-offset decomposition</strong>
+    <span>原创教学模型：把匹配应变态带边相对平均势的差，与界面偶极 lineup 分开。</span>
+    <span lang="en">Original teaching model: separate matched-strain bulk band edges relative to an averaged potential from the interface-dipole lineup.</span>
+  </figcaption>
+
+  <div class="chapter-visual__controls">
+    <label>界面 lineup ΔV (eV) <input data-lineup type="range" min="-0.8" max="0.8" step="0.02" value={defaults.lineup} /></label>
+    <label>B 价带应变项 ΔE<sub>v</sub><sup>strain</sup> (eV) <input data-vstrain type="range" min="-0.5" max="0.5" step="0.02" value={defaults.strainValenceB} /></label>
+    <label>B 导带应变项 ΔE<sub>c</sub><sup>strain</sup> (eV) <input data-cstrain type="range" min="-0.5" max="0.5" step="0.02" value={defaults.strainConductionB} /></label>
+  </div>
+
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby={`${componentId}-title ${componentId}-desc`}>
+    <title id={`${componentId}-title`}>材料 A 与 B 的界面价带和导带阶</title>
+    <desc id={`${componentId}-desc`}>左侧固定材料 A 带边，右侧材料 B 带边由体相对项、界面势阶和应变项共同移动。</desc>
+    <rect class="material material-a" x="60" y="35" width="300" height="290" />
+    <rect class="material material-b" x="460" y="35" width="300" height="290" />
+    <text x="210" y="62" text-anchor="middle">material A</text>
+    <text x="610" y="62" text-anchor="middle">material B (strained)</text>
+    <line class="band-edge conduction" x1="92" x2="328" y1={yScale(conductionA)} y2={yScale(conductionA)} />
+    <line class="band-edge valence" x1="92" x2="328" y1={yScale(valenceA)} y2={yScale(valenceA)} />
+    <line data-cb class="band-edge conduction" x1="492" x2="728" y1={yScale(conductionBAligned)} y2={yScale(conductionBAligned)} />
+    <line data-vb class="band-edge valence" x1="492" x2="728" y1={yScale(valenceBAligned)} y2={yScale(valenceBAligned)} />
+    <text x="210" y={yScale(conductionA) - 9} text-anchor="middle">CBM A</text>
+    <text x="210" y={yScale(valenceA) + 20} text-anchor="middle">VBM A</text>
+    <text data-cb-label x="610" y={yScale(conductionBAligned) - 9} text-anchor="middle">CBM B</text>
+    <text data-vb-label x="610" y={yScale(valenceBAligned) + 20} text-anchor="middle">VBM B</text>
+    <line class="reference" x1="360" x2="460" y1="180" y2="180" />
+    <text x="410" y="168" text-anchor="middle">interface</text>
+  </svg>
+
+  <div class="chapter-visual__readout" aria-live="polite">
+    <span>体价带项 = <output data-bulk-v>{result.bulkValenceTerm.toFixed(2)}</output> eV</span>
+    <span>体导带项 = <output data-bulk-c>{result.bulkConductionTerm.toFixed(2)}</output> eV</span>
+    <span>ΔE<sub>v</sub> = <output data-vbo>{result.valenceOffset.toFixed(2)}</output> eV</span>
+    <span>ΔE<sub>c</sub> = <output data-cbo>{result.conductionOffset.toFixed(2)}</output> eV</span>
+    <span>B strained gap = <output data-gap>{result.gapBStrained.toFixed(2)}</output> eV</span>
+  </div>
+
+  <div class="chapter-visual__contract">
+    <p><strong>模型：</strong>ΔE<sub>v/c</sub> = [(E<sub>v/c</sub>−V̄)<sub>B</sub>−(E<sub>v/c</sub>−V̄)<sub>A</sub>] + ΔV<sub>lineup</sub> + ΔE<sub>v/c</sub><sup>strain</sup>。固定体项只是教学数值。</p>
+    <p><strong>验收：</strong>lineup 增加 δ 时价带和导带 offset 同时增加 δ；价带应变只改变价带 offset，导带应变只改变导带 offset；带阶差必须保持有向 convention。</p>
+    <p><strong>边界：</strong>模型不含真实界面化学、缺陷、空间电荷、量子限域、准粒子自能或电极偏压。层分 DOS 或孤立真空能级不能替代匹配 bulk + interface lineup。</p>
+  </div>
+
+  <noscript><p><strong>无 JavaScript fallback | No-JavaScript fallback：</strong>默认带阶图、分解和 convention 仍可见；控件不更新。</p></noscript>
+</figure>
+
+<script>
+  import { interfaceBandOffsets } from '../../../data/part05/ch22TeachingModels.mjs';
+  const root = document.getElementById('ch22-interface-lineup');
+  if (root) {
+    const lineup = root.querySelector('[data-lineup]'); const vstrain = root.querySelector('[data-vstrain]'); const cstrain = root.querySelector('[data-cstrain]');
+    const vb = root.querySelector('[data-vb]'); const cb = root.querySelector('[data-cb]');
+    const vbLabel = root.querySelector('[data-vb-label]'); const cbLabel = root.querySelector('[data-cb-label]');
+    const outputs = {
+      bulkV: root.querySelector('[data-bulk-v]'), bulkC: root.querySelector('[data-bulk-c]'), vbo: root.querySelector('[data-vbo]'),
+      cbo: root.querySelector('[data-cbo]'), gap: root.querySelector('[data-gap]'),
+    };
+    if ([lineup, vstrain, cstrain].every((item) => item instanceof HTMLInputElement)
+      && [vb, cb].every((item) => item instanceof SVGLineElement)
+      && [vbLabel, cbLabel].every((item) => item instanceof SVGTextElement)
+      && Object.values(outputs).every((item) => item instanceof HTMLOutputElement)) {
+      const yMin = -1.8; const yMax = 2; const yScale = (energy) => 45 + (yMax - energy) / (yMax - yMin) * 270;
+      const valenceA = -1.2; const conductionA = 1.1;
+      const update = () => {
+        const result = interfaceBandOffsets({ lineup: Number(lineup.value), strainValenceB: Number(vstrain.value), strainConductionB: Number(cstrain.value) });
+        const vbEnergy = valenceA + result.valenceOffset; const cbEnergy = conductionA + result.conductionOffset;
+        vb.setAttribute('y1', String(yScale(vbEnergy))); vb.setAttribute('y2', String(yScale(vbEnergy)));
+        cb.setAttribute('y1', String(yScale(cbEnergy))); cb.setAttribute('y2', String(yScale(cbEnergy)));
+        vbLabel.setAttribute('y', String(yScale(vbEnergy) + 20)); cbLabel.setAttribute('y', String(yScale(cbEnergy) - 9));
+        outputs.bulkV.value = result.bulkValenceTerm.toFixed(2); outputs.bulkC.value = result.bulkConductionTerm.toFixed(2);
+        outputs.vbo.value = result.valenceOffset.toFixed(2); outputs.cbo.value = result.conductionOffset.toFixed(2); outputs.gap.value = result.gapBStrained.toFixed(2);
+      };
+      [lineup, vstrain, cstrain].forEach((input) => input.addEventListener('input', update)); update();
+    }
+  }
+</script>
+
+<style>
+  .interface-lineup { width: 100%; min-width: 0; max-width: 100%; margin-inline: 0; overflow-x: auto; }
+  .interface-lineup svg { display: block; width: 100%; min-width: 38rem; height: auto; }
+  .material { fill: var(--sl-color-gray-7); stroke: var(--sl-color-gray-4); }
+  .band-edge { stroke-width: 4; }
+  .conduction { stroke: var(--sl-color-accent-high); }
+  .valence { stroke: currentColor; }
+  .reference { stroke: var(--sl-color-gray-3); stroke-dasharray: 5 4; }
+  text { fill: currentColor; font-size: 14px; }
+</style>

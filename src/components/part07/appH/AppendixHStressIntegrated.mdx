@@ -1,0 +1,270 @@
+import BilingualSection from '../../BilingualSection.astro';
+import BilingualCallout from '../../BilingualCallout.astro';
+import StressGaugeFluxExplorer from './StressGaugeFluxExplorer.astro';
+
+<span id="section-h-2"></span>
+
+## H.2 应力密度 | Stress Density
+
+<BilingualSection titleZh="force density 固定 stress 的 divergence，不固定 stress 本身" titleEn="Force density fixes the divergence of stress, not the stress itself" eyebrow="【Martin Eq. H.18 | Martin Eq. H.18】">
+  <div class="bilingual-section__zh">
+
+局域力平衡写成
+
+$$
+\nabla_\beta\sigma_{\alpha\beta}(\mathbf r)
+=f_\alpha(\mathbf r).
+$$
+
+$f_\alpha$ 是作用在位置 $\mathbf r$ 附近 particles/fields 上的 force density。若另一个 tensor $G_{\alpha\beta}$ 满足
+
+$$
+\nabla_\beta G_{\alpha\beta}=0,
+$$
+
+则 $\sigma'_{\alpha\beta}=\sigma_{\alpha\beta}+G_{\alpha\beta}$ 产生完全相同的 force density。对 $d>1$，这种 divergence-free freedom 有无限多，因此 H.18 不能唯一反演 stress map。对一维问题，导数只把 stress 固定到 additive constant；boundary condition 仍然必要。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Local force balance is
+
+$$
+\nabla_\beta\sigma_{\alpha\beta}(\mathbf r)
+=f_\alpha(\mathbf r).
+$$
+
+Here $f_\alpha$ is the force density acting on particles or fields near $\mathbf r$. If another tensor $G_{\alpha\beta}$ satisfies
+
+$$
+\nabla_\beta G_{\alpha\beta}=0,
+$$
+
+then $\sigma'_{\alpha\beta}=\sigma_{\alpha\beta}+G_{\alpha\beta}$ produces exactly the same force density. For $d>1$, infinitely many divergence-free tensors exist, so H.18 cannot uniquely invert a stress map. In one dimension, the derivative fixes stress only up to an additive constant, and a boundary condition remains necessary.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="inhomogeneous metric derivative 给出局域 generalized force" titleEn="An inhomogeneous metric derivative gives a local generalized force" eyebrow="【Martin Eq. H.19 | Martin Eq. H.19】">
+  <div class="bilingual-section__zh">
+
+Appendix G 用 homogeneous metric 定义 macroscopic stress。推广到空间依赖 metric field：
+
+$$
+\sigma_{\alpha\beta}(\mathbf r)
+=-\frac{1}{2\Omega}
+\frac{\delta E_{\mathrm{total}}}
+{\delta g_{\alpha\beta}(\mathbf r)}.
+$$
+
+这里必须区分 functional derivative 与 ordinary cell derivative。对给定 nonuniform coordinate deformation，metric variation 可以只发生在 interstitial、surface region 或 cell boundary 附近；generalized force theorem 允许用这种 deformation 提取同一个允许的 integrated force/stress quantity。
+
+metric definition 仍不消除 gauge freedom，因为 energy functional 在 integration by parts、curvature/divergence terms 与 coordinate representation 之间可重新分组。局域 tensor 还依赖是否使用 reference/current metric、density weight、Cartesian/curvilinear components 和 pseudopotential coordinate transformation。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Appendix G defines macroscopic stress through a homogeneous metric. The extension to a spatially varying metric field is
+
+$$
+\sigma_{\alpha\beta}(\mathbf r)
+=-\frac{1}{2\Omega}
+\frac{\delta E_{\mathrm{total}}}
+{\delta g_{\alpha\beta}(\mathbf r)}.
+$$
+
+A functional derivative must be distinguished from an ordinary cell derivative. For a chosen nonuniform coordinate deformation, the metric variation can be confined to an interstitial region, surface region, or neighbourhood of a cell boundary. The generalized force theorem then extracts the same allowed integrated force or stress quantity from that deformation.
+
+The metric definition does not remove gauge freedom because the energy functional can be regrouped through integration by parts, curvature or divergence terms, and coordinate representation. The local tensor also depends on reference versus current metric, density weight, Cartesian versus curvilinear components, and the coordinate transformation of pseudopotentials.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="H.20 把 nonuniqueness 收进 density-derivative 参数" titleEn="H.20 collects nonuniqueness into a density-derivative parameter" eyebrow="【Martin Eq. H.20 | Martin Eq. H.20】">
+  <div class="bilingual-section__zh">
+
+对 Kohn–Sham independent particles 与 LDA exchange–correlation，Martin 把若干历史 stress-density expressions 组织成统一结构：
+
+$$
+\boldsymbol\sigma
+=\boldsymbol\sigma^{\mathrm{fermion}}
++\boldsymbol\sigma^{n}(C)
++\boldsymbol\sigma^{\mathrm{Maxwell}}
++\mathbf I\,n(\varepsilon_{xc}^{\mathrm{LDA}}-V_{xc}^{\mathrm{LDA}}).
+$$
+
+第一项由 normalized orbitals 的 gradients 构成，承载 H.13 的 unique fermionic information；$\boldsymbol\sigma^n(C)$ 只含 $n$ 的一阶/二阶 derivatives，参数 $C$ 选择 kinetic/density gauge；Maxwell term 是电场 tensor；最后一项是 isotropic LDA XC contribution。改变 $C$ 会重排局域 stress，但 force density 与允许 surface integral 不变。
+
+网站不逐字复制 H.20 的完整 component formula；实现时应从采用的 source/code convention 重建所有 prefactors、spin sums、$\hbar^2/m$、electrostatic units 和 $C$ definition。只比较某一点的 $\sigma_{xx}$ 而不匹配 $C$ 没有意义。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For Kohn-Sham independent particles with LDA exchange-correlation, Martin organizes several historical stress-density expressions into the common structure
+
+$$
+\boldsymbol\sigma
+=\boldsymbol\sigma^{\mathrm{fermion}}
++\boldsymbol\sigma^{n}(C)
++\boldsymbol\sigma^{\mathrm{Maxwell}}
++\mathbf I\,n(\varepsilon_{xc}^{\mathrm{LDA}}-V_{xc}^{\mathrm{LDA}}).
+$$
+
+The first term is built from gradients of normalized orbitals and carries the unique fermionic information of H.13. The term $\boldsymbol\sigma^n(C)$ contains only first and second derivatives of $n$, with parameter $C$ selecting the kinetic or density gauge. The Maxwell term is the electric-field tensor, and the last term is the isotropic LDA XC contribution. Changing $C$ redistributes local stress while leaving the force density and allowed surface integrals unchanged.
+
+The site does not reproduce the full component expression of H.20 verbatim. An implementation must reconstruct all prefactors, spin sums, $\hbar^2/m$, electrostatic units, and the definition of $C$ from its adopted source or code convention. Comparing $\sigma_{xx}$ at one point without matching $C$ is not meaningful.
+
+  </div>
+</BilingualSection>
+
+<StressGaugeFluxExplorer />
+
+<BilingualSection titleZh="Maxwell stress 与 kinetic momentum flux 是局域传递图像" titleEn="Maxwell stress and kinetic momentum flux describe local transmission" eyebrow="【Martin H.2–H.3 | Martin H.2–H.3】">
+  <div class="bilingual-section__zh">
+
+Maxwell stress 把 Coulomb force 看成 electric field 穿过 surface 传递的 traction；kinetic stress 把 orbitals 的 gradients/momenta 看成 particles 穿过 surface 传递 momentum flux。两种图像对 surface-force calculation 很有用，但其 pointwise decomposition 仍可与 density-derivative gauge term重新分组。
+
+在 all-electron 方法中，可选择不变形 core region、只让 interstitial/cell boundary 发生 nonuniform metric variation，从而避免直接 differentiating rapidly varying core states。这个计算优势不意味着 core region 的 local stress 被唯一证明为零；它意味着 generalized-force integral 可由 boundary 上的 valence/interstitial information 求得。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Maxwell stress views Coulomb force as traction transmitted by the electric field across a surface. Kinetic stress views orbital gradients or momenta as a momentum flux carried across that surface. Both pictures are useful for surface-force calculations, but their pointwise decomposition can still be regrouped with density-derivative gauge terms.
+
+In an all-electron method, one can choose a nonuniform metric variation that leaves core regions rigid and deforms only the interstitial or cell-boundary region. This avoids directly differentiating rapidly varying core states. The computational advantage does not prove that local stress in a core region is uniquely zero; it shows that the generalized-force integral can be obtained from valence or interstitial information at the boundary.
+
+  </div>
+</BilingualSection>
+
+<span id="section-h-3"></span>
+
+## H.3 积分量 | Integrated Quantities
+
+<BilingualSection titleZh="全空间积分必须恢复唯一 total energy" titleEn="The whole-space integral must recover the unique total energy" eyebrow="【Martin H.3 | Martin H.3】">
+  <div class="bilingual-section__zh">
+
+energy density 的最低验收是
+
+$$
+\int_{\mathrm{all\ space}}d\mathbf r\,e(\mathbf r)=E.
+$$
+
+对 periodic cell，opposite faces 上的 divergence flux cancellation 使完整 cell integral gauge invariant；对 isolated bound state，要求 wavefunctions、density 和 gauge field 足够快衰减。若 numerical grid、augmentation sphere 或 domain truncation 破坏 boundary cancellation，两个正式等价 gauges 的积分会出现 residual；该 residual 是 discretization/boundary error，不是新的物理 energy。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+The minimum acceptance condition for an energy density is
+
+$$
+\int_{\mathrm{all\ space}}d\mathbf r\,e(\mathbf r)=E.
+$$
+
+For a periodic cell, cancellation of divergence fluxes on opposite faces makes the complete cell integral gauge invariant. For an isolated bound state, the wavefunctions, density, and gauge field must decay sufficiently rapidly. If a numerical grid, augmentation sphere, or truncated domain breaks the boundary cancellation, two formally equivalent gauges acquire a residual integral. That residual is a discretization or boundary error rather than a new physical energy.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="surface energy 使用 vacuum-to-bulk matched integral" titleEn="Surface energy uses a matched vacuum-to-bulk integral" eyebrow="【Martin H.3 | Martin H.3】">
+  <div class="bilingual-section__zh">
+
+表面能可由 slab energy density 与 bulk reference density 的差积分得到。沿 surface normal $z$，schematic form 为
+
+$$
+\gamma
+=\int_{\mathrm{vacuum}}^{\mathrm{bulk\ interior}}dz\,
+\bigl[\bar e_{\mathrm{slab}}(z)-\bar e_{\mathrm{bulk}}(z)\bigr],
+$$
+
+具体还要除以 surface area、处理 two surfaces 和 bulk atom/cell matching。vacuum 端 density 消失，bulk interior 端 slab-bulk difference 消失，因此允许 gauge terms 的 endpoint contribution 可归零。
+
+这个证明要求两套 calculations 使用相同 gauge、cell normalization、pseudopotential/core convention 和 bulk reference。若 slab 中间未达到 bulk-like、vacuum field 未收敛、两表面不等价或存在 charged/polar slab，简单积分不再满足 matched-boundary premise。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A surface energy can be obtained by integrating the difference between a slab energy density and a bulk reference density. Along the surface normal $z$, a schematic form is
+
+$$
+\gamma
+=\int_{\mathrm{vacuum}}^{\mathrm{bulk\ interior}}dz\,
+\bigl[\bar e_{\mathrm{slab}}(z)-\bar e_{\mathrm{bulk}}(z)\bigr],
+$$
+
+with explicit normalization by surface area, treatment of two surfaces, and matching of bulk atoms or cells. The density vanishes at the vacuum end, while the slab-bulk difference vanishes in the bulk interior, allowing endpoint contributions of the permitted gauge terms to vanish.
+
+The proof requires the two calculations to use the same gauge, cell normalization, pseudopotential or core convention, and bulk reference. If the slab centre is not bulk-like, the vacuum field is unconverged, the two surfaces are inequivalent, or the slab is charged or polar, the simple integral no longer satisfies the matched-boundary premise.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="surface traction 给出跨截面的 macroscopic force" titleEn="Surface traction gives the macroscopic force across a cut" eyebrow="【Martin H.3 + Appendix I | Martin H.3 + Appendix I】">
+  <div class="bilingual-section__zh">
+
+对法向 $\mathbf n$ 的 surface $S$，traction 为
+
+$$
+t_\alpha=\sigma_{\alpha\beta}n_\beta,
+$$
+
+跨 surface 传递的 force 为
+
+$$
+F_\alpha=\int_SdS\,\sigma_{\alpha\beta}n_\beta.
+$$
+
+在 equilibrium periodic crystal 中，完整 unit-cell boundary 或将宏观 solid 分成两 half-spaces 的完整截面可给出 macroscopic stress/force per area。divergence-free gauge 对完整 allowed surface 的额外 flux 为零，所以结果 independent of valid stress-density gauge。
+
+任意局部 patch 上的 traction map 不具同样保证。若只积分一部分 surface、surface 穿过 source/singularity、normal convention 不一致或 cell face 未完整覆盖，gauge term 可保留。Appendix I 将这一 surface-integral 思路进一步用于 force/pressure expressions。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+For a surface $S$ with normal $\mathbf n$, the traction is
+
+$$
+t_\alpha=\sigma_{\alpha\beta}n_\beta,
+$$
+
+and the force transmitted across the surface is
+
+$$
+F_\alpha=\int_SdS\,\sigma_{\alpha\beta}n_\beta.
+$$
+
+In an equilibrium periodic crystal, a complete unit-cell boundary or a complete cut dividing a macroscopic solid into two half-spaces can yield the macroscopic stress or force per area. A divergence-free gauge has zero additional flux through the complete allowed surface, making the result independent of a valid stress-density gauge.
+
+An arbitrary local traction patch has no such guarantee. A gauge term can remain if only part of the surface is integrated, if the surface crosses a source or singularity, if normal conventions are inconsistent, or if a cell face is not covered completely. Appendix I develops this surface-integral idea further for force and pressure expressions.
+
+  </div>
+</BilingualSection>
+
+<BilingualSection titleZh="任意 region decomposition 通常不是 observable" titleEn="An arbitrary regional decomposition is generally not an observable" eyebrow="【H.3 interpretation boundary | H.3 interpretation boundary】">
+  <div class="bilingual-section__zh">
+
+把 total energy 分成 atom A、bond AB、interstitial 或某个 Bader basin 的积分，除非 region boundaries 使允许 gauge flux 全部消失，否则分区值依赖 gauge。即使使用 zero-flux surface of density，也只控制与 $\nabla n$ 相关的部分 gauge，不自动控制 Coulomb field、kinetic orbital 或 stress gauges。
+
+region energies 可以作为在固定 protocol 内比较同系列 systems 的 descriptor，但应报告 gauge sensitivity、boundary movement 与 total reconstruction error。更强主张需要证明所用 difference/integral 在目标 transformations 下 invariant，而不是仅展示数值稳定到若干小数。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+A decomposition of total energy into atom A, bond AB, an interstitial region, or a Bader basin depends on the gauge unless the regional boundaries eliminate every allowed gauge flux. Even a zero-flux surface of the density controls only selected gauges involving $\nabla n$ and does not automatically control Coulomb-field, orbital-kinetic, or stress gauges.
+
+Regional energies can serve as descriptors for comparing a series of systems under one fixed protocol, but gauge sensitivity, boundary movement, and total reconstruction error should be reported. A stronger claim requires proof that the selected difference or integral is invariant under the target transformations, not merely numerical stability to several decimal places.
+
+  </div>
+</BilingualSection>
+
+<BilingualCallout titleZh="integrated quantity 的四项验收" titleEn="Four-part acceptance of an integrated quantity" kind="practice">
+  <div class="bilingual-section__zh">
+
+每个 integrated claim 都要回答：积分对象是什么；region 与 orientation 如何定义；允许 gauge difference 是什么 divergence/curl/Laplacian；其 boundary term 为什么为零。随后再检查 grid、vacuum/bulk matching、cell size、surface completeness 和 total reconstruction。缺少任一项，就只能称为 gauge-fixed partition，不能称为唯一 local observable。
+
+  </div>
+  <div class="bilingual-section__en" lang="en">
+
+Every integrated claim must answer four questions: what is integrated, how the region and orientation are defined, which divergence, curl, or Laplacian represents the allowed gauge difference, and why its boundary term vanishes. Then check the grid, vacuum or bulk matching, cell size, surface completeness, and reconstruction of the total. Without all four items, the result is a gauge-fixed partition rather than a unique local observable.
+
+  </div>
+</BilingualCallout>
