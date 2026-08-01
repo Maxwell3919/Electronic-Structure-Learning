@@ -16,6 +16,27 @@ const close = (actual, expected, tolerance, message) => {
   assert.ok(Math.abs(actual - expected) <= tolerance, `${message}: expected ${expected}, received ${actual}`);
 };
 
+const determinant2 = (matrix) => matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+const inverse2 = (matrix) => {
+  const determinant = determinant2(matrix);
+  assert.ok(Math.abs(determinant) > 1e-12, 'Two-state matrix is singular');
+  return [
+    [matrix[1][1] / determinant, -matrix[0][1] / determinant],
+    [-matrix[1][0] / determinant, matrix[0][0] / determinant],
+  ];
+};
+const multiply2 = (left, right) => [
+  [
+    left[0][0] * right[0][0] + left[0][1] * right[1][0],
+    left[0][0] * right[0][1] + left[0][1] * right[1][1],
+  ],
+  [
+    left[1][0] * right[0][0] + left[1][1] * right[1][0],
+    left[1][0] * right[0][1] + left[1][1] * right[1][1],
+  ],
+];
+const isSymmetric2 = (matrix, tolerance = 1e-13) => Math.abs(matrix[0][1] - matrix[1][0]) <= tolerance;
+
 // Exterior matching and norm-conservation teaching model.
 for (const coreRadius of [1.2, 1.8, 2.2, 2.6]) {
   const aeNorm = normInside(reducedAllElectron, coreRadius);
@@ -84,20 +105,32 @@ for (const [smooth, correction] of [[0.82, 0.18], [1.1, -0.1], [0.6, 0.4]]) {
   close(augmentationNorm(smooth, correction), 1, 1e-14, 'Augmented norm');
 }
 
-// Finite projector algebra in a two-state example.
+// Multiprojector algebra has separate reproduction and Hermiticity gates.
+// A symmetric, invertible B has a symmetric inverse and can define a Hermitian
+// chi B^{-1} chi^T operator for real projectors.
 const B = [[2, 0.5], [0.5, 1.5]];
-const det = B[0][0] * B[1][1] - B[0][1] * B[1][0];
-assert.ok(Math.abs(det) > 0.1, 'Projector matrix must be invertible');
-const inverse = [
-  [B[1][1] / det, -B[0][1] / det],
-  [-B[1][0] / det, B[0][0] / det],
-];
+assert.ok(Math.abs(determinant2(B)) > 0.1, 'Projector matrix must be invertible');
+assert.ok(isSymmetric2(B), 'Generalized norm conservation should supply a symmetric real B matrix');
+const inverse = inverse2(B);
+assert.ok(isSymmetric2(inverse), 'The inverse of the accepted symmetric B matrix must remain symmetric');
+const identity = multiply2(B, inverse);
 for (let row = 0; row < 2; row += 1) {
   for (let column = 0; column < 2; column += 1) {
-    const product = B[row][0] * inverse[0][column] + B[row][1] * inverse[1][column];
-    close(product, row === column ? 1 : 0, 1e-13, 'B times inverse');
+    close(identity[row][column], row === column ? 1 : 0, 1e-13, 'B times inverse');
   }
 }
+
+// Invertibility alone is insufficient. With chi equal to the identity in this
+// finite toy basis, V_NL = B^{-1}; an invertible but nonsymmetric B therefore
+// gives a non-Hermitian operator even though the inverse exists.
+const invertibleButNonHermitianB = [[2, 0.7], [0.2, 1.5]];
+assert.ok(Math.abs(determinant2(invertibleButNonHermitianB)) > 0.1, 'Counterexample B must be invertible');
+assert.ok(!isSymmetric2(invertibleButNonHermitianB), 'Counterexample B must violate Hermiticity');
+const nonHermitianOperator = inverse2(invertibleButNonHermitianB);
+assert.ok(
+  !isSymmetric2(nonHermitianOperator),
+  'An invertible nonsymmetric B must not be accepted as a Hermitian multiprojector operator',
+);
 
 const routePath = new URL('../src/content/docs/part-03-important-preliminaries-on-atoms/chapter-11-pseudopotentials.mdx', import.meta.url);
 const route = await readFile(routePath, 'utf8');
@@ -135,6 +168,28 @@ assert.match(
   conventionAudit,
   /不能在同一个[^\n]+混用|cannot be mixed under one definition/,
   'Convention audit must prohibit mixing coefficients under one energy definition',
+);
+
+const projectors = await readFile(
+  new URL('../src/components/part03/ch11/Chapter11Projectors.mdx', import.meta.url),
+  'utf8',
+);
+assert.match(projectors, /data-multiprojector-hermiticity-audit/);
+assert.match(projectors, /data-reference-reproduction="separate-gate"/);
+assert.match(projectors, /data-hermiticity-condition="B-Hermitian"/);
+assert.match(projectors, /generalized norm-conserving \/ ONCV/);
+assert.match(projectors, /\\langle\\phi_i\|\\phi_j\\rangle_\{r_c\}/);
+assert.match(projectors, /\\langle\\psi_i\|\\psi_j\\rangle_\{r_c\}/);
+assert.match(projectors, /B=B\^\\dagger/);
+assert.match(projectors, /\\chi B\^{-1\}\\chi\^\\dagger/);
+assert.match(projectors, /\|\\chi_s\\rangle\(B\^{-1\}\)_\{ss'\}\\langle\\chi_\{s'\}\|/);
+assert.match(projectors, /Reference-state reproduction, matrix Hermiticity, numerical conditioning, and ghost-state scans/);
+assert.match(projectors, /参考态复现、矩阵 Hermiticity、数值条件数和 ghost-state 扫描/);
+assert.match(projectors, /Invertibility alone/);
+assert.doesNotMatch(
+  projectors,
+  /The construction requires an invertible, well-conditioned finite matrix; equivalent implementations/,
+  'The old invertibility-only acceptance statement must not remain',
 );
 
 const contentsPath = new URL('../src/components/part03/ch11/Chapter11Contents.astro', import.meta.url);
@@ -176,4 +231,4 @@ for (const label of ['>0</text>', '>−6</text>', '>−12</text>']) {
   assert.ok(hardnessComponent.includes(label), `Hardness explorer is missing the ${label} axis tick`);
 }
 
-console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, norm-conservation source convention, hardness axis, augmentation, projector algebra, route, source map, and visualization contracts.');
+console.log('Part III Chapter 11 deterministic validation passed: wave matching, log derivatives, norm-conservation source convention, hardness axis, augmentation, multiprojector reproduction and Hermiticity, route, source map, and visualization contracts.');
