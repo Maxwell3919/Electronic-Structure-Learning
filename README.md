@@ -52,3 +52,19 @@ npm run check
 开始修改前阅读 `AGENTS.md` 和 `docs/` 中的架构、内容、来源、版权及可视化契约。仓库与 Pages 均为公开状态；持续性修改使用短期分支和 PR。
 
 真实 DFT raw/restart/WFC、教材 PDF、受限制材料、凭据以及本地参考仓库 clone 不进入本仓库。
+
+## 致谢与设计参考
+
+Electronic-Structure-Learning 是独立开发项目，与下列项目、作者和机构不存在隶属、合作、赞助或背书关系。列出这些项目用于感谢其在科学传播、交互设计、课程组织和 DFT 教学方面提供的公开启发。
+
+除仓库中的具体文件另行记录来源和许可证外，本项目不复制这些项目的正文、插图、品牌资产、课程答案或受版权保护内容。
+
+科学出版与交互设计参考：[Distill](https://distill.pub/)、[Bartosz Ciechanowski](https://ciechanow.ski/)、[Mathigon](https://mathigon.org/)、[Quanta Magazine](https://www.quantamagazine.org/)、[Stripe Press](https://press.stripe.com/)、[Observable](https://observablehq.com/) 和 [The Pudding](https://pudding.cool/)。
+
+DFT 与电子结构教学参考：[DFT_PIB_Code](https://github.com/tjz21/DFT_PIB_Code)、[DFTK.jl](https://github.com/JuliaMolSim/DFTK.jl)、[espresso](https://github.com/pranabdas/espresso)、[QE-SSP](https://github.com/nguyen-group/QE-SSP)、[Density-Functional-Theory](https://github.com/MathWorks-Teaching-Resources/Density-Functional-Theory)、[dft-book](https://github.com/jkitchin/dft-book)、[MSE404-MM](https://github.com/ImperialCollegeLondon/MSE404-MM)、[python_1d_dft](https://github.com/tamuhey/python_1d_dft)、[iDEA](https://github.com/iDEA-org/iDEA)、[iesm-public](https://github.com/lcbc-epfl/iesm-public)、[quantum-mechanics](https://github.com/osscar-org/quantum-mechanics)、[phononwebsite](https://github.com/henriquemiranda/phononwebsite)、[wannier-tutorials](https://github.com/mostofi/wannier-tutorials)、[crystaltoolkit](https://github.com/materialsproject/crystaltoolkit) 和 [aachen_introduction_dftk](https://github.com/mfherbst/aachen_introduction_dftk)。详细边界与启发范围见 [`docs/credits-and-inspiration.md`](docs/credits-and-inspiration.md)。
+
+## Acknowledgements and design references
+
+Electronic-Structure-Learning is an independently developed project. It is not affiliated with, partnered with, sponsored by, or endorsed by any project, author, or institution listed above. They are acknowledged solely for their publicly visible contributions to science communication, interaction design, course organization, and DFT education.
+
+Unless a specific repository file records its source and license separately, this project does not copy their prose, illustrations, brand assets, course answers, or other copyrighted materials.

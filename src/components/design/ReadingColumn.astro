@@ -1,0 +1,5 @@
+---
+interface Props { pageType?: 'theory-chapter' | 'appendix-reference' | 'lab-case'; }
+const { pageType = 'theory-chapter' } = Astro.props;
+---
+<div class="esl-reading-column" data-page-type={pageType}><slot /></div>

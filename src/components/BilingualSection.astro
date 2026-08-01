@@ -1,4 +1,6 @@
 ---
+import BilingualModeControl from './design/BilingualModeControl.astro';
+
 interface Props {
   titleZh?: string;
   titleEn?: string;
@@ -15,6 +17,7 @@ const {
 ---
 
 <section class:list={['bilingual-section', { 'bilingual-section--compact': compact }]}>
+  <BilingualModeControl />
   {(eyebrow || titleZh || titleEn) && (
     <header class="bilingual-section__header">
       {eyebrow && <p class="bilingual-section__eyebrow">{eyebrow}</p>}

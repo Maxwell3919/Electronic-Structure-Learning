@@ -1,0 +1,5 @@
+---
+interface Props { label?: string; live?: 'polite' | 'assertive' | 'off'; }
+const { label = '实时结果', live = 'polite' } = Astro.props;
+---
+<output class="esl-interaction-readout" aria-label={label} aria-live={live}><slot /></output>

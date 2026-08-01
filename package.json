@@ -16,6 +16,8 @@
     "validate:framework": "node scripts/validate-framework.mjs",
     "validate:scf": "node scripts/validate-scf-model.mjs",
     "validate:site-architecture": "node scripts/validate-site-architecture.mjs",
+    "validate:design-system": "node scripts/validate-design-system.mjs",
+    "validate:build-budget": "node scripts/validate-build-budget.mjs",
     "validate:registered": "node scripts/run-registered-validators.mjs",
     "list:smoke": "node scripts/list-smoke-tests.mjs",
     "validate:part01-closure": "node scripts/validate-part01-closure.mjs",
@@ -52,7 +54,7 @@
     "validate:part07-app-h": "node scripts/validate-part07-app-h.mjs",
     "validate:part07-app-i": "node scripts/validate-part07-app-i.mjs",
     "validate:part07-app-j": "node scripts/validate-part07-app-j.mjs",
-    "check": "npm run validate:framework && npm run validate:scf && npm run validate:registered && npm run build"
+    "check": "npm run validate:framework && npm run validate:scf && npm run build && npm run validate:registered"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.2.1",

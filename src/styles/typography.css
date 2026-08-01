@@ -1,0 +1,52 @@
+.sl-markdown-content {
+  color: var(--esl-ink);
+  font-family: var(--esl-font-body);
+  font-size: clamp(1rem, 0.98rem + 0.12vw, 1.075rem);
+  line-height: 1.78;
+}
+
+.sl-markdown-content :where(h1, h2, h3) {
+  color: var(--esl-ink);
+  text-wrap: balance;
+}
+
+.sl-markdown-content h1,
+.esl-display-title {
+  font-family: var(--esl-font-display);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.sl-markdown-content h2 {
+  margin-top: var(--esl-space-7);
+  font-weight: 650;
+  letter-spacing: -0.012em;
+}
+
+.sl-markdown-content h3 {
+  font-weight: 620;
+}
+
+.sl-markdown-content :where(p, li) {
+  text-wrap: pretty;
+}
+
+.sl-markdown-content :where(code, pre, kbd, samp) {
+  font-family: var(--esl-font-code);
+}
+
+.esl-kicker,
+.esl-eyebrow {
+  color: var(--esl-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.esl-title-en,
+[lang='en'].esl-secondary {
+  color: var(--esl-ink-muted);
+}

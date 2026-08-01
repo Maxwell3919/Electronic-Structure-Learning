@@ -1,8 +1,9 @@
-# Design-system foundation
+# Editorial Quantum Atlas design system
 
-The foundation provides semantic tokens, responsive layout primitives, and neutral component classes. Tokens map to Starlight variables so the current light/dark behavior remains the baseline.
+Editorial Quantum Atlas combines an editorial paper surface, ink-led hierarchy, restrained indigo emphasis, teal evidence states, amber assumptions, and red errors. All color, spacing, typography, widths, and motion values are exposed through semantic `--esl-*` tokens.
 
-Components are static-first, keyboard-reachable through native links and controls, and understandable without JavaScript. The layout protects narrow screens, bilingual containers, tables, code, and long formulas from page-level overflow.
+The system uses local system font stacks only. Display headings use a serif stack; body, mathematics, and code remain optimized for reading. The shared layout provides a 47rem reading column, 72rem figure/interaction width, and 88rem outer limit.
 
-This foundation is an interface, not a final visual identity.
+Components are static-first, keyboard reachable, and understandable without JavaScript. Margin notes collapse into document flow, wide figures cannot create page-level overflow, long formulas scroll locally, and non-essential motion respects `prefers-reduced-motion`.
 
+Token values may be contrast-tuned without changing their semantic roles. Reference projects inform responsibilities and principles only; no external brand assets or implementation are copied.

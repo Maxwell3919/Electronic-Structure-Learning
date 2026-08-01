@@ -32,12 +32,19 @@ export default defineConfig({
       },
       customCss: [
         './src/styles/tokens.css',
+        './src/styles/themes.css',
+        './src/styles/reset-overrides.css',
+        './src/styles/typography.css',
         './src/styles/layout.css',
-        './src/styles/site-components.css',
+        './src/styles/components.css',
+        './src/styles/learning.css',
+        './src/styles/figures.css',
+        './src/styles/motion.css',
         './src/styles/custom.css',
         './src/styles/chapter02.css',
         './src/styles/chapter04.css',
         './src/styles/chapter05.css',
+        './src/styles/compatibility.css',
       ],
       sidebar: [
         {

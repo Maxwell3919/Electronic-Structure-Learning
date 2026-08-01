@@ -1,0 +1,5 @@
+---
+interface Props { id?: string; title: string; titleEn?: string; status?: string; }
+const { id, title, titleEn, status = 'available' } = Astro.props;
+---
+<article class="esl-learning-milestone" id={id} data-status={status}><div><h3>{title}</h3>{titleEn && <p lang="en">{titleEn}</p>}<slot /></div><small>{status}</small></article>

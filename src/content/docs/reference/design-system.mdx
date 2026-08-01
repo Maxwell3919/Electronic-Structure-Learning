@@ -1,0 +1,95 @@
+---
+title: "Design System | 设计系统"
+description: "Editorial Quantum Atlas 的公开组件与语义 token 展示。"
+---
+
+import EditorialPageHero from '../../../components/design/EditorialPageHero.astro';
+import BilingualSection from '../../../components/BilingualSection.astro';
+import WideFigure from '../../../components/design/WideFigure.astro';
+import FigureCaption from '../../../components/design/FigureCaption.astro';
+import MarginNote from '../../../components/design/MarginNote.astro';
+import AssumptionNote from '../../../components/design/AssumptionNote.astro';
+import EvidenceNote from '../../../components/design/EvidenceNote.astro';
+import SectionLead from '../../../components/design/SectionLead.astro';
+import LearningMilestone from '../../../components/learning/LearningMilestone.astro';
+import TaskPrompt from '../../../components/learning/TaskPrompt.astro';
+import InteractiveExplanation from '../../../components/interaction/InteractiveExplanation.astro';
+import InteractionReadout from '../../../components/interaction/InteractionReadout.astro';
+import InteractionBoundary from '../../../components/interaction/InteractionBoundary.astro';
+import MotionControl from '../../../components/interaction/MotionControl.astro';
+
+<EditorialPageHero
+  titleZh="编辑型量子科学图谱"
+  titleEn="Editorial Quantum Atlas"
+  description="设计展示仅验证排版、状态、交互壳和响应式行为，不提出科学结论。"
+  descriptionEn="A public specimen for typography, states, interaction shells, and responsive behavior—without scientific claims."
+  pageType="reference"
+/>
+
+<SectionLead eyebrow="Foundations" title="色彩与排版" description="组件只调用语义 token；浅色和暗色主题共享相同含义。" />
+
+<div class="esl-token-grid" aria-label="语义色彩 token">
+  <div class="esl-token-swatch" data-token="page">page</div>
+  <div class="esl-token-swatch" data-token="surface">surface</div>
+  <div class="esl-token-swatch" data-token="accent">accent</div>
+  <div class="esl-token-swatch" data-token="science">science</div>
+  <div class="esl-token-swatch" data-token="warning">warning</div>
+  <div class="esl-token-swatch" data-token="danger">danger</div>
+</div>
+
+<p class="esl-display-title">Display heading</p>
+
+普通正文使用系统无衬线字体，编辑型标题使用系统衬线字体；代码和数学保持独立字族。
+
+## Section heading
+
+### Subsection heading
+
+<BilingualSection
+  titleZh="双语阅读样例"
+  titleEn="Bilingual reading specimen"
+  zh="无 JavaScript 时中英文完整显示；启用脚本后可以选择对照、中文优先或 English。"
+  en="Both languages remain complete without JavaScript; enhanced mode offers parallel, Chinese-first, and English views."
+/>
+
+<MarginNote label="示例旁注">窄屏时旁注回到相邻正文流。</MarginNote>
+
+<aside class="esl-note" data-kind="definition" aria-label="定义示例"><strong>定义</strong>：这是无科学主张的语义块。</aside>
+
+<section class="derivation-block" aria-label="推导样式示例"><strong>Derivation</strong><p>短步骤 → 可检查关系 → 明确边界。</p></section>
+
+<AssumptionNote>示例条件必须显式出现，不能只用颜色表示。</AssumptionNote>
+
+<aside class="esl-note" data-kind="warning" aria-label="警告示例"><strong>警告</strong>：琥珀色与文字标签同时传递含义。</aside>
+
+<EvidenceNote>组件状态不自动证明科学接受或学习效果。</EvidenceNote>
+
+<WideFigure label="原创抽象图形示例">
+  <svg class="esl-specimen-figure" viewBox="0 0 720 180" role="img" aria-label="抽象线和点，不代表真实数据">
+    <path d="M10 120 C150 20 250 160 360 88 S570 35 710 98" />
+    <g><circle cx="120" cy="80" r="5"/><circle cx="360" cy="88" r="5"/><circle cx="600" cy="66" r="5"/></g>
+  </svg>
+  <FigureCaption title="Figure 01 · 抽象构图" kind="原创示意；非材料数据" />
+</WideFigure>
+
+<LearningMilestone title="里程碑样例" titleEn="Milestone specimen" status="available">短目标、状态和后续入口保持同一层级。</LearningMilestone>
+
+<TaskPrompt title="Lab task · 界面样例">完成一个有明确停止条件的短任务；本样例不提供实验输入。</TaskPrompt>
+
+<InteractiveExplanation title="Interaction shell | 交互壳" question="控件、读数和边界如何共同出现？">
+  <MotionControl />
+  <InteractionReadout label="示例动态读数">state: ready</InteractionReadout>
+  <InteractionBoundary>静态说明、键盘入口和文字状态在无动画时仍然成立。</InteractionBoundary>
+</InteractiveExplanation>
+
+<section aria-labelledby="controls-title">
+  <h2 id="controls-title">Links, buttons and form controls</h2>
+  <div class="esl-control-sample">
+    <a class="esl-button" href="../">参考手册</a>
+    <button class="esl-button" type="button">普通按钮</button>
+    <label>短文本<input type="text" name="specimen" value="editable" /></label>
+    <label>模式<select name="specimen-mode"><option>Parallel</option><option>Compact</option></select></label>
+  </div>
+</section>
+
+本页随 Starlight 主题切换展示 light/dark，并在窄屏验证图形、注释和控件回落。详细契约见项目仓库的 `docs/page-type-contracts.md`。

@@ -11,9 +11,8 @@ import learningPaths from '../../../data/site/learningPaths.mjs';
 
 export const path = learningPaths.find((item) => item.id === 'first-real-calculation');
 
-<SiteSectionHero titleZh={path.titleZh} titleEn={path.titleEn} description={path.summaryZh} />
+<SiteSectionHero titleZh={path.titleZh} titleEn={path.titleEn} description={path.summaryZh} descriptionEn={path.summaryEn} pageType="learning" />
 
 <LearningPathTimeline path={path} />
 
 本页不提供 QE/VASP 输入、参数或伪造结果；实验将在后续独立任务完成。
-

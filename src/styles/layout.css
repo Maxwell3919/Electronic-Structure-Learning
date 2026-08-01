@@ -1,45 +1,78 @@
-.esl-reading-region {
+:root {
+  --sl-content-width: var(--esl-wide-width);
+}
+
+.esl-reading-region,
+.esl-reading-column {
   width: min(100%, var(--esl-reading-width));
+  margin-inline: auto;
 }
 
+.esl-wide-region,
 .esl-visual-region {
-  width: min(100%, var(--esl-visual-width));
+  width: min(100%, var(--esl-wide-width));
+  margin-inline: auto;
 }
 
+.esl-full-region {
+  width: min(100%, var(--esl-full-width));
+  margin-inline: auto;
+}
+
+.esl-page-stack {
+  display: grid;
+  gap: var(--esl-space-7);
+}
+
+.esl-responsive-grid,
 .esl-card-grid,
 .esl-path-timeline__context,
 .esl-progress-summary__grid,
 .esl-catalog {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: var(--esl-space-4);
+  gap: var(--esl-space-5);
   min-width: 0;
 }
 
-.esl-card-grid > *,
-.esl-path-timeline__context > *,
-.esl-progress-summary__grid > *,
-.esl-catalog > *,
+:where(.esl-responsive-grid, .esl-card-grid, .esl-path-timeline__context,
+  .esl-progress-summary__grid, .esl-catalog) > *,
 .bilingual-section__zh,
 .bilingual-section__en {
   min-width: 0;
   max-width: 100%;
 }
 
-.sl-markdown-content .katex-display,
-.sl-markdown-content table,
-.sl-markdown-content pre {
+.sl-markdown-content :where(.katex-display, table, pre) {
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
 }
 
-@media (max-width: 390px) {
-  .esl-card-grid,
-  .esl-path-timeline__context,
-  .esl-progress-summary__grid,
-  .esl-catalog {
+.sl-markdown-content .katex-error {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
+}
+
+.esl-reading-grid {
+  display: grid;
+  grid-template-columns: minmax(0, var(--esl-reading-width)) minmax(10rem, 15rem);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+
+@media (max-width: 64rem) {
+  .esl-reading-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
+@media (max-width: 390px) {
+  :where(.esl-responsive-grid, .esl-card-grid, .esl-path-timeline__context,
+    .esl-progress-summary__grid, .esl-catalog) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
