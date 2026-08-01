@@ -36,10 +36,12 @@
     <text x="500" y="188" text-anchor="middle" data-ch03-dm-label1>0.133</text>
   </svg>
 
-  <div class="chapter-visual__readout" aria-live="polite">
+  <div class="chapter-visual__readout" aria-live="polite" aria-atomic="true" data-ch03-dm-status>
     <strong data-ch03-dm-probabilities>p0 = 0.867; p1 = 0.133</strong>
     <span data-ch03-dm-thermo>U = 0.199; S/kB = 0.392; F = −0.114</span>
     <span data-ch03-dm-purity>Tr(ρ²) = 0.769</span>
+    <span data-ch03-dm-summary-zh>有限温度使激发态具有非零概率，密度矩阵为热混合态。</span>
+    <span lang="en" data-ch03-dm-summary-en>Finite temperature gives the excited state nonzero probability, so the density matrix is thermally mixed.</span>
   </div>
 
   <div class="chapter-visual__contract">
@@ -69,6 +71,8 @@
     const probabilities = root.querySelector('[data-ch03-dm-probabilities]');
     const thermo = root.querySelector('[data-ch03-dm-thermo]');
     const purity = root.querySelector('[data-ch03-dm-purity]');
+    const summaryZh = root.querySelector('[data-ch03-dm-summary-zh]');
+    const summaryEn = root.querySelector('[data-ch03-dm-summary-en]');
     if (!(gapInput instanceof HTMLInputElement) || !(temperatureInput instanceof HTMLInputElement)) return;
     if (!(bar0 instanceof SVGRectElement) || !(bar1 instanceof SVGRectElement)) return;
 
@@ -96,6 +100,18 @@
       if (probabilities instanceof HTMLElement) probabilities.textContent = `p0 = ${result.p0.toFixed(3)}; p1 = ${result.p1.toFixed(3)}`;
       if (thermo instanceof HTMLElement) thermo.textContent = `U = ${result.internalEnergy.toFixed(3)}; S/kB = ${result.entropy.toFixed(3)}; F = ${result.freeEnergy.toFixed(3)}`;
       if (purity instanceof HTMLElement) purity.textContent = `Tr(ρ²) = ${result.purity.toFixed(3)}`;
+      const degenerateZeroTemperature = temperature === 0 && gap === 0;
+      const pureGroundState = temperature === 0 && gap > 0;
+      if (summaryZh instanceof HTMLElement) summaryZh.textContent = degenerateZeroTemperature
+        ? '零温且两能级精确简并；本站采用简并子空间等权 Gibbs 极限，而不是选择唯一纯态。'
+        : pureGroundState
+          ? '零温非简并极限：概率集中在基态，密度矩阵为纯态。'
+          : '有限温度使激发态具有非零概率，密度矩阵为热混合态。';
+      if (summaryEn instanceof HTMLElement) summaryEn.textContent = degenerateZeroTemperature
+        ? 'At zero temperature with exact degeneracy, the site uses the equal-weight Gibbs limit in the degenerate subspace rather than selecting one pure state.'
+        : pureGroundState
+          ? 'Zero-temperature nondegenerate limit: all probability occupies the ground state and the density matrix is pure.'
+          : 'Finite temperature gives the excited state nonzero probability, so the density matrix is thermally mixed.';
     };
 
     gapInput.addEventListener('input', update);
