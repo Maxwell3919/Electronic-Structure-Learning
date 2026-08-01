@@ -14,7 +14,7 @@ const toPoints = (screening) => distances.map((distance, i) => { const value = m
   </svg>
   <div class="chapter-visual__readout" aria-live="polite"><span>bare at R=6=<output data-mto-bare>{initial.bareTail.toExponential(4)}</output></span><span>screened=<output data-mto-tail>{initial.screenedTail.toExponential(4)}</output></span><span>ratio=<output data-mto-ratio>{initial.ratio.toExponential(4)}</output></span></div>
   <div class="chapter-visual__contract">
-    <p><strong>模型：</strong>$R^{-2}$ envelope 乘以 $e^{-\alpha R}$ screening factor。</p><p lang="en"><strong>Model:</strong> an $R^{-2}$ envelope multiplied by $e^{-\alpha R}$.</p>
+    <p><strong>模型：</strong><code>R^-2</code> envelope 乘以 <code>exp(-α R)</code> screening factor。</p><p lang="en"><strong>Model:</strong> an <code>R^-2</code> envelope multiplied by <code>exp(-α R)</code>.</p>
     <p><strong>验收：</strong>α=0 回到 bare tail；α 增大时固定 R 的 amplitude 单调下降。</p><p lang="en"><strong>Acceptance:</strong> α=0 recovers the bare tail and increasing α decreases the amplitude at fixed R.</p>
     <p><strong>边界：</strong>screening 改善 representation locality，不自动证明 Hamiltonian、density matrix 或完整算法为 O(N)。</p><p lang="en"><strong>Boundary:</strong> screening improves representational locality but does not prove O(N) scaling.</p>
   </div>
