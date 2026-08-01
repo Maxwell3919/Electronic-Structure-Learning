@@ -8,79 +8,81 @@ import CPAEffectiveMediumExplorer from './CPAEffectiveMediumExplorer.astro';
 ## 16.4 Alloys and the coherent potential approximation | åˆé‡‘ä¸ç›¸å¹²åŠ¿è¿‘ä¼¼
 
 <BilingualCallout titleZh="æ¥æºå®šä½" titleEn="Source locator" kind="source">
-  <div class="bilingual-section__zh">ã€Martin åŸä¹¦ | Martin sourceã€‘å°åˆ·é¡µ 349â€“350 ä»¥ substitutional disorder ä¸ºèƒŒæ™¯ä»‹ç» single-site CPA çš„ effective-medium idea ä¸ broadened Bloch spectral functionã€‚ç½‘ç«™ä½¿ç”¨ scalar cavity model å±•ç¤º self-consistencyï¼Œä¸å¤åˆ¶ source alloy spectrumã€‚</div>
-  <div class="bilingual-section__en" lang="en">ã€Martin sourceã€‘Printed pp. 349â€“350 introduce the effective-medium idea of single-site CPA for substitutional disorder and the broadened Bloch spectral function. The site uses a scalar cavity model to illustrate self-consistency and does not reproduce the source alloy spectrum.</div>
+  <div class="bilingual-section__zh">ã€Martin åŸä¹¦ | Martin sourceã€‘å°åˆ·é¡µ 349â€“350 å°† KKR single-site scattering language ç”¨äº substitutional disorderï¼Œå¹¶æ¦‚è¿° coherent potential approximationã€‚ä»¥ä¸‹ scalar derivation ä¸äº¤äº’æ¨¡å‹åªå±•ç¤ºå¹³å‡ excess scattering ä¸ºé›¶çš„æ¡ä»¶ã€‚</div>
+  <div class="bilingual-section__en" lang="en">ã€Martin sourceã€‘Printed pp. 349â€“350 apply the KKR single-site scattering language to substitutional disorder and outline the coherent potential approximation. The scalar derivation and interactive model below only illustrate the zero-average-excess-scattering condition.</div>
 </BilingualCallout>
 
-<BilingualSection titleZh="single-site CPA condition" titleEn="The single-site CPA condition">
+<BilingualSection titleZh="æœ‰æ•ˆä»‹è´¨ä¸çœŸå® configuration æ˜¯ä¸åŒå¯¹è±¡" titleEn="An effective medium is not a real configuration">
   <div class="bilingual-section__zh">
-    <p>è€ƒè™‘ binary alloy $A_cB_{1-c}$ã€‚ç”¨ coherent medium çš„ site scattering $t_c$ æ›¿ä»£æ¯ä¸ªéšæœº siteï¼Œå†æŠŠä¸€ä¸ªçœŸå® A æˆ– B atom åµŒå…¥è¯¥ mediumã€‚å…¶ excess scattering å†™æˆ</p>
+    <p>å¯¹ binary substitutional alloy $A_cB_{1-c}$ï¼ŒCPA ç”¨ translationally invariant coherent medium å–ä»£æ˜¾å¼ disorder configurationsã€‚ä»‹è´¨ç”± complexã€energy-dependent coherent potential $\Sigma(z)$ æè¿°ï¼›æŠŠçœŸå® A æˆ– B site æ”¾å› cavity åäº§ç”Ÿ excess scatteringï¼š</p>
 
 $$
-T_\alpha^{\mathrm{ex}}
-=\left[t_\alpha^{-1}-t_c^{-1}-\tau_c^{00}\right]^{-1},
-\qquad \alpha\in\{A,B\},
+t_\alpha^{\mathrm{ex}}(z)=
+\frac{V_\alpha-\Sigma(z)}{1-[V_\alpha-\Sigma(z)]G_c(z)},
+\qquad \alpha\in\{A,B\}.
 $$
 
-    <p>æˆ–åœ¨ç­‰ä»· cavity notation ä¸­å†™æˆ impurity perturbation divided by a local denominatorã€‚single-site CPA è¦æ±‚å¹³å‡ replacement ä¸å†äº§ç”Ÿé¢å¤– scatteringï¼š</p>
+    <p>single-site CPA condition ä¸º</p>
 
 $$
-c\,T_A^{\mathrm{ex}}+(1-c)\,T_B^{\mathrm{ex}}=0.
+c\,t_A^{\mathrm{ex}}+(1-c)t_B^{\mathrm{ex}}=0.
 $$
 
-    <p>ç”±äº coherent medium é€šå¸¸æ˜¯ complex and energy dependentï¼Œspectral peaks è·å¾— disorder broadeningã€‚complex width æ˜¯ configurational averaging çš„ç»“æœï¼Œä¸åº”è‡ªåŠ¨è§£é‡Šä¸º electron-electron lifetimeã€‚</p>
+    <p>å®ƒè¦æ±‚ coherent cavity ä¸­å¹³å‡é¢å¤–æ•£å°„æ¶ˆå¤±ï¼Œä¸è¦æ±‚æ¯ä¸ª site çš„ scattering æ¶ˆå¤±ã€‚$\operatorname{Im}\Sigma$ å¯è¡¨ç¤º disorder broadeningï¼Œä½†å…¶æ•°å€¼ä¾èµ– energyã€lattice Green functionã€orbital channel ä¸ self-consistent potentialã€‚</p>
   </div>
   <div class="bilingual-section__en" lang="en">
-    <p>Consider a binary alloy $A_cB_{1-c}$. Replace every random site by a coherent-medium scatterer $t_c$, then embed one real A or B atom in that medium. Its excess scattering can be written</p>
+    <p>For a binary substitutional alloy $A_cB_{1-c}$, CPA replaces explicit disorder configurations by a translationally invariant coherent medium described by a complex, energy-dependent coherent potential $\Sigma(z)$. Restoring a real A or B site in the cavity produces excess scattering:</p>
 
 $$
-T_\alpha^{\mathrm{ex}}
-=\left[t_\alpha^{-1}-t_c^{-1}-\tau_c^{00}\right]^{-1},
-\qquad \alpha\in\{A,B\},
+t_\alpha^{\mathrm{ex}}(z)=
+\frac{V_\alpha-\Sigma(z)}{1-[V_\alpha-\Sigma(z)]G_c(z)},
+\qquad \alpha\in\{A,B\}.
 $$
 
-    <p>or, in an equivalent cavity notation, as an impurity perturbation divided by a local denominator. Single-site CPA requires the average replacement to produce no additional scattering:</p>
+    <p>The single-site CPA condition is</p>
 
 $$
-c\,T_A^{\mathrm{ex}}+(1-c)\,T_B^{\mathrm{ex}}=0.
+c\,t_A^{\mathrm{ex}}+(1-c)t_B^{\mathrm{ex}}=0.
 $$
 
-    <p>The coherent medium is generally complex and energy dependent, so spectral peaks acquire disorder broadening. That complex width arises from configurational averaging and should not automatically be interpreted as an electron-electron lifetime.</p>
+    <p>It requires average additional scattering in the coherent cavity to vanish, not every site to stop scattering. $\operatorname{Im}\Sigma$ can represent disorder broadening, but depends on energy, the lattice Green function, orbital channel, and the self-consistent potential.</p>
   </div>
 </BilingualSection>
 
-<CPAEffectiveMediumExplorer />
+<DerivationBlock title="scalar CPA quadratic | scalar CPA äºŒæ¬¡æ–¹ç¨‹" assumptions={['one scalar orbital and fixed retarded cavity Green function gï¼›','real site potentials V_A and V_Bï¼›','no local relaxation, charge transfer, or short-range orderã€‚']}>
 
-<DerivationBlock
-  title="scalar cavity CPA used in the teaching model | æ•™å­¦æ¨¡å‹ä¸­çš„ scalar cavity CPA"
-  assumptions={[
-    'one scalar orbital per siteï¼›',
-    'fixed retarded cavity Green function g with Im g<0ï¼›',
-    'component on-site potentials V_A and V_Bï¼›',
-    'no off-diagonal disorder or short-range orderã€‚',
-  ]}
->
-
-For coherent potential $\Sigma$, the excess scatterer is
+For scalar $g$,
 
 $$
-t_\alpha^{\mathrm{ex}}
-=\frac{V_\alpha-\Sigma}
-{1-(V_\alpha-\Sigma)g}.
+c\frac{V_A-\Sigma}{1-g(V_A-\Sigma)}
++(1-c)\frac{V_B-\Sigma}{1-g(V_B-\Sigma)}=0
 $$
 
-The CPA residual is
-
-$$
-R(\Sigma)=c\,t_A^{\mathrm{ex}}+(1-c)t_B^{\mathrm{ex}}.
-$$
-
-Multiplying the two denominators gives a quadratic teaching equation,
+becomes
 
 $$
 \bar V-\Sigma-g(V_A-\Sigma)(V_B-\Sigma)=0,
-\qquad
-\bar V=cV_A+(1-c)V_B.
+\qquad \bar V=cV_A+(1-c)V_B,
 $$
 
-The retarded root is selected with $\operatorname{ImuõqM¥µ…q±”À¸Ğ€‘ŒôÄ°€‘qM¥µ„õY}…¹€‘Ñ}yíqµ…Ñ¡Éµí•áõôôÀì…Ğ€‘ŒôÀ°€‘qM¥µ„õY}…¹€‘Ñ}	yíqµ…Ñ¡Éµí•áõôôÀ¸Q¡•Í”•¹‘Á½¥¹ÑÌ…É”‘•Ñ•Éµ¥¹¥ÍÑ¥Œ…•ÁÑ…¹”Ñ•ÍÑÌ¸ÁÉ½‘ÕÑ¥½¸--HµA…±Õ±…Ñ¥½¸É•Á±…•ÌÑ¡”™¥á•Í…±…È€‘œİ¥Ñ Ñ¡”Í•±˜µ½¹Í¥ÍÑ•¹Ğµ…ÑÉ¥à…Ù¥ÑäÉ••¸™Õ¹Ñ¥½¸½˜Ñ¡”½¡•É•¹Ğ±…ÑÑ¥”¸((ğ½•É¥Ù…Ñ¥½¹	±½¬ø((ñ	¥±¥¹Õ…±…±±½ÕĞÑ¥Ñ±•i ô‰Í¥¹±”µÍ¥Ñ”A½µ¥ÑÑ•Á¡åÍ¥ÌˆÑ¥Ñ±•¸ô‰A¡åÍ¥Ì½µ¥ÑÑ•‰äÍ¥¹±”µÍ¥Ñ”Aˆ­¥¹ô‰‰½Õ¹‘…Éäˆø(€€ñ‘¥Ø±…ÍÌô‰‰¥±¥¹Õ…°µÍ•Ñ¥½¹}}é ˆùM¥¹±”µÍ¥Ñ”AÉ•ÁÉ½‘Õ•ÌÑ¡”½¹™¥ÕÉ…Ñ¥½¹…±±ä…Ù•É…•½¹”µÍ¥Ñ”Í…ÑÑ•É¥¹œ½¹‘¥Ñ¥½¸¸%Ğ½µ¥ÑÌ•áÁ±¥¥ĞÁ…¥È½ÉÉ•±…Ñ¥½¹Ì°±ÕÍÑ•É¥¹œ°Í¡½ÉĞµÉ…¹”½É‘•È°•¹Ù¥É½¹µ•¹Ğµ‘•Á•¹‘•¹ĞÉ•±…á…Ñ¥½¸°½™˜µ‘¥…½¹…°‘¥Í½É‘•ÈÕ¹±•ÍÌ•¹•É…±¥é•°…¹½¹”ÍÁ•¥™¥Œµ¥É½Í½Á¥Œ½¹™¥ÕÉ…Ñ¥½¸¸É••µ•¹Ğ½˜…¸…Ù•É…”=L‘½•Ì¹½ĞÙ…±¥‘…Ñ”±½…°¡•µ¥ÍÑÉä½È„½¹™¥ÕÉ…Ñ¥½¸µÉ•Í½±Ù•™½É”¸ğ½‘¥Øø(€€ñ‘¥Ø±…ÍÌô‰‰¥±¥¹Õ…°µÍ•Ñ¥½¹}}•¸ˆ±…¹œô‰•¸ˆùM¥¹±”µÍ¥Ñ”AÉ•ÁÉ½‘Õ•Ì„½¹™¥ÕÉ…Ñ¥½¹…±±ä…Ù•É…•½¹”µÍ¥Ñ”Í…ÑÑ•É¥¹œ½¹‘¥Ñ¥½¸¸%Ğ½µ¥ÑÌ•áÁ±¥¥ĞÁ…¥È½ÉÉ•±…Ñ¥½¹Ì°±ÕÍÑ•É¥¹œ°Í¡½ÉĞµÉ…¹”½É‘•È°•¹Ù¥É½¹µ•¹Ğµ‘•Á•¹‘•¹ĞÉ•±…á…Ñ¥½¸°½™˜µ‘¥…½¹…°‘¥Í½É‘•ÈÕ¹±•ÍÌ•¹•É…±¥é•°…¹…¹ä½¹”µ¥É½Í½Á¥Œ½¹™¥ÕÉ…Ñ¥½¸¸É••µ•¹Ğ½˜…¸…Ù•É…”=L‘½•Ì¹½ĞÙ…±¥‘…Ñ”±½…°¡•µ¥ÍÑÉä½È„½¹™¥ÕÉ…Ñ¥½¸µÉ•Í½±Ù•™½É”¸ğ½‘¥Øø(ğ½	¥±¥¹Õ…±…±±½ÕĞø(
+or
+
+$$
+g\Sigma^2+[1-g(V_A+V_B)]\Sigma+gV_AV_B-\bar V=0.
+$$
+
+The physical retarded branch is selected by analytic continuity from the pure endpoints and by lying in the retarded half-plane. Choosing a root merely because its magnitude is smaller is not a physical criterion.
+
+</DerivationBlock>
+
+<CPAEffectiveMediumExplorer />
+
+<BilingualSection titleZh="CPA èƒ½æ”¯æŒä»€ä¹ˆ" titleEn="What CPA can support">
+  <div class="bilingual-section__zh"><ul><li>declared single-site approximation ä¸‹çš„ configuration-averaged Green function ä¸ DOSï¼›</li><li>composition-dependent broadeningã€average charge ä¸ spectral momentsï¼›</li><li>ä¸ ordered supercellsã€cluster CPA æˆ– experiment æ¯”è¾ƒçš„ disorder baselineã€‚</li></ul><p>single-site CPA ä¸¢å¤± local-environment correlationsï¼Œä¸èƒ½æè¿° short-range orderã€cluster motifsã€percolation geometryã€local relaxation æˆ– configuration-specific rare statesã€‚</p></div>
+  <div class="bilingual-section__en" lang="en"><ul><li>configuration-averaged Green functions and DOS under a declared single-site approximation;</li><li>composition-dependent broadening, average charge, and spectral moments;</li><li>a disorder baseline for ordered-supercell, cluster-CPA, or experimental comparisons.</li></ul><p>Single-site CPA discards local-environment correlations and cannot represent short-range order, cluster motifs, percolation geometry, local relaxation, or configuration-specific rare states.</p></div>
+</BilingualSection>
+
+<BilingualCallout titleZh="å¹³å‡ä»‹è´¨ä¸ç­‰äºå¹³å‡ç»“æ„" titleEn="An average medium is not an average structure" kind="boundary">
+  <div class="bilingual-section__zh">CPA translational invariance å±äº ensemble-averaged Green-function constructionã€‚å®ƒä¸æ„å‘³ç€åŸå­åœ¨å¹³å‡ä½ç½®å½¢æˆçœŸå® periodic crystalï¼Œä¹Ÿä¸èƒ½ä» broadened CPA spectrum ç›´æ¥è¯»å–å±€åŸŸé”®é•¿ã€site-resolved force æˆ– phonon stabilityã€‚</div>
+  <div class="bilingual-section__en" lang="en">CPA translational invariance belongs to an ensemble-averaged Green-function construction. It does not imply a real periodic crystal at average atomic positions, and a broadened CPA spectrum does not directly provide local bond lengths, site-resolved forces, or phonon stability.</div>
+</BilingualCallout>
