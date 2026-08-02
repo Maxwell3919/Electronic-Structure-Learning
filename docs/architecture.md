@@ -16,7 +16,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-The reviewed content has developed in six batches:
+The reviewed content has developed in seven batches:
 
 1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
 2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
@@ -24,6 +24,7 @@ The reviewed content has developed in six batches:
 4. Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, Self-Consistent Field Methods, Discretization and Basis Representations.
 5. Differential Equations, Fourier Analysis, Crystallography, Group Theory and Symmetry.
 6. Plane-Wave and Real-Space Methods, Pseudopotentials/PAW/Core–Valence Treatments, Brillouin-Zone Sampling, Relativistic Electronic Structure/Spin/Magnetism.
+7. Atomic and Molecular Physics, Physical Chemistry, Chemical Bonding and Molecular Structure, Localized-Orbital Methods.
 
 The Tier-1 responsibility chain remains explicit:
 
@@ -36,7 +37,9 @@ interacting many-electron problem
 → finite numerical representation
 ```
 
-Tier 2 is not a fixed linear sequence. The current periodic-material branch connects several distinct layers:
+Tier 2 is not a fixed linear sequence. Two complementary routes are now visible.
+
+### Periodic plane-wave and real-space route
 
 ```text
 Fourier analysis
@@ -65,7 +68,31 @@ Relativity and magnetism
 └── magnetic symmetry and anisotropy
 ```
 
-These responsibilities must remain separate:
+### Molecular and localized-orbital route
+
+```text
+Quantum mechanics and group theory
+├── atomic terms, angular momenta, fields, and spectra
+└── molecular rotation, vibration, transitions, and selection rules
+
+Physical chemistry
+├── thermodynamic potentials and chemical potentials
+├── barriers, rates, and kinetic models
+└── spectroscopy and finite-temperature interpretation
+
+Quantum chemistry and chemical bonding
+├── molecular Hamiltonians and approximate electronic states
+├── orbital, density, symmetry, and energy interpretations
+└── method-dependent charges, bond orders, and decompositions
+
+Localized-orbital methods
+├── Gaussian, Slater, and numerical atom-centred functions
+├── nonorthogonal generalized eigenproblems
+├── periodic Bloch sums and tight-binding models
+└── basis, grid, Pulay, and BSSE convergence
+```
+
+The following responsibilities remain separate:
 
 - A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
 - An FFT or real-space grid is not automatically the orbital basis.
@@ -73,6 +100,11 @@ These responsibilities must remain separate:
 - An SCF integration mesh, a denser NSCF/DOS mesh, and an illustrative band path are different objects.
 - Scalar relativity, spin polarization, noncollinearity, and SOC are not interchangeable accuracy levels.
 - One converged magnetic branch is not proof of the global magnetic ground state.
+- Atomic and molecular spectra require transition operators and state models; they are not recovered from arbitrary ground-state Kohn–Sham eigenvalue differences.
+- Electronic total energies, thermodynamic free energies, reaction barriers, rates, and spectra belong to different model layers.
+- Orbital pictures, charge partitions, density topology, bond orders, and energy decompositions are distinct interpretation frameworks.
+- Empirical tight binding and full self-consistent localized-basis electronic structure may share matrix algebra but do not support the same claims.
+- Basis labels and radial cutoffs from different codes are not directly interchangeable; convergence remains system- and observable-specific.
 
 All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
