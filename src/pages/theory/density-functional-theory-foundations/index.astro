@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Density Functional Theory: Foundations" description="Ground-state density, Hohenberg–Kohn theorems, constrained search, representability, and variational scope." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Density Functional Theory: Foundations</span>
+  </nav>
+
+  <h1>Density Functional Theory: Foundations</h1>
+  <p class="lede">Ground-state density-functional theory asks whether the many-electron ground state can be formulated through the three-dimensional particle density rather than the full many-coordinate wavefunction.</p>
+  <p>The answer is an exact existence and variational theory. It is not yet a practical orbital algorithm, and it does not supply the unknown universal functional in closed form. Kohn–Sham construction and exchange–correlation approximations therefore belong to later pages.</p>
+
+  <h2>The density is a reduced ground-state variable</h2>
+  <p>For an <math class="math-inline" aria-label="N electron"><semantics><mrow><mi>N</mi><mtext>-electron</mtext></mrow><annotation encoding="application/x-tex">N\text&#123;-electron&#125;</annotation></semantics></math> state, the density satisfies</p>
+  <div class="math-display">
+    <math display="block" aria-label="integral of n of r over space equals N">
+      <semantics>
+        <mrow><mo>∫</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>=</mo><mi>N</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\int n(\mathbf&#123;r&#125;)\,d^3r=N.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The density is an observable one-body quantity. It contains much less explicit information than the wavefunction: it has no visible list of configurations, pair coordinates, or many-body phases. The foundational question is whether that compression can still determine the ground-state problem.</p>
+
+  <h2>The external potential identifies the physical system</h2>
+  <p>For a fixed particle number and fixed electron–electron interaction, the Hamiltonian may be separated into universal internal terms and a system-specific external potential:</p>
+  <div class="math-display">
+    <math display="block" aria-label="H of v equals T plus W plus integral v external times density operator">
+      <semantics>
+        <mrow>
+          <mover><mi>H</mi><mo>^</mo></mover><msub><mo></mo><mi>v</mi></msub><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>+</mo><mover><mi>W</mi><mo>^</mo></mover>
+          <mo>+</mo><mo>∫</mo><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mover><mi>n</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;_v=\hat&#123;T&#125;+\hat&#123;W&#125;+\int v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)\hat&#123;n&#125;(\mathbf&#123;r&#125;)\,d^3r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p><math class="math-inline" aria-label="T hat"><semantics><mover><mi>T</mi><mo>^</mo></mover><annotation encoding="application/x-tex">\hat&#123;T&#125;</annotation></semantics></math> and <math class="math-inline" aria-label="W hat"><semantics><mover><mi>W</mi><mo>^</mo></mover><annotation encoding="application/x-tex">\hat&#123;W&#125;</annotation></semantics></math> are the same for every ordinary nonrelativistic electronic system in this class. The nuclei, fields, and other one-body influences enter through <math class="math-inline" aria-label="v external of r"><semantics><mrow><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)</annotation></semantics></math>.</p>
+
+  <h2>The first Hohenberg–Kohn result is a uniqueness statement</h2>
+  <p>Under the standard ground-state assumptions, two external scalar potentials that differ by more than an additive constant cannot have the same ground-state density. Thus the ground-state density determines the external potential up to a constant and, through the Hamiltonian, determines ground-state properties in principle.</p>
+  <aside class="callout">
+    <p>This is an existence and uniqueness result, not a reconstruction algorithm.</p>
+    <p>Degeneracy, spin variables, magnetic vector potentials, periodic electric fields, ensembles, and other extensions require their own precise formulations.</p>
+  </aside>
+  <p>The theorem does not say that every imaginable nonnegative normalized function is the ground-state density of some physical external potential. That is a representability question.</p>
+
+  <h2>The energy is variational in the density</h2>
+  <p>The ground-state energy for a specified external potential can be expressed as</p>
+  <div class="math-display">
+    <math display="block" aria-label="E v of n equals F of n plus integral v external n">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><mo>∫</mo><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_v[n]=F[n]+\int v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;)\,d^3r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The internal functional <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> is universal within the chosen interaction and kinetic-energy theory: it does not depend on which external potential generated the density.</p>
+  <p>The exact ground-state energy follows from a global minimization over admissible densities, with the correct particle number:</p>
+  <div class="math-display">
+    <math display="block" aria-label="E zero equals minimum over admissible densities of E v of n">
+      <semantics>
+        <mrow><msub><mi>E</mi><mn>0</mn></msub><mo>=</mo><munder><mo>min</mo><mrow><mi>n</mi><mo>→</mo><mi>N</mi></mrow></munder><msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_0=\min_&#123;n\to N&#125;E_v[n].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A stationary density is not automatically the global minimum. Approximate functionals can also introduce false minima or incorrect ordering among competing states.</p>
+
+  <h2>Levy–Lieb constrained search defines the universal functional</h2>
+  <p>A direct definition separates the internal many-electron problem from the external potential:</p>
+  <div class="math-display">
+    <math display="block" aria-label="F of n equals minimum over antisymmetric wavefunctions yielding n of expectation T plus W">
+      <semantics>
+        <mrow>
+          <mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo>
+          <munder><mo>min</mo><mrow><mi>Ψ</mi><mo>→</mo><mi>n</mi></mrow></munder>
+          <mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mover><mi>T</mi><mo>^</mo></mover><mo>+</mo><mover><mi>W</mi><mo>^</mo></mover><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">F[n]=\min_&#123;\Psi\to n&#125;\langle\Psi|\hat&#123;T&#125;+\hat&#123;W&#125;|\Psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The inner search ranges over normalized antisymmetric wavefunctions that produce the prescribed density. The outer minimization over densities then selects the physical ground state for a chosen external potential.</p>
+  <p>This formulation makes two boundaries explicit: the functional is defined through the interacting wavefunction even though its argument is the density, and the domain is constrained by <em>N</em>-representability rather than by normalization alone.</p>
+
+  <h2>Representability is part of the theorem's domain</h2>
+  <dl class="paired-definitions">
+    <dt><em>N</em>-representable density</dt>
+    <dd>A density produced by at least one normalized antisymmetric <em>N</em>-electron state.</dd>
+    <dt>Ground-state <em>v</em>-representable density</dt>
+    <dd>A density that occurs as a ground-state density for an external potential in the stated class.</dd>
+  </dl>
+  <p>The constrained-search formulation enlarges the useful variational domain beyond densities already known to be ground states of some potential. A practical discretization still introduces additional finite-representation questions that are not resolved by formal representability.</p>
+
+  <h2>Exact DFT and approximate density functionals are different claims</h2>
+  <p>The Hohenberg–Kohn and Levy–Lieb results define an exact ground-state framework. Practical calculations require an approximation or indirect construction for the unknown internal functional.</p>
+  <p>Therefore:</p>
+  <ul>
+    <li>failure of an approximate functional is not a failure of the existence theorem;</li>
+    <li>exactness of the formal theory does not make a chosen approximation exact;</li>
+    <li>small self-consistent residuals do not measure functional error;</li>
+    <li>agreement for one observable does not establish transferability to another.</li>
+  </ul>
+
+  <h2>This page stops before Kohn–Sham theory</h2>
+  <p>The density-only variational framework does not yet provide the orbital equations used in most calculations. Kohn–Sham theory introduces an auxiliary noninteracting system chosen to reproduce the interacting ground-state density and moves the remaining unknown physics into exchange–correlation terms.</p>
+  <p>That construction is not merely another wording of the Hohenberg–Kohn theorem. It introduces orbitals, a noninteracting kinetic energy, an effective potential, and a density-closure problem, each with separate interpretation limits.</p>
+
+  <h2>Ground-state scope does not imply exact excitation spectra</h2>
+  <p>The basic variational theorems concern ground-state quantities. The fact that the exact ground-state density determines the Hamiltonian in principle does not make auxiliary eigenvalue differences exact neutral or charged excitation energies.</p>
+  <p>Ensemble DFT, derivative discontinuities, time-dependent DFT, and quasiparticle theories address related but distinct questions. They should be introduced with their own variables and assumptions rather than inferred from the ground-state minimization alone.</p>
+
+  <h2>Connections</h2>
+  <p><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> supplies the interacting Hamiltonian and antisymmetric states used in the constrained search. <a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> provides the contrasting single-determinant variational route. Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, and Self-Consistent Field Methods remain separate downstream responsibilities.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/density-functional-theory-foundations/6122D8BF7FAE865BE26A7330124432BB">Richard M. Martin, <cite>Electronic Structure</cite>, Chapter 6</a> explicitly separates interacting density-functional foundations from the later Kohn–Sham auxiliary system and exchange–correlation approximations. The full text requires purchase or institutional access.</p>
+  <p><a href="https://link.springer.com/book/10.1007/978-3-642-14090-7">Eberhard Engel and Reiner M. Dreizler, <cite>Density Functional Theory: An Advanced Course</cite></a> is the rigorous continuation for existence theorems, effective single-particle equations, orbital-dependent functionals, and advanced extensions. It is not a first introduction.</p>
+  <p><a href="https://academic.oup.com/book/41995">Robert G. Parr and Weitao Yang, <cite>Density-Functional Theory of Atoms and Molecules</cite></a> develops the foundational and chemical perspectives on density as a basic variable. Its age means that modern functional practice and implementation details require newer sources.</p>
+  <p><a href="https://dft.uci.edu/learnDFT.php">The Burke Group's <cite>ABC of DFT</cite></a> is a free supplementary set of notes aimed at users and developers. Its own page warns that pieces are missing and need rewriting and restricts reproduction to individual use; it is therefore not used here as the sole authority.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and resource roles were reviewed on 2 August 2026 against the Theory research report and Martin's separation of DFT foundations from Kohn–Sham theory. The page treats theorems, functional approximation, numerical convergence, and excitation interpretation as distinct claims.</p>
+  </aside>
+</BaseLayout>
