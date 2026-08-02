@@ -16,7 +16,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-The reviewed content has developed in nine batches:
+The reviewed content has developed in ten batches:
 
 1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
 2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
@@ -27,6 +27,7 @@ The reviewed content has developed in nine batches:
 7. Atomic and Molecular Physics, Physical Chemistry, Chemical Bonding and Molecular Structure, Localized-Orbital Methods.
 8. Electromagnetism, Statistical Mechanics, Solid-State Chemistry.
 9. Functional Analysis and Variational Methods, Many-Body Physics, Linear Response and Excited States, Many-Body Perturbation Theory and Quasiparticles.
+10. Probability and Statistics, Classical Mechanics, Thermodynamics.
 
 The Tier-1 responsibility chain remains explicit:
 
@@ -39,7 +40,7 @@ interacting many-electron problem
 → finite numerical representation
 ```
 
-Tier 2 is not a fixed linear sequence. It supports three complementary routes.
+Tier 2 and Tier 3 are branching maps rather than fixed linear sequences.
 
 ### Periodic plane-wave and real-space route
 
@@ -144,6 +145,28 @@ Many-body perturbation theory
 └── BSE electron–hole excitations
 ```
 
+### Uncertainty, nuclear motion, and macroscopic equilibrium route
+
+```text
+Probability and statistics
+├── random variables and estimators
+├── correlated sampling and effective sample size
+├── inference, resampling, and benchmark metrics
+└── sampling uncertainty versus numerical and model error
+
+Classical mechanics
+├── generalized coordinates and constraints
+├── Lagrangian and Hamiltonian dynamics
+├── Born–Oppenheimer forces and trajectories
+└── harmonic normal modes and integration error
+
+Thermodynamics
+├── state variables and laws
+├── Helmholtz, Gibbs, and grand potentials
+├── chemical potentials and phase coexistence
+└── zero-temperature energies versus finite-temperature stability
+```
+
 The following responsibilities remain separate:
 
 - A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
@@ -166,6 +189,10 @@ The following responsibilities remain separate:
 - DFPT, TDDFT, GW, and BSE have distinct perturbations, particle-number sectors, kernels, and convergence controls.
 - Kohn–Sham gaps, charged quasiparticle gaps, neutral optical excitations, and exciton binding energies are not interchangeable.
 - GW starting points and self-consistency variants do not form a universal accuracy ladder.
+- Sampling uncertainty, deterministic numerical error, model discrepancy, and experimental uncertainty are distinct evidence categories.
+- The number of stored trajectory frames is not automatically the number of independent samples.
+- Electronic-force convergence, trajectory integration, local harmonic stability, thermodynamic stability, and kinetic accessibility are distinct conclusions.
+- Internal energy, Helmholtz free energy, Gibbs free energy, grand potential, and zero-temperature electronic energy answer different constrained questions.
 
 All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
@@ -173,7 +200,7 @@ Mathematics is authored as native MathML inside the static Astro source. Display
 
 Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
 
-The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations now have enough distinct objects, workflows, and convergence boundaries to justify an independent advanced module.
+The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point.
 
 ## Methods and other entrances
 

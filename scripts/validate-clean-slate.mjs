@@ -14,6 +14,7 @@ const theorySlugs = [
   'brillouin-zone-sampling',
   'calculus-and-analysis',
   'chemical-bonding-and-molecular-structure',
+  'classical-mechanics',
   'crystallography',
   'density-functional-theory-foundations',
   'differential-equations',
@@ -34,6 +35,7 @@ const theorySlugs = [
   'numerical-analysis',
   'physical-chemistry',
   'plane-wave-and-real-space-methods',
+  'probability-and-statistics',
   'pseudopotentials-paw-and-core-valence-treatments',
   'quantum-chemistry',
   'quantum-mechanics',
@@ -42,6 +44,7 @@ const theorySlugs = [
   'solid-state-chemistry',
   'solid-state-physics',
   'statistical-mechanics',
+  'thermodynamics',
 ];
 
 const expectedPages = [
@@ -66,9 +69,12 @@ const reviewedTheoryPages = {
   'fourier-analysis': ['The DFT and FFT are finite numerical objects', 'Reciprocal lattice and Brillouin-zone variables are not the same index'],
   'functional-analysis-and-variational-methods': ['The Rayleigh quotient connects spectra to optimization', 'Existence, uniqueness, and stationarity are separate questions'],
   'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
+  'probability-and-statistics': ['A random variable is a function on possible outcomes', 'Statistical uncertainty and systematic error answer different questions'],
   'group-theory-and-symmetry': ['Representations describe how symmetry acts on a space', 'Symmetry reduction is not automatically physically harmless'],
+  'classical-mechanics': ['The Lagrangian converts forces and constraints into equations of motion', 'Small oscillations reduce coupled displacements to normal modes'],
   'electromagnetism': ['Charge density determines an electrostatic potential only after boundary conditions are stated', 'Longitudinal and transverse fields lead to different approximations'],
   'quantum-mechanics': ['Identical electrons require antisymmetry'],
+  'thermodynamics': ['Legendre transforms choose natural control variables', 'Zero-temperature electronic energies are ingredients, not complete free energies'],
   'statistical-mechanics': ['An ensemble states what is controlled and what fluctuates', 'Numerical smearing and physical temperature must remain separate'],
   'atomic-and-molecular-physics': ['Hydrogenic states provide a reference language', 'Selection rules are symmetry statements'],
   'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
@@ -166,7 +172,7 @@ if (sourceMode) {
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['Functional Analysis and Variational Methods', 'Many-Body Physics', 'Linear Response and Excited States', 'Many-Body Perturbation Theory and Quasiparticles']) assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
+  for (const label of ['Probability and Statistics', 'Classical Mechanics', 'Thermodynamics', 'Functional Analysis and Variational Methods', 'Many-Body Physics', 'Linear Response and Excited States', 'Many-Body Perturbation Theory and Quasiparticles']) assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   checkReviewedPages(root, 'source');
 
   const methods = fs.readFileSync(path.join(root, 'src/pages/methods/index.astro'), 'utf8');

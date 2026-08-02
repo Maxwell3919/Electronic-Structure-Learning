@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Thermodynamics" description="State variables, thermodynamic potentials, equilibrium, chemical potentials, phase stability, and free-energy boundaries for electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Thermodynamics</span>
+  </nav>
+
+  <h1>Thermodynamics</h1>
+  <p class="lede">Thermodynamics determines which state function is appropriate under stated constraints and what equilibrium or stability means at the macroscopic level.</p>
+  <p>Electronic-structure calculations often provide zero-temperature electronic energies or ingredients for free energies. Thermodynamics supplies the missing constraint logic: temperature, pressure, volume, composition, reservoirs, phases, and work variables determine which quantity should be compared.</p>
+
+  <h2>A thermodynamic state is specified by variables and constraints</h2>
+  <p>Internal energy <math class="math-inline" aria-label="U"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math>, entropy <math class="math-inline" aria-label="S"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>, volume <math class="math-inline" aria-label="V"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>, particle numbers <math class="math-inline" aria-label="N i"><semantics><msub><mi>N</mi><mi>i</mi></msub><annotation encoding="application/x-tex">N_i</annotation></semantics></math>, temperature, pressure, and chemical potentials are related rather than independently adjustable.</p>
+  <p>For a simple multicomponent system, the fundamental relation can be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="d U equals T d S minus p d V plus sum mu i d N i">
+      <semantics>
+        <mrow><mi>d</mi><mi>U</mi><mo>=</mo><mi>T</mi><mi>d</mi><mi>S</mi><mo>−</mo><mi>p</mi><mi>d</mi><mi>V</mi><mo>+</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>μ</mi><mi>i</mi></msub><mi>d</mi><msub><mi>N</mi><mi>i</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">dU=T\,dS-p\,dV+\sum_i\mu_i\,dN_i.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Additional work terms may describe strain, electric polarization, magnetization, surfaces, or chemical reactions. Omitting them changes the equilibrium problem.</p>
+
+  <h2>The laws constrain allowed changes</h2>
+  <p>The first law accounts for energy conservation. The second law introduces entropy and directionality for spontaneous change. The third law constrains entropy near zero temperature under its stated assumptions.</p>
+  <p>Heat and work are path-dependent transfers; internal energy and entropy are state functions. A calculated energy difference between endpoints does not determine the heat, work, or kinetic pathway taken between them.</p>
+
+  <h2>Legendre transforms choose natural control variables</h2>
+  <p>Thermodynamic potentials exchange inconvenient extensive variables for controlled intensive variables:</p>
+  <div class="math-display">
+    <math display="block" aria-label="thermodynamic potentials">
+      <semantics>
+        <mrow>
+          <mi>F</mi><mo>=</mo><mi>U</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>,</mo>
+          <mspace width="1em"/>
+          <mi>H</mi><mo>=</mo><mi>U</mi><mo>+</mo><mi>p</mi><mi>V</mi><mo>,</mo>
+          <mspace width="1em"/>
+          <mi>G</mi><mo>=</mo><mi>U</mi><mo>+</mo><mi>p</mi><mi>V</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">F=U-TS,\qquad H=U+pV,\qquad G=U+pV-TS.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>At fixed <math class="math-inline" aria-label="T and V"><semantics><mrow><mi>T</mi><mtext> and </mtext><mi>V</mi></mrow><annotation encoding="application/x-tex">T\text&#123; and &#125;V</annotation></semantics></math>, stable equilibrium minimizes Helmholtz free energy under the allowed variations. At fixed <math class="math-inline" aria-label="T and p"><semantics><mrow><mi>T</mi><mtext> and </mtext><mi>p</mi></mrow><annotation encoding="application/x-tex">T\text&#123; and &#125;p</annotation></semantics></math>, Gibbs free energy is the relevant potential. Open systems require chemical-potential terms or a grand potential.</p>
+  <p>“Lowest energy” is therefore incomplete unless the potential, constraints, composition space, and allowed phases are declared.</p>
+
+  <h2>Chemical potential is the free-energy cost of composition change</h2>
+  <p>For Gibbs free energy,</p>
+  <div class="math-display">
+    <math display="block" aria-label="mu i equals partial G partial N i">
+      <semantics>
+        <mrow><msub><mi>μ</mi><mi>i</mi></msub><mo>=</mo><msub><mo>(</mo><mfrac><mrow><mi>∂</mi><mi>G</mi></mrow><mrow><mi>∂</mi><msub><mi>N</mi><mi>i</mi></msub></mrow></mfrac><mo>)</mo><mrow><mi>T</mi><mo>,</mo><mi>p</mi><mo>,</mo><msub><mi>N</mi><mrow><mi>j</mi><mo>≠</mo><mi>i</mi></mrow></msub></mrow></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mu_i=\left(\frac&#123;\partial G&#125;&#123;\partial N_i&#125;\right)_&#123;T,p,N_&#123;j\ne i&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Chemical potentials encode reservoirs and composition constraints. In defect, surface, adsorption, and phase calculations they are not arbitrary fitting constants: bounds arise from competing phases, environmental conditions, and the chosen reference states.</p>
+
+  <h2>Equilibrium compares all allowed variations</h2>
+  <p>A stationary point of a thermodynamic potential is not necessarily stable. Stability requires the appropriate second-variation or convexity conditions and comparison with all accessible phases, compositions, and order parameters.</p>
+  <p>Metastable states are local minima separated by barriers. Thermodynamics can rank their potentials but does not determine whether a transition occurs on an experimental timescale.</p>
+
+  <h2>Phase coexistence equalizes intensive variables</h2>
+  <p>At equilibrium, coexisting phases share temperature, pressure, and the relevant chemical potentials. For one component, equality of chemical potential between phases determines coexistence:</p>
+  <div class="math-display">
+    <math display="block" aria-label="mu alpha equals mu beta">
+      <semantics>
+        <mrow><msup><mi>μ</mi><mi>α</mi></msup><mo>(</mo><mi>T</mi><mo>,</mo><mi>p</mi><mo>)</mo><mo>=</mo><msup><mi>μ</mi><mi>β</mi></msup><mo>(</mo><mi>T</mi><mo>,</mo><mi>p</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mu^\alpha(T,p)=\mu^\beta(T,p).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Multicomponent phase diagrams add composition dimensions, tie lines, miscibility gaps, and possible ordered phases. A finite list of candidate structures gives only a restricted phase comparison.</p>
+
+  <h2>Zero-temperature electronic energies are ingredients, not complete free energies</h2>
+  <p>A practical materials free energy may contain electronic, vibrational, configurational, magnetic, rotational, translational, pressure–volume, surface, and environmental terms:</p>
+  <div class="math-display">
+    <math display="block" aria-label="schematic free energy decomposition">
+      <semantics>
+        <mrow><mi>G</mi><mo>≈</mo><msub><mi>E</mi><mi>el</mi></msub><mo>+</mo><msub><mi>F</mi><mi>vib</mi></msub><mo>+</mo><msub><mi>F</mi><mi>conf</mi></msub><mo>+</mo><msub><mi>F</mi><mi>mag</mi></msub><mo>+</mo><mi>p</mi><mi>V</mi><mo>+</mo><mo>⋯</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">G\approx E_&#123;\mathrm&#123;el&#125;&#125;+F_&#123;\mathrm&#123;vib&#125;&#125;+F_&#123;\mathrm&#123;conf&#125;&#125;+F_&#123;\mathrm&#123;mag&#125;&#125;+pV+\cdots.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Which terms are needed depends on the target accuracy and conditions. A small electronic energy difference may be reversed by an omitted entropy contribution, but the possibility of reversal is not evidence that it actually occurs.</p>
+
+  <h2>Convex hulls answer a restricted zero-temperature question</h2>
+  <p>A formation-energy convex hull compares candidate phases at common overall composition under a chosen reference convention. A point above the hull is unstable against at least one listed decomposition within that model; a point on the hull is stable only relative to the included phases and approximation stack.</p>
+  <p>Finite temperature, pressure, defects, disorder, surfaces, kinetic trapping, missing phases, and method errors can change the experimental outcome. Distance to a computed hull is not a synthesis probability.</p>
+
+  <h2>Electrochemical and field variables require consistent work terms</h2>
+  <p>Charged species, electrode potentials, electric fields, strain, and surfaces introduce additional conjugate variables. Comparing calculations performed under different charge, field, volume, or reference conventions without transforming to a common thermodynamic potential can produce meaningless rankings.</p>
+
+  <h2>Thermodynamic derivatives define response</h2>
+  <p>Heat capacities, compressibilities, expansion coefficients, susceptibilities, and phase-boundary slopes are derivatives of appropriate potentials. Numerical derivatives amplify noise and require convergence of the underlying free energy over the relevant variable range, not only at one point.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> derives thermodynamic potentials and fluctuations from microscopic ensembles.</li>
+    <li><a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> applies thermodynamics to chemical equilibrium, reactions, kinetics, and spectroscopy.</li>
+    <li><a href={href('/theory/solid-state-chemistry/')}>Solid-State Chemistry</a> uses chemical potentials and competing phases for defects, doping, and nonstoichiometry.</li>
+    <li><a href={href('/theory/classical-mechanics/')}>Classical Mechanics</a> addresses trajectories and barriers that thermodynamics alone does not determine.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/8-044-statistical-physics-i-spring-2013/">MIT OpenCourseWare 8.044, <cite>Statistical Physics I</cite></a> provides a physics route combining probability, thermodynamics, and introductory statistical mechanics. Use its thermodynamic laws, state variables, equilibrium, and examples as the main physical foundation.</p>
+  <p><a href="https://ocw.mit.edu/courses/5-60-thermodynamics-kinetics-spring-2008/">MIT OpenCourseWare 5.60, <cite>Thermodynamics &amp; Kinetics</cite></a> provides the chemistry route through state functions, entropy, Gibbs free energy, chemical potential, chemical and phase equilibrium, and reaction kinetics. Its kinetic half extends beyond this page's equilibrium responsibility.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not prescribe a universal free-energy correction, reservoir choice, phase set, defect model, or synthesis criterion. It does not equate a zero-temperature DFT ranking with complete thermodynamic stability, or thermodynamic favorability with a fast or experimentally accessible pathway.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official MIT OpenCourseWare 8.044 and 5.60 destinations were checked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>

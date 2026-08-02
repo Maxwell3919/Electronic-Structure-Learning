@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-two subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-five subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -20,7 +20,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="fourier-analysis"><a href={href('/theory/fourier-analysis/')}>Fourier Analysis</a> <span class="item-summary">— transforms, reciprocal components, convolution, sampling, DFTs, and aliasing.</span></li>
       <li id="functional-analysis-and-variational-methods"><a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis and Variational Methods</a> <span class="item-summary">— Hilbert spaces, operator domains, weak formulations, and continuum variational principles.</span></li>
       <li id="numerical-analysis"><a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a> <span class="item-summary">— error, conditioning, stability, discretization, and iterative solution.</span></li>
-      <li id="probability-and-statistics">Probability and Statistics</li>
+      <li id="probability-and-statistics"><a href={href('/theory/probability-and-statistics/')}>Probability and Statistics</a> <span class="item-summary">— random variables, sampling, correlations, inference, and uncertainty boundaries.</span></li>
       <li id="group-theory-and-symmetry"><a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> <span class="item-summary">— representations, irreducible sectors, selection rules, little groups, and compatibility.</span></li>
     </ul>
   </section>
@@ -29,10 +29,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <h2 id="physical-foundations">Physical Foundations</h2>
     <p>The physical principles governing quantum systems, equilibrium, periodic matter, response, and interacting particles.</p>
     <ul>
-      <li id="classical-mechanics">Classical Mechanics</li>
+      <li id="classical-mechanics"><a href={href('/theory/classical-mechanics/')}>Classical Mechanics</a> <span class="item-summary">— generalized coordinates, variational dynamics, normal modes, forces, and classical nuclei.</span></li>
       <li id="electromagnetism"><a href={href('/theory/electromagnetism/')}>Electromagnetism</a> <span class="item-summary">— Coulomb fields, Poisson equations, multipoles, polarization, dielectric response, and boundaries.</span></li>
       <li id="quantum-mechanics"><a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> <span class="item-summary">— states, operators, dynamics, spin, and identical fermions.</span></li>
-      <li id="thermodynamics">Thermodynamics</li>
+      <li id="thermodynamics"><a href={href('/theory/thermodynamics/')}>Thermodynamics</a> <span class="item-summary">— state functions, thermodynamic potentials, equilibrium, chemical potentials, and phase stability.</span></li>
       <li id="statistical-mechanics"><a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> <span class="item-summary">— ensembles, Fermi occupations, entropy, finite-temperature free energies, and fluctuations.</span></li>
       <li id="atomic-and-molecular-physics"><a href={href('/theory/atomic-and-molecular-physics/')}>Atomic and Molecular Physics</a> <span class="item-summary">— bound states, angular momenta, fields, spectra, and selection rules.</span></li>
       <li id="solid-state-physics"><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> <span class="item-summary">— periodicity, Bloch states, bands, filling, and collective degrees of freedom.</span></li>

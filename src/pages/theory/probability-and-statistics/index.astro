@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Probability and Statistics" description="Random variables, expectations, sampling error, correlations, inference, and uncertainty for electronic-structure research." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Probability and Statistics</span>
+  </nav>
+
+  <h1>Probability and Statistics</h1>
+  <p class="lede">Probability describes uncertainty in a model; statistics uses finite data to estimate, compare, and test quantities under that model.</p>
+  <p>Most ground-state Kohn–Sham calculations are deterministic once their inputs and algorithms are fixed. Probability becomes essential when configurations are sampled, noisy estimators are used, measurements are compared with calculations, model parameters are fitted, or uncertainty is propagated. It should not be invoked to hide systematic numerical or methodological error.</p>
+
+  <h2>A random variable is a function on possible outcomes</h2>
+  <p>For a random variable <math class="math-inline" aria-label="X"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> with probability density <math class="math-inline" aria-label="p of x"><semantics><mrow><mi>p</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics></math>, the expectation and variance are</p>
+  <div class="math-display">
+    <math display="block" aria-label="expectation and variance of X">
+      <semantics>
+        <mrow>
+          <mi mathvariant="double-struck">E</mi><mo>[</mo><mi>X</mi><mo>]</mo><mo>=</mo><mo>∫</mo><mi>x</mi><mi>p</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi><mo>,</mo>
+          <mspace width="1em"/>
+          <mi>Var</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><mi mathvariant="double-struck">E</mi><mo>[</mo><mo>(</mo><mi>X</mi><mo>−</mo><mi mathvariant="double-struck">E</mi><mo>[</mo><mi>X</mi><mo>]</mo><mo>)</mo><msup><mo></mo><mn>2</mn></msup><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathbb&#123;E&#125;[X]=\int x p(x)\,dx,\qquad \operatorname&#123;Var&#125;(X)=\mathbb&#123;E&#125;[(X-\mathbb&#123;E&#125;[X])^2].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The distribution, not only its mean, determines rare events, skewness, tails, and confidence statements. A standard deviation describes spread under the stated probability model; it is not automatically an error bar on a theoretical approximation.</p>
+
+  <h2>Conditional probability states what information has changed</h2>
+  <p>For events <math class="math-inline" aria-label="A and B"><semantics><mrow><mi>A</mi><mtext> and </mtext><mi>B</mi></mrow><annotation encoding="application/x-tex">A\text&#123; and &#125;B</annotation></semantics></math>,</p>
+  <div class="math-display">
+    <math display="block" aria-label="conditional probability of A given B">
+      <semantics>
+        <mrow><mi>P</mi><mo>(</mo><mi>A</mi><mo>|</mo><mi>B</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo>(</mo><mi>A</mi><mo>∩</mo><mi>B</mi><mo>)</mo></mrow><mrow><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo></mrow></mfrac><mo>,</mo><mspace width="0.5em"/><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">P(A\mid B)=\frac&#123;P(A\cap B)&#125;&#123;P(B)&#125;,\quad P(B)&gt;0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Bayesian updating, likelihood-based fitting, and model comparison all depend on which quantities are treated as random, which data are conditioned on, and which prior assumptions are declared. A posterior distribution is conditional on the complete statistical model, not only on the observed dataset.</p>
+
+  <h2>Sample averages estimate ensemble averages</h2>
+  <p>For independent samples <math class="math-inline" aria-label="X one through X N"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>X</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">X_1,\ldots,X_N</annotation></semantics></math>, the sample mean is</p>
+  <div class="math-display">
+    <math display="block" aria-label="sample mean">
+      <semantics>
+        <mrow><mover><mi>X</mi><mo>¯</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>X</mi><mi>i</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\bar&#123;X&#125;=\frac&#123;1&#125;&#123;N&#125;\sum_&#123;i=1&#125;^N X_i.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>If the samples are identically distributed, independent, and have finite variance <math class="math-inline" aria-label="sigma squared"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\sigma^2</annotation></semantics></math>, then <math class="math-inline" aria-label="variance of sample mean"><semantics><mrow><mi>Var</mi><mo>(</mo><mover><mi>X</mi><mo>¯</mo></mover><mo>)</mo><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>/</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">\operatorname&#123;Var&#125;(\bar&#123;X&#125;)=\sigma^2/N</annotation></semantics></math>. This familiar scaling fails when samples are strongly correlated, heavy-tailed, nonstationary, or selected after inspection.</p>
+
+  <h2>Correlated trajectories contain fewer independent samples than frames</h2>
+  <p>Molecular dynamics and Markov-chain Monte Carlo generate time-correlated data. For a normalized autocorrelation function <math class="math-inline" aria-label="rho of k"><semantics><mrow><mi>ρ</mi><mo>(</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\rho(k)</annotation></semantics></math>, an integrated autocorrelation time may be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="integrated autocorrelation time">
+      <semantics>
+        <mrow><msub><mi>τ</mi><mi>int</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>+</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mo>∞</mo></munderover><mi>ρ</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\tau_&#123;\mathrm&#123;int&#125;&#125;=\tfrac12+\sum_&#123;k=1&#125;^\infty\rho(k).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The effective sample size is then smaller than the number of stored frames. Equilibration, stationarity, autocorrelation, rare transitions, and multiple independent chains must be assessed before quoting a sampling uncertainty.</p>
+
+  <h2>Monte Carlo replaces difficult integrals with stochastic estimators</h2>
+  <p>For samples drawn from a density <math class="math-inline" aria-label="p"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>, an expectation can be estimated by</p>
+  <div class="math-display">
+    <math display="block" aria-label="Monte Carlo estimator">
+      <semantics>
+        <mrow><mi mathvariant="double-struck">E</mi><mo>[</mo><mi>f</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>]</mo><mo>≈</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mi>f</mi><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbb&#123;E&#125;[f(X)]\approx\frac&#123;1&#125;&#123;N&#125;\sum_&#123;i=1&#125;^N f(X_i).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Quantum Monte Carlo, configurational sampling, stochastic trace estimators, and uncertainty propagation use related ideas but have different target distributions, estimators, biases, and convergence diagnostics. “Monte Carlo error” is not one universal quantity.</p>
+
+  <h2>Statistical uncertainty and systematic error answer different questions</h2>
+  <dl class="paired-definitions">
+    <dt>Sampling uncertainty</dt>
+    <dd>Variation caused by using a finite, possibly correlated sample from a stated distribution.</dd>
+    <dt>Numerical error</dt>
+    <dd>Finite precision, incomplete iterative solution, discretization, sampling mesh, or finite-cell effects.</dd>
+    <dt>Model discrepancy</dt>
+    <dd>Difference caused by omitted physics or an approximation stack, such as an exchange–correlation functional or harmonic model.</dd>
+    <dt>Experimental uncertainty</dt>
+    <dd>Measurement noise, calibration, sample variation, and analysis choices in the observed data.</dd>
+  </dl>
+  <p>Repeating a biased calculation many times can reduce sampling noise while leaving the bias unchanged. A narrow confidence interval does not establish physical validity.</p>
+
+  <h2>Benchmark comparisons require a declared population and metric</h2>
+  <p>Mean absolute error, root-mean-square error, rank correlation, calibration, coverage, and outlier rates emphasize different aspects of performance. Dataset composition, duplicated chemical families, leakage between training and test sets, and reference uncertainty can dominate the result.</p>
+  <p>Bootstrap or cross-validation estimates are conditional on the resampling design. They do not create independence that the dataset does not possess.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> defines physical equilibrium ensembles; probability supplies their mathematical language.</li>
+    <li><a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a> separates deterministic approximation error from stochastic uncertainty.</li>
+    <li><a href={href('/theory/classical-mechanics/')}>Classical Mechanics</a> provides trajectories whose time correlations affect statistical estimates.</li>
+    <li><a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> connects stochastic and correlation-based estimators to interacting systems.</li>
+  </ul>
+
+  <h2>Study route</h2>
+  <p><a href="https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2022/">MIT OpenCourseWare 18.05, <cite>Introduction to Probability and Statistics</cite></a> is the preferred introductory resource. It covers random variables, distributions, expectation, variance, conditional probability, Bayesian and frequentist inference, confidence intervals, regression, simulation, and bootstrap methods.</p>
+  <p><a href="https://ocw.mit.edu/courses/18-175-theory-of-probability-spring-2014/">MIT OpenCourseWare 18.175, <cite>Theory of Probability</cite></a> is an advanced continuation requiring real analysis. It is not the default starting point for an electronic-structure learner.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not prescribe a universal statistical test, prior, confidence level, Monte Carlo algorithm, trajectory length, or benchmark metric. It also does not treat statistical uncertainty as a substitute for convergence tests, method validation, or evidence about omitted physics.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official MIT OpenCourseWare 18.05 and 18.175 destinations were checked on 3 August 2026; 18.05 was selected to close the report's missing introductory-resource gap.</p>
+  </aside>
+</BaseLayout>

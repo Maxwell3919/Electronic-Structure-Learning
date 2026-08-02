@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirty-two individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirty-five individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -44,6 +44,10 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Keep The Many-Electron Problem as the problem-definition page and Many-Body Physics as the formal second-quantized/Green-function framework. Do not merge them because both concern interacting electrons.
 - Keep ground-state derivatives, DFPT, TDDFT, GW quasiparticles, and BSE electron–hole excitations distinct. Similar matrix forms or spectra do not make their physical objects interchangeable.
 - Distinguish charged addition/removal gaps, neutral optical excitations, exciton binding, and Kohn–Sham eigenvalue gaps. Every GW claim must name its starting point, self-consistency variant, screening model, dimensional Coulomb treatment, and relevant convergence controls.
+- Distinguish sampling uncertainty, deterministic numerical error, model discrepancy, and experimental uncertainty. Repeated or statistically precise calculations do not validate an approximation stack.
+- Treat correlated trajectories through equilibration, autocorrelation, effective sample size, and stationarity checks; the number of stored frames is not automatically the number of independent samples.
+- Keep electronic forces, classical nuclear dynamics, harmonic normal modes, and thermodynamic equilibrium as separate responsibilities. A stable trajectory or positive local curvature does not prove global or finite-temperature stability.
+- Keep internal energy, Helmholtz free energy, Gibbs free energy, grand potential, and zero-temperature electronic energy distinct. State the controlled variables, reservoirs, allowed phases, and omitted entropy terms before making stability claims.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.

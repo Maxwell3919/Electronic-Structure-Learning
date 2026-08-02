@@ -23,9 +23,12 @@ THEORY_ROUTES = [
     "theory/fourier-analysis/",
     "theory/functional-analysis-and-variational-methods/",
     "theory/numerical-analysis/",
+    "theory/probability-and-statistics/",
     "theory/group-theory-and-symmetry/",
+    "theory/classical-mechanics/",
     "theory/electromagnetism/",
     "theory/quantum-mechanics/",
+    "theory/thermodynamics/",
     "theory/statistical-mechanics/",
     "theory/atomic-and-molecular-physics/",
     "theory/solid-state-physics/",
@@ -50,9 +53,7 @@ THEORY_ROUTES = [
     "theory/linear-response-and-excited-states/",
     "theory/many-body-perturbation-theory-and-quasiparticles/",
 ]
-CONTENT_ROUTES = [
-    "", "theory/", *THEORY_ROUTES, "methods/", "computational-tools/", "reference/",
-]
+CONTENT_ROUTES = ["", "theory/", *THEORY_ROUTES, "methods/", "computational-tools/", "reference/"]
 BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
 DEAD_CAMBRIDGE_ID = "8C2B8F7F4C94A903A9018E9D8A42B9A7"
@@ -191,7 +192,7 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: thirty-seven content routes, thirty-two MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: forty content routes, thirty-five MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
