@@ -21,6 +21,8 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Prefer ordinary `.astro` pages, semantic HTML, and one shared stylesheet.
 - Do not add Starlight, a CMS, search, client hydration, page-specific JavaScript, packaged fonts, or a general data registry without a demonstrated current consumer and explicit review.
 - Keep navigation usable without JavaScript and on narrow screens.
+- Author mathematical notation with native MathML. Every mathematical expression must include a TeX annotation inside `<semantics>`; display equations use the shared `.math-display` wrapper. Do not present equations as code-styled Unicode text, images, or client-rendered MathJax/KaTeX output.
+- Keep display mathematics horizontally contained at narrow widths. Internal equation scrolling is acceptable; page-level horizontal overflow is not.
 - Do not restore legacy Part, Chapter, Appendix, practice, learning-path, reading-system, lab, case, literature, status, or progress structures merely because they exist in history.
 
 ## Content and evidence
@@ -30,6 +32,7 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database.
 - Distinguish program execution, numerical convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
+- Remove or replace dead external resources when the official destination can no longer be verified. Do not preserve a broken link merely because it appeared in an earlier review.
 
 ## Verification
 
@@ -41,7 +44,7 @@ npm run check
 git diff --check
 ```
 
-Changes affecting public behavior also require the clean-slate browser smoke at desktop and 390-pixel widths with JavaScript enabled and disabled. A successful build verifies only the covered structure and runtime behavior; it does not constitute scientific review.
+Changes affecting public behavior also require the clean-slate browser smoke at desktop and 390-pixel widths with JavaScript enabled and disabled. Theory pages containing mathematics must additionally verify visible native MathML, TeX annotations, and no page-level horizontal overflow. A successful build verifies only the covered structure and runtime behavior; it does not constitute scientific review.
 
 ## Deployment
 

@@ -23,30 +23,93 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>A learner can begin quantum mechanics with the first layer. Formal density-functional arguments, response theory, and careful convergence reasoning eventually require parts of the second.</p>
 
   <h2>Derivatives express response</h2>
-  <p>A derivative measures how a quantity changes under a controlled variation. If an energy depends on a parameter <code>λ</code>, then</p>
-  <p class="equation"><code>dE/dλ</code></p>
-  <p>describes its local response to that parameter. In electronic structure, the varying object might be a nuclear coordinate, an external field, a density, a cell strain, or a parameter in a model.</p>
+  <p>A derivative measures how a quantity changes under a controlled variation. If an energy depends on a parameter <math class="math-inline" aria-label="lambda"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>, its local response is</p>
+  <div class="math-display">
+    <math display="block" aria-label="derivative of E with respect to lambda">
+      <semantics>
+        <mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>λ</mi></mrow></mfrac>
+        <annotation encoding="application/x-tex">\frac&#123;dE&#125;&#123;d\lambda&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>In electronic structure, the varying object might be a nuclear coordinate, an external field, a density, a cell strain, or a parameter in a model.</p>
   <p>For many variables, the gradient collects all first derivatives. Geometry optimization uses gradients with respect to nuclear coordinates, while response theories differentiate energies or densities with respect to perturbations. A zero derivative identifies a stationary point; it does not by itself prove that the point is a minimum.</p>
 
   <h2>Integration builds normalization and observables</h2>
   <p>Wavefunctions, densities, potentials, and basis functions live over continuous space. Integration turns these fields into numbers and enforces global constraints. For example, normalization is expressed as</p>
-  <p class="equation"><code>∫ |ψ(r)|² dr = 1</code>,</p>
+  <div class="math-display">
+    <math display="block" aria-label="integral of the absolute value squared of psi of r over r equals one">
+      <semantics>
+        <mrow>
+          <mo>∫</mo>
+          <msup><mrow><mo>|</mo><mi>ψ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup>
+          <mi>d</mi><mi mathvariant="bold">r</mi>
+          <mo>=</mo><mn>1</mn><mo>,</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\int |\psi(\mathbf&#123;r&#125;)|^2\,d\mathbf&#123;r&#125;=1,</annotation>
+      </semantics>
+    </math>
+  </div>
   <p>while an expectation value has the schematic form</p>
-  <p class="equation"><code>⟨A⟩ = ∫ ψ*(r) Aψ(r) dr</code>.</p>
+  <div class="math-display">
+    <math display="block" aria-label="expectation value of A equals integral psi star of r A psi of r d r">
+      <semantics>
+        <mrow>
+          <mo>⟨</mo><mi>A</mi><mo>⟩</mo><mo>=</mo>
+          <mo>∫</mo>
+          <msup><mi>ψ</mi><mo>*</mo></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mover accent="true"><mi>A</mi><mo>^</mo></mover>
+          <mi>ψ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mi>d</mi><mi mathvariant="bold">r</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\langle A\rangle=\int \psi^*(\mathbf&#123;r&#125;)\,\hat&#123;A&#125;\,\psi(\mathbf&#123;r&#125;)\,d\mathbf&#123;r&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
   <p>In an actual computation these integrals are represented by quadrature rules, reciprocal-space sums, basis contractions, or discrete grids. The mathematical integral and its numerical approximation must not be conflated.</p>
 
   <h2>Series connect local models to controlled approximations</h2>
-  <p>Taylor expansions organize how a function responds near a reference point. First derivatives describe linear response; second derivatives describe curvature, force constants, and local stability. Perturbation methods use the same logic, but their validity depends on regularity, scale separation, and the size of neglected terms.</p>
-  <p>A formal series is not automatically convergent, and a convergent series may converge too slowly to be useful. The relevant question is not merely whether an expansion can be written, but what assumptions make truncation defensible.</p>
+  <p>Taylor expansions organize how a function responds near a reference point. First derivatives describe linear response; second derivatives describe curvature, force constants, and local stability. A one-dimensional expansion makes the hierarchy explicit:</p>
+  <div class="math-display">
+    <math display="block" aria-label="f of x plus delta x equals f of x plus f prime of x delta x plus one half f double prime of x delta x squared plus higher order terms">
+      <semantics>
+        <mrow>
+          <mi>f</mi><mo>(</mo><mi>x</mi><mo>+</mo><mi>δ</mi><mi>x</mi><mo>)</mo>
+          <mo>=</mo>
+          <mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo>
+          <mo>+</mo>
+          <msup><mi>f</mi><mo>′</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mi>δ</mi><mi>x</mi>
+          <mo>+</mo>
+          <mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <msup><mi>f</mi><mo>″</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo>
+          <msup><mrow><mo>(</mo><mi>δ</mi><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup>
+          <mo>+</mo><mi mathvariant="normal">O</mi><mo>(</mo><msup><mrow><mi>δ</mi><mi>x</mi></mrow><mn>3</mn></msup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">f(x+\delta x)=f(x)+f'(x)\delta x+\frac&#123;1&#125;&#123;2&#125;f''(x)(\delta x)^2+\mathcal&#123;O&#125;((\delta x)^3).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Perturbation methods use the same logic, but their validity depends on regularity, scale separation, and the size of neglected terms. A formal series is not automatically convergent, and a convergent series may converge too slowly to be useful.</p>
 
   <h2>Sequences and limits make convergence meaningful</h2>
-  <p>Electronic-structure calculations generate sequences: energies as a basis grows, densities during self-consistency, integrals as a grid is refined, or observables as a sampling mesh becomes denser. A statement such as</p>
-  <p class="equation"><code>limₙ→∞ Eₙ = E</code></p>
-  <p>requires a specified sequence and a specified limiting process. Different parameters can approach their limits at different rates, and apparent stability over a few values is not a proof of convergence.</p>
+  <p>Electronic-structure calculations generate sequences: energies as a basis grows, densities during self-consistency, integrals as a grid is refined, or observables as a sampling mesh becomes denser. A convergence statement must specify both the sequence and the limiting process:</p>
+  <div class="math-display">
+    <math display="block" aria-label="limit as n approaches infinity of E sub n equals E">
+      <semantics>
+        <mrow>
+          <munder><mo>lim</mo><mrow><mi>n</mi><mo>→</mo><mo>∞</mo></mrow></munder>
+          <msub><mi>E</mi><mi>n</mi></msub>
+          <mo>=</mo><mi>E</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\lim_&#123;n\to\infty&#125;E_n=E.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Different parameters can approach their limits at different rates, and apparent stability over a few values is not a proof of convergence.</p>
   <p>Real analysis supplies the distinctions among pointwise convergence, uniform convergence, continuity, and interchange of limits, derivatives, and integrals. The full theory is advanced, but the warning is already practical: operations that are valid for each finite approximation need not remain valid after taking a limit.</p>
 
   <h2>Where DFT asks for more</h2>
-  <p>Density-functional theory varies an energy with respect to a function rather than a finite list of numbers. The resulting functional derivative is a later generalization of ordinary and multivariable differentiation. This page only establishes the finite-dimensional intuition; rigorous variational spaces, weak convergence, and constrained search belong to Functional Analysis and Variational Methods.</p>
+  <p>Density-functional theory varies an energy with respect to a function rather than a finite list of numbers. The resulting functional derivative is a later generalization of ordinary and multivariable differentiation. This page establishes the finite-dimensional intuition; rigorous variational spaces, weak convergence, and constrained search belong to Functional Analysis and Variational Methods.</p>
   <p>Complex variables also enter wave mechanics, Green functions, and contour methods, but a full complex-analysis course is not required for the first path through ground-state DFT.</p>
 
   <h2>Choose the route that matches the gap</h2>

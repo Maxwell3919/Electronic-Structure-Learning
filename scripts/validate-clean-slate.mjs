@@ -76,9 +76,9 @@ const expectedTheoryAnchors = [
 ];
 const reviewedTheoryPages = {
   'src/pages/theory/linear-algebra/index.astro': [
-    'In a non-orthogonal basis',
-    'Hc = εSc',
+    'generalized eigenvalue problem',
     'linear.axler.net',
+    'The obsolete Cambridge resource link was removed',
   ],
   'src/pages/theory/calculus-and-analysis/index.astro': [
     'Two layers hidden under one title',
@@ -90,6 +90,19 @@ const reviewedTheoryPages = {
     'Algorithmic convergence is not observable convergence',
     '18-335j-introduction-to-numerical-methods',
   ],
+};
+const deadCambridgeId = '8C2B8F7F4C94A903A9018E9D8A42B9A7';
+const count = (text, expression) => (text.match(expression) ?? []).length;
+const checkMathMl = (text, label) => {
+  const math = count(text, /<math(?:\s|>)/g);
+  const semantics = count(text, /<semantics(?:\s|>)/g);
+  const annotations = count(text, /<annotation\s+encoding="application\/x-tex">/g);
+  assert(math > 0, `${label} contains no native MathML`);
+  assert(math === semantics, `${label} must give every MathML expression a semantics element: ${math} math, ${semantics} semantics`);
+  assert(math === annotations, `${label} must give every MathML expression one TeX annotation: ${math} math, ${annotations} annotations`);
+  assert(text.includes('class="math-display"'), `${label} contains no shared display-math wrapper`);
+  assert(text.includes('class="math-inline"'), `${label} contains no inline MathML`);
+  assert(!text.includes('class="equation"'), `${label} still uses the removed code-style equation class`);
 };
 
 if (sourceMode) {
@@ -116,6 +129,7 @@ if (sourceMode) {
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the GitHub Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
+  assert(!sources.includes(deadCambridgeId), 'dead Cambridge Linear Algebra resource remains in public source');
   for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
     assert(!sources.toLowerCase().includes(term.toLowerCase()), `legacy content or UI term remains in public source: ${term}`);
   }
@@ -139,7 +153,14 @@ if (sourceMode) {
   for (const [file, markers] of Object.entries(reviewedTheoryPages)) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');
     for (const marker of markers) assert(source.includes(marker), `${file} is missing reviewed content marker: ${marker}`);
+    checkMathMl(source, file);
   }
+
+  const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
+  for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) {
+    assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
+  }
+  assert(!styles.includes('.equation'), 'removed code-style equation rule remains in the stylesheet');
 }
 
 if (builtMode) {
@@ -165,6 +186,7 @@ if (builtMode) {
   ]);
   for (const htmlFile of htmlFiles) {
     const html = fs.readFileSync(path.join(dist, htmlFile), 'utf8');
+    assert(!html.includes(deadCambridgeId), `dead Cambridge resource remains in built HTML: ${htmlFile}`);
     for (const match of html.matchAll(/href="([^"]+)"/g)) {
       const href = match[1];
       if (/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
@@ -184,6 +206,7 @@ if (builtMode) {
     for (const marker of markers.filter((value) => !value.includes('.net') && !value.includes('18-'))) {
       assert(html.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
     }
+    checkMathMl(html, relative);
   }
 }
 
