@@ -1,21 +1,25 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">This page currently fixes only the first two levels of the directory. Books, courses, websites, and detailed concept relations will be added separately after review.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. The first reviewed pages cover three mathematical foundations; the remaining entries still mark subjects to be developed individually.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
+    <p>The mathematical language of states, operators, fields, approximation, and numerical solution.</p>
     <ul>
-      <li id="linear-algebra">Linear Algebra</li>
-      <li id="calculus-and-analysis">Calculus and Analysis</li>
+      <li id="linear-algebra"><a href={href('/theory/linear-algebra/')}>Linear Algebra</a> <span class="item-summary">— states, bases, operators, subspaces, and eigenvalue problems.</span></li>
+      <li id="calculus-and-analysis"><a href={href('/theory/calculus-and-analysis/')}>Calculus and Analysis</a> <span class="item-summary">— change, integration, limits, and convergence.</span></li>
       <li id="differential-equations">Differential Equations</li>
       <li id="fourier-analysis">Fourier Analysis</li>
       <li id="functional-analysis-and-variational-methods">Functional Analysis and Variational Methods</li>
-      <li id="numerical-analysis">Numerical Analysis</li>
+      <li id="numerical-analysis"><a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a> <span class="item-summary">— error, conditioning, stability, discretization, and iterative solution.</span></li>
       <li id="probability-and-statistics">Probability and Statistics</li>
       <li id="group-theory-and-symmetry">Group Theory and Symmetry</li>
     </ul>
@@ -23,6 +27,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <section aria-labelledby="physical-foundations">
     <h2 id="physical-foundations">Physical Foundations</h2>
+    <p>The physical principles governing quantum systems, equilibrium, periodic matter, response, and interacting particles.</p>
     <ul>
       <li id="classical-mechanics">Classical Mechanics</li>
       <li id="electromagnetism">Electromagnetism</li>
@@ -38,6 +43,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <section aria-labelledby="chemical-foundations">
     <h2 id="chemical-foundations">Chemical Foundations</h2>
+    <p>The concepts used to interpret atoms, bonds, molecules, solids, surfaces, and composition-dependent behavior.</p>
     <ul>
       <li id="general-chemistry">General Chemistry</li>
       <li id="physical-chemistry">Physical Chemistry</li>
@@ -51,6 +57,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <section aria-labelledby="electronic-structure-theory">
     <h2 id="electronic-structure-theory">Electronic Structure Theory</h2>
+    <p>Focused theories and computational representations used to formulate and solve electronic many-electron problems.</p>
     <ul>
       <li id="many-electron-problem">The Many-Electron Problem</li>
       <li id="hartree-and-hartree-fock-methods">Hartree and Hartree–Fock Methods</li>
@@ -70,6 +77,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <section aria-labelledby="learning-map">
     <h2 id="learning-map">Learning Map</h2>
-    <p>The Learning Map will connect the detailed concepts contained in these subjects. It will represent prerequisites, branches, and converging paths rather than prescribe one fixed reading order.</p>
+    <p>The Learning Map will connect detailed concepts through prerequisites, branches, and converging paths. It will not prescribe one fixed reading order.</p>
   </section>
 </BaseLayout>

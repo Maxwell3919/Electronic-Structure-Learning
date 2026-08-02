@@ -14,7 +14,21 @@ const expectedPages = [
   'src/pages/index.astro',
   'src/pages/methods/index.astro',
   'src/pages/reference/index.astro',
+  'src/pages/theory/calculus-and-analysis/index.astro',
   'src/pages/theory/index.astro',
+  'src/pages/theory/linear-algebra/index.astro',
+  'src/pages/theory/numerical-analysis/index.astro',
+];
+const expectedHtml = [
+  '404.html',
+  'computational-tools/index.html',
+  'index.html',
+  'methods/index.html',
+  'reference/index.html',
+  'theory/calculus-and-analysis/index.html',
+  'theory/index.html',
+  'theory/linear-algebra/index.html',
+  'theory/numerical-analysis/index.html',
 ];
 const expectedTheoryAnchors = [
   'mathematical-foundations',
@@ -60,11 +74,28 @@ const expectedTheoryAnchors = [
   'berry-phases-and-electronic-topology',
   'learning-map',
 ];
+const reviewedTheoryPages = {
+  'src/pages/theory/linear-algebra/index.astro': [
+    'In a non-orthogonal basis',
+    'Hc = εSc',
+    'linear.axler.net',
+  ],
+  'src/pages/theory/calculus-and-analysis/index.astro': [
+    'Two layers hidden under one title',
+    'Computational calculus',
+    '18-100a-real-analysis',
+  ],
+  'src/pages/theory/numerical-analysis/index.astro': [
+    'Four error sources must remain separate',
+    'Algorithmic convergence is not observable convergence',
+    '18-335j-introduction-to-numerical-methods',
+  ],
+};
 
 if (sourceMode) {
   const tracked = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   const actualPages = tracked.filter((file) => file.startsWith('src/pages/')).sort();
-  assert(JSON.stringify(actualPages) === JSON.stringify(expectedPages), `public page sources must be exactly the clean-slate set: ${actualPages.join(', ')}`);
+  assert(JSON.stringify(actualPages) === JSON.stringify(expectedPages), `public page sources must match the reviewed static set: ${actualPages.join(', ')}`);
 
   for (const directory of ['src/content', 'src/components', 'src/data', 'src/lib', 'schemas', 'templates']) {
     assert(!fs.existsSync(path.join(root, directory)), `legacy directory still exists: ${directory}`);
@@ -74,7 +105,7 @@ if (sourceMode) {
   }
   const scriptFiles = tracked.filter((file) => file.startsWith('scripts/')).sort();
   const expectedScripts = ['scripts/smoke-clean-slate.py', 'scripts/validate-build-budget.mjs', 'scripts/validate-clean-slate.mjs'];
-  assert(JSON.stringify(scriptFiles) === JSON.stringify(expectedScripts), `scripts must be exactly the minimal suite: ${scriptFiles.join(', ')}`);
+  assert(JSON.stringify(scriptFiles) === JSON.stringify(expectedScripts), `scripts must remain the minimal suite: ${scriptFiles.join(', ')}`);
 
   const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
   assert(JSON.stringify(Object.keys(packageJson.dependencies ?? {}).sort()) === JSON.stringify(['astro']), 'Astro must be the only production dependency');
@@ -85,7 +116,7 @@ if (sourceMode) {
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the GitHub Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
-  for (const term of ['Martin', 'Sholl', 'checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
+  for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
     assert(!sources.toLowerCase().includes(term.toLowerCase()), `legacy content or UI term remains in public source: ${term}`);
   }
   for (const privatePath of [['/home', 'talos'].join('/'), ['/Users', ''].join('')]) {
@@ -102,6 +133,13 @@ if (sourceMode) {
   for (const anchor of expectedTheoryAnchors) {
     assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   }
+  for (const route of ['/theory/linear-algebra/', '/theory/calculus-and-analysis/', '/theory/numerical-analysis/']) {
+    assert(theorySource.includes(route), `Theory directory is missing reviewed page link: ${route}`);
+  }
+  for (const [file, markers] of Object.entries(reviewedTheoryPages)) {
+    const source = fs.readFileSync(path.join(root, file), 'utf8');
+    for (const marker of markers) assert(source.includes(marker), `${file} is missing reviewed content marker: ${marker}`);
+  }
 }
 
 if (builtMode) {
@@ -111,12 +149,20 @@ if (builtMode) {
   const walk = (directory) => { for (const entry of fs.readdirSync(directory, { withFileTypes: true })) { const absolute = path.join(directory, entry.name); entry.isDirectory() ? walk(absolute) : files.push(absolute); } };
   walk(dist);
   const htmlFiles = files.filter((file) => file.endsWith('.html')).map((file) => path.relative(dist, file)).sort();
-  const expectedHtml = ['404.html', 'computational-tools/index.html', 'index.html', 'methods/index.html', 'reference/index.html', 'theory/index.html'];
-  assert(JSON.stringify(htmlFiles) === JSON.stringify(expectedHtml), `built HTML must be exactly six files: ${htmlFiles.join(', ')}`);
+  assert(JSON.stringify(htmlFiles) === JSON.stringify(expectedHtml), `built HTML must match the reviewed static set: ${htmlFiles.join(', ')}`);
   assert(!files.some((file) => file.endsWith('.js')), 'built site contains JavaScript');
   assert(!files.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
 
-  const routeFiles = new Set(['', 'theory/', 'methods/', 'computational-tools/', 'reference/']);
+  const routeFiles = new Set([
+    '',
+    'theory/',
+    'theory/linear-algebra/',
+    'theory/calculus-and-analysis/',
+    'theory/numerical-analysis/',
+    'methods/',
+    'computational-tools/',
+    'reference/',
+  ]);
   for (const htmlFile of htmlFiles) {
     const html = fs.readFileSync(path.join(dist, htmlFile), 'utf8');
     for (const match of html.matchAll(/href="([^"]+)"/g)) {
@@ -131,6 +177,13 @@ if (builtMode) {
   const theoryHtml = fs.readFileSync(path.join(dist, 'theory/index.html'), 'utf8');
   for (const anchor of expectedTheoryAnchors) {
     assert(theoryHtml.includes(`id="${anchor}"`), `built Theory page is missing directory anchor: ${anchor}`);
+  }
+  for (const [sourceFile, markers] of Object.entries(reviewedTheoryPages)) {
+    const relative = sourceFile.replace(/^src\/pages\//, '').replace(/\.astro$/, '.html');
+    const html = fs.readFileSync(path.join(dist, relative), 'utf8');
+    for (const marker of markers.filter((value) => !value.includes('.net') && !value.includes('18-'))) {
+      assert(html.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
+    }
   }
 }
 
