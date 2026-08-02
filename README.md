@@ -2,7 +2,7 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure theory, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, seventeen individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, twenty-one individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
@@ -25,6 +25,10 @@ The production site is a static Plain Astro build. It currently contains the Hom
 - `/theory/exchange-correlation-functionals-and-approximations/`
 - `/theory/self-consistent-field-methods/`
 - `/theory/discretization-and-basis-representations/`
+- `/theory/plane-wave-and-real-space-methods/`
+- `/theory/pseudopotentials-paw-and-core-valence-treatments/`
+- `/theory/brillouin-zone-sampling/`
+- `/theory/relativistic-electronic-structure-spin-and-magnetism/`
 - `/methods/`
 - `/computational-tools/`
 - `/reference/`
@@ -47,4 +51,4 @@ The retired source-aligned course site, its practice cross-reference, interactiv
 
 ## Boundaries
 
-New scientific content is added individually after source and scope review. Topic pages are shaped by the subject rather than forced into one public template. Mathematical notation uses static native MathML with TeX annotations. This repository does not store textbook PDFs, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.
+New scientific content is added individually after source and scope review. Topic pages are shaped by the subject rather than forced into one public template. Mathematical notation uses static native MathML with TeX annotations. The Methods entrance is a concise conceptual map; execution, convergence, validation, and provenance workflows remain in DFT Research Workflow. This repository does not store textbook PDFs, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.
