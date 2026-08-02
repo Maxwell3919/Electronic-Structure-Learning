@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Many-Body Physics" description="Second quantization, Green functions, quasiparticles, collective modes, and interacting quantum systems." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Many-Body Physics</span>
+  </nav>
+
+  <h1>Many-Body Physics</h1>
+  <p class="lede">Many-body physics develops a reusable formal language for interacting quantum systems: Fock space, creation and annihilation operators, Green functions, collective modes, broken symmetry, and quasiparticles.</p>
+  <p>The page is not a duplicate of <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a>. That page defines why interacting electrons are difficult and what information is sought. This page introduces the formal structures used to reorganize the problem and connect microscopic Hamiltonians to spectra and response.</p>
+
+  <h2>Fock space allows particle occupations to vary</h2>
+  <p>Instead of storing an antisymmetric coordinate-space wavefunction for each particle number separately, second quantization describes states through occupations of one-particle modes. Fermionic creation and annihilation operators obey</p>
+  <div class="math-display">
+    <math display="block" aria-label="fermionic anticommutation relations">
+      <semantics>
+        <mrow><mo>&#123;</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>&#125;</mo><mo>=</mo><msub><mi>δ</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>,</mo><mspace width="0.5em"/><mo>&#123;</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>&#125;</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\&#123;\hat c_p,\hat c_q^\dagger\&#125;=\delta_&#123;pq&#125;,\quad\&#123;\hat c_p,\hat c_q\&#125;=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The anticommutation relations encode Pauli exclusion and fermionic signs algebraically. They do not remove correlation; they make occupation changes, excitations, and contractions easier to express.</p>
+
+  <h2>An interacting Hamiltonian separates one-body and two-body structure</h2>
+  <p>In an orthonormal one-particle basis, a generic electronic Hamiltonian is</p>
+  <div class="math-display">
+    <math display="block" aria-label="second quantized interacting Hamiltonian">
+      <semantics>
+        <mrow><mover><mi>H</mi><mo>^</mo></mover><mo>=</mo><munderover><mo>∑</mo><mrow><mi>p</mi><mi>q</mi></mrow><mo></mo></munderover><msub><mi>h</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi><mo>†</mo></msubsup><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munderover><mo>∑</mo><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow><mo></mo></munderover><msub><mi>v</mi><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow></msub><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi><mo>†</mo></msubsup><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><msub><mover><mi>c</mi><mo>^</mo></mover><mi>s</mi></msub><msub><mover><mi>c</mi><mo>^</mo></mover><mi>r</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\hat H=\sum_&#123;pq&#125;h_&#123;pq&#125;\hat c_p^\dagger\hat c_q+\tfrac12\sum_&#123;pqrs&#125;v_&#123;pqrs&#125;\hat c_p^\dagger\hat c_q^\dagger\hat c_s\hat c_r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The algebra is independent of whether the basis consists of orbitals, Bloch states, Wannier functions, spinors, or another representation. Numerical cost and interpretation still depend strongly on that choice.</p>
+
+  <h2>Green functions connect propagation to addition and removal spectra</h2>
+  <p>The time-ordered one-particle Green function is</p>
+  <div class="math-display">
+    <math display="block" aria-label="time ordered one particle Green function">
+      <semantics>
+        <mrow><msub><mi>G</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>−</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><mo>−</mo><mi>i</mi><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mi>T</mi><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>(</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">G_&#123;pq&#125;(t-t')=-i\langle\Psi|T\hat c_p(t)\hat c_q^\dagger(t')|\Psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Its poles and spectral weight describe electron-addition and electron-removal processes. This is the natural language for photoemission-like charged excitations, lifetimes, and quasiparticle renormalization.</p>
+  <p>A Kohn–Sham orbital spectrum and an interacting spectral function answer different questions. Similar-looking peaks do not make the two objects formally identical.</p>
+
+  <h2>Quasiparticles are approximate poles with finite weight</h2>
+  <p>Interactions can transform a bare particle into a long-lived excitation carrying the same quantum numbers but modified energy, velocity, mass, and residue. Near an isolated pole, a Green function can be approximated schematically by</p>
+  <div class="math-display">
+    <math display="block" aria-label="Green function near quasiparticle pole">
+      <semantics>
+        <mrow><mi>G</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>≈</mo><mfrac><mi>Z</mi><mrow><mi>ω</mi><mo>−</mo><msub><mi>ε</mi><mi>QP</mi></msub><mo>+</mo><mi>i</mi><mi>Γ</mi></mrow></mfrac><mo>+</mo><msub><mi>G</mi><mi>incoh</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">G(\omega)\approx\frac&#123;Z&#125;&#123;\omega-\varepsilon_&#123;\mathrm&#123;QP&#125;&#125;+i\Gamma&#125;+G_&#123;\mathrm&#123;incoh&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The residue <math class="math-inline" aria-label="Z"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math> need not equal one, and broad or overlapping structures may not support a sharp quasiparticle description. Quasiparticle language is an approximation whose validity depends on energy, interaction strength, dimensionality, disorder, and phase.</p>
+
+  <h2>Two-particle correlations generate collective response</h2>
+  <p>Density, spin, current, and pairing response functions contain correlated particle–hole or particle–particle propagation. Their poles can describe plasmons, magnons, excitons, phonons coupled to electrons, amplitude modes, and other collective excitations.</p>
+  <p>A collective mode is not generally the same as one orbital transition. Its spectral weight, damping, symmetry, and coupling to a probe must be evaluated in the appropriate response channel.</p>
+
+  <h2>Broken symmetry reorganizes the low-energy theory</h2>
+  <p>Mean-field states can break spin, gauge, translational, or other symmetries. Fluctuations around these states can produce Goldstone modes, collective coordinates, domains, and competing phases.</p>
+  <p>A self-consistent broken-symmetry solution is evidence for a stationary branch within the chosen approximation. It is not by itself proof of the exact ground state, the thermodynamic phase, or long-range order in a finite-dimensional system.</p>
+
+  <h2>Diagrammatic and path-integral methods are optional continuations</h2>
+  <p>Wick's theorem, Feynman diagrams, functional integrals, renormalization, and effective field theories systematize approximations and scale dependence. They are central for advanced many-body work, but ordinary ground-state DFT users do not need to master the full path-integral or renormalization-group apparatus before learning Kohn–Sham calculations.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> defines the interacting problem and correlation language.</li>
+    <li><a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> supplies ensembles, finite-temperature Green functions, and fluctuations.</li>
+    <li><a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> organizes response to external perturbations.</li>
+    <li><a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a> specializes the Green-function framework to screened self-energy and electron–hole calculations.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/8-513-many-body-theory-for-condensed-matter-systems-fall-2004/">MIT OpenCourseWare 8.513, <cite>Many-Body Theory for Condensed Matter Systems</cite></a> covers second quantization, path integrals, broken symmetry, fluctuations, and interacting bosons and magnets. It is a graduate course with substantial prerequisites.</p>
+  <p><a href="https://ocw.mit.edu/courses/8-513-modern-quantum-many-body-physics-for-condensed-matter-systems-fall-2021/">MIT OpenCourseWare 8.513, <cite>Modern Quantum Many-Body Physics</cite></a> emphasizes quasiparticles, topology, interacting phases, and long-range entanglement. It is a specialized continuation rather than a general electronic-structure introduction.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page introduces a formal language, not one production algorithm. It does not claim that every interacting spectrum has sharp quasiparticles, that every broken-symmetry solution is the exact phase, or that a full many-body course is required before ordinary DFT.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official MIT OpenCourseWare destinations were rechecked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
