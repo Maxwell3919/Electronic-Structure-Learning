@@ -22,6 +22,9 @@ CONTENT_ROUTES = [
     "theory/linear-algebra/",
     "theory/calculus-and-analysis/",
     "theory/numerical-analysis/",
+    "theory/quantum-mechanics/",
+    "theory/solid-state-physics/",
+    "theory/quantum-chemistry/",
     "methods/",
     "computational-tools/",
     "reference/",
@@ -30,6 +33,9 @@ MATH_ROUTES = {
     "theory/linear-algebra/",
     "theory/calculus-and-analysis/",
     "theory/numerical-analysis/",
+    "theory/quantum-mechanics/",
+    "theory/solid-state-physics/",
+    "theory/quantum-chemistry/",
 }
 BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
@@ -166,7 +172,7 @@ def main():
     finally:
         no_javascript.quit()
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: eight content pages, native MathML, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: eleven content pages, six MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
