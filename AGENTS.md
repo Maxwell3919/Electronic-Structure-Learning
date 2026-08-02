@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, twenty-one individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, twenty-five individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -33,6 +33,10 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Keep reciprocal-space vectors, plane-wave basis size, FFT grids, and Brillouin-zone sampling distinct. Do not present a band path as a BZ integration mesh or full-zone search.
 - Treat pseudopotential and PAW datasets as versioned scientific inputs. Library verification does not replace system- and observable-specific validation.
 - Distinguish scalar relativity, collinear spin polarization, noncollinear magnetism, and spin–orbit coupling. A converged magnetic branch is not proof of a global magnetic ground state.
+- Keep Atomic and Molecular Physics focused on states, spectra, fields, and selection rules. It must not replace Quantum Chemistry or imply that ground-state Kohn–Sham eigenvalue differences are general excitation energies.
+- Keep electronic total energies, finite-temperature free energies, chemical potentials, barriers, rates, and spectra as distinct model layers. Numerical convergence of one layer does not validate the others.
+- Treat orbitals, charge partitions, bond orders, energy decompositions, oxidation states, and density topology as explicitly named interpretation frameworks rather than one universal bonding observable.
+- Distinguish empirical tight binding from first-principles localized-basis calculations. Localized-basis labels, cutoff radii, zeta levels, auxiliary bases, grids, and convergence criteria are code- and observable-specific.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
