@@ -31,7 +31,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
           <mo>|</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>⟩</mo>
           <mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">|\psi\rangle=\sum_{i=1}^{N}c_i|\phi_i\rangle.</annotation>
+        <annotation encoding="application/x-tex">|\psi\rangle=\sum_&#123;i=1&#125;^&#123;N&#125;c_i|\phi_i\rangle.</annotation>
       </semantics>
     </math>
   </div>
@@ -40,7 +40,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Inner products give geometry</h2>
   <p>Inner products define lengths, normalization, angles, and orthogonality. They allow statements such as “these two states are orthogonal” or “this trial state is normalized” to have a precise meaning.</p>
-  <p>In an orthonormal basis, the coefficient-space inner product has the familiar form <math class="math-inline" aria-label="c dagger d"><semantics><mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">d</mi></mrow><annotation encoding="application/x-tex">\mathbf{c}^{\dagger}\mathbf{d}</annotation></semantics></math>. In a non-orthogonal basis, the overlap matrix enters:</p>
+  <p>In an orthonormal basis, the coefficient-space inner product has the familiar form <math class="math-inline" aria-label="c dagger d"><semantics><mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">d</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;c&#125;^&#123;\dagger&#125;\mathbf&#123;d&#125;</annotation></semantics></math>. In a non-orthogonal basis, the overlap matrix enters:</p>
   <div class="math-display">
     <math display="block" aria-label="inner product of psi and chi equals c dagger S d, with S sub i j equal to inner product of phi sub i and phi sub j">
       <semantics>
@@ -56,11 +56,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
             <mtd><mrow><mo>⟨</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>|</mo><msub><mi>φ</mi><mi>j</mi></msub><mo>⟩</mo><mo>.</mo></mrow></mtd>
           </mtr>
         </mtable>
-        <annotation encoding="application/x-tex">\begin{aligned}\langle\psi|\chi\rangle&amp;=\mathbf{c}^{\dagger}\mathbf{S}\mathbf{d},\\S_{ij}&amp;=\langle\phi_i|\phi_j\rangle.\end{aligned}</annotation>
+        <annotation encoding="application/x-tex">\begin&#123;aligned&#125;\langle\psi|\chi\rangle&amp;=\mathbf&#123;c&#125;^&#123;\dagger&#125;\mathbf&#123;S&#125;\mathbf&#123;d&#125;,\\S_&#123;ij&#125;&amp;=\langle\phi_i|\phi_j\rangle.\end&#123;aligned&#125;</annotation>
       </semantics>
     </math>
   </div>
-  <p>The matrix <math class="math-inline" aria-label="S"><semantics><mi mathvariant="bold">S</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math> is therefore not an optional correction. It records the geometry induced by the chosen basis. Near-linear dependence among basis functions makes the overlap matrix ill-conditioned and can make otherwise reasonable calculations numerically fragile.</p>
+  <p>The matrix <math class="math-inline" aria-label="S"><semantics><mi mathvariant="bold">S</mi><annotation encoding="application/x-tex">\mathbf&#123;S&#125;</annotation></semantics></math> is therefore not an optional correction. It records the geometry induced by the chosen basis. Near-linear dependence among basis functions makes the overlap matrix ill-conditioned and can make otherwise reasonable calculations numerically fragile.</p>
 
   <h2>Operators become spectral problems</h2>
   <p>A linear operator maps one state to another. Observables and Hamiltonians are represented by Hermitian operators, whose finite matrices have real eigenvalues and mutually orthogonal eigenspaces under the relevant inner product.</p>
@@ -69,7 +69,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="H c equals epsilon c">
       <semantics>
         <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\mathbf{H}\mathbf{c}=\varepsilon\mathbf{c}.</annotation>
+        <annotation encoding="application/x-tex">\mathbf&#123;H&#125;\mathbf&#123;c&#125;=\varepsilon\mathbf&#123;c&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -78,7 +78,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="H c equals epsilon S c">
       <semantics>
         <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\mathbf{H}\mathbf{c}=\varepsilon\mathbf{S}\mathbf{c}.</annotation>
+        <annotation encoding="application/x-tex">\mathbf&#123;H&#125;\mathbf&#123;c&#125;=\varepsilon\mathbf&#123;S&#125;\mathbf&#123;c&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -102,7 +102,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
           </mfrac>
           <mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">R(\mathbf{c})=\frac{\mathbf{c}^{\dagger}\mathbf{H}\mathbf{c}}{\mathbf{c}^{\dagger}\mathbf{S}\mathbf{c}}.</annotation>
+        <annotation encoding="application/x-tex">R(\mathbf&#123;c&#125;)=\frac&#123;\mathbf&#123;c&#125;^&#123;\dagger&#125;\mathbf&#123;H&#125;\mathbf&#123;c&#125;&#125;&#123;\mathbf&#123;c&#125;^&#123;\dagger&#125;\mathbf&#123;S&#125;\mathbf&#123;c&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
