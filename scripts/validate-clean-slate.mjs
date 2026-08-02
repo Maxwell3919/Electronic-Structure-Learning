@@ -18,6 +18,9 @@ const expectedPages = [
   'src/pages/theory/index.astro',
   'src/pages/theory/linear-algebra/index.astro',
   'src/pages/theory/numerical-analysis/index.astro',
+  'src/pages/theory/quantum-chemistry/index.astro',
+  'src/pages/theory/quantum-mechanics/index.astro',
+  'src/pages/theory/solid-state-physics/index.astro',
 ];
 const expectedHtml = [
   '404.html',
@@ -29,6 +32,9 @@ const expectedHtml = [
   'theory/index.html',
   'theory/linear-algebra/index.html',
   'theory/numerical-analysis/index.html',
+  'theory/quantum-chemistry/index.html',
+  'theory/quantum-mechanics/index.html',
+  'theory/solid-state-physics/index.html',
 ];
 const expectedTheoryAnchors = [
   'mathematical-foundations',
@@ -90,10 +96,33 @@ const reviewedTheoryPages = {
     'Algorithmic convergence is not observable convergence',
     '18-335j-introduction-to-numerical-methods',
   ],
+  'src/pages/theory/quantum-mechanics/index.astro': [
+    'Identical electrons require antisymmetry',
+    '8-04-quantum-physics-i',
+    '8-05-quantum-physics-ii',
+  ],
+  'src/pages/theory/solid-state-physics/index.astro': [
+    "Bloch's theorem reorganizes the one-electron problem",
+    'A plotted band path shows selected eigenvalues',
+    '8-231-physics-of-solids-i',
+  ],
+  'src/pages/theory/quantum-chemistry/index.astro': [
+    'The clamped-nuclei electronic Hamiltonian',
+    'A Slater determinant enforces it',
+    '5-61-physical-chemistry',
+  ],
 };
+const reviewedRoutes = [
+  '/theory/linear-algebra/',
+  '/theory/calculus-and-analysis/',
+  '/theory/numerical-analysis/',
+  '/theory/quantum-mechanics/',
+  '/theory/solid-state-physics/',
+  '/theory/quantum-chemistry/',
+];
 const deadCambridgeId = '8C2B8F7F4C94A903A9018E9D8A42B9A7';
 const count = (text, expression) => (text.match(expression) ?? []).length;
-const checkMathMl = (text, label) => {
+const checkMathMl = (text, label, source = false) => {
   const math = count(text, /<math(?:\s|>)/g);
   const semantics = count(text, /<semantics(?:\s|>)/g);
   const annotations = count(text, /<annotation\s+encoding="application\/x-tex">/g);
@@ -103,6 +132,11 @@ const checkMathMl = (text, label) => {
   assert(text.includes('class="math-display"'), `${label} contains no shared display-math wrapper`);
   assert(text.includes('class="math-inline"'), `${label} contains no inline MathML`);
   assert(!text.includes('class="equation"'), `${label} still uses the removed code-style equation class`);
+  if (source) {
+    for (const match of text.matchAll(/<annotation\s+encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)) {
+      assert(!/[{}]/.test(match[1]), `${label} has unescaped TeX grouping braces that Astro will parse as expressions`);
+    }
+  }
 };
 
 if (sourceMode) {
@@ -147,13 +181,13 @@ if (sourceMode) {
   for (const anchor of expectedTheoryAnchors) {
     assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   }
-  for (const route of ['/theory/linear-algebra/', '/theory/calculus-and-analysis/', '/theory/numerical-analysis/']) {
+  for (const route of reviewedRoutes) {
     assert(theorySource.includes(route), `Theory directory is missing reviewed page link: ${route}`);
   }
   for (const [file, markers] of Object.entries(reviewedTheoryPages)) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');
     for (const marker of markers) assert(source.includes(marker), `${file} is missing reviewed content marker: ${marker}`);
-    checkMathMl(source, file);
+    checkMathMl(source, file, true);
   }
 
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
@@ -180,6 +214,9 @@ if (builtMode) {
     'theory/linear-algebra/',
     'theory/calculus-and-analysis/',
     'theory/numerical-analysis/',
+    'theory/quantum-mechanics/',
+    'theory/solid-state-physics/',
+    'theory/quantum-chemistry/',
     'methods/',
     'computational-tools/',
     'reference/',
@@ -203,7 +240,7 @@ if (builtMode) {
   for (const [sourceFile, markers] of Object.entries(reviewedTheoryPages)) {
     const relative = sourceFile.replace(/^src\/pages\//, '').replace(/\.astro$/, '.html');
     const html = fs.readFileSync(path.join(dist, relative), 'utf8');
-    for (const marker of markers.filter((value) => !value.includes('.net') && !value.includes('18-'))) {
+    for (const marker of markers.filter((value) => !value.includes('.net') && !value.match(/\d+-\d+/))) {
       assert(html.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
     }
     checkMathMl(html, relative);
