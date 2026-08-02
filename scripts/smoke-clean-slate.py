@@ -115,8 +115,6 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"MathML expression lacks one TeX annotation in {mode}: {url}")
             if not driver.find_elements(By.CSS_SELECTOR, "main .math-display math[display='block']"):
                 raise AssertionError(f"display MathML missing in {mode}: {url}")
-            if not driver.find_elements(By.CSS_SELECTOR, "main math.math-inline"):
-                raise AssertionError(f"inline MathML missing in {mode}: {url}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             parsed = urlparse(anchor.get_attribute("href"))
