@@ -16,9 +16,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 BASE_URL = os.environ.get("PAGES_URL", "http://127.0.0.1:4321/Electronic-Structure-Learning/").rstrip("/") + "/"
 DEPLOYED_SHA = os.environ.get("DEPLOYED_SHA")
 ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/clean-slate-smoke"))
-CONTENT_ROUTES = ["", "theory/", "methods/", "computational-tools/", "reference/"]
+CONTENT_ROUTES = [
+    "",
+    "theory/",
+    "theory/linear-algebra/",
+    "theory/calculus-and-analysis/",
+    "theory/numerical-analysis/",
+    "methods/",
+    "computational-tools/",
+    "reference/",
+]
 BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
+
 
 def make_driver(javascript=True, width=1440, height=900):
     options = Options()
@@ -38,12 +48,14 @@ def make_driver(javascript=True, width=1440, height=900):
         options.add_experimental_option("prefs", {"profile.managed_default_content_settings.javascript": 2})
     return webdriver.Chrome(service=Service(), options=options)
 
+
 def http_status(url):
     try:
         with urlopen(url, timeout=30) as response:
             return response.status
     except HTTPError as error:
         return error.code
+
 
 def inspect(driver, mode, expected_width=None):
     checks = []
@@ -71,6 +83,7 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"internal link escapes Pages base: {anchor.get_attribute('href')}")
         checks.append({"route": route or "/", "mode": mode, **metrics})
     return checks
+
 
 def main():
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
@@ -118,7 +131,8 @@ def main():
     finally:
         no_javascript.quit()
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: five content pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: eight content pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+
 
 if __name__ == "__main__":
     main()
