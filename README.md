@@ -2,7 +2,7 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure theory, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, twenty-five individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, twenty-eight individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
@@ -14,13 +14,16 @@ The production site is a static Plain Astro build. It currently contains the Hom
 - `/theory/fourier-analysis/`
 - `/theory/numerical-analysis/`
 - `/theory/group-theory-and-symmetry/`
+- `/theory/electromagnetism/`
 - `/theory/quantum-mechanics/`
+- `/theory/statistical-mechanics/`
 - `/theory/atomic-and-molecular-physics/`
 - `/theory/solid-state-physics/`
 - `/theory/crystallography/`
 - `/theory/physical-chemistry/`
 - `/theory/quantum-chemistry/`
 - `/theory/chemical-bonding-and-molecular-structure/`
+- `/theory/solid-state-chemistry/`
 - `/theory/many-electron-problem/`
 - `/theory/hartree-and-hartree-fock-theory/`
 - `/theory/density-functional-theory-foundations/`
