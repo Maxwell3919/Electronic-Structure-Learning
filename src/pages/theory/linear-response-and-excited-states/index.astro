@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Linear Response and Excited States" description="Response functions, DFPT, TDDFT, spectra, perturbations, and neutral excitations." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Linear Response and Excited States</span>
+  </nav>
+
+  <h1>Linear Response and Excited States</h1>
+  <p class="lede">Linear response asks how an observable changes under a weak perturbation. Its poles and matrix elements connect ground-state electronic structure to phonons, dielectric response, optical spectra, magnetic excitations, and neutral electronic transitions.</p>
+  <p>This page separates three responsibilities that are often compressed into one label: derivatives of a ground state, time-dependent density response, and neutral excitation spectra. Charged quasiparticle addition and removal energies belong to <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.</p>
+
+  <h2>A response function is a derivative with a declared perturbation</h2>
+  <p>For an external field <math class="math-inline" aria-label="f of t"><semantics><mrow><mi>f</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(t)</annotation></semantics></math> coupled to an operator, the first-order change of an observable can be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="delta A equals integral susceptibility times f">
+      <semantics>
+        <mrow><mi>δ</mi><mi>A</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mo>∫</mo><msub><mi>χ</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>−</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mi>f</mi><mo>(</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mi>d</mi><msup><mi>t</mi><mo>′</mo></msup><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\delta A(t)=\int\chi_&#123;AB&#125;(t-t')f(t')\,dt'.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The susceptibility depends on the observable, perturbing operator, reference state, boundary conditions, frequency, wavevector, temperature, and approximation. “The dielectric constant” or “the polarizability” is incomplete unless these choices are stated.</p>
+
+  <h2>Causality fixes the structure of the retarded response</h2>
+  <p>For an equilibrium quantum system, the retarded Kubo response is</p>
+  <div class="math-display">
+    <math display="block" aria-label="retarded Kubo response function">
+      <semantics>
+        <mrow><msub><mi>χ</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>i</mi><mi>θ</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>⟨</mo><mo>[</mo><mover><mi>A</mi><mo>^</mo></mover><mo>(</mo><mi>t</mi><mo>)</mo><mo>,</mo><mover><mi>B</mi><mo>^</mo></mover><mo>(</mo><mn>0</mn><mo>)</mo><mo>]</mo><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\chi_&#123;AB&#125;(t)=-i\theta(t)\langle[\hat A(t),\hat B(0)]\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The step function enforces that the response follows the perturbation. Analyticity then connects real and imaginary parts through dispersion relations. Numerical spectra that violate causality, sum rules, or symmetry may indicate inadequate convergence or an inconsistent implementation.</p>
+
+  <h2>Density response is a two-point kernel</h2>
+  <p>The induced density under a weak external potential is</p>
+  <div class="math-display">
+    <math display="block" aria-label="induced density equals chi times external potential">
+      <semantics>
+        <mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mo>∫</mo><mi>χ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>;</mo><mi>ω</mi><mo>)</mo><mi>δ</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\delta n(\mathbf&#123;r&#125;,\omega)=\int\chi(\mathbf&#123;r&#125;,\mathbf&#123;r&#125;';\omega)\delta v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;',\omega)\,d^3r'.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>In periodic materials the kernel carries reciprocal-lattice components and a perturbation wavevector. Macroscopic dielectric response is extracted from a microscopic matrix after treating local-field effects and the long-range Coulomb singularity.</p>
+
+  <h2>Finite differences and analytic response are distinct routes</h2>
+  <p>A derivative can be estimated by separate self-consistent calculations at displaced structures or finite fields. Density-functional perturbation theory instead differentiates the self-consistent equations and solves directly for first-order wavefunctions, densities, and potentials.</p>
+  <p>Finite differences expose nonlinear behavior and can be implementation-simple, but require displacement or field convergence and symmetry-aware fitting. Analytic response can be more efficient and precise but introduces its own solver, gauge, occupation, degeneracy, and perturbation-specific conditions.</p>
+
+  <h2>The Sternheimer equation avoids an explicit complete empty-state sum</h2>
+  <p>For an occupied state, a projected first-order equation has the schematic form</p>
+  <div class="math-display">
+    <math display="block" aria-label="Sternheimer response equation">
+      <semantics>
+        <mrow><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>−</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>)</mo><mo>|</mo><mi>δ</mi><msub><mi>ψ</mi><mi>n</mi></msub><mo>⟩</mo><mo>=</mo><mo>−</mo><mover><mi>Q</mi><mo>^</mo></mover><mi>δ</mi><mover><mi>V</mi><mo>^</mo></mover><mo>|</mo><msub><mi>ψ</mi><mi>n</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">(\hat H-\varepsilon_n)|\delta\psi_n\rangle=-\hat Q\,\delta\hat V|\psi_n\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The projector removes components in a chosen occupied or resonant subspace. The equation is singular without a gauge or projection convention, and metals, degeneracies, nonlocal potentials, ultrasoft/PAW metrics, and finite frequencies require modified forms.</p>
+
+  <h2>DFPT targets ground-state derivatives and collective lattice response</h2>
+  <p>Phonons, Born effective charges, dielectric tensors, electron–phonon matrix elements, and related quantities can be obtained from derivatives around a self-consistent ground state. The perturbation wavevector, electronic k mesh, q mesh, occupation scheme, acoustic sum rules, non-analytic long-range terms, and interpolation all have independent convergence requirements.</p>
+  <p>A phonon calculation at one q point does not establish dynamical stability over the Brillouin zone. A visually smooth interpolated dispersion does not prove that the underlying q mesh or force constants are converged.</p>
+
+  <h2>TDDFT maps time-dependent density to an auxiliary response problem</h2>
+  <p>In linear-response TDDFT, the interacting density response satisfies a Dyson-like equation</p>
+  <div class="math-display">
+    <math display="block" aria-label="TDDFT Dyson equation for density response">
+      <semantics>
+        <mrow><mi>χ</mi><mo>=</mo><msub><mi>χ</mi><mi>s</mi></msub><mo>+</mo><msub><mi>χ</mi><mi>s</mi></msub><mo>(</mo><mi>v</mi><mo>+</mo><msub><mi>f</mi><mi>xc</mi></msub><mo>)</mo><mi>χ</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\chi=\chi_s+\chi_s(v+f_&#123;\mathrm&#123;xc&#125;&#125;)\chi.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Here <math class="math-inline" aria-label="chi s"><semantics><msub><mi>χ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\chi_s</annotation></semantics></math> is the Kohn–Sham response and <math class="math-inline" aria-label="f xc"><semantics><msub><mi>f</mi><mi>xc</mi></msub><annotation encoding="application/x-tex">f_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math> is the exchange–correlation kernel. The kernel, not only the ground-state potential, controls excitation corrections and collective effects.</p>
+
+  <h2>Time propagation, Casida equations, and frequency-domain solvers are formulations of the same response problem</h2>
+  <ul>
+    <li><strong>Real-time propagation</strong> applies a weak impulse or field and Fourier transforms the time-dependent signal.</li>
+    <li><strong>Casida-type equations</strong> diagonalize a particle–hole response matrix to obtain discrete neutral excitations and oscillator strengths.</li>
+    <li><strong>Sternheimer frequency-domain methods</strong> solve driven linear systems at selected frequencies without explicitly constructing all particle–hole pairs.</li>
+  </ul>
+  <p>These formulations have different memory, frequency-resolution, broadening, empty-state, symmetry, and convergence behavior. Agreement in the same controlled limit is a validation target, not an assumption.</p>
+
+  <h2>Excitation energies require the correct particle-number sector</h2>
+  <p>Neutral optical excitations keep the electron number fixed and involve correlated electron–hole motion. Photoemission and inverse photoemission add or remove an electron and probe charged quasiparticle energies. Ground-state total-energy differences, TDDFT poles, GW quasiparticle energies, and BSE excitons are related but not interchangeable objects.</p>
+  <p>Ordinary Kohn–Sham eigenvalue differences can provide useful starting information, but they are not generally exact neutral or charged excitation energies.</p>
+
+  <h2>Approximation and convergence boundaries</h2>
+  <ul>
+    <li>Adiabatic local or semilocal TDDFT kernels can miss double excitations, long-range charge transfer, and strongly bound excitons.</li>
+    <li>Finite boxes, vacuum, absorbing boundaries, propagation time, time step, damping, and grid spacing affect real-time spectra.</li>
+    <li>Empty-state cutoffs, response basis size, frequency grids, broadening, k/q meshes, local-field effects, and Coulomb treatment affect frequency-domain spectra.</li>
+    <li>Peak positions, oscillator strengths, integrated sum rules, and line shapes can converge at different rates.</li>
+  </ul>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/electromagnetism/')}>Electromagnetism</a> supplies fields, polarization, dielectric response, and boundary conditions.</li>
+    <li><a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> supplies correlation functions, poles, and collective modes.</li>
+    <li><a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> connects the ground-state functional to response kernels and their limitations.</li>
+    <li><a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a> treats screened self-energy and electron–hole kernels beyond ordinary TDDFT.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/excitation-spectra-and-optical-properties/E708B2F729C1961D9A9D598FCDBAF656">Martin, <cite>Electronic Structure</cite>, Chapter 21</a> connects TDDFT, dielectric response, time propagation, molecular and crystal optics, and limitations of the adiabatic approximation. Publisher access may be required.</p>
+  <p><a href="https://octopus-code.org/documentation/main/tutorial/response/">Octopus Optical Response tutorials</a> provide implementation bridges for time propagation, convergence, Casida equations, Sternheimer response, triplet excitations, and symmetry. They are software-specific tutorials, not universal parameter prescriptions.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not merge DFPT, TDDFT, GW, and BSE into one method. It does not identify a Kohn–Sham gap with an optical or quasiparticle gap, or one broadened spectrum with a fully converged excitation calculation.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report and Martin second edition. Official Cambridge and Octopus destinations were rechecked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
