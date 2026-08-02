@@ -1,19 +1,22 @@
 ---
-title: "理论课程"
-description: "Martin Part I–VII 理论主线与课程地图。"
+title: "Theory"
+description: "理解电子结构研究所需的基础学科与知识关系。"
 ---
 
-import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
-import SectionNavigationGrid from '../../../components/site/SectionNavigationGrid.astro';
-import martin from '../../../data/martin/index.mjs';
+Theory 不从 DFT 术语直接开始。电子结构理论依赖数学、物理和化学中的完整课程背景；这些基础缺口往往正是某些概念长期含混的原因。
 
-export const theoryLinks = [
-  { id: 'book-map', titleZh: '完整课程地图', titleEn: 'Complete course map', descriptionZh: '查看 7 Parts、46 单元及页码结构。', href: '/book-map/', status: 'available' },
-  ...martin.parts.map((part) => ({ id: `part-${part.number}`, titleZh: part.titleZh, titleEn: part.label, descriptionZh: `${part.units.length} 个目录单元`, href: `/${part.slug}/`, status: 'available' })),
-];
+本站不复制大学课程目录。每个课程级入口只整理三类内容：适合继续学习的书籍与网站、推荐理由，以及这些资源共同覆盖的必要概念图谱。
 
-<SiteSectionHero titleZh="理论课程" titleEn="Theory course" description="Martin Part I–VII 的现有 URL、内部顺序和章节正文均保持不变；内容状态按四个维度独立记录。" descriptionEn="The complete Martin spine remains stable while structural, technical, review, and learner states stay separate." pageType="theory" />
+## 学科入口
 
-<SectionNavigationGrid items={theoryLinks} heading="Martin 理论课程" />
+- [Mathematical Foundations](./mathematical-foundations/)
+- [Physical Foundations](./physical-foundations/)
+- [Chemical Foundations](./chemical-foundations/)
+- [Electronic Structure Theory](./electronic-structure/)
+- [Learning Map](./learning-map/)
 
-Appendices 同时可从 [参考手册](../reference/) 进入；本页不改写任何章节或附录正文。
+## 现有教材内容
+
+已有 Martin Part I–VII 页面暂时保留为可访问内容。它们将在后续迁移中重新归入上述知识结构；此阶段不改写正文，也不把教材章节目录视为新版网站的顶层信息架构。
+
+[查看现有 Martin 课程地图](../book-map/)
