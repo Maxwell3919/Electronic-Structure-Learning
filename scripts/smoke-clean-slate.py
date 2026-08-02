@@ -16,9 +16,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 BASE_URL = os.environ.get("PAGES_URL", "http://127.0.0.1:4321/Electronic-Structure-Learning/").rstrip("/") + "/"
 DEPLOYED_SHA = os.environ.get("DEPLOYED_SHA")
 ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/clean-slate-smoke"))
-CONTENT_ROUTES = [
-    "",
-    "theory/",
+THEORY_ROUTES = [
     "theory/linear-algebra/",
     "theory/calculus-and-analysis/",
     "theory/numerical-analysis/",
@@ -28,21 +26,14 @@ CONTENT_ROUTES = [
     "theory/many-electron-problem/",
     "theory/hartree-and-hartree-fock-theory/",
     "theory/density-functional-theory-foundations/",
-    "methods/",
-    "computational-tools/",
-    "reference/",
+    "theory/kohn-sham-density-functional-theory/",
+    "theory/exchange-correlation-functionals-and-approximations/",
+    "theory/self-consistent-field-methods/",
+    "theory/discretization-and-basis-representations/",
 ]
-MATH_ROUTES = {
-    "theory/linear-algebra/",
-    "theory/calculus-and-analysis/",
-    "theory/numerical-analysis/",
-    "theory/quantum-mechanics/",
-    "theory/solid-state-physics/",
-    "theory/quantum-chemistry/",
-    "theory/many-electron-problem/",
-    "theory/hartree-and-hartree-fock-theory/",
-    "theory/density-functional-theory-foundations/",
-}
+CONTENT_ROUTES = [
+    "", "theory/", *THEORY_ROUTES, "methods/", "computational-tools/", "reference/",
+]
 BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
 DEAD_CAMBRIDGE_ID = "8C2B8F7F4C94A903A9018E9D8A42B9A7"
@@ -105,7 +96,7 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"removed code-style equation block remains in {mode}: {url}")
 
         math_count = 0
-        if route in MATH_ROUTES:
+        if route in THEORY_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
                 "const box=node.getBoundingClientRect();"
@@ -140,15 +131,14 @@ def main():
         if manifest.get("sha") != DEPLOYED_SHA:
             raise AssertionError(f"deployment SHA mismatch: {manifest.get('sha')} != {DEPLOYED_SHA}")
         report["manifest"] = manifest
+
     for route in CONTENT_ROUTES:
         status = http_status(urljoin(BASE_URL, route))
         if status != 200:
             raise AssertionError(f"expected HTTP 200 for {route or '/'}; observed {status}")
         report["http"][route or "/"] = status
-    not_found_status = http_status(urljoin(BASE_URL, "404.html"))
-    if not_found_status != 200:
-        raise AssertionError(f"expected direct 404 document HTTP 200; observed {not_found_status}")
-    report["http"]["404.html"] = not_found_status
+    if http_status(urljoin(BASE_URL, "404.html")) != 200:
+        raise AssertionError("direct 404 document is not HTTP 200")
     for route in LEGACY_ROUTES:
         status = http_status(urljoin(BASE_URL, route))
         if status != 404:
@@ -165,18 +155,21 @@ def main():
         report["keyboard"] = True
     finally:
         desktop.quit()
+
     narrow = make_driver(width=390, height=844)
     try:
         report["checks"].extend(inspect(narrow, "390px", expected_width=390))
     finally:
         narrow.quit()
+
     no_javascript = make_driver(javascript=False, width=390, height=844)
     try:
         report["checks"].extend(inspect(no_javascript, "no-javascript", expected_width=390))
     finally:
         no_javascript.quit()
+
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: fourteen content pages, nine MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: eighteen content routes, thirteen MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
