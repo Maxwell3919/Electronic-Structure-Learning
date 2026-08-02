@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, twenty-five individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, twenty-eight individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -37,6 +37,9 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Keep electronic total energies, finite-temperature free energies, chemical potentials, barriers, rates, and spectra as distinct model layers. Numerical convergence of one layer does not validate the others.
 - Treat orbitals, charge partitions, bond orders, energy decompositions, oxidation states, and density topology as explicitly named interpretation frameworks rather than one universal bonding observable.
 - Distinguish empirical tight binding from first-principles localized-basis calculations. Localized-basis labels, cutoff radii, zeta levels, auxiliary bases, grids, and convergence criteria are code- and observable-specific.
+- Treat electrostatic boundary conditions, potential references, Coulomb kernels, multipole corrections, and charged-cell conventions as part of the physical model. A static Poisson solution is not a full optical Maxwell calculation.
+- Keep physical electronic temperature, numerical smearing, vibrational free energy, thermodynamic ensemble, and finite trajectory sampling distinct. Convergence of one does not validate the others.
+- Keep formal oxidation states, partitioned charges, defect charge states, carrier concentrations, and nominal dopant counts distinct. Zero-temperature formation energies do not by themselves establish finite-temperature phase stability or synthesis accessibility.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
