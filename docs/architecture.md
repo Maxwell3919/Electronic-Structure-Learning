@@ -47,8 +47,8 @@ Theory
 │   └── Surface and Interface Chemistry
 ├── Electronic Structure Theory
 │   ├── The Many-Electron Problem
-│   ├── Hartree and Hartree–Fock Methods
-│   ├── Density Functional Theory
+│   ├── Hartree and Hartree–Fock Theory
+│   ├── Density Functional Theory: Foundations
 │   ├── Kohn–Sham Theory
 │   ├── Exchange-Correlation Theory
 │   ├── Self-Consistent Field Methods
@@ -62,7 +62,9 @@ Theory
 └── Learning Map
 ```
 
-The first reviewed content batch adds individual pages for Linear Algebra, Calculus and Analysis, and Numerical Analysis. The second adds Quantum Mechanics, Solid-State Physics, and Quantum Chemistry. All six pages share navigation, source discipline, mathematical presentation, and review boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
+The first reviewed content batch adds individual pages for Linear Algebra, Calculus and Analysis, and Numerical Analysis. The second adds Quantum Mechanics, Solid-State Physics, and Quantum Chemistry. The third adds The Many-Electron Problem, Hartree and Hartree–Fock Theory, and Density Functional Theory: Foundations. All nine pages share navigation, source discipline, mathematical presentation, and review boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
+
+The third batch establishes a strict responsibility chain: the many-electron page defines the interacting fermion problem and correlation vocabulary; the Hartree–Fock page treats product and single-determinant variational mean fields; the DFT foundations page treats ground-state density, Hohenberg–Kohn uniqueness, Levy–Lieb constrained search, and representability. Kohn–Sham orbitals, exchange–correlation approximations, and self-consistent numerical solution remain downstream pages rather than being folded into DFT foundations.
 
 Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
 
