@@ -3,16 +3,21 @@ title: "Computational Tools"
 description: "软件包、程序、工作流、数据库与辅助工具入口。"
 ---
 
+import AtlasCatalog from '../../../components/atlas/AtlasCatalog.astro';
+import { computationalToolCategories, computationalTools } from '../../../data/atlas/computational-tools.mjs';
+
 Computational Tools 介绍电子结构研究所使用的具体载体。
 
-## 分类
+<AtlasCatalog entries={computationalToolCategories} />
 
-- DFT 软件包
-- 程序与后处理工具
-- 工作流框架
-- 可视化工具
-- 数据库与在线服务
-- 其他辅助工具
+## 代表性软件包层级
+
+{computationalTools.map((tool) => (
+  <section id={tool.id.replace('tool:', '')}>
+    <h3>{tool.name}</h3><p>{tool.scope}</p>
+    <ul>{tool.programs.map((program) => <li id={program.id.replace('program:', '')}><code>{program.name}</code>：Overview、Input、Output、Validation Commands、Common Errors（planned）</li>)}</ul>
+  </section>
+))}
 
 输入文件、输出文件、快速验收命令和常见错误必须放在对应软件或程序页面中。例如，Quantum ESPRESSO 的 `pw.x` 页面讨论其输入、输出和检查命令；这些内容不作为脱离环境的通用命令表维护。
 

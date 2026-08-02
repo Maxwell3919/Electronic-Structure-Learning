@@ -3,15 +3,14 @@ title: "Mathematical Foundations"
 description: "电子结构理论所依赖的数学课程入口。"
 ---
 
+import AtlasCatalog from '../../../../components/atlas/AtlasCatalog.astro';
+import { theoryDomains } from '../../../../data/atlas/theory.mjs';
+
+export const domain = theoryDomains.find((item) => item.id === 'mathematical-foundations');
+
 电子结构研究需要的数学基础按课程组织，而不是拆成零散公式。
 
-## 课程范围
-
-- 线性代数
-- 微积分
-- 常微分方程与偏微分方程
-- 数值分析
-- 概率与统计
+<AtlasCatalog entries={domain.courses} />
 
 每门课程后续分别整理推荐书籍、学习网站和推荐理由，并从这些资源中提取共同覆盖的必要概念，形成课程内部的概念图谱。
 

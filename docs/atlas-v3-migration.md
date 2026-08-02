@@ -2,6 +2,12 @@
 
 `docs/architecture.md` 是新版信息架构权威。本文件只记录迁移顺序和边界。
 
+## Foundation data boundary
+
+Atlas v3 的静态数据入口位于 `src/data/atlas/`。`theory.mjs` 只保存学科、课程级入口与有限电子结构主题；`learning-map.mjs` 单独保存可分叉、汇合和多入口的节点与边；`methods.mjs` 排除论文 ID、精读笔记和 claim ledger；`computational-tools.mjs` 区分 package、program、workflow、visualization、database 与 auxiliary；`references.mjs` 只有在来源、许可、推荐理由和适用范围逐条核验后才收录资源。
+
+页面通过这些注册表渲染现有路由中的入口与锚点。它没有引入 CMS、后端或私有研究数据，也没有改变 GitHub Pages base path。Martin 46 单元的初始映射仅为来源定位，全部保留 `specialist-review-required`，不把教材目录直接升级为 Theory 分类。
+
 ## 本轮轻量调整
 
 - 更新站点显示名称与顶层导航；
