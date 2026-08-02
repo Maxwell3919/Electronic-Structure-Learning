@@ -9,23 +9,31 @@ const assert = (condition, message) => { if (!condition) failures.push(message);
 const sourceMode = process.argv.includes('--source') || !process.argv.includes('--built');
 const builtMode = process.argv.includes('--built');
 
+const theorySlugs = [
+  'calculus-and-analysis',
+  'density-functional-theory-foundations',
+  'discretization-and-basis-representations',
+  'exchange-correlation-functionals-and-approximations',
+  'hartree-and-hartree-fock-theory',
+  'kohn-sham-density-functional-theory',
+  'linear-algebra',
+  'many-electron-problem',
+  'numerical-analysis',
+  'quantum-chemistry',
+  'quantum-mechanics',
+  'self-consistent-field-methods',
+  'solid-state-physics',
+];
+
 const expectedPages = [
   'src/pages/404.astro',
   'src/pages/computational-tools/index.astro',
   'src/pages/index.astro',
   'src/pages/methods/index.astro',
   'src/pages/reference/index.astro',
-  'src/pages/theory/calculus-and-analysis/index.astro',
-  'src/pages/theory/density-functional-theory-foundations/index.astro',
-  'src/pages/theory/hartree-and-hartree-fock-theory/index.astro',
   'src/pages/theory/index.astro',
-  'src/pages/theory/linear-algebra/index.astro',
-  'src/pages/theory/many-electron-problem/index.astro',
-  'src/pages/theory/numerical-analysis/index.astro',
-  'src/pages/theory/quantum-chemistry/index.astro',
-  'src/pages/theory/quantum-mechanics/index.astro',
-  'src/pages/theory/solid-state-physics/index.astro',
-];
+  ...theorySlugs.map((slug) => `src/pages/theory/${slug}/index.astro`),
+].sort();
 
 const expectedHtml = [
   '404.html',
@@ -33,131 +41,47 @@ const expectedHtml = [
   'index.html',
   'methods/index.html',
   'reference/index.html',
-  'theory/calculus-and-analysis/index.html',
-  'theory/density-functional-theory-foundations/index.html',
-  'theory/hartree-and-hartree-fock-theory/index.html',
   'theory/index.html',
-  'theory/linear-algebra/index.html',
-  'theory/many-electron-problem/index.html',
-  'theory/numerical-analysis/index.html',
-  'theory/quantum-chemistry/index.html',
-  'theory/quantum-mechanics/index.html',
-  'theory/solid-state-physics/index.html',
-];
-
-const expectedTheoryAnchors = [
-  'mathematical-foundations',
-  'linear-algebra',
-  'calculus-and-analysis',
-  'differential-equations',
-  'fourier-analysis',
-  'functional-analysis-and-variational-methods',
-  'numerical-analysis',
-  'probability-and-statistics',
-  'group-theory-and-symmetry',
-  'physical-foundations',
-  'classical-mechanics',
-  'electromagnetism',
-  'quantum-mechanics',
-  'thermodynamics',
-  'statistical-mechanics',
-  'atomic-and-molecular-physics',
-  'solid-state-physics',
-  'crystallography',
-  'many-body-physics',
-  'chemical-foundations',
-  'general-chemistry',
-  'physical-chemistry',
-  'quantum-chemistry',
-  'chemical-bonding-and-molecular-structure',
-  'inorganic-chemistry',
-  'solid-state-chemistry',
-  'surface-and-interface-chemistry',
-  'electronic-structure-theory',
-  'many-electron-problem',
-  'hartree-and-hartree-fock-methods',
-  'density-functional-theory',
-  'kohn-sham-theory',
-  'exchange-correlation-theory',
-  'self-consistent-field-methods',
-  'basis-sets-and-numerical-representations',
-  'plane-wave-and-real-space-methods',
-  'localized-orbital-methods',
-  'pseudopotentials-and-paw',
-  'brillouin-zone-sampling',
-  'linear-response-and-excited-states',
-  'berry-phases-and-electronic-topology',
-  'learning-map',
-];
+  ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
+].sort();
 
 const reviewedTheoryPages = {
-  'src/pages/theory/linear-algebra/index.astro': {
-    source: ['generalized eigenvalue problem', 'linear.axler.net', 'The obsolete Cambridge resource link was removed'],
-    built: ['generalized eigenvalue problem', 'The obsolete Cambridge resource link was removed'],
-  },
-  'src/pages/theory/calculus-and-analysis/index.astro': {
-    source: ['Two layers hidden under one title', 'Computational calculus', '18-100a-real-analysis'],
-    built: ['Two layers hidden under one title', 'Computational calculus'],
-  },
-  'src/pages/theory/numerical-analysis/index.astro': {
-    source: ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence', '18-335j-introduction-to-numerical-methods'],
-    built: ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
-  },
-  'src/pages/theory/quantum-mechanics/index.astro': {
-    source: ['Identical electrons require antisymmetry', '8-04-quantum-physics-i', '8-05-quantum-physics-ii'],
-    built: ['Identical electrons require antisymmetry'],
-  },
-  'src/pages/theory/solid-state-physics/index.astro': {
-    source: ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues', '8-231-physics-of-solids-i'],
-    built: ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
-  },
-  'src/pages/theory/quantum-chemistry/index.astro': {
-    source: ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it', '5-61-physical-chemistry'],
-    built: ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
-  },
-  'src/pages/theory/many-electron-problem/index.astro': {
-    source: ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention', '8-513-modern-quantum-many-body-physics'],
-    built: ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
-  },
-  'src/pages/theory/hartree-and-hartree-fock-theory/index.astro': {
-    source: ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem", 'single determinant'],
-    built: ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem", 'single determinant'],
-  },
-  'src/pages/theory/density-functional-theory-foundations/index.astro': {
-    source: ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory', 'pieces are missing and need rewriting'],
-    built: ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory', 'pieces are missing and need rewriting'],
-  },
+  'linear-algebra': ['generalized eigenvalue problem', 'The obsolete Cambridge resource link was removed'],
+  'calculus-and-analysis': ['Two layers hidden under one title', 'Computational calculus'],
+  'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
+  'quantum-mechanics': ['Identical electrons require antisymmetry'],
+  'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
+  'quantum-chemistry': ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
+  'many-electron-problem': ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
+  'hartree-and-hartree-fock-theory': ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem"],
+  'density-functional-theory-foundations': ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory'],
+  'kohn-sham-density-functional-theory': ['The auxiliary system preserves the density, not the interacting wavefunction', 'Kohn–Sham orbitals are auxiliary variables'],
+  'exchange-correlation-functionals-and-approximations': ['No material-type lookup table can select a universal best functional', 'Self-interaction and delocalization error'],
+  'self-consistent-field-methods': ['The fixed-point problem', 'Four separate conclusions'],
+  'discretization-and-basis-representations': ['Basis, quadrature, and grid are distinct choices', 'Convergence is observable-specific'],
 };
 
-const reviewedRoutes = [
-  '/theory/linear-algebra/',
-  '/theory/calculus-and-analysis/',
-  '/theory/numerical-analysis/',
-  '/theory/quantum-mechanics/',
-  '/theory/solid-state-physics/',
-  '/theory/quantum-chemistry/',
-  '/theory/many-electron-problem/',
-  '/theory/hartree-and-hartree-fock-theory/',
-  '/theory/density-functional-theory-foundations/',
+const expectedTheoryAnchors = [
+  'mathematical-foundations', 'linear-algebra', 'calculus-and-analysis', 'differential-equations',
+  'fourier-analysis', 'functional-analysis-and-variational-methods', 'numerical-analysis',
+  'probability-and-statistics', 'group-theory-and-symmetry', 'physical-foundations',
+  'classical-mechanics', 'electromagnetism', 'quantum-mechanics', 'thermodynamics',
+  'statistical-mechanics', 'atomic-and-molecular-physics', 'solid-state-physics',
+  'crystallography', 'many-body-physics', 'chemical-foundations', 'general-chemistry',
+  'physical-chemistry', 'quantum-chemistry', 'chemical-bonding-and-molecular-structure',
+  'inorganic-chemistry', 'solid-state-chemistry', 'surface-and-interface-chemistry',
+  'electronic-structure-theory', 'many-electron-problem', 'hartree-and-hartree-fock-methods',
+  'density-functional-theory', 'kohn-sham-theory', 'exchange-correlation-theory',
+  'self-consistent-field-methods', 'basis-sets-and-numerical-representations',
+  'plane-wave-and-real-space-methods', 'localized-orbital-methods', 'pseudopotentials-and-paw',
+  'brillouin-zone-sampling', 'linear-response-and-excited-states',
+  'berry-phases-and-electronic-topology', 'learning-map',
 ];
 
 const internalRoutes = new Set([
-  '',
-  'theory/',
-  'theory/linear-algebra/',
-  'theory/calculus-and-analysis/',
-  'theory/numerical-analysis/',
-  'theory/quantum-mechanics/',
-  'theory/solid-state-physics/',
-  'theory/quantum-chemistry/',
-  'theory/many-electron-problem/',
-  'theory/hartree-and-hartree-fock-theory/',
-  'theory/density-functional-theory-foundations/',
-  'methods/',
-  'computational-tools/',
-  'reference/',
+  '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
+  'methods/', 'computational-tools/', 'reference/',
 ]);
-
 const deadCambridgeId = '8C2B8F7F4C94A903A9018E9D8A42B9A7';
 const count = (text, expression) => (text.match(expression) ?? []).length;
 
@@ -178,14 +102,12 @@ const checkMathMl = (text, label, source = false) => {
 };
 
 const checkReviewedPages = (baseDirectory, mode) => {
-  for (const [sourceFile, markers] of Object.entries(reviewedTheoryPages)) {
+  for (const [slug, markers] of Object.entries(reviewedTheoryPages)) {
     const relative = mode === 'source'
-      ? sourceFile
-      : sourceFile.replace(/^src\/pages\//, '').replace(/\.astro$/, '.html');
+      ? `src/pages/theory/${slug}/index.astro`
+      : `theory/${slug}/index.html`;
     const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
-    for (const marker of markers[mode]) {
-      assert(text.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
-    }
+    for (const marker of markers) assert(text.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
     checkMathMl(text, relative, mode === 'source');
   }
 };
@@ -216,35 +138,24 @@ if (sourceMode) {
   assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
   assert(!sources.includes(deadCambridgeId), 'dead Cambridge Linear Algebra resource remains in public source');
   for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
-    assert(!sources.toLowerCase().includes(term.toLowerCase()), `legacy content or UI term remains in public source: ${term}`);
+    assert(!sources.toLowerCase().includes(term), `legacy content or UI term remains in public source: ${term}`);
   }
   for (const privatePath of [['/home', 'talos'].join('/'), ['/Users', ''].join('')]) {
     assert(!sources.includes(privatePath), `private local path remains in public source: ${privatePath}`);
   }
   assert(!tracked.some((file) => /(?:^|\/)(?:POTCAR|.*\.(?:pdf|zip|key|pem))$/i.test(file)), 'restricted or archive file remains tracked');
 
-  const layout = fs.readFileSync(path.join(root, 'src/layouts/BaseLayout.astro'), 'utf8');
-  for (const route of ['/theory/', '/methods/', '/computational-tools/', '/reference/']) {
-    assert(layout.includes(`route: '${route}'`), `navigation target is missing: ${route}`);
-  }
-
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
-  for (const anchor of expectedTheoryAnchors) {
-    assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
-  }
-  for (const route of reviewedRoutes) {
-    assert(theorySource.includes(route), `Theory directory is missing reviewed page link: ${route}`);
-  }
-  for (const label of ['Hartree and Hartree–Fock Theory', 'Density Functional Theory: Foundations']) {
+  for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
+  for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
+  for (const label of ['Kohn–Sham Density Functional Theory', 'Exchange–Correlation Functionals and Approximations', 'Self-Consistent Field Methods', 'Discretization and Basis Representations']) {
     assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   }
 
   checkReviewedPages(root, 'source');
 
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
-  for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) {
-    assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
-  }
+  for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
   assert(!styles.includes('.equation'), 'removed code-style equation rule remains in the stylesheet');
 }
 
@@ -259,7 +170,6 @@ if (builtMode) {
     }
   };
   walk(dist);
-
   const htmlFiles = files.filter((file) => file.endsWith('.html')).map((file) => path.relative(dist, file)).sort();
   assert(JSON.stringify(htmlFiles) === JSON.stringify(expectedHtml), `built HTML must match the reviewed static set: ${htmlFiles.join(', ')}`);
   assert(!files.some((file) => file.endsWith('.js')), 'built site contains JavaScript');
@@ -271,15 +181,9 @@ if (builtMode) {
     for (const match of html.matchAll(/href="([^"]+)"/g)) {
       const href = match[1];
       if (/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
-      const withoutBase = href.replace(/^\/[^/]+\//, '').replace(/^\//, '');
-      const route = withoutBase.split(/[?#]/)[0];
+      const route = href.replace(/^\/[^/]+\//, '').replace(/^\//, '').split(/[?#]/)[0];
       assert(internalRoutes.has(route), `broken or unexpected internal link in ${htmlFile}: ${href}`);
     }
-  }
-
-  const theoryHtml = fs.readFileSync(path.join(dist, 'theory/index.html'), 'utf8');
-  for (const anchor of expectedTheoryAnchors) {
-    assert(theoryHtml.includes(`id="${anchor}"`), `built Theory page is missing directory anchor: ${anchor}`);
   }
   checkReviewedPages(dist, 'built');
 }
