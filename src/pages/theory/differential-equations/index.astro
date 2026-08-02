@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Differential Equations" description="Initial and boundary value problems, eigenvalue equations, Green functions, and continuous models in electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Differential Equations</span>
+  </nav>
+
+  <h1>Differential Equations</h1>
+  <p class="lede">Electronic-structure theory is written in continuous equations before it becomes matrices, grids, plane waves, or finite elements. Differential equations supply the language of evolution, boundary conditions, spectra, and fields.</p>
+  <p>This page concerns the structure of the continuous problem. How a computer discretizes and solves that problem belongs to <a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> and <a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a>.</p>
+
+  <h2>An equation is incomplete without its domain and conditions</h2>
+  <p>A differential expression alone does not define a unique physical problem. One must also state the spatial domain, coefficients, regularity assumptions, initial or boundary conditions, normalization, and any behavior imposed at infinity.</p>
+  <p>For example, the same second-order differential operator can describe bound states, scattering states, a periodic crystal, or a finite box depending on the domain and boundary conditions. These choices change the admissible functions and therefore the spectrum.</p>
+
+  <h2>Initial-value and boundary-value problems answer different questions</h2>
+  <dl class="paired-definitions">
+    <dt>Initial-value problem</dt>
+    <dd>The state is specified at one time or point and evolved according to the equation. Time-dependent Schrödinger dynamics is a central example.</dd>
+    <dt>Boundary-value problem</dt>
+    <dd>Conditions are imposed at spatial boundaries or asymptotic regions. Stationary Schrödinger, Poisson, radial atomic, and electrostatic cell problems commonly take this form.</dd>
+  </dl>
+  <p>Existence and uniqueness statements are conditional: they depend on the equation class, coefficient regularity, domain, and supplied data. Numerical convergence cannot repair an ill-posed or physically mismatched continuous problem.</p>
+
+  <h2>The stationary Schrödinger equation is a spectral differential equation</h2>
+  <div class="math-display">
+    <math display="block" aria-label="Hamiltonian operator acting on psi n equals E n psi n">
+      <semantics>
+        <mrow><mover><mi>H</mi><mo>^</mo></mover><msub><mi>ψ</mi><mi>n</mi></msub><mo>=</mo><msub><mi>E</mi><mi>n</mi></msub><msub><mi>ψ</mi><mi>n</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;\psi_n=E_n\psi_n.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The eigenvalue is not produced by differentiation alone. It arises from the operator together with its domain and boundary conditions. Boundaries, periodicity, singular nuclear potentials, spinor structure, and self-adjointness all affect the allowed spectrum.</p>
+
+  <h2>Poisson's equation connects density to electrostatics</h2>
+  <p>In atomic units, one common sign convention for the Hartree potential is</p>
+  <div class="math-display">
+    <math display="block" aria-label="laplacian of Hartree potential equals minus four pi times density">
+      <semantics>
+        <mrow><msup><mo>∇</mo><mn>2</mn></msup><msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mo>−</mo><mn>4</mn><mi>π</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\nabla^2 v_&#123;\mathrm&#123;H&#125;&#125;(\mathbf&#123;r&#125;)=-4\pi n(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The equation must be paired with boundary conditions appropriate to an isolated molecule, a periodic bulk cell, a slab, a wire, or another geometry. Applying a periodic solver to an isolated charged object changes the mathematical problem and introduces image interactions unless corrective methods are used.</p>
+
+  <h2>Separation of variables exposes symmetry and reduced equations</h2>
+  <p>When geometry and coefficients permit, a multidimensional problem can be decomposed into lower-dimensional equations. Atomic central potentials separate radial and angular variables; periodic translation separates crystal-momentum sectors; time-independent operators separate temporal phases.</p>
+  <p>Separation is not merely algebraic convenience. It identifies conserved quantities and symmetry sectors. It fails or becomes approximate when the Hamiltonian breaks the assumed symmetry.</p>
+
+  <h2>Sturm–Liouville structure organizes many one-dimensional spectra</h2>
+  <p>A broad family of eigenvalue problems can be written schematically as</p>
+  <div class="math-display">
+    <math display="block" aria-label="minus derivative of p derivative y plus q y equals lambda w y">
+      <semantics>
+        <mrow><mo>−</mo><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><mi>p</mi><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>)</mo><mo>+</mo><mi>q</mi><mi>y</mi><mo>=</mo><mi>λ</mi><mi>w</mi><mi>y</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">-\frac&#123;d&#125;&#123;dx&#125;\left(p\frac&#123;dy&#125;&#123;dx&#125;\right)+qy=\lambda wy.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Under suitable conditions, such operators have real eigenvalues and orthogonal eigenfunctions with respect to the weight. Radial equations, normal modes, and basis constructions often inherit this structure. Singular endpoints and continuum spectra require additional care beyond the regular textbook case.</p>
+
+  <h2>Green functions invert an operator subject to stated boundaries</h2>
+  <p>For a linear operator <math class="math-inline" aria-label="L"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>, a Green function is defined schematically by</p>
+  <div class="math-display">
+    <math display="block" aria-label="L acting on G of r r prime equals delta of r minus r prime">
+      <semantics>
+        <mrow><mi>L</mi><mi>G</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><mi>δ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">L G(\mathbf&#123;r&#125;,\mathbf&#123;r&#125;')=\delta(\mathbf&#123;r&#125;-\mathbf&#123;r&#125;').</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The inverse is not unique until boundary, causal, or radiation conditions are fixed. Retarded, advanced, periodic, and isolated Green functions solve different problems even when the differential expression is identical.</p>
+
+  <h2>Weak formulations widen the admissible solution space</h2>
+  <p>Finite-element and variational methods often multiply the equation by test functions and integrate by parts. Derivatives are then interpreted in an integral sense, allowing less regular solutions and incorporating natural boundary conditions.</p>
+  <p>A weak solution is not an imprecise solution. It is a different mathematical formulation with its own function spaces, existence theory, and convergence requirements. Rigorous Sobolev-space treatment belongs to the later Functional Analysis and Variational Methods page.</p>
+
+  <h2>Continuous and discrete problems must remain distinguishable</h2>
+  <aside class="callout">
+    <p><strong>Continuous model:</strong> differential operator, domain, coefficients, and boundary or initial data.</p>
+    <p><strong>Discrete model:</strong> finite basis, grid, quadrature, matrix, and algebraic boundary treatment.</p>
+    <p><strong>Solver result:</strong> approximate solution of that finite algebraic problem.</p>
+  </aside>
+  <p>A small matrix residual establishes only the third item. It does not prove that the discrete representation approximates the intended continuous problem or that the physical model is appropriate.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.mat.univie.ac.at/~gerald/ftp/book-ode/ode.pdf">Gerald Teschl, <cite>Ordinary Differential Equations and Dynamical Systems</cite></a> is a rigorous route through existence, uniqueness, linear systems, Sturm–Liouville problems, and dynamical systems. The author-hosted text is open; its main emphasis is ODEs rather than a complete PDE curriculum.</p>
+  <p><a href="https://www.cambridge.org/highereducation/books/mathematical-methods-for-physics-and-engineering/FC466374D5B94E86D969100070CA6483">Riley, Hobson, and Bence, <cite>Mathematical Methods for Physics and Engineering</cite>, 3rd ed.</a> is a broad physics-oriented reference for differential equations, separation, special functions, and Green functions. It is paid or institutionally accessed and should not be treated as a rigorous PDE existence text.</p>
+  <p><a href="https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/">MIT OpenCourseWare 18.330</a> is the numerical continuation for finite differences, interpolation, quadrature, and error analysis. Numerical methods are downstream of the continuous problem defined here.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not attempt a full modern PDE course, distribution theory, Sobolev theory, or numerical solver manual. It establishes enough structure to distinguish an operator from its domain, an equation from its boundary conditions, and a continuous physical problem from its discretization.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official University of Vienna, Cambridge, and MIT destinations were reviewed on 3 August 2026. The report explicitly identifies the absence of a fully reviewed open PDE course as a remaining resource gap.</p>
+  </aside>
+</BaseLayout>
