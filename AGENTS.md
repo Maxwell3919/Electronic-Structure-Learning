@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, six individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, nine individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
