@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import inventoryRules, { inventoryDispositions, inventorySnapshot } from '../src/data/atlas/migration/inventory.mjs';
 
@@ -7,16 +8,14 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
 
-const walk = (relativeDirectory) => fs.readdirSync(path.join(root, relativeDirectory), { withFileTypes: true })
-  .flatMap((entry) => {
-    const relativePath = path.posix.join(relativeDirectory, entry.name);
-    return entry.isDirectory() ? walk(relativePath) : [relativePath];
-  });
-
-const inventoryFiles = [
-  ...inventorySnapshot.scopeRoots.flatMap(walk),
-  ...inventorySnapshot.explicitFiles,
-].sort();
+const repositoryFiles = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], {
+  cwd: root,
+  encoding: 'utf8',
+}).trim().split('\n').filter(Boolean);
+const inventoryFiles = repositoryFiles.filter((relativePath) =>
+  inventorySnapshot.explicitFiles.includes(relativePath)
+  || inventorySnapshot.scopeRoots.some((scopeRoot) => relativePath.startsWith(`${scopeRoot}/`)),
+).sort();
 
 assert(/^[0-9a-f]{40}$/.test(inventorySnapshot.baselineSha), 'inventory baseline must be an exact commit SHA');
 assert(new Set(inventoryRules.map((item) => item.id)).size === inventoryRules.length, 'inventory rule IDs must be unique');
