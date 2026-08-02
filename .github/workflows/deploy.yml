@@ -73,11 +73,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
-      - name: Set up Node.js for the smoke registry
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22.12.0
-
       - name: Locate Chrome
         shell: bash
         run: |
@@ -98,13 +93,7 @@ jobs:
           .venv-pages-smoke/bin/python -m pip install --disable-pip-version-check selenium==4.34.2
 
       - name: Run live desktop, narrow-screen, keyboard, and no-JavaScript checks
-        shell: bash
-        run: |
-          mapfile -t smoke_tests < <(node scripts/list-smoke-tests.mjs --paths)
-          for smoke_test in "${smoke_tests[@]}"; do
-            echo "Running ${smoke_test}"
-            .venv-pages-smoke/bin/python "${smoke_test}"
-          done
+        run: .venv-pages-smoke/bin/python scripts/smoke-clean-slate.py
 
       - name: Upload browser-smoke evidence
         if: always()

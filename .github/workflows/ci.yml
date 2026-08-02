@@ -29,10 +29,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Validate Python smoke-test syntax
-        shell: bash
-        run: |
-          mapfile -t smoke_tests < <(node scripts/list-smoke-tests.mjs --paths)
-          python3 -m py_compile "${smoke_tests[@]}"
+        run: python3 -m py_compile scripts/smoke-clean-slate.py
 
-      - name: Validate models and build static site
+      - name: Validate clean-slate source and production build
         run: npm run check

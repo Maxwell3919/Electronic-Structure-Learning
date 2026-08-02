@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Home" description="A concise atlas of electronic-structure theory, methods, and computational tools." current="home">
+  <h1>Electronic Structure Atlas</h1>
+  <p class="lede">A concise public map of the theory, research methods, and computational tools used to understand electronic structure.</p>
+  <ul class="section-list">
+    <li><a href={href('/theory/')}>Theory</a> — mathematical, physical, chemical, and electronic-structure foundations.</li>
+    <li><a href={href('/methods/')}>Methods</a> — scientific methods, their assumptions, inputs, outputs, and limits.</li>
+    <li><a href={href('/computational-tools/')}>Computational Tools</a> — software packages, programs, workflows, databases, and supporting utilities.</li>
+    <li><a href={href('/reference/')}>Reference</a> — carefully reviewed resources with explicit reasons for inclusion.</li>
+  </ul>
+  <p class="secondary">A future Talos experience is planned, but it is not part of this baseline.</p>
+</BaseLayout>

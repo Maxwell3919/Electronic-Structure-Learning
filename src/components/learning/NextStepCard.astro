@@ -1,5 +1,0 @@
----
-interface Props { href: string; title: string; description?: string; }
-const { href, title, description } = Astro.props;
----
-<aside class="esl-next-step"><p class="esl-eyebrow">Next step</p><h2><a href={href}>{title}</a></h2>{description && <p>{description}</p>}<slot /></aside>

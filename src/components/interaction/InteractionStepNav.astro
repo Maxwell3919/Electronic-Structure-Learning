@@ -1,8 +1,0 @@
----
-interface Props { previousLabel?: string; nextLabel?: string; }
-const { previousLabel = '上一步', nextLabel = '下一步' } = Astro.props;
----
-<nav class="esl-interaction-step-nav" aria-label="解释步骤">
-  <button class="esl-interaction-button" type="button" data-step-previous>{previousLabel}</button>
-  <button class="esl-interaction-button" type="button" data-step-next>{nextLabel}</button>
-</nav>
