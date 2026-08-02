@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Twenty-five subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Twenty-eight subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -30,10 +30,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <p>The physical principles governing quantum systems, equilibrium, periodic matter, response, and interacting particles.</p>
     <ul>
       <li id="classical-mechanics">Classical Mechanics</li>
-      <li id="electromagnetism">Electromagnetism</li>
+      <li id="electromagnetism"><a href={href('/theory/electromagnetism/')}>Electromagnetism</a> <span class="item-summary">— Coulomb fields, Poisson equations, multipoles, polarization, dielectric response, and boundaries.</span></li>
       <li id="quantum-mechanics"><a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> <span class="item-summary">— states, operators, dynamics, spin, and identical fermions.</span></li>
       <li id="thermodynamics">Thermodynamics</li>
-      <li id="statistical-mechanics">Statistical Mechanics</li>
+      <li id="statistical-mechanics"><a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> <span class="item-summary">— ensembles, Fermi occupations, entropy, finite-temperature free energies, and fluctuations.</span></li>
       <li id="atomic-and-molecular-physics"><a href={href('/theory/atomic-and-molecular-physics/')}>Atomic and Molecular Physics</a> <span class="item-summary">— bound states, angular momenta, fields, spectra, and selection rules.</span></li>
       <li id="solid-state-physics"><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> <span class="item-summary">— periodicity, Bloch states, bands, filling, and collective degrees of freedom.</span></li>
       <li id="crystallography"><a href={href('/theory/crystallography/')}>Crystallography</a> <span class="item-summary">— lattices, cells, reciprocal space, diffraction, space groups, and Wyckoff positions.</span></li>
@@ -50,7 +50,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="quantum-chemistry"><a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> <span class="item-summary">— molecular Hamiltonians, Born–Oppenheimer separation, orbitals, antisymmetry, and correlation.</span></li>
       <li id="chemical-bonding-and-molecular-structure"><a href={href('/theory/chemical-bonding-and-molecular-structure/')}>Chemical Bonding and Molecular Structure</a> <span class="item-summary">— orbital, density, symmetry, energy, and formal chemical interpretations.</span></li>
       <li id="inorganic-chemistry">Inorganic Chemistry</li>
-      <li id="solid-state-chemistry">Solid-State Chemistry</li>
+      <li id="solid-state-chemistry"><a href={href('/theory/solid-state-chemistry/')}>Solid-State Chemistry</a> <span class="item-summary">— composition, structure types, defects, nonstoichiometry, doping, and phase relations.</span></li>
       <li id="surface-and-interface-chemistry">Surface and Interface Chemistry</li>
     </ul>
   </section>
