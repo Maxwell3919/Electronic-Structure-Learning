@@ -14,50 +14,18 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 ## Theory
 
-Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels:
+Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-```text
-Theory
-├── Mathematical Foundations
-│   ├── Linear Algebra
-│   ├── Calculus and Analysis
-│   ├── Differential Equations
-│   ├── Fourier Analysis
-│   ├── Functional Analysis and Variational Methods
-│   ├── Numerical Analysis
-│   ├── Probability and Statistics
-│   └── Group Theory and Symmetry
-├── Physical Foundations
-│   ├── Classical Mechanics
-│   ├── Electromagnetism
-│   ├── Quantum Mechanics
-│   ├── Thermodynamics
-│   ├── Statistical Mechanics
-│   ├── Atomic and Molecular Physics
-│   ├── Solid-State Physics
-│   ├── Crystallography
-│   └── Many-Body Physics
-├── Chemical Foundations
-├── Electronic Structure Theory
-│   ├── The Many-Electron Problem
-│   ├── Hartree and Hartree–Fock Theory
-│   ├── Density Functional Theory: Foundations
-│   ├── Kohn–Sham Density Functional Theory
-│   ├── Exchange–Correlation Functionals and Approximations
-│   ├── Self-Consistent Field Methods
-│   ├── Discretization and Basis Representations
-│   ├── Plane-Wave and Real-Space Methods
-│   ├── Localized-Orbital Methods
-│   ├── Pseudopotentials and Projector-Augmented Waves
-│   ├── Brillouin-Zone Sampling
-│   ├── Linear Response and Excited States
-│   └── Berry Phases and Electronic Topology
-└── Learning Map
-```
+The reviewed content has developed in six batches:
 
-The first three reviewed batches add Linear Algebra, Calculus and Analysis, Numerical Analysis, Quantum Mechanics, Solid-State Physics, Quantum Chemistry, The Many-Electron Problem, Hartree and Hartree–Fock Theory, and Density Functional Theory: Foundations.
+1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
+2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
+3. The Many-Electron Problem, Hartree and Hartree–Fock Theory, Density Functional Theory: Foundations.
+4. Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, Self-Consistent Field Methods, Discretization and Basis Representations.
+5. Differential Equations, Fourier Analysis, Crystallography, Group Theory and Symmetry.
+6. Plane-Wave and Real-Space Methods, Pseudopotentials/PAW/Core–Valence Treatments, Brillouin-Zone Sampling, Relativistic Electronic Structure/Spin/Magnetism.
 
-The fourth batch completes the Tier-1 explanatory loop with Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, Self-Consistent Field Methods, and Discretization and Basis Representations:
+The Tier-1 responsibility chain remains explicit:
 
 ```text
 interacting many-electron problem
@@ -68,39 +36,57 @@ interacting many-electron problem
 → finite numerical representation
 ```
 
-The fifth batch begins Tier 2 with Differential Equations, Fourier Analysis, Crystallography, and Group Theory and Symmetry. It adds four complementary routes rather than a fixed sequence:
+Tier 2 is not a fixed linear sequence. The current periodic-material branch connects several distinct layers:
 
 ```text
-Differential Equations
-├── continuous operators, domains, and boundary conditions
-├── Schrödinger and Poisson equations
-└── Green functions and weak-form awareness
+Fourier analysis
+├── plane-wave basis and FFT grids
+└── Brillouin-zone integration
 
-Fourier Analysis
-├── transforms, convolution, and sampling
-├── reciprocal-space representation
-└── DFT/FFT and aliasing boundaries
+Crystallography and group theory
+├── reciprocal cells and k-vector conventions
+├── symmetry reduction
+└── magnetic and double-group extensions
 
-Crystallography
-├── lattices, cells, reciprocal lattices, and diffraction
-├── space groups and Wyckoff positions
-└── structure settings and provenance
+Discretization
+├── plane-wave spectral spaces
+├── real-space finite differences / finite elements / multiresolution
+└── observable-specific representation convergence
 
-Group Theory and Symmetry
-├── representations and irreducible sectors
-├── symmetry-adapted bases and selection rules
-└── little groups, compatibility, and symmetry breaking
+Core treatment
+├── frozen-core pseudopotentials
+├── ultrasoft augmentation
+└── PAW transformation and reconstruction
+
+Relativity and magnetism
+├── scalar-relativistic Hamiltonians
+├── collinear and noncollinear spin
+├── spin–orbit coupling
+└── magnetic symmetry and anisotropy
 ```
 
-Crystallography and group theory remain separate: the former defines periodic geometry and classification, while the latter describes how symmetry acts on states, operators, modes, and tensors. Fourier reciprocal-lattice vectors, Bloch wavevectors, FFT grids, and Brillouin-zone sampling remain distinct objects. Differential equations remain distinct from their finite discretizations and algebraic solver results.
+These responsibilities must remain separate:
 
-All reviewed pages share navigation, source discipline, mathematical presentation, and review boundaries, but they do not follow a mandatory public section template. Kohn–Sham orbitals are not presented as general quasiparticle states; functional selection is observable-specific; SCF convergence is separated from representation and scientific convergence; basis, quadrature, grids, boundary conditions, core treatment, and Brillouin-zone sampling remain distinct numerical layers.
+- A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
+- An FFT or real-space grid is not automatically the orbital basis.
+- A pseudopotential-library verification result is not a validation of every target compound or observable.
+- An SCF integration mesh, a denser NSCF/DOS mesh, and an illustrative band path are different objects.
+- Scalar relativity, spin polarization, noncollinearity, and SOC are not interchangeable accuracy levels.
+- One converged magnetic branch is not proof of the global magnetic ground state.
+
+All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
 Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
 
 Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
 
-Methods discusses scientific methods rather than paper-reading records. Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
+The relativistic/spin/magnetism page is included because the systematic review identified it as the clearest independent omission. Its minimum content and implementation anchors have been reviewed, but the dedicated second-round textbook/course comparison remains open and is stated on the page rather than hidden.
+
+## Methods and other entrances
+
+Methods provides a concise conceptual map of method families and what scientific problems they address. It does not duplicate operation contracts, executable recipes, convergence workflows, provenance, or reproducibility packaging maintained by DFT Research Workflow.
+
+Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
 
 The site defaults to English and system serif fonts. Pages use white space and typographic hierarchy rather than cards, dashboards, reading modes, status badges, or decorative interaction.
 
