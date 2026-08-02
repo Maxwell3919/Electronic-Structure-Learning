@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Statistical Mechanics" description="Ensembles, partition functions, Fermi occupations, entropy, finite-temperature free energies, and fluctuations for electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Statistical Mechanics</span>
+  </nav>
+
+  <h1>Statistical Mechanics</h1>
+  <p class="lede">Statistical mechanics connects microscopic states to equilibrium occupations, entropy, free energies, fluctuations, and collective thermodynamic behavior.</p>
+  <p>For electronic structure it is essential when interpreting metals, finite electronic temperature, phonon free energies, phase stability, magnetic disorder, and thermal response. It must remain distinct from numerical smearing, molecular dynamics sampling, and macroscopic thermodynamics.</p>
+
+  <h2>An ensemble states what is controlled and what fluctuates</h2>
+  <p>The canonical partition function at temperature <math class="math-inline" aria-label="T"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math> is</p>
+  <div class="math-display">
+    <math display="block" aria-label="Z equals trace exponential minus beta H">
+      <semantics>
+        <mrow><mi>Z</mi><mo>=</mo><mi>Tr</mi><mspace width="0.2em"/><msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><mover><mi>H</mi><mo>^</mo></mover></mrow></msup><mo>,</mo><mspace width="0.5em"/><mi>β</mi><mo>=</mo><mfrac><mn>1</mn><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">Z=\mathrm&#123;Tr&#125;\,e^&#123;-\beta\hat&#123;H&#125;&#125;,\quad\beta=1/(k_&#123;\mathrm&#123;B&#125;&#125;T).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The microcanonical, canonical, and grand-canonical ensembles fix different combinations of energy, particle number, volume, temperature, and chemical potential. Their equivalence requires a thermodynamic limit and appropriate regularity; finite systems and phase coexistence can retain ensemble-specific behavior.</p>
+
+  <h2>Free energies are generated from partition functions</h2>
+  <p>The Helmholtz free energy follows from</p>
+  <div class="math-display">
+    <math display="block" aria-label="F equals minus k B T log Z">
+      <semantics>
+        <mrow><mi>F</mi><mo>=</mo><mo>−</mo><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi><mi>ln</mi><mi>Z</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">F=-k_&#123;\mathrm&#123;B&#125;&#125;T\ln Z.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Changing ensemble changes the thermodynamic potential. Internal energy, Helmholtz free energy, Gibbs free energy, and grand potential answer different constrained minimization questions and cannot be substituted by one electronic total energy.</p>
+
+  <h2>Fermi–Dirac occupations connect bands to finite-temperature electron counts</h2>
+  <p>For independent fermionic levels, the mean occupation is</p>
+  <div class="math-display">
+    <math display="block" aria-label="f epsilon equals one over exponential beta epsilon minus mu plus one">
+      <semantics>
+        <mrow><mi>f</mi><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mi>e</mi><mrow><mi>β</mi><mo>(</mo><mi>ε</mi><mo>−</mo><mi>μ</mi><mo>)</mo></mrow></msup><mo>+</mo><mn>1</mn></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">f(\varepsilon)=\frac&#123;1&#125;&#123;e^&#123;\beta(\varepsilon-\mu)&#125;+1&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The chemical potential is fixed by the particle-number constraint and generally varies with temperature. Metals require dense sampling near the Fermi surface because small occupation changes can affect energies, forces, response, and entropy.</p>
+
+  <h2>Electronic entropy is part of a finite-temperature variational problem</h2>
+  <p>For independent fermionic occupations,</p>
+  <div class="math-display">
+    <math display="block" aria-label="S equals minus k B sum f log f plus one minus f log one minus f">
+      <semantics>
+        <mrow><mi>S</mi><mo>=</mo><mo>−</mo><msub><mi>k</mi><mi>B</mi></msub><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><mo>[</mo><msub><mi>f</mi><mi>i</mi></msub><mi>ln</mi><msub><mi>f</mi><mi>i</mi></msub><mo>+</mo><mo>(</mo><mn>1</mn><mo>−</mo><msub><mi>f</mi><mi>i</mi></msub><mo>)</mo><mi>ln</mi><mo>(</mo><mn>1</mn><mo>−</mo><msub><mi>f</mi><mi>i</mi></msub><mo>)</mo><mo>]</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">S=-k_&#123;\mathrm&#123;B&#125;&#125;\sum_i[f_i\ln f_i+(1-f_i)\ln(1-f_i)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Mermin's finite-temperature extension of density-functional theory makes the equilibrium density minimize a grand-potential functional at stated temperature and chemical potential. This formal temperature should not be silently identified with an arbitrary convergence aid.</p>
+
+  <h2>Numerical smearing and physical temperature must remain separate</h2>
+  <p>Smearing can regularize Brillouin-zone integration and SCF convergence in metals. Some schemes approximate a finite electronic temperature; others are quadrature devices with correction formulas and no direct thermal interpretation.</p>
+  <p>Report the occupation scheme, width or temperature, extrapolated or free-energy quantity, k-point mesh, and target observable. Convergence with respect to one smearing width does not establish physical finite-temperature behavior.</p>
+
+  <h2>Lattice vibrations add a distinct thermal contribution</h2>
+  <p>In the harmonic approximation, a phonon mode of frequency <math class="math-inline" aria-label="omega q nu"><semantics><msub><mi>ω</mi><mrow><mi mathvariant="bold">q</mi><mi>ν</mi></mrow></msub><annotation encoding="application/x-tex">\omega_&#123;\mathbf&#123;q&#125;\nu&#125;</annotation></semantics></math> contributes a free energy</p>
+  <div class="math-display">
+    <math display="block" aria-label="F ph equals sum half hbar omega plus k B T log one minus exponential minus beta hbar omega">
+      <semantics>
+        <mrow><msub><mi>F</mi><mi>ph</mi></msub><mo>=</mo><munderover><mo>∑</mo><mrow><mi mathvariant="bold">q</mi><mi>ν</mi></mrow><mo></mo></munderover><mo>[</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>ℏ</mi><msub><mi>ω</mi><mrow><mi mathvariant="bold">q</mi><mi>ν</mi></mrow></msub><mo>+</mo><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi><mi>ln</mi><mo>(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><mi>ℏ</mi><msub><mi>ω</mi><mrow><mi mathvariant="bold">q</mi><mi>ν</mi></mrow></msub></mrow></msup><mo>)</mo><mo>]</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">F_&#123;\mathrm&#123;ph&#125;&#125;=\sum_&#123;\mathbf&#123;q&#125;\nu&#125;[\tfrac12\hbar\omega_&#123;\mathbf&#123;q&#125;\nu&#125;+k_&#123;\mathrm&#123;B&#125;&#125;T\ln(1-e^&#123;-\beta\hbar\omega_&#123;\mathbf&#123;q&#125;\nu&#125;&#125;)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Imaginary harmonic modes, anharmonicity, thermal expansion, disorder, and phase transitions can invalidate a simple harmonic free-energy comparison. Electronic and vibrational thermal terms are separate approximations with separate convergence requirements.</p>
+
+  <h2>Fluctuations connect response to equilibrium correlations</h2>
+  <p>Susceptibilities, heat capacities, compressibilities, and transport coefficients can be expressed through fluctuations or correlation functions under stated ensembles. This connection motivates linear response and many-body Green-function methods, but a finite trajectory or finite cell samples only an approximation to the ensemble.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> translates ensembles and free energies into chemical equilibrium and kinetic questions.</li>
+    <li><a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> separates k-space integration, occupations, and smearing convergence.</li>
+    <li><a href={href('/theory/self-consistent-field-methods/')}>SCF Methods</a> treats occupation changes as part of the nonlinear solution.</li>
+    <li>Many-Body Physics will extend equilibrium ensembles to Green functions, collective modes, and interacting quasiparticles.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/8-333-statistical-mechanics-i-statistical-mechanics-of-particles-fall-2013/">MIT OpenCourseWare 8.333, <cite>Statistical Mechanics I</cite></a> is a graduate route through thermodynamics, probability, ensembles, interacting systems, quantum gases, phonons, and Fermi/Bose statistics. Its prerequisites and breadth exceed the minimum needed for routine ground-state DFT.</p>
+  <p><a href="https://journals.aps.org/pr/abstract/10.1103/PhysRev.137.A1441">N. David Mermin, “Thermal Properties of the Inhomogeneous Electron Gas”</a> is the primary formal source for finite-temperature density-functional theory in the grand canonical ensemble.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not prescribe a universal smearing, electronic temperature, phonon free-energy model, molecular-dynamics ensemble, or phase-stability workflow. It also does not treat one converged finite-temperature calculation as proof that all relevant thermal degrees of freedom have been included.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report; the official MIT OpenCourseWare and APS destinations were rechecked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>

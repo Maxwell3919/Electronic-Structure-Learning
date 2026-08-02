@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Solid-State Chemistry" description="Composition, structure types, bonding, defects, nonstoichiometry, doping, and phase relations for materials electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Solid-State Chemistry</span>
+  </nav>
+
+  <h1>Solid-State Chemistry</h1>
+  <p class="lede">Solid-state chemistry connects composition, crystal structure, bonding, defects, oxidation states, and synthesis conditions to the behavior of real materials.</p>
+  <p>Its role differs from Solid-State Physics. The physics route emphasizes bands, excitations, quasiparticles, and collective response; the chemistry route asks which compositions and structures form, how local environments and defects accommodate charge, and how chemical substitution changes the electronic problem.</p>
+
+  <h2>A chemical formula does not uniquely determine a crystal structure</h2>
+  <p>Polymorphs can share composition while differing in coordination, connectivity, density, symmetry, and electronic properties. Conversely, one structure type can host many compositions through substitution, vacancies, mixed occupancy, or ordering.</p>
+  <p>A calculation must therefore identify the actual structural model, composition, occupancy, magnetic state, and provenance. A prototype label or database formula is an entry point, not proof that the modeled phase is experimentally stable under the stated conditions.</p>
+
+  <h2>Coordination and connectivity organize local chemical environments</h2>
+  <p>Coordination numbers, polyhedra, bond-valence ideas, packing, and network connectivity summarize local structure. They help distinguish layered, framework, chain, molecular, close-packed, perovskite-like, spinel-like, and other structural families.</p>
+  <p>These descriptors depend on distance thresholds and chemical interpretation. A coordination polyhedron is not itself a quantum observable, but it can guide orbital splitting, hopping paths, defect sites, diffusion channels, and likely structural distortions.</p>
+
+  <h2>Ionic, covalent, metallic, and multicentre pictures are limiting models</h2>
+  <p>Real solids often combine several bonding characters. Formal oxidation states and ionic radii can rationalize trends; orbital hybridization and charge density describe covalency; band filling and delocalization describe metallic behavior.</p>
+  <p>Partial charges obtained from different partitions need not equal formal oxidation states. Agreement with one simple bonding picture can be useful without making that picture an exact decomposition of the many-electron wavefunction or density.</p>
+
+  <h2>Stoichiometry and charge neutrality constrain defect chemistry</h2>
+  <p>For charged species and electronic carriers, a macroscopic charge-neutrality condition can be written schematically as</p>
+  <div class="math-display">
+    <math display="block" aria-label="sum alpha z alpha c alpha plus p minus n equals zero">
+      <semantics>
+        <mrow><munderover><mo>∑</mo><mi>α</mi><mo></mo></munderover><msub><mi>z</mi><mi>α</mi></msub><msub><mi>c</mi><mi>α</mi></msub><mo>+</mo><mi>p</mi><mo>−</mo><mi>n</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\sum_\alpha z_\alpha c_\alpha+p-n=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Here the indexed terms may represent charged defects, dopants, or ionic species, while <math class="math-inline" aria-label="p and n"><semantics><mrow><mi>p</mi><mtext> and </mtext><mi>n</mi></mrow><annotation encoding="application/x-tex">p\text&#123; and &#125;n</annotation></semantics></math> represent hole and electron concentrations. The actual relation depends on the chosen defect reactions, reservoirs, temperature, and electronic structure.</p>
+  <p>Nonstoichiometry can be accommodated by vacancies, interstitials, antisites, mixed valence, extended defects, or secondary phases. A nominal dopant concentration does not guarantee an equal free-carrier concentration.</p>
+
+  <h2>Defect formation energies depend on reservoirs and Fermi level</h2>
+  <p>A commonly used charged-defect expression is</p>
+  <div class="math-display">
+    <math display="block" aria-label="defect formation energy expression">
+      <semantics>
+        <mrow><mi>Δ</mi><msub><mi>H</mi><mi>f</mi></msub><mo>(</mo><msup><mi>D</mi><mi>q</mi></msup><mo>)</mo><mo>=</mo><msub><mi>E</mi><mi>def</mi></msub><mo>−</mo><msub><mi>E</mi><mi>bulk</mi></msub><mo>−</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>n</mi><mi>i</mi></msub><msub><mi>μ</mi><mi>i</mi></msub><mo>+</mo><mi>q</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>+</mo><msub><mi>E</mi><mi>ref</mi></msub><mo>)</mo><mo>+</mo><msub><mi>E</mi><mi>corr</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Delta H_f(D^q)=E_&#123;\mathrm&#123;def&#125;&#125;-E_&#123;\mathrm&#123;bulk&#125;&#125;-\sum_i n_i\mu_i+q(E_F+E_&#123;\mathrm&#123;ref&#125;&#125;)+E_&#123;\mathrm&#123;corr&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Every term carries a convention: atom addition signs, chemical-potential references, band-edge alignment, charge correction, cell size, electrostatic boundary condition, and electronic method. The expression is not a universal plug-in formula independent of provenance.</p>
+  <p>Chemical potentials are restricted by host stability and competing phases. A mathematically allowed reservoir point can still be experimentally inaccessible because of kinetics, pressure, temperature, or missing phases.</p>
+
+  <h2>Substitution changes more than electron count</h2>
+  <p>Aliovalent or isovalent substitution can alter carrier concentration, local strain, coordination, disorder, magnetic exchange, spin state, orbital energies, and phase stability. A rigid-band approximation changes occupations while holding the underlying electronic structure fixed; real chemical doping may violate that assumption strongly.</p>
+  <p>Ordered supercells represent one configuration. Random alloys, partial occupancies, clustering, and short-range order require configurational models or sampling rather than one arbitrary arrangement.</p>
+
+  <h2>Phase stability is a compositional comparison</h2>
+  <p>For a phase with composition vector <math class="math-inline" aria-label="x"><semantics><mi mathvariant="bold">x</mi><annotation encoding="application/x-tex">\mathbf&#123;x&#125;</annotation></semantics></math>, stability is assessed relative to all allowed competing combinations at the same overall composition. At zero temperature, the lower convex envelope of formation energies provides one idealized criterion.</p>
+  <p>Finite-temperature entropy, pressure, defects, surfaces, metastability, and kinetic trapping can change the experimentally observed phase. A negative formation energy relative to isolated elements is not sufficient to establish stability against compounds.</p>
+
+  <h2>Structure–property relations need controlled comparisons</h2>
+  <p>Changing composition often changes structure, volume, symmetry, magnetic order, and disorder simultaneously. Attributing a property trend to “chemical pressure,” “electron doping,” or “bond covalency” requires comparisons that separate these effects or acknowledge the remaining confounding factors.</p>
+  <p>Electronic-structure calculations can compare hypothetical controlled models, but the relation to synthesis and measurement depends on whether those models are physically realizable.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/crystallography/')}>Crystallography</a> defines cells, space groups, Wyckoff sites, occupancies, and structural conventions.</li>
+    <li><a href={href('/theory/chemical-bonding-and-molecular-structure/')}>Chemical Bonding and Molecular Structure</a> provides orbital, density, and formal-chemical interpretation frameworks.</li>
+    <li><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> treats bands, phonons, Fermi surfaces, and collective properties after a structural and compositional model is chosen.</li>
+    <li><a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> supplies chemical potentials, equilibrium, and finite-temperature model layers.</li>
+  </ul>
+
+  <h2>Study route</h2>
+  <p><a href="https://ocw.mit.edu/courses/3-091-introduction-to-solid-state-chemistry-fall-2018/">MIT OpenCourseWare 3.091, <cite>Introduction to Solid-State Chemistry</cite></a> is an undergraduate entry route spanning atomic structure, bonding, semiconductors, crystallography, defects, kinetics, electrochemistry, and diffusion. It is especially suitable for readers who need chemical intuition before advanced electronic-structure theory.</p>
+  <p>The course is broad and introductory. Defect thermodynamics, phase diagrams, magnetic materials, and first-principles convergence still require dedicated advanced sources and method-specific validation.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not infer a material's synthesis route from a relaxed structure, equate formal oxidation state with a unique computed charge, prescribe one defect correction, or claim that a zero-temperature convex hull captures all experimental stability.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report; the official MIT OpenCourseWare destination was rechecked on 3 August 2026. The report did not complete a second-round comparison of every advanced solid-state chemistry text.</p>
+  </aside>
+</BaseLayout>
