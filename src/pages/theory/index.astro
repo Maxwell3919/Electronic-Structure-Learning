@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Seventeen subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Twenty-one subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -16,12 +16,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <ul>
       <li id="linear-algebra"><a href={href('/theory/linear-algebra/')}>Linear Algebra</a> <span class="item-summary">— states, bases, operators, subspaces, and eigenvalue problems.</span></li>
       <li id="calculus-and-analysis"><a href={href('/theory/calculus-and-analysis/')}>Calculus and Analysis</a> <span class="item-summary">— change, integration, limits, and convergence.</span></li>
-      <li id="differential-equations"><a href={href('/theory/differential-equations/')}>Differential Equations</a> <span class="item-summary">— continuous operators, domains, boundary conditions, spectra, and Green functions.</span></li>
-      <li id="fourier-analysis"><a href={href('/theory/fourier-analysis/')}>Fourier Analysis</a> <span class="item-summary">— transforms, convolution, sampling, reciprocal space, and FFTs.</span></li>
+      <li id="differential-equations"><a href={href('/theory/differential-equations/')}>Differential Equations</a> <span class="item-summary">— continuous operators, initial and boundary conditions, spectral problems, and Green functions.</span></li>
+      <li id="fourier-analysis"><a href={href('/theory/fourier-analysis/')}>Fourier Analysis</a> <span class="item-summary">— transforms, reciprocal components, convolution, sampling, DFTs, and aliasing.</span></li>
       <li id="functional-analysis-and-variational-methods">Functional Analysis and Variational Methods</li>
       <li id="numerical-analysis"><a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a> <span class="item-summary">— error, conditioning, stability, discretization, and iterative solution.</span></li>
       <li id="probability-and-statistics">Probability and Statistics</li>
-      <li id="group-theory-and-symmetry"><a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> <span class="item-summary">— representations, irreducible sectors, selection rules, and symmetry reduction.</span></li>
+      <li id="group-theory-and-symmetry"><a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> <span class="item-summary">— representations, irreducible sectors, selection rules, little groups, and compatibility.</span></li>
     </ul>
   </section>
 
@@ -66,10 +66,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="exchange-correlation-theory"><a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> <span class="item-summary">— exact role, approximation families, constraints, implementation, and failure modes.</span></li>
       <li id="self-consistent-field-methods"><a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> <span class="item-summary">— nonlinear fixed points, residuals, mixing, occupations, and metastability.</span></li>
       <li id="basis-sets-and-numerical-representations"><a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> <span class="item-summary">— finite spaces, grids, boundary conditions, completeness, and observable-specific convergence.</span></li>
-      <li id="plane-wave-and-real-space-methods">Plane-Wave and Real-Space Methods</li>
+      <li id="plane-wave-and-real-space-methods"><a href={href('/theory/plane-wave-and-real-space-methods/')}>Plane-Wave and Real-Space Methods</a> <span class="item-summary">— spectral bases, real-space families, FFT grids, boundary conditions, and representation errors.</span></li>
       <li id="localized-orbital-methods">Localized-Orbital Methods</li>
-      <li id="pseudopotentials-and-paw">Pseudopotentials and Projector-Augmented Waves</li>
-      <li id="brillouin-zone-sampling">Brillouin-Zone Sampling</li>
+      <li id="pseudopotentials-and-paw"><a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a> <span class="item-summary">— frozen cores, projectors, augmentation, reconstruction, transferability, and validation.</span></li>
+      <li id="brillouin-zone-sampling"><a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> <span class="item-summary">— k-space integration, symmetry weights, occupations, smearing, and observable convergence.</span></li>
+      <li id="relativistic-electronic-structure-spin-and-magnetism"><a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a> <span class="item-summary">— scalar relativity, spinors, SOC, noncollinearity, magnetic symmetry, and anisotropy.</span></li>
       <li id="linear-response-and-excited-states">Linear Response and Excited States</li>
       <li id="berry-phases-and-electronic-topology">Berry Phases and Electronic Topology</li>
     </ul>
