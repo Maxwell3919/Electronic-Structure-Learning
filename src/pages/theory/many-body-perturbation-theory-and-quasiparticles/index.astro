@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Many-Body Perturbation Theory and Quasiparticles" description="Dyson equations, self-energy, screened interactions, GW quasiparticles, and BSE excitons." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Many-Body Perturbation Theory and Quasiparticles</span>
+  </nav>
+
+  <h1>Many-Body Perturbation Theory and Quasiparticles</h1>
+  <p class="lede">Many-body perturbation theory describes electron addition and removal through Green functions and self-energies, then builds neutral electron–hole excitations from screened interactions.</p>
+  <p>This page separates charged quasiparticle energies from neutral optical excitations. It also separates the formal approximation from the production workflow: “GW” and “BSE” denote families of choices whose numerical realization, self-consistency, screening, and convergence must be declared.</p>
+
+  <h2>The Dyson equation replaces a static potential by an energy-dependent self-energy</h2>
+  <p>The interacting one-particle Green function satisfies</p>
+  <div class="math-display">
+    <math display="block" aria-label="Dyson equation G inverse equals G zero inverse minus Sigma">
+      <semantics>
+        <mrow><msup><mi>G</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><msubsup><mi>G</mi><mn>0</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>−</mo><mi>Σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">G^&#123;-1&#125;(\omega)=G_0^&#123;-1&#125;(\omega)-\Sigma(\omega).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The self-energy <math class="math-inline" aria-label="Sigma"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math> is generally nonlocal, energy-dependent, complex, and non-Hermitian away from isolated poles. Its real part shifts excitation energies; its imaginary part is related to finite lifetimes and spectral broadening.</p>
+  <p>A local static exchange–correlation potential and a many-body self-energy are not equivalent objects, even when a perturbative correction starts from Kohn–Sham orbitals.</p>
+
+  <h2>Screening replaces the bare Coulomb interaction by a medium-dependent interaction</h2>
+  <p>The screened interaction obeys a Dyson-like relation</p>
+  <div class="math-display">
+    <math display="block" aria-label="W equals v plus v P W">
+      <semantics>
+        <mrow><mi>W</mi><mo>=</mo><mi>v</mi><mo>+</mo><mi>v</mi><mi>P</mi><mi>W</mi><mo>=</mo><msup><mo>(</mo><mn>1</mn><mo>−</mo><mi>v</mi><mi>P</mi><mo>)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>v</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">W=v+vPW=(1-vP)^&#123;-1&#125;v.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Here <math class="math-inline" aria-label="P"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> is an irreducible polarizability. Screening depends on frequency, wavevector, dimensionality, dielectric environment, band structure, occupation, and approximation.</p>
+  <p>Supercell vacuum does not automatically eliminate image screening in low-dimensional systems. Coulomb truncation, dielectric matrix size, and long-wavelength treatment can be decisive.</p>
+
+  <h2>The GW approximation retains a first screened-interaction self-energy</h2>
+  <p>The defining approximation is commonly written</p>
+  <div class="math-display">
+    <math display="block" aria-label="Sigma GW equals i G W">
+      <semantics>
+        <mrow><msub><mi>Σ</mi><mi>GW</mi></msub><mo>(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>)</mo><mo>=</mo><mi>i</mi><mi>G</mi><mo>(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>)</mo><mi>W</mi><mo>(</mo><mn>1</mn><mo>,</mo><msup><mn>2</mn><mo>+</mo></msup><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Sigma_&#123;GW&#125;(1,2)=iG(1,2)W(1,2^+).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Vertex corrections are omitted at this level. The notation hides choices about the starting Green function, polarizability, frequency treatment, self-consistency, spin, relativistic effects, and core–valence partition.</p>
+
+  <h2>Quasiparticle energies solve an energy-dependent equation</h2>
+  <p>For a reference orbital <math class="math-inline" aria-label="phi n"><semantics><msub><mi>φ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\phi_n</annotation></semantics></math>, a diagonal quasiparticle equation is often approximated by</p>
+  <div class="math-display">
+    <math display="block" aria-label="quasiparticle energy correction equation">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>n</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>+</mo><msub><mi>Z</mi><mi>n</mi></msub><mo>⟨</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>|</mo><mi>Σ</mi><mo>(</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>)</mo><mo>−</mo><msub><mi>v</mi><mi>xc</mi></msub><mo>|</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_n=\varepsilon_n+Z_n\langle\phi_n|\Sigma(\varepsilon_n)-v_&#123;\mathrm&#123;xc&#125;&#125;|\phi_n\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The renormalization factor derives from the energy derivative of the self-energy. Linearization, diagonal approximations, and neglect of off-diagonal mixing can fail near degeneracies, band inversions, strong hybridization, or satellite structures.</p>
+
+  <h2>GW denotes a family, not one uniquely defined calculation</h2>
+  <dl class="paired-definitions">
+    <dt><math class="math-inline" aria-label="G zero W zero"><semantics><msub><mi>G</mi><mn>0</mn></msub><msub><mi>W</mi><mn>0</mn></msub><annotation encoding="application/x-tex">G_0W_0</annotation></semantics></math></dt>
+    <dd>One-shot correction from a fixed mean-field starting point. Results can depend strongly on that starting point.</dd>
+    <dt>Eigenvalue self-consistency</dt>
+    <dd>Updates selected quasiparticle energies while retaining some orbitals or screening approximations.</dd>
+    <dt>Quasiparticle self-consistency</dt>
+    <dd>Constructs an updated effective one-particle Hamiltonian from the self-energy under a declared mapping.</dd>
+    <dt>Fully self-consistent GW</dt>
+    <dd>Iterates the Green function and screened interaction, changing conservation properties, spectra, and cost.</dd>
+  </dl>
+  <p>These variants do not form a universal accuracy ladder. Vertex corrections, cancellation of errors, starting-point quality, and the target observable can reverse simple expectations.</p>
+
+  <h2>Neutral excitations require an electron–hole equation</h2>
+  <p>After quasiparticle energies and screening are constructed, the Bethe–Salpeter equation is often represented as an effective electron–hole eigenproblem,</p>
+  <div class="math-display">
+    <math display="block" aria-label="BSE electron hole eigenvalue equation">
+      <semantics>
+        <mrow><munderover><mo>∑</mo><mrow><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup></mrow><mo></mo></munderover><msub><mi>H</mi><mrow><mi>v</mi><mi>c</mi><mo>,</mo><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup></mrow></msub><msubsup><mi>A</mi><mrow><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup></mrow><mi>S</mi></msubsup><mo>=</mo><msub><mi>Ω</mi><mi>S</mi></msub><msubsup><mi>A</mi><mrow><mi>v</mi><mi>c</mi></mrow><mi>S</mi></msubsup><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\sum_&#123;v'c'&#125;H_&#123;vc,v'c'&#125;A_&#123;v'c'&#125;^S=\Omega_S A_&#123;vc&#125;^S.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The basis labels occupied–empty transitions. The kernel includes direct screened attraction and exchange-like terms under the chosen approximation. Its eigenvalues describe neutral excitations; they are not quasiparticle addition/removal energies.</p>
+
+  <h2>Optical gaps, fundamental gaps, and exciton binding are distinct</h2>
+  <p>The fundamental gap is a charged excitation difference. The lowest bright optical excitation is a neutral transition with nonzero oscillator strength. A schematic exciton binding energy is</p>
+  <div class="math-display">
+    <math display="block" aria-label="exciton binding equals quasiparticle gap minus optical excitation">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>b</mi></msub><mo>=</mo><msub><mi>E</mi><mi>gap</mi></msub><mo>−</mo><msub><mi>Ω</mi><mi>opt</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_b=E_&#123;\mathrm&#123;gap&#125;&#125;-\Omega_&#123;\mathrm&#123;opt&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Dark excitons, indirect gaps, spin selection, phonon assistance, finite temperature, and dielectric environments complicate this simple relation. The compared quantities must come from compatible geometries, screening models, spin/SOC settings, and numerical convergence levels.</p>
+
+  <h2>Production convergence is multi-dimensional</h2>
+  <ul>
+    <li>Mean-field starting point, functional, pseudopotential or all-electron treatment, and spin/SOC settings.</li>
+    <li>Number and energy range of empty states, dielectric cutoff, response basis, frequency grid or contour model.</li>
+    <li>k-point sampling, q-point transfer, Coulomb singularity treatment, vacuum, truncation, and finite-size effects.</li>
+    <li>Self-energy linearization, off-diagonal terms, self-consistency variant, and analytic continuation.</li>
+    <li>BSE transition subspace, screening, exchange, Tamm–Dancoff choice, broadening, and oscillator-strength convergence.</li>
+  </ul>
+  <p>Convergence of the quasiparticle gap does not establish convergence of absolute band edges, effective masses, lifetimes, satellite weights, exciton energies, or spectra.</p>
+
+  <h2>Validation requires more than agreement with one experimental number</h2>
+  <p>Useful checks include sum rules, limiting cases, symmetry and degeneracy, comparison among frequency treatments, basis and empty-state extrapolation, dimensional Coulomb tests, consistency between charged and neutral gaps, and comparison with well-characterized reference systems.</p>
+  <p>Agreement with experiment can contain cancellation among geometry, electron–phonon renormalization, temperature, disorder, substrate screening, relativistic effects, and many-body approximation errors. The comparison conditions must be aligned.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> supplies Green functions, quasiparticles, and response-function language.</li>
+    <li><a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> separates ground-state derivatives, TDDFT, and neutral response.</li>
+    <li><a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> supplies periodic integration and long-wavelength sampling boundaries.</li>
+    <li><a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> defines the starting mean-field potential that many practical GW calculations correct.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://journals.aps.org/pr/abstract/10.1103/PhysRev.139.A796">Lars Hedin, “New Method for Calculating the One-Particle Green's Function”</a> is the primary source for the screened-interaction hierarchy underlying GW. It is a research paper, not a first introduction.</p>
+  <p><a href="https://berkeleygw.org/documentation/tutorial/">BerkeleyGW Tutorial</a> connects mean-field input, dielectric screening, GW self-energy, BSE kernels, and absorption calculations. It is a software-specific workflow bridge and does not supply universal convergence values.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not present GW as a universal correction to every DFT result, does not identify BSE excitons with quasiparticle poles, and does not treat one-shot agreement with experiment as independent validation. The variant, starting point, screening, dimensional treatment, numerical limits, and target observable must be stated.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> The systematic-review report allowed this material to remain inside Linear Response provisionally. It is separated here because quasiparticle self-energy and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Official APS and BerkeleyGW destinations were rechecked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>

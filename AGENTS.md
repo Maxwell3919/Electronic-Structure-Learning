@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, twenty-eight individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirty-two individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -40,6 +40,10 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Treat electrostatic boundary conditions, potential references, Coulomb kernels, multipole corrections, and charged-cell conventions as part of the physical model. A static Poisson solution is not a full optical Maxwell calculation.
 - Keep physical electronic temperature, numerical smearing, vibrational free energy, thermodynamic ensemble, and finite trajectory sampling distinct. Convergence of one does not validate the others.
 - Keep formal oxidation states, partitioned charges, defect charge states, carrier concentrations, and nominal dopant counts distinct. Zero-temperature formation energies do not by themselves establish finite-temperature phase stability or synthesis accessibility.
+- Keep continuum operator domains, admissible spaces, boundary conditions, and finite discretizations explicit. A variational energy bound does not establish monotonic or correct convergence of every observable.
+- Keep The Many-Electron Problem as the problem-definition page and Many-Body Physics as the formal second-quantized/Green-function framework. Do not merge them because both concern interacting electrons.
+- Keep ground-state derivatives, DFPT, TDDFT, GW quasiparticles, and BSE electron–hole excitations distinct. Similar matrix forms or spectra do not make their physical objects interchangeable.
+- Distinguish charged addition/removal gaps, neutral optical excitations, exciton binding, and Kohn–Sham eigenvalue gaps. Every GW claim must name its starting point, self-consistency variant, screening model, dimensional Coulomb treatment, and relevant convergence controls.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.

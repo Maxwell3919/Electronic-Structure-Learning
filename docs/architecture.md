@@ -16,7 +16,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-The reviewed content has developed in eight batches:
+The reviewed content has developed in nine batches:
 
 1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
 2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
@@ -26,6 +26,7 @@ The reviewed content has developed in eight batches:
 6. Plane-Wave and Real-Space Methods, Pseudopotentials/PAW/Core–Valence Treatments, Brillouin-Zone Sampling, Relativistic Electronic Structure/Spin/Magnetism.
 7. Atomic and Molecular Physics, Physical Chemistry, Chemical Bonding and Molecular Structure, Localized-Orbital Methods.
 8. Electromagnetism, Statistical Mechanics, Solid-State Chemistry.
+9. Functional Analysis and Variational Methods, Many-Body Physics, Linear Response and Excited States, Many-Body Perturbation Theory and Quasiparticles.
 
 The Tier-1 responsibility chain remains explicit:
 
@@ -38,7 +39,7 @@ interacting many-electron problem
 → finite numerical representation
 ```
 
-Tier 2 is not a fixed linear sequence. It now supports three complementary routes.
+Tier 2 is not a fixed linear sequence. It supports three complementary routes.
 
 ### Periodic plane-wave and real-space route
 
@@ -115,6 +116,34 @@ Solid-state chemistry
 └── synthesis-aware structure–property interpretation
 ```
 
+### Advanced variational and excitation route
+
+```text
+Functional analysis and variational methods
+├── Hilbert spaces and operator domains
+├── Rayleigh–Ritz and constrained stationarity
+├── functional derivatives and weak formulations
+└── continuum-to-discrete convergence boundaries
+
+Many-body physics
+├── second quantization and Fock space
+├── Green functions and spectral functions
+├── quasiparticles and collective modes
+└── broken symmetry and correlation frameworks
+
+Linear response and excited states
+├── finite differences and DFPT
+├── Kubo and density response
+├── TDDFT: real time, Casida, and Sternheimer
+└── neutral excitations and spectra
+
+Many-body perturbation theory
+├── Dyson equation and self-energy
+├── screened interaction and GW variants
+├── quasiparticle addition/removal energies
+└── BSE electron–hole excitations
+```
+
 The following responsibilities remain separate:
 
 - A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
@@ -132,6 +161,11 @@ The following responsibilities remain separate:
 - Physical electronic temperature, numerical smearing, vibrational free energy, and trajectory sampling are distinct approximations.
 - Formal oxidation states, partitioned charges, defect charge states, carrier concentrations, and nominal dopant counts are distinct quantities.
 - Zero-temperature energy or convex-hull results do not by themselves establish finite-temperature phase stability or synthesis accessibility.
+- A continuum variational energy bound does not establish convergence of every density, force, response, or excitation observable.
+- The Many-Electron Problem defines the interacting problem; Many-Body Physics supplies a formal language for it.
+- DFPT, TDDFT, GW, and BSE have distinct perturbations, particle-number sectors, kernels, and convergence controls.
+- Kohn–Sham gaps, charged quasiparticle gaps, neutral optical excitations, and exciton binding energies are not interchangeable.
+- GW starting points and self-consistency variants do not form a universal accuracy ladder.
 
 All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
@@ -139,7 +173,7 @@ Mathematics is authored as native MathML inside the static Astro source. Display
 
 Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
 
-The relativistic/spin/magnetism page is included because the systematic review identified it as the clearest independent omission. Its minimum content and implementation anchors have been reviewed, but the dedicated second-round textbook/course comparison remains open and is stated on the page rather than hidden.
+The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations now have enough distinct objects, workflows, and convergence boundaries to justify an independent advanced module.
 
 ## Methods and other entrances
 
