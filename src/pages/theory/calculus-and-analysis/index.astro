@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Calculus and Analysis" description="Change, integration, limits, and convergence for electronic-structure theory." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Calculus and Analysis</span>
+  </nav>
+
+  <h1>Calculus and Analysis</h1>
+  <p class="lede">Electronic-structure theory needs both the ability to calculate derivatives and integrals and the ability to reason about limits, convergence, and continuity. These are related skills, but they are not the same course.</p>
+
+  <h2>Two layers hidden under one title</h2>
+  <dl class="paired-definitions">
+    <dt>Computational calculus</dt>
+    <dd>Derivatives, multivariable gradients, integrals, series expansions, and the practical manipulation of functions.</dd>
+    <dt>Real analysis</dt>
+    <dd>Precise definitions of limits, continuity, convergence, and the conditions under which familiar manipulations are valid.</dd>
+  </dl>
+  <p>A learner can begin quantum mechanics with the first layer. Formal density-functional arguments, response theory, and careful convergence reasoning eventually require parts of the second.</p>
+
+  <h2>Derivatives express response</h2>
+  <p>A derivative measures how a quantity changes under a controlled variation. If an energy depends on a parameter <code>λ</code>, then</p>
+  <p class="equation"><code>dE/dλ</code></p>
+  <p>describes its local response to that parameter. In electronic structure, the varying object might be a nuclear coordinate, an external field, a density, a cell strain, or a parameter in a model.</p>
+  <p>For many variables, the gradient collects all first derivatives. Geometry optimization uses gradients with respect to nuclear coordinates, while response theories differentiate energies or densities with respect to perturbations. A zero derivative identifies a stationary point; it does not by itself prove that the point is a minimum.</p>
+
+  <h2>Integration builds normalization and observables</h2>
+  <p>Wavefunctions, densities, potentials, and basis functions live over continuous space. Integration turns these fields into numbers and enforces global constraints. For example, normalization is expressed as</p>
+  <p class="equation"><code>∫ |ψ(r)|² dr = 1</code>,</p>
+  <p>while an expectation value has the schematic form</p>
+  <p class="equation"><code>⟨A⟩ = ∫ ψ*(r) Aψ(r) dr</code>.</p>
+  <p>In an actual computation these integrals are represented by quadrature rules, reciprocal-space sums, basis contractions, or discrete grids. The mathematical integral and its numerical approximation must not be conflated.</p>
+
+  <h2>Series connect local models to controlled approximations</h2>
+  <p>Taylor expansions organize how a function responds near a reference point. First derivatives describe linear response; second derivatives describe curvature, force constants, and local stability. Perturbation methods use the same logic, but their validity depends on regularity, scale separation, and the size of neglected terms.</p>
+  <p>A formal series is not automatically convergent, and a convergent series may converge too slowly to be useful. The relevant question is not merely whether an expansion can be written, but what assumptions make truncation defensible.</p>
+
+  <h2>Sequences and limits make convergence meaningful</h2>
+  <p>Electronic-structure calculations generate sequences: energies as a basis grows, densities during self-consistency, integrals as a grid is refined, or observables as a sampling mesh becomes denser. A statement such as</p>
+  <p class="equation"><code>limₙ→∞ Eₙ = E</code></p>
+  <p>requires a specified sequence and a specified limiting process. Different parameters can approach their limits at different rates, and apparent stability over a few values is not a proof of convergence.</p>
+  <p>Real analysis supplies the distinctions among pointwise convergence, uniform convergence, continuity, and interchange of limits, derivatives, and integrals. The full theory is advanced, but the warning is already practical: operations that are valid for each finite approximation need not remain valid after taking a limit.</p>
+
+  <h2>Where DFT asks for more</h2>
+  <p>Density-functional theory varies an energy with respect to a function rather than a finite list of numbers. The resulting functional derivative is a later generalization of ordinary and multivariable differentiation. This page only establishes the finite-dimensional intuition; rigorous variational spaces, weak convergence, and constrained search belong to Functional Analysis and Variational Methods.</p>
+  <p>Complex variables also enter wave mechanics, Green functions, and contour methods, but a full complex-analysis course is not required for the first path through ground-state DFT.</p>
+
+  <h2>Choose the route that matches the gap</h2>
+  <p><a href="https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/">MIT OpenCourseWare 18.01SC, Single Variable Calculus</a> is the best open route when derivatives, integrals, and standard problem solving are not yet fluent. It includes lectures, problem sets, solutions, and examinations, but it does not provide the proof-level foundation needed for advanced analysis.</p>
+  <p><a href="https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/">MIT OpenCourseWare 18.100A, Real Analysis</a> is the next route when limits, continuity, integration, and sequences need rigorous treatment. It assumes multivariable calculus and proof experience.</p>
+  <p><a href="https://link.springer.com/book/10.1007/978-1-4939-2712-8">Stephen Abbott, <cite>Understanding Analysis</cite>, 2nd ed.</a> is a proof-oriented textbook that emphasizes why elementary calculus works. It is commercial or institutionally accessed and does not replace courses in measure theory, Sobolev spaces, or operator theory.</p>
+
+  <h2>What this page deliberately leaves open</h2>
+  <p>The first edition does not attempt a complete treatment of measure theory, complex analysis, distributions, Sobolev spaces, or infinite-dimensional variational analysis. Those subjects should be introduced only where a later electronic-structure topic actually needs them.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> The distinction between computational calculus and real analysis, together with the listed resource roles and access boundaries, was reviewed on 2 August 2026.</p>
+  </aside>
+</BaseLayout>
