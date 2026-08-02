@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Brillouin-Zone Sampling" description="Reciprocal-space integration, k-point meshes, symmetry weights, occupations, smearing, and observable-specific convergence." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Brillouin-Zone Sampling</span>
+  </nav>
+
+  <h1>Brillouin-Zone Sampling</h1>
+  <p class="lede">Periodic electronic-structure calculations replace integrals over the Brillouin zone by finite weighted sums over k points. This is a numerical integration problem, not merely a choice of how to draw a band structure.</p>
+  <p>The appropriate mesh depends on the cell, symmetry, occupations, Fermi-surface geometry, method, and target observable. No universal k-point density proves convergence for every material or property.</p>
+
+  <h2>Periodic observables are Brillouin-zone integrals</h2>
+  <p>For a cell-periodic quantity <math class="math-inline" aria-label="A of k"><semantics><mrow><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(\mathbf&#123;k&#125;)</annotation></semantics></math>, a normalized Brillouin-zone average has the form</p>
+  <div class="math-display">
+    <math display="block" aria-label="average A equals one over Brillouin zone volume integral over Brillouin zone A of k d cubed k approximately sum k w k A k">
+      <semantics>
+        <mrow>
+          <mo>⟨</mo><mi>A</mi><mo>⟩</mo><mo>=</mo><mfrac><mn>1</mn><msub><mi>Ω</mi><mi>BZ</mi></msub></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>k</mi>
+          <mo>≈</mo><munderover><mo>∑</mo><mi mathvariant="bold">k</mi><mo></mo></munderover><msub><mi>w</mi><mi mathvariant="bold">k</mi></msub><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\langle A\rangle=\Omega_&#123;\mathrm&#123;BZ&#125;&#125;^&#123;-1&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;A(\mathbf&#123;k&#125;)d^3k\approx\sum_\mathbf&#123;k&#125;w_\mathbf&#123;k&#125;A(\mathbf&#123;k&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The weights include the volume represented by each point and may include symmetry multiplicity. A finite sum is exact only for a restricted class of functions; real band energies, occupations, densities, forces, and responses must be checked for quadrature error.</p>
+
+  <h2>A mesh belongs to a reciprocal cell</h2>
+  <p>Uniform meshes are specified relative to reciprocal primitive vectors. Changing from a primitive cell to a supercell shrinks the Brillouin zone, so a numerically identical mesh no longer represents the same sampling density.</p>
+  <p>Equivalent real-space supercells and reciprocal-space meshes can sometimes represent the same periodicity, but only after accounting for folding, offsets, symmetry, and normalization. Quoting only “6 × 6 × 6” without the cell is incomplete.</p>
+
+  <h2>Γ-centred and shifted meshes are not interchangeable</h2>
+  <p>Regular grids may include Γ or be offset from it. Monkhorst–Pack constructions, Γ-centred grids, and code-specific conventions can coincide for some dimensions and differ for others.</p>
+  <p>Offsets can improve integration efficiency by avoiding redundant sampling or special degeneracies, but they can also exclude physically important points. The mesh definition, offsets, reciprocal convention, and symmetry treatment should be recorded explicitly.</p>
+
+  <h2>Symmetry reduces work only when the symmetry is valid</h2>
+  <p>If a space-group operation maps k to an equivalent point and leaves the Hamiltonian invariant, one representative can stand for an orbit of k points. The irreducible-zone weights then satisfy</p>
+  <div class="math-display">
+    <math display="block" aria-label="sum over irreducible k point weights equals one">
+      <semantics>
+        <mrow><munderover><mo>∑</mo><mrow><mi mathvariant="bold">k</mi><mo>∈</mo><mi>IBZ</mi></mrow><mo></mo></munderover><msub><mi>w</mi><mi mathvariant="bold">k</mi></msub><mo>=</mo><mn>1</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\sum_&#123;\mathbf&#123;k&#125;\in\mathrm&#123;IBZ&#125;&#125;w_\mathbf&#123;k&#125;=1.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Distortions, defects, surfaces, magnetic order, noncollinear spin, external fields, and spin–orbit coupling can reduce the usable symmetry. Time-reversal reduction is not valid in every magnetic problem. An incorrectly imposed symmetry can make a calculation efficient and wrong.</p>
+
+  <h2>Insulators and metals present different integration problems</h2>
+  <p>For a gapped insulator at zero temperature, occupied subspaces often vary smoothly with k. Metals contain a discontinuity at the Fermi surface, so energies and densities can converge more slowly and non-monotonically with mesh density.</p>
+  <p>Smearing replaces the sharp occupation by a smooth function. A generic Fermi–Dirac occupation is</p>
+  <div class="math-display">
+    <math display="block" aria-label="f epsilon equals one divided by exponential epsilon minus mu over k B T plus one">
+      <semantics>
+        <mrow><mi>f</mi><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mi>e</mi><mfrac><mrow><mi>ε</mi><mo>−</mo><mi>μ</mi></mrow><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi></mrow></mfrac></msup><mo>+</mo><mn>1</mn></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">f(\varepsilon)=1/[e^&#123;(\varepsilon-\mu)/(k_BT)&#125;+1].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Other smearings are numerical quadrature devices rather than physical electronic temperatures. The reported quantity may be a smeared free energy, entropy-corrected energy, or another code-defined expression. Width sensitivity and extrapolation conventions must be checked.</p>
+
+  <h2>Tetrahedron and smearing methods answer different numerical needs</h2>
+  <p>Tetrahedron methods interpolate bands within reciprocal-space tetrahedra and can provide accurate density-of-states and zero-temperature integrations when bands and meshes satisfy the method assumptions. Smearing methods regularize occupations and can improve SCF stability.</p>
+  <p>Neither is automatically superior for all quantities. Forces, stresses, Fermi-surface properties, magnetic anisotropy, phonons, electron–phonon coupling, and transport can respond differently to mesh, interpolation, and occupation treatment.</p>
+
+  <h2>Three meshes must not be conflated</h2>
+  <dl class="paired-definitions">
+    <dt>SCF integration mesh</dt>
+    <dd>Builds the self-consistent density and potential. Its convergence controls the ground-state calculation being used downstream.</dd>
+    <dt>NSCF or DOS mesh</dt>
+    <dd>Evaluates states or integrals on a denser mesh using a fixed or previously converged potential. It cannot repair an unconverged SCF density.</dd>
+    <dt>Illustrative band path</dt>
+    <dd>Samples selected lines between conventional high-symmetry points for visualization. It is not a Brillouin-zone quadrature and can miss extrema, crossings, or pockets away from the path.</dd>
+  </dl>
+  <p>A smooth band plot along Γ–M–K–Γ does not establish metallicity, a global gap, a Fermi surface, a density of states, or convergence of any Brillouin-zone integral.</p>
+
+  <h2>High-symmetry labels depend on the lattice and setting</h2>
+  <p>Named k points and conventional paths are defined for a specified reciprocal lattice, space-group setting, and metric regime. The same printed label can represent a different vector after a cell transformation.</p>
+  <p>Bilbao k-vector tables and figures are reference data for crystallographic conventions and little groups. They do not choose a scientifically sufficient integration mesh or certify that a conventional band path contains every feature relevant to the target problem.</p>
+
+  <h2>Observable-specific convergence</h2>
+  <p>A useful convergence study holds the physical model and other numerical layers fixed while increasing reciprocal-space resolution. The acceptance quantity should match the intended claim:</p>
+  <ul>
+    <li>total-energy or phase-energy differences;</li>
+    <li>forces, stress, lattice parameters, or elastic constants;</li>
+    <li>band extrema, gap character, density of states, or Fermi-level quantities;</li>
+    <li>phonons, dielectric response, magnetic anisotropy, or Berry-phase observables;</li>
+    <li>electron–phonon, superconducting, and transport integrals on dense meshes.</li>
+  </ul>
+  <p>Converging total energy to one tolerance does not prove that a sharper Fermi-surface or response observable is converged.</p>
+
+  <h2>Study routes and references</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/contents/45985954A19E640C6C637C5EA2E174C0">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> supplies the theoretical connection among Bloch states, reciprocal cells, special points, occupations, and numerical integration. Full text may require institutional access.</p>
+  <p><a href="https://www.cryst.ehu.es/cryst/get_kvec.html">Bilbao Crystallographic Server Brillouin-zone database</a> provides conventional k-vector tables, figures, little groups, and metric-dependent Brillouin-zone data. It is a reference tool, not a convergence protocol.</p>
+  <p><a href="https://docs.siesta-project.org/projects/siesta/en/stable/tutorials/basic/kpoint-convergence/index.html">SIESTA k-point tutorial</a> connects mesh refinement to a localized-orbital implementation. Its example values are not transferable defaults.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page treats reciprocal-space numerical integration. Bloch theory belongs to Solid-State Physics, crystallographic conventions to Crystallography, and illustrative band structures do not substitute for integration or full-zone searches.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Martin, Bilbao, and SIESTA destinations were reviewed on 3 August 2026. No universal mesh density or smearing width is recommended.</p>
+  </aside>
+</BaseLayout>

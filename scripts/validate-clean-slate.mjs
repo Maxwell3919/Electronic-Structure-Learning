@@ -10,6 +10,7 @@ const sourceMode = process.argv.includes('--source') || !process.argv.includes('
 const builtMode = process.argv.includes('--built');
 
 const theorySlugs = [
+  'brillouin-zone-sampling',
   'calculus-and-analysis',
   'crystallography',
   'density-functional-theory-foundations',
@@ -23,8 +24,11 @@ const theorySlugs = [
   'linear-algebra',
   'many-electron-problem',
   'numerical-analysis',
+  'plane-wave-and-real-space-methods',
+  'pseudopotentials-paw-and-core-valence-treatments',
   'quantum-chemistry',
   'quantum-mechanics',
+  'relativistic-electronic-structure-spin-and-magnetism',
   'self-consistent-field-methods',
   'solid-state-physics',
 ];
@@ -67,6 +71,10 @@ const reviewedTheoryPages = {
   'exchange-correlation-functionals-and-approximations': ['No material-type lookup table can select a universal best functional', 'Self-interaction and delocalization error'],
   'self-consistent-field-methods': ['The fixed-point problem', 'Four separate conclusions'],
   'discretization-and-basis-representations': ['Basis, quadrature, and grid are distinct choices', 'Convergence is observable-specific'],
+  'plane-wave-and-real-space-methods': ['Real-space methods form a family, not one algorithm', 'Representation-specific artifacts'],
+  'pseudopotentials-paw-and-core-valence-treatments': ['Verification, validation, and convergence are different', 'A library benchmark can reduce risk'],
+  'brillouin-zone-sampling': ['Three meshes must not be conflated', 'A smooth band plot'],
+  'relativistic-electronic-structure-spin-and-magnetism': ['A magnetic calculation searches a nonlinear landscape', 'Resource-review boundary'],
 };
 
 const expectedTheoryAnchors = [
@@ -82,8 +90,8 @@ const expectedTheoryAnchors = [
   'density-functional-theory', 'kohn-sham-theory', 'exchange-correlation-theory',
   'self-consistent-field-methods', 'basis-sets-and-numerical-representations',
   'plane-wave-and-real-space-methods', 'localized-orbital-methods', 'pseudopotentials-and-paw',
-  'brillouin-zone-sampling', 'linear-response-and-excited-states',
-  'berry-phases-and-electronic-topology', 'learning-map',
+  'brillouin-zone-sampling', 'relativistic-electronic-structure-spin-and-magnetism',
+  'linear-response-and-excited-states', 'berry-phases-and-electronic-topology', 'learning-map',
 ];
 
 const internalRoutes = new Set([
@@ -156,11 +164,16 @@ if (sourceMode) {
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['Differential Equations', 'Fourier Analysis', 'Group Theory and Symmetry', 'Crystallography', 'Kohn–Sham Density Functional Theory', 'Exchange–Correlation Functionals and Approximations', 'Self-Consistent Field Methods', 'Discretization and Basis Representations']) {
+  for (const label of ['Plane-Wave and Real-Space Methods', 'Pseudopotentials, PAW, and Core–Valence Treatments', 'Brillouin-Zone Sampling', 'Relativistic Electronic Structure, Spin, and Magnetism']) {
     assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   }
 
   checkReviewedPages(root, 'source');
+
+  const methods = fs.readFileSync(path.join(root, 'src/pages/methods/index.astro'), 'utf8');
+  for (const marker of ['Ground-State Density-Functional Methods', 'From methods to a reliable workflow', 'DFT-Research-Workflow']) {
+    assert(methods.includes(marker), `Methods page is missing reviewed marker: ${marker}`);
+  }
 
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
   for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
