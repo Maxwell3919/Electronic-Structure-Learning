@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: 'home' | 'theory' | 'methods' | 'computational-tools' | 'reference';
+}
+
+const { title, description, current } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const navigation = [
+  { id: 'theory', label: 'Theory', route: '/theory/' },
+  { id: 'methods', label: 'Methods', route: '/methods/' },
+  { id: 'computational-tools', label: 'Computational Tools', route: '/computational-tools/' },
+  { id: 'reference', label: 'Reference', route: '/reference/' },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title} · Electronic Structure Atlas</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-name" href={href('/')} aria-current={current === 'home' ? 'page' : undefined}>
+        Electronic Structure Atlas
+      </a>
+      <nav aria-label="Primary navigation">
+        {navigation.map((item) => (
+          <a href={href(item.route)} aria-current={current === item.id ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>Independent, static, and built for careful scientific reading.</p>
+    </footer>
+  </body>
+</html>

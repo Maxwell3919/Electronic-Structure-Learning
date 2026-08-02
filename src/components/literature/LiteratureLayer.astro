@@ -1,7 +1,0 @@
----
-import LiteratureEntry from './LiteratureEntry.astro';
-const { entries = [] } = Astro.props;
----
-<section class="esl-literature-layer" data-content-layer="later-literature">
-  {entries.length > 0 ? entries.map((entry) => <LiteratureEntry entry={entry} />) : <p>当前没有已登记文献；空 registry 不生成占位卡片。</p>}
-</section>

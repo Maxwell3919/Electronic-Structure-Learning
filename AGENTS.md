@@ -1,101 +1,47 @@
 # AGENTS.md
 
-本文件规定人类维护者、网页版 GPT、Talos Codex 和其他自动化 Agent 在本仓库中的工作边界。
+This file defines the repository-specific rules for maintainers and automated agents.
 
-## 1. 项目定位
+## Scope
 
-本仓库是公开的 Electronic Structure Atlas 网站源码权威，保存：
+This repository is the public source for Electronic Structure Atlas. The production baseline is Plain Astro, fully static, and limited to Home, Theory, Methods, Computational Tools, Reference, and a general 404 page.
 
-- Astro/Starlight 网站代码；
-- Theory、Methods、Computational Tools 和 Reference 内容；
-- 现有 Martin 与 Sholl–Steckel 页面及其稳定 URL；
-- 原创解释、轻量可视化数据、组件和验证脚本；
-- GitHub Pages 构建与部署配置。
+The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
-仓库不保存教材 PDF、批量论文、论文精读原文、原始 DFT 输出、restart、WFC/DWF、CHGCAR、WAVECAR、POTCAR、许可证材料、凭据或私密记录。
+## Before changing the repository
 
-## 2. 工作开始前
+1. Resolve the current remote `main` SHA and read this file, `README.md`, and the relevant documents.
+2. Inspect open issues, pull requests, and task branches.
+3. Use a single-purpose short-lived branch and preserve unrelated work.
+4. Treat every committed file as public material.
 
-1. 读取远端 `main` 当前 SHA、`README.md`、本文件和 `docs/architecture.md`；
-2. 检查现有 Issue、PR 和任务分支；
-3. 使用单一职责短期分支；网页版 GPT 写入必须通过 PR；
-4. 不根据聊天记录或旧工作树假定远端状态；
-5. 仓库为 public，提交前按公开发布标准检查全部新增内容。
+## Architecture
 
-## 3. 信息架构
+- Keep Astro in static-output mode and preserve the GitHub Pages base path.
+- Prefer ordinary `.astro` pages, semantic HTML, and one shared stylesheet.
+- Do not add Starlight, a CMS, search, client hydration, page-specific JavaScript, packaged fonts, or a general data registry without a demonstrated current consumer and explicit review.
+- Keep navigation usable without JavaScript and on narrow screens.
+- Do not restore legacy Part, Chapter, Appendix, Sholl–Steckel, learning-path, reading-system, lab, case, literature, status, or progress structures merely because they exist in history.
 
-当前顶层结构由 `docs/architecture.md` 定义：
+## Content and evidence
 
-```text
-Home
-Theory
-Methods
-Computational Tools
-Reference
+- Add content individually after scientific and source review; do not generate bulk filler.
+- Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database.
+- Distinguish program execution, numerical convergence, observable convergence, and scientific support.
+- Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
+
+## Verification
+
+Minimum local gate:
+
+```bash
+npm ci --no-audit --no-fund
+npm run check
+git diff --check
 ```
 
-- Theory 按课程级基础学科和电子结构理论组织；Learning Map 属于 Theory。
-- Methods 讨论方法本身，不承担论文精读或方法—论文数据库。
-- Computational Tools 按软件包、程序、工作流、数据库和辅助工具组织。
-- 软件输入、输出、检查命令和错误说明必须放入对应软件或程序页面。
-- Reference 中的资源必须说明推荐原因、适用范围和与知识结构的关系。
+Changes affecting public behavior also require the clean-slate browser smoke at desktop and 390-pixel widths with JavaScript enabled and disabled. A successful build verifies only the covered structure and runtime behavior; it does not constitute scientific review.
 
-现有 Martin、Sholl–Steckel、实验、案例和交互页面在迁移期间保持 URL 稳定，但不再定义新版顶层架构。
+## Deployment
 
-## 4. 内容规则
-
-网站不强制统一文风或固定页面模板。理论、方法、工具和资源页面可以采用不同写法。
-
-应避免：
-
-- 无必要的开场和重复总结；
-- 机械化的“学习目标—步骤—小结”结构；
-- 所有页面复制同一组标题；
-- AI 式泛化、空洞过渡和过度分段；
-- 未说明来源和用途的资源列表。
-
-应优先保留：
-
-- 准确定义、清楚公式和物理解释；
-- 假设、适用条件和限制；
-- 数值方法、目标 observable 和收敛边界；
-- 推荐资源的理由及其覆盖范围。
-
-Theory 的课程级页面不复制完整大学课程。每门课程主要整理推荐书籍和网站、推荐理由、资源共同覆盖的必要概念图谱，以及与电子结构理论的联系。
-
-Learn、Quiz、Exercises、完成状态或学习检查点不是必需内容，不得批量自动添加。
-
-## 5. 科学判断边界
-
-程序正常退出、电子迭代收敛、结构收敛、目标 observable 收敛和科学结论支持必须分别判断。
-
-命令行检查只能支持其明确检查的有限状态。不得把单条 `grep`、正常结束标志或局部输出解释成完整科学验收。
-
-## 6. 版权与来源
-
-- 不提交教材 PDF、扫描页、受版权保护图表、习题原文或大段转录；
-- 正文必须原创表述；
-- 外部代码、数据和图片进入仓库前必须检查许可、来源和可再分发性；
-- 论文精读、受限制正文和内部研究判断应保存在独立且适当权限的系统中。
-
-## 7. 代码、交互与数据
-
-- 默认使用 TypeScript 严格模式；
-- 网站保持 static-first；
-- 交互组件必须有明确解释价值和无 JavaScript 时可理解的文本；
-- 首页 Talos 交互仍是后续企划，未完成设计与性能边界前不得仓促实现；
-- 小型数据优先使用 JSON、CSV、CIF 或 XYZ，并附 provenance；
-- 真实生产计算在外部环境完成。
-
-## 8. 验证与合并
-
-最低门槛：
-
-1. 锁文件与实际安装一致；
-2. `npm run check` 在项目规定的 Node 环境通过；
-3. 内部链接、MDX 导入和公式渲染无构建错误；
-4. 新增交互有输入、输出、边界和重复检查；
-5. PR 只包含当前任务范围；
-6. 不含敏感内容、受限制材料或大型文件。
-
-仓库和 Pages 均为公开状态。自定义域名、仓库 rename、后端、账户、数据库及其他高影响变化需要单独授权。
+GitHub Pages remains at `https://maxwell3919.github.io/Electronic-Structure-Learning/`. Completion claims require a successful exact-`main` deployment manifest and live smoke. Repository rename, visibility, Pages base-path, custom-domain, backend, account, and database changes require separate authorization.

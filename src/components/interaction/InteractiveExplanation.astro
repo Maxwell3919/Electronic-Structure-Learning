@@ -1,8 +1,0 @@
----
-interface Props { title: string; question: string; step?: string; }
-const { title, question, step = '01' } = Astro.props;
----
-<section class="esl-interactive-explanation" data-interactive-explanation>
-  <header><p class="esl-eyebrow">Interaction · {step}</p><h2>{title}</h2><p>{question}</p></header>
-  <slot />
-</section>

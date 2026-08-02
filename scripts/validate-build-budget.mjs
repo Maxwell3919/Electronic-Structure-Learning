@@ -4,71 +4,23 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
-const limits = {
-  totalBytes: 38_000_000,
-  homeJsBytes: 12_000,
-  theoryJsBytes: 25_000,
-  largestAssetBytes: 1_600_000,
-  assetCount: 480,
-};
-const baseline = {
-  observedAt: '2026-08-01',
-  sha: '6b1dee8e0517e03c99542fc01697ddf3fd9785e6',
-  totalBytes: 35_073_983,
-  homeJsBytes: 6_168,
-  theoryJsBytes: 13_643,
-  largestAssetBytes: 1_433_139,
-  assetCount: 422,
-  note: 'Fresh Editorial Quantum Atlas main build measured before the reading-semantics changes.',
-};
-
-if (!fs.existsSync(dist)) {
-  console.error('Build budget requires dist/. Run npm run build first.');
-  process.exit(1);
-}
-
+const limits = { totalBytes: 500_000, htmlBytes: 160_000, jsBytes: 0, cssBytes: 30_000, fontBytes: 0, assetCount: 20, largestAssetBytes: 100_000, htmlPages: 6 };
+const baseline = { sha: '7cbf789720e152cb76acdc406016a788bc0a8de2', htmlPages: 94, totalBytes: 37_158_277, htmlBytes: 32_177_853, jsBytes: 822_195, cssBytes: 361_817, fontBytes: 1_072_948, assetCount: 472, largestAssetBytes: 1_399_938, buildSeconds: 27.88 };
+if (!fs.existsSync(dist)) throw new Error('dist does not exist; run the production build first');
 const files = [];
-const walk = (directory) => {
-  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    const absolutePath = path.join(directory, entry.name);
-    if (entry.isDirectory()) walk(absolutePath);
-    else files.push(absolutePath);
-  }
-};
+const walk = (directory) => { for (const entry of fs.readdirSync(directory, { withFileTypes: true })) { const absolute = path.join(directory, entry.name); entry.isDirectory() ? walk(absolute) : files.push(absolute); } };
 walk(dist);
-
-const totalBytes = files.reduce((total, file) => total + fs.statSync(file).size, 0);
-const largest = files.map((file) => ({ file: path.relative(dist, file), bytes: fs.statSync(file).size }))
-  .sort((a, b) => b.bytes - a.bytes)[0];
-const routeJsBytes = (relativeHtml) => {
-  const html = fs.readFileSync(path.join(dist, relativeHtml), 'utf8');
-  const assets = [...html.matchAll(/src="[^"]*\/_astro\/([^"]+\.js)"/g)]
-    .map((match) => path.join(dist, '_astro', match[1]))
-    .filter((file, index, all) => fs.existsSync(file) && all.indexOf(file) === index);
-  return assets.reduce((total, file) => total + fs.statSync(file).size, 0);
-};
-
-const result = {
-  baseline,
-  limits,
-  measured: {
-    totalBytes,
-    homeJsBytes: routeJsBytes('index.html'),
-    theoryJsBytes: routeJsBytes('part-01-overview-and-background/chapter-03-theoretical-background/index.html'),
-    largestAsset: largest,
-    assetCount: files.length,
-  },
-};
-console.log(JSON.stringify(result, null, 2));
-
+const size = (file) => fs.statSync(file).size;
+const bytesFor = (extensions) => files.filter((file) => extensions.includes(path.extname(file).toLowerCase())).reduce((sum, file) => sum + size(file), 0);
+const largest = files.map((file) => ({ file: path.relative(dist, file), bytes: size(file) })).sort((a, b) => b.bytes - a.bytes)[0];
+const measured = { htmlPages: files.filter((file) => file.endsWith('.html')).length, totalBytes: files.reduce((sum, file) => sum + size(file), 0), htmlBytes: bytesFor(['.html']), jsBytes: bytesFor(['.js']), cssBytes: bytesFor(['.css']), fontBytes: bytesFor(['.woff', '.woff2', '.ttf', '.otf']), assetCount: files.length, largestAsset: largest };
+console.log(JSON.stringify({ baseline, limits, measured }, null, 2));
 const failures = [];
-if (totalBytes > limits.totalBytes) failures.push(`dist total ${totalBytes} > ${limits.totalBytes}`);
-if (result.measured.homeJsBytes > limits.homeJsBytes) failures.push(`home JS ${result.measured.homeJsBytes} > ${limits.homeJsBytes}`);
-if (result.measured.theoryJsBytes > limits.theoryJsBytes) failures.push(`theory JS ${result.measured.theoryJsBytes} > ${limits.theoryJsBytes}`);
+for (const key of ['htmlPages', 'totalBytes', 'htmlBytes', 'jsBytes', 'cssBytes', 'fontBytes', 'assetCount']) if (measured[key] > limits[key]) failures.push(`${key} ${measured[key]} > ${limits[key]}`);
 if (largest.bytes > limits.largestAssetBytes) failures.push(`largest asset ${largest.bytes} > ${limits.largestAssetBytes}: ${largest.file}`);
-if (files.length > limits.assetCount) failures.push(`asset count ${files.length} > ${limits.assetCount}`);
-if (failures.length) {
-  failures.forEach((failure) => console.error(`- ${failure}`));
-  process.exit(1);
-}
-console.log('Build budget validation passed.');
+const reductions = { pages: 1 - measured.htmlPages / baseline.htmlPages, bytes: 1 - measured.totalBytes / baseline.totalBytes, assets: 1 - measured.assetCount / baseline.assetCount };
+if (reductions.pages < 0.85) failures.push(`page reduction ${(reductions.pages * 100).toFixed(1)}% < 85%`);
+if (reductions.bytes < 0.70) failures.push(`byte reduction ${(reductions.bytes * 100).toFixed(1)}% < 70%`);
+if (reductions.assets < 0.60) failures.push(`asset reduction ${(reductions.assets * 100).toFixed(1)}% < 60%`);
+if (failures.length) { failures.forEach((failure) => console.error(`- ${failure}`)); process.exit(1); }
+console.log(`Build budget passed; reductions: pages ${(reductions.pages * 100).toFixed(1)}%, bytes ${(reductions.bytes * 100).toFixed(1)}%, assets ${(reductions.assets * 100).toFixed(1)}%.`);

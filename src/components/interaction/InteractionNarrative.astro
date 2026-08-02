@@ -1,5 +1,0 @@
----
-interface Props { step?: string; title?: string; }
-const { step = '1', title = '当前解释步骤' } = Astro.props;
----
-<section class="esl-interaction-narrative" aria-label={`${title} ${step}`}><p class="esl-eyebrow">Step {step}</p><slot /></section>
