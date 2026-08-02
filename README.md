@@ -2,12 +2,15 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure theory, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build with six HTML files: Home, four subject entrances, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, three individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
 - `/`
 - `/theory/`
+- `/theory/linear-algebra/`
+- `/theory/calculus-and-analysis/`
+- `/theory/numerical-analysis/`
 - `/methods/`
 - `/computational-tools/`
 - `/reference/`
@@ -26,8 +29,8 @@ The deployed browser smoke is intentionally separate because it verifies the Git
 
 ## Legacy site
 
-The retired Martin-course site, its Sholl–Steckel cross-reference, interactive components, and validation system remain available only through the annotated tag `legacy/atlas-v3-martin-site-20260802`. See [`docs/legacy-site.md`](docs/legacy-site.md). Old public URLs are not compatibility targets.
+The retired source-aligned course site, its practice cross-reference, interactive components, and validation system remain available only through the annotated tag `legacy/atlas-v3-martin-site-20260802`. See [`docs/legacy-site.md`](docs/legacy-site.md). Old public URLs are not compatibility targets.
 
 ## Boundaries
 
-New scientific content is added only after human review. This repository does not store textbook PDFs, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.
+New scientific content is added individually after source and scope review. Topic pages are shaped by the subject rather than forced into one public template. This repository does not store textbook PDFs, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.
