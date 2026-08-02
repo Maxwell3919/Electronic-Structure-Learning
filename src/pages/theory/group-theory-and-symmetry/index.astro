@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Group Theory and Symmetry" description="Groups, representations, irreducible sectors, selection rules, and symmetry reduction in electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Group Theory and Symmetry</span>
+  </nav>
+
+  <h1>Group Theory and Symmetry</h1>
+  <p class="lede">Symmetry identifies transformations that leave a stated physical or mathematical object unchanged. Group theory turns those transformations into algebra and organizes states, operators, degeneracies, selection rules, and computational blocks.</p>
+  <p>The page is deliberately separate from <a href={href('/theory/crystallography/')}>Crystallography</a>. Crystallography classifies periodic geometry; group theory explains how symmetry acts on vectors, functions, orbitals, vibrations, spins, and bands.</p>
+
+  <h2>A symmetry group is defined relative to an object</h2>
+  <p>A group contains an identity, an inverse for every element, an associative composition law, and closure under composition. In physics the elements may be rotations, reflections, translations, permutations, time reversal, or combined operations.</p>
+  <p>The phrase “the symmetry of the material” is incomplete until the object is specified: nuclear coordinates, charge density, spin density, Hamiltonian, external field, magnetic order, or an approximate numerical representation can have different symmetry groups.</p>
+
+  <h2>Representations describe how symmetry acts on a space</h2>
+  <p>A representation assigns a linear operator or matrix to every group element while preserving composition:</p>
+  <div class="math-display">
+    <math display="block" aria-label="D of g one g two equals D of g one times D of g two">
+      <semantics>
+        <mrow><mi>D</mi><mo>(</mo><msub><mi>g</mi><mn>1</mn></msub><msub><mi>g</mi><mn>2</mn></msub><mo>)</mo><mo>=</mo><mi>D</mi><mo>(</mo><msub><mi>g</mi><mn>1</mn></msub><mo>)</mo><mi>D</mi><mo>(</mo><msub><mi>g</mi><mn>2</mn></msub><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">D(g_1g_2)=D(g_1)D(g_2).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The same abstract group can have many representations: coordinates, atomic orbitals, plane waves, vibrational displacements, spinors, Bloch states, and tensors transform differently.</p>
+
+  <h2>Irreducible representations define invariant sectors</h2>
+  <p>A reducible representation can be transformed into independent blocks. An irreducible representation cannot be decomposed further while preserving the group action.</p>
+  <p>If a Hamiltonian commutes with every operation of a symmetry group, its matrix can be organized into symmetry sectors. States in inequivalent irreducible representations do not mix unless the symmetry is broken or the operator connects those sectors.</p>
+
+  <h2>Characters compress representation information</h2>
+  <p>The character of an operation is the trace of its representation matrix. Characters are constant on conjugacy classes and allow a reducible representation to be decomposed without constructing every change-of-basis matrix.</p>
+  <div class="math-display">
+    <math display="block" aria-label="multiplicity n alpha equals one over group order sum over g character alpha conjugate times character Gamma">
+      <semantics>
+        <mrow>
+          <msub><mi>n</mi><mi>α</mi></msub><mo>=</mo>
+          <mfrac><mn>1</mn><mrow><mo>|</mo><mi>G</mi><mo>|</mo></mrow></mfrac>
+          <munderover><mo>∑</mo><mrow><mi>g</mi><mo>∈</mo><mi>G</mi></mrow><mo></mo></munderover>
+          <msup><msub><mi>χ</mi><mi>α</mi></msub><mo>*</mo></msup><mo>(</mo><mi>g</mi><mo>)</mo>
+          <msub><mi>χ</mi><mi>Γ</mi></msub><mo>(</mo><mi>g</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n_\alpha=\frac&#123;1&#125;&#123;|G|&#125;\sum_&#123;g\in G&#125;\chi_\alpha^*(g)\chi_\Gamma(g).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Character tables are summaries of a chosen group and convention. They are not substitutes for identifying the actual symmetry operations, coordinate axes, basis functions, and physical operator.</p>
+
+  <h2>Symmetry-adapted combinations reduce a problem</h2>
+  <p>Projection operators can extract the component of a trial function transforming as a chosen irreducible representation. Schematically,</p>
+  <div class="math-display">
+    <math display="block" aria-label="projection operator P alpha equals d alpha over group order sum g character alpha conjugate U g">
+      <semantics>
+        <mrow>
+          <msub><mi>P</mi><mi>α</mi></msub><mo>=</mo>
+          <mfrac><msub><mi>d</mi><mi>α</mi></msub><mrow><mo>|</mo><mi>G</mi><mo>|</mo></mrow></mfrac>
+          <munderover><mo>∑</mo><mrow><mi>g</mi><mo>∈</mo><mi>G</mi></mrow><mo></mo></munderover>
+          <msup><msub><mi>χ</mi><mi>α</mi></msub><mo>*</mo></msup><mo>(</mo><mi>g</mi><mo>)</mo><mi>U</mi><mo>(</mo><mi>g</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">P_\alpha=\frac&#123;d_\alpha&#125;&#123;|G|&#125;\sum_&#123;g\in G&#125;\chi_\alpha^*(g)U(g).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Symmetry adaptation can reduce matrix dimensions, classify modes, construct molecular orbitals, and prevent mixing between forbidden sectors. A code may exploit only a subset of the exact symmetry because of implementation, magnetic order, k-point choice, or numerical tolerance.</p>
+
+  <h2>Direct products express coupling and selection rules</h2>
+  <p>A matrix element can be nonzero only when the combined symmetry of final state, operator, and initial state contains the totally symmetric representation:</p>
+  <div class="math-display">
+    <math display="block" aria-label="Gamma final tensor Gamma operator tensor Gamma initial contains totally symmetric representation">
+      <semantics>
+        <mrow><msub><mi>Γ</mi><mi>f</mi></msub><mo>⊗</mo><msub><mi>Γ</mi><mi>O</mi></msub><mo>⊗</mo><msub><mi>Γ</mi><mi>i</mi></msub><mo>⊃</mo><msub><mi>Γ</mi><mi>tot</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Gamma_f\otimes\Gamma_O\otimes\Gamma_i\supset\Gamma_&#123;\mathrm&#123;tot&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This principle underlies optical, infrared, Raman, vibronic, and perturbative selection rules. Symmetry can forbid a transition within an idealized model, but disorder, phonons, fields, spin–orbit coupling, finite temperature, and lower-symmetry environments can relax the rule.</p>
+
+  <h2>Point groups, space groups, and little groups have different roles</h2>
+  <dl class="paired-definitions">
+    <dt>Point group</dt>
+    <dd>Operations leaving at least one point fixed; central for molecules, local environments, tensors, and zone-centre modes.</dd>
+    <dt>Space group</dt>
+    <dd>Point operations combined with translations; classifies periodic crystals, including nonsymmorphic screw and glide operations.</dd>
+    <dt>Little group of a wavevector</dt>
+    <dd>Operations that leave a crystal momentum invariant modulo a reciprocal-lattice vector; classifies Bloch states at that wavevector.</dd>
+  </dl>
+  <p>Using a molecular point-group label for a general crystal-momentum state, or using a full space-group irrep away from its valid k point, produces incorrect symmetry assignments.</p>
+
+  <h2>Degeneracy and compatibility follow from representations, not visual coincidence</h2>
+  <p>Multidimensional irreducible representations enforce degeneracies under the stated symmetry. Along a path in reciprocal space, compatibility relations describe how irreducible representations branch as the little group changes.</p>
+  <p>Two numerically equal eigenvalues need not form a symmetry-protected degeneracy, and a small numerical splitting does not automatically prove symmetry breaking. One must inspect the group, representation, tolerance, and perturbations included in the Hamiltonian.</p>
+
+  <h2>Spin and time reversal require extended symmetry structures</h2>
+  <p>Spinors transform under double groups rather than ordinary single-valued point-group representations. Magnetic order can require magnetic space groups or spin groups, and antiunitary time reversal changes the representation theory.</p>
+  <p>Ordinary nonmagnetic character tables are therefore insufficient for spin–orbit-coupled degeneracies, Kramers pairs, noncollinear magnetism, and magnetic topology. Those topics belong to the later Relativistic Electronic Structure, Spin, and Magnetism page.</p>
+
+  <h2>Symmetry reduction is not automatically physically harmless</h2>
+  <p>Imposing symmetry can accelerate calculations and reduce sampling, but it can also exclude lower-symmetry solutions. Structural instabilities, Jahn–Teller distortions, charge order, orbital order, antiferromagnetism, and spin textures may require deliberately reducing the starting symmetry or enlarging the cell.</p>
+  <p>A converged high-symmetry solution only establishes a stationary solution within the permitted symmetry sector. It does not establish global stability against all lower-symmetry perturbations.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://academic.oup.com/book/59280">Peter F. Bernath, <cite>Spectra of Atoms and Molecules</cite>, 5th ed.</a> provides a current molecular route through symmetry operations, point groups, matrix representations, irreducible representations, character tables, direct products, and spectroscopic selection rules. It is paid or institutionally accessed.</p>
+  <p><a href="https://www.cryst.ehu.es/">Bilbao Crystallographic Server</a> provides point- and space-group representations, direct products, little-group data, compatibility relations, double groups, magnetic groups, and symmetry-adapted tensor tools. It is a reference and computational service rather than a first course.</p>
+  <p><a href="https://www.iucr.org/education/pamphlets">IUCr Teaching Pamphlets</a> include focused introductions to symmetry, space-group patterns, matrices, mappings, and crystallographic symmetry. Their levels and mathematical depth vary.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not derive the full representation theory of continuous, magnetic, or topological groups. It establishes enough structure to interpret irreducible labels, symmetry-adapted bases, selection rules, degeneracies, and computational symmetry reduction without treating labels as self-explanatory.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> The Oxford fifth edition, Bilbao representation tools, and IUCr pamphlet collection were reviewed on 3 August 2026. A modern cross-disciplinary group-theory textbook with complete open exercises remains an unresolved resource-selection item.</p>
+  </aside>
+</BaseLayout>
