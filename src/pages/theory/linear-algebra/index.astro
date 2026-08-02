@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Linear Algebra" description="The language of states, bases, operators, and spectra in electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Linear Algebra</span>
+  </nav>
+
+  <h1>Linear Algebra</h1>
+  <p class="lede">Electronic-structure theory repeatedly turns physical objects into vectors, operators into matrices, and stationary states into eigenvalue problems. Linear algebra is the language that makes those translations precise.</p>
+  <p>This page is not a complete linear-algebra course. It isolates the ideas that recur when quantum states are represented in a finite basis and when electronic-structure equations are solved numerically.</p>
+
+  <h2>Representing a state</h2>
+  <p>A quantum state is not a column of numbers by itself. The numbers are coordinates relative to a chosen basis. In a finite representation, a state can be written as a linear combination</p>
+  <p class="equation"><code>|ψ⟩ = Σᵢ cᵢ |φᵢ⟩</code>.</p>
+  <p>The basis functions <code>|φᵢ⟩</code> specify the representation; the coefficients <code>cᵢ</code> specify the state within that representation. Changing the basis changes the coefficients, but it should not change the underlying physical state when both representations are sufficiently complete.</p>
+  <p>This distinction is fundamental for plane waves, localized atomic orbitals, Gaussian functions, finite elements, and real-space grids. A basis is a numerical choice, not a new physical theory.</p>
+
+  <h2>Inner products give geometry</h2>
+  <p>Inner products define lengths, normalization, angles, and orthogonality. They allow statements such as “these two states are orthogonal” or “this trial state is normalized” to have a precise meaning.</p>
+  <p>In an orthonormal basis, the coefficient-space inner product has the familiar form <code>c†d</code>. In a non-orthogonal basis, the overlap matrix enters:</p>
+  <p class="equation"><code>⟨ψ|χ⟩ = c† S d</code>, where <code>Sᵢⱼ = ⟨φᵢ|φⱼ⟩</code>.</p>
+  <p>The matrix <code>S</code> is therefore not an optional correction. It records the geometry induced by the chosen basis. Near-linear dependence among basis functions makes <code>S</code> ill-conditioned and can make otherwise reasonable calculations numerically fragile.</p>
+
+  <h2>Operators become spectral problems</h2>
+  <p>A linear operator maps one state to another. Observables and Hamiltonians are represented by Hermitian operators, whose finite matrices have real eigenvalues and mutually orthogonal eigenspaces under the relevant inner product.</p>
+  <p>For an orthonormal basis, the stationary equation becomes</p>
+  <p class="equation"><code>Hc = εc</code>.</p>
+  <p>For a non-orthogonal basis, the same physical problem becomes a generalized eigenvalue problem:</p>
+  <p class="equation"><code>Hc = εSc</code>.</p>
+  <p>This is the algebraic core behind many orbital calculations. The matrix elements, the overlap matrix, the dimension of the represented subspace, and the algorithm used to solve the problem all affect the numerical result.</p>
+
+  <h2>Subspaces matter more than individual vectors</h2>
+  <p>Many electronic-structure quantities depend on an occupied subspace rather than on a unique set of orbitals. Unitary rotations within a fully occupied subspace can change the individual orbital shapes without changing the density matrix or total occupied space.</p>
+  <p>This is why degeneracy, symmetry-adapted blocks, projector methods, density matrices, and Wannier transformations are naturally expressed in terms of subspaces. Treating every displayed orbital as a uniquely defined physical object can therefore be misleading.</p>
+
+  <h2>Variational reasoning in matrix form</h2>
+  <p>The Rayleigh quotient connects eigenvalues to minimization:</p>
+  <p class="equation"><code>R(c) = (c†Hc) / (c†Sc)</code>.</p>
+  <p>Within a chosen subspace, minimizing this quotient gives the lowest represented eigenvalue. Enlarging a well-constructed variational basis can improve the approximation, but the conclusion depends on the method and representation. A small residual or a stable eigenvalue within one basis does not by itself establish basis completeness.</p>
+
+  <h2>What becomes numerical</h2>
+  <p>Electronic-structure calculations rarely use dense matrices of modest size. They exploit sparsity, symmetry, matrix-vector products, low-rank structure, and iterative extraction of only part of a spectrum. Several ideas are therefore especially valuable beyond the introductory course:</p>
+  <ul>
+    <li><strong>Singular-value decomposition</strong> for rank, conditioning, compression, and near-linear dependence.</li>
+    <li><strong>Generalized Hermitian eigenproblems</strong> for non-orthogonal bases.</li>
+    <li><strong>Projection and orthogonalization</strong> for constrained subspaces and iterative solvers.</li>
+    <li><strong>Sparse and iterative methods</strong> when forming or diagonalizing the full matrix is impractical.</li>
+  </ul>
+  <p>The error and stability questions associated with these algorithms belong to <a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a>.</p>
+
+  <h2>How to study this subject</h2>
+  <p><a href="https://www.cambridge.org/highereducation/books/introduction-to-linear-algebra/8C2B8F7F4C94A903A9018E9D8A42B9A7">Gilbert Strang, <cite>Introduction to Linear Algebra</cite>, 6th ed.</a> is the most direct first route when matrices, subspaces, least squares, eigenvalues, and SVD need to be connected to computation. The textbook is commercial, with official companion material available separately.</p>
+  <p><a href="https://linear.axler.net/">Sheldon Axler, <cite>Linear Algebra Done Right</cite>, 4th ed.</a> is the stronger route for linear maps, invariant subspaces, eigenvalues, and spectral structure. The author provides a legal open version under a noncommercial license. It is rigorous, but it is not a numerical-algorithms text.</p>
+  <p><a href="https://ocw.mit.edu/courses/18-335j-introduction-to-numerical-methods-spring-2019/">MIT OpenCourseWare 18.335J, Introduction to Numerical Methods</a> is an advanced continuation for conditioning, QR, SVD, iterative methods, and eigenvalue algorithms. It assumes substantial linear algebra and programming maturity.</p>
+
+  <h2>Minimum recognition target</h2>
+  <p>Before moving into quantum mechanics or basis-set methods, a learner should be able to distinguish a state from its coordinates, explain what an inner product contributes, recognize Hermitian and unitary structure, interpret ordinary and generalized eigenvalue equations, and identify when a basis or overlap matrix may be poorly conditioned.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Resource roles and access boundaries were reviewed on 2 August 2026. The page uses original exposition and does not reproduce textbook chapters, figures, or exercise solutions.</p>
+  </aside>
+</BaseLayout>
