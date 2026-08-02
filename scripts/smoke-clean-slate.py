@@ -21,6 +21,7 @@ THEORY_ROUTES = [
     "theory/calculus-and-analysis/",
     "theory/differential-equations/",
     "theory/fourier-analysis/",
+    "theory/functional-analysis-and-variational-methods/",
     "theory/numerical-analysis/",
     "theory/group-theory-and-symmetry/",
     "theory/electromagnetism/",
@@ -29,6 +30,7 @@ THEORY_ROUTES = [
     "theory/atomic-and-molecular-physics/",
     "theory/solid-state-physics/",
     "theory/crystallography/",
+    "theory/many-body-physics/",
     "theory/physical-chemistry/",
     "theory/quantum-chemistry/",
     "theory/chemical-bonding-and-molecular-structure/",
@@ -45,6 +47,8 @@ THEORY_ROUTES = [
     "theory/pseudopotentials-paw-and-core-valence-treatments/",
     "theory/brillouin-zone-sampling/",
     "theory/relativistic-electronic-structure-spin-and-magnetism/",
+    "theory/linear-response-and-excited-states/",
+    "theory/many-body-perturbation-theory-and-quasiparticles/",
 ]
 CONTENT_ROUTES = [
     "", "theory/", *THEORY_ROUTES, "methods/", "computational-tools/", "reference/",
@@ -187,7 +191,7 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: thirty-three content routes, twenty-eight MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: thirty-seven content routes, thirty-two MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
