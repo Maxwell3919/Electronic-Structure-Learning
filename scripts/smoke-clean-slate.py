@@ -122,8 +122,11 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"display MathML missing in {mode}: {url}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
+            raw_href = anchor.get_dom_attribute("href") or ""
+            raw_parsed = urlparse(raw_href)
             parsed = urlparse(anchor.get_attribute("href"))
-            if parsed.netloc == urlparse(BASE_URL).netloc and parsed.path and not parsed.path.startswith(expected_base):
+            local_reference = not raw_parsed.scheme and not raw_parsed.netloc
+            if local_reference and parsed.netloc == urlparse(BASE_URL).netloc and parsed.path and not parsed.path.startswith(expected_base):
                 raise AssertionError(f"internal link escapes Pages base: {anchor.get_attribute('href')}")
         checks.append({"route": route or "/", "mode": mode, "math_nodes": math_count, **metrics})
     return checks
