@@ -26,8 +26,14 @@ CONTENT_ROUTES = [
     "computational-tools/",
     "reference/",
 ]
+MATH_ROUTES = {
+    "theory/linear-algebra/",
+    "theory/calculus-and-analysis/",
+    "theory/numerical-analysis/",
+}
 BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
+DEAD_CAMBRIDGE_ID = "8C2B8F7F4C94A903A9018E9D8A42B9A7"
 
 
 def make_driver(javascript=True, width=1440, height=900):
@@ -64,7 +70,11 @@ def inspect(driver, mode, expected_width=None):
         url = urljoin(BASE_URL, route)
         driver.get(url)
         WebDriverWait(driver, 20).until(lambda current: current.find_elements(By.CSS_SELECTOR, "main"))
-        metrics = driver.execute_script("return {scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,viewport:window.innerWidth,bg:getComputedStyle(document.body).backgroundColor,font:getComputedStyle(document.body).fontFamily,scripts:document.scripts.length};")
+        metrics = driver.execute_script(
+            "return {scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,"
+            "viewport:window.innerWidth,bg:getComputedStyle(document.body).backgroundColor,"
+            "font:getComputedStyle(document.body).fontFamily,scripts:document.scripts.length};"
+        )
         if expected_width is not None and metrics["viewport"] != expected_width:
             raise AssertionError(f"viewport is not {expected_width}px in {mode}: {metrics['viewport']}")
         if metrics["scroll"] - metrics["client"] > 1:
@@ -77,11 +87,36 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"client scripts found in {mode}: {url}")
         if driver.find_elements(By.CSS_SELECTOR, '[class*="card"], [class*="status"], [class*="progress"], [class*="dashboard"]'):
             raise AssertionError(f"legacy UI marker found in {mode}: {url}")
+        if DEAD_CAMBRIDGE_ID in driver.page_source:
+            raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
+        if driver.find_elements(By.CSS_SELECTOR, "main .equation"):
+            raise AssertionError(f"removed code-style equation block remains in {mode}: {url}")
+
+        math_count = 0
+        if route in MATH_ROUTES:
+            math_metrics = driver.execute_script(
+                "return Array.from(document.querySelectorAll('main math')).map((node) => {"
+                "const box=node.getBoundingClientRect();"
+                "return {width:box.width,height:box.height,text:(node.textContent||'').trim(),"
+                "annotation:node.querySelectorAll('annotation[encoding=\"application/x-tex\"]').length};});"
+            )
+            math_count = len(math_metrics)
+            if math_count == 0:
+                raise AssertionError(f"native MathML missing in {mode}: {url}")
+            if any(item["width"] < 1 or item["height"] < 1 or not item["text"] for item in math_metrics):
+                raise AssertionError(f"MathML is not visibly laid out in {mode}: {url}")
+            if any(item["annotation"] != 1 for item in math_metrics):
+                raise AssertionError(f"MathML expression lacks one TeX annotation in {mode}: {url}")
+            if not driver.find_elements(By.CSS_SELECTOR, "main .math-display math[display='block']"):
+                raise AssertionError(f"display MathML missing in {mode}: {url}")
+            if not driver.find_elements(By.CSS_SELECTOR, "main math.math-inline"):
+                raise AssertionError(f"inline MathML missing in {mode}: {url}")
+
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             parsed = urlparse(anchor.get_attribute("href"))
             if parsed.netloc == urlparse(BASE_URL).netloc and parsed.path and not parsed.path.startswith(expected_base):
                 raise AssertionError(f"internal link escapes Pages base: {anchor.get_attribute('href')}")
-        checks.append({"route": route or "/", "mode": mode, **metrics})
+        checks.append({"route": route or "/", "mode": mode, "math_nodes": math_count, **metrics})
     return checks
 
 
@@ -131,7 +166,7 @@ def main():
     finally:
         no_javascript.quit()
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: eight content pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: eight content pages, native MathML, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
