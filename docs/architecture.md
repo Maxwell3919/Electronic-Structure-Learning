@@ -1,142 +1,251 @@
-# Architecture
+# Electronic-Structure-Atlas Architecture
 
-## 1. Static-first structure
+## Project Philosophy
 
-```text
-Machine-readable source maps and site registries
-        │
-        ├── Martin: 7 Parts / 46 units
-        ├── Sholl–Steckel: 10 practice units
-        ├── navigation, paths, status, labs, cases, reference
-        ├── 46-unit source-semantic audit and terminology registry
-        └── empty-first literature, claim, queue, and discussion contracts
-                    │
-                    ▼
-          MDX route skeletons
-                    │
-        ├── directory-level page locators
-        ├── reusable outline components
-        ├── future original explanations
-        └── interactive teaching components
-                    │
-                    ▼
-       deterministic Node validation
-                    │
-                    ▼
-             Astro static build
-                    │
-                    ▼
-         GitHub Pages public deployment
-```
+Electronic-Structure-Atlas is a concise and rigorous knowledge base for electronic-structure theory, computational methods, and scientific tools.
 
-The site remains static-first. MDX stores learning pages; small client-side components are used only where interaction has a clear teaching purpose.
+The project does not aim to replace textbooks, software manuals, or research literature. It provides a structured view of the field, helping readers understand the relationships between fundamental knowledge, computational methods, and practical tools.
 
-## 2. Content layers
+The content should remain focused on essential concepts, assumptions, methods, limitations, and reliable external resources.
+
+## Information Architecture
 
 ```text
-src/data/
-├── martin/
-│   ├── index.mjs
-│   └── part01.mjs … part07.mjs
-├── shollSteckelStructure.mjs
-└── site/
-    ├── navigation.mjs
-    ├── learningPaths.mjs
-    ├── contentStatus.mjs
-    ├── labs.mjs
-    ├── cases.mjs
-    ├── referenceSections.mjs
-    ├── sourceSemanticStatus.mjs
-    └── terminology.mjs
+Electronic-Structure-Atlas
 
-src/data/literature/
-├── registry.mjs
-├── topics.mjs
-├── readingQueue.mjs
-├── claimLedger.mjs
-├── discussions.mjs
-└── schema.mjs
-
-src/content/docs/
-├── index.mdx
-├── start-here.mdx
-├── reading-system.mdx
-├── book-map.mdx
-├── learning-paths/
-├── theory/
-├── labs/
-├── cases/
-├── interactive-labs/
-├── reference/
-├── literature/
-├── part-01-overview-and-background/
-├── part-02-density-functional-theory/
-├── part-03-important-preliminaries-on-atoms/
-├── part-04-determination-of-electronic-structure/
-├── part-05-properties-of-matter/
-├── part-06-electronic-structure-and-topology/
-├── part-07-appendices/
-├── practice-sholl-steckel/
-└── labs/
+├── Home
+├── Theory
+├── Methods
+├── Computational Tools
+└── Reference
 ```
 
-The Martin and Sholl–Steckel modules remain the source-structure authority. `src/data/site/` supplies learner-facing navigation and four-dimensional content status. Framework routes stay thin and data-driven.
+## Home
 
-## 3. Authority boundary
+The homepage introduces electronic structure through an accessible overview.
 
-| Object | Authority |
-|---|---|
-| Site code, structure catalogs, and original learning content | This repository `main` |
-| Deployed public site | GitHub Pages deployment record |
-| Textbook body | Lawfully obtained external copy; never stored here |
-| Private reflection | Learning-Records/future Record |
-| Raw DFT output and restart data | Project repositories or calculation hosts |
-| Small publishable derived data | This repository only after provenance and redistribution checks |
+Future design direction:
 
-## 4. Components
+- Talos, the interactive tuxedo cow cat mascot, may serve as a visual guide throughout the homepage.
+- The mascot should support navigation and exploration without replacing scientific content.
+- The homepage should introduce the field, the knowledge structure, and available paths of exploration.
 
-- `ReadingOutline.astro`: unit-level source, page and section skeleton;
-- `TrackOverview.astro`: Part or practical-track navigation;
-- `BookMap.astro`: complete course map;
-- `SourceNote.astro`: source identity and status;
-- `DerivationBlock.astro`: assumptions and derivation container;
-- `VisualizationPlaceholder.astro`: pre-implementation visualization contract;
-- `SCFIterationVisualizer.astro`: existing affine fixed-point teaching experiment.
-- `src/components/site/`: neutral learning-path, catalog, status and navigation interfaces.
-- `src/components/reading/`: route-aware unit frame, source header, display toolbar, semantic contents and literature bridge;
-- `src/components/overrides/`: Starlight integration shared by all routes;
-- `src/components/theory/`: static-first complete Theory Atlas;
-- `src/components/literature/`: bibliography, claim and discussion presentation contracts.
+## Theory
 
-## 5. Validation
+Theory provides the fundamental knowledge structure required to understand electronic-structure research.
 
-- `scripts/validate-framework.mjs`: structural counts, files, slugs and page ordering;
-- `scripts/validate-scf-model.mjs`: five deterministic teaching-model regimes;
-- `scripts/test-registry.mjs`: stable validator and browser-smoke registration;
-- `scripts/validate-site-architecture.mjs`: routes, statuses, references and publication boundaries;
-- `scripts/run-registered-validators.mjs`: fail-closed deterministic registry runner;
-- `scripts/validate-unit-reading-frame.mjs`: all-unit and built-HTML reading-frame audit;
-- `scripts/validate-source-semantics.mjs`: catalog/source-layer and bounded heading audit;
-- `scripts/validate-terminology.mjs`: terminology registry contract;
-- `scripts/validate-literature-layer.mjs`: empty-first literature schema and route checks;
-- `scripts/validate-runtime-lifecycle.mjs`: timer, RAF, observer, global-listener, and idempotent-controller ownership checks;
-- `scripts/runtime-diagnostics/`: test-only Chrome/CDP idle, route, mode, and interaction probes; never imported by production source;
-- `npm run build`: MDX imports, routes, formulas and static-site output.
-
-These gates do not validate future scientific explanations or real DFT calculations.
-
-## 6. Scientific data flow
+It follows the conceptual development of electronic structure rather than a simplified DFT tutorial.
 
 ```text
-QE / VASP / other external calculation
-        -> parser
-        -> identity, unit, reference, grid and provenance checks
-        -> small JSON / CSV / CIF / XYZ derivative
-        -> read-only website visualization
+Theory
+
+├── Mathematical Foundations
+├── Physical Foundations
+├── Chemical Foundations
+├── Electronic Structure Theory
+└── Learning Map
 ```
 
-The browser does not run production QE, VASP, DFPT or EPW jobs.
+### Mathematical Foundations
 
-## 7. Deferred capabilities
+The website introduces prerequisite subjects at the course level rather than reproducing complete university courses.
 
-The current framework does not introduce accounts, databases, a Python backend, Slurm submission, large-object storage, or online production DFT calculations.
+Examples:
+
+```text
+Mathematical Foundations
+├── Linear Algebra
+├── Calculus
+├── Differential Equations
+├── Numerical Methods
+└── Probability and Statistics
+```
+
+Each subject page provides:
+
+- why this subject is needed;
+- recommended books and websites;
+- reasons for recommendation;
+- a concept map summarizing the common essential knowledge extracted from these resources;
+- connections to electronic-structure theory.
+
+The website does not reproduce the full curriculum of these subjects.
+
+### Physical Foundations
+
+```text
+Physical Foundations
+├── Classical Mechanics
+├── Electromagnetism
+├── Quantum Mechanics
+├── Statistical Mechanics
+└── Solid State Physics
+```
+
+### Chemical Foundations
+
+```text
+Chemical Foundations
+├── Atomic Structure
+├── Chemical Bonding
+├── Molecular Orbitals
+├── Periodic Trends
+└── Surface Chemistry
+```
+
+### Electronic Structure Theory
+
+```text
+Electronic Structure Theory
+├── Many-Electron Problem
+├── Density Functional Theory
+├── Hohenberg-Kohn Theory
+├── Kohn-Sham Theory
+├── Exchange-Correlation
+├── Self-Consistent Field
+├── Basis Representations
+├── Plane Waves
+├── Localized Basis Methods
+├── Pseudopotentials and PAW
+├── Brillouin-Zone Sampling
+└── Electronic Structure Methods
+```
+
+### Learning Map
+
+Learning Map is a part of Theory.
+
+It describes dependency relationships between concepts rather than a fixed reading order.
+
+Examples:
+
+```text
+Crystal Vector
+↓
+Crystal Structure
+↓
+Symmetry
+↓
+Reciprocal Space
+↓
+Brillouin Zone
+↓
+Bloch Theorem
+↓
+Band Structure
+```
+
+The final representation should be a knowledge graph with multiple entry points.
+
+## Methods
+
+Methods introduces computational and theoretical methods used in electronic-structure research.
+
+It does not serve as a literature database and does not store detailed paper analysis.
+
+```text
+Methods
+
+├── Structural Methods
+├── Electronic Structure Analysis
+├── Stability Analysis
+├── Lattice Dynamics
+├── Magnetic Methods
+├── Surface and Interface Methods
+├── Defect Methods
+├── Transport Methods
+├── Superconductivity Methods
+└── Advanced Methods
+```
+
+Each method page may discuss:
+
+- physical meaning;
+- theoretical basis;
+- computational approach;
+- required inputs;
+- important outputs;
+- applicability;
+- limitations;
+- references for deeper study.
+
+## Computational Tools
+
+Computational Tools describes software packages, workflow systems, visualization tools, databases, and auxiliary utilities.
+
+```text
+Computational Tools
+
+├── DFT Packages
+├── Workflow Frameworks
+├── Visualization Tools
+├── Databases
+└── Auxiliary Tools
+```
+
+Software-specific input files, output files, and validation commands belong to the corresponding software or program pages.
+
+Example:
+
+```text
+Quantum ESPRESSO
+
+├── Overview
+├── pw.x
+│   ├── Input
+│   ├── Output
+│   ├── Validation Commands
+│   └── Common Errors
+├── ph.x
+└── EPW
+```
+
+## Reference
+
+Reference provides external knowledge resources.
+
+```text
+Reference
+
+├── Books
+├── Websites
+├── Software Documentation
+├── Databases
+├── Courses
+└── Visualization Resources
+```
+
+Resources should explain their purpose and relation to the knowledge structure instead of being simple collections of links.
+
+## Content Style
+
+The website does not enforce a single writing style.
+
+Different content types may use different styles:
+
+- theory pages: textbook style;
+- tool pages: documentation style;
+- method pages: scientific review style;
+- resource pages: concise evaluation style.
+
+Avoid:
+
+- unnecessary introductions;
+- repetitive summaries;
+- artificial learning guidance;
+- excessive sectioning;
+- AI-generated writing patterns.
+
+Prefer:
+
+- precise definitions;
+- clear equations;
+- physical interpretation;
+- explicit assumptions;
+- limitations and references.
+
+## Technical Principles
+
+The website remains static-first. Interactive components are used only when they provide clear explanatory value.
+
+Large production calculations, databases requiring backend services, and computational workloads remain outside the browser.
