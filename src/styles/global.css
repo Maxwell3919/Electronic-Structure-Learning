@@ -79,14 +79,51 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .section-list a { font-size: 1.15rem; }
 .secondary, .item-summary { color: #666666; }
 .item-summary { font-size: 0.96em; }
-.equation {
-  margin: 1.4rem 0;
-  padding-left: 1rem;
-  border-left: 2px solid #d8d8d8;
-  overflow-wrap: anywhere;
-  font-size: 1.05rem;
+
+.math-display {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  border-inline-start: 2px solid #cbd6e2;
+  background: #fafbfd;
+  scrollbar-width: thin;
 }
-.equation code { padding: 0; background: transparent; color: #222222; }
+
+.math-display math {
+  display: block;
+  width: max-content;
+  min-width: min-content;
+  margin-inline: auto;
+  color: #161616;
+  font-family:
+    "STIX Two Math",
+    "Cambria Math",
+    "Latin Modern Math",
+    "Times New Roman",
+    serif;
+  font-size: 1.28rem;
+  line-height: 1.45;
+}
+
+math.math-inline {
+  display: inline-block;
+  margin-inline: 0.06em;
+  color: #161616;
+  font-family:
+    "STIX Two Math",
+    "Cambria Math",
+    "Latin Modern Math",
+    "Times New Roman",
+    serif;
+  font-size: 1em;
+  line-height: 1;
+  vertical-align: -0.12em;
+  white-space: nowrap;
+}
+
+math annotation { display: none; }
+
 .callout {
   margin: 1.5rem 0;
   padding: 0.2rem 0 0.2rem 1rem;
@@ -111,4 +148,6 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   main { padding-block: 2.8rem 3.6rem; }
   nav { gap: 0.4rem 0.9rem; }
   dd { margin-left: 0.8rem; }
+  .math-display { margin-inline: -0.15rem; padding: 0.85rem 0.9rem; }
+  .math-display math { font-size: 1.12rem; }
 }
