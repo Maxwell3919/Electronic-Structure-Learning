@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production baseline is Plain Astro, fully static, and limited to Home, Theory, Methods, Computational Tools, Reference, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, three individually reviewed mathematical-foundation pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -21,11 +21,12 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Prefer ordinary `.astro` pages, semantic HTML, and one shared stylesheet.
 - Do not add Starlight, a CMS, search, client hydration, page-specific JavaScript, packaged fonts, or a general data registry without a demonstrated current consumer and explicit review.
 - Keep navigation usable without JavaScript and on narrow screens.
-- Do not restore legacy Part, Chapter, Appendix, Sholl–Steckel, learning-path, reading-system, lab, case, literature, status, or progress structures merely because they exist in history.
+- Do not restore legacy Part, Chapter, Appendix, practice, learning-path, reading-system, lab, case, literature, status, or progress structures merely because they exist in history.
 
 ## Content and evidence
 
 - Add content individually after scientific and source review; do not generate bulk filler.
+- Do not impose one visible section contract on all Theory pages. Let each subject determine its explanatory order while keeping scope, sources, and limitations explicit.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database.
 - Distinguish program execution, numerical convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
