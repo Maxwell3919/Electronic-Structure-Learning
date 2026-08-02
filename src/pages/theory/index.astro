@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Nine subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirteen subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -62,10 +62,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="many-electron-problem"><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> <span class="item-summary">— interacting Hamiltonians, antisymmetry, state-space growth, observables, and correlation.</span></li>
       <li id="hartree-and-hartree-fock-methods"><a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> <span class="item-summary">— product states, determinants, mean fields, exchange, and single-determinant limits.</span></li>
       <li id="density-functional-theory"><a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> <span class="item-summary">— ground-state density, universal functionals, constrained search, and variational scope.</span></li>
-      <li id="kohn-sham-theory">Kohn–Sham Theory</li>
-      <li id="exchange-correlation-theory">Exchange-Correlation Theory</li>
-      <li id="self-consistent-field-methods">Self-Consistent Field Methods</li>
-      <li id="basis-sets-and-numerical-representations">Basis Sets and Numerical Representations</li>
+      <li id="kohn-sham-theory"><a href={href('/theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a> <span class="item-summary">— the auxiliary noninteracting system, effective potential, orbitals, and density reconstruction.</span></li>
+      <li id="exchange-correlation-theory"><a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> <span class="item-summary">— exact role, approximation families, constraints, implementation, and failure modes.</span></li>
+      <li id="self-consistent-field-methods"><a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> <span class="item-summary">— nonlinear fixed points, residuals, mixing, occupations, and metastability.</span></li>
+      <li id="basis-sets-and-numerical-representations"><a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> <span class="item-summary">— finite spaces, grids, boundary conditions, completeness, and observable-specific convergence.</span></li>
       <li id="plane-wave-and-real-space-methods">Plane-Wave and Real-Space Methods</li>
       <li id="localized-orbital-methods">Localized-Orbital Methods</li>
       <li id="pseudopotentials-and-paw">Pseudopotentials and Projector-Augmented Waves</li>

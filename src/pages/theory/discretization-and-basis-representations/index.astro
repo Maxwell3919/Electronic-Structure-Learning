@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Discretization and Basis Representations" description="How continuous electronic-structure equations become finite algebraic problems, and how representation error is controlled." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Discretization and Basis Representations</span>
+  </nav>
+
+  <h1>Discretization and Basis Representations</h1>
+  <p class="lede">Electronic-structure equations are posed for continuous functions, but a computer solves a finite problem. Discretization chooses which finite degrees of freedom represent orbitals, densities, potentials, and operators.</p>
+  <p>This choice controls accuracy, cost, conditioning, boundary behavior, and which convergence parameters must be tested. It is a numerical representation, not a change in the underlying Kohn–Sham or Hartree–Fock theory.</p>
+
+  <h2>From functions to coefficients</h2>
+  <p>A common finite representation expands an orbital in basis functions:</p>
+  <div class="math-display">
+    <math display="block" aria-label="phi i of r equals sum over mu C mu i chi mu of r">
+      <semantics>
+        <mrow>
+          <msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo>
+          <munderover><mo>∑</mo><mi>μ</mi><mi>M</mi></munderover>
+          <msub><mi>C</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub>
+          <msub><mi>χ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\phi_i(\mathbf&#123;r&#125;)=\sum_\mu^M C_&#123;\mu i&#125;\chi_\mu(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The continuous eigenproblem becomes a finite matrix problem. For a nonorthogonal basis,</p>
+  <div class="math-display">
+    <math display="block" aria-label="H C equals S C epsilon">
+      <semantics>
+        <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">C</mi><mo>=</mo><mi mathvariant="bold">S</mi><mi mathvariant="bold">C</mi><mi mathvariant="bold">ε</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;H&#125;\mathbf&#123;C&#125;=\mathbf&#123;S&#125;\mathbf&#123;C&#125;\boldsymbol&#123;\varepsilon&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The overlap matrix <math class="math-inline" aria-label="S"><semantics><mi mathvariant="bold">S</mi><annotation encoding="application/x-tex">\mathbf&#123;S&#125;</annotation></semantics></math> records basis geometry. Near-linear dependence can make the finite problem poorly conditioned even when the underlying differential equation is well behaved.</p>
+
+  <h2>Major representation families</h2>
+  <dl class="paired-definitions">
+    <dt>Plane waves</dt>
+    <dd>Global Fourier basis functions natural for periodic boundary conditions. A kinetic-energy cutoff controls the finite subspace. They are systematically improvable but usually require a core-electron treatment and large vacuum regions for isolated objects.</dd>
+    <dt>Localized atom-centred functions</dt>
+    <dd>Gaussian functions or numerical atomic orbitals concentrate degrees of freedom near atoms. They can be compact and chemically interpretable, but completeness is less uniform and basis dependence can produce linear-dependence and Pulay effects.</dd>
+    <dt>Real-space finite differences</dt>
+    <dd>Represent functions by values on a grid and approximate derivatives by finite stencils. Grid spacing, stencil order, and boundary conditions control the error.</dd>
+    <dt>Finite elements</dt>
+    <dd>Use local polynomial spaces on a mesh, allowing adaptive refinement and complex geometries. Their convergence depends on mesh size, polynomial order, and formulation.</dd>
+    <dt>Other multiresolution or adaptive representations</dt>
+    <dd>Wavelets, adaptive coordinates, and related schemes can concentrate resolution where needed. They should not be grouped with all “real-space” methods as if their error behavior were identical.</dd>
+  </dl>
+
+  <h2>Basis, quadrature, and grid are distinct choices</h2>
+  <p>An orbital basis defines the variational subspace. A quadrature rule approximates integrals. A real-space grid may represent density and potential even when orbitals use localized functions. A plane-wave calculation also uses FFT grids. Conflating these layers makes convergence tests hard to interpret.</p>
+  <p>Core-electron treatment, Brillouin-zone sampling, supercell size, and occupations are additional choices. Increasing one resolution parameter does not converge the others.</p>
+
+  <h2>Completeness and resolution</h2>
+  <p>A representation sequence should approach a larger function space under a declared refinement: higher plane-wave cutoff, more radial and angular functions, smaller grid spacing, higher finite-element order, or denser adaptive mesh.</p>
+  <p>For some variational basis methods, ground-state eigenvalues or energies approach a limit from one side under ideal conditions. Real calculations may violate simple monotonic expectations because the Hamiltonian, pseudopotential, quadrature, occupations, geometry, or self-consistent solution changes simultaneously.</p>
+
+  <h2>Boundary conditions are part of the finite problem</h2>
+  <p>Periodic, isolated, slab, wire, and embedded boundary conditions define different approximations. An isolated molecule in a periodic supercell still interacts with its images unless the cell or electrostatic treatment removes the effect. A real-space grid needs an explicit boundary prescription; a plane-wave basis is periodic by construction.</p>
+  <p>Cell-size convergence and basis convergence must therefore be tested separately.</p>
+
+  <h2>Representation-dependent forces and stress</h2>
+  <p>When basis functions depend on atomic positions or cell shape, derivatives of the basis contribute to forces or stress. These Pulay terms are not new physical forces; they arise because the finite representation changes during differentiation.</p>
+  <p>A small total-energy error does not guarantee equally small force, stress, polarization, response, or energy-difference errors. The target observable determines the required refinement.</p>
+
+  <h2>Common failure modes</h2>
+  <ul>
+    <li><strong>Insufficient resolution:</strong> orbitals, density, or potentials contain features outside the represented subspace.</li>
+    <li><strong>Linear dependence:</strong> an overcomplete localized basis makes the overlap matrix ill-conditioned.</li>
+    <li><strong>Aliasing and integration error:</strong> products or nonlinear potentials contain frequencies not resolved by the grid.</li>
+    <li><strong>Egg-box effects:</strong> energies or forces vary spuriously as atoms move relative to a fixed real-space grid.</li>
+    <li><strong>Boundary artifacts:</strong> periodic images, truncated domains, or inconsistent electrostatic solvers contaminate the result.</li>
+    <li><strong>Unbalanced comparisons:</strong> two structures or species receive different effective basis quality, causing basis-set superposition or cancellation errors.</li>
+  </ul>
+
+  <h2>Convergence is observable-specific</h2>
+  <p>A convergence study defines a sequence of representations and monitors the quantity used in the scientific claim. Total energy per atom, relative phase energy, force, stress, band edge, density of states, phonon frequency, and adsorption energy can converge at different rates.</p>
+  <p>The lowest-cost sufficient test varies one representation parameter at a time when possible, preserves all other physical assumptions, and checks that the target observable changes by less than a predeclared tolerance relevant to the conclusion.</p>
+
+  <h2>Comparing representations without false equivalence</h2>
+  <p>Cutoffs, basis labels, and grid spacings from different codes are not directly interchangeable. A 400 eV plane-wave cutoff, a double-zeta polarized atomic basis, and a 0.18 Å finite-difference grid do not define the same finite space. Cross-code agreement requires independent convergence in each representation and consistent physical approximations.</p>
+  <p>Basis Set Exchange is a useful database for molecular basis definitions. It is not a basis-set theory course and does not establish that a selected basis is converged for a target observable.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/contents/45985954A19E640C6C637C5EA2E174C0">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> provides the common electronic-structure framework and the later method-specific chapters on plane waves, localized orbitals, grids, and augmented functions.</p>
+  <p><a href="https://gpaw.readthedocs.io/documentation/basic.html">GPAW basic documentation</a> compares plane-wave, localized atomic-orbital, and finite-difference modes within one PAW code. This makes it a useful implementation comparison, but examples from one code do not prove cross-representation convergence.</p>
+  <p><a href="https://docs.siesta-project.org/projects/siesta/en/stable/tutorials/basic/first-encounter/">SIESTA first-encounter tutorial</a> separates localized basis quality, real-space mesh cutoff, SCF controls, and solver choice. Its parameter names and numerical values remain code-specific.</p>
+  <p><a href="https://docs.siesta-project.org/projects/siesta/en/latest/tutorials/basic/grid-convergence/index.html">SIESTA real-space-grid tutorial</a> demonstrates mesh convergence and egg-box effects. It should be used to understand a failure mechanism, not as a universal cutoff prescription.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page compares discretization principles and error sources. Detailed plane-wave, localized-orbital, real-space, pseudopotential, PAW, and Brillouin-zone implementations remain separate downstream modules.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Martin/GPAW/SIESTA destinations were reviewed on 2 August 2026. Representation parameters are treated as code- and observable-specific.</p>
+  </aside>
+</BaseLayout>

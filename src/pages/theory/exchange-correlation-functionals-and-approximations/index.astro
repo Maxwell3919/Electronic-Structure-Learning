@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Exchange–Correlation Functionals and Approximations" description="The role, ingredients, constraints, families, and failure modes of exchange–correlation approximations." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Exchange–Correlation Functionals and Approximations</span>
+  </nav>
+
+  <h1>Exchange–Correlation Functionals and Approximations</h1>
+  <p class="lede">The exchange–correlation functional is the part of Kohn–Sham DFT that contains everything not represented by the noninteracting kinetic energy and classical Hartree interaction.</p>
+  <p>Its exact existence follows from the formal theory. Its usable form does not: practical calculations require an approximation whose assumptions, ingredients, implementation, and known failures must be stated.</p>
+
+  <h2>What exchange–correlation contains</h2>
+  <p>The exact decomposition can be written as</p>
+  <div class="math-display">
+    <math display="block" aria-label="E x c equals interacting kinetic minus noninteracting kinetic plus electron interaction minus Hartree energy">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>=</mo>
+          <mo>(</mo><mi>T</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>−</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>)</mo>
+          <mo>+</mo>
+          <mo>(</mo><msub><mi>V</mi><mrow><mi>e</mi><mi>e</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;[n]=(T[n]-T_s[n])+(V_&#123;ee&#125;[n]-E_&#123;\mathrm&#123;H&#125;&#125;[n]).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The first bracket is the kinetic contribution missing from the auxiliary noninteracting system. The second is the difference between the true electron–electron interaction and the classical Hartree energy. Exchange and correlation are therefore not merely two optional empirical corrections.</p>
+
+  <h2>The potential is a functional derivative</h2>
+  <p>The Kohn–Sham equations require the response of the XC energy to a density variation:</p>
+  <div class="math-display">
+    <math display="block" aria-label="v x c of r equals functional derivative of E x c with respect to density">
+      <semantics>
+        <mrow>
+          <msub><mi>v</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo>
+          <mfrac><mrow><mi>δ</mi><msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_&#123;\mathrm&#123;xc&#125;&#125;(\mathbf&#123;r&#125;)=\frac&#123;\delta E_&#123;\mathrm&#123;xc&#125;&#125;[n]&#125;&#123;\delta n(\mathbf&#123;r&#125;)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>An approximation must therefore be assessed not only by the energies it produces but also by the potential, forces, response kernels, spin dependence, and derivatives required by the target calculation.</p>
+
+  <h2>Functional families differ by their ingredients</h2>
+  <dl class="paired-definitions">
+    <dt>Local-density approximations</dt>
+    <dd>Use the density at each point, usually informed by the uniform electron gas.</dd>
+    <dt>Generalized-gradient approximations</dt>
+    <dd>Add density gradients and dimensionless measures of inhomogeneity.</dd>
+    <dt>Meta-GGAs</dt>
+    <dd>Add ingredients such as kinetic-energy density or the density Laplacian, depending on the formulation.</dd>
+    <dt>Hybrid functionals</dt>
+    <dd>Mix a fraction or range-separated form of nonlocal exact exchange with semilocal components.</dd>
+    <dt>Nonlocal correlation and dispersion models</dt>
+    <dd>Introduce longer-range density dependence or an additional dispersion correction to address interactions absent from ordinary semilocal forms.</dd>
+  </dl>
+  <p>“Jacob’s ladder” is a useful organizational metaphor, not a proof that every higher rung is uniformly more accurate, cheaper, or more appropriate.</p>
+
+  <h2>Exact constraints guide construction</h2>
+  <p>Known scaling relations, spin scaling, uniform-density limits, sum rules, asymptotic behavior, coordinate transformations, and bounds can constrain approximate forms. Satisfying more constraints can improve transferability, but it does not guarantee accuracy for every observable or material class.</p>
+  <p>Some approximations are nonempirical in the sense that parameters are fixed by constraints; others include fits to reference data. Both still require validation outside their construction set.</p>
+
+  <h2>Recurring failure mechanisms</h2>
+  <ul>
+    <li><strong>Self-interaction and delocalization error</strong> can distort charge localization, dissociation, defect states, redox energetics, and band alignment.</li>
+    <li><strong>Static-correlation error</strong> becomes severe when one determinant or one density-based local picture cannot represent near-degenerate states.</li>
+    <li><strong>Missing long-range correlation</strong> affects dispersion-bound molecules, layered solids, adsorption, and interfaces unless treated explicitly.</li>
+    <li><strong>Derivative discontinuity and spectral interpretation</strong> limit the direct use of ordinary Kohn–Sham gaps as fundamental gaps.</li>
+    <li><strong>Density-driven error</strong> means that a poor self-consistent density can be an important part of the final error, not only the value of the functional on an exact density.</li>
+  </ul>
+
+  <h2>No material-type lookup table can select a universal best functional</h2>
+  <p>A functional should be chosen against the scientific question and target observable: equilibrium structure, relative energy, reaction barrier, magnetic state, band gap, dielectric response, adsorption, phonon frequency, or another quantity. A method that performs well for one observable can fail for another in the same system.</p>
+  <p>Validation should use relevant benchmarks, sensitivity to nearby approximations, and known physical limits. Agreement with one experiment can arise from cancellation among functional, basis, core-treatment, finite-size, and thermal errors.</p>
+
+  <h2>Implementation details are part of reproducibility</h2>
+  <p>A functional name is not always a complete specification. Codes and libraries can differ in parameterization, spin treatment, numerical derivatives, nonlocal kernels, exact-exchange algorithms, dispersion variants, and default settings. Pseudopotentials may also have been generated with a different functional.</p>
+  <p>Record the functional identifier, variant, library or code version, auxiliary correction, pseudopotential or PAW dataset lineage, and any modified parameters. Libxc is an implementation reference and catalogue; it is not a substitute for understanding the theory or validating the chosen approximation.</p>
+
+  <h2>Connections to SCF and numerics</h2>
+  <p>The shape and derivative of the XC functional influence the nonlinear Kohn–Sham map, spin instabilities, and convergence behavior. A difficult SCF cycle can expose a numerical problem, a poor initial state, a near-degenerate physical landscape, or an unsuitable approximation. Faster convergence does not make one functional more physically correct.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/contents/45985954A19E640C6C637C5EA2E174C0">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., Chapters 8–9</a> provides the theory spine from exact properties to widely used approximation families. Full text may require institutional access.</p>
+  <p><a href="https://libxc.gitlab.io/functionals/">Libxc functional catalogue</a> records implemented families, identifiers, references, and implementation metadata. It is particularly useful for reproducibility checks and for distinguishing similarly named variants.</p>
+  <p><a href="https://libxc.gitlab.io/manual/">Libxc manual</a> explains how functional families and derivatives are exposed to electronic-structure codes. It should be read as software documentation, not as evidence that an implemented functional is suitable for a given problem.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page explains what XC approximations contain, how they are organized, and why their errors are problem-dependent. It does not prescribe one default functional, teach DFT+U or dispersion methods in full, or equate implementation availability with scientific validation.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Libxc/Cambridge destinations were reviewed on 2 August 2026. Functional selection remains observable-specific and version-sensitive.</p>
+  </aside>
+</BaseLayout>
