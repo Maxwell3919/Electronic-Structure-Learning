@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Classical Mechanics" description="Generalized coordinates, variational dynamics, Hamiltonian structure, normal modes, forces, and classical nuclei in electronic-structure research." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Classical Mechanics</span>
+  </nav>
+
+  <h1>Classical Mechanics</h1>
+  <p class="lede">Classical mechanics describes nuclear motion on an approximate potential-energy surface and supplies the language of forces, conserved quantities, oscillations, normal modes, and molecular dynamics.</p>
+  <p>Electronic-structure theory determines energies and forces for a chosen electronic model. Classical mechanics then specifies how nuclei move under those forces. This separation is useful but conditional: quantum nuclei, nonadiabatic transitions, strong electron–phonon dynamics, and thermal sampling may require additional theory.</p>
+
+  <h2>Coordinates and constraints define the mechanical problem</h2>
+  <p>A system with generalized coordinates <math class="math-inline" aria-label="q one through q n"><semantics><mrow><msub><mi>q</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>q</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">q_1,\ldots,q_n</annotation></semantics></math> may use Cartesian positions, bond coordinates, cell strains, collective variables, or reduced coordinates adapted to constraints. The coordinate choice changes the equations and metric factors, but it must describe the same physical configuration space.</p>
+  <p>Constraints can remove degrees of freedom or introduce reaction forces. A constrained relaxation or molecular-dynamics trajectory therefore solves a different problem from the unconstrained system.</p>
+
+  <h2>The Lagrangian converts forces and constraints into equations of motion</h2>
+  <p>For a Lagrangian <math class="math-inline" aria-label="L equals T minus V"><semantics><mrow><mi>L</mi><mo>=</mo><mi>T</mi><mo>−</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">L=T-V</annotation></semantics></math>, Hamilton's principle makes the action stationary:</p>
+  <div class="math-display">
+    <math display="block" aria-label="delta action equals zero">
+      <semantics>
+        <mrow><mi>δ</mi><mi>S</mi><mo>=</mo><mi>δ</mi><mo>∫</mo><msub><mi>t</mi><mn>0</mn></msub><msup><mi>t</mi><mn>1</mn></msup><mi>L</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>,</mo><mover><mi mathvariant="bold">q</mi><mo>˙</mo></mover><mo>,</mo><mi>t</mi><mo>)</mo><mi>d</mi><mi>t</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\delta S=\delta\int_&#123;t_0&#125;^&#123;t_1&#125;L(\mathbf&#123;q&#125;,\dot&#123;\mathbf&#123;q&#125;&#125;,t)\,dt=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The resulting Euler–Lagrange equations are</p>
+  <div class="math-display">
+    <math display="block" aria-label="Euler Lagrange equation">
+      <semantics>
+        <mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>(</mo><mfrac><mrow><mi>∂</mi><mi>L</mi></mrow><mrow><mi>∂</mi><msub><mover><mi>q</mi><mo>˙</mo></mover><mi>i</mi></msub></mrow></mfrac><mo>)</mo><mo>−</mo><mfrac><mrow><mi>∂</mi><mi>L</mi></mrow><mrow><mi>∂</mi><msub><mi>q</mi><mi>i</mi></msub></mrow></mfrac><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\frac&#123;d&#125;&#123;dt&#125;\left(\frac&#123;\partial L&#125;&#123;\partial\dot&#123;q&#125;_i&#125;\right)-\frac&#123;\partial L&#125;&#123;\partial q_i&#125;=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This variational principle concerns a time-dependent trajectory. It is distinct from minimizing a ground-state electronic energy or a thermodynamic free energy, even though related mathematical tools appear in all three settings.</p>
+
+  <h2>The Hamiltonian formulation exposes phase-space structure</h2>
+  <p>With conjugate momenta <math class="math-inline" aria-label="p i equals derivative L by q dot i"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mi>∂</mi><mi>L</mi><mo>/</mo><mi>∂</mi><msub><mover><mi>q</mi><mo>˙</mo></mover><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">p_i=\partial L/\partial\dot&#123;q&#125;_i</annotation></semantics></math>, the Hamiltonian is a Legendre transform of the Lagrangian. Hamilton's equations are</p>
+  <div class="math-display">
+    <math display="block" aria-label="Hamilton equations">
+      <semantics>
+        <mrow><msub><mover><mi>q</mi><mo>˙</mo></mover><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mi>∂</mi><mi>H</mi></mrow><mrow><mi>∂</mi><msub><mi>p</mi><mi>i</mi></msub></mrow></mfrac><mo>,</mo><mspace width="1em"/><msub><mover><mi>p</mi><mo>˙</mo></mover><mi>i</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>∂</mi><mi>H</mi></mrow><mrow><mi>∂</mi><msub><mi>q</mi><mi>i</mi></msub></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\dot&#123;q&#125;_i=\frac&#123;\partial H&#125;&#123;\partial p_i&#125;,\qquad \dot&#123;p&#125;_i=-\frac&#123;\partial H&#125;&#123;\partial q_i&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Hamiltonian structure underlies symplectic integration, canonical ensembles, classical phase-space sampling, and the formal transition to quantum mechanics. It does not imply that a practical finite-step trajectory exactly conserves the continuous Hamiltonian.</p>
+
+  <h2>Born–Oppenheimer dynamics treats nuclei as classical particles on an electronic surface</h2>
+  <p>For nuclei with masses <math class="math-inline" aria-label="M I"><semantics><msub><mi>M</mi><mi>I</mi></msub><annotation encoding="application/x-tex">M_I</annotation></semantics></math> and positions <math class="math-inline" aria-label="R I"><semantics><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><annotation encoding="application/x-tex">\mathbf&#123;R&#125;_I</annotation></semantics></math>, a common approximation is</p>
+  <div class="math-display">
+    <math display="block" aria-label="nuclear equation on Born Oppenheimer surface">
+      <semantics>
+        <mrow><msub><mi>M</mi><mi>I</mi></msub><msub><mover><mi mathvariant="bold">R</mi><mo>¨</mo></mover><mi>I</mi></msub><mo>=</mo><mo>−</mo><msub><mo>∇</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></msub><msub><mi>E</mi><mi>BO</mi></msub><mo>(</mo><mo>{</mo><mi mathvariant="bold">R</mi><mo>}</mo><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">M_I\ddot&#123;\mathbf&#123;R&#125;&#125;_I=-\nabla_&#123;\mathbf&#123;R&#125;_I&#125;E_&#123;\mathrm&#123;BO&#125;&#125;(\&#123;\mathbf&#123;R&#125;\&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The force is meaningful only for a declared electronic state, approximation stack, basis, boundary condition, and convergence level. Incomplete SCF convergence, Pulay terms, noisy forces, or state switching can change the trajectory.</p>
+  <p>The Born–Oppenheimer approximation assumes electrons remain on one adiabatic surface. It can fail near crossings, in electronically excited dynamics, or when electron and nuclear timescales strongly couple.</p>
+
+  <h2>Small oscillations reduce coupled displacements to normal modes</h2>
+  <p>Near a stable equilibrium, expand the potential energy in displacements <math class="math-inline" aria-label="u"><semantics><mi mathvariant="bold">u</mi><annotation encoding="application/x-tex">\mathbf&#123;u&#125;</annotation></semantics></math>:</p>
+  <div class="math-display">
+    <math display="block" aria-label="harmonic potential expansion">
+      <semantics>
+        <mrow><mi>V</mi><mo>(</mo><mi mathvariant="bold">u</mi><mo>)</mo><mo>≈</mo><msub><mi>V</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi mathvariant="bold">u</mi><mi>T</mi></msup><mi mathvariant="bold">K</mi><mi mathvariant="bold">u</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">V(\mathbf&#123;u&#125;)\approx V_0+\tfrac12\mathbf&#123;u&#125;^\mathrm&#123;T&#125;\mathbf&#123;K&#125;\mathbf&#123;u&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>With mass matrix <math class="math-inline" aria-label="M"><semantics><mi mathvariant="bold">M</mi><annotation encoding="application/x-tex">\mathbf&#123;M&#125;</annotation></semantics></math>, normal modes solve the generalized eigenproblem</p>
+  <div class="math-display">
+    <math display="block" aria-label="normal mode generalized eigenproblem">
+      <semantics>
+        <mrow><mi mathvariant="bold">K</mi><msub><mi mathvariant="bold">e</mi><mi>ν</mi></msub><mo>=</mo><msubsup><mi>ω</mi><mi>ν</mi><mn>2</mn></msubsup><mi mathvariant="bold">M</mi><msub><mi mathvariant="bold">e</mi><mi>ν</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;K&#125;\mathbf&#123;e&#125;_\nu=\omega_\nu^2\mathbf&#123;M&#125;\mathbf&#123;e&#125;_\nu.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Positive eigenvalues correspond to stable harmonic oscillations within the model. Zero modes reflect exact translations or rotations only when the boundary conditions and numerical representation preserve them. Negative eigenvalues identify directions of negative curvature, not real oscillation frequencies.</p>
+  <p>A harmonic normal-mode calculation describes local curvature at one stationary structure. It does not establish global stability, anharmonic lifetime, finite-temperature phase behavior, or dynamical accessibility.</p>
+
+  <h2>Time integration introduces a second approximation</h2>
+  <p>Velocity Verlet, symplectic splitting, and related methods approximate continuous equations at a finite timestep. Stability and energy behavior depend on the fastest resolved frequency, force accuracy, constraints, thermostats, and integration scheme.</p>
+  <p>A trajectory that runs without crashing may still have timestep bias, poor equilibration, hidden drift, inadequate sampling, or incorrect ensemble statistics. Conserved quantities and reversibility checks diagnose integration, not the validity of the electronic potential surface.</p>
+
+  <h2>Thermostats and barostats change the sampled dynamics</h2>
+  <p>Microcanonical dynamics aims to conserve energy, while thermostatted or barostatted dynamics targets a chosen distribution under additional equations or stochastic forces. Different algorithms can reproduce the same equilibrium distribution while generating different time correlations.</p>
+  <p>Therefore, equilibrium averages and transport coefficients require different validation. A thermostat suitable for sampling may distort real-time dynamics.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis and Variational Methods</a> distinguishes trajectory stationarity from ground-state minimization.</li>
+    <li><a href={href('/theory/atomic-and-molecular-physics/')}>Atomic and Molecular Physics</a> connects rotations, vibrations, and spectroscopy to nuclear motion.</li>
+    <li><a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> determines which equilibrium distribution a trajectory is intended to sample.</li>
+    <li><a href={href('/theory/probability-and-statistics/')}>Probability and Statistics</a> treats autocorrelation, effective sample size, and uncertainty in trajectory averages.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/">MIT OpenCourseWare 8.01SC, <cite>Classical Mechanics</cite></a> is the first-course route through forces, energy, momentum, torque, angular momentum, and conservation laws.</p>
+  <p><a href="https://ocw.mit.edu/courses/8-223-classical-mechanics-ii-january-iap-2017/">MIT OpenCourseWare 8.223, <cite>Classical Mechanics II</cite></a> provides the more relevant advanced bridge through Lagrangian mechanics, conserved quantities, oscillations, Hamiltonian mechanics, Poisson brackets, and canonical transformations.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not provide a complete rigid-body, orbital-mechanics, continuum-mechanics, thermostat, or molecular-dynamics course. It does not treat classical nuclei as universally valid, one stable trajectory as adequate sampling, or harmonic normal modes as proof of finite-temperature stability.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report and the normal-mode bridge in the supplied electronic-structure texts. Official MIT OpenCourseWare 8.01SC and 8.223 destinations were checked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
