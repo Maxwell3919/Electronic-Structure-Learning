@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Functional Analysis and Variational Methods" description="Hilbert spaces, operators, spectra, weak formulations, and variational principles for electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Functional Analysis and Variational Methods</span>
+  </nav>
+
+  <h1>Functional Analysis and Variational Methods</h1>
+  <p class="lede">Functional analysis extends linear algebra and calculus from finite vectors to function spaces. Variational methods turn operator equations into minimization, stationarity, and weak-form problems.</p>
+  <p>This subject clarifies the continuum objects that finite basis sets approximate. It is an advanced support layer rather than a prerequisite for every first DFT calculation: finite-dimensional Rayleigh–Ritz reasoning can be learned first, then strengthened with Hilbert-space domains, convergence, compactness, and spectral theory.</p>
+
+  <h2>Wavefunctions live in spaces with structure</h2>
+  <p>A Hilbert space is a complete inner-product space. Its norm is induced by the inner product,</p>
+  <div class="math-display">
+    <math display="block" aria-label="norm psi squared equals inner product psi psi">
+      <semantics>
+        <mrow><msup><mrow><mo>∥</mo><mi>ψ</mi><mo>∥</mo></mrow><mn>2</mn></msup><mo>=</mo><mo>⟨</mo><mi>ψ</mi><mo>|</mo><mi>ψ</mi><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\|\psi\|^2=\langle\psi|\psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Completeness means that every Cauchy sequence converges to an element of the space. This matters because numerical sequences can converge in one norm but not another, and pointwise convergence need not preserve derivatives, kinetic energy, density, or boundary conditions.</p>
+  <p>Different observables naturally involve different function spaces. Square-integrability alone may be insufficient for a kinetic-energy expectation; Sobolev regularity and operator domains determine whether derivatives and quadratic forms are well defined.</p>
+
+  <h2>Operators are defined by both their action and their domain</h2>
+  <p>An unbounded operator such as the kinetic-energy operator is not specified only by a differential expression. Its domain and boundary conditions affect self-adjointness and the spectrum.</p>
+  <p>For a self-adjoint Hamiltonian, expectation values are real and spectral theory provides the mathematical basis for bound-state expansions, continuous spectra, and projection-valued decompositions. A Hermitian matrix obtained after discretization approximates this structure but does not automatically reproduce every property of the continuum operator.</p>
+
+  <h2>The Rayleigh quotient connects spectra to optimization</h2>
+  <p>For a normalized trial state outside the null space, the Rayleigh quotient is</p>
+  <div class="math-display">
+    <math display="block" aria-label="Rayleigh quotient of psi equals expectation H divided by norm squared">
+      <semantics>
+        <mrow><mi>R</mi><mo>[</mo><mi>ψ</mi><mo>]</mo><mo>=</mo><mfrac><mrow><mo>⟨</mo><mi>ψ</mi><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><mi>ψ</mi><mo>⟩</mo></mrow><mrow><mo>⟨</mo><mi>ψ</mi><mo>|</mo><mi>ψ</mi><mo>⟩</mo></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">R[\psi]=\frac&#123;\langle\psi|\hat&#123;H&#125;|\psi\rangle&#125;&#123;\langle\psi|\psi\rangle&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>For a Hamiltonian bounded from below, minimizing this quotient over an admissible space gives the ground-state energy under suitable conditions. Restricting the search to a finite trial subspace produces the Rayleigh–Ritz approximation.</p>
+  <p>Enlarging nested trial spaces can lower the approximate ground-state energy toward the continuum limit. This upper-bound statement applies to the variational energy in the declared Hamiltonian and trial class; it does not imply monotonic convergence of every density, eigenvalue difference, force, response function, or post-processed observable.</p>
+
+  <h2>Stationarity under constraints introduces multipliers</h2>
+  <p>Orthonormal orbitals are obtained by varying an energy while enforcing overlap constraints. Schematically,</p>
+  <div class="math-display">
+    <math display="block" aria-label="variation of energy minus lambda overlap constraint equals zero">
+      <semantics>
+        <mrow><mi>δ</mi><mo>[</mo><mi>E</mi><mo>[</mo><mo>&#123;</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>&#125;</mo><mo>]</mo><mo>−</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow><mo></mo></munderover><msub><mi>λ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>(</mo><mo>⟨</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>|</mo><msub><mi>φ</mi><mi>j</mi></msub><mo>⟩</mo><mo>−</mo><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>)</mo><mo>]</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\delta[E[\&#123;\phi_i\&#125;]-\sum_&#123;ij&#125;\lambda_&#123;ij&#125;(\langle\phi_i|\phi_j\rangle-\delta_&#123;ij&#125;)]=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The multiplier matrix can often be diagonalized within the occupied subspace, yielding canonical orbital equations. The physically meaningful variational object is usually the occupied subspace or density matrix, not one unique set of canonical orbitals.</p>
+
+  <h2>Functional derivatives require a declared topology</h2>
+  <p>A directional variation of a functional can be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="delta F equals integral functional derivative times delta n">
+      <semantics>
+        <mrow><mi>δ</mi><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><mo>∫</mo><mfrac><mrow><mi>δ</mi><mi>F</mi></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow></mfrac><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\delta F[n]=\int\frac&#123;\delta F&#125;&#123;\delta n(\mathbf&#123;r&#125;)&#125;\delta n(\mathbf&#123;r&#125;)\,d^3r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Gâteaux and Fréchet differentiability are not identical notions. The result depends on the admissible variations, norm, boundary conditions, constraints, and whether the functional is differentiable at the point considered.</p>
+  <p>In density-functional theory, representability and differentiability can fail in ways hidden by finite grids and basis sets. Formal Euler equations should therefore not be read as proof that every trial density or approximate functional satisfies the required mathematical assumptions.</p>
+
+  <h2>Weak formulations move derivatives onto test functions</h2>
+  <p>Finite-element and related methods often replace a strong differential equation by an integral identity valid for all test functions in a declared space. This lowers regularity requirements and incorporates boundary conditions systematically.</p>
+  <p>A converged discrete weak solution is still a solution of a finite problem. Mesh refinement, polynomial order, quadrature, domain truncation, and boundary treatment must be tested against the target observable.</p>
+
+  <h2>Existence, uniqueness, and stationarity are separate questions</h2>
+  <ul>
+    <li>A stationary point need not be a minimum.</li>
+    <li>A minimum may be nonunique because of degeneracy or symmetry.</li>
+    <li>A minimizing sequence may fail to converge strongly without compactness or coercivity.</li>
+    <li>A discretized minimum can converge to the wrong continuum problem if domains or boundary conditions drift.</li>
+    <li>Nonlinear approximate functionals can possess multiple local stationary solutions.</li>
+  </ul>
+
+  <h2>Connections through the Atlas</h2>
+  <ul>
+    <li><a href={href('/theory/linear-algebra/')}>Linear Algebra</a> supplies finite-dimensional subspaces, generalized eigenproblems, and orthogonality.</li>
+    <li><a href={href('/theory/calculus-and-analysis/')}>Calculus and Analysis</a> supplies limits, differentiation, integration, and convergence.</li>
+    <li><a href={href('/theory/density-functional-theory-foundations/')}>DFT Foundations</a> uses constrained search and density variational principles.</li>
+    <li><a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> turns continuum trial spaces into finite numerical spaces.</li>
+  </ul>
+
+  <h2>Study route</h2>
+  <p><a href="https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/">MIT OpenCourseWare 18.102, <cite>Introduction to Functional Analysis</cite></a> covers normed spaces, completeness, duality, Hilbert spaces, self-adjoint operators, compactness, and spectral theory. It assumes prior real analysis and linear algebra and is broader than the minimum needed for ordinary DFT use.</p>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/functional-equations/0E8C4193AC900DD417E2F003DE9FEA0C">Martin, <cite>Electronic Structure</cite>, Appendix A: Functional Equations</a> supplies an electronic-structure bridge for functional derivatives and constrained variation. Publisher access may be required.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not prove all existence theorems behind quantum mechanics or DFT, and it does not imply that a variational energy bound validates every observable. Operator domains, admissible spaces, constraints, discretization, and convergence remain part of the claim.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official MIT and Cambridge destinations were rechecked on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
