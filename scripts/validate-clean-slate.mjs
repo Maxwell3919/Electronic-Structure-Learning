@@ -18,6 +18,7 @@ const theorySlugs = [
   'density-functional-theory-foundations',
   'differential-equations',
   'discretization-and-basis-representations',
+  'electromagnetism',
   'exchange-correlation-functionals-and-approximations',
   'fourier-analysis',
   'group-theory-and-symmetry',
@@ -34,7 +35,9 @@ const theorySlugs = [
   'quantum-mechanics',
   'relativistic-electronic-structure-spin-and-magnetism',
   'self-consistent-field-methods',
+  'solid-state-chemistry',
   'solid-state-physics',
+  'statistical-mechanics',
 ];
 
 const expectedPages = [
@@ -64,13 +67,16 @@ const reviewedTheoryPages = {
   'fourier-analysis': ['The DFT and FFT are finite numerical objects', 'Reciprocal lattice and Brillouin-zone variables are not the same index'],
   'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
   'group-theory-and-symmetry': ['Representations describe how symmetry acts on a space', 'Symmetry reduction is not automatically physically harmless'],
+  'electromagnetism': ['Charge density determines an electrostatic potential only after boundary conditions are stated', 'Longitudinal and transverse fields lead to different approximations'],
   'quantum-mechanics': ['Identical electrons require antisymmetry'],
+  'statistical-mechanics': ['An ensemble states what is controlled and what fluctuates', 'Numerical smearing and physical temperature must remain separate'],
   'atomic-and-molecular-physics': ['Hydrogenic states provide a reference language', 'Selection rules are symmetry statements'],
   'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
   'crystallography': ['A crystal combines a lattice with a basis', 'Structure standardization is useful but not neutral provenance'],
   'physical-chemistry': ['Energy alone does not determine equilibrium', 'Electronic-structure calculations enter through a model stack'],
   'quantum-chemistry': ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
   'chemical-bonding-and-molecular-structure': ['Chemical bonding is not represented by one unique quantum-mechanical observable', 'Multiple analyses should not be forced to agree'],
+  'solid-state-chemistry': ['A chemical formula does not uniquely determine a crystal structure', 'Defect formation energies depend on reservoirs and Fermi level'],
   'many-electron-problem': ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
   'hartree-and-hartree-fock-theory': ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem"],
   'density-functional-theory-foundations': ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory'],
@@ -173,6 +179,9 @@ if (sourceMode) {
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
   for (const label of [
+    'Electromagnetism',
+    'Statistical Mechanics',
+    'Solid-State Chemistry',
     'Atomic and Molecular Physics',
     'Physical Chemistry',
     'Chemical Bonding and Molecular Structure',
