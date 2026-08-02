@@ -11,9 +11,13 @@ const builtMode = process.argv.includes('--built');
 
 const theorySlugs = [
   'calculus-and-analysis',
+  'crystallography',
   'density-functional-theory-foundations',
+  'differential-equations',
   'discretization-and-basis-representations',
   'exchange-correlation-functionals-and-approximations',
+  'fourier-analysis',
+  'group-theory-and-symmetry',
   'hartree-and-hartree-fock-theory',
   'kohn-sham-density-functional-theory',
   'linear-algebra',
@@ -48,9 +52,13 @@ const expectedHtml = [
 const reviewedTheoryPages = {
   'linear-algebra': ['generalized eigenvalue problem', 'The obsolete Cambridge resource link was removed'],
   'calculus-and-analysis': ['Two layers hidden under one title', 'Computational calculus'],
+  'differential-equations': ['An equation is incomplete without its domain and conditions', 'Continuous and discrete problems must remain distinguishable'],
+  'fourier-analysis': ['The DFT and FFT are finite numerical objects', 'Reciprocal lattice and Brillouin-zone variables are not the same index'],
   'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
+  'group-theory-and-symmetry': ['Representations describe how symmetry acts on a space', 'Symmetry reduction is not automatically physically harmless'],
   'quantum-mechanics': ['Identical electrons require antisymmetry'],
   'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
+  'crystallography': ['A crystal combines a lattice with a basis', 'Structure standardization is useful but not neutral provenance'],
   'quantum-chemistry': ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
   'many-electron-problem': ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
   'hartree-and-hartree-fock-theory': ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem"],
@@ -148,7 +156,7 @@ if (sourceMode) {
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['Kohn–Sham Density Functional Theory', 'Exchange–Correlation Functionals and Approximations', 'Self-Consistent Field Methods', 'Discretization and Basis Representations']) {
+  for (const label of ['Differential Equations', 'Fourier Analysis', 'Group Theory and Symmetry', 'Crystallography', 'Kohn–Sham Density Functional Theory', 'Exchange–Correlation Functionals and Approximations', 'Self-Consistent Field Methods', 'Discretization and Basis Representations']) {
     assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   }
 

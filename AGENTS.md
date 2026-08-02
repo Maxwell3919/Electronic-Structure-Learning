@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirteen individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, seventeen individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -30,6 +30,9 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Add content individually after scientific and source review; do not generate bulk filler.
 - Do not impose one visible section contract on all Theory pages. Let each subject determine its explanatory order while keeping scope, sources, and limitations explicit.
 - Keep DFT foundations, Kohn–Sham construction, XC approximation, SCF solution, and numerical representation as distinct responsibilities. Do not merge them into a generic “DFT” page.
+- Keep a continuous differential equation distinct from its domain and boundary conditions, its finite discretization, and the algebraic solver result.
+- Keep Fourier coefficients, reciprocal-lattice vectors, Bloch wavevectors, FFT grids, and Brillouin-zone sampling as distinct objects.
+- Keep crystallographic geometry and classification distinct from the representation theory describing how symmetry acts on states, operators, modes, and tensors.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.

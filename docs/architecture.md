@@ -19,7 +19,24 @@ Theory connects mathematical, physical, chemical, and electronic-structure found
 ```text
 Theory
 ├── Mathematical Foundations
+│   ├── Linear Algebra
+│   ├── Calculus and Analysis
+│   ├── Differential Equations
+│   ├── Fourier Analysis
+│   ├── Functional Analysis and Variational Methods
+│   ├── Numerical Analysis
+│   ├── Probability and Statistics
+│   └── Group Theory and Symmetry
 ├── Physical Foundations
+│   ├── Classical Mechanics
+│   ├── Electromagnetism
+│   ├── Quantum Mechanics
+│   ├── Thermodynamics
+│   ├── Statistical Mechanics
+│   ├── Atomic and Molecular Physics
+│   ├── Solid-State Physics
+│   ├── Crystallography
+│   └── Many-Body Physics
 ├── Chemical Foundations
 ├── Electronic Structure Theory
 │   ├── The Many-Electron Problem
@@ -40,7 +57,7 @@ Theory
 
 The first three reviewed batches add Linear Algebra, Calculus and Analysis, Numerical Analysis, Quantum Mechanics, Solid-State Physics, Quantum Chemistry, The Many-Electron Problem, Hartree and Hartree–Fock Theory, and Density Functional Theory: Foundations.
 
-The fourth batch completes the Tier-1 explanatory loop with Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, Self-Consistent Field Methods, and Discretization and Basis Representations. The responsibility chain is explicit:
+The fourth batch completes the Tier-1 explanatory loop with Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, Self-Consistent Field Methods, and Discretization and Basis Representations:
 
 ```text
 interacting many-electron problem
@@ -51,7 +68,33 @@ interacting many-electron problem
 → finite numerical representation
 ```
 
-These pages share navigation, source discipline, mathematical presentation, and review boundaries, but they do not follow a mandatory public section template. Kohn–Sham orbitals are not presented as general quasiparticle states; functional selection is observable-specific; SCF convergence is separated from representation and scientific convergence; basis, quadrature, grids, boundary conditions, core treatment, and Brillouin-zone sampling remain distinct numerical layers.
+The fifth batch begins Tier 2 with Differential Equations, Fourier Analysis, Crystallography, and Group Theory and Symmetry. It adds four complementary routes rather than a fixed sequence:
+
+```text
+Differential Equations
+├── continuous operators, domains, and boundary conditions
+├── Schrödinger and Poisson equations
+└── Green functions and weak-form awareness
+
+Fourier Analysis
+├── transforms, convolution, and sampling
+├── reciprocal-space representation
+└── DFT/FFT and aliasing boundaries
+
+Crystallography
+├── lattices, cells, reciprocal lattices, and diffraction
+├── space groups and Wyckoff positions
+└── structure settings and provenance
+
+Group Theory and Symmetry
+├── representations and irreducible sectors
+├── symmetry-adapted bases and selection rules
+└── little groups, compatibility, and symmetry breaking
+```
+
+Crystallography and group theory remain separate: the former defines periodic geometry and classification, while the latter describes how symmetry acts on states, operators, modes, and tensors. Fourier reciprocal-lattice vectors, Bloch wavevectors, FFT grids, and Brillouin-zone sampling remain distinct objects. Differential equations remain distinct from their finite discretizations and algebraic solver results.
+
+All reviewed pages share navigation, source discipline, mathematical presentation, and review boundaries, but they do not follow a mandatory public section template. Kohn–Sham orbitals are not presented as general quasiparticle states; functional selection is observable-specific; SCF convergence is separated from representation and scientific convergence; basis, quadrature, grids, boundary conditions, core treatment, and Brillouin-zone sampling remain distinct numerical layers.
 
 Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
 
