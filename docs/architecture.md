@@ -1,142 +1,78 @@
-# Architecture
+# Electronic-Structure-Learning Architecture
 
-## 1. Static-first structure
+## Project Philosophy
 
-```text
-Machine-readable source maps and site registries
-        │
-        ├── Martin: 7 Parts / 46 units
-        ├── Sholl–Steckel: 10 practice units
-        ├── navigation, paths, status, labs, cases, reference
-        ├── 46-unit source-semantic audit and terminology registry
-        └── empty-first literature, claim, queue, and discussion contracts
-                    │
-                    ▼
-          MDX route skeletons
-                    │
-        ├── directory-level page locators
-        ├── reusable outline components
-        ├── future original explanations
-        └── interactive teaching components
-                    │
-                    ▼
-       deterministic Node validation
-                    │
-                    ▼
-             Astro static build
-                    │
-                    ▼
-         GitHub Pages public deployment
-```
+Electronic-Structure-Learning is a concise and rigorous knowledge base for electronic-structure theory and computational materials research.
 
-The site remains static-first. MDX stores learning pages; small client-side components are used only where interaction has a clear teaching purpose.
+The website does not aim to replace textbooks, software manuals, or research literature. It provides a compact map of electronic-structure theory, practical references for DFT calculations, and guidance for locating deeper resources.
 
-## 2. Content layers
+The project avoids unnecessary expansion. Content should focus on essential concepts, methods, assumptions, limitations, and references.
+
+## Information Architecture
 
 ```text
-src/data/
-├── martin/
-│   ├── index.mjs
-│   └── part01.mjs … part07.mjs
-├── shollSteckelStructure.mjs
-└── site/
-    ├── navigation.mjs
-    ├── learningPaths.mjs
-    ├── contentStatus.mjs
-    ├── labs.mjs
-    ├── cases.mjs
-    ├── referenceSections.mjs
-    ├── sourceSemanticStatus.mjs
-    └── terminology.mjs
-
-src/data/literature/
-├── registry.mjs
-├── topics.mjs
-├── readingQueue.mjs
-├── claimLedger.mjs
-├── discussions.mjs
-└── schema.mjs
-
-src/content/docs/
-├── index.mdx
-├── start-here.mdx
-├── reading-system.mdx
-├── book-map.mdx
-├── learning-paths/
-├── theory/
-├── labs/
-├── cases/
-├── interactive-labs/
-├── reference/
-├── literature/
-├── part-01-overview-and-background/
-├── part-02-density-functional-theory/
-├── part-03-important-preliminaries-on-atoms/
-├── part-04-determination-of-electronic-structure/
-├── part-05-properties-of-matter/
-├── part-06-electronic-structure-and-topology/
-├── part-07-appendices/
-├── practice-sholl-steckel/
-└── labs/
+Electronic-Structure-Learning
+├── Home
+├── Learn
+├── DFT Calculations
+├── Research
+└── Reference
 ```
 
-The Martin and Sholl–Steckel modules remain the source-structure authority. `src/data/site/` supplies learner-facing navigation and four-dimensional content status. Framework routes stay thin and data-driven.
+## Learn
 
-## 3. Authority boundary
+Learn follows the conceptual development of Martin's Electronic Structure. It provides a concise electronic-structure knowledge map rather than a complete online course.
 
-| Object | Authority |
-|---|---|
-| Site code, structure catalogs, and original learning content | This repository `main` |
-| Deployed public site | GitHub Pages deployment record |
-| Textbook body | Lawfully obtained external copy; never stored here |
-| Private reflection | Learning-Records/future Record |
-| Raw DFT output and restart data | Project repositories or calculation hosts |
-| Small publishable derived data | This repository only after provenance and redistribution checks |
+## DFT Calculations
 
-## 4. Components
+DFT Calculations provides practical references for commonly used electronic-structure software. It focuses on input structures, output interpretation, command-line inspection, common errors, and software conventions. It does not replace official documentation or provide complete calculation tutorials.
 
-- `ReadingOutline.astro`: unit-level source, page and section skeleton;
-- `TrackOverview.astro`: Part or practical-track navigation;
-- `BookMap.astro`: complete course map;
-- `SourceNote.astro`: source identity and status;
-- `DerivationBlock.astro`: assumptions and derivation container;
-- `VisualizationPlaceholder.astro`: pre-implementation visualization contract;
-- `SCFIterationVisualizer.astro`: existing affine fixed-point teaching experiment.
-- `src/components/site/`: neutral learning-path, catalog, status and navigation interfaces.
-- `src/components/reading/`: route-aware unit frame, source header, display toolbar, semantic contents and literature bridge;
-- `src/components/overrides/`: Starlight integration shared by all routes;
-- `src/components/theory/`: static-first complete Theory Atlas;
-- `src/components/literature/`: bibliography, claim and discussion presentation contracts.
+## Research
 
-## 5. Validation
-
-- `scripts/validate-framework.mjs`: structural counts, files, slugs and page ordering;
-- `scripts/validate-scf-model.mjs`: five deterministic teaching-model regimes;
-- `scripts/test-registry.mjs`: stable validator and browser-smoke registration;
-- `scripts/validate-site-architecture.mjs`: routes, statuses, references and publication boundaries;
-- `scripts/run-registered-validators.mjs`: fail-closed deterministic registry runner;
-- `scripts/validate-unit-reading-frame.mjs`: all-unit and built-HTML reading-frame audit;
-- `scripts/validate-source-semantics.mjs`: catalog/source-layer and bounded heading audit;
-- `scripts/validate-terminology.mjs`: terminology registry contract;
-- `scripts/validate-literature-layer.mjs`: empty-first literature schema and route checks;
-- `scripts/validate-runtime-lifecycle.mjs`: timer, RAF, observer, global-listener, and idempotent-controller ownership checks;
-- `scripts/runtime-diagnostics/`: test-only Chrome/CDP idle, route, mode, and interaction probes; never imported by production source;
-- `npm run build`: MDX imports, routes, formulas and static-site output.
-
-These gates do not validate future scientific explanations or real DFT calculations.
-
-## 6. Scientific data flow
+Research organizes knowledge by scientific problems and computational applications.
 
 ```text
-QE / VASP / other external calculation
-        -> parser
-        -> identity, unit, reference, grid and provenance checks
-        -> small JSON / CSV / CIF / XYZ derivative
-        -> read-only website visualization
+Research
+├── How To Research
+├── Structure
+├── Electronic Properties
+├── Stability
+├── Lattice Dynamics
+├── Magnetism
+├── Optical and Response Properties
+├── Surfaces and Interfaces
+├── Defects and Doping
+├── Transport
+├── Superconductivity
+└── Advanced Methods
 ```
 
-The browser does not run production QE, VASP, DFPT or EPW jobs.
+## Reference
 
-## 7. Deferred capabilities
+Reference explains external resources and their role in the knowledge structure. Resources are classified by purpose rather than collected as simple lists.
 
-The current framework does not introduce accounts, databases, a Python backend, Slurm submission, large-object storage, or online production DFT calculations.
+## Content Style
+
+The website does not enforce a single writing style. Theory pages may follow textbook style. Software pages may follow manual style. Research pages may follow review style.
+
+Avoid:
+- unnecessary introductions;
+- repetitive summaries;
+- artificial learning guidance;
+- excessive sectioning;
+- AI-generated writing patterns.
+
+Prefer:
+- precise definitions;
+- clear equations;
+- physical interpretation;
+- explicit assumptions;
+- limitations and references.
+
+## Page Organization
+
+Pages should follow the nature of their content. Possible elements include definitions, background, physical picture, mathematical formulation, implementation, applications, limitations, and references. Not every page requires every element.
+
+## Technical Principles
+
+The website remains static-first. Interactive components are used only when they provide clear explanatory value. Large computations and production DFT workflows remain outside the browser.
