@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Kohn–Sham Density Functional Theory" description="The auxiliary noninteracting system, Kohn–Sham equations, density reconstruction, and interpretation boundaries." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Kohn–Sham Density Functional Theory</span>
+  </nav>
+
+  <h1>Kohn–Sham Density Functional Theory</h1>
+  <p class="lede">Kohn–Sham theory replaces the interacting ground-state problem by an auxiliary system of noninteracting particles chosen to reproduce the same ground-state density.</p>
+  <p>The replacement is exact in principle if the exact exchange–correlation functional is known. In practice, the auxiliary equations become useful only after an approximation for that functional and a numerical self-consistent solution are supplied.</p>
+
+  <h2>The auxiliary system preserves the density, not the interacting wavefunction</h2>
+  <p>The Kohn–Sham construction does not claim that real electrons cease to interact. It introduces orbitals whose occupied density equals the density of the interacting ground state:</p>
+  <div class="math-display">
+    <math display="block" aria-label="density equals sum over occupations times orbital magnitude squared">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo>
+          <munderover><mo>∑</mo><mi>i</mi><mo>occ</mo></munderover>
+          <msub><mi>f</mi><mi>i</mi></msub>
+          <msup><mrow><mo>|</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\sum_i^&#123;\mathrm&#123;occ&#125;&#125;f_i|\phi_i(\mathbf&#123;r&#125;)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The occupations <math class="math-inline" aria-label="f sub i"><semantics><msub><mi>f</mi><mi>i</mi></msub><annotation encoding="application/x-tex">f_i</annotation></semantics></math> encode how the auxiliary states contribute to the density. Integer occupations are sufficient for many finite insulating ground states; metals, spin polarization, degeneracy, and finite-temperature formulations require additional care.</p>
+
+  <h2>The universal functional is reorganized</h2>
+  <p>Kohn–Sham theory separates the universal functional into a noninteracting kinetic term, a classical Hartree term, and the remaining exchange–correlation contribution:</p>
+  <div class="math-display">
+    <math display="block" aria-label="F of n equals T s of n plus E H of n plus E x c of n">
+      <semantics>
+        <mrow>
+          <mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>=</mo>
+          <msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">F[n]=T_s[n]+E_&#123;\mathrm&#123;H&#125;&#125;[n]+E_&#123;\mathrm&#123;xc&#125;&#125;[n].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p><math class="math-inline" aria-label="T s"><semantics><msub><mi>T</mi><mi>s</mi></msub><annotation encoding="application/x-tex">T_s</annotation></semantics></math> is the minimum kinetic energy of noninteracting orbitals yielding the density. The Hartree term is the classical Coulomb self-energy of the density. Everything not captured by those two pieces is assigned to <math class="math-inline" aria-label="E x c"><semantics><msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math>.</p>
+
+  <h2>The Kohn–Sham equations</h2>
+  <p>Stationarity of the energy with respect to orthonormal orbitals gives one-particle equations:</p>
+  <div class="math-display">
+    <math display="block" aria-label="minus one half laplacian plus effective potential acting on phi i equals epsilon i phi i">
+      <semantics>
+        <mrow>
+          <mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mo>∇</mo><mn>2</mn></msup>
+          <mo>+</mo><msub><mi>v</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo>
+          <msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">[-\tfrac12\nabla^2+v_s[n](\mathbf&#123;r&#125;)]\phi_i(\mathbf&#123;r&#125;)=\varepsilon_i\phi_i(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The effective potential is</p>
+  <div class="math-display">
+    <math display="block" aria-label="v s equals v external plus v Hartree plus v exchange correlation">
+      <semantics>
+        <mrow>
+          <msub><mi>v</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>=</mo><msub><mi>v</mi><mi>ext</mi></msub>
+          <mo>+</mo><msub><mi>v</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>v</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_s[n]=v_&#123;\mathrm&#123;ext&#125;&#125;+v_&#123;\mathrm&#123;H&#125;&#125;[n]+v_&#123;\mathrm&#123;xc&#125;&#125;[n].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Because the potential depends on the density reconstructed from the orbitals, this is a nonlinear eigenvalue problem. The equations must therefore be solved self-consistently; the numerical iteration is treated on the <a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> page.</p>
+
+  <h2>What the orbitals and eigenvalues do—and do not—mean</h2>
+  <p>Kohn–Sham orbitals are auxiliary variables that reproduce the ground-state density and the noninteracting kinetic contribution. They are not, in general, the natural orbitals of the interacting system and should not be interpreted as classical electron trajectories.</p>
+  <p>The exact highest occupied eigenvalue has a special relation to the ionization energy under the exact functional and suitable conditions. This does not make the entire Kohn–Sham spectrum a quasiparticle spectrum. Unoccupied eigenvalues, band gaps, and excitation energies generally require additional theory or carefully justified approximations.</p>
+
+  <h2>Total energy is not the sum of occupied eigenvalues</h2>
+  <p>The eigenvalue sum double-counts parts of the Hartree and exchange–correlation contributions. A correct total-energy expression must include the appropriate subtraction and functional terms. Comparing raw eigenvalue sums between calculations is therefore not a substitute for comparing consistently evaluated total energies.</p>
+
+  <h2>Spin, occupations, and ensembles extend the basic construction</h2>
+  <p>Spin-density functional theory replaces one density by spin-resolved densities or a magnetization field. Fractional occupations may represent ensembles, metallic filling, degeneracy, or finite electronic temperature. These extensions change the variables and variational object and should not be treated as mere numerical conveniences.</p>
+
+  <h2>Where errors enter in practice</h2>
+  <ul>
+    <li><strong>Functional approximation:</strong> the exact exchange–correlation functional is unknown.</li>
+    <li><strong>Finite representation:</strong> orbitals and densities are expanded on a basis or grid.</li>
+    <li><strong>Self-consistency error:</strong> the nonlinear fixed point is solved only to finite tolerance.</li>
+    <li><strong>Sampling and boundary error:</strong> periodic systems require finite cells and Brillouin-zone integration.</li>
+  </ul>
+  <p>These errors are distinct. A tightly converged SCF loop cannot compensate for an unsuitable functional or an incomplete numerical representation.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/kohnsham-auxiliary-system/15B910D74BA0ABE27F512EF4D5E5CF50">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., Chapter 7</a> is the main reference for the auxiliary-system construction and its separation from general DFT foundations and later approximations.</p>
+  <p><a href="https://link.aps.org/doi/10.1103/PhysRev.140.A1133">Kohn and Sham, “Self-Consistent Equations Including Exchange and Correlation Effects”</a> is the original formulation. It is a historical primary source, not a modern numerical tutorial.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page defines the Kohn–Sham auxiliary system and the meaning of its variables. It does not rank exchange–correlation approximations, prescribe mixing parameters, or choose a basis. Those responsibilities belong to the linked XC, SCF, and discretization pages.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official resource destinations were reviewed on 2 August 2026. The exposition follows the separation among DFT foundations, the Kohn–Sham auxiliary system, XC approximations, and numerical solution.</p>
+  </aside>
+</BaseLayout>
