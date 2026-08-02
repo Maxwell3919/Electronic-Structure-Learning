@@ -17,9 +17,9 @@
 | 规则 | 当前路径 | 当前职责 | 消费者 | 稳定公开 URL | 验证 | Atlas v3 目标 | 分类 | 判断依据 | 前置条件 |
 |---|---|---|---|---|---|---|---|---|---|
 | `route-home` | `src/content/docs/index.mdx` | Atlas 首页 | Starlight 首页与主导航 | `/` | site architecture、build budget | Home | RETAIN | 已是 v3 入口；Talos 互动未实施 | 互动设计单独验收 |
-| `route-v3-theory-entry` | `src/content/docs/theory/{index,mathematical-foundations,physical-foundations,chemical-foundations,electronic-structure,learning-map}/index.mdx` | 课程级 Theory 与 Learning Map 骨架 | `astro.config.mjs`、首页、Theory 内链 | 对应 6 个 URL | site architecture | 数据驱动 Theory | MIGRATE | 目前分类仍写在页面中 | Atlas registry 与 route 检查先通过 |
-| `route-v3-methods-tools` | `src/content/docs/{methods,computational-tools}/index.mdx` | 两个顶层骨架 | sidebar、首页 | `/methods/`、`/computational-tools/` | site architecture | 数据驱动分类与子路由 | MIGRATE | 缺注册表和引用校验 | 先建立最小模型 |
-| `route-reference-entry` | `src/content/docs/reference/index.mdx` | Reference 入口与兼容锚点 | sidebar、旧正文 links | `/reference/` | site architecture、built-link checks | 数据驱动 Reference | MIGRATE | 稳定入口需保留 | provenance 模型先通过 |
+| `route-v3-theory-entry` | `src/content/docs/theory/{index,mathematical-foundations,physical-foundations,chemical-foundations,electronic-structure,learning-map}/index.mdx` | 课程级 Theory 与 Learning Map | `astro.config.mjs`、首页、Theory 内链 | 对应 6 个 URL | site architecture、Atlas model | 数据驱动 Theory | RETAIN | 已由最小模型渲染课程入口和代表性关系 | 专项来源核验后再扩展 |
+| `route-v3-methods-tools` | `src/content/docs/{methods,computational-tools}/index.mdx` | 方法分类与工具层级入口 | sidebar、首页 | `/methods/`、`/computational-tools/` | site architecture、Atlas model | 数据驱动分类与代表性层级 | RETAIN | 已接入注册表和引用检查 | 正文按主题后续单独调研 |
+| `route-reference-entry` | `src/content/docs/reference/index.mdx` | Reference 入口与兼容锚点 | sidebar、旧正文 links | `/reference/` | site architecture、built-link checks、Atlas model | 数据驱动 Reference | RETAIN | 已接入资源契约，未填充未经核验条目 | provenance 与许可逐条通过后收录 |
 | `route-reference-support` | `src/content/docs/reference/{design-system,terminology-and-symbols}.mdx` | 设计 specimen、术语索引 | 专用 validators | 2 个 URL | design/terminology gates | Reference 内部索引 | RETAIN | 各有独立职责 | 保持专用门槛 |
 | `route-theory-legacy-maps` | `src/content/docs/{book-map,theory/atlas/index}.mdx` | 旧课程地图与阅读地图 | BookMap、reading frame、旧链接 | `/book-map/`、`/theory/atlas/` | reading-frame + smoke | Learning Map 兼容视图 | MERGE | 地图职责相邻，旧 smoke 仍活跃 | 新 static-first map、兼容 URL、原 smoke |
 | `route-martin` | `src/content/docs/part-01-*` … `part-07-*` | 7 Part index + 46 单元正文 | Martin catalog、contentStatus、unitCatalog、45 validators/43 smokes 中的单元门槛 | 53 个 URL | framework、source semantics、reading frame、per-unit | Theory/Methods 的参考内容 | MIGRATE | 内容有价值，教材目录不等于知识分类 | 逐单元 mapping；不批量改写；URL/anchor/gates 保留 |
@@ -31,13 +31,14 @@
 
 `astro.config.mjs` 当前主导航已经是 Home / Theory / Methods / Computational Tools / Reference；Martin、Sholl、labs、cases、interactive-labs 仍位于“现有内容 · 迁移中”。Literature、learning-paths、reading-system 等路由存在但未进入新版顶层入口。所有 93 个内容源均产生或支撑稳定公开 URL，本轮不删除、重定向或改名。
 
-基线覆盖统计：832 个对象，其中 93 routes、65 data registries、552 components、15 CSS、48 validators、43 browser smokes、8 runtime tools、2 workflows、4 orchestration scripts 与 2 configuration files。按逐文件规则归类为 `RETAIN 182`、`MIGRATE 577`、`MERGE 49`、`REMOVE_CANDIDATE 24`、`UNRESOLVED 0`。
+当前覆盖统计：842 个对象，其中 93 routes、72 data registries、554 components、15 CSS、49 validators、43 browser smokes、8 runtime tools、2 workflows、4 orchestration scripts 与 2 configuration files。按逐文件规则归类为 `RETAIN 201`、`MIGRATE 568`、`MERGE 49`、`REMOVE_CANDIDATE 24`、`UNRESOLVED 0`。
 
 ## 数据注册表
 
 | 规则 | 当前路径 | 当前职责 | 消费者 | 稳定公开 URL | 验证 | Atlas v3 目标 | 分类 | 判断依据 | 前置条件 |
 |---|---|---|---|---|---|---|---|---|---|
 | `data-atlas-migration` | `src/data/atlas/migration/*.mjs` | 本清单规则 | inventory validator、迁移文档 | 不适用 | inventory validator | `atlas/migration` | RETAIN | 使覆盖可执行 | 保持简洁 |
+| `data-atlas-model` | `src/data/atlas/{index,theory,learning-map,methods,computational-tools,references}.mjs` | Atlas v3 最小静态模型 | 新版入口与 model validator | 不适用 | Atlas model validator | `src/data/atlas` | RETAIN | 集中稳定 ID、关系与引用边界 | 不复制课程目录、不演化为 CMS |
 | `data-martin` | `src/data/martin/*.mjs`、`shollSteckelStructure.mjs` | 46+10 单元、页码、section locator | generator/framework、unitCatalog、BookMap、status | 间接支撑 64 个 URL | framework/source semantics | 原结构权威 + v3 mapping | RETAIN | 不能把整书目录复制进课程 registry | mapping 只引用稳定 ID |
 | `data-teaching-models` | `src/data/part02/**` … `part07/**` | 章节可视化模型与小型派生数据 | 专题 components/validators | 间接支撑单元 URL | per-unit validators | 随权威主题迁移 | MIGRATE | 目标取决于科学映射 | provenance、输入输出、边界与 validator 保留 |
 | `data-site-legacy` | `src/data/site/*.mjs` | 导航、路线、labs/cases、status、reference、术语、source semantics | pages/components/test registry/validators | 间接 | site/design/source gates | Atlas registry 或 migration compatibility | MERGE | 一个目录混合结构和管理职责 | 逐消费者迁移，证据边界保留 |
@@ -48,6 +49,7 @@
 | 规则 | 当前路径 | 当前职责 | 消费者 | 稳定公开 URL | 验证 | Atlas v3 目标 | 分类 | 判断依据 | 前置条件 |
 |---|---|---|---|---|---|---|---|---|---|
 | `component-shared-root` | `src/components/*.{astro,mdx}` | 共享 callout/source/map 与早期 explorer 混合层 | routes 与 chapter components | 间接 | unit/model/runtime gates | 通用原语或主题交互 | MERGE | 同层职责混合但实际被引用 | import graph、no-JS、科学边界 |
+| `component-atlas` | `src/components/atlas/**` | 数据驱动目录与 static-first Learning Map | Theory、Methods、Tools、Reference | 间接 | Atlas model/site gates | v3 共享呈现层 | RETAIN | 注册表单一维护、无 JS 可读 | keyboard、narrow、reduced motion、no-JS |
 | `component-chapter-content` | `src/components/chapter01` … `chapter05`、`part02` … `part07` | Martin 正文组装、推导、图与交互 | 对应 46 单元 route | 间接 | per-unit validators/smokes | v3 主题或兼容 route | MIGRATE | 有内容价值，不可按目录批量移动 | 逐单元 mapping、URL/anchor/gates |
 | `component-framework` | `src/components/{design,interaction,overrides,reading,site,theory}/**` | 共享设计、static-first interaction、Starlight override、reading canvas | config、顶层页、单元页 | 间接 | design/runtime/reading gates | v3 共享呈现层 | RETAIN | 提供可访问性与生命周期基础 | no-JS、keyboard、reduced motion、lifecycle |
 | `component-learning` | `src/components/learning/**` | 旧目标、进度、checkpoint、路线 UI | learning routes/framework | 间接 | design/site gates | 仅留必要 prerequisite/link 原语 | MERGE | v3 不强制课程进度模板 | 逐 import 核验与语义等价 |

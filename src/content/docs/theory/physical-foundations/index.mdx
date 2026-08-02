@@ -3,15 +3,14 @@ title: "Physical Foundations"
 description: "电子结构理论所依赖的物理课程入口。"
 ---
 
+import AtlasCatalog from '../../../../components/atlas/AtlasCatalog.astro';
+import { theoryDomains } from '../../../../data/atlas/theory.mjs';
+
+export const domain = theoryDomains.find((item) => item.id === 'physical-foundations');
+
 物理基础按课程组织，重点说明它们在电子结构理论中的作用。
 
-## 课程范围
-
-- 经典力学
-- 电磁学
-- 量子力学
-- 统计力学
-- 固体物理
+<AtlasCatalog entries={domain.courses} />
 
 后续页面不会把这些课程压缩成若干速查条目。每门课程将给出适合系统学习的书籍和网站、推荐理由，以及它与电子结构理论之间的概念连接。
 

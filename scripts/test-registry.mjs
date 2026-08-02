@@ -13,6 +13,14 @@ const contentTests = contentStatus
 
 export const testRegistry = [
   {
+    id: 'atlas-v3-model',
+    route: '/theory/learning-map/',
+    validator: 'scripts/validate-atlas-v3-model.mjs',
+    smokeScript: null,
+    status: 'active',
+    category: 'site-architecture',
+  },
+  {
     id: 'atlas-v3-inventory',
     route: '/',
     validator: 'scripts/validate-atlas-v3-inventory.mjs',

@@ -24,6 +24,9 @@ ROUTES = [
     "start-here/",
     "learning-paths/",
     "theory/",
+    "theory/learning-map/",
+    "methods/",
+    "computational-tools/",
     "labs/",
     "cases/",
     "reference/",
@@ -120,6 +123,19 @@ def main():
             raise AssertionError("Theme background could not be resolved")
         report["themes"] = colors
         report["keyboard_focus_tag"] = focused_tag
+
+        desktop.get(urljoin(BASE_URL, "theory/learning-map/"))
+        nodes = desktop.find_elements(By.CSS_SELECTOR, ".learning-map__nodes li")
+        edges = desktop.find_elements(By.CSS_SELECTOR, ".learning-map ul li")
+        if len(nodes) != 13 or len(edges) != 11:
+            raise AssertionError(
+                f"Representative Learning Map mismatch: {len(nodes)} nodes, {len(edges)} edges"
+            )
+        nodes[0].send_keys(Keys.TAB)
+        focused = desktop.execute_script("return document.activeElement")
+        if focused not in nodes:
+            raise AssertionError("Learning Map nodes are not keyboard-focusable")
+        report["learning_map"] = {"nodes": len(nodes), "edges": len(edges), "keyboard": True}
     finally:
         desktop.quit()
 
@@ -132,6 +148,10 @@ def main():
     no_javascript = make_driver(javascript=False, width=390, height=844)
     try:
         report["checks"].extend(inspect_routes(no_javascript, "no-javascript"))
+        no_javascript.get(urljoin(BASE_URL, "theory/learning-map/"))
+        if len(no_javascript.find_elements(By.CSS_SELECTOR, ".learning-map__nodes li")) != 13:
+            raise AssertionError("Learning Map fallback lost its static node list")
+        report["learning_map"]["no_javascript"] = True
     finally:
         no_javascript.quit()
 

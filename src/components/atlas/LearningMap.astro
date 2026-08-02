@@ -1,0 +1,28 @@
+---
+import { learningMapEdges, learningMapNodes, learningMapVersion } from '../../data/atlas/learning-map.mjs';
+const byId = new Map(learningMapNodes.map((item) => [item.id, item]));
+---
+<section class="learning-map" aria-labelledby="learning-map-heading">
+  <h2 id="learning-map-heading">代表性关系网络</h2>
+  <p>版本 <code>{learningMapVersion}</code>。这组有限节点验证分叉、汇合和跨学科关系，不代表完整知识图谱或唯一课程顺序。</p>
+  <ol class="learning-map__nodes">
+    {learningMapNodes.map((node) => <li id={node.id.replace('concept:', 'node-')} tabindex="0">
+      <strong>{node.nameZh}</strong> <span lang="en">{node.nameEn}</span>
+      <small>{node.domain} · {node.type}</small><p>{node.definition}</p>
+    </li>)}
+  </ol>
+  <h3>关系</h3>
+  <ul>{learningMapEdges.map((edge) => <li>
+    <a href={`#${edge.from.replace('concept:', 'node-')}`}>{byId.get(edge.from)?.nameZh}</a><span aria-hidden="true"> → </span>
+    <a href={`#${edge.to.replace('concept:', 'node-')}`}>{byId.get(edge.to)?.nameZh}</a><span>：{edge.explanation}（{edge.strictness}）</span>
+  </li>)}</ul>
+</section>
+<style>
+  .learning-map__nodes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .75rem; padding: 0; list-style: none; }
+  .learning-map__nodes li { border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; padding: .8rem; }
+  .learning-map__nodes li:focus { outline: 3px solid var(--sl-color-accent); outline-offset: 3px; }
+  .learning-map__nodes span, .learning-map__nodes small { color: var(--sl-color-gray-2); }
+  .learning-map__nodes small { display: block; margin-block-start: .25rem; }
+  .learning-map__nodes p { margin-block-end: 0; }
+  @media (prefers-reduced-motion: reduce) { .learning-map * { scroll-behavior: auto !important; } }
+</style>

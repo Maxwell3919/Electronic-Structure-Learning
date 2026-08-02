@@ -17,6 +17,7 @@
     "validate:scf": "node scripts/validate-scf-model.mjs",
     "validate:site-architecture": "node scripts/validate-site-architecture.mjs",
     "validate:atlas-v3-inventory": "node scripts/validate-atlas-v3-inventory.mjs",
+    "validate:atlas-v3-model": "node scripts/validate-atlas-v3-model.mjs",
     "validate:design-system": "node scripts/validate-design-system.mjs",
     "validate:build-budget": "node scripts/validate-build-budget.mjs",
     "validate:unit-reading-frame": "node scripts/validate-unit-reading-frame.mjs",

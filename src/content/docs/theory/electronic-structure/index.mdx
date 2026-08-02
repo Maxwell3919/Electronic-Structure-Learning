@@ -3,19 +3,11 @@ title: "Electronic Structure Theory"
 description: "从多电子问题到实际电子结构方法的理论入口。"
 ---
 
+import AtlasCatalog from '../../../../components/atlas/AtlasCatalog.astro';
+import { electronicStructureTopics } from '../../../../data/atlas/theory.mjs';
+
 本节承接数学、物理和化学基础，讨论电子结构理论本身。
 
-## 范围
+<AtlasCatalog entries={electronicStructureTopics} />
 
-- 多电子问题
-- Hohenberg–Kohn 理论
-- Kohn–Sham 理论
-- 交换关联近似
-- 自洽场
-- 基组与数值表示
-- 平面波、网格和局域基组
-- 赝势与 PAW
-- 布里渊区采样
-- 主要电子结构方法
-
-现有 Martin 页面提供了这一部分的大量正文。后续工作将按知识关系重新组织入口，不要求教材章节与新版目录一一对应，也不重复维护同一段理论内容。
+现有 Martin 页面只作为可定位的参考内容保留。46 个单元的迁移项默认标为 `source-location` 与 `specialist-review-required`；未凭目录标题决定拆分、重写或知识分类。
