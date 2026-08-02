@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Pseudopotentials, PAW, and Core–Valence Treatments" description="Frozen cores, scattering equivalence, projectors, augmentation, reconstruction, transferability, and validation." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Pseudopotentials, PAW, and Core–Valence Treatments</span>
+  </nav>
+
+  <h1>Pseudopotentials, PAW, and Core–Valence Treatments</h1>
+  <p class="lede">Core–valence methods replace the rapidly varying all-electron problem near nuclei with a smoother valence problem while preserving selected physical information outside chosen core regions.</p>
+  <p>This approximation enables efficient plane-wave and real-space calculations, but it introduces a dataset-dependent model. A pseudopotential or PAW file is part of the scientific method, not an interchangeable input accessory.</p>
+
+  <h2>Why core states are separated</h2>
+  <p>Core orbitals are strongly bound and oscillate rapidly near the nucleus. Representing those oscillations directly requires high spatial resolution even when the target chemistry is governed mainly by valence electrons.</p>
+  <p>The frozen-core approximation assumes that selected core states remain close to a reference atomic configuration. The remaining valence states feel an effective ionic potential and, depending on the method, augmentation terms that recover missing charge or all-electron information.</p>
+
+  <h2>Scattering equivalence is the central objective</h2>
+  <p>A useful effective potential should reproduce relevant all-electron valence scattering over an energy and angular-momentum range, not merely match one atomic eigenvalue. Outside a core radius, pseudo and all-electron partial waves are constructed to agree or to carry equivalent logarithmic derivatives and phase shifts.</p>
+  <p>Transferability asks whether that atomic construction remains adequate in molecules, solids, surfaces, unusual oxidation states, compressed structures, magnetism, and response calculations. It is therefore a property of a dataset used for a stated problem, not a permanent binary label.</p>
+
+  <h2>Norm-conserving pseudopotentials</h2>
+  <p>A norm-conserving construction matches the integrated pseudo and all-electron radial probability within the core for each reference channel:</p>
+  <div class="math-display">
+    <math display="block" aria-label="integral zero to r c of pseudo radial function squared equals integral zero to r c of all electron radial function squared">
+      <semantics>
+        <mrow>
+          <msubsup><mo>∫</mo><mn>0</mn><msub><mi>r</mi><mi>c</mi></msub></msubsup><msup><mrow><mo>|</mo><msub><mover><mi>u</mi><mo>~</mo></mover><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mi>d</mi><mi>r</mi>
+          <mo>=</mo>
+          <msubsup><mo>∫</mo><mn>0</mn><msub><mi>r</mi><mi>c</mi></msub></msubsup><msup><mrow><mo>|</mo><msub><mi>u</mi><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mi>d</mi><mi>r</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\int_0^&#123;r_c&#125;|\tilde u_l(r)|^2dr=\int_0^&#123;r_c&#125;|u_l(r)|^2dr.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Norm conservation supports scattering and charge response properties, but often requires harder, higher-cutoff wavefunctions than more flexible approaches. “Norm-conserving” alone does not specify the generator, reference configuration, local channel, relativistic treatment, or exchange–correlation functional.</p>
+
+  <h2>Nonlocal projectors distinguish angular channels</h2>
+  <p>Modern pseudopotentials are generally nonlocal because different angular-momentum channels require different effective interactions. A schematic separable form is</p>
+  <div class="math-display">
+    <math display="block" aria-label="V nonlocal equals sum over i j of beta i D i j beta j bra ket">
+      <semantics>
+        <mrow><msub><mover><mi>V</mi><mo>^</mo></mover><mi>NL</mi></msub><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow><mo></mo></munderover><mo>|</mo><msub><mi>β</mi><mi>i</mi></msub><mo>⟩</mo><msub><mi>D</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>⟨</mo><msub><mi>β</mi><mi>j</mi></msub><mo>|</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\hat V_&#123;\mathrm&#123;NL&#125;&#125;=\sum_&#123;ij&#125;|\beta_i\rangle D_&#123;ij&#125;\langle\beta_j|.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Projector completeness over the relevant valence subspace affects transferability. Poor local-channel choices or incomplete projectors can produce ghost states: unphysical low-energy solutions that may look numerically converged.</p>
+
+  <h2>Ultrasoft pseudopotentials move norm differences into augmentation</h2>
+  <p>Ultrasoft methods relax norm conservation to create smoother pseudo wavefunctions. The missing charge is restored through augmentation functions and a generalized overlap operator, so the orbital equation is no longer an ordinary orthonormal eigenproblem.</p>
+  <p>This can reduce plane-wave cutoffs, especially for difficult elements, but introduces additional density grids, augmentation terms, and implementation details. Wavefunction and charge-density cutoffs may converge differently.</p>
+
+  <h2>PAW is a transformation between smooth and all-electron descriptions</h2>
+  <p>The projector-augmented wave method relates a smooth auxiliary state to an all-electron state through a linear transformation:</p>
+  <div class="math-display">
+    <math display="block" aria-label="Psi equals T times pseudo Psi">
+      <semantics>
+        <mrow><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>|</mo><mover><mi>Ψ</mi><mo>~</mo></mover><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">|\Psi\rangle=\hat T|\tilde\Psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Inside atom-centred augmentation regions, partial waves and projectors reconstruct rapidly varying all-electron quantities from the smooth representation. PAW remains a frozen-core method unless core relaxation is explicitly included; “all-electron reconstruction” does not mean every electron was variationally optimized in the solid.</p>
+
+  <h2>Semicore and valence partition choices matter</h2>
+  <p>States that are core-like in one environment can hybridize or polarize in another. Transition-metal semicore p states, heavy-element shells, high-pressure phases, oxidation changes, spectroscopy, and magnetism can require a larger valence partition.</p>
+  <p>Adding semicore states often increases computational cost and the required cutoff. Omitting them can bias equilibrium volumes, energy differences, response properties, core-level shifts, or magnetic interactions. The decision should be tested against the target observable.</p>
+
+  <h2>Relativistic content belongs to the dataset lineage</h2>
+  <p>Datasets may be nonrelativistic, scalar-relativistic, or fully relativistic. Spin–orbit calculations require compatible j-resolved or spinor information in the effective core treatment. Applying an SOC keyword cannot recover relativistic information absent from the dataset generation.</p>
+  <p>Relativistic generation choices also affect scalar energies and scattering before explicit SOC is enabled. Dataset metadata should state the valence configuration, generation method, XC functional, relativistic level, and version.</p>
+
+  <h2>Verification, validation, and convergence are different</h2>
+  <dl class="paired-definitions">
+    <dt>Atomic verification</dt>
+    <dd>Checks eigenvalues, logarithmic derivatives, phase shifts, norms, ghost states, or reference configurations for the generated atom.</dd>
+    <dt>Cross-code or all-electron verification</dt>
+    <dd>Compares controlled equations of state or other common tests across implementations.</dd>
+    <dt>Numerical convergence</dt>
+    <dd>Tests cutoff, grids, projectors, augmentation, and solver tolerances for the selected dataset.</dd>
+    <dt>Scientific validation</dt>
+    <dd>Establishes that the chosen core partition and dataset support the target property for the actual chemical and physical regime.</dd>
+  </dl>
+  <p>A library benchmark can reduce risk, but it cannot independently validate every compound, oxidation state, magnetic configuration, pressure, excited-state method, or response quantity.</p>
+
+  <h2>What should be recorded</h2>
+  <ul>
+    <li>Exact dataset filename, format, source collection, version, and checksum.</li>
+    <li>Generator and exchange–correlation functional when available.</li>
+    <li>Valence and semicore configuration, core radii, projector channels, and relativistic treatment.</li>
+    <li>Wavefunction and density/augmentation cutoffs actually tested.</li>
+    <li>Any cross-dataset or all-electron comparison relevant to the target observable.</li>
+  </ul>
+
+  <h2>Study routes and implementation bridges</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/pseudopotentials/">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> provides the theory spine for pseudization, scattering, nonlocality, ultrasoft methods, and PAW. Full text may require institutional access.</p>
+  <p><a href="https://www.quantum-espresso.org/pseudopotentials/">Quantum ESPRESSO pseudopotential guidance</a> links supported formats and curated sources to plane-wave practice. It does not remove the need to test the actual system and observable.</p>
+  <p><a href="https://www.materialscloud.org/discover/sssp/table/efficiency">SSSP</a> supplies precision- and efficiency-oriented pseudopotential tables built from a defined verification protocol. A table entry is evidence about covered tests, not a universal ranking.</p>
+  <p><a href="https://gpaw.readthedocs.io/algorithms.html">GPAW algorithm documentation</a> provides an implementation bridge for PAW transformation and multiple smooth representations.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page explains the approximation and its evidence requirements. It does not recommend one universal library, valence partition, dataset, cutoff, or PAW setup for all materials.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Martin, Quantum ESPRESSO, SSSP, and GPAW destinations were reviewed on 3 August 2026. Dataset suitability remains system- and observable-specific.</p>
+  </aside>
+</BaseLayout>
