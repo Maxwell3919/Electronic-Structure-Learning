@@ -16,7 +16,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-The reviewed content has developed in seven batches:
+The reviewed content has developed in eight batches:
 
 1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
 2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
@@ -25,6 +25,7 @@ The reviewed content has developed in seven batches:
 5. Differential Equations, Fourier Analysis, Crystallography, Group Theory and Symmetry.
 6. Plane-Wave and Real-Space Methods, Pseudopotentials/PAW/Core–Valence Treatments, Brillouin-Zone Sampling, Relativistic Electronic Structure/Spin/Magnetism.
 7. Atomic and Molecular Physics, Physical Chemistry, Chemical Bonding and Molecular Structure, Localized-Orbital Methods.
+8. Electromagnetism, Statistical Mechanics, Solid-State Chemistry.
 
 The Tier-1 responsibility chain remains explicit:
 
@@ -37,7 +38,7 @@ interacting many-electron problem
 → finite numerical representation
 ```
 
-Tier 2 is not a fixed linear sequence. Two complementary routes are now visible.
+Tier 2 is not a fixed linear sequence. It now supports three complementary routes.
 
 ### Periodic plane-wave and real-space route
 
@@ -92,6 +93,28 @@ Localized-orbital methods
 └── basis, grid, Pulay, and BSSE convergence
 ```
 
+### Fields, finite temperature, and composition route
+
+```text
+Electromagnetism
+├── Coulomb fields and Poisson equations
+├── electrostatic boundaries and references
+├── multipoles and polarization
+└── dielectric and optical-response foundations
+
+Statistical mechanics
+├── ensembles and partition functions
+├── Fermi occupations and electronic entropy
+├── phonon and finite-temperature free energies
+└── fluctuations and response
+
+Solid-state chemistry
+├── composition and structure types
+├── defects, nonstoichiometry, and doping
+├── chemical potentials and competing phases
+└── synthesis-aware structure–property interpretation
+```
+
 The following responsibilities remain separate:
 
 - A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
@@ -105,6 +128,10 @@ The following responsibilities remain separate:
 - Orbital pictures, charge partitions, density topology, bond orders, and energy decompositions are distinct interpretation frameworks.
 - Empirical tight binding and full self-consistent localized-basis electronic structure may share matrix algebra but do not support the same claims.
 - Basis labels and radial cutoffs from different codes are not directly interchangeable; convergence remains system- and observable-specific.
+- Electrostatic boundary conditions, Coulomb kernels, potential references, and charged-cell conventions are part of the model.
+- Physical electronic temperature, numerical smearing, vibrational free energy, and trajectory sampling are distinct approximations.
+- Formal oxidation states, partitioned charges, defect charge states, carrier concentrations, and nominal dopant counts are distinct quantities.
+- Zero-temperature energy or convex-hull results do not by themselves establish finite-temperature phase stability or synthesis accessibility.
 
 All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
