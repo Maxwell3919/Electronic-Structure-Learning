@@ -1,61 +1,235 @@
-# Electronic-Structure-Learning Architecture
+# Electronic-Structure-Atlas Architecture
 
 ## Project Philosophy
 
-Electronic-Structure-Learning is a concise and rigorous knowledge base for electronic-structure theory and computational materials research.
+Electronic-Structure-Atlas is a concise and rigorous knowledge base for electronic-structure theory, computational methods, and scientific tools.
 
-The website does not aim to replace textbooks, software manuals, or research literature. It provides a compact map of electronic-structure theory, practical references for DFT calculations, and guidance for locating deeper resources.
+The project does not aim to replace textbooks, software manuals, or research literature. It provides a structured view of the field, helping readers understand the relationships between fundamental knowledge, computational methods, and practical tools.
 
-The project avoids unnecessary expansion. Content should focus on essential concepts, methods, assumptions, limitations, and references.
+The content should remain focused on essential concepts, assumptions, methods, limitations, and reliable external resources.
 
 ## Information Architecture
 
 ```text
-Electronic-Structure-Learning
+Electronic-Structure-Atlas
+
 ├── Home
-├── Learn
-├── DFT Calculations
-├── Research
+├── Theory
+├── Methods
+├── Computational Tools
 └── Reference
 ```
 
-## Learn
+## Home
 
-Learn follows the conceptual development of Martin's Electronic Structure. It provides a concise electronic-structure knowledge map rather than a complete online course.
+The homepage introduces electronic structure through an accessible overview.
 
-## DFT Calculations
+Future design direction:
 
-DFT Calculations provides practical references for commonly used electronic-structure software. It focuses on input structures, output interpretation, command-line inspection, common errors, and software conventions. It does not replace official documentation or provide complete calculation tutorials.
+- Talos, the interactive tuxedo cow cat mascot, may serve as a visual guide throughout the homepage.
+- The mascot should support navigation and exploration without replacing scientific content.
+- The homepage should introduce the field, the knowledge structure, and available paths of exploration.
 
-## Research
+## Theory
 
-Research organizes knowledge by scientific problems and computational applications.
+Theory provides the fundamental knowledge structure required to understand electronic-structure research.
+
+It follows the conceptual development of electronic structure rather than a simplified DFT tutorial.
 
 ```text
-Research
-├── How To Research
-├── Structure
-├── Electronic Properties
-├── Stability
+Theory
+
+├── Mathematical Foundations
+├── Physical Foundations
+├── Chemical Foundations
+├── Electronic Structure Theory
+└── Learning Map
+```
+
+### Mathematical Foundations
+
+The website introduces prerequisite subjects at the course level rather than reproducing complete university courses.
+
+Examples:
+
+```text
+Mathematical Foundations
+├── Linear Algebra
+├── Calculus
+├── Differential Equations
+├── Numerical Methods
+└── Probability and Statistics
+```
+
+Each subject page provides:
+
+- why this subject is needed;
+- recommended books and websites;
+- reasons for recommendation;
+- a concept map summarizing the common essential knowledge extracted from these resources;
+- connections to electronic-structure theory.
+
+The website does not reproduce the full curriculum of these subjects.
+
+### Physical Foundations
+
+```text
+Physical Foundations
+├── Classical Mechanics
+├── Electromagnetism
+├── Quantum Mechanics
+├── Statistical Mechanics
+└── Solid State Physics
+```
+
+### Chemical Foundations
+
+```text
+Chemical Foundations
+├── Atomic Structure
+├── Chemical Bonding
+├── Molecular Orbitals
+├── Periodic Trends
+└── Surface Chemistry
+```
+
+### Electronic Structure Theory
+
+```text
+Electronic Structure Theory
+├── Many-Electron Problem
+├── Density Functional Theory
+├── Hohenberg-Kohn Theory
+├── Kohn-Sham Theory
+├── Exchange-Correlation
+├── Self-Consistent Field
+├── Basis Representations
+├── Plane Waves
+├── Localized Basis Methods
+├── Pseudopotentials and PAW
+├── Brillouin-Zone Sampling
+└── Electronic Structure Methods
+```
+
+### Learning Map
+
+Learning Map is a part of Theory.
+
+It describes dependency relationships between concepts rather than a fixed reading order.
+
+Examples:
+
+```text
+Crystal Vector
+↓
+Crystal Structure
+↓
+Symmetry
+↓
+Reciprocal Space
+↓
+Brillouin Zone
+↓
+Bloch Theorem
+↓
+Band Structure
+```
+
+The final representation should be a knowledge graph with multiple entry points.
+
+## Methods
+
+Methods introduces computational and theoretical methods used in electronic-structure research.
+
+It does not serve as a literature database and does not store detailed paper analysis.
+
+```text
+Methods
+
+├── Structural Methods
+├── Electronic Structure Analysis
+├── Stability Analysis
 ├── Lattice Dynamics
-├── Magnetism
-├── Optical and Response Properties
-├── Surfaces and Interfaces
-├── Defects and Doping
-├── Transport
-├── Superconductivity
+├── Magnetic Methods
+├── Surface and Interface Methods
+├── Defect Methods
+├── Transport Methods
+├── Superconductivity Methods
 └── Advanced Methods
+```
+
+Each method page may discuss:
+
+- physical meaning;
+- theoretical basis;
+- computational approach;
+- required inputs;
+- important outputs;
+- applicability;
+- limitations;
+- references for deeper study.
+
+## Computational Tools
+
+Computational Tools describes software packages, workflow systems, visualization tools, databases, and auxiliary utilities.
+
+```text
+Computational Tools
+
+├── DFT Packages
+├── Workflow Frameworks
+├── Visualization Tools
+├── Databases
+└── Auxiliary Tools
+```
+
+Software-specific input files, output files, and validation commands belong to the corresponding software or program pages.
+
+Example:
+
+```text
+Quantum ESPRESSO
+
+├── Overview
+├── pw.x
+│   ├── Input
+│   ├── Output
+│   ├── Validation Commands
+│   └── Common Errors
+├── ph.x
+└── EPW
 ```
 
 ## Reference
 
-Reference explains external resources and their role in the knowledge structure. Resources are classified by purpose rather than collected as simple lists.
+Reference provides external knowledge resources.
+
+```text
+Reference
+
+├── Books
+├── Websites
+├── Software Documentation
+├── Databases
+├── Courses
+└── Visualization Resources
+```
+
+Resources should explain their purpose and relation to the knowledge structure instead of being simple collections of links.
 
 ## Content Style
 
-The website does not enforce a single writing style. Theory pages may follow textbook style. Software pages may follow manual style. Research pages may follow review style.
+The website does not enforce a single writing style.
+
+Different content types may use different styles:
+
+- theory pages: textbook style;
+- tool pages: documentation style;
+- method pages: scientific review style;
+- resource pages: concise evaluation style.
 
 Avoid:
+
 - unnecessary introductions;
 - repetitive summaries;
 - artificial learning guidance;
@@ -63,16 +237,15 @@ Avoid:
 - AI-generated writing patterns.
 
 Prefer:
+
 - precise definitions;
 - clear equations;
 - physical interpretation;
 - explicit assumptions;
 - limitations and references.
 
-## Page Organization
-
-Pages should follow the nature of their content. Possible elements include definitions, background, physical picture, mathematical formulation, implementation, applications, limitations, and references. Not every page requires every element.
-
 ## Technical Principles
 
-The website remains static-first. Interactive components are used only when they provide clear explanatory value. Large computations and production DFT workflows remain outside the browser.
+The website remains static-first. Interactive components are used only when they provide clear explanatory value.
+
+Large production calculations, databases requiring backend services, and computational workloads remain outside the browser.
