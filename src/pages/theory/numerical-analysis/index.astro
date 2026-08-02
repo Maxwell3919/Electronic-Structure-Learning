@@ -25,7 +25,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Conditioning belongs to the problem</h2>
   <p>Conditioning measures how strongly the exact answer changes when the input changes slightly. A well-conditioned problem is insensitive to small perturbations; an ill-conditioned problem amplifies them.</p>
-  <p>For a linear system <math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf A\mathbf x=\mathbf b</annotation></semantics></math>, the condition number <math class="math-inline" aria-label="kappa of A"><semantics><mrow><mi>κ</mi><mo>(</mo><mi mathvariant="bold">A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\kappa(\mathbf A)</annotation></semantics></math> bounds how input perturbations can be amplified. In first-order form, the relationship is commonly summarized as</p>
+  <p>For a linear system <math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;A&#125;\mathbf&#123;x&#125;=\mathbf&#123;b&#125;</annotation></semantics></math>, the condition number <math class="math-inline" aria-label="kappa of A"><semantics><mrow><mi>κ</mi><mo>(</mo><mi mathvariant="bold">A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\kappa(\mathbf&#123;A&#125;)</annotation></semantics></math> bounds how input perturbations can be amplified. In first-order form, the relationship is commonly summarized as</p>
   <div class="math-display">
     <math display="block" aria-label="relative change in x is approximately bounded by kappa of A times relative change in b">
       <semantics>
@@ -42,7 +42,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
           </mfrac>
           <mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\frac{\lVert\delta\mathbf x\rVert}{\lVert\mathbf x\rVert}\lesssim\kappa(\mathbf A)\frac{\lVert\delta\mathbf b\rVert}{\lVert\mathbf b\rVert}.</annotation>
+        <annotation encoding="application/x-tex">\frac&#123;\lVert\delta\mathbf&#123;x&#125;\rVert&#125;&#123;\lVert\mathbf&#123;x&#125;\rVert&#125;\lesssim\kappa(\mathbf&#123;A&#125;)\frac&#123;\lVert\delta\mathbf&#123;b&#125;\rVert&#125;&#123;\lVert\mathbf&#123;b&#125;\rVert&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -60,13 +60,13 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Several numerical problems appear repeatedly in electronic structure:</p>
   <dl class="paired-definitions">
     <dt>Linear systems</dt>
-    <dd><math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf A\mathbf x=\mathbf b</annotation></semantics></math>, arising in Poisson solvers, response equations, and preconditioned updates.</dd>
+    <dd><math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;A&#125;\mathbf&#123;x&#125;=\mathbf&#123;b&#125;</annotation></semantics></math>, arising in Poisson solvers, response equations, and preconditioned updates.</dd>
     <dt>Eigenvalue problems</dt>
-    <dd><math class="math-inline" aria-label="H c equals epsilon S c"><semantics><mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi></mrow><annotation encoding="application/x-tex">\mathbf H\mathbf c=\varepsilon\mathbf S\mathbf c</annotation></semantics></math>, used to extract selected states from large Hermitian or generalized Hermitian operators.</dd>
+    <dd><math class="math-inline" aria-label="H c equals epsilon S c"><semantics><mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;H&#125;\mathbf&#123;c&#125;=\varepsilon\mathbf&#123;S&#125;\mathbf&#123;c&#125;</annotation></semantics></math>, used to extract selected states from large Hermitian or generalized Hermitian operators.</dd>
     <dt>Quadrature and sampling</dt>
     <dd>Finite sums that approximate spatial integrals, reciprocal-space integrals, and expectation values.</dd>
     <dt>Nonlinear fixed points</dt>
-    <dd><math class="math-inline" aria-label="n sub k plus one equals F of n sub k"><semantics><mrow><msub><mi>n</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi mathvariant="normal">F</mi><mo>[</mo><msub><mi>n</mi><mi>k</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">n_{k+1}=F[n_k]</annotation></semantics></math>, the abstract structure behind self-consistent field iterations.</dd>
+    <dd><math class="math-inline" aria-label="n sub k plus one equals F of n sub k"><semantics><mrow><msub><mi>n</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi mathvariant="normal">F</mi><mo>[</mo><msub><mi>n</mi><mi>k</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">n_&#123;k+1&#125;=F[n_k]</annotation></semantics></math>, the abstract structure behind self-consistent field iterations.</dd>
   </dl>
   <p>Direct diagonalization is only one possible strategy. Krylov subspaces, iterative eigensolvers, sparse matrix methods, preconditioners, and domain-specific transformations are often necessary because the full matrix is too large or too expensive to form.</p>
 
