@@ -2,8 +2,81 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Methods" description="Scientific methods used in electronic-structure research." current="methods">
+<BaseLayout
+  title="Methods"
+  description="A conceptual map of the principal method families used in electronic-structure research."
+  current="methods"
+>
   <h1>Methods</h1>
-  <p class="lede">This section will describe research methods themselves: the questions they address, their physical basis, required inputs, key outputs, numerical conditions, and limits.</p>
-  <p>Paper reading notes and literature claim databases belong to separate research systems and will not be attached to this section.</p>
+  <p class="lede">
+    Electronic-structure methods are physical approximations, algorithms, and representations used to answer different scientific questions. They are not interchangeable accuracy settings, and a method name alone does not establish that a calculation is converged or that a scientific claim is supported.
+  </p>
+  <p>
+    Theory develops the mathematical and physical foundations behind these methods. This page explains what the main method families mean and which problems they address. Detailed guidance on composing, executing, converging, validating, interpreting, and preserving calculations belongs to DFT Research Workflow; software commands and file semantics belong to Computational Tools.
+  </p>
+
+  <h2>Ground-State Density-Functional Methods</h2>
+  <p>
+    <strong>Kohn–Sham density-functional theory</strong> replaces the interacting ground-state problem with an auxiliary one-electron construction that reproduces the density for a chosen exchange–correlation approximation. It provides total energies, densities, forces, stresses, and Kohn–Sham states used in many ground-state studies, but its eigenvalues are not generally quasiparticle excitation energies.
+  </p>
+  <p>
+    <strong>Spin-polarized DFT</strong> resolves collinear spin densities, while <strong>noncollinear DFT</strong> allows the magnetization direction to vary in space. These extensions support magnetic-state comparisons and spin-texture analysis, but a converged solution does not by itself identify the global magnetic ground state or demonstrate robustness against alternative initial states and models.
+  </p>
+
+  <h2>Relativistic, Correlation, and Functional Extensions</h2>
+  <p>
+    <strong>Spin–orbit coupling</strong> introduces relativistic coupling between orbital and spin degrees of freedom and is central to magnetic anisotropy, band splittings, and many topological questions. <strong>DFT+U</strong> adds a chosen localized-interaction correction, <strong>hybrid DFT</strong> mixes nonlocal exchange into the functional, and <strong>vdW-corrected DFT</strong> supplies a treatment of dispersion that semilocal functionals do not capture reliably.
+  </p>
+  <p>
+    These choices address different missing physics and are not interchangeable “higher-accuracy” switches. Their usefulness depends on the system, the target observable, the definition of localized subspaces or interaction parameters where applicable, and comparison against relevant evidence.
+  </p>
+
+  <h2>Response and Lattice-Dynamical Methods</h2>
+  <p>
+    <strong>Density-functional perturbation theory</strong> obtains linear responses to small perturbations without explicitly constructing every displaced configuration. <strong>Finite-difference methods</strong> infer derivatives from separately evaluated displaced or perturbed systems. Both can provide force constants, phonons, dielectric responses, effective charges, and related couplings, but they differ in numerical construction and implementation constraints.
+  </p>
+  <p>
+    Neither route automatically validates the harmonic or linear-response regime. Results still depend on the reference state, perturbation sampling, numerical representation, symmetry treatment, and convergence of the target response quantity.
+  </p>
+
+  <h2>Localized Representations and Interpolation</h2>
+  <p>
+    <strong>Wannier methods</strong> transform selected extended electronic states into localized orbitals or an equivalent compact representation. They enable efficient interpolation on dense meshes, low-energy Hamiltonians, chemical interpretation, topology analysis, and some transport or coupling calculations.
+  </p>
+  <p>
+    The representation depends on band selection, energy windows, gauge choices, and localization quality. A visually localized orbital set does not by itself establish that the interpolated bands, matrix elements, or derived observables are accurate over the required domain.
+  </p>
+
+  <h2>Structural Paths and Finite-Temperature Sampling</h2>
+  <p>
+    <strong>The nudged elastic band method</strong> optimizes a chain of configurations to estimate a minimum-energy path and barrier between specified endpoints. It characterizes a proposed pathway, not every possible mechanism, and a barrier alone is not a kinetic rate without an appropriate statistical treatment.
+  </p>
+  <p>
+    <strong>Ab initio molecular dynamics</strong> propagates nuclei using forces evaluated from an electronic-structure method, producing finite-temperature trajectories and ensemble samples. Its conclusions are limited by the electronic approximation, timestep, ensemble control, equilibration, trajectory length, finite-size effects, and statistical independence of the sampled data.
+  </p>
+
+  <h2>Excited-State and Beyond-DFT Methods</h2>
+  <p>
+    <strong>GW</strong> targets quasiparticle energies through an approximate electronic self-energy. The <strong>Bethe–Salpeter equation</strong> describes correlated electron–hole excitations and optical spectra built on an underlying one-particle description. <strong>Time-dependent DFT</strong> treats time-dependent densities or their response, while <strong>dynamical mean-field theory</strong> addresses local dynamical correlations through an embedded many-body problem.
+  </p>
+  <p>
+    These methods answer different questions and should not be grouped as a single ladder of “advanced accuracy.” Their conclusions depend on the starting point, interaction kernels or impurity construction, basis and frequency representations, convergence controls, and the observable being assessed.
+  </p>
+
+  <h2>Coupling and Transport Methods</h2>
+  <p>
+    <strong>Electron–phonon methods</strong> evaluate how electronic states couple to lattice vibrations, supporting analyses of linewidths, relaxation, mass renormalization, and conventional superconductivity within declared approximations. <strong>Boltzmann transport</strong> uses semiclassical distribution dynamics to derive electronic or thermal transport coefficients under specified scattering and relaxation models.
+  </p>
+  <p>
+    These are composite calculations rather than isolated labels. They commonly require converged electronic and vibrational states, dense Brillouin-zone integration or interpolation, and explicit tests of smearing, sampling, scattering assumptions, and the final transport or coupling observable.
+  </p>
+
+  <h2>From methods to a reliable workflow</h2>
+  <p>
+    This page provides a conceptual map of method families. Detailed guidance on composing operations, designing protocols, preparing calculations, managing execution, testing convergence, validating physical consistency, assessing scientific claims, recording provenance, and preserving reproducible research is maintained in DFT Research Workflow.
+  </p>
+  <ul>
+    <li><a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow public site</a></li>
+    <li><a href="https://github.com/Maxwell3919/DFT-Research-Workflow">DFT Research Workflow GitHub repository</a></li>
+  </ul>
 </BaseLayout>
