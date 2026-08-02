@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Plane-Wave and Real-Space Methods" description="Plane-wave spectral bases, real-space discretizations, grids, boundary conditions, and representation-specific errors." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Plane-Wave and Real-Space Methods</span>
+  </nav>
+
+  <h1>Plane-Wave and Real-Space Methods</h1>
+  <p class="lede">Plane-wave and real-space methods solve related electronic-structure equations through different finite representations. One expands functions in reciprocal-space modes; the other represents them on grids, elements, or adaptive real-space structures.</p>
+  <p>They should not be treated as two names for the same discretization. Their boundary conditions, convergence controls, numerical errors, and efficient algorithms differ even when they approximate the same continuum problem.</p>
+
+  <h2>Plane waves follow naturally from periodicity</h2>
+  <p>For a periodic system, a Bloch orbital may be expanded as</p>
+  <div class="math-display">
+    <math display="block" aria-label="psi n k of r equals sum over G of c n k G times exponential i k plus G dot r">
+      <semantics>
+        <mrow>
+          <msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo><munderover><mo>∑</mo><mi mathvariant="bold">G</mi><mo></mo></munderover>
+          <msub><mi>c</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo>
+          <msup><mi>e</mi><mrow><mi>i</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\psi_&#123;n\mathbf&#123;k&#125;&#125;(\mathbf&#123;r&#125;)=\sum_\mathbf&#123;G&#125;c_&#123;n\mathbf&#123;k&#125;&#125;(\mathbf&#123;G&#125;)e^&#123;i(\mathbf&#123;k&#125;+\mathbf&#123;G&#125;)\cdot\mathbf&#123;r&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The reciprocal-lattice vector <math class="math-inline" aria-label="G"><semantics><mi mathvariant="bold">G</mi><annotation encoding="application/x-tex">\mathbf&#123;G&#125;</annotation></semantics></math> labels periodic Fourier components, while <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> labels a Bloch sector. The distinction is essential: increasing the plane-wave basis at one k point is not the same operation as increasing Brillouin-zone sampling.</p>
+
+  <h2>The kinetic-energy cutoff defines the finite spectral space</h2>
+  <p>A practical plane-wave calculation retains modes satisfying a kinetic-energy condition such as</p>
+  <div class="math-display">
+    <math display="block" aria-label="one half times magnitude k plus G squared less than or equal to E cutoff">
+      <semantics>
+        <mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mrow><mo>|</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup><mo>≤</mo><msub><mi>E</mi><mi>cut</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\tfrac12|\mathbf&#123;k&#125;+\mathbf&#123;G&#125;|^2\le E_&#123;\mathrm&#123;cut&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This produces a systematic sequence of finite spaces, but the useful cutoff depends on the core treatment, element set, target observable, cell, and implementation. A cutoff printed in a dataset or tutorial is a starting point, not evidence that a particular energy difference, force, stress, phonon, or response property is converged.</p>
+
+  <h2>FFT grids are related to the basis but are not identical to it</h2>
+  <p>Plane-wave coefficients are transformed to real-space grids to evaluate local potentials, densities, and nonlinear products. The wavefunction cutoff, density cutoff, augmentation grid, and FFT dimensions can therefore be distinct numerical controls.</p>
+  <p>Products of functions contain higher Fourier components than either factor. If the grid cannot represent them, aliasing occurs. Code-specific “dual” grids or density cutoffs address this problem, but their ratios are not universal constants across pseudopotential types or observables.</p>
+
+  <h2>Real-space methods form a family, not one algorithm</h2>
+  <dl class="paired-definitions">
+    <dt>Finite differences</dt>
+    <dd>Replace derivatives by local stencils on a grid. Accuracy depends on spacing, stencil order, grid geometry, and boundary treatment.</dd>
+    <dt>Finite elements</dt>
+    <dd>Approximate functions by local polynomial spaces over elements and naturally support weak formulations and local refinement.</dd>
+    <dt>Wavelets and multiresolution bases</dt>
+    <dd>Use localized functions at multiple length scales, allowing spatially adaptive resolution.</dd>
+    <dt>Real-space spectral or pseudospectral methods</dt>
+    <dd>Evaluate fields on grids while using global or high-order representations for derivatives and transforms.</dd>
+  </dl>
+  <p>A page or code that uses finite differences does not define all real-space electronic structure. Convergence behavior and variational properties depend on the actual discretization.</p>
+
+  <h2>Boundary conditions are part of the physical model</h2>
+  <p>Periodic boundary conditions represent an infinite repetition of the simulation cell. Isolated, slab, wire, embedded, or open-boundary problems require different Poisson solvers or corrections.</p>
+  <p>Adding vacuum reduces some image interactions but does not mathematically convert a periodic solver into an isolated one. Charged cells, dipoles, long-range fields, and low-dimensional screening require explicit treatment of the electrostatic boundary condition and the zero-wavevector component.</p>
+
+  <h2>Poisson solution exposes the reciprocal/real-space connection</h2>
+  <p>For a periodic charge density and nonzero reciprocal vector, the Hartree potential has the schematic reciprocal-space form</p>
+  <div class="math-display">
+    <math display="block" aria-label="V H of G equals four pi n of G divided by magnitude G squared for G not equal zero">
+      <semantics>
+        <mrow><msub><mi>V</mi><mi>H</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>4</mn><mi>π</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo></mrow><msup><mrow><mo>|</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup></mfrac><mo>,</mo><mspace width="0.5em"/><mi mathvariant="bold">G</mi><mo>≠</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">V_H(\mathbf&#123;G&#125;)=4\pi n(\mathbf&#123;G&#125;)/|\mathbf&#123;G&#125;|^2,\quad\mathbf&#123;G&#125;\ne0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The omitted zero component encodes neutrality and boundary conventions. In real space, multigrid, finite-element, finite-difference, FFT, multipole, and domain-decomposition solvers can address different geometries. “The Poisson equation converged” therefore says nothing about whether the chosen electrostatic model matches the intended physical system.</p>
+
+  <h2>Representation-specific artifacts</h2>
+  <ul>
+    <li><strong>Aliasing</strong> arises when nonlinear products exceed the represented Fourier or grid bandwidth.</li>
+    <li><strong>Egg-box effects</strong> appear when energies or forces vary spuriously as atoms move relative to a fixed grid.</li>
+    <li><strong>Supercell interactions</strong> couple periodic images of defects, molecules, slabs, charges, or dipoles.</li>
+    <li><strong>Boundary reflections</strong> contaminate time-dependent or open-domain real-space calculations when absorbers or domains are inadequate.</li>
+    <li><strong>Inconsistent grids</strong> can make energies, forces, stresses, and response functions converge at different rates.</li>
+  </ul>
+
+  <h2>Convergence is attached to the target quantity</h2>
+  <p>Cutoff, grid spacing, domain size, vacuum, stencil order, element order, and Poisson tolerance should be varied separately where they represent independent errors. A stable total energy does not establish force, stress, energy-difference, density, phonon, or response convergence.</p>
+  <p>Brillouin-zone sampling, core treatment, exchange–correlation approximation, and SCF stopping criteria introduce additional error layers and should not be absorbed into one generic “basis convergence” test.</p>
+
+  <h2>Study routes and implementation bridges</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/plane-waves-and-grids-basics/">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> supplies the theoretical bridge among Fourier representation, grids, electrostatics, and electronic-structure algorithms. Full text may require institutional access.</p>
+  <p><a href="https://www.quantum-espresso.org/documentation/">Quantum ESPRESSO documentation</a> connects plane waves, FFT grids, pseudopotentials, k points, and periodic calculations in a production implementation. It is not a substitute for observable-specific convergence tests.</p>
+  <p><a href="https://gpaw.readthedocs.io/documentation/basic.html">GPAW documentation</a> is useful for comparing plane-wave, finite-difference, and localized-orbital representations within one PAW framework. Defaults and examples remain code-specific.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page compares representation principles and their numerical consequences. Pseudopotential/PAW construction and Brillouin-zone integration are treated separately. It does not recommend a universal cutoff, grid spacing, vacuum thickness, or solver.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Martin, Quantum ESPRESSO, and GPAW destinations were reviewed on 3 August 2026. Mathematical exposition is original and no textbook figures or examples are reproduced.</p>
+  </aside>
+</BaseLayout>
