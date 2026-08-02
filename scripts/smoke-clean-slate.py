@@ -19,9 +19,13 @@ ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/clean-slate-
 THEORY_ROUTES = [
     "theory/linear-algebra/",
     "theory/calculus-and-analysis/",
+    "theory/differential-equations/",
+    "theory/fourier-analysis/",
     "theory/numerical-analysis/",
+    "theory/group-theory-and-symmetry/",
     "theory/quantum-mechanics/",
     "theory/solid-state-physics/",
+    "theory/crystallography/",
     "theory/quantum-chemistry/",
     "theory/many-electron-problem/",
     "theory/hartree-and-hartree-fock-theory/",
@@ -169,7 +173,7 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: eighteen content routes, thirteen MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: twenty-two content routes, seventeen MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
