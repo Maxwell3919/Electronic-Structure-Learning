@@ -1,40 +1,29 @@
 ---
-title: "Electronic Structure Learning"
-description: "从学习路线进入电子结构理论、计算实验、案例、交互与参考手册。"
+title: "Electronic Structure Atlas"
+description: "电子结构理论、科研方法与计算工具的知识入口。"
 ---
 
 import SiteSectionHero from '../../components/site/SiteSectionHero.astro';
-import LearningPathGrid from '../../components/site/LearningPathGrid.astro';
-import SectionNavigationGrid from '../../components/site/SectionNavigationGrid.astro';
-import ContentProgressSummary from '../../components/site/ContentProgressSummary.astro';
-import SectionLead from '../../components/design/SectionLead.astro';
-import NextStepCard from '../../components/learning/NextStepCard.astro';
-import learningPaths from '../../data/site/learningPaths.mjs';
-import navigation from '../../data/site/navigation.mjs';
-import { contentStatusSummary } from '../../data/site/contentStatus.mjs';
 
 <SiteSectionHero
-  titleZh="电子结构学习系统"
-  titleEn="Electronic Structure Learning"
-  description="一份从理论对象、数值表示到证据边界逐层展开的公开学习图谱。"
-  descriptionEn="A public learning atlas that moves from theoretical objects and numerical representations to explicit evidence boundaries."
+  titleZh="电子结构图谱"
+  titleEn="Electronic Structure Atlas"
+  description="电子结构理论、科研方法与计算工具的知识入口。"
+  descriptionEn="A knowledge atlas for electronic-structure theory, research methods, and computational tools."
   pageType="home"
 />
 
-<SectionLead eyebrow="Choose a route" title="从一条路线开始" description="路线连接现有内容，但不会把目录状态、技术验证、科学审查或学习者测试混为一谈。" />
+本站不试图替代教材、软件手册或科研文献。正文只保留建立概念联系和判断方法边界所必需的内容。
 
-<LearningPathGrid paths={learningPaths} />
+## 入口
 
-<SectionLead eyebrow="Three working modes" title="理论、实验与案例" description="理论内容可立即阅读；实验和案例保持明确的 planned 边界。" />
+- [Theory](./theory/)：数学、物理、化学与电子结构理论，以及它们之间的知识依赖关系。
+- [Methods](./methods/)：结构、电子性质、稳定性、晶格动力学等研究方法。
+- [Computational Tools](./computational-tools/)：软件包、程序、工作流、数据库与辅助工具。
+- [Reference](./reference/)：经过说明和评价的书目、网站与官方文档。
 
-<SectionNavigationGrid items={navigation.filter((item) => ['theory', 'labs', 'cases'].includes(item.id))} heading="理论、实验与案例入口" />
+## 当前阶段
 
-<ContentProgressSummary summary={contentStatusSummary} />
+新版信息架构已经确定，旧 Martin、Sholl–Steckel、实验和案例页面暂时保留，并将在不破坏现有 URL 的前提下逐步迁移。
 
-<NextStepCard href="./interactive-labs/" title="进入可用的交互实验" description="从现有 SCF 固定点教学模型开始；它不伪装为真实材料计算。" />
-
-<NextStepCard href="./book-map/" title="查看 Martin 完整理论地图" description="保留 7 Parts、28 Chapters、18 Appendices 和全部既有 URL。" />
-
-<SectionLead eyebrow="Public project" title="开放边界与致谢" description="本站使用原创表达、系统字体和自制科学意象；来源、许可、验证上限与设计启发均公开记录。" />
-
-[阅读项目边界](./reading-system/) · [查看设计系统](./reference/design-system/) · [查看致谢与设计参考](https://github.com/Maxwell3919/Electronic-Structure-Learning/blob/main/docs/credits-and-inspiration.md)
+首页未来将以 Talos——一只可互动的奶牛猫——作为视觉与导航线索。该交互尚未实施；科学内容不依赖吉祥物才能访问或理解。

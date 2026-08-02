@@ -9,7 +9,7 @@ const limits = {
   homeJsBytes: 12_000,
   theoryJsBytes: 25_000,
   largestAssetBytes: 1_600_000,
-  assetCount: 470,
+  assetCount: 480,
 };
 const baseline = {
   observedAt: '2026-08-01',

@@ -22,8 +22,8 @@ export default defineConfig({
   base: '/Electronic-Structure-Learning',
   integrations: [
     starlight({
-      title: 'Electronic Structure Learning',
-      description: '电子结构与密度泛函理论的结构化、可视化学习网站。',
+      title: 'Electronic Structure Atlas',
+      description: '电子结构理论、科研方法与计算工具的知识地图。',
       locales: {
         root: { label: '简体中文', lang: 'zh-CN' },
       },
@@ -57,19 +57,29 @@ export default defineConfig({
       ],
       sidebar: [
         {
-          label: '开始',
-          items: [
-            { label: '首页', link: '/' },
-            'start-here',
-            { autogenerate: { directory: 'learning-paths' } },
-          ],
+          label: '入口',
+          items: [{ label: '首页', link: '/' }],
         },
         {
-          label: '理论课程',
+          label: '理论',
           items: [
             'theory',
-            { label: '完整 Chapter 图谱', link: '/theory/atlas/' },
-            'book-map',
+            'theory/mathematical-foundations',
+            'theory/physical-foundations',
+            'theory/chemical-foundations',
+            'theory/electronic-structure',
+            'theory/learning-map',
+          ],
+        },
+        { label: '方法', items: ['methods'] },
+        { label: '计算工具', items: ['computational-tools'] },
+        { label: '参考', items: ['reference'] },
+        {
+          label: '现有内容 · 迁移中',
+          collapsed: true,
+          items: [
+            'start-here',
+            { label: '旧课程地图', link: '/book-map/' },
             part('Part I · Overview and Background', 'part-01-overview-and-background'),
             part('Part II · Density Functional Theory', 'part-02-density-functional-theory'),
             part('Part III · Atoms and Pseudopotentials', 'part-03-important-preliminaries-on-atoms'),
@@ -77,27 +87,12 @@ export default defineConfig({
             part('Part V · Properties of Matter', 'part-05-properties-of-matter'),
             part('Part VI · Electronic Structure and Topology', 'part-06-electronic-structure-and-topology'),
             part('Part VII · Appendices', 'part-07-appendices'),
+            'labs',
+            'cases',
+            'interactive-labs',
+            part('Sholl–Steckel 交叉参考', 'practice-sholl-steckel'),
           ],
         },
-        { label: '计算实验', items: ['labs'] },
-        { label: '案例项目', items: ['cases'] },
-        {
-          label: '交互实验室',
-          items: ['interactive-labs', 'labs/scf-fixed-point-and-mixing'],
-        },
-        part('实践交叉参考 · Sholl–Steckel', 'practice-sholl-steckel'),
-        {
-          label: '文献层',
-          collapsed: true,
-          items: [
-            'literature',
-            'literature/topics',
-            'literature/reading-queue',
-            'literature/claims',
-            'literature/discussions',
-          ],
-        },
-        { label: '参考手册', items: ['reference'] },
       ],
     }),
     mdx({ processor: createMarkdownProcessor() }),

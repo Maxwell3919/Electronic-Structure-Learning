@@ -1,12 +1,31 @@
 ---
-title: "参考手册"
-description: "附录、术语、参数映射、provenance、收敛和诊断入口。"
+title: "Reference"
+description: "书籍、网站、官方文档与其他外部知识资源。"
 ---
 
 import SiteSectionHero from '../../../components/site/SiteSectionHero.astro';
-import ReferenceCatalog from '../../../components/site/ReferenceCatalog.astro';
-import sections from '../../../data/site/referenceSections.mjs';
 
-<SiteSectionHero titleZh="参考手册" titleEn="Reference manual" description="克制的附录与参考入口；除已存在的 Martin Appendices 外，其余正文仍保持 planned。" descriptionEn="A restrained appendix and reference index; all non-Appendix reference bodies remain planned." pageType="reference" />
+<SiteSectionHero
+  titleZh="参考"
+  titleEn="Reference"
+  description="带有推荐理由、适用范围和知识关联的外部资源。"
+  descriptionEn="External resources with reasons, scope, and explicit knowledge connections."
+  pageType="reference"
+/>
 
-<ReferenceCatalog sections={sections} />
+Reference 不是链接收藏夹。每项资源都应说明它解决什么问题、适合什么阶段、为什么值得推荐，以及它对应 Theory、Methods 或 Computational Tools 中的哪些内容。
+
+## 范围
+
+- 书籍
+- 学习网站与课程
+- 软件官方文档
+- 数据库与在线服务
+- 可视化资源
+- 公式、术语与必要索引
+
+<h2 id="convergence-checklists">收敛与验收索引</h2>
+
+旧页面仍通过这一锚点进入收敛与验收内容。新版中，具体判据归入相应 Method 或具体程序页面；本节只保留稳定入口，后续再建立跨页面索引。
+
+已有参考页暂时保留。后续重组时，应删除没有评价、适用范围或来源说明的简单链接堆积。
