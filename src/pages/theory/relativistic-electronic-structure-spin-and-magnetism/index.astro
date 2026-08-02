@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Relativistic Electronic Structure, Spin, and Magnetism" description="Scalar relativity, spinors, spin–orbit coupling, collinear and noncollinear magnetism, symmetry, and convergence boundaries." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Relativistic Electronic Structure, Spin, and Magnetism</span>
+  </nav>
+
+  <h1>Relativistic Electronic Structure, Spin, and Magnetism</h1>
+  <p class="lede">Relativistic and magnetic electronic structure changes the state variables, Hamiltonian, symmetry, and interpretation of a calculation. Scalar relativity, spin polarization, noncollinear magnetism, and spin–orbit coupling are related but distinct approximations.</p>
+  <p>Enabling a relativistic or spin option is not a generic accuracy upgrade. The physical question, core treatment, magnetic model, numerical precision, and competing solutions must all be stated.</p>
+
+  <h2>The relativistic starting point changes the one-electron theory</h2>
+  <p>The Dirac equation combines spatial and spin degrees of freedom in a four-component spinor. Practical electronic-structure methods often reduce it to scalar-relativistic Hamiltonians, two-component spinor forms, or effective spin–orbit operators appropriate to the energy range and core treatment.</p>
+  <p>Scalar-relativistic treatments include leading mass–velocity and Darwin effects while averaging over explicit spin–orbit splitting. They can significantly change orbital contraction, level ordering, bonding, and equilibrium structure for heavier elements even when no explicit SOC band splitting is calculated.</p>
+
+  <h2>Spin density extends the ordinary particle density</h2>
+  <p>In a collinear calculation, separate spin-channel densities may be represented by</p>
+  <div class="math-display">
+    <math display="block" aria-label="n equals n up plus n down and m z equals mu B times n up minus n down">
+      <semantics>
+        <mtable columnalign="right center left" rowspacing="0.55em">
+          <mtr><mtd><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>m</mi><mi>z</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>μ</mi><mi>B</mi></msub><mo>[</mo><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>−</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=n_\uparrow(\mathbf&#123;r&#125;)+n_\downarrow(\mathbf&#123;r&#125;),\quad m_z(\mathbf&#123;r&#125;)=\mu_B[n_\uparrow(\mathbf&#123;r&#125;)-n_\downarrow(\mathbf&#123;r&#125;)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This assumes one global quantization axis. In a noncollinear calculation, the magnetization becomes a vector field and the Kohn–Sham states are two-component spinors. Local “up” and “down” labels then depend on a chosen axis and cannot be assigned globally without loss of information.</p>
+
+  <h2>Spin–orbit coupling links spin to spatial motion</h2>
+  <p>In a central-potential approximation, the leading spin–orbit term has the schematic form</p>
+  <div class="math-display">
+    <math display="block" aria-label="H S O proportional to one over r d V over d r times L dot S">
+      <semantics>
+        <mrow><msub><mover><mi>H</mi><mo>^</mo></mover><mi>SO</mi></msub><mo>∝</mo><mfrac><mn>1</mn><mi>r</mi></mfrac><mfrac><mrow><mi>d</mi><mi>V</mi></mrow><mrow><mi>d</mi><mi>r</mi></mrow></mfrac><mover><mi mathvariant="bold">L</mi><mo>^</mo></mover><mo>·</mo><mover><mi mathvariant="bold">S</mi><mo>^</mo></mover><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\hat H_&#123;\mathrm&#123;SO&#125;&#125;\propto r^&#123;-1&#125;(dV/dr)\hat\mathbf&#123;L&#125;\cdot\hat\mathbf&#123;S&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The actual solid-state operator depends on the relativistic reduction, non-spherical potential, basis, and core treatment. SOC can lift degeneracies, mix spin channels, alter band ordering, modify selection rules, and couple magnetization direction to the lattice.</p>
+
+  <h2>Collinear and noncollinear magnetism answer different questions</h2>
+  <dl class="paired-definitions">
+    <dt>Spin-unpolarized</dt>
+    <dd>Constrains equal spin populations or excludes spontaneous spin density. It is a model choice, not proof that the material is nonmagnetic.</dd>
+    <dt>Collinear spin-polarized</dt>
+    <dd>Allows different up/down densities along one global axis. It can represent ferro-, ferri-, and many antiferromagnetic patterns when the real-space cell is adequate.</dd>
+    <dt>Noncollinear</dt>
+    <dd>Allows local moments to point in different directions and is required for spin spirals, canting, frustrated order, and general SOC-coupled textures.</dd>
+    <dt>Constrained magnetism</dt>
+    <dd>Adds fields, penalties, or constraints to follow a prescribed moment direction or magnitude. The constraint contribution and physical interpretation must be reported.</dd>
+  </dl>
+
+  <h2>A magnetic calculation searches a nonlinear landscape</h2>
+  <p>Different initial moments, cells, occupation patterns, symmetry constraints, and spin directions can converge to distinct self-consistent states. A single converged magnetic solution does not establish the global ground state.</p>
+  <p>Meaningful comparison requires consistent structures, basis/core settings, k meshes, smearing, functionals, and convergence thresholds. Competing ferro-, antiferro-, ferri-, nonmagnetic, and noncollinear candidates may require different cells or symmetry groups.</p>
+
+  <h2>Magnetic moments are representation-dependent quantities</h2>
+  <p>The total spin magnetization is an integrated quantity, but atom-resolved moments depend on the partition: augmentation sphere, projection, Bader basin, Wannier subspace, or another real-space/orbital definition.</p>
+  <p>Projected moments are useful diagnostics, not unique observables. Comparisons across codes or datasets require the same partition definition or a clearly stated mapping.</p>
+
+  <h2>SOC changes symmetry and Brillouin-zone reduction</h2>
+  <p>Without SOC, global spin rotations may be independent of real-space crystal rotations. With SOC, spin and spatial operations are linked, and the magnetic direction can reduce the usable symmetry.</p>
+  <p>Time reversal, inversion, combined antiunitary operations, double groups, and magnetic space groups determine degeneracies and k-point equivalences. A scalar-relativistic symmetry reduction should not be assumed valid for a fully relativistic noncollinear calculation.</p>
+
+  <h2>Magnetic anisotropy is a small energy difference</h2>
+  <p>A magnetic anisotropy energy can be expressed schematically as</p>
+  <div class="math-display">
+    <math display="block" aria-label="Delta E M A E equals E of direction one minus E of direction two">
+      <semantics>
+        <mrow><mi>Δ</mi><msub><mi>E</mi><mi>MAE</mi></msub><mo>=</mo><mi>E</mi><mo>(</mo><msub><mover><mi mathvariant="bold">m</mi><mo>^</mo></mover><mn>1</mn></msub><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><msub><mover><mi mathvariant="bold">m</mi><mo>^</mo></mover><mn>2</mn></msub><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Delta E_&#123;\mathrm&#123;MAE&#125;&#125;=E(\hat\mathbf&#123;m&#125;_1)-E(\hat\mathbf&#123;m&#125;_2).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Because this difference can be much smaller than the individual total energies, it can demand tighter SCF thresholds, denser k meshes, consistent occupations, stable force/geometry choices, and explicit checks against numerical noise. An energy ordering smaller than the unresolved numerical uncertainty is not a supported anisotropy claim.</p>
+
+  <h2>The core treatment and SOC must be compatible</h2>
+  <p>Scalar-relativistic and fully relativistic pseudopotential/PAW datasets encode different atomic information. Heavy-element, semicore, orbital-moment, hyperfine, or core-spectroscopy questions can be sensitive to the valence partition and reconstruction.</p>
+  <p>The exact dataset filename, relativistic level, valence configuration, and code treatment should be recorded. A nonrelativistic dataset cannot be made fully relativistic merely by changing a runtime flag.</p>
+
+  <h2>Connections and interpretation limits</h2>
+  <ul>
+    <li><a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> supplies double-group, little-group, and magnetic-symmetry language.</li>
+    <li><a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> treats symmetry weights and convergence after magnetic/SOC symmetry reduction.</li>
+    <li><a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a> supplies dataset and reconstruction boundaries.</li>
+    <li>Berry phases, orbital magnetization, spin textures, and topological invariants are downstream topics requiring additional gauge and occupied-subspace concepts.</li>
+  </ul>
+
+  <h2>Current study resources</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/dirac-equation-and-spinorbit-interaction/">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., relativistic appendices and related chapters</a> provides a common theoretical reference. Full text may require institutional access.</p>
+  <p><a href="https://gpaw.readthedocs.io/documentation/soc/soc.html">GPAW spin–orbit and noncollinear documentation</a> provides a current implementation bridge for spinors, constrained directions, and PAW-based SOC. It is not a complete relativity or magnetism course.</p>
+  <p><a href="https://octopus-code.org/documentation/main/variables/hamiltonian/relativisticcorrection/">Octopus relativistic-correction reference</a> documents implementation choices. It should not be used alone to establish conceptual prerequisites or method suitability.</p>
+
+  <h2>Boundary and review gap</h2>
+  <p>This page establishes the minimum conceptual and computational boundaries needed to read relativistic and magnetic calculations. It does not provide a complete derivation of the Dirac equation, a comprehensive theory of magnetism, a magnetic-space-group course, or a universal protocol for selecting magnetic ground states.</p>
+  <aside class="callout">
+    <p><strong>Resource-review boundary.</strong> The Atlas systematic report identified this subject as the most important missing independent module, but also recorded that a dedicated second-round resource review was not yet complete. The resources above are therefore theory and implementation anchors, not a finalized recommended curriculum.</p>
+  </aside>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Page scope and official Martin, GPAW, and Octopus destinations were reviewed on 3 August 2026. Dedicated textbook/course comparison remains open.</p>
+  </aside>
+</BaseLayout>
