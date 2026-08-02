@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirteen subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Seventeen subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -16,12 +16,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <ul>
       <li id="linear-algebra"><a href={href('/theory/linear-algebra/')}>Linear Algebra</a> <span class="item-summary">— states, bases, operators, subspaces, and eigenvalue problems.</span></li>
       <li id="calculus-and-analysis"><a href={href('/theory/calculus-and-analysis/')}>Calculus and Analysis</a> <span class="item-summary">— change, integration, limits, and convergence.</span></li>
-      <li id="differential-equations">Differential Equations</li>
-      <li id="fourier-analysis">Fourier Analysis</li>
+      <li id="differential-equations"><a href={href('/theory/differential-equations/')}>Differential Equations</a> <span class="item-summary">— continuous operators, domains, boundary conditions, spectra, and Green functions.</span></li>
+      <li id="fourier-analysis"><a href={href('/theory/fourier-analysis/')}>Fourier Analysis</a> <span class="item-summary">— transforms, convolution, sampling, reciprocal space, and FFTs.</span></li>
       <li id="functional-analysis-and-variational-methods">Functional Analysis and Variational Methods</li>
       <li id="numerical-analysis"><a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a> <span class="item-summary">— error, conditioning, stability, discretization, and iterative solution.</span></li>
       <li id="probability-and-statistics">Probability and Statistics</li>
-      <li id="group-theory-and-symmetry">Group Theory and Symmetry</li>
+      <li id="group-theory-and-symmetry"><a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> <span class="item-summary">— representations, irreducible sectors, selection rules, and symmetry reduction.</span></li>
     </ul>
   </section>
 
@@ -36,7 +36,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="statistical-mechanics">Statistical Mechanics</li>
       <li id="atomic-and-molecular-physics">Atomic and Molecular Physics</li>
       <li id="solid-state-physics"><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> <span class="item-summary">— periodicity, Bloch states, bands, filling, and collective degrees of freedom.</span></li>
-      <li id="crystallography">Crystallography</li>
+      <li id="crystallography"><a href={href('/theory/crystallography/')}>Crystallography</a> <span class="item-summary">— lattices, cells, reciprocal space, diffraction, space groups, and Wyckoff positions.</span></li>
       <li id="many-body-physics">Many-Body Physics</li>
     </ul>
   </section>
