@@ -62,7 +62,7 @@ Theory
 └── Learning Map
 ```
 
-The first reviewed content batch adds individual pages for Linear Algebra, Calculus and Analysis, and Numerical Analysis. These pages share navigation and visual language but do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
+The first reviewed content batch adds individual pages for Linear Algebra, Calculus and Analysis, and Numerical Analysis. The second adds Quantum Mechanics, Solid-State Physics, and Quantum Chemistry. All six pages share navigation, source discipline, mathematical presentation, and review boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
 Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
 

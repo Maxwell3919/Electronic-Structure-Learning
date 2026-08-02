@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Solid-State Physics" description="Periodicity, Bloch states, bands, filling, and collective degrees of freedom." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Solid-State Physics</span>
+  </nav>
+
+  <h1>Solid-State Physics</h1>
+  <p class="lede">A solid contains many nuclei and electrons, but crystalline periodicity lets the electronic problem be reorganized by translation symmetry. Bands, reciprocal space, the Fermi level, phonons, screening, and collective response all grow from that reorganization.</p>
+  <p>This page supplies the physical picture needed for periodic electronic structure. Detailed space-group classification belongs to Crystallography, and numerical integration over reciprocal space belongs to Brillouin-Zone Sampling.</p>
+
+  <h2>A crystal is a lattice plus a basis</h2>
+  <p>A Bravais lattice is the set of translations that leaves the infinite crystal unchanged. The atoms attached to each lattice point form the basis or motif. Confusing these two meanings of “basis” causes trouble because an orbital basis is a separate numerical representation.</p>
+  <p>A lattice translation has the form</p>
+  <div class="math-display">
+    <math display="block" aria-label="R equals n one a one plus n two a two plus n three a three">
+      <semantics>
+        <mrow>
+          <mi mathvariant="bold">R</mi><mo>=</mo>
+          <msub><mi>n</mi><mn>1</mn></msub><msub><mi mathvariant="bold">a</mi><mn>1</mn></msub>
+          <mo>+</mo><msub><mi>n</mi><mn>2</mn></msub><msub><mi mathvariant="bold">a</mi><mn>2</mn></msub>
+          <mo>+</mo><msub><mi>n</mi><mn>3</mn></msub><msub><mi mathvariant="bold">a</mi><mn>3</mn></msub><mo>,</mo>
+          <mspace width="0.5em"/><msub><mi>n</mi><mi>i</mi></msub><mo>∈</mo><mi>ℤ</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;R&#125;=n_1\mathbf&#123;a&#125;_1+n_2\mathbf&#123;a&#125;_2+n_3\mathbf&#123;a&#125;_3,\qquad n_i\in\mathbb&#123;Z&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The primitive cell is one possible fundamental domain of this translation group. Conventional cells may be larger because they expose symmetry more clearly.</p>
+
+  <h2>Reciprocal space is the natural language of periodic fields</h2>
+  <p>The reciprocal vectors are defined so that direct- and reciprocal-lattice primitives satisfy</p>
+  <div class="math-display">
+    <math display="block" aria-label="a sub i dot b sub j equals two pi delta sub i j">
+      <semantics>
+        <mrow>
+          <msub><mi mathvariant="bold">a</mi><mi>i</mi></msub><mo>·</mo><msub><mi mathvariant="bold">b</mi><mi>j</mi></msub>
+          <mo>=</mo><mn>2</mn><mi>π</mi><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;a&#125;_i\cdot\mathbf&#123;b&#125;_j=2\pi\delta_&#123;ij&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Wavevectors that differ by a reciprocal-lattice vector describe equivalent crystal momentum labels. The first Brillouin zone is therefore a primitive cell of reciprocal space, not merely a standard plotting box.</p>
+
+  <h2>Bloch's theorem reorganizes the one-electron problem</h2>
+  <p>For a Hamiltonian periodic under every lattice translation, eigenstates can be chosen in Bloch form:</p>
+  <div class="math-display">
+    <math display="block" aria-label="psi n k of r equals exponential i k dot r times u n k of r, with u periodic under R">
+      <semantics>
+        <mtable columnalign="right center left" rowspacing="0.6em">
+          <mtr>
+            <mtd><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>+</mo><mi mathvariant="bold">R</mi><mo>)</mo></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\begin&#123;aligned&#125;\psi_&#123;n\mathbf k&#125;(\mathbf r)&amp;=e^&#123;i\mathbf k\cdot\mathbf r&#125;u_&#123;n\mathbf k&#125;(\mathbf r),\\u_&#123;n\mathbf k&#125;(\mathbf r+\mathbf R)&amp;=u_&#123;n\mathbf k&#125;(\mathbf r).\end&#123;aligned&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The band index <math class="math-inline" aria-label="n"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> labels solutions at fixed crystal momentum <math class="math-inline" aria-label="bold k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math>. Bloch's theorem reduces an infinite periodic system to a family of cell-periodic problems parameterized by the Brillouin zone.</p>
+
+  <h2>Bands are spectra indexed by crystal momentum</h2>
+  <p>After the Bloch phase is separated, the cell-periodic Hamiltonian defines an eigenproblem at each wavevector:</p>
+  <div class="math-display">
+    <math display="block" aria-label="H of k u n k equals epsilon n k u n k">
+      <semantics>
+        <mrow>
+          <mover><mi>H</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo>
+          <msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub>
+          <mo>=</mo>
+          <msub><mi>ε</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub>
+          <msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;(\mathbf&#123;k&#125;)u_&#123;n\mathbf k&#125;=\varepsilon_&#123;n\mathbf k&#125;u_&#123;n\mathbf k&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A plotted band path shows selected eigenvalues along selected lines. It is useful for interpretation, but it is not a substitute for integrating over the full Brillouin zone or searching the full zone for extrema and Fermi-surface pockets.</p>
+
+  <h2>Filling determines whether low-energy electronic states are available</h2>
+  <p>The electron count, degeneracies, spin treatment, and occupation rule determine which one-electron states are filled. At zero temperature, the Fermi energy separates occupied from unoccupied states in the independent-particle picture.</p>
+  <p>A band gap around the chemical potential is the simplest route to an insulator; partially filled bands or band crossings produce a metal or semimetal. This classification can be altered by symmetry breaking, correlation, disorder, finite temperature, or an inadequate electronic-structure approximation.</p>
+
+  <h2>The density of states compresses the spectrum</h2>
+  <p>The density of states counts spectral weight per energy interval. In a band description it can be written schematically as</p>
+  <div class="math-display">
+    <math display="block" aria-label="g of E equals sum over n integral over the Brillouin zone delta of E minus epsilon n k d k over the Brillouin zone volume">
+      <semantics>
+        <mrow>
+          <mi>g</mi><mo>(</mo><mi>E</mi><mo>)</mo><mo>=</mo>
+          <munderover><mo>∑</mo><mi>n</mi><mrow></mrow></munderover>
+          <mfrac><mn>1</mn><msub><mi>Ω</mi><mi>BZ</mi></msub></mfrac>
+          <msub><mo>∫</mo><mi>BZ</mi></msub>
+          <mi>δ</mi><mo>(</mo><mi>E</mi><mo>−</mo><msub><mi>ε</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>)</mo>
+          <mi>d</mi><mi mathvariant="bold">k</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">g(E)=\sum_n\frac&#123;1&#125;&#123;\Omega_&#123;\mathrm&#123;BZ&#125;&#125;&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;\delta(E-\varepsilon_&#123;n\mathbf k&#125;)\,d\mathbf k.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Sharp features can reflect flat dispersion or critical points. A density of states alone discards momentum information; a band plot alone does not supply properly weighted spectral integration.</p>
+
+  <h2>Solids have nuclear and collective degrees of freedom too</h2>
+  <p>Small displacements of nuclei around equilibrium produce normal modes and phonons. Electronic polarization produces dielectric screening. Spin degrees of freedom can order magnetically and support collective modes. These phenomena are not optional decorations around a band structure: they determine stability, response, transport, optical behavior, and possible ordered phases.</p>
+  <p>Electronic ground states, lattice dynamics, dielectric response, and magnetism require related but distinct approximations and convergence tests.</p>
+
+  <h2>Two complementary study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/8-231-physics-of-solids-i-fall-2006/">MIT OpenCourseWare 8.231, Physics of Solids I</a> is the advanced physics route through periodic structure, Bloch states, electronic bands, phonons, and response in solids. It assumes substantial quantum and statistical mechanics.</p>
+  <p><a href="https://ocw.mit.edu/courses/3-091sc-introduction-to-solid-state-chemistry-fall-2010/">MIT OpenCourseWare 3.091SC, Introduction to Solid-State Chemistry</a> is a more materials-oriented route through bonding, crystal structures, defects, and semiconductors. It complements rather than replaces the band-theory emphasis of solid-state physics.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not prescribe a k-point mesh, a band path, a smearing width, or a criterion for a specific material. Those are numerical and observable-specific questions. It also does not replace Crystallography, Group Theory and Symmetry, Statistical Mechanics, Brillouin-Zone Sampling, or dedicated treatments of magnetism and topology.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and resource roles were reviewed on 2 August 2026. The page distinguishes a band path from full-zone integration and keeps crystal classification separate from the physical consequences of periodicity.</p>
+  </aside>
+</BaseLayout>

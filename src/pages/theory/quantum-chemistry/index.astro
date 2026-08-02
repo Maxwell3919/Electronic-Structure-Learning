@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Quantum Chemistry" description="Molecular Hamiltonians, Born–Oppenheimer separation, orbitals, antisymmetry, and correlation." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Quantum Chemistry</span>
+  </nav>
+
+  <h1>Quantum Chemistry</h1>
+  <p class="lede">Quantum chemistry turns the quantum mechanics of nuclei and electrons into a tractable language for molecular structure, orbitals, bonding, spectra, and chemical change. Its value for electronic structure is not a separate set of laws, but a disciplined sequence of approximations and interpretations.</p>
+  <p>The molecular route is the most direct preparation for atom-centred basis sets, Hartree–Fock theory, molecular density-functional theory, and post-mean-field correlation methods.</p>
+
+  <h2>The full molecular problem contains nuclei and electrons</h2>
+  <p>A nonrelativistic molecular Hamiltonian contains nuclear kinetic energy, electronic kinetic energy, electron–nuclear attraction, electron–electron repulsion, and nuclear–nuclear repulsion. Even before correlation methods are considered, the coupled motion spans many coordinates and several mass scales.</p>
+  <p>The first major reorganization is the Born–Oppenheimer approximation: nuclei are treated as fixed while the electronic problem is solved, then the resulting electronic energy becomes part of the potential governing nuclear motion.</p>
+
+  <h2>The clamped-nuclei electronic Hamiltonian</h2>
+  <p>For fixed nuclear positions, a common atomic-unit form is</p>
+  <div class="math-display">
+    <math display="block" aria-label="electronic Hamiltonian equals electron kinetic energy plus electron nuclear attraction plus electron electron repulsion">
+      <semantics>
+        <mrow>
+          <mover><mi>H</mi><mo>^</mo></mover><msub><mo></mo><mi>e</mi></msub>
+          <mo>=</mo>
+          <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munderover><mo>∑</mo><mi>i</mi><msub><mi>N</mi><mi>e</mi></msub></munderover><msubsup><mo>∇</mo><mi>i</mi><mn>2</mn></msubsup>
+          <mo>−</mo><munderover><mo>∑</mo><mi>i</mi><msub><mi>N</mi><mi>e</mi></msub></munderover><munderover><mo>∑</mo><mi>A</mi><msub><mi>N</mi><mi>n</mi></msub></munderover><mfrac><msub><mi>Z</mi><mi>A</mi></msub><msub><mi>r</mi><mrow><mi>i</mi><mi>A</mi></mrow></msub></mfrac>
+          <mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow><msub><mi>N</mi><mi>e</mi></msub></munderover><mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;_e=-\frac&#123;1&#125;&#123;2&#125;\sum_i^&#123;N_e&#125;\nabla_i^2-\sum_i^&#123;N_e&#125;\sum_A^&#123;N_n&#125;\frac&#123;Z_A&#125;&#123;r_&#123;iA&#125;&#125;+\sum_&#123;i&lt;j&#125;^&#123;N_e&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The nuclear repulsion energy is added for a chosen geometry but is constant within the electronic eigenproblem. The approximation does not claim that nuclei are truly motionless; it defines a hierarchy in which electronic and nuclear problems are solved on different scales.</p>
+
+  <h2>Potential-energy surfaces connect electrons to molecular structure</h2>
+  <p>Solving the electronic problem at many nuclear geometries produces an energy surface. Equilibrium structures are stationary points on that surface; vibrational frequencies depend on its local curvature; reactions connect regions through paths and saddle points.</p>
+  <p>A geometry for which an electronic calculation terminates is not automatically an equilibrium geometry. A stationary point is not automatically a minimum, and a minimum on one approximate surface is not automatically accurate for experiment.</p>
+
+  <h2>Orbitals are a useful representation, not the many-electron state</h2>
+  <p>A molecular orbital is a one-electron function. In an atom-centred representation it is expanded in basis functions:</p>
+  <div class="math-display">
+    <math display="block" aria-label="molecular orbital phi p equals sum over mu of coefficient mu p times basis function chi mu">
+      <semantics>
+        <mrow>
+          <msub><mi>φ</mi><mi>p</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo>
+          <munderover><mo>∑</mo><mi>μ</mi><mi>K</mi></munderover>
+          <msub><mi>C</mi><mrow><mi>μ</mi><mi>p</mi></mrow></msub>
+          <msub><mi>χ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\phi_p(\mathbf&#123;r&#125;)=\sum_\mu^K C_&#123;\mu p&#125;\chi_\mu(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The coefficients depend on the chosen basis and orbital convention. Canonical orbitals, localized orbitals, natural orbitals, and symmetry-adapted orbitals can represent related information differently. Orbital pictures are therefore models for interpretation, not unique experimental objects.</p>
+
+  <h2>Antisymmetry couples orbital language to fermions</h2>
+  <p>A simple product of one-electron orbitals does not satisfy electron exchange antisymmetry. A Slater determinant enforces it:</p>
+  <div class="math-display">
+    <math display="block" aria-label="Phi of x one through x N equals one over square root N factorial times determinant of spin orbitals chi p of x q">
+      <semantics>
+        <mrow>
+          <mi>Φ</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo>
+          <mo>=</mo>
+          <mfrac><mn>1</mn><msqrt><mrow><mi>N</mi><mo>!</mo></mrow></msqrt></mfrac>
+          <mo>det</mo><mo>[</mo><msub><mi>χ</mi><mi>p</mi></msub><mo>(</mo><msub><mi>x</mi><mi>q</mi></msub><mo>)</mo><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Phi(x_1,\ldots,x_N)=\frac&#123;1&#125;&#123;\sqrt&#123;N!&#125;&#125;\det[\chi_p(x_q)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This produces exchange effects exactly within a single-determinant form. It does not reproduce the full correlated motion generated by electron–electron repulsion.</p>
+
+  <h2>The variational principle turns approximation into a controlled search</h2>
+  <p>For any normalized admissible trial state, the energy expectation cannot fall below the exact ground-state energy:</p>
+  <div class="math-display">
+    <math display="block" aria-label="trial energy equals trial bra H trial ket over trial norm and is greater than or equal to ground state energy">
+      <semantics>
+        <mrow>
+          <mi>E</mi><msub><mo></mo><mi>trial</mi></msub>
+          <mo>=</mo>
+          <mfrac>
+            <mrow><mo>⟨</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>⟩</mo></mrow>
+            <mrow><mo>⟨</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>|</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>⟩</mo></mrow>
+          </mfrac>
+          <mo>≥</mo><msub><mi>E</mi><mn>0</mn></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;trial&#125;&#125;=\frac&#123;\langle\Psi_&#123;\mathrm&#123;trial&#125;&#125;|\hat&#123;H&#125;|\Psi_&#123;\mathrm&#123;trial&#125;&#125;\rangle&#125;&#123;\langle\Psi_&#123;\mathrm&#123;trial&#125;&#125;|\Psi_&#123;\mathrm&#123;trial&#125;&#125;\rangle&#125;\ge E_0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Hartree–Fock optimizes within the manifold of single determinants. Configuration interaction, coupled cluster, multiconfigurational methods, and other correlated approaches enlarge or reorganize the trial description. Density-functional theory changes the basic variable and requires a separate foundation.</p>
+
+  <h2>Mean field and correlation must not be collapsed into one label</h2>
+  <p>Hartree–Fock includes exchange arising from antisymmetry but omits most Coulomb correlation beyond a single optimized determinant. “Correlation energy” depends on a stated reference and convention; it is not synonymous with every difference between a calculation and experiment.</p>
+  <p>Near-degeneracy can make a single-reference picture qualitatively inadequate, while basis incompleteness and method truncation introduce different errors. A more expensive method does not remove the need to test representation and observable convergence.</p>
+
+  <h2>Basis sets define a finite molecular problem</h2>
+  <p>Gaussian functions, numerical atomic orbitals, and other localized functions convert continuous orbitals into finite coefficient vectors. Basis size, angular momentum content, radial flexibility, diffuse functions, core treatment, and linear dependence determine what the finite problem can represent.</p>
+  <p>A named basis family is not a universal accuracy guarantee. Energy differences, electric response, weak binding, core properties, and excited states can demand different flexibility. Basis-set convergence is therefore tied to the target observable.</p>
+
+  <h2>Chemical interpretation needs declared conventions</h2>
+  <p>Bond order, atomic charge, orbital population, localization, and aromaticity are interpretation frameworks built from a wavefunction, density, or reduced quantity. Different schemes partition the same continuous electronic state differently. Their numerical values should not be mixed as if they were unique observables.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/">MIT OpenCourseWare 5.61, Physical Chemistry</a> is the open bridge from quantum mechanics to molecular orbitals, approximation methods, and spectroscopy.</p>
+  <p><a href="https://ocw.mit.edu/courses/5-73-quantum-mechanics-i-fall-2018/">MIT OpenCourseWare 5.73, Quantum Mechanics I</a> is the more advanced molecular quantum-mechanics continuation.</p>
+  <p><a href="https://academic.oup.com/book/43692">Jochen Autschbach, <cite>Quantum Theory for Chemical Applications</cite></a> is a self-contained chemistry-oriented text with worked problems. It is commercial or institutionally accessed.</p>
+  <p><a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119019572">Helgaker, Jørgensen, and Olsen, <cite>Molecular Electronic-Structure Theory</cite></a> is the rigorous reference for Gaussian basis functions, integrals, Hartree–Fock, configuration interaction, coupled cluster, and basis convergence. Its scale makes it a reference rather than a first introduction.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not derive Hartree–Fock, density-functional theory, post-Hartree–Fock methods, or localized-orbital algorithms in full. It establishes the molecular Hamiltonian, Born–Oppenheimer separation, orbital representation, antisymmetry, variational logic, and correlation vocabulary needed to compare those methods without confusing their responsibilities.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and resource roles were reviewed on 2 August 2026. Molecular interpretation quantities are presented as convention-dependent analyses rather than unique observables.</p>
+  </aside>
+</BaseLayout>
