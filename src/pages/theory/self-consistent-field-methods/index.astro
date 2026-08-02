@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Self-Consistent Field Methods" description="Nonlinear fixed points, residuals, mixing, occupations, metastability, and convergence evidence." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Self-Consistent Field Methods</span>
+  </nav>
+
+  <h1>Self-Consistent Field Methods</h1>
+  <p class="lede">Hartree–Fock and Kohn–Sham equations are nonlinear because the operator being solved depends on the orbitals or density produced by its own solution.</p>
+  <p>An SCF method searches for a fixed point of that nonlinear map. It is an algorithmic layer, not a new physical theory, and successful iteration is only one of several evidence gates in an electronic-structure calculation.</p>
+
+  <h2>The fixed-point problem</h2>
+  <p>Let <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> denote the density produced after building a Hamiltonian from an input density and solving the orbital problem. Self-consistency requires</p>
+  <div class="math-display">
+    <math display="block" aria-label="n star equals F of n star">
+      <semantics>
+        <mrow><msup><mi>n</mi><mo>*</mo></msup><mo>=</mo><mi>F</mi><mo>[</mo><msup><mi>n</mi><mo>*</mo></msup><mo>]</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">n^*=F[n^*].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The residual at iteration <math class="math-inline" aria-label="k"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> is</p>
+  <div class="math-display">
+    <math display="block" aria-label="R sub k equals n out sub k minus n in sub k">
+      <semantics>
+        <mrow>
+          <msub><mi>R</mi><mi>k</mi></msub>
+          <mo>=</mo>
+          <msubsup><mi>n</mi><mi>k</mi><mi>out</mi></msubsup>
+          <mo>−</mo>
+          <msubsup><mi>n</mi><mi>k</mi><mi>in</mi></msubsup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">R_k=n_k^&#123;\mathrm&#123;out&#125;&#125;-n_k^&#123;\mathrm&#123;in&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A small residual means the current finite nonlinear equations are nearly self-consistent under the chosen norm and representation. It does not establish basis completeness, k-point convergence, the global ground state, or the suitability of the physical approximation.</p>
+
+  <h2>The SCF loop</h2>
+  <ol class="reasoning-list">
+    <li>Choose an initial density, density matrix, potential, or Hamiltonian.</li>
+    <li>Build the Hartree, exchange, exchange–correlation, and other effective terms.</li>
+    <li>Solve the current linear or generalized eigenproblem.</li>
+    <li>Apply occupations and reconstruct an output density or density matrix.</li>
+    <li>Measure residuals and monitored scalar changes.</li>
+    <li>Mix or precondition the update and repeat until a declared stopping condition is met.</li>
+  </ol>
+  <p>Different codes may mix density, density matrix, potential, or Hamiltonian. Their printed residuals and tolerances are therefore not numerically interchangeable without checking definitions and normalization.</p>
+
+  <h2>Linear mixing exposes the central compromise</h2>
+  <p>A simple damped update is</p>
+  <div class="math-display">
+    <math display="block" aria-label="n in k plus one equals n in k plus alpha times P times R k">
+      <semantics>
+        <mrow>
+          <msubsup><mi>n</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow><mi>in</mi></msubsup>
+          <mo>=</mo>
+          <msubsup><mi>n</mi><mi>k</mi><mi>in</mi></msubsup>
+          <mo>+</mo><mi>α</mi><mi>P</mi><msub><mi>R</mi><mi>k</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n_&#123;k+1&#125;^&#123;\mathrm&#123;in&#125;&#125;=n_k^&#123;\mathrm&#123;in&#125;&#125;+\alpha P R_k.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The damping parameter <math class="math-inline" aria-label="alpha"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> trades speed against stability. The preconditioner <math class="math-inline" aria-label="P"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> reshapes different spatial or algebraic components of the residual. Too aggressive an update can oscillate or diverge; excessive damping can make convergence impractically slow.</p>
+
+  <h2>Pulay, DIIS, Broyden, and quasi-Newton ideas</h2>
+  <p>History-based methods combine several previous residuals and iterates to approximate the inverse response of the nonlinear map. Pulay or DIIS methods construct an optimized subspace combination; Broyden-type methods update an approximate Jacobian or inverse Jacobian.</p>
+  <p>These algorithms can be much faster than linear mixing, but they can also amplify noisy, inconsistent, or physically changing histories. Restarting the history, reducing the step, changing the preconditioner, or improving the initial state may be more defensible than simply increasing the maximum iteration count.</p>
+
+  <h2>Why metals and large cells are difficult</h2>
+  <p>Small changes in a metallic potential can move states through the Fermi level and alter occupations. Long-wavelength density fluctuations in extended cells can produce charge sloshing, where low-wavevector residual components are over-amplified. Magnetic and near-degenerate systems add competing occupation and spin branches.</p>
+  <p>Smearing or finite electronic temperature can regularize occupations, but it changes the variational quantity. The reported free energy, entropy term, and extrapolated zero-temperature energy must be interpreted according to the chosen scheme rather than treated as identical total energies.</p>
+
+  <h2>Initial conditions and metastable solutions</h2>
+  <p>SCF equations can admit multiple fixed points. Initial density, magnetic moments, symmetry constraints, occupation choices, charge state, and restart files can select different solutions. Convergence from one initial state does not prove that a lower-energy or physically relevant branch has been found.</p>
+  <p>For systems with competing states, use multiple justified initial configurations, compare final energies with consistent settings, inspect the resulting density and occupations, and test whether the solution persists under tighter numerical controls.</p>
+
+  <h2>Stopping criteria measure different things</h2>
+  <dl class="paired-definitions">
+    <dt>Density or density-matrix residual</dt>
+    <dd>Measures mismatch between input and output electronic variables.</dd>
+    <dt>Potential or Hamiltonian residual</dt>
+    <dd>Measures change in the effective operator; its meaning depends on the mixing convention.</dd>
+    <dt>Total-energy change</dt>
+    <dd>Can become small before the density is accurate enough for forces, response, or weak energy differences.</dd>
+    <dt>Eigenvalue or occupation change</dt>
+    <dd>Can diagnose Fermi-level rearrangements but is not a universal convergence norm.</dd>
+  </dl>
+  <p>A defensible stopping rule connects the monitored residual to the target observable and confirms that tightening the SCF tolerance no longer changes that observable materially.</p>
+
+  <h2>Four separate conclusions</h2>
+  <aside class="callout">
+    <p><strong>The program completed:</strong> the executable reached its normal termination path.</p>
+    <p><strong>The SCF equations converged:</strong> declared residual criteria were satisfied for the current finite problem.</p>
+    <p><strong>The target observable converged numerically:</strong> it is stable under basis, grid, cell, sampling, occupation, and tolerance refinement relevant to the claim.</p>
+    <p><strong>The scientific interpretation is supported:</strong> the model, approximation, comparison, and alternative states are adequate for the conclusion.</p>
+  </aside>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/solving-kohnsham-equations/6D80A46A3C01F331484C7383A373CBE3">Richard M. Martin, <cite>Electronic Structure</cite>, “Solving Kohn–Sham equations”</a> provides the electronic-structure context for iterative solution and its relation to the Kohn–Sham problem.</p>
+  <p><a href="https://docs.siesta-project.org/projects/siesta/en/stable/tutorials/basic/scf-convergence/">SIESTA SCF-cycle tutorial</a> explicitly shows the density–Hamiltonian–solution–new-density loop, residual monitoring, and linear, Pulay, and Broyden mixing. Its parameter names and default values are SIESTA-specific and must not be transferred numerically to other codes.</p>
+  <p><a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a> supplies the distinctions among conditioning, stability, residuals, and observable convergence.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page explains nonlinear iteration and convergence evidence. It does not prescribe universal mixing values, guarantee a global ground state, or replace systematic convergence studies of the numerical representation and target observable.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Martin/SIESTA destinations were reviewed on 2 August 2026. Software defaults are presented only as source-specific examples, not transferable recommendations.</p>
+  </aside>
+</BaseLayout>
