@@ -15,23 +15,73 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page is not a complete linear-algebra course. It isolates the ideas that recur when quantum states are represented in a finite basis and when electronic-structure equations are solved numerically.</p>
 
   <h2>Representing a state</h2>
-  <p>A quantum state is not a column of numbers by itself. The numbers are coordinates relative to a chosen basis. In a finite representation, a state can be written as a linear combination</p>
-  <p class="equation"><code>|ψ⟩ = Σᵢ cᵢ |φᵢ⟩</code>.</p>
-  <p>The basis functions <code>|φᵢ⟩</code> specify the representation; the coefficients <code>cᵢ</code> specify the state within that representation. Changing the basis changes the coefficients, but it should not change the underlying physical state when both representations are sufficiently complete.</p>
+  <p>A quantum state is not a column of numbers by itself. The numbers are coordinates relative to a chosen basis. In a finite representation, a state can be written as</p>
+  <div class="math-display">
+    <math display="block" aria-label="psi ket equals the sum from i equals one to N of c sub i times phi sub i ket">
+      <semantics>
+        <mrow>
+          <mo>|</mo><mi>ψ</mi><mo>⟩</mo>
+          <mo>=</mo>
+          <munderover>
+            <mo>∑</mo>
+            <mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow>
+            <mi>N</mi>
+          </munderover>
+          <msub><mi>c</mi><mi>i</mi></msub>
+          <mo>|</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>⟩</mo>
+          <mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">|\psi\rangle=\sum_{i=1}^{N}c_i|\phi_i\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The basis functions <math class="math-inline" aria-label="phi sub i ket"><semantics><mrow><mo>|</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>⟩</mo></mrow><annotation encoding="application/x-tex">|\phi_i\rangle</annotation></semantics></math> specify the representation; the coefficients <math class="math-inline" aria-label="c sub i"><semantics><msub><mi>c</mi><mi>i</mi></msub><annotation encoding="application/x-tex">c_i</annotation></semantics></math> specify the state within that representation. Changing the basis changes the coordinates, but it should not change the underlying physical state when both representations are sufficiently complete.</p>
   <p>This distinction is fundamental for plane waves, localized atomic orbitals, Gaussian functions, finite elements, and real-space grids. A basis is a numerical choice, not a new physical theory.</p>
 
   <h2>Inner products give geometry</h2>
   <p>Inner products define lengths, normalization, angles, and orthogonality. They allow statements such as “these two states are orthogonal” or “this trial state is normalized” to have a precise meaning.</p>
-  <p>In an orthonormal basis, the coefficient-space inner product has the familiar form <code>c†d</code>. In a non-orthogonal basis, the overlap matrix enters:</p>
-  <p class="equation"><code>⟨ψ|χ⟩ = c† S d</code>, where <code>Sᵢⱼ = ⟨φᵢ|φⱼ⟩</code>.</p>
-  <p>The matrix <code>S</code> is therefore not an optional correction. It records the geometry induced by the chosen basis. Near-linear dependence among basis functions makes <code>S</code> ill-conditioned and can make otherwise reasonable calculations numerically fragile.</p>
+  <p>In an orthonormal basis, the coefficient-space inner product has the familiar form <math class="math-inline" aria-label="c dagger d"><semantics><mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">d</mi></mrow><annotation encoding="application/x-tex">\mathbf{c}^{\dagger}\mathbf{d}</annotation></semantics></math>. In a non-orthogonal basis, the overlap matrix enters:</p>
+  <div class="math-display">
+    <math display="block" aria-label="inner product of psi and chi equals c dagger S d, with S sub i j equal to inner product of phi sub i and phi sub j">
+      <semantics>
+        <mtable columnalign="right center left" rowspacing="0.65em">
+          <mtr>
+            <mtd><mrow><mo>⟨</mo><mi>ψ</mi><mo>|</mo><mi>χ</mi><mo>⟩</mo></mrow></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">S</mi><mi mathvariant="bold">d</mi><mo>,</mo></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd><msub><mi>S</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mo>⟨</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>|</mo><msub><mi>φ</mi><mi>j</mi></msub><mo>⟩</mo><mo>.</mo></mrow></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\begin{aligned}\langle\psi|\chi\rangle&amp;=\mathbf{c}^{\dagger}\mathbf{S}\mathbf{d},\\S_{ij}&amp;=\langle\phi_i|\phi_j\rangle.\end{aligned}</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The matrix <math class="math-inline" aria-label="S"><semantics><mi mathvariant="bold">S</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math> is therefore not an optional correction. It records the geometry induced by the chosen basis. Near-linear dependence among basis functions makes the overlap matrix ill-conditioned and can make otherwise reasonable calculations numerically fragile.</p>
 
   <h2>Operators become spectral problems</h2>
   <p>A linear operator maps one state to another. Observables and Hamiltonians are represented by Hermitian operators, whose finite matrices have real eigenvalues and mutually orthogonal eigenspaces under the relevant inner product.</p>
   <p>For an orthonormal basis, the stationary equation becomes</p>
-  <p class="equation"><code>Hc = εc</code>.</p>
+  <div class="math-display">
+    <math display="block" aria-label="H c equals epsilon c">
+      <semantics>
+        <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf{H}\mathbf{c}=\varepsilon\mathbf{c}.</annotation>
+      </semantics>
+    </math>
+  </div>
   <p>For a non-orthogonal basis, the same physical problem becomes a generalized eigenvalue problem:</p>
-  <p class="equation"><code>Hc = εSc</code>.</p>
+  <div class="math-display">
+    <math display="block" aria-label="H c equals epsilon S c">
+      <semantics>
+        <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf{H}\mathbf{c}=\varepsilon\mathbf{S}\mathbf{c}.</annotation>
+      </semantics>
+    </math>
+  </div>
   <p>This is the algebraic core behind many orbital calculations. The matrix elements, the overlap matrix, the dimension of the represented subspace, and the algorithm used to solve the problem all affect the numerical result.</p>
 
   <h2>Subspaces matter more than individual vectors</h2>
@@ -40,7 +90,22 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Variational reasoning in matrix form</h2>
   <p>The Rayleigh quotient connects eigenvalues to minimization:</p>
-  <p class="equation"><code>R(c) = (c†Hc) / (c†Sc)</code>.</p>
+  <div class="math-display">
+    <math display="block" aria-label="R of c equals c dagger H c divided by c dagger S c">
+      <semantics>
+        <mrow>
+          <mi>R</mi><mo>(</mo><mi mathvariant="bold">c</mi><mo>)</mo>
+          <mo>=</mo>
+          <mfrac>
+            <mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi></mrow>
+            <mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi></mrow>
+          </mfrac>
+          <mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">R(\mathbf{c})=\frac{\mathbf{c}^{\dagger}\mathbf{H}\mathbf{c}}{\mathbf{c}^{\dagger}\mathbf{S}\mathbf{c}}.</annotation>
+      </semantics>
+    </math>
+  </div>
   <p>Within a chosen subspace, minimizing this quotient gives the lowest represented eigenvalue. Enlarging a well-constructed variational basis can improve the approximation, but the conclusion depends on the method and representation. A small residual or a stable eigenvalue within one basis does not by itself establish basis completeness.</p>
 
   <h2>What becomes numerical</h2>
@@ -54,14 +119,13 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The error and stability questions associated with these algorithms belong to <a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a>.</p>
 
   <h2>How to study this subject</h2>
-  <p><a href="https://www.cambridge.org/highereducation/books/introduction-to-linear-algebra/8C2B8F7F4C94A903A9018E9D8A42B9A7">Gilbert Strang, <cite>Introduction to Linear Algebra</cite>, 6th ed.</a> is the most direct first route when matrices, subspaces, least squares, eigenvalues, and SVD need to be connected to computation. The textbook is commercial, with official companion material available separately.</p>
-  <p><a href="https://linear.axler.net/">Sheldon Axler, <cite>Linear Algebra Done Right</cite>, 4th ed.</a> is the stronger route for linear maps, invariant subspaces, eigenvalues, and spectral structure. The author provides a legal open version under a noncommercial license. It is rigorous, but it is not a numerical-algorithms text.</p>
+  <p><a href="https://linear.axler.net/">Sheldon Axler, <cite>Linear Algebra Done Right</cite>, 4th ed.</a> is a rigorous route through linear maps, invariant subspaces, eigenvalues, and spectral structure. The author provides a legal open version under a noncommercial license. It is not a numerical-algorithms text.</p>
   <p><a href="https://ocw.mit.edu/courses/18-335j-introduction-to-numerical-methods-spring-2019/">MIT OpenCourseWare 18.335J, Introduction to Numerical Methods</a> is an advanced continuation for conditioning, QR, SVD, iterative methods, and eigenvalue algorithms. It assumes substantial linear algebra and programming maturity.</p>
 
   <h2>Minimum recognition target</h2>
   <p>Before moving into quantum mechanics or basis-set methods, a learner should be able to distinguish a state from its coordinates, explain what an inner product contributes, recognize Hermitian and unitary structure, interpret ordinary and generalized eigenvalue equations, and identify when a basis or overlap matrix may be poorly conditioned.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Resource roles and access boundaries were reviewed on 2 August 2026. The page uses original exposition and does not reproduce textbook chapters, figures, or exercise solutions.</p>
+    <p><strong>Review note.</strong> Resource roles and access boundaries were reviewed on 2 August 2026. The obsolete Cambridge resource link was removed on 2 August 2026. The page uses original exposition and does not reproduce textbook chapters, figures, or exercise solutions.</p>
   </aside>
 </BaseLayout>
