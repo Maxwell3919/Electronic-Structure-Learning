@@ -25,8 +25,28 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Conditioning belongs to the problem</h2>
   <p>Conditioning measures how strongly the exact answer changes when the input changes slightly. A well-conditioned problem is insensitive to small perturbations; an ill-conditioned problem amplifies them.</p>
-  <p>For a linear system <math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf A\mathbf x=\mathbf b</annotation></semantics></math>, the condition number <math class="math-inline" aria-label="kappa of A"><semantics><mrow><mi>κ</mi><mo>(</mo><mi mathvariant="bold">A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\kappa(\mathbf A)</annotation></semantics></math> bounds how input perturbations can be amplified. A large condition number can arise from near-linear dependence, poor scaling, or an intrinsically sensitive problem.</p>
-  <p>No algorithm can recover information that the input representation has effectively lost. Better algorithms can control additional error, but they cannot make an ill-conditioned mathematical problem well-conditioned.</p>
+  <p>For a linear system <math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf A\mathbf x=\mathbf b</annotation></semantics></math>, the condition number <math class="math-inline" aria-label="kappa of A"><semantics><mrow><mi>κ</mi><mo>(</mo><mi mathvariant="bold">A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\kappa(\mathbf A)</annotation></semantics></math> bounds how input perturbations can be amplified. In first-order form, the relationship is commonly summarized as</p>
+  <div class="math-display">
+    <math display="block" aria-label="relative change in x is approximately bounded by kappa of A times relative change in b">
+      <semantics>
+        <mrow>
+          <mfrac>
+            <mrow><mo>‖</mo><mi>δ</mi><mi mathvariant="bold">x</mi><mo>‖</mo></mrow>
+            <mrow><mo>‖</mo><mi mathvariant="bold">x</mi><mo>‖</mo></mrow>
+          </mfrac>
+          <mo>≲</mo>
+          <mi>κ</mi><mo>(</mo><mi mathvariant="bold">A</mi><mo>)</mo>
+          <mfrac>
+            <mrow><mo>‖</mo><mi>δ</mi><mi mathvariant="bold">b</mi><mo>‖</mo></mrow>
+            <mrow><mo>‖</mo><mi mathvariant="bold">b</mi><mo>‖</mo></mrow>
+          </mfrac>
+          <mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac{\lVert\delta\mathbf x\rVert}{\lVert\mathbf x\rVert}\lesssim\kappa(\mathbf A)\frac{\lVert\delta\mathbf b\rVert}{\lVert\mathbf b\rVert}.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A large condition number can arise from near-linear dependence, poor scaling, or an intrinsically sensitive problem. No algorithm can recover information that the input representation has effectively lost. Better algorithms can control additional error, but they cannot make an ill-conditioned mathematical problem well-conditioned.</p>
 
   <h2>Stability belongs to the algorithm</h2>
   <p>A stable algorithm solves the intended problem, or a nearby problem, without introducing excessive additional error. Conditioning and stability therefore answer different questions:</p>
