@@ -12,7 +12,59 @@ Reference
 
 The implementation uses Plain Astro pages, one shared layout, and one global stylesheet. It has no Starlight layer, content registry, search index, client hydration, packaged fonts, interactive runtime, backend, account system, or database.
 
-Theory will eventually connect mathematical, physical, chemical, and electronic-structure foundations. Its Learning Map remains a short textual responsibility until individual relationships have been reviewed. Methods discusses scientific methods rather than paper-reading records. Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
+## Theory
+
+Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its current directory stops at two levels:
+
+```text
+Theory
+├── Mathematical Foundations
+│   ├── Linear Algebra
+│   ├── Calculus and Analysis
+│   ├── Differential Equations
+│   ├── Fourier Analysis
+│   ├── Functional Analysis and Variational Methods
+│   ├── Numerical Analysis
+│   ├── Probability and Statistics
+│   └── Group Theory and Symmetry
+├── Physical Foundations
+│   ├── Classical Mechanics
+│   ├── Electromagnetism
+│   ├── Quantum Mechanics
+│   ├── Thermodynamics
+│   ├── Statistical Mechanics
+│   ├── Atomic and Molecular Physics
+│   ├── Solid-State Physics
+│   ├── Crystallography
+│   └── Many-Body Physics
+├── Chemical Foundations
+│   ├── General Chemistry
+│   ├── Physical Chemistry
+│   ├── Quantum Chemistry
+│   ├── Chemical Bonding and Molecular Structure
+│   ├── Inorganic Chemistry
+│   ├── Solid-State Chemistry
+│   └── Surface and Interface Chemistry
+├── Electronic Structure Theory
+│   ├── The Many-Electron Problem
+│   ├── Hartree and Hartree–Fock Methods
+│   ├── Density Functional Theory
+│   ├── Kohn–Sham Theory
+│   ├── Exchange-Correlation Theory
+│   ├── Self-Consistent Field Methods
+│   ├── Basis Sets and Numerical Representations
+│   ├── Plane-Wave and Real-Space Methods
+│   ├── Localized-Orbital Methods
+│   ├── Pseudopotentials and Projector-Augmented Waves
+│   ├── Brillouin-Zone Sampling
+│   ├── Linear Response and Excited States
+│   └── Berry Phases and Electronic Topology
+└── Learning Map
+```
+
+Books, course websites, resource evaluations, and detailed concept graphs are added later as separately reviewed content. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
+
+Methods discusses scientific methods rather than paper-reading records. Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
 
 The site defaults to English and system serif fonts. Pages use white space and typographic hierarchy rather than cards, dashboards, reading modes, status badges, or decorative interaction.
 

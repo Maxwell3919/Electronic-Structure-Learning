@@ -16,6 +16,50 @@ const expectedPages = [
   'src/pages/reference/index.astro',
   'src/pages/theory/index.astro',
 ];
+const expectedTheoryAnchors = [
+  'mathematical-foundations',
+  'linear-algebra',
+  'calculus-and-analysis',
+  'differential-equations',
+  'fourier-analysis',
+  'functional-analysis-and-variational-methods',
+  'numerical-analysis',
+  'probability-and-statistics',
+  'group-theory-and-symmetry',
+  'physical-foundations',
+  'classical-mechanics',
+  'electromagnetism',
+  'quantum-mechanics',
+  'thermodynamics',
+  'statistical-mechanics',
+  'atomic-and-molecular-physics',
+  'solid-state-physics',
+  'crystallography',
+  'many-body-physics',
+  'chemical-foundations',
+  'general-chemistry',
+  'physical-chemistry',
+  'quantum-chemistry',
+  'chemical-bonding-and-molecular-structure',
+  'inorganic-chemistry',
+  'solid-state-chemistry',
+  'surface-and-interface-chemistry',
+  'electronic-structure-theory',
+  'many-electron-problem',
+  'hartree-and-hartree-fock-methods',
+  'density-functional-theory',
+  'kohn-sham-theory',
+  'exchange-correlation-theory',
+  'self-consistent-field-methods',
+  'basis-sets-and-numerical-representations',
+  'plane-wave-and-real-space-methods',
+  'localized-orbital-methods',
+  'pseudopotentials-and-paw',
+  'brillouin-zone-sampling',
+  'linear-response-and-excited-states',
+  'berry-phases-and-electronic-topology',
+  'learning-map',
+];
 
 if (sourceMode) {
   const tracked = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
@@ -53,6 +97,11 @@ if (sourceMode) {
   for (const route of ['/theory/', '/methods/', '/computational-tools/', '/reference/']) {
     assert(layout.includes(`route: '${route}'`), `navigation target is missing: ${route}`);
   }
+
+  const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
+  for (const anchor of expectedTheoryAnchors) {
+    assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
+  }
 }
 
 if (builtMode) {
@@ -77,6 +126,11 @@ if (builtMode) {
       const route = withoutBase.split(/[?#]/)[0];
       assert(routeFiles.has(route), `broken or unexpected internal link in ${htmlFile}: ${href}`);
     }
+  }
+
+  const theoryHtml = fs.readFileSync(path.join(dist, 'theory/index.html'), 'utf8');
+  for (const anchor of expectedTheoryAnchors) {
+    assert(theoryHtml.includes(`id="${anchor}"`), `built Theory page is missing directory anchor: ${anchor}`);
   }
 }
 

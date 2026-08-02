@@ -4,7 +4,72 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
-  <p class="lede">Electronic-structure theory draws on mathematics, physics, and chemistry: the language of operators and spectra, the laws governing quantum systems, and the concepts used to interpret atoms, bonds, and solids.</p>
-  <h2>Learning Map</h2>
-  <p>A future learning map will express dependencies between ideas and allow several points of entry. It will not prescribe a fixed course sequence. This clean baseline does not yet claim a complete map of the field.</p>
+  <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
+  <p class="secondary">This page currently fixes only the first two levels of the directory. Books, courses, websites, and detailed concept relations will be added separately after review.</p>
+
+  <section aria-labelledby="mathematical-foundations">
+    <h2 id="mathematical-foundations">Mathematical Foundations</h2>
+    <ul>
+      <li id="linear-algebra">Linear Algebra</li>
+      <li id="calculus-and-analysis">Calculus and Analysis</li>
+      <li id="differential-equations">Differential Equations</li>
+      <li id="fourier-analysis">Fourier Analysis</li>
+      <li id="functional-analysis-and-variational-methods">Functional Analysis and Variational Methods</li>
+      <li id="numerical-analysis">Numerical Analysis</li>
+      <li id="probability-and-statistics">Probability and Statistics</li>
+      <li id="group-theory-and-symmetry">Group Theory and Symmetry</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="physical-foundations">
+    <h2 id="physical-foundations">Physical Foundations</h2>
+    <ul>
+      <li id="classical-mechanics">Classical Mechanics</li>
+      <li id="electromagnetism">Electromagnetism</li>
+      <li id="quantum-mechanics">Quantum Mechanics</li>
+      <li id="thermodynamics">Thermodynamics</li>
+      <li id="statistical-mechanics">Statistical Mechanics</li>
+      <li id="atomic-and-molecular-physics">Atomic and Molecular Physics</li>
+      <li id="solid-state-physics">Solid-State Physics</li>
+      <li id="crystallography">Crystallography</li>
+      <li id="many-body-physics">Many-Body Physics</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="chemical-foundations">
+    <h2 id="chemical-foundations">Chemical Foundations</h2>
+    <ul>
+      <li id="general-chemistry">General Chemistry</li>
+      <li id="physical-chemistry">Physical Chemistry</li>
+      <li id="quantum-chemistry">Quantum Chemistry</li>
+      <li id="chemical-bonding-and-molecular-structure">Chemical Bonding and Molecular Structure</li>
+      <li id="inorganic-chemistry">Inorganic Chemistry</li>
+      <li id="solid-state-chemistry">Solid-State Chemistry</li>
+      <li id="surface-and-interface-chemistry">Surface and Interface Chemistry</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="electronic-structure-theory">
+    <h2 id="electronic-structure-theory">Electronic Structure Theory</h2>
+    <ul>
+      <li id="many-electron-problem">The Many-Electron Problem</li>
+      <li id="hartree-and-hartree-fock-methods">Hartree and Hartree–Fock Methods</li>
+      <li id="density-functional-theory">Density Functional Theory</li>
+      <li id="kohn-sham-theory">Kohn–Sham Theory</li>
+      <li id="exchange-correlation-theory">Exchange-Correlation Theory</li>
+      <li id="self-consistent-field-methods">Self-Consistent Field Methods</li>
+      <li id="basis-sets-and-numerical-representations">Basis Sets and Numerical Representations</li>
+      <li id="plane-wave-and-real-space-methods">Plane-Wave and Real-Space Methods</li>
+      <li id="localized-orbital-methods">Localized-Orbital Methods</li>
+      <li id="pseudopotentials-and-paw">Pseudopotentials and Projector-Augmented Waves</li>
+      <li id="brillouin-zone-sampling">Brillouin-Zone Sampling</li>
+      <li id="linear-response-and-excited-states">Linear Response and Excited States</li>
+      <li id="berry-phases-and-electronic-topology">Berry Phases and Electronic Topology</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="learning-map">
+    <h2 id="learning-map">Learning Map</h2>
+    <p>The Learning Map will connect the detailed concepts contained in these subjects. It will represent prerequisites, branches, and converging paths rather than prescribe one fixed reading order.</p>
+  </section>
 </BaseLayout>
