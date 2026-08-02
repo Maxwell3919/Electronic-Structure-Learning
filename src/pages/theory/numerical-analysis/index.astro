@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Numerical Analysis" description="Error, conditioning, stability, and convergence in electronic-structure calculations." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Numerical Analysis</span>
+  </nav>
+
+  <h1>Numerical Analysis</h1>
+  <p class="lede">An electronic-structure calculation does not solve a continuous many-electron equation directly. It constructs a finite problem, applies algorithms, and returns numbers whose reliability depends on approximation, conditioning, stability, and convergence.</p>
+  <p>Numerical analysis asks what those numbers mean and how errors move through the calculation. It is not a catalogue of software settings.</p>
+
+  <h2>Four error sources must remain separate</h2>
+  <ol class="reasoning-list">
+    <li><strong>Model error</strong> comes from the physical theory or approximation: for example, the chosen exchange-correlation approximation or frozen-core treatment.</li>
+    <li><strong>Discretization error</strong> comes from representing continuous functions with a finite basis, grid, cell, or sampling mesh.</li>
+    <li><strong>Algebraic or iterative error</strong> remains because linear systems, eigenproblems, or nonlinear fixed points are solved only to finite tolerances.</li>
+    <li><strong>Floating-point error</strong> comes from finite-precision arithmetic, cancellation, scaling, and accumulated roundoff.</li>
+  </ol>
+  <p>Reducing one source does not remove the others. A tightly converged self-consistent loop can still use an inadequate basis, an unsuitable physical approximation, or an unconverged Brillouin-zone mesh.</p>
+
+  <h2>Conditioning belongs to the problem</h2>
+  <p>Conditioning measures how strongly the exact answer changes when the input changes slightly. A well-conditioned problem is insensitive to small perturbations; an ill-conditioned problem amplifies them.</p>
+  <p>For a linear system <code>Ax = b</code>, the condition number <code>κ(A)</code> bounds how input perturbations can be amplified. A large condition number can arise from near-linear dependence, poor scaling, or an intrinsically sensitive problem.</p>
+  <p>No algorithm can recover information that the input representation has effectively lost. Better algorithms can control additional error, but they cannot make an ill-conditioned mathematical problem well-conditioned.</p>
+
+  <h2>Stability belongs to the algorithm</h2>
+  <p>A stable algorithm solves the intended problem, or a nearby problem, without introducing excessive additional error. Conditioning and stability therefore answer different questions:</p>
+  <ul>
+    <li><em>Conditioning:</em> how sensitive is the mathematical problem?</li>
+    <li><em>Stability:</em> how much error does the chosen algorithm add?</li>
+  </ul>
+  <p>This distinction explains why two mathematically equivalent formulations can behave very differently in finite precision.</p>
+
+  <h2>The recurring computational objects</h2>
+  <p>Several numerical problems appear repeatedly in electronic structure:</p>
+  <dl class="paired-definitions">
+    <dt>Linear systems</dt>
+    <dd><code>Ax = b</code>, arising in Poisson solvers, response equations, and preconditioned updates.</dd>
+    <dt>Eigenvalue problems</dt>
+    <dd><code>Hc = εSc</code>, used to extract selected states from large Hermitian or generalized Hermitian operators.</dd>
+    <dt>Quadrature and sampling</dt>
+    <dd>Finite sums that approximate spatial integrals, reciprocal-space integrals, and expectation values.</dd>
+    <dt>Nonlinear fixed points</dt>
+    <dd><code>nₖ₊₁ = F[nₖ]</code>, the abstract structure behind self-consistent field iterations.</dd>
+  </dl>
+  <p>Direct diagonalization is only one possible strategy. Krylov subspaces, iterative eigensolvers, sparse matrix methods, preconditioners, and domain-specific transformations are often necessary because the full matrix is too large or too expensive to form.</p>
+
+  <h2>Discretization is part of the method</h2>
+  <p>Interpolation, quadrature, finite differences, spectral expansions, and basis truncation all replace a continuous object by finite data. Their errors depend on smoothness, boundary conditions, resolution, and the structure of the chosen representation.</p>
+  <p>Increasing a cutoff or refining a grid usually changes both accuracy and cost. Variational behavior may provide one-sided convergence for some quantities and methods, but it must not be assumed universally. Different observables can converge at different rates.</p>
+
+  <h2>Algorithmic convergence is not observable convergence</h2>
+  <aside class="callout">
+    <p><strong>Solver convergence</strong> means that a stated residual or update criterion has become small for the current finite problem.</p>
+    <p><strong>Numerical-parameter convergence</strong> means that the target observable is stable under systematic refinement of basis, grid, sampling, cell size, or other representation choices.</p>
+    <p><strong>Scientific support</strong> additionally requires that the physical model, comparison, and interpretation are appropriate for the claim.</p>
+  </aside>
+  <p>These are separate evidence gates. A calculation can pass the first and fail the second; it can pass both numerical gates and still be unsuitable for a stronger physical claim.</p>
+
+  <h2>Residuals are necessary but incomplete</h2>
+  <p>A residual measures how well a candidate satisfies a discrete equation. It is often a better diagnostic than the change in a single scalar such as total energy. However, a small residual does not automatically imply a small error in every quantity, especially for ill-conditioned or nonlinear problems.</p>
+  <p>Stopping criteria must therefore be connected to the target observable and to the scale of the problem. Universal thresholds detached from system size, normalization convention, method, and observable are not reliable guidance.</p>
+
+  <h2>Methods worth recognizing</h2>
+  <ul>
+    <li><strong>QR and SVD</strong> for stable factorization, rank, least squares, and conditioning.</li>
+    <li><strong>Krylov methods</strong> for large linear systems and selected eigenpairs.</li>
+    <li><strong>Preconditioning</strong> for reshaping a difficult problem so that iterations reduce error efficiently.</li>
+    <li><strong>Root finding and fixed-point acceleration</strong> for nonlinear equations and self-consistent cycles.</li>
+    <li><strong>Interpolation and quadrature</strong> for turning continuous fields and integrals into finite approximations.</li>
+  </ul>
+
+  <h2>A route into the subject</h2>
+  <p><a href="https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/">MIT OpenCourseWare 18.330, Introduction to Numerical Analysis</a> is the broad undergraduate entry. It is the better starting point when interpolation, quadrature, root finding, differential equations, and general error analysis are still new.</p>
+  <p><a href="https://ocw.mit.edu/courses/18-335j-introduction-to-numerical-methods-spring-2019/">MIT OpenCourseWare 18.335J, Introduction to Numerical Methods</a> is the advanced route for numerical linear algebra, conditioning, stability, eigenproblems, and iterative methods. It assumes strong linear algebra and programming.</p>
+  <p><a href="https://epubs.siam.org/doi/book/10.1137/1.9781611977165">Lloyd N. Trefethen and David Bau III, <cite>Numerical Linear Algebra</cite></a> is a concise, rigorous text organized around QR, conditioning, stability, iterative methods, and eigenvalue problems. It is commercial or institutionally accessed and does not cover the full nonlinear SCF problem or every discretization family.</p>
+
+  <h2>Questions to ask whenever a result is reported</h2>
+  <ul>
+    <li>What continuous or infinite problem was replaced by a finite one?</li>
+    <li>Which error source is the reported tolerance actually controlling?</li>
+    <li>Is the problem poorly conditioned or merely slow for the chosen algorithm?</li>
+    <li>What residual is monitored, and how is it normalized?</li>
+    <li>Which target observable was tested under parameter refinement?</li>
+    <li>Could a different initial state or metastable branch satisfy the same stopping criterion?</li>
+    <li>What stronger conclusion remains unsupported even after numerical convergence?</li>
+  </ul>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> The resource combination and the separation among algorithmic convergence, observable convergence, and scientific support were reviewed on 2 August 2026.</p>
+  </aside>
+</BaseLayout>
