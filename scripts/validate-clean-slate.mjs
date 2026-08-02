@@ -8,6 +8,7 @@ const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
 const sourceMode = process.argv.includes('--source') || !process.argv.includes('--built');
 const builtMode = process.argv.includes('--built');
+
 const expectedPages = [
   'src/pages/404.astro',
   'src/pages/computational-tools/index.astro',
@@ -15,13 +16,17 @@ const expectedPages = [
   'src/pages/methods/index.astro',
   'src/pages/reference/index.astro',
   'src/pages/theory/calculus-and-analysis/index.astro',
+  'src/pages/theory/density-functional-theory-foundations/index.astro',
+  'src/pages/theory/hartree-and-hartree-fock-theory/index.astro',
   'src/pages/theory/index.astro',
   'src/pages/theory/linear-algebra/index.astro',
+  'src/pages/theory/many-electron-problem/index.astro',
   'src/pages/theory/numerical-analysis/index.astro',
   'src/pages/theory/quantum-chemistry/index.astro',
   'src/pages/theory/quantum-mechanics/index.astro',
   'src/pages/theory/solid-state-physics/index.astro',
 ];
+
 const expectedHtml = [
   '404.html',
   'computational-tools/index.html',
@@ -29,13 +34,17 @@ const expectedHtml = [
   'methods/index.html',
   'reference/index.html',
   'theory/calculus-and-analysis/index.html',
+  'theory/density-functional-theory-foundations/index.html',
+  'theory/hartree-and-hartree-fock-theory/index.html',
   'theory/index.html',
   'theory/linear-algebra/index.html',
+  'theory/many-electron-problem/index.html',
   'theory/numerical-analysis/index.html',
   'theory/quantum-chemistry/index.html',
   'theory/quantum-mechanics/index.html',
   'theory/solid-state-physics/index.html',
 ];
+
 const expectedTheoryAnchors = [
   'mathematical-foundations',
   'linear-algebra',
@@ -80,38 +89,46 @@ const expectedTheoryAnchors = [
   'berry-phases-and-electronic-topology',
   'learning-map',
 ];
+
 const reviewedTheoryPages = {
-  'src/pages/theory/linear-algebra/index.astro': [
-    'generalized eigenvalue problem',
-    'linear.axler.net',
-    'The obsolete Cambridge resource link was removed',
-  ],
-  'src/pages/theory/calculus-and-analysis/index.astro': [
-    'Two layers hidden under one title',
-    'Computational calculus',
-    '18-100a-real-analysis',
-  ],
-  'src/pages/theory/numerical-analysis/index.astro': [
-    'Four error sources must remain separate',
-    'Algorithmic convergence is not observable convergence',
-    '18-335j-introduction-to-numerical-methods',
-  ],
-  'src/pages/theory/quantum-mechanics/index.astro': [
-    'Identical electrons require antisymmetry',
-    '8-04-quantum-physics-i',
-    '8-05-quantum-physics-ii',
-  ],
-  'src/pages/theory/solid-state-physics/index.astro': [
-    "Bloch's theorem reorganizes the one-electron problem",
-    'A plotted band path shows selected eigenvalues',
-    '8-231-physics-of-solids-i',
-  ],
-  'src/pages/theory/quantum-chemistry/index.astro': [
-    'The clamped-nuclei electronic Hamiltonian',
-    'A Slater determinant enforces it',
-    '5-61-physical-chemistry',
-  ],
+  'src/pages/theory/linear-algebra/index.astro': {
+    source: ['generalized eigenvalue problem', 'linear.axler.net', 'The obsolete Cambridge resource link was removed'],
+    built: ['generalized eigenvalue problem', 'The obsolete Cambridge resource link was removed'],
+  },
+  'src/pages/theory/calculus-and-analysis/index.astro': {
+    source: ['Two layers hidden under one title', 'Computational calculus', '18-100a-real-analysis'],
+    built: ['Two layers hidden under one title', 'Computational calculus'],
+  },
+  'src/pages/theory/numerical-analysis/index.astro': {
+    source: ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence', '18-335j-introduction-to-numerical-methods'],
+    built: ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
+  },
+  'src/pages/theory/quantum-mechanics/index.astro': {
+    source: ['Identical electrons require antisymmetry', '8-04-quantum-physics-i', '8-05-quantum-physics-ii'],
+    built: ['Identical electrons require antisymmetry'],
+  },
+  'src/pages/theory/solid-state-physics/index.astro': {
+    source: ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues', '8-231-physics-of-solids-i'],
+    built: ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
+  },
+  'src/pages/theory/quantum-chemistry/index.astro': {
+    source: ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it', '5-61-physical-chemistry'],
+    built: ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
+  },
+  'src/pages/theory/many-electron-problem/index.astro': {
+    source: ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention', '8-513-modern-quantum-many-body-physics'],
+    built: ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
+  },
+  'src/pages/theory/hartree-and-hartree-fock-theory/index.astro': {
+    source: ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem", 'single determinant'],
+    built: ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem", 'single determinant'],
+  },
+  'src/pages/theory/density-functional-theory-foundations/index.astro': {
+    source: ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory', 'pieces are missing and need rewriting'],
+    built: ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory', 'pieces are missing and need rewriting'],
+  },
 };
+
 const reviewedRoutes = [
   '/theory/linear-algebra/',
   '/theory/calculus-and-analysis/',
@@ -119,15 +136,37 @@ const reviewedRoutes = [
   '/theory/quantum-mechanics/',
   '/theory/solid-state-physics/',
   '/theory/quantum-chemistry/',
+  '/theory/many-electron-problem/',
+  '/theory/hartree-and-hartree-fock-theory/',
+  '/theory/density-functional-theory-foundations/',
 ];
+
+const internalRoutes = new Set([
+  '',
+  'theory/',
+  'theory/linear-algebra/',
+  'theory/calculus-and-analysis/',
+  'theory/numerical-analysis/',
+  'theory/quantum-mechanics/',
+  'theory/solid-state-physics/',
+  'theory/quantum-chemistry/',
+  'theory/many-electron-problem/',
+  'theory/hartree-and-hartree-fock-theory/',
+  'theory/density-functional-theory-foundations/',
+  'methods/',
+  'computational-tools/',
+  'reference/',
+]);
+
 const deadCambridgeId = '8C2B8F7F4C94A903A9018E9D8A42B9A7';
 const count = (text, expression) => (text.match(expression) ?? []).length;
+
 const checkMathMl = (text, label, source = false) => {
   const math = count(text, /<math(?:\s|>)/g);
   const semantics = count(text, /<semantics(?:\s|>)/g);
   const annotations = count(text, /<annotation\s+encoding="application\/x-tex">/g);
   assert(math > 0, `${label} contains no native MathML`);
-  assert(math === semantics, `${label} must give every MathML expression a semantics element: ${math} math, ${semantics} semantics`);
+  assert(math === semantics, `${label} must give every MathML expression one semantics element: ${math} math, ${semantics} semantics`);
   assert(math === annotations, `${label} must give every MathML expression one TeX annotation: ${math} math, ${annotations} annotations`);
   assert(text.includes('class="math-display"'), `${label} contains no shared display-math wrapper`);
   assert(!text.includes('class="equation"'), `${label} still uses the removed code-style equation class`);
@@ -135,6 +174,19 @@ const checkMathMl = (text, label, source = false) => {
     for (const match of text.matchAll(/<annotation\s+encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)) {
       assert(!/[{}]/.test(match[1]), `${label} has unescaped TeX grouping braces that Astro will parse as expressions`);
     }
+  }
+};
+
+const checkReviewedPages = (baseDirectory, mode) => {
+  for (const [sourceFile, markers] of Object.entries(reviewedTheoryPages)) {
+    const relative = mode === 'source'
+      ? sourceFile
+      : sourceFile.replace(/^src\/pages\//, '').replace(/\.astro$/, '.html');
+    const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
+    for (const marker of markers[mode]) {
+      assert(text.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
+    }
+    checkMathMl(text, relative, mode === 'source');
   }
 };
 
@@ -149,8 +201,8 @@ if (sourceMode) {
   for (const prefix of ['part-', 'practice-sholl-steckel', 'learning-paths', 'reading-system', 'labs', 'cases', 'interactive-labs', 'literature', 'book-map']) {
     assert(!tracked.some((file) => file.includes(prefix)), `legacy tracked path remains: ${prefix}`);
   }
-  const scriptFiles = tracked.filter((file) => file.startsWith('scripts/')).sort();
   const expectedScripts = ['scripts/smoke-clean-slate.py', 'scripts/validate-build-budget.mjs', 'scripts/validate-clean-slate.mjs'];
+  const scriptFiles = tracked.filter((file) => file.startsWith('scripts/')).sort();
   assert(JSON.stringify(scriptFiles) === JSON.stringify(expectedScripts), `scripts must remain the minimal suite: ${scriptFiles.join(', ')}`);
 
   const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -183,11 +235,11 @@ if (sourceMode) {
   for (const route of reviewedRoutes) {
     assert(theorySource.includes(route), `Theory directory is missing reviewed page link: ${route}`);
   }
-  for (const [file, markers] of Object.entries(reviewedTheoryPages)) {
-    const source = fs.readFileSync(path.join(root, file), 'utf8');
-    for (const marker of markers) assert(source.includes(marker), `${file} is missing reviewed content marker: ${marker}`);
-    checkMathMl(source, file, true);
+  for (const label of ['Hartree and Hartree–Fock Theory', 'Density Functional Theory: Foundations']) {
+    assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   }
+
+  checkReviewedPages(root, 'source');
 
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
   for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) {
@@ -200,26 +252,19 @@ if (builtMode) {
   const dist = path.join(root, 'dist');
   assert(fs.existsSync(dist), 'dist does not exist; build before --built validation');
   const files = [];
-  const walk = (directory) => { for (const entry of fs.readdirSync(directory, { withFileTypes: true })) { const absolute = path.join(directory, entry.name); entry.isDirectory() ? walk(absolute) : files.push(absolute); } };
+  const walk = (directory) => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const absolute = path.join(directory, entry.name);
+      entry.isDirectory() ? walk(absolute) : files.push(absolute);
+    }
+  };
   walk(dist);
+
   const htmlFiles = files.filter((file) => file.endsWith('.html')).map((file) => path.relative(dist, file)).sort();
   assert(JSON.stringify(htmlFiles) === JSON.stringify(expectedHtml), `built HTML must match the reviewed static set: ${htmlFiles.join(', ')}`);
   assert(!files.some((file) => file.endsWith('.js')), 'built site contains JavaScript');
   assert(!files.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
 
-  const routeFiles = new Set([
-    '',
-    'theory/',
-    'theory/linear-algebra/',
-    'theory/calculus-and-analysis/',
-    'theory/numerical-analysis/',
-    'theory/quantum-mechanics/',
-    'theory/solid-state-physics/',
-    'theory/quantum-chemistry/',
-    'methods/',
-    'computational-tools/',
-    'reference/',
-  ]);
   for (const htmlFile of htmlFiles) {
     const html = fs.readFileSync(path.join(dist, htmlFile), 'utf8');
     assert(!html.includes(deadCambridgeId), `dead Cambridge resource remains in built HTML: ${htmlFile}`);
@@ -228,7 +273,7 @@ if (builtMode) {
       if (/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
       const withoutBase = href.replace(/^\/[^/]+\//, '').replace(/^\//, '');
       const route = withoutBase.split(/[?#]/)[0];
-      assert(routeFiles.has(route), `broken or unexpected internal link in ${htmlFile}: ${href}`);
+      assert(internalRoutes.has(route), `broken or unexpected internal link in ${htmlFile}: ${href}`);
     }
   }
 
@@ -236,14 +281,7 @@ if (builtMode) {
   for (const anchor of expectedTheoryAnchors) {
     assert(theoryHtml.includes(`id="${anchor}"`), `built Theory page is missing directory anchor: ${anchor}`);
   }
-  for (const [sourceFile, markers] of Object.entries(reviewedTheoryPages)) {
-    const relative = sourceFile.replace(/^src\/pages\//, '').replace(/\.astro$/, '.html');
-    const html = fs.readFileSync(path.join(dist, relative), 'utf8');
-    for (const marker of markers.filter((value) => !value.includes('.net') && !value.match(/\d+-\d+/))) {
-      assert(html.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
-    }
-    checkMathMl(html, relative);
-  }
+  checkReviewedPages(dist, 'built');
 }
 
 if (failures.length) {
