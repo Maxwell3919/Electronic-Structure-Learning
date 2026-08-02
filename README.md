@@ -34,6 +34,12 @@ Martin Part I–VII、Sholl–Steckel、实验、案例和交互页面暂时保�
 
 文风不要求统一。理论页面可以接近教材，工具页面可以接近手册，方法页面可以接近科学综述，但都应避免机械模板、重复总结和 AI 式空泛表达。
 
+## 独立性与来源边界
+
+Electronic Structure Atlas 是独立开发项目，与所列参考项目、作者和机构不存在隶属、合作、赞助或背书关系。除具体文件另行记录来源和许可证外，本项目不复制其正文、插图、品牌资产、课程答案或其他受版权保护内容。
+
+Electronic Structure Atlas is independently developed and is not affiliated with, partnered with, sponsored by, or endorsed by referenced projects, authors, or institutions. Unless a specific file records its source and license, this project does not copy their prose, illustrations, brand assets, course answers, or other copyrighted materials.
+
 ## 本地验证
 
 要求 Node.js 22.12 或更高版本。
