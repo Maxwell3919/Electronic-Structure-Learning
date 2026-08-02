@@ -23,7 +23,7 @@ Boundary: the report records that second-round textbook comparison for all Tier-
 
 ### Richard M. Martin, Electronic Structure, second edition
 
-Official destination: <https://www.cambridge.org/core/books/abs/electronic-structure/localized-orbitals-tightbinding/>
+Official destination: <https://www.cambridge.org/core/books/electronic-structure/localized-orbitals-tightbinding/A40B1291E9099D574131ACCE2E55816E>
 
 Role: theory spine for localized atomic orbitals, tight-binding formulations, nonorthogonal Hamiltonian and overlap matrices, Gaussian and numerical basis functions, and full self-consistent localized-orbital calculations.
 
