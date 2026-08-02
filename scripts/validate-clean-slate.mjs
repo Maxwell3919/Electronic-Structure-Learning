@@ -10,8 +10,10 @@ const sourceMode = process.argv.includes('--source') || !process.argv.includes('
 const builtMode = process.argv.includes('--built');
 
 const theorySlugs = [
+  'atomic-and-molecular-physics',
   'brillouin-zone-sampling',
   'calculus-and-analysis',
+  'chemical-bonding-and-molecular-structure',
   'crystallography',
   'density-functional-theory-foundations',
   'differential-equations',
@@ -22,8 +24,10 @@ const theorySlugs = [
   'hartree-and-hartree-fock-theory',
   'kohn-sham-density-functional-theory',
   'linear-algebra',
+  'localized-orbital-methods',
   'many-electron-problem',
   'numerical-analysis',
+  'physical-chemistry',
   'plane-wave-and-real-space-methods',
   'pseudopotentials-paw-and-core-valence-treatments',
   'quantum-chemistry',
@@ -61,9 +65,12 @@ const reviewedTheoryPages = {
   'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
   'group-theory-and-symmetry': ['Representations describe how symmetry acts on a space', 'Symmetry reduction is not automatically physically harmless'],
   'quantum-mechanics': ['Identical electrons require antisymmetry'],
+  'atomic-and-molecular-physics': ['Hydrogenic states provide a reference language', 'Selection rules are symmetry statements'],
   'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
   'crystallography': ['A crystal combines a lattice with a basis', 'Structure standardization is useful but not neutral provenance'],
+  'physical-chemistry': ['Energy alone does not determine equilibrium', 'Electronic-structure calculations enter through a model stack'],
   'quantum-chemistry': ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
+  'chemical-bonding-and-molecular-structure': ['Chemical bonding is not represented by one unique quantum-mechanical observable', 'Multiple analyses should not be forced to agree'],
   'many-electron-problem': ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
   'hartree-and-hartree-fock-theory': ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem"],
   'density-functional-theory-foundations': ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory'],
@@ -72,6 +79,7 @@ const reviewedTheoryPages = {
   'self-consistent-field-methods': ['The fixed-point problem', 'Four separate conclusions'],
   'discretization-and-basis-representations': ['Basis, quadrature, and grid are distinct choices', 'Convergence is observable-specific'],
   'plane-wave-and-real-space-methods': ['Real-space methods form a family, not one algorithm', 'Representation-specific artifacts'],
+  'localized-orbital-methods': ['Empirical tight binding and first-principles local orbitals are distinct', 'Basis convergence is not one scalar setting'],
   'pseudopotentials-paw-and-core-valence-treatments': ['Verification, validation, and convergence are different', 'A library benchmark can reduce risk'],
   'brillouin-zone-sampling': ['Three meshes must not be conflated', 'A smooth band plot'],
   'relativistic-electronic-structure-spin-and-magnetism': ['A magnetic calculation searches a nonlinear landscape', 'Resource-review boundary'],
@@ -164,7 +172,16 @@ if (sourceMode) {
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['Plane-Wave and Real-Space Methods', 'Pseudopotentials, PAW, and Core–Valence Treatments', 'Brillouin-Zone Sampling', 'Relativistic Electronic Structure, Spin, and Magnetism']) {
+  for (const label of [
+    'Atomic and Molecular Physics',
+    'Physical Chemistry',
+    'Chemical Bonding and Molecular Structure',
+    'Localized-Orbital Methods',
+    'Plane-Wave and Real-Space Methods',
+    'Pseudopotentials, PAW, and Core–Valence Treatments',
+    'Brillouin-Zone Sampling',
+    'Relativistic Electronic Structure, Spin, and Magnetism',
+  ]) {
     assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   }
 
