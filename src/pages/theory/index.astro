@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. The first reviewed pages cover three mathematical foundations; the remaining entries still mark subjects to be developed individually.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Six subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -31,11 +31,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <ul>
       <li id="classical-mechanics">Classical Mechanics</li>
       <li id="electromagnetism">Electromagnetism</li>
-      <li id="quantum-mechanics">Quantum Mechanics</li>
+      <li id="quantum-mechanics"><a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> <span class="item-summary">— states, operators, dynamics, spin, and identical fermions.</span></li>
       <li id="thermodynamics">Thermodynamics</li>
       <li id="statistical-mechanics">Statistical Mechanics</li>
       <li id="atomic-and-molecular-physics">Atomic and Molecular Physics</li>
-      <li id="solid-state-physics">Solid-State Physics</li>
+      <li id="solid-state-physics"><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> <span class="item-summary">— periodicity, Bloch states, bands, filling, and collective degrees of freedom.</span></li>
       <li id="crystallography">Crystallography</li>
       <li id="many-body-physics">Many-Body Physics</li>
     </ul>
@@ -47,7 +47,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <ul>
       <li id="general-chemistry">General Chemistry</li>
       <li id="physical-chemistry">Physical Chemistry</li>
-      <li id="quantum-chemistry">Quantum Chemistry</li>
+      <li id="quantum-chemistry"><a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> <span class="item-summary">— molecular Hamiltonians, Born–Oppenheimer separation, orbitals, antisymmetry, and correlation.</span></li>
       <li id="chemical-bonding-and-molecular-structure">Chemical Bonding and Molecular Structure</li>
       <li id="inorganic-chemistry">Inorganic Chemistry</li>
       <li id="solid-state-chemistry">Solid-State Chemistry</li>
