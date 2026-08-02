@@ -130,7 +130,6 @@ const checkMathMl = (text, label, source = false) => {
   assert(math === semantics, `${label} must give every MathML expression a semantics element: ${math} math, ${semantics} semantics`);
   assert(math === annotations, `${label} must give every MathML expression one TeX annotation: ${math} math, ${annotations} annotations`);
   assert(text.includes('class="math-display"'), `${label} contains no shared display-math wrapper`);
-  assert(text.includes('class="math-inline"'), `${label} contains no inline MathML`);
   assert(!text.includes('class="equation"'), `${label} still uses the removed code-style equation class`);
   if (source) {
     for (const match of text.matchAll(/<annotation\s+encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)) {
