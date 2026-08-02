@@ -14,7 +14,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 ## Theory
 
-Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its current directory stops at two levels:
+Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels:
 
 ```text
 Theory
@@ -62,12 +62,14 @@ Theory
 └── Learning Map
 ```
 
-Books, course websites, resource evaluations, and detailed concept graphs are added later as separately reviewed content. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
+The first reviewed content batch adds individual pages for Linear Algebra, Calculus and Analysis, and Numerical Analysis. These pages share navigation and visual language but do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
+
+Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
 
 Methods discusses scientific methods rather than paper-reading records. Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
 
 The site defaults to English and system serif fonts. Pages use white space and typographic hierarchy rather than cards, dashboards, reading modes, status badges, or decorative interaction.
 
-The former Martin course, Sholl–Steckel cross-reference, learning paths, labs, cases, literature layer, interactive components, and their validation system are not part of the current build. They remain recoverable from Git history and the tag documented in `docs/legacy-site.md`; their former URLs are intentionally unsupported.
+The former source-aligned course, practice cross-reference, learning paths, labs, cases, literature layer, interactive components, and their validation system are not part of the current build. They remain recoverable from Git history and the tag documented in `docs/legacy-site.md`; their former URLs are intentionally unsupported.
 
 Future content is added manually, one reviewed responsibility at a time. A successful build or browser smoke verifies only the declared structural and runtime behavior, not scientific acceptance or learning effectiveness.
