@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="The Many-Electron Problem" description="Interacting-electron Hamiltonians, antisymmetry, state-space growth, observables, and correlation." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">The Many-Electron Problem</span>
+  </nav>
+
+  <h1>The Many-Electron Problem</h1>
+  <p class="lede">Electronic structure begins with a compact Hamiltonian and an extremely large quantum state. The difficulty is not that the governing equation is unknown; it is that electron–electron interaction and fermionic antisymmetry couple all electronic coordinates.</p>
+  <p>This page defines the problem that Hartree–Fock, density-functional theory, quantum Monte Carlo, and many-body perturbation theory reorganize in different ways. It does not treat those reorganizations as interchangeable.</p>
+
+  <h2>Fixed nuclei leave an interacting electronic problem</h2>
+  <p>After the usual Born–Oppenheimer separation, nuclear positions enter as parameters. In Hartree atomic units, the electronic Hamiltonian may be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="H equals sum over electrons of kinetic plus external potential, plus pairwise Coulomb repulsion">
+      <semantics>
+        <mrow>
+          <mover><mi>H</mi><mo>^</mo></mover><mo>=</mo>
+          <munderover><mo>∑</mo><mi>i</mi><mi>N</mi></munderover>
+          <mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msubsup><mo>∇</mo><mi>i</mi><mn>2</mn></msubsup><mo>+</mo><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>)</mo><mo>]</mo>
+          <mo>+</mo>
+          <munderover><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow><mi>N</mi></munderover>
+          <mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;=\sum_&#123;i=1&#125;^&#123;N&#125;[-\frac&#123;1&#125;&#123;2&#125;\nabla_i^2+v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;_i)]+\sum_&#123;i&lt;j&#125;^&#123;N&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The one-electron terms are additive. The final term depends on pairs of electron coordinates and prevents the exact state from generally separating into independent one-electron functions.</p>
+
+  <h2>The state lives in many coordinates</h2>
+  <p>For <math class="math-inline" aria-label="N electrons"><semantics><mrow><mi>N</mi><mtext> electrons</mtext></mrow><annotation encoding="application/x-tex">N\;\mathrm&#123;electrons&#125;</annotation></semantics></math>, the wavefunction depends on all spatial and spin variables. Writing <math class="math-inline" aria-label="x sub i equals r sub i and sigma sub i"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mo>(</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>,</mo><msub><mi>σ</mi><mi>i</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">x_i=(\mathbf&#123;r&#125;_i,\sigma_i)</annotation></semantics></math>, a pure state is</p>
+  <div class="math-display">
+    <math display="block" aria-label="Psi of x one through x N">
+      <semantics>
+        <mrow><mi>Ψ</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Psi(x_1,\ldots,x_N).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A real-space grid that is modest for one particle becomes impossible when naively repeated over all <math class="math-inline" aria-label="three N spatial dimensions"><semantics><mrow><mn>3</mn><mi>N</mi></mrow><annotation encoding="application/x-tex">3N</annotation></semantics></math> spatial dimensions. Basis expansions replace the grid by coefficients, but they do not remove the growth of the state space.</p>
+
+  <h2>Fermionic antisymmetry is an exact constraint</h2>
+  <p>Exchanging two identical electrons changes the sign of the wavefunction:</p>
+  <div class="math-display">
+    <math display="block" aria-label="Psi with x i and x j exchanged equals minus Psi">
+      <semantics>
+        <mrow>
+          <mi>Ψ</mi><mo>(</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>j</mi></msub><mo>,</mo><mo>…</mo><mo>)</mo>
+          <mo>=</mo><mo>−</mo>
+          <mi>Ψ</mi><mo>(</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>j</mi></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><mo>…</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Psi(\ldots,x_i,\ldots,x_j,\ldots)=-\Psi(\ldots,x_j,\ldots,x_i,\ldots).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This requirement produces the Pauli exclusion principle and exchange effects even before an approximate treatment of Coulomb repulsion is chosen. A product of arbitrary one-electron functions does not satisfy it; a Slater determinant does.</p>
+
+  <h2>Finite bases expose combinatorial growth</h2>
+  <p>Suppose <math class="math-inline" aria-label="N electrons occupy M spin orbitals"><semantics><mrow><mi>N</mi><mtext> electrons occupy </mtext><mi>M</mi><mtext> spin orbitals</mtext></mrow><annotation encoding="application/x-tex">N\;\mathrm&#123;electrons\ in&#125;\;M\;\mathrm&#123;spin\ orbitals&#125;</annotation></semantics></math>. The number of distinct determinants is</p>
+  <div class="math-display">
+    <math display="block" aria-label="M choose N equals M factorial over N factorial times M minus N factorial">
+      <semantics>
+        <mrow>
+          <mo>(</mo><mfrac linethickness="0"><mi>M</mi><mi>N</mi></mfrac><mo>)</mo>
+          <mo>=</mo>
+          <mfrac><mrow><mi>M</mi><mo>!</mo></mrow><mrow><mi>N</mi><mo>!</mo><mo>(</mo><mi>M</mi><mo>−</mo><mi>N</mi><mo>)</mo><mo>!</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\binom&#123;M&#125;&#123;N&#125;=\frac&#123;M!&#125;&#123;N!(M-N)!&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This is polynomial only when the electron number is fixed. For realistic sequences in which both basis size and electron number grow, the determinant space grows combinatorially. Symmetry, locality, sparsity, low-rank structure, stochastic sampling, and alternative basic variables are therefore central computational ideas rather than optional refinements.</p>
+
+  <h2>Reduced quantities compress selected information</h2>
+  <p>The particle density is obtained by integrating out all but one spatial coordinate and summing over spin:</p>
+  <div class="math-display">
+    <math display="block" aria-label="n of r equals N times sum over spin of integral of absolute Psi squared over the remaining electron coordinates">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mi>N</mi>
+          <munderover><mo>∑</mo><mi>σ</mi><mspace width="0.2em"/></munderover>
+          <mo>∫</mo><msup><mo>|</mo><mn>2</mn></msup>
+          <mi>Ψ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mi>σ</mi><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo><msup><mo>|</mo><mn>2</mn></msup>
+          <mi>d</mi><msub><mi>x</mi><mn>2</mn></msub><mo>⋯</mo><mi>d</mi><msub><mi>x</mi><mi>N</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=N\sum_\sigma\int|\Psi(\mathbf&#123;r&#125;\sigma,x_2,\ldots,x_N)|^2\,dx_2\cdots dx_N.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The density is far smaller than the wavefunction and determines many ground-state observables. It does not explicitly retain every phase, pair correlation, or excitation amplitude. Reduced density matrices and correlation functions retain more information at correspondingly higher cost.</p>
+
+  <h2>Correlation terminology needs a declared convention</h2>
+  <p><strong>Exchange</strong> refers to effects of fermionic antisymmetry and is already present in a single determinant. <strong>Coulomb or dynamical correlation</strong> commonly describes correlated electron motion beyond that optimized determinant. <strong>Static or nondynamical correlation</strong> commonly refers to situations in which several determinants are comparably important, often because configurations are nearly degenerate.</p>
+  <p>The phrase <em>Fermi correlation</em> is used inconsistently: some authors use it for same-spin avoidance caused by antisymmetry, while others reserve “correlation” for effects beyond Hartree–Fock. The convention must therefore be stated before comparing correlation energies or holes.</p>
+
+  <h2>Ground-state and excitation questions are different</h2>
+  <p>The variational principle singles out the ground state, but materials also have addition, removal, neutral-excitation, optical, and collective spectra. A method that is exact or controlled for a ground-state energy need not return exact excitation energies from its auxiliary eigenvalues.</p>
+  <p>Later pages separate density-based ground-state theory, independent-particle auxiliary systems, response theory, and quasiparticle methods rather than treating every displayed eigenvalue as the same physical object.</p>
+
+  <h2>Several approximation routes leave this page</h2>
+  <ul>
+    <li><a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> restricts the state to product or single-determinant forms.</li>
+    <li><a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> establishes a variational ground-state theory in terms of the density.</li>
+    <li>Wavefunction methods enlarge or transform determinant expansions.</li>
+    <li>Many-body Green-function methods reorganize propagation, screening, self-energy, and excitations.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/theoretical-background/77B94007F143F1D85E7D96B13237F62A">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., Chapter 3</a> gives the common interacting-electron starting point and distinguishes ground-state, independent-electron, Hartree–Fock, and correlation concepts. It is publisher-hosted and requires purchase or institutional access for full text.</p>
+  <p><a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119019572">Helgaker, Jørgensen, and Olsen, <cite>Molecular Electronic-Structure Theory</cite></a> is the rigorous molecular reference for second quantization, determinants, Hartree–Fock, correlated wavefunction methods, and calibration. Its scale makes it a reference rather than a first introduction.</p>
+  <p><a href="https://ocw.mit.edu/courses/8-513-modern-quantum-many-body-physics-for-condensed-matter-systems-fall-2021/">MIT OpenCourseWare 8.513, Modern Quantum Many-body Physics</a> is a free advanced continuation focused on interacting condensed-matter systems. It assumes graduate quantum mechanics, statistical physics, and solid-state physics; it is not the entry route to the present page.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and resource roles were reviewed on 2 August 2026 against the Theory research report and Martin's interacting-electron formulation. Terminology for exchange and correlation is explicitly treated as convention-sensitive.</p>
+  </aside>
+</BaseLayout>
