@@ -96,12 +96,38 @@ def new_driver(*, javascript: bool, width: int, height: int) -> webdriver.Chrome
     return driver
 
 
-def load_with_retry(driver: webdriver.Chrome, url: str, marker: str, attempts: int = 12) -> None:
+def styles_ready(driver: webdriver.Chrome, selector: str) -> bool:
+    return bool(
+        driver.execute_script(
+            """
+            const target = document.querySelector(arguments[0]);
+            if (!target || document.styleSheets.length === 0) return false;
+            const style = window.getComputedStyle(target);
+            return style.display === 'grid'
+              && style.gridTemplateColumns
+              && style.gridTemplateColumns !== 'none';
+            """,
+            selector,
+        )
+    )
+
+
+def load_with_retry(
+    driver: webdriver.Chrome,
+    url: str,
+    marker: str,
+    attempts: int = 12,
+    style_selector: str | None = None,
+) -> None:
     last_error: Exception | None = None
     for _ in range(attempts):
         try:
             driver.get(url)
             WebDriverWait(driver, 20).until(lambda active: marker in active.page_source)
+            if style_selector:
+                WebDriverWait(driver, 20).until(
+                    lambda active: styles_ready(active, style_selector)
+                )
             return
         except Exception as exc:
             last_error = exc
@@ -195,7 +221,12 @@ def part_index_smoke(report: dict) -> None:
 def desktop_and_interaction_smoke(report: dict) -> None:
     driver = new_driver(javascript=True, width=1440, height=1200)
     try:
-        load_with_retry(driver, CHAPTER_URL, "Chapter 20")
+        load_with_retry(
+            driver,
+            CHAPTER_URL,
+            "Chapter 20",
+            style_selector=".bilingual-section__grid",
+        )
         WebDriverWait(driver, 20).until(
             lambda active: len(active.find_elements(By.CSS_SELECTOR, ".katex")) > 0
         )
@@ -264,7 +295,7 @@ def desktop_and_interaction_smoke(report: dict) -> None:
         driver.set_window_size(390, 844)
         driver.refresh()
         WebDriverWait(driver, 20).until(
-            lambda active: len(active.find_elements(By.CSS_SELECTOR, ".bilingual-section__grid")) > 0
+            lambda active: styles_ready(active, ".bilingual-section__grid")
         )
         if grid_column_count(driver, ".bilingual-section__grid") != 1:
             fail("Chapter 20 narrow bilingual layout is not a single column")
@@ -281,7 +312,12 @@ def desktop_and_interaction_smoke(report: dict) -> None:
 def no_javascript_smoke(report: dict) -> None:
     driver = new_driver(javascript=False, width=1280, height=1000)
     try:
-        load_with_retry(driver, CHAPTER_URL, "No-JavaScript fallback")
+        load_with_retry(
+            driver,
+            CHAPTER_URL,
+            "No-JavaScript fallback",
+            style_selector=".bilingual-section__grid",
+        )
         contracts = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual__contract")
         figures = driver.find_elements(By.CSS_SELECTOR, ".chapter-visual")
         fallbacks = driver.find_elements(By.XPATH, "//*[contains(text(), '无 JavaScript fallback')]")
