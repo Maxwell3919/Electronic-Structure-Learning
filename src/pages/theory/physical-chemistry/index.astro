@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Physical Chemistry" description="Thermodynamics, kinetics, quantum structure, and spectroscopy as a bridge to electronic-structure interpretation." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Physical Chemistry</span>
+  </nav>
+
+  <h1>Physical Chemistry</h1>
+  <p class="lede">Physical chemistry connects molecular and materials questions to thermodynamics, kinetics, quantum mechanics, spectroscopy, and statistical reasoning.</p>
+  <p>This page is a bridge, not a compressed replacement for those subjects. Its purpose is to show how electronic energies enter chemical equilibrium, rates, finite-temperature stability, and observable spectra—and where additional models are required.</p>
+
+  <h2>Energy alone does not determine equilibrium</h2>
+  <p>For a multicomponent system, the differential of the Gibbs free energy is</p>
+  <div class="math-display">
+    <math display="block" aria-label="d G equals minus S d T plus V d p plus sum chemical potential d N">
+      <semantics>
+        <mrow><mi>d</mi><mi>G</mi><mo>=</mo><mo>−</mo><mi>S</mi><mi>d</mi><mi>T</mi><mo>+</mo><mi>V</mi><mi>d</mi><mi>p</mi><mo>+</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>μ</mi><mi>i</mi></msub><mi>d</mi><msub><mi>N</mi><mi>i</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">dG=-S\,dT+V\,dp+\sum_i\mu_i\,dN_i.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The appropriate potential depends on the controlled variables. A zero-temperature electronic total energy at fixed nuclei is therefore not automatically a Gibbs free energy, chemical potential, phase boundary, or finite-temperature stability criterion.</p>
+  <p>Vibrational, configurational, rotational, electronic, magnetic, pressure–volume, and environmental contributions may matter. Their relevance depends on the system, temperature, pressure, composition, and target decision.</p>
+
+  <h2>Reaction free energies combine enthalpy and entropy</h2>
+  <p>At fixed temperature and pressure,</p>
+  <div class="math-display">
+    <math display="block" aria-label="Delta G equals Delta H minus T Delta S">
+      <semantics>
+        <mrow><mi>Δ</mi><mi>G</mi><mo>=</mo><mi>Δ</mi><mi>H</mi><mo>−</mo><mi>T</mi><mi>Δ</mi><mi>S</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Delta G=\Delta H-T\Delta S.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Electronic-structure calculations often provide one contribution to <math class="math-inline" aria-label="Delta H"><semantics><mrow><mi>Δ</mi><mi>H</mi></mrow><annotation encoding="application/x-tex">\Delta H</annotation></semantics></math> or to an internal-energy difference. Thermal corrections and entropy require phonons, molecular partition functions, configurational models, or other explicit approximations.</p>
+  <p>For a standard reaction free energy, the equilibrium constant obeys</p>
+  <div class="math-display">
+    <math display="block" aria-label="K equals exponential of minus Delta G standard over R T">
+      <semantics>
+        <mrow><mi>K</mi><mo>=</mo><mi>exp</mi><mo>(</mo><mo>−</mo><mfrac><mrow><mi>Δ</mi><msup><mi>G</mi><mo>°</mo></msup></mrow><mrow><mi>R</mi><mi>T</mi></mrow></mfrac><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">K=\exp(-\Delta G^\circ/RT).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The standard state, concentration convention, pressure convention, and activities must be specified. A computed energy difference does not define them by itself.</p>
+
+  <h2>Chemical potentials organize open systems and defects</h2>
+  <p>The chemical potential <math class="math-inline" aria-label="mu i"><semantics><msub><mi>μ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mu_i</annotation></semantics></math> is the free-energy cost of changing composition under stated constraints. It enters phase diagrams, defect formation energies, adsorption, electrochemistry, and surface stability.</p>
+  <p>Chemical-potential bounds come from competing phases and reservoirs. They are not arbitrary tuning parameters. A defect or surface calculation must state the reservoir model, charge convention, finite-size correction, and thermodynamic ensemble before a formation energy can support a stability claim.</p>
+
+  <h2>Kinetics asks about pathways, not only endpoints</h2>
+  <p>Two states can have favorable thermodynamics but be separated by a large barrier. A simple Arrhenius form is</p>
+  <div class="math-display">
+    <math display="block" aria-label="k equals A exponential minus activation energy over R T">
+      <semantics>
+        <mrow><mi>k</mi><mo>=</mo><mi>A</mi><mi>exp</mi><mo>(</mo><mo>−</mo><mfrac><msub><mi>E</mi><mi>a</mi></msub><mrow><mi>R</mi><mi>T</mi></mrow></mfrac><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">k=A\exp(-E_a/RT).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The prefactor and activation energy depend on the kinetic model. Transition-state theory, diffusion theory, nonadiabatic dynamics, solvent friction, tunnelling, and driven processes introduce different assumptions. A static minimum-energy path is not a complete rate calculation.</p>
+
+  <h2>Spectroscopy connects energy differences to response</h2>
+  <p>Absorption, emission, Raman, photoelectron, and magnetic-resonance experiments probe different operators and correlation functions. Matching a peak requires more than finding a similar Kohn–Sham eigenvalue difference: transition matrix elements, selection rules, vibronic structure, lifetime broadening, temperature, environment, and many-body corrections can be decisive.</p>
+  <p><a href={href('/theory/atomic-and-molecular-physics/')}>Atomic and Molecular Physics</a> develops the states-and-spectra language; <a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> develops molecular electronic structure. Physical chemistry connects those quantities to thermodynamic and kinetic questions.</p>
+
+  <h2>Electronic-structure calculations enter through a model stack</h2>
+  <ol>
+    <li><strong>Electronic model:</strong> Hamiltonian, functional, core treatment, spin, charge, and boundary conditions.</li>
+    <li><strong>Nuclear model:</strong> fixed nuclei, harmonic motion, anharmonic motion, classical dynamics, or quantum nuclei.</li>
+    <li><strong>Thermodynamic model:</strong> ensemble, reservoirs, standard states, and finite-temperature contributions.</li>
+    <li><strong>Kinetic or spectroscopic model:</strong> pathway, transition operator, rate theory, line shape, or response function.</li>
+  </ol>
+  <p>Agreement at one layer does not validate the others. For example, a well-converged electronic total energy does not independently verify a harmonic free energy, a transition-state prefactor, or an experimental line assignment.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/5-60-thermodynamics-kinetics-spring-2008/">MIT OpenCourseWare 5.60, <cite>Thermodynamics &amp; Kinetics</cite></a> provides an undergraduate bridge through chemical equilibrium and reaction rates. It is the main open route for the thermodynamic and kinetic half of this page.</p>
+  <p><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/">MIT OpenCourseWare 5.61, <cite>Physical Chemistry</cite></a> develops quantum mechanics, molecular orbitals, molecular structure, spectroscopy, and photochemistry for chemists. It overlaps with the Quantum Chemistry page but supplies a more interpretive chemistry route.</p>
+  <p>For electronic-structure work, use these courses to identify the required thermodynamic or spectroscopic model. They do not replace method-specific convergence, finite-size analysis, or validation against the target observable.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not provide a full thermodynamics, statistical mechanics, kinetics, or spectroscopy course. It does not equate a zero-kelvin DFT energy ranking with thermodynamic stability, or a minimum-energy pathway with a measured rate.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official MIT OpenCourseWare destinations were reviewed on 3 August 2026. The page identifies model layers and evidence limits; it does not select a universal finite-temperature or kinetic workflow.</p>
+  </aside>
+</BaseLayout>

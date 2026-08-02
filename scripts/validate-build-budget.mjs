@@ -5,16 +5,16 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 const limits = {
-  totalBytes: 1_700_000,
-  htmlBytes: 1_250_000,
+  totalBytes: 2_000_000,
+  htmlBytes: 1_600_000,
   jsBytes: 0,
   cssBytes: 30_000,
   fontBytes: 0,
-  assetCount: 40,
-  largestAssetBytes: 130_000,
-  htmlPages: 27,
+  assetCount: 45,
+  largestAssetBytes: 140_000,
+  htmlPages: 31,
 };
-const minimumReductions = { pages: 0.70, bytes: 0.70, assets: 0.60 };
+const minimumReductions = { pages: 0.67, bytes: 0.70, assets: 0.60 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,

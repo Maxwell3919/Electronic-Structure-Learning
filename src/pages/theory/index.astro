@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Twenty-one subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Twenty-five subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -34,7 +34,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="quantum-mechanics"><a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> <span class="item-summary">— states, operators, dynamics, spin, and identical fermions.</span></li>
       <li id="thermodynamics">Thermodynamics</li>
       <li id="statistical-mechanics">Statistical Mechanics</li>
-      <li id="atomic-and-molecular-physics">Atomic and Molecular Physics</li>
+      <li id="atomic-and-molecular-physics"><a href={href('/theory/atomic-and-molecular-physics/')}>Atomic and Molecular Physics</a> <span class="item-summary">— bound states, angular momenta, fields, spectra, and selection rules.</span></li>
       <li id="solid-state-physics"><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> <span class="item-summary">— periodicity, Bloch states, bands, filling, and collective degrees of freedom.</span></li>
       <li id="crystallography"><a href={href('/theory/crystallography/')}>Crystallography</a> <span class="item-summary">— lattices, cells, reciprocal space, diffraction, space groups, and Wyckoff positions.</span></li>
       <li id="many-body-physics">Many-Body Physics</li>
@@ -46,9 +46,9 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <p>The concepts used to interpret atoms, bonds, molecules, solids, surfaces, and composition-dependent behavior.</p>
     <ul>
       <li id="general-chemistry">General Chemistry</li>
-      <li id="physical-chemistry">Physical Chemistry</li>
+      <li id="physical-chemistry"><a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> <span class="item-summary">— thermodynamic, kinetic, quantum, and spectroscopic model layers for chemical questions.</span></li>
       <li id="quantum-chemistry"><a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> <span class="item-summary">— molecular Hamiltonians, Born–Oppenheimer separation, orbitals, antisymmetry, and correlation.</span></li>
-      <li id="chemical-bonding-and-molecular-structure">Chemical Bonding and Molecular Structure</li>
+      <li id="chemical-bonding-and-molecular-structure"><a href={href('/theory/chemical-bonding-and-molecular-structure/')}>Chemical Bonding and Molecular Structure</a> <span class="item-summary">— orbital, density, symmetry, energy, and formal chemical interpretations.</span></li>
       <li id="inorganic-chemistry">Inorganic Chemistry</li>
       <li id="solid-state-chemistry">Solid-State Chemistry</li>
       <li id="surface-and-interface-chemistry">Surface and Interface Chemistry</li>
@@ -67,7 +67,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="self-consistent-field-methods"><a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> <span class="item-summary">— nonlinear fixed points, residuals, mixing, occupations, and metastability.</span></li>
       <li id="basis-sets-and-numerical-representations"><a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> <span class="item-summary">— finite spaces, grids, boundary conditions, completeness, and observable-specific convergence.</span></li>
       <li id="plane-wave-and-real-space-methods"><a href={href('/theory/plane-wave-and-real-space-methods/')}>Plane-Wave and Real-Space Methods</a> <span class="item-summary">— spectral bases, real-space families, FFT grids, boundary conditions, and representation errors.</span></li>
-      <li id="localized-orbital-methods">Localized-Orbital Methods</li>
+      <li id="localized-orbital-methods"><a href={href('/theory/localized-orbital-methods/')}>Localized-Orbital Methods</a> <span class="item-summary">— atom-centred bases, nonorthogonality, Bloch sums, tight binding, and basis convergence.</span></li>
       <li id="pseudopotentials-and-paw"><a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a> <span class="item-summary">— frozen cores, projectors, augmentation, reconstruction, transferability, and validation.</span></li>
       <li id="brillouin-zone-sampling"><a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> <span class="item-summary">— k-space integration, symmetry weights, occupations, smearing, and observable convergence.</span></li>
       <li id="relativistic-electronic-structure-spin-and-magnetism"><a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a> <span class="item-summary">— scalar relativity, spinors, SOC, noncollinearity, magnetic symmetry, and anisotropy.</span></li>

@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Atomic and Molecular Physics" description="States, angular momentum, spectra, fields, and selection rules for atoms and molecules." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Atomic and Molecular Physics</span>
+  </nav>
+
+  <h1>Atomic and Molecular Physics</h1>
+  <p class="lede">Atomic and molecular physics organizes bound states, angular momenta, fields, and spectra into experimentally observable structure.</p>
+  <p>Its role here is narrower than a complete AMO curriculum. The page connects benchmark atoms, term structure, rotational and vibrational motion, and spectroscopic selection rules to electronic-structure calculations. Collision physics, laser engineering, and molecular dynamics are outside the present scope.</p>
+
+  <h2>Hydrogenic states provide a reference language</h2>
+  <p>For a central potential, the one-electron wavefunction separates into radial and angular parts. In atomic units the radial equation for <math class="math-inline" aria-label="u n l"><semantics><msub><mi>u</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><annotation encoding="application/x-tex">u_&#123;nl&#125;</annotation></semantics></math> can be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="radial Schrodinger equation">
+      <semantics>
+        <mrow>
+          <mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>r</mi><mn>2</mn></msup></mrow></mfrac>
+          <mo>+</mo><mfrac><mrow><mi>l</mi><mo>(</mo><mi>l</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mrow><mn>2</mn><msup><mi>r</mi><mn>2</mn></msup></mrow></mfrac>
+          <mo>−</mo><mfrac><mi>Z</mi><mi>r</mi></mfrac><mo>]</mo>
+          <msub><mi>u</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>=</mo><msub><mi>E</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><msub><mi>u</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">[-\tfrac12\frac&#123;d^2&#125;&#123;dr^2&#125;+\frac&#123;l(l+1)&#125;&#123;2r^2&#125;-\frac&#123;Z&#125;&#123;r&#125;]u_&#123;nl&#125;(r)=E_&#123;nl&#125;u_&#123;nl&#125;(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The hydrogenic spectrum is not a quantitative model for general atoms, but its quantum numbers, angular functions, nodes, and degeneracies provide the vocabulary used in atomic basis functions, pseudopotential channels, projected densities of states, and spectroscopic labels.</p>
+
+  <h2>Many-electron atoms require coupled angular momenta</h2>
+  <p>Individual orbital and spin angular momenta combine into total quantum numbers. In the common LS-coupling notation, an atomic level is labelled</p>
+  <div class="math-display">
+    <math display="block" aria-label="atomic term symbol two S plus one L J">
+      <semantics>
+        <msubsup><mi>L</mi><mi>J</mi><mrow><mn>2</mn><mi>S</mi><mo>+</mo><mn>1</mn></mrow></msubsup>
+        <annotation encoding="application/x-tex">^&#123;2S+1&#125;L_J</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The multiplicity, total orbital angular momentum, total angular momentum, and parity constrain degeneracies and transitions. Other coupling schemes become more appropriate when spin–orbit interactions compete strongly with electrostatic term splittings.</p>
+  <p>Term symbols describe symmetry and angular-momentum content; they are not equivalent to a single orbital occupation diagram. Configuration interaction, relativistic mixing, and external fields can mix states with the same allowed symmetry.</p>
+
+  <h2>Fine, hyperfine, Zeeman, and Stark structure resolve different interactions</h2>
+  <p>Fine structure includes relativistic kinetic, spin–orbit, and related corrections. Hyperfine structure couples electronic angular momentum to nuclear spin and multipole moments. Magnetic and electric fields produce Zeeman and Stark shifts, lift degeneracies, and mix states subject to symmetry.</p>
+  <p>A calculation that omits spin–orbit coupling cannot be used to assign SOC-induced splittings. A scalar-relativistic atomic dataset can improve radial energetics without producing spinor-resolved fine structure. The Hamiltonian used in the calculation must therefore be stated before comparing level splittings.</p>
+
+  <h2>Molecules add rotation and vibration</h2>
+  <p>After separating electronic and nuclear motion approximately, a molecule has rotational, vibrational, and electronic energy scales. For a harmonic normal mode with frequency <math class="math-inline" aria-label="omega"><semantics><mi>ω</mi><annotation encoding="application/x-tex">\omega</annotation></semantics></math>, the idealized vibrational levels are</p>
+  <div class="math-display">
+    <math display="block" aria-label="vibrational energy equals hbar omega times v plus one half">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>v</mi></msub><mo>=</mo><mi>ℏ</mi><mi>ω</mi><mo>(</mo><mi>v</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_v=\hbar\omega(v+\tfrac12).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Real spectra include anharmonicity, rovibrational coupling, electronic-state dependence, nuclear-spin statistics, and environment effects. A normal-mode calculation at one minimum is not a complete molecular spectrum.</p>
+
+  <h2>Selection rules are symmetry statements</h2>
+  <p>A transition amplitude contains a matrix element such as</p>
+  <div class="math-display">
+    <math display="block" aria-label="transition dipole matrix element">
+      <semantics>
+        <mrow><msub><mi>M</mi><mrow><mi>f</mi><mi>i</mi></mrow></msub><mo>=</mo><mo>⟨</mo><msub><mi>Ψ</mi><mi>f</mi></msub><mo>|</mo><mover><mi>μ</mi><mo>^</mo></mover><mo>|</mo><msub><mi>Ψ</mi><mi>i</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">M_&#123;fi&#125;=\langle\Psi_f|\hat&#123;\mu&#125;|\Psi_i\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A transition is forbidden in a stated approximation when symmetry forces the relevant matrix element to vanish. “Forbidden” does not mean impossible: vibronic coupling, spin–orbit mixing, symmetry breaking, higher multipoles, or external fields can activate weak intensity.</p>
+
+  <h2>Electronic-structure connections</h2>
+  <ul>
+    <li><strong>Atomic reference calculations</strong> test radial solvers, basis functions, exchange–correlation behavior, and relativistic treatments.</li>
+    <li><strong>Pseudopotential and PAW generation</strong> uses atomic channels, scattering properties, occupations, and core–valence partitions.</li>
+    <li><strong>Spectroscopy</strong> requires energy differences, transition operators, response theory, and often vibronic or relativistic corrections beyond a ground-state calculation.</li>
+    <li><strong>Projected quantities</strong> inherit angular-momentum conventions and projection radii; an “atomic orbital character” is representation-dependent.</li>
+  </ul>
+
+  <h2>Study routes</h2>
+  <p><a href="https://ocw.mit.edu/courses/8-421-atomic-and-optical-physics-i-spring-2014/">MIT OpenCourseWare 8.421, <cite>Atomic and Optical Physics I</cite></a> provides a graduate course on simple atoms, fine and hyperfine structure, fields, resonance, and atom–light interaction. It assumes prior quantum mechanics and is not an introductory electronic-structure course.</p>
+  <p><a href="https://academic.oup.com/book/59280">Peter F. Bernath, <cite>Spectra of Atoms and Molecules</cite>, 5th ed.</a> is a spectroscopy reference connecting molecular symmetry, atomic spectra, rotation, vibration, and electronic transitions. Full access is publisher-dependent.</p>
+  <p><a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a>, <a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a>, and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a> supply the main prerequisites and downstream connections.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page explains states and spectra as an interpretive bridge. It does not replace Quantum Chemistry, derive production pseudopotentials, teach collision theory, or claim that ground-state Kohn–Sham eigenvalue differences are generally quantitative excitation energies.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official MIT/Oxford destinations were reviewed on 3 August 2026. The page records theory and resource roles; it does not independently validate spectroscopic predictions for a particular system.</p>
+  </aside>
+</BaseLayout>

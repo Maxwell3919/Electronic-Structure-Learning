@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Localized-Orbital Methods" description="Atom-centred basis functions, Bloch sums, nonorthogonality, basis convergence, and localized electronic-structure formulations." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Localized-Orbital Methods</span>
+  </nav>
+
+  <h1>Localized-Orbital Methods</h1>
+  <p class="lede">Localized-orbital methods represent electronic states with functions attached to atoms, bonds, fragments, cells, or adaptive spatial regions.</p>
+  <p>The category includes empirical tight-binding models, Gaussian or Slater-type basis calculations, numerical atomic orbitals, all-electron atom-centred methods, and mixed formulations. Sharing a localized representation does not make these methods equivalent in Hamiltonian, accuracy, or evidence.</p>
+
+  <h2>Atom-centred functions define a finite subspace</h2>
+  <p>A molecular orbital or Kohn–Sham state may be expanded as</p>
+  <div class="math-display">
+    <math display="block" aria-label="psi i equals sum mu C mu i chi mu">
+      <semantics>
+        <mrow><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi>μ</mi><mo></mo></munderover><msub><mi>C</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub><msub><mi>χ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\psi_i(\mathbf&#123;r&#125;)=\sum_\mu C_&#123;\mu i&#125;\chi_\mu(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The functions may differ in angular momentum, radial shape, confinement radius, exponent, centre, and number of radial functions per channel. “Double-zeta polarized” or “tier 2” is meaningful only within a specified basis family and code.</p>
+  <p>Locality can reduce matrix sparsity and support chemical interpretation, but it does not guarantee completeness, transferability, or linear scaling for every operation.</p>
+
+  <h2>Nonorthogonal bases produce generalized eigenproblems</h2>
+  <p>Atom-centred functions usually overlap. The coefficients therefore satisfy</p>
+  <div class="math-display">
+    <math display="block" aria-label="H C equals S C epsilon">
+      <semantics>
+        <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">C</mi><mo>=</mo><mi mathvariant="bold">S</mi><mi mathvariant="bold">C</mi><mi mathvariant="bold">ε</mi><mo>,</mo><mspace width="0.5em"/><msub><mi>S</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><mo>⟨</mo><msub><mi>χ</mi><mi>μ</mi></msub><mo>|</mo><msub><mi>χ</mi><mi>ν</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;H&#125;\mathbf&#123;C&#125;=\mathbf&#123;S&#125;\mathbf&#123;C&#125;\boldsymbol&#123;\varepsilon&#125;,\quad S_&#123;\mu\nu&#125;=\langle\chi_\mu|\chi_\nu\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Near-linear dependence makes the overlap matrix ill-conditioned. Adding diffuse or redundant functions can therefore worsen numerical stability even while enlarging the nominal basis.</p>
+  <p>Population analyses, projected densities of states, and orbital weights must account for the overlap metric. Coefficient magnitudes alone are not invariant orbital populations.</p>
+
+  <h2>Periodic crystals use Bloch sums of local functions</h2>
+  <p>For a basis function <math class="math-inline" aria-label="chi mu"><semantics><msub><mi>χ</mi><mi>μ</mi></msub><annotation encoding="application/x-tex">\chi_\mu</annotation></semantics></math> repeated by lattice translations <math class="math-inline" aria-label="R"><semantics><mi mathvariant="bold">R</mi><annotation encoding="application/x-tex">\mathbf&#123;R&#125;</annotation></semantics></math>, a Bloch-adapted basis is</p>
+  <div class="math-display">
+    <math display="block" aria-label="chi mu k equals sum R exponential i k dot R chi mu translated">
+      <semantics>
+        <mrow><msub><mi>χ</mi><mrow><mi>μ</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mi>N</mi></msqrt></mfrac><munderover><mo>∑</mo><mi mathvariant="bold">R</mi><mo></mo></munderover><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup><msub><mi>χ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\chi_&#123;\mu\mathbf&#123;k&#125;&#125;(\mathbf&#123;r&#125;)=\frac&#123;1&#125;&#123;\sqrt&#123;N&#125;&#125;\sum_\mathbf&#123;R&#125;e^&#123;i\mathbf&#123;k&#125;\cdot\mathbf&#123;R&#125;&#125;\chi_\mu(\mathbf&#123;r&#125;-\mathbf&#123;R&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The Hamiltonian and overlap matrices become <math class="math-inline" aria-label="k dependent"><semantics><mrow><mi mathvariant="bold">k</mi><mtext>-dependent</mtext></mrow><annotation encoding="application/x-tex">\mathbf&#123;k&#125;\text&#123;-dependent&#125;</annotation></semantics></math>. Basis convergence and Brillouin-zone sampling remain separate numerical questions.</p>
+
+  <h2>Empirical tight binding and first-principles local orbitals are distinct</h2>
+  <p>In empirical tight binding, selected onsite and hopping parameters define a model Hamiltonian, often fitted to experiment or higher-level calculations. In a first-principles localized-basis calculation, matrix elements are evaluated from an explicit Hamiltonian, density, basis, integration grid, and core treatment.</p>
+  <p>Both can use the same algebraic form. Their claims differ: a fitted model may reproduce selected bands without being a transferable total-energy method, while a self-consistent method must still demonstrate basis, grid, sampling, and model convergence.</p>
+
+  <h2>Basis families trade systematic simplicity for compactness</h2>
+  <dl class="paired-definitions">
+    <dt>Gaussian-type orbitals</dt>
+    <dd>Enable efficient analytic integral machinery and mature hierarchical basis families, especially in molecular quantum chemistry.</dd>
+    <dt>Slater-type orbitals</dt>
+    <dd>Have physically natural cusp and asymptotic forms but less convenient multicentre integral structure.</dd>
+    <dt>Numerical atomic orbitals</dt>
+    <dd>Use tabulated radial functions with flexible confinement and can treat molecules and solids compactly.</dd>
+    <dt>Numeric atom-centred all-electron functions</dt>
+    <dd>Resolve all electrons with radial functions and numerical integration, avoiding a pseudopotential but requiring near-nucleus accuracy.</dd>
+    <dt>Mixed bases</dt>
+    <dd>Combine local functions with plane waves, grids, or auxiliary bases to separate difficult spatial or algebraic components.</dd>
+  </dl>
+  <p>No family is universally best. Efficiency and convergence depend on system type, core treatment, observable, dimensionality, diffuse states, response order, and implementation.</p>
+
+  <h2>Basis convergence is not one scalar setting</h2>
+  <p>Relevant choices include cardinality, polarization functions, diffuse functions, angular-momentum cutoff, radial extent, confinement, auxiliary basis, integration grid, and treatment of empty regions. The target observable determines which changes matter.</p>
+  <p>Basis-set superposition error occurs when fragments borrow each other’s functions, lowering the combined-system energy more than the separated reference. Counterpoise or larger-basis checks can diagnose this in suitable contexts, but they do not remove every representation or geometry inconsistency.</p>
+
+  <h2>Moving bases create Pulay terms</h2>
+  <p>When basis functions depend on nuclear positions or cell parameters, derivatives of the basis contribute to forces and stress. A stationary coefficient vector does not make those basis derivatives vanish in an incomplete representation.</p>
+  <p>Force convergence can therefore be slower or different from total-energy convergence. Geometry optimization must test the observable actually used to stop the relaxation.</p>
+
+  <h2>Locality enables sparse and reduced-order methods</h2>
+  <p>In insulating systems, density matrices and Wannier-like representations can decay in real space. This supports truncation, sparse algebra, embedding, fragment methods, and some linear-scaling algorithms.</p>
+  <p>Metallicity, small gaps, finite electronic temperature, long-range exchange, diffuse states, and response functions can weaken locality. Sparse storage alone does not establish asymptotic linear scaling or controlled error.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/localized-orbitals-tightbinding/A40B1291E9099D574131ACCE2E55816E">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., Chapters 14–15</a> connects localized atomic orbitals, tight-binding models, nonorthogonal matrices, Gaussian and numerical bases, and full self-consistent methods. Full text may require institutional access.</p>
+  <p><a href="https://docs.siesta-project.org/projects/siesta/en/stable/tutorials/basic/basis-optimization/">SIESTA basis-set optimization tutorial</a> demonstrates numerical atomic-orbital cardinality, confinement, optimization, and practical basis errors. It is implementation documentation, not a universal basis prescription.</p>
+  <p><a href="https://fhi-aims.org/uploads/manual/Ch3/S4.html">FHI-aims manual: specifying the basis</a> documents numerical atom-centred all-electron functions and convergence controls. Version-specific manual details must be recorded with production calculations.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not equate localized orbitals with empirical tight binding, does not prescribe a universal zeta level or cutoff radius, and does not treat basis labels from different codes as interchangeable. Convergence must be demonstrated for the stated system and observable.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Cambridge, SIESTA, and FHI-aims destinations were reviewed on 3 August 2026. Software documentation records implementation behavior, not independent validation of a basis for every scientific use.</p>
+  </aside>
+</BaseLayout>
