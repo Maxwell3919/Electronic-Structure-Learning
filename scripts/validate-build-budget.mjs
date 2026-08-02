@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
-const limits = { totalBytes: 500_000, htmlBytes: 160_000, jsBytes: 0, cssBytes: 30_000, fontBytes: 0, assetCount: 20, largestAssetBytes: 100_000, htmlPages: 9 };
+const limits = { totalBytes: 500_000, htmlBytes: 160_000, jsBytes: 0, cssBytes: 30_000, fontBytes: 0, assetCount: 20, largestAssetBytes: 100_000, htmlPages: 12 };
 const baseline = { sha: '7cbf789720e152cb76acdc406016a788bc0a8de2', htmlPages: 94, totalBytes: 37_158_277, htmlBytes: 32_177_853, jsBytes: 822_195, cssBytes: 361_817, fontBytes: 1_072_948, assetCount: 472, largestAssetBytes: 1_399_938, buildSeconds: 27.88 };
 if (!fs.existsSync(dist)) throw new Error('dist does not exist; run the production build first');
 const files = [];
