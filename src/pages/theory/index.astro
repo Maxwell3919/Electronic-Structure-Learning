@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Six subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Nine subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -59,9 +59,9 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <h2 id="electronic-structure-theory">Electronic Structure Theory</h2>
     <p>Focused theories and computational representations used to formulate and solve electronic many-electron problems.</p>
     <ul>
-      <li id="many-electron-problem">The Many-Electron Problem</li>
-      <li id="hartree-and-hartree-fock-methods">Hartree and Hartree–Fock Methods</li>
-      <li id="density-functional-theory">Density Functional Theory</li>
+      <li id="many-electron-problem"><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> <span class="item-summary">— interacting Hamiltonians, antisymmetry, state-space growth, observables, and correlation.</span></li>
+      <li id="hartree-and-hartree-fock-methods"><a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> <span class="item-summary">— product states, determinants, mean fields, exchange, and single-determinant limits.</span></li>
+      <li id="density-functional-theory"><a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> <span class="item-summary">— ground-state density, universal functionals, constrained search, and variational scope.</span></li>
       <li id="kohn-sham-theory">Kohn–Sham Theory</li>
       <li id="exchange-correlation-theory">Exchange-Correlation Theory</li>
       <li id="self-consistent-field-methods">Self-Consistent Field Methods</li>
