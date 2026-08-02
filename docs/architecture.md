@@ -64,7 +64,9 @@ Theory
 
 The first reviewed content batch adds individual pages for Linear Algebra, Calculus and Analysis, and Numerical Analysis. These pages share navigation and visual language but do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
-Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
+Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
+
+Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
 
 Methods discusses scientific methods rather than paper-reading records. Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
 
