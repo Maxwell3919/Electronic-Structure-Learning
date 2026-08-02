@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Chemical Bonding and Molecular Structure" description="Orbital, density, symmetry, and energy-based interpretations of chemical bonding." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Chemical Bonding and Molecular Structure</span>
+  </nav>
+
+  <h1>Chemical Bonding and Molecular Structure</h1>
+  <p class="lede">Chemical bonding is not represented by one unique quantum-mechanical observable. It is interpreted through complementary models built from orbitals, densities, energies, symmetry, and experimentally meaningful trends.</p>
+  <p>This page explains how those models connect to electronic-structure results without treating any single bond order, charge partition, orbital picture, or topology as a universal definition of a bond.</p>
+
+  <h2>Structure is a pattern in nuclear configuration space</h2>
+  <p>A molecular geometry is usually associated with a minimum or stationary point on a Born–Oppenheimer potential-energy surface. Bond lengths and angles describe the nuclear arrangement; they do not by themselves identify the electronic mechanism that stabilizes it.</p>
+  <p>Different electronic states, spin states, charge states, environments, or constraints can support different structures. A relaxed geometry is meaningful only together with its electronic model, convergence state, symmetry constraints, and vibrational characterization.</p>
+
+  <h2>Molecular orbitals are basis-dependent representations</h2>
+  <p>An orbital expanded in atom-centred functions has the form</p>
+  <div class="math-display">
+    <math display="block" aria-label="psi i equals sum mu C mu i chi mu">
+      <semantics>
+        <mrow><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi>μ</mi><mo></mo></munderover><msub><mi>C</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub><msub><mi>χ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\psi_i(\mathbf&#123;r&#125;)=\sum_\mu C_&#123;\mu i&#125;\chi_\mu(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Bonding, antibonding, lone-pair, hybrid-orbital, and fragment-orbital pictures can expose symmetry and phase relationships. Their coefficients change under rotations within an occupied subspace, basis changes, localization procedures, and fragment definitions.</p>
+  <p>Orbital diagrams are therefore explanatory coordinates, not direct photographs of electrons. Their value depends on whether they clarify the stated chemical question.</p>
+
+  <h2>The density matrix links orbital coefficients to one-body quantities</h2>
+  <p>For occupations <math class="math-inline" aria-label="f i"><semantics><msub><mi>f</mi><mi>i</mi></msub><annotation encoding="application/x-tex">f_i</annotation></semantics></math>, a basis representation of the one-particle density matrix is</p>
+  <div class="math-display">
+    <math display="block" aria-label="P mu nu equals sum i f i C mu i C nu i star">
+      <semantics>
+        <mrow><msub><mi>P</mi><mrow><mi>μ</mi><mi>ν</mi></mrow></msub><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>f</mi><mi>i</mi></msub><msub><mi>C</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub><msubsup><mi>C</mi><mrow><mi>ν</mi><mi>i</mi></mrow><mo>*</mo></msubsup><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">P_&#123;\mu\nu&#125;=\sum_i f_i C_&#123;\mu i&#125;C^*_&#123;\nu i&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Overlap populations, density-matrix bond indices, natural orbitals, localized orbitals, and fragment populations extract different summaries from this object. Numerical values depend on the basis, overlap metric, localization or population scheme, and treatment of diffuse or delocalized density.</p>
+
+  <h2>Electron density offers an orbital-invariant starting point</h2>
+  <p>The electron density is invariant under unitary rotations of equally occupied orbitals. It can reveal accumulation, depletion, anisotropy, polarization, and shell structure without selecting a particular orbital representation.</p>
+  <p>Topological approaches partition space through critical points and zero-flux boundaries. A schematic zero-flux condition on an interatomic surface is</p>
+  <div class="math-display">
+    <math display="block" aria-label="gradient rho dot normal equals zero">
+      <semantics>
+        <mrow><mo>∇</mo><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\nabla\rho(\mathbf&#123;r&#125;)\cdot\mathbf&#123;n&#125;(\mathbf&#123;r&#125;)=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Density topology is a rigorous analysis of a stated density, but the chemical interpretation of a critical point or basin remains a model choice. The absence or presence of one feature does not by itself settle every question about bonding, stability, or reactivity.</p>
+
+  <h2>Energy decomposition answers a different question</h2>
+  <p>Energy-decomposition analyses separate an interaction energy into terms associated with electrostatics, exchange or Pauli repulsion, polarization, charge transfer, dispersion, preparation, or other model-defined contributions.</p>
+  <p>These components are generally not unique observables. Their values depend on fragments, reference states, orbital constraints, functional, basis, and decomposition formalism. They are most reliable for comparisons performed consistently within one declared scheme.</p>
+
+  <h2>Bond order and formal oxidation state are useful conventions</h2>
+  <p>Formal bond orders, Lewis structures, resonance forms, oxidation states, ligand-field diagrams, and valence rules compress complex electronic structure into transferable chemical language. They support reasoning about trends and reactions.</p>
+  <p>They should not be silently equated with an integrated charge or one computed orbital occupation. Several internally consistent assignments may exist, especially in delocalized, metallic, multicentre, mixed-valence, or strongly covalent systems.</p>
+
+  <h2>Symmetry constrains bonding patterns</h2>
+  <p>Symmetry determines which atomic or fragment orbitals can mix and which distortions, vibrations, and transitions are allowed in a stated approximation. Orbitals belonging to incompatible irreducible representations do not mix while the symmetry is preserved.</p>
+  <p><a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> provides the formal language. Real molecules may lower symmetry through vibronic coupling, Jahn–Teller distortions, environments, magnetic order, or numerical perturbations.</p>
+
+  <h2>Multiple analyses should not be forced to agree</h2>
+  <ul>
+    <li>An orbital picture describes a chosen one-electron representation.</li>
+    <li>A density partition assigns real space or basis functions to fragments.</li>
+    <li>An energy decomposition assigns interaction-energy changes to model terms.</li>
+    <li>A spectroscopic assignment connects states through transition operators and measured signals.</li>
+  </ul>
+  <p>Disagreement can reveal that the analyses answer different questions. Selecting the scheme after seeing the preferred narrative creates interpretation bias.</p>
+
+  <h2>Study routes</h2>
+  <p><a href="https://academic.oup.com/book/43692">Jochen Autschbach, <cite>Quantum Theory for Chemical Applications</cite></a> develops orbital, symmetry, molecular-structure, response, and relativistic concepts in a chemistry-centred route. It is a paid or institutional resource and does not replace method-specific software documentation.</p>
+  <p><a href="https://academic.oup.com/book/53229">Richard F. W. Bader, <cite>Atoms in Molecules: A Quantum Theory</cite></a> provides a density-topological interpretation distinct from orbital-centred bonding models. It should be read as one formal analysis framework rather than a universal replacement for all chemical models.</p>
+  <p><a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> supplies the molecular Hamiltonian and approximation framework; <a href={href('/theory/localized-orbital-methods/')}>Localized-Orbital Methods</a> explains how atom-centred representations are constructed computationally.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not define one universal bond metric, prescribe one charge scheme, or treat orbital plots as observables. A bonding claim must state the analysis method, reference states, basis or partition, numerical settings, and the narrower conclusion that the evidence supports.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope and official Oxford destinations were reviewed on 3 August 2026. The page compares interpretive frameworks; it does not independently validate a bonding assignment for a particular molecule or material.</p>
+  </aside>
+</BaseLayout>
