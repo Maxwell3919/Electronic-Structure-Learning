@@ -56,6 +56,27 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>In empirical tight binding, selected onsite and hopping parameters define a model Hamiltonian, often fitted to experiment or higher-level calculations. In a first-principles localized-basis calculation, matrix elements are evaluated from an explicit Hamiltonian, density, basis, integration grid, and core treatment.</p>
   <p>Both can use the same algebraic form. Their claims differ: a fitted model may reproduce selected bands without being a transferable total-energy method, while a self-consistent method must still demonstrate basis, grid, sampling, and model convergence.</p>
 
+  <h2>Wannier functions localize a selected Bloch subspace</h2>
+  <p>Atom-centred basis functions define the finite representation used to solve a problem. Canonical Kohn–Sham orbitals are eigenstates of the chosen effective Hamiltonian. Wannier functions are a third object: localized transforms of a selected set of Bloch states. A schematic construction is</p>
+  <div class="math-display">
+    <math display="block" aria-label="Wannier function n R equals one over square root N k sum k exponential minus i k dot R sum m U m n of k psi m k">
+      <semantics>
+        <mrow>
+          <mo>|</mo><msub><mi>w</mi><mrow><mi>n</mi><mi mathvariant="bold">R</mi></mrow></msub><mo>⟩</mo><mo>=</mo>
+          <mfrac><mn>1</mn><msqrt><msub><mi>N</mi><mi>k</mi></msub></msqrt></mfrac>
+          <munderover><mo>∑</mo><mi mathvariant="bold">k</mi><mo></mo></munderover>
+          <msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup>
+          <munderover><mo>∑</mo><mi>m</mi><mo></mo></munderover>
+          <msub><mi>U</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo>
+          <mo>|</mo><msub><mi>ψ</mi><mrow><mi>m</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">|w_&#123;n\mathbf&#123;R&#125;&#125;\rangle=\frac&#123;1&#125;&#123;\sqrt&#123;N_k&#125;&#125;\sum_\mathbf&#123;k&#125;e^&#123;-i\mathbf&#123;k&#125;\cdot\mathbf&#123;R&#125;&#125;\sum_m U_&#123;mn&#125;(\mathbf&#123;k&#125;)|\psi_&#123;m\mathbf&#123;k&#125;&#125;\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The matrices <math class="math-inline" aria-label="U of k"><semantics><mrow><mi mathvariant="bold">U</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\mathbf&#123;U&#125;(\mathbf&#123;k&#125;)</annotation></semantics></math> choose a gauge within the selected subspace. For entangled bands, the outer and inner windows, disentanglement, projections, symmetry constraints, and k mesh become part of the construction. A localized Wannier function is therefore not automatically an atomic orbital, a unique chemical bond, or an observable.</p>
+  <p>Wannier interpolation must reproduce the target first-principles bands and matrix elements over the stated window before it supports dense-mesh conclusions. Topological bands can obstruct a symmetry-preserving, exponentially localized Wannier representation of the isolated occupied subspace. These gauge and topology questions continue on <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.</p>
+
   <h2>Basis families trade systematic simplicity for compactness</h2>
   <dl class="paired-definitions">
     <dt>Gaussian-type orbitals</dt>
@@ -80,8 +101,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Force convergence can therefore be slower or different from total-energy convergence. Geometry optimization must test the observable actually used to stop the relaxation.</p>
 
   <h2>Locality enables sparse and reduced-order methods</h2>
-  <p>In insulating systems, density matrices and Wannier-like representations can decay in real space. This supports truncation, sparse algebra, embedding, fragment methods, and some linear-scaling algorithms.</p>
-  <p>Metallicity, small gaps, finite electronic temperature, long-range exchange, diffuse states, and response functions can weaken locality. Sparse storage alone does not establish asymptotic linear scaling or controlled error.</p>
+  <p>In insulating systems, density matrices and suitably chosen Wannier representations can decay in real space. This supports truncation, sparse algebra, embedding, fragment methods, and some linear-scaling algorithms.</p>
+  <p>Metallicity, small gaps, finite electronic temperature, long-range exchange, diffuse states, response functions, and topological obstructions can weaken or qualify locality. Sparse storage alone does not establish asymptotic linear scaling or controlled error.</p>
 
   <h2>Study routes</h2>
   <p><a href="https://www.cambridge.org/core/books/electronic-structure/localized-orbitals-tightbinding/A40B1291E9099D574131ACCE2E55816E">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., Chapters 14–15</a> connects localized atomic orbitals, tight-binding models, nonorthogonal matrices, Gaussian and numerical bases, and full self-consistent methods. Full text may require institutional access.</p>
@@ -92,6 +113,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page does not equate localized orbitals with empirical tight binding, does not prescribe a universal zeta level or cutoff radius, and does not treat basis labels from different codes as interchangeable. Convergence must be demonstrated for the stated system and observable.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official Cambridge, SIESTA, and FHI-aims destinations were reviewed on 3 August 2026. Software documentation records implementation behavior, not independent validation of a basis for every scientific use.</p>
+    <p><strong>Review note.</strong> The Wannier cross-responsibility was re-audited on 3 August 2026 against the Theory report and Martin’s localized-orbital/Wannier treatment. Software documentation records implementation behavior, not independent validation of a basis or Wannier model.</p>
   </aside>
 </BaseLayout>
