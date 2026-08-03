@@ -77,6 +77,33 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </ul>
   </section>
 
+  <section aria-labelledby="reviewed-study-routes">
+    <h2 id="reviewed-study-routes">Reviewed Study Routes</h2>
+    <p>Course selection is not restricted to MIT OpenCourseWare or major publishers. Chinese university courses, independent creators, long-form explanations, and open-source notebooks are included when their authorship, structure, technical scope, access, and limitations can be checked. These are alternatives for different gaps, not a prestige ranking.</p>
+
+    <h3>Quantum mechanics</h3>
+    <p><a href="https://www.bilibili.com/video/BV1yh4y1A7ja/"><cite lang="zh-CN">B站物院の量子力学</cite></a> is a compact self-produced Chinese sequence covering wavefunctions, Schrödinger equations, model potentials, operators, Hilbert-space notation, representations, hydrogen, spin, angular momentum, and identical particles. It is useful for a first pass or structured review, but its short chapters should be paired with a textbook and sustained problem solving.</p>
+    <p><a href="https://www.zhihu.com/tardis/zm/art/169805550"><cite lang="zh-CN">从线性代数到量子力学</cite> by PeiLingX</a> uses spin experiments, basis changes, probability distributions, Fourier transforms, and uncertainty to bridge <a href={href('/theory/linear-algebra/')}>Linear Algebra</a> and <a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a>. It is a conceptual bridge rather than a complete course.</p>
+
+    <h3>Electromagnetism</h3>
+    <p><a href="https://www.bilibili.com/video/BV1ki4y1A7Mh/"><cite lang="zh-CN">大学物理《电磁学》</cite>, University of Science and Technology of China School of the Gifted Young</a> is a 116-lecture official course recording covering electrostatics, dielectric media, boundary-value methods, magnetism, induction, Maxwell equations, and waves. It provides a complete Chinese undergraduate route before the Atlas narrows the subject to periodic electrostatics and response.</p>
+    <p><a href="https://www.bilibili.com/video/BV1Kk4y1e7He/"><cite lang="zh-CN">普通物理学—电磁学</cite> by 大T-Peachsea</a> is a completed handwritten independent sequence with detailed derivations and examples. It is useful for calculation-following support; the creator's own undergraduate framing means it should supplement, not replace, established textbooks.</p>
+
+    <h3>Solid-state physics</h3>
+    <p><a href="https://www.icourse163.org/course/NUDT-1206139804"><cite lang="zh-CN">简明固体物理</cite>, National University of Defense Technology</a> covers crystal structure, lattice vibrations, free electrons, and band theory in a lower-barrier course of roughly ten video hours. It is a compact entry route rather than a full advanced treatment of magnetism, topology, or many-body response.</p>
+    <p><a href="https://www.bilibili.com/video/BV1Hs4y1n7T8/"><cite lang="zh-CN">B站物院の固体物理</cite></a> is a concise eight-chapter independent series with paired exercises on crystal structure, reciprocal lattices, bonding, lattice vibrations, phonon thermodynamics, the free-electron gas, bands, and semiconductors. Its compressed form makes it better for review than for proof-level study.</p>
+
+    <h3>Density-functional and Kohn–Sham theory</h3>
+    <p><a href="https://www.bilibili.com/video/BV1spj4zgEv3/"><cite lang="zh-CN">密度泛函理论（2025年5月）</cite> by 孙老师讲物理</a> is a six-part Chinese sequence connecting Thomas–Fermi, Thomas–Fermi–Dirac, Hohenberg–Kohn variation, Kohn–Sham equations, and the local-density approximation. It offers a coherent narrative bridge, while the Atlas continues to separate DFT foundations, the Kohn–Sham construction, XC approximation, and SCF solution.</p>
+    <p><a href="https://github.com/tjz21/DFT_PIB_Code"><code>tjz21/DFT_PIB_Code</code></a> provides MIT-licensed Jupyter and Colab notebooks that expose the Kohn–Sham potential, LDA/PBE choices, density updates, eigenvalues, and SCF iteration through pedagogical model systems. It is an executable introduction, not evidence for production-material accuracy.</p>
+    <p><a href="https://github.com/JuliaMolSim/DFTK.jl"><code>JuliaMolSim/DFTK.jl</code></a> is an actively maintained MIT-licensed plane-wave DFT toolkit built for numerical and algorithmic transparency. Its tutorials connect the physical model to cutoffs, k-point sampling, and SCF solution, but require Julia and substantially more numerical maturity.</p>
+
+    <h3>Variational and real-space numerics</h3>
+    <p><a href="https://github.com/JSchoeberl/iFEM"><code>JSchoeberl/iFEM</code></a> is an interactive Jupyter-book course on finite-element theory and computation. It is not an electronic-structure course, but it gives a rigorous experimental bridge from weak formulations and Sobolev spaces to real-space discretization for <a href={href('/theory/differential-equations/')}>Differential Equations</a>, <a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis</a>, and numerical representation.</p>
+
+    <p>Third-party university-course reuploads, textbook-download bundles, marketing-first training pages, exam-cram fragments, and repositories with unclear provenance or unresolved copyright boundaries are excluded. Play count, follower count, stars, and institutional branding are discovery signals only.</p>
+  </section>
+
   <section aria-labelledby="learning-map">
     <h2 id="learning-map">Learning Map</h2>
     <p>The Learning Map connects detailed concepts through prerequisites, branches, and converging paths. It does not prescribe one fixed reading order and remains a relationship layer rather than a separate course.</p>
