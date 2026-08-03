@@ -28,7 +28,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>The factor of two applies only when the two faces are equivalent. Polar, asymmetric, nonstoichiometric, reconstructed, charged, or adsorbate-covered surfaces require additional chemical-potential and electrostatic terms.</p>
+  <p>The factor of two applies only when the two faces are equivalent. For an asymmetric slab, the total excess generally determines <math class="math-inline" aria-label="gamma top plus gamma bottom"><semantics><mrow><msub><mi>γ</mi><mi>top</mi></msub><mo>+</mo><msub><mi>γ</mi><mi>bottom</mi></msub></mrow><annotation encoding="application/x-tex">\gamma_&#123;\mathrm&#123;top&#125;&#125;+\gamma_&#123;\mathrm&#123;bottom&#125;&#125;</annotation></semantics></math>, not the two face energies separately. Extracting an individual termination requires additional reference slabs, symmetry relations, chemical-potential constraints, or another thermodynamic construction.</p>
+  <p>Polar, nonstoichiometric, reconstructed, charged, or adsorbate-covered surfaces require additional chemical-potential and electrostatic terms.</p>
   <p>Bulk and slab references must use compatible Hamiltonians, pseudopotentials, basis settings, k-space treatment, magnetic states, and energy conventions. Numerical cancellation does not rescue inconsistent references.</p>
 
   <h2>Adsorption energy depends on references and sign convention</h2>
