@@ -42,6 +42,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>This produces a systematic sequence of finite spaces, but the useful cutoff depends on the core treatment, element set, target observable, cell, and implementation. A cutoff printed in a dataset or tutorial is a starting point, not evidence that a particular energy difference, force, stress, phonon, or response property is converged.</p>
+  <p>Because the cutoff selects reciprocal vectors relative to the current cell, changing cell volume or shape at fixed cutoff changes the represented plane-wave set. Modes can enter or leave the finite basis as the reciprocal lattice changes. This finite-cutoff basis variation contributes a Pulay-like stress error even though the plane waves do not move with individual atoms. Cell optimization, equations of state, and stress therefore require their own cutoff convergence checks.</p>
 
   <h2>FFT grids are related to the basis but are not identical to it</h2>
   <p>Plane-wave coefficients are transformed to real-space grids to evaluate local potentials, densities, and nonlinear products. The wavefunction cutoff, density cutoff, augmentation grid, and FFT dimensions can therefore be distinct numerical controls.</p>
@@ -80,6 +81,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <ul>
     <li><strong>Aliasing</strong> arises when nonlinear products exceed the represented Fourier or grid bandwidth.</li>
     <li><strong>Egg-box effects</strong> appear when energies or forces vary spuriously as atoms move relative to a fixed grid.</li>
+    <li><strong>Pulay stress</strong> can appear when cell changes alter the finite plane-wave set at fixed cutoff.</li>
     <li><strong>Supercell interactions</strong> couple periodic images of defects, molecules, slabs, charges, or dipoles.</li>
     <li><strong>Boundary reflections</strong> contaminate time-dependent or open-domain real-space calculations when absorbers or domains are inadequate.</li>
     <li><strong>Inconsistent grids</strong> can make energies, forces, stresses, and response functions converge at different rates.</li>
@@ -98,6 +100,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page compares representation principles and their numerical consequences. Pseudopotential/PAW construction and Brillouin-zone integration are treated separately. It does not recommend a universal cutoff, grid spacing, vacuum thickness, or solver.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official Martin, Quantum ESPRESSO, and GPAW destinations were reviewed on 3 August 2026. Mathematical exposition is original and no textbook figures or examples are reproduced.</p>
+    <p><strong>Review note.</strong> The fixed-cutoff cell-change and Pulay-stress boundary was re-audited on 3 August 2026 against the Theory report and Martin’s plane-wave discussion. Mathematical exposition is original and no textbook figures or examples are reproduced.</p>
   </aside>
 </BaseLayout>
