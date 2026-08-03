@@ -24,13 +24,13 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="electronic Hamiltonian equals electron kinetic energy plus electron nuclear attraction plus electron electron repulsion">
       <semantics>
         <mrow>
-          <mover><mi>H</mi><mo>^</mo></mover><msub><mo></mo><mi>e</mi></msub>
+          <msub><mover><mi>H</mi><mo>^</mo></mover><mi>e</mi></msub>
           <mo>=</mo>
-          <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munderover><mo>∑</mo><mi>i</mi><msub><mi>N</mi><mi>e</mi></msub></munderover><msubsup><mo>∇</mo><mi>i</mi><mn>2</mn></msubsup>
-          <mo>−</mo><munderover><mo>∑</mo><mi>i</mi><msub><mi>N</mi><mi>e</mi></msub></munderover><munderover><mo>∑</mo><mi>A</mi><msub><mi>N</mi><mi>n</mi></msub></munderover><mfrac><msub><mi>Z</mi><mi>A</mi></msub><msub><mi>r</mi><mrow><mi>i</mi><mi>A</mi></mrow></msub></mfrac>
-          <mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow><msub><mi>N</mi><mi>e</mi></msub></munderover><mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac><mo>.</mo>
+          <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>N</mi><mi>e</mi></msub></munderover><msubsup><mo>∇</mo><mi>i</mi><mn>2</mn></msubsup>
+          <mo>−</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>N</mi><mi>e</mi></msub></munderover><munderover><mo>∑</mo><mrow><mi>A</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>N</mi><mi>n</mi></msub></munderover><mfrac><msub><mi>Z</mi><mi>A</mi></msub><msub><mi>r</mi><mrow><mi>i</mi><mi>A</mi></mrow></msub></mfrac>
+          <mo>+</mo><munder><mo>∑</mo><mrow><mn>1</mn><mo>≤</mo><mi>i</mi><mo>&lt;</mo><mi>j</mi><mo>≤</mo><msub><mi>N</mi><mi>e</mi></msub></mrow></munder><mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\hat&#123;H&#125;_e=-\frac&#123;1&#125;&#123;2&#125;\sum_i^&#123;N_e&#125;\nabla_i^2-\sum_i^&#123;N_e&#125;\sum_A^&#123;N_n&#125;\frac&#123;Z_A&#125;&#123;r_&#123;iA&#125;&#125;+\sum_&#123;i&lt;j&#125;^&#123;N_e&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;.</annotation>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;_e=-\frac&#123;1&#125;&#123;2&#125;\sum_&#123;i=1&#125;^&#123;N_e&#125;\nabla_i^2-\sum_&#123;i=1&#125;^&#123;N_e&#125;\sum_&#123;A=1&#125;^&#123;N_n&#125;\frac&#123;Z_A&#125;&#123;r_&#123;iA&#125;&#125;+\sum_&#123;1\le i&lt;j\le N_e&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -67,7 +67,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
           <mi>Φ</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo>
           <mo>=</mo>
           <mfrac><mn>1</mn><msqrt><mrow><mi>N</mi><mo>!</mo></mrow></msqrt></mfrac>
-          <mo>det</mo><mo>[</mo><msub><mi>χ</mi><mi>p</mi></msub><mo>(</mo><msub><mi>x</mi><mi>q</mi></msub><mo>)</mo><mo>]</mo><mo>.</mo>
+          <mi mathvariant="normal">det</mi><mo>[</mo><msub><mi>χ</mi><mi>p</mi></msub><mo>(</mo><msub><mi>x</mi><mi>q</mi></msub><mo>)</mo><mo>]</mo><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">\Phi(x_1,\ldots,x_N)=\frac&#123;1&#125;&#123;\sqrt&#123;N!&#125;&#125;\det[\chi_p(x_q)].</annotation>
       </semantics>
@@ -81,11 +81,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="trial energy equals trial bra H trial ket over trial norm and is greater than or equal to ground state energy">
       <semantics>
         <mrow>
-          <mi>E</mi><msub><mo></mo><mi>trial</mi></msub>
+          <msub><mi>E</mi><mi mathvariant="normal">trial</mi></msub>
           <mo>=</mo>
           <mfrac>
-            <mrow><mo>⟨</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>⟩</mo></mrow>
-            <mrow><mo>⟨</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>|</mo><mi>Ψ</mi><msub><mo></mo><mi>trial</mi></msub><mo>⟩</mo></mrow>
+            <mrow><mo>⟨</mo><msub><mi>Ψ</mi><mi mathvariant="normal">trial</mi></msub><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><msub><mi>Ψ</mi><mi mathvariant="normal">trial</mi></msub><mo>⟩</mo></mrow>
+            <mrow><mo>⟨</mo><msub><mi>Ψ</mi><mi mathvariant="normal">trial</mi></msub><mo>|</mo><msub><mi>Ψ</mi><mi mathvariant="normal">trial</mi></msub><mo>⟩</mo></mrow>
           </mfrac>
           <mo>≥</mo><msub><mi>E</mi><mn>0</mn></msub><mo>.</mo>
         </mrow>
