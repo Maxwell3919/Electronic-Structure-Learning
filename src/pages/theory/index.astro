@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-eight subjects now have individually reviewed pages; the remaining entry still marks a responsibility to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-nine subjects now have individually reviewed pages; all listed Theory responsibilities are represented, while the Learning Map remains a relationship layer.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -73,12 +73,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <li id="relativistic-electronic-structure-spin-and-magnetism"><a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a> <span class="item-summary">— scalar relativity, spinors, SOC, noncollinearity, magnetic symmetry, and anisotropy.</span></li>
       <li id="linear-response-and-excited-states"><a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> <span class="item-summary">— response kernels, DFPT, TDDFT, spectra, and neutral excitations.</span></li>
       <li id="many-body-perturbation-theory-and-quasiparticles"><a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a> <span class="item-summary">— screened self-energy, GW quasiparticles, BSE excitons, and charged/neutral excitation boundaries.</span></li>
-      <li id="berry-phases-and-electronic-topology">Berry Phases and Electronic Topology</li>
+      <li id="berry-phases-and-electronic-topology"><a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a> <span class="item-summary">— gauge structure, polarization, curvature, Chern numbers, Wilson loops, and topology evidence.</span></li>
     </ul>
   </section>
 
   <section aria-labelledby="learning-map">
     <h2 id="learning-map">Learning Map</h2>
-    <p>The Learning Map will connect detailed concepts through prerequisites, branches, and converging paths. It will not prescribe one fixed reading order.</p>
+    <p>The Learning Map connects detailed concepts through prerequisites, branches, and converging paths. It does not prescribe one fixed reading order and remains a relationship layer rather than a separate course.</p>
   </section>
 </BaseLayout>
