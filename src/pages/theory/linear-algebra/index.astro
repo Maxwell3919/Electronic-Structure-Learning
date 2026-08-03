@@ -82,6 +82,15 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
+  <p>For linearly independent basis functions, <math class="math-inline" aria-label="S is Hermitian positive definite"><semantics><mrow><mi mathvariant="bold">S</mi><mtext> is Hermitian positive definite</mtext></mrow><annotation encoding="application/x-tex">\mathbf&#123;S&#125;\text&#123; is Hermitian positive definite&#125;</annotation></semantics></math>. The generalized eigenvectors can then be normalized in the overlap metric:</p>
+  <div class="math-display">
+    <math display="block" aria-label="c m dagger S c n equals delta m n">
+      <semantics>
+        <mrow><msubsup><mi mathvariant="bold">c</mi><mi>m</mi><mo>†</mo></msubsup><mi mathvariant="bold">S</mi><msub><mi mathvariant="bold">c</mi><mi>n</mi></msub><mo>=</mo><msub><mi>δ</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;c&#125;_m^&#123;\dagger&#125;\mathbf&#123;S&#125;\mathbf&#123;c&#125;_n=\delta_&#123;mn&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
   <p>This is the algebraic core behind many orbital calculations. The matrix elements, the overlap matrix, the dimension of the represented subspace, and the algorithm used to solve the problem all affect the numerical result.</p>
 
   <h2>Subspaces matter more than individual vectors</h2>

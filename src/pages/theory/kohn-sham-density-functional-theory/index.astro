@@ -17,16 +17,16 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>The auxiliary system preserves the density, not the interacting wavefunction</h2>
   <p>The Kohn–Sham construction does not claim that real electrons cease to interact. It introduces orbitals whose occupied density equals the density of the interacting ground state:</p>
   <div class="math-display">
-    <math display="block" aria-label="density equals sum over occupations times orbital magnitude squared">
+    <math display="block" aria-label="density equals sum over states of occupation times orbital magnitude squared">
       <semantics>
         <mrow>
           <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
           <mo>=</mo>
-          <munderover><mo>∑</mo><mi>i</mi><mo>occ</mo></munderover>
+          <munder><mo>∑</mo><mi>i</mi></munder>
           <msub><mi>f</mi><mi>i</mi></msub>
           <msup><mrow><mo>|</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\sum_i^&#123;\mathrm&#123;occ&#125;&#125;f_i|\phi_i(\mathbf&#123;r&#125;)|^2.</annotation>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\sum_i f_i|\phi_i(\mathbf&#123;r&#125;)|^2.</annotation>
       </semantics>
     </math>
   </div>
@@ -86,7 +86,22 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The exact highest occupied eigenvalue has a special relation to the ionization energy under the exact functional and suitable conditions. This does not make the entire Kohn–Sham spectrum a quasiparticle spectrum. Unoccupied eigenvalues, band gaps, and excitation energies generally require additional theory or carefully justified approximations.</p>
 
   <h2>Total energy is not the sum of occupied eigenvalues</h2>
-  <p>The eigenvalue sum double-counts parts of the Hartree and exchange–correlation contributions. A correct total-energy expression must include the appropriate subtraction and functional terms. Comparing raw eigenvalue sums between calculations is therefore not a substitute for comparing consistently evaluated total energies.</p>
+  <p>The eigenvalue sum contains the effective Hartree and exchange–correlation potentials already sampled by the orbitals. For the ordinary local multiplicative Kohn–Sham form, the electronic total energy can be rearranged as</p>
+  <div class="math-display">
+    <math display="block" aria-label="Kohn Sham energy equals eigenvalue sum minus Hartree energy plus exchange correlation energy minus integral of exchange correlation potential times density">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>KS</mi></msub><mo>=</mo>
+          <munder><mo>∑</mo><mi>i</mi></munder><msub><mi>f</mi><mi>i</mi></msub><msub><mi>ε</mi><mi>i</mi></msub>
+          <mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>−</mo><mo>∫</mo><msub><mi>v</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;KS&#125;&#125;=\sum_i f_i\varepsilon_i-E_&#123;\mathrm&#123;H&#125;&#125;[n]+E_&#123;\mathrm&#123;xc&#125;&#125;[n]-\int v_&#123;\mathrm&#123;xc&#125;&#125;[n](\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;)\,d^3r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>A nucleus–nucleus term is added separately when the full clamped-nuclei energy is required. The identity above also assumes a local multiplicative XC potential; generalized Kohn–Sham and explicitly nonlocal orbital-dependent operators require their own energy bookkeeping. Comparing raw eigenvalue sums between calculations is therefore not a substitute for comparing consistently evaluated total energies.</p>
 
   <h2>Spin, occupations, and ensembles extend the basic construction</h2>
   <p>Spin-density functional theory replaces one density by spin-resolved densities or a magnetization field. Fractional occupations may represent ensembles, metallic filling, degeneracy, or finite electronic temperature. These extensions change the variables and variational object and should not be treated as mere numerical conveniences.</p>
