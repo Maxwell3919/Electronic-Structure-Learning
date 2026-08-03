@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Berry Phases and Electronic Topology" description="Gauge structure, Berry connection and curvature, polarization, Chern numbers, Wilson loops, Wannier centers, and topology evidence boundaries." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Berry Phases and Electronic Topology</span>
+  </nav>
+
+  <h1>Berry Phases and Electronic Topology</h1>
+  <p class="lede">Berry-phase theory describes geometric information carried by quantum states as parameters change. In crystals, the parameters are commonly Bloch wavevectors, and the relevant object is often the occupied subspace rather than one arbitrarily labelled band.</p>
+  <p>The same language connects electric polarization, Wannier centres, Chern numbers, Wilson loops, orbital responses, and topological band classifications. It is an advanced route: Bloch states, Brillouin zones, gauge freedom, symmetry, and spin–orbit coupling must already have clear meanings.</p>
+
+  <h2>A Bloch eigenstate has gauge freedom</h2>
+  <p>For a nondegenerate cell-periodic Bloch state, changing its wavevector-dependent phase does not change the physical ray:</p>
+  <div class="math-display">
+    <math display="block" aria-label="u n k transforms to exponential i phi n k u n k">
+      <semantics>
+        <mrow><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>→</mo><msup><mi>e</mi><mrow><mi>i</mi><msub><mi>φ</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow></msup><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">|u_&#123;n\mathbf&#123;k&#125;&#125;\rangle\rightarrow e^&#123;i\phi_n(\mathbf&#123;k&#125;)&#125;|u_&#123;n\mathbf&#123;k&#125;&#125;\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This is gauge freedom, not an arbitrary numerical nuisance. Derivatives with respect to <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> depend on how phases are chosen from point to point, so geometric quantities must be constructed with their transformation rules explicit.</p>
+
+  <h2>The Berry connection is gauge-dependent, while closed-loop phases have controlled invariance</h2>
+  <p>For an isolated band, the Berry connection is</p>
+  <div class="math-display">
+    <math display="block" aria-label="A n of k equals i inner product u n k with gradient k u n k">
+      <semantics>
+        <mrow><msub><mi mathvariant="bold">A</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mi>i</mi><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;A&#125;_n(\mathbf&#123;k&#125;)=i\langle u_&#123;n\mathbf&#123;k&#125;&#125;|\nabla_\mathbf&#123;k&#125;u_&#123;n\mathbf&#123;k&#125;&#125;\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Under a phase change, the connection shifts by a gradient. It is therefore not itself a gauge-invariant observable. Around a closed loop <math class="math-inline" aria-label="C"><semantics><mi mathvariant="script">C</mi><annotation encoding="application/x-tex">\mathcal&#123;C&#125;</annotation></semantics></math>, the Berry phase is</p>
+  <div class="math-display">
+    <math display="block" aria-label="gamma n of C equals closed integral A n dot d k">
+      <semantics>
+        <mrow><msub><mi>γ</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="script">C</mi><mo>)</mo><mo>=</mo><mo>∮</mo><msub><mi mathvariant="script">C</mi></msub><msub><mi mathvariant="bold">A</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>·</mo><mi>d</mi><mi mathvariant="bold">k</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\gamma_n(\mathcal&#123;C&#125;)=\oint_\mathcal&#123;C&#125;\mathbf&#123;A&#125;_n(\mathbf&#123;k&#125;)\cdot d\mathbf&#123;k&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>For a smooth single-valued gauge on the loop, the phase is invariant modulo <math class="math-inline" aria-label="two pi"><semantics><mrow><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">2\pi</annotation></semantics></math>. The branch choice matters, so phase differences and continuous evolution are often more meaningful than one absolute number.</p>
+
+  <h2>Berry curvature is the local geometric field</h2>
+  <p>The curvature of an isolated band is the curl of the connection:</p>
+  <div class="math-display">
+    <math display="block" aria-label="Omega n equals gradient k cross A n">
+      <semantics>
+        <mrow><msub><mi mathvariant="bold">Ω</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><mo>×</mo><msub><mi mathvariant="bold">A</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\boldsymbol&#123;\Omega&#125;_n(\mathbf&#123;k&#125;)=\nabla_\mathbf&#123;k&#125;\times\mathbf&#123;A&#125;_n(\mathbf&#123;k&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Curvature is gauge-invariant for an isolated band, but band crossings can invalidate a single-band description. Time-reversal, inversion, mirror, and other symmetries constrain how curvature is distributed without automatically determining every topological invariant.</p>
+
+  <h2>The occupied subspace is more fundamental than individual band labels</h2>
+  <p>When occupied bands cross or mix, a wavevector-dependent unitary rotation among them changes individual eigenvectors while leaving the occupied projector unchanged:</p>
+  <div class="math-display">
+    <math display="block" aria-label="P of k equals sum occupied u n k outer product u n k">
+      <semantics>
+        <mrow><mi mathvariant="bold">P</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>n</mi><mo>∈</mo><mi>occ</mi></mrow><mo></mo></munderover><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;P&#125;(\mathbf&#123;k&#125;)=\sum_&#123;n\in\mathrm&#123;occ&#125;&#125;|u_&#123;n\mathbf&#123;k&#125;&#125;\rangle\langle u_&#123;n\mathbf&#123;k&#125;&#125;|.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The non-Abelian connection is a matrix within that subspace,</p>
+  <div class="math-display">
+    <math display="block" aria-label="A m n equals i inner product u m with gradient u n">
+      <semantics>
+        <mrow><msub><mi mathvariant="bold">A</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mi>i</mi><mo>⟨</mo><msub><mi>u</mi><mrow><mi>m</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;A&#125;_&#123;mn&#125;(\mathbf&#123;k&#125;)=i\langle u_&#123;m\mathbf&#123;k&#125;&#125;|\nabla_\mathbf&#123;k&#125;u_&#123;n\mathbf&#123;k&#125;&#125;\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Topological statements must remain invariant under allowed unitary mixing. Tracking bands by energy order alone can create artificial discontinuities near degeneracies and avoided crossings.</p>
+
+  <h2>Polarization is a Berry-phase quantity with a branch ambiguity</h2>
+  <p>In one dimension, a schematic independent-electron expression for the electronic polarization is</p>
+  <div class="math-display">
+    <math display="block" aria-label="electronic polarization equals minus e over two pi sum occupied integral Berry connection d k">
+      <semantics>
+        <mrow><msub><mi>P</mi><mi>el</mi></msub><mo>=</mo><mo>−</mo><mfrac><mi>e</mi><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>n</mi><mo>∈</mo><mi>occ</mi></mrow><mo></mo></munderover><mo>∫</mo><msub><mi mathvariant="bold">A</mi><mi>n</mi></msub><mo>(</mo><mi>k</mi><mo>)</mo><mi>d</mi><mi>k</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">P_&#123;\mathrm&#123;el&#125;&#125;=-\frac&#123;e&#125;&#123;2\pi&#125;\sum_&#123;n\in\mathrm&#123;occ&#125;&#125;\int A_n(k)\,dk.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>In a periodic crystal, bulk polarization is defined modulo a polarization quantum. A calculation therefore produces a lattice of branches rather than one unique dipole per arbitrarily chosen cell. Changes along an insulating adiabatic path, with branches tracked continuously, are the physically controlled quantities.</p>
+
+  <h2>A Chern number integrates curvature over a closed Brillouin zone</h2>
+  <p>For a two-dimensional gapped occupied subspace, the first Chern number can be written schematically as</p>
+  <div class="math-display">
+    <math display="block" aria-label="C equals one over two pi sum occupied integral Brillouin zone Omega n z d squared k">
+      <semantics>
+        <mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>n</mi><mo>∈</mo><mi>occ</mi></mrow><mo></mo></munderover><msub><mo>∫</mo><mi>BZ</mi></msub><msub><mi>Ω</mi><mrow><mi>n</mi><mi>z</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msup><mi>d</mi><mn>2</mn></msup><mi>k</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\sum_&#123;n\in\mathrm&#123;occ&#125;&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;\Omega_&#123;nz&#125;(\mathbf&#123;k&#125;)\,d^2k.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Integer quantization assumes a closed manifold, a separated occupied subspace, and consistent conventions. If the gap closes, the occupied manifold can change and the invariant may cease to be defined at the transition.</p>
+  <p>A nonzero Chern number obstructs a globally smooth periodic gauge for the full occupied subspace and therefore obstructs a complete set of exponentially localized Wannier functions for that subspace. This is a structural statement, not a failure of one minimization algorithm.</p>
+
+  <h2>Wilson loops and overlap matrices provide discrete computational objects</h2>
+  <p>On a discrete path, neighbouring occupied subspaces are connected through overlap matrices</p>
+  <div class="math-display">
+    <math display="block" aria-label="M j m n equals inner product u m at k j with u n at k j plus one">
+      <semantics>
+        <mrow><msubsup><mi>M</mi><mrow><mi>m</mi><mi>n</mi></mrow><mo>(</mo><mi>j</mi><mo>)</mo></msubsup><mo>=</mo><mo>⟨</mo><msub><mi>u</mi><mrow><mi>m</mi><mo>,</mo><msub><mi mathvariant="bold">k</mi><mi>j</mi></msub></mrow></msub><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mo>,</mo><msub><mi mathvariant="bold">k</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">M^&#123;(j)&#125;_&#123;mn&#125;=\langle u_&#123;m,\mathbf&#123;k&#125;_j&#125;|u_&#123;n,\mathbf&#123;k&#125;_&#123;j+1&#125;&#125;\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>An ordered product around a loop defines a Wilson-loop operator. Its eigenphases can track hybrid Wannier centres and diagnose topological winding. Numerical conclusions depend on path closure, mesh density, occupied or selected subspace, energy windows, disentanglement, and symmetry conventions.</p>
+
+  <h2>Wannier functions require a gauge choice</h2>
+  <p>Wannier functions are Fourier transforms of Bloch states after a gauge has been selected across the Brillouin zone. Different smooth gauges redistribute centres and spreads while preserving gauge-invariant information.</p>
+  <p>Atom-centred basis functions, canonical Kohn–Sham orbitals, and Wannier functions are different objects. A localized basis used to solve the Hamiltonian does not automatically provide maximally localized Wannier functions or a topology-ready tight-binding model.</p>
+
+  <h2>Two-band models expose geometry without replacing material validation</h2>
+  <p>A generic two-band Hamiltonian may be written</p>
+  <div class="math-display">
+    <math display="block" aria-label="H of k equals d zero I plus d vector dot sigma vector">
+      <semantics>
+        <mrow><mi mathvariant="bold">H</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><msub><mi>d</mi><mn>0</mn></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mi mathvariant="bold">I</mi><mo>+</mo><mi mathvariant="bold">d</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">σ</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;H&#125;(\mathbf&#123;k&#125;)=d_0(\mathbf&#123;k&#125;)\mathbf&#123;I&#125;+\mathbf&#123;d&#125;(\mathbf&#123;k&#125;)\cdot\boldsymbol&#123;\sigma&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The normalized vector <math class="math-inline" aria-label="d hat of k"><semantics><mrow><mover><mi mathvariant="bold">d</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\hat&#123;\mathbf&#123;d&#125;&#125;(\mathbf&#123;k&#125;)</annotation></semantics></math> maps momentum space to a sphere and makes winding visible. The result belongs to the stated model, symmetry, filling, and gap. It does not establish that a real material realizes the model or that neglected bands are harmless.</p>
+
+  <h2>Band inversion is a clue, not a topological invariant</h2>
+  <p>Orbital-character exchange, symmetry eigenvalues, avoided crossings, and spin–orbit-driven inversions can motivate a topology calculation. None is sufficient by itself unless the relevant invariant and assumptions are stated.</p>
+  <p>Symmetry indicators compress information from representations at selected momenta. They depend on the space or magnetic group, filling, isolated band set, and indicator map; some topological phases are invisible to a chosen indicator, while some nontrivial indicators leave multiple physical possibilities.</p>
+
+  <h2>Bulk–boundary correspondence still requires a boundary calculation with its own controls</h2>
+  <p>A bulk invariant can constrain possible edge or surface behavior, but an observed line in a slab band plot must still be checked for localization, termination dependence, finite-size hybridization, symmetry protection, full boundary Brillouin-zone coverage, and separation from projected bulk states.</p>
+  <p>One crossing on one selected path is not proof of a topological boundary state. Conversely, a boundary perturbation can move or obscure states without changing a bulk invariant when the protecting conditions remain satisfied.</p>
+
+  <h2>Topology calculations have observable-specific convergence and model boundaries</h2>
+  <ul>
+    <li><strong>Bulk manifold:</strong> verify the relevant direct or indirect gap, electron count, spin treatment, magnetic branch, and included bands.</li>
+    <li><strong>Geometry in k space:</strong> converge meshes, loop paths, finite differences or overlaps, and branch tracking.</li>
+    <li><strong>Hamiltonian:</strong> record exchange–correlation approximation, core treatment, spin–orbit coupling, dimensional Coulomb treatment, and structural model.</li>
+    <li><strong>Wannier model:</strong> record projections, frozen and outer windows, disentanglement, spreads, interpolation error, and symmetry handling.</li>
+    <li><strong>Boundary spectrum:</strong> converge slab or ribbon thickness, termination, vacuum, surface potential, k sampling, and localization diagnostics.</li>
+  </ul>
+  <p>This page primarily concerns independent-particle and band-topology frameworks. Strongly interacting topological order, fractionalization, and many-body invariants require the formalism of Many-Body Physics and are not inferred from ordinary Kohn–Sham bands.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <p><a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a> supplies Bloch states and band gaps; <a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> supplies reciprocal-space integration; <a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> supplies representations and symmetry indicators; <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a> supplies spinors, SOC, and magnetic symmetry; <a href={href('/theory/localized-orbital-methods/')}>Localized-Orbital Methods</a> distinguishes basis orbitals and Wannier functions.</p>
+
+  <h2>Study and implementation routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/ED0FF348536BFFE8899627C8F78FEE6A">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> provides the Atlas-wide bridge through Wannier functions, polarization and Berry phases, two-band topology, and two- and three-dimensional topological insulators. Full access may require purchase or institutional authentication.</p>
+  <p><a href="https://www.cambridge.org/core/books/berry-phases-in-electronic-structure-theory/DDD71CA4FE9AF5F3A2FB300E602F394A">David Vanderbilt, <cite>Berry Phases in Electronic Structure Theory</cite></a> is the dedicated rigorous reference for Berry phases and curvatures, polarization, topological insulators and semimetals, orbital magnetization, and related responses. It is a paid or institutional resource.</p>
+  <p><a href="https://wannier.org/support/">Wannier90 support, user guide, tutorials, and solutions</a> provides the implementation bridge for Wannierization and derived interpolation. The reviewed support page exposes version 3.1.0 materials; software documentation records implementation behavior and does not independently validate a material-specific topology claim.</p>
+  <p><a href="https://ocw.mit.edu/courses/8-513-modern-quantum-many-body-physics-for-condensed-matter-systems-fall-2021/">MIT OpenCourseWare 8.513, <cite>Modern Quantum Many-Body Physics for Condensed Matter Systems</cite></a> gives advanced context for geometric phases, Chern numbers, quantum Hall physics, and topological phases. Its prerequisites and interacting-system scope make it an advanced continuation rather than a first introduction.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not provide a universal topology workflow, classify a material from a band-inversion image, or treat one Wilson loop, symmetry indicator, edge crossing, or Wannier interpolation as self-validating. Every claim must state the invariant, protecting assumptions, occupied or selected subspace, Hamiltonian, numerical controls, and gap conditions.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official Cambridge, Wannier90, and MIT OpenCourseWare destinations and their access boundaries were reviewed on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
