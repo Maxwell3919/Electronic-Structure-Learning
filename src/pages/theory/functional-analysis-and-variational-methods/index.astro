@@ -32,7 +32,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>For a self-adjoint Hamiltonian, expectation values are real and spectral theory provides the mathematical basis for bound-state expansions, continuous spectra, and projection-valued decompositions. A Hermitian matrix obtained after discretization approximates this structure but does not automatically reproduce every property of the continuum operator.</p>
 
   <h2>The Rayleigh quotient connects spectra to optimization</h2>
-  <p>For a normalized trial state outside the null space, the Rayleigh quotient is</p>
+  <p>For any nonzero trial state in the operator domain, or more generally in the quadratic-form domain when that is the appropriate formulation, the Rayleigh quotient is</p>
   <div class="math-display">
     <math display="block" aria-label="Rayleigh quotient of psi equals expectation H divided by norm squared">
       <semantics>
@@ -41,7 +41,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>For a Hamiltonian bounded from below, minimizing this quotient over an admissible space gives the ground-state energy under suitable conditions. Restricting the search to a finite trial subspace produces the Rayleigh–Ritz approximation.</p>
+  <p>For a self-adjoint Hamiltonian bounded from below, the infimum of this quotient over an admissible space gives the bottom of the spectrum. It is a ground-state eigenvalue only when that infimum is attained by an admissible state. Restricting the search to a finite trial subspace produces the Rayleigh–Ritz approximation.</p>
   <p>Enlarging nested trial spaces can lower the approximate ground-state energy toward the continuum limit. This upper-bound statement applies to the variational energy in the declared Hamiltonian and trial class; it does not imply monotonic convergence of every density, eigenvalue difference, force, response function, or post-processed observable.</p>
 
   <h2>Stationarity under constraints introduces multipliers</h2>
