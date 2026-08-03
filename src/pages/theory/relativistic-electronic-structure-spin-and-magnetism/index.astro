@@ -97,14 +97,15 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/dirac-equation-and-spinorbit-interaction/AEB751CC64E210E1450E9C40CEAEEDCD">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed., relativistic appendices and related chapters</a> provides a common theoretical reference. Full text may require institutional access.</p>
   <p><a href="https://gpaw.readthedocs.io/documentation/soc/soc.html">GPAW spin–orbit and noncollinear documentation</a> provides a current implementation bridge for spinors, constrained directions, and PAW-based SOC. It is not a complete relativity or magnetism course.</p>
   <p><a href="https://octopus-code.org/documentation/main/variables/hamiltonian/relativisticcorrection/">Octopus relativistic-correction reference</a> documents implementation choices. It should not be used alone to establish conceptual prerequisites or method suitability.</p>
+  <p><a href="https://note-collection.issp.u-tokyo.ac.jp/katsumoto/magnetism2022/note01-14_en.pdf">Shingo Katsumoto’s University of Tokyo <cite>Lecture note on Magnetism</cite></a> starts with magnetic response, spin magnetic moments, spin–orbit interaction, and localized-electron magnetism before moving to collective models. It gives a readable theory bridge for readers who know quantum mechanics and statistical mechanics; it is a 2022 course note rather than a guide to relativistic electronic-structure implementations or magnetic-ground-state searches.</p>
 
   <h2>Boundary and review gap</h2>
   <p>This page establishes the minimum conceptual and computational boundaries needed to read relativistic and magnetic calculations. It does not provide a complete derivation of the Dirac equation, a comprehensive theory of magnetism, a magnetic-space-group course, or a universal protocol for selecting magnetic ground states.</p>
   <aside class="callout">
-    <p><strong>Resource-review boundary.</strong> The Atlas systematic report identified this subject as the most important missing independent module, but also recorded that a dedicated second-round resource review was not yet complete. The resources above are therefore theory and implementation anchors, not a finalized recommended curriculum.</p>
+    <p><strong>Resource-review boundary.</strong> The routes deliberately separate the Dirac/SOC and magnetism concepts, an implementation bridge, and a maintained course note. None removes the need to compare magnetic states, use compatible relativistic datasets, and converge the observable actually being claimed.</p>
   </aside>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Page scope and official Martin, GPAW, and Octopus destinations were reviewed on 3 August 2026. Dedicated textbook/course comparison remains open.</p>
+    <p><strong>Review note.</strong> Page scope and official Martin, GPAW, Octopus, and University of Tokyo destinations were reviewed on 4 August 2026. A dedicated Chinese-language electronic-structure SOC course remains a useful future gap.</p>
   </aside>
 </BaseLayout>
