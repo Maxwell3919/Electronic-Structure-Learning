@@ -15,12 +15,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>An SCF method searches for a fixed point of that nonlinear map. It is an algorithmic layer, not a new physical theory, and successful iteration is only one of several evidence gates in an electronic-structure calculation.</p>
 
   <h2>The fixed-point problem</h2>
-  <p>Let <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> denote the density produced after building a Hamiltonian from an input density and solving the orbital problem. Self-consistency requires</p>
+  <p>Let <math class="math-inline" aria-label="M of n"><semantics><mrow><mi mathvariant="script">M</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">\mathcal&#123;M&#125;[n]</annotation></semantics></math> denote the density produced after building a Hamiltonian from an input density and solving the orbital problem. This map is distinct from the universal DFT functional <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math>. Self-consistency requires</p>
   <div class="math-display">
-    <math display="block" aria-label="n star equals F of n star">
+    <math display="block" aria-label="n star equals M of n star">
       <semantics>
-        <mrow><msup><mi>n</mi><mo>*</mo></msup><mo>=</mo><mi>F</mi><mo>[</mo><msup><mi>n</mi><mo>*</mo></msup><mo>]</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">n^*=F[n^*].</annotation>
+        <mrow><msup><mi>n</mi><mo>*</mo></msup><mo>=</mo><mi mathvariant="script">M</mi><mo>[</mo><msup><mi>n</mi><mo>*</mo></msup><mo>]</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">n^*=\mathcal&#123;M&#125;[n^*].</annotation>
       </semantics>
     </math>
   </div>
@@ -39,7 +39,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>A small residual means the current finite nonlinear equations are nearly self-consistent under the chosen norm and representation. It does not establish basis completeness, k-point convergence, the global ground state, or the suitability of the physical approximation.</p>
+  <p>A small residual means the current finite nonlinear equations are nearly self-consistent under the chosen norm and representation. The fixed-point residual is not generally the gradient of the total energy, and its norm does not by itself measure energy error. It also does not establish basis completeness, k-point convergence, the global ground state, or the suitability of the physical approximation.</p>
 
   <h2>The SCF loop</h2>
   <ol class="reasoning-list">
@@ -111,6 +111,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page explains nonlinear iteration and convergence evidence. It does not prescribe universal mixing values, guarantee a global ground state, or replace systematic convergence studies of the numerical representation and target observable.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official Martin/SIESTA destinations were reviewed on 2 August 2026. Software defaults are presented only as source-specific examples, not transferable recommendations.</p>
+    <p><strong>Review note.</strong> Fixed-point notation and residual interpretation were re-audited on 3 August 2026 against the Theory report and Martin’s iterative-solution discussion. Software defaults remain source-specific examples, not transferable recommendations.</p>
   </aside>
 </BaseLayout>
