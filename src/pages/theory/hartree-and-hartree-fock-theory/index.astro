@@ -21,7 +21,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <semantics>
         <mrow>
           <msub><mi>Ψ</mi><mi>H</mi></msub><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo>
-          <mo>=</mo><munderover><mo>∏</mo><mi>i</mi><mi>N</mi></munderover><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>.</mo>
+          <mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">\Psi_&#123;\mathrm&#123;H&#125;&#125;(x_1,\ldots,x_N)=\prod_&#123;i=1&#125;^&#123;N&#125;\phi_i(x_i).</annotation>
       </semantics>
@@ -117,7 +117,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </aside>
 
   <h2>Where this page connects</h2>
-  <p><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> defines the unrestricted interacting system. <a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> changes the basic variational variable from a determinant to the density. Later pages will compare Hartree–Fock exchange with Kohn–Sham exchange–correlation approximations and separate orbital-equation convergence from scientific convergence.</p>
+  <p><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> defines the unrestricted interacting system. <a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> changes the basic variational variable from a determinant to the density. <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> distinguishes exact Hartree–Fock exchange from practical Kohn–Sham and generalized Kohn–Sham approximation families, while <a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> separates nonlinear orbital-equation convergence from representation convergence and scientific support.</p>
 
   <h2>Study routes</h2>
   <p><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/">MIT OpenCourseWare 5.61, Physical Chemistry</a> is the free bridge from quantum mechanics and molecular orbitals to many-electron atoms, basis sets, and electronic correlation. It provides lecture notes, videos, problem sets, solutions, and exams, but it is not a complete derivation of modern Hartree–Fock implementations.</p>
