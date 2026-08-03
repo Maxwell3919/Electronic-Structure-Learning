@@ -16,7 +16,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-The reviewed content has developed in eleven batches:
+The reviewed content has developed in twelve batches:
 
 1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
 2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
@@ -29,6 +29,7 @@ The reviewed content has developed in eleven batches:
 9. Functional Analysis and Variational Methods, Many-Body Physics, Linear Response and Excited States, Many-Body Perturbation Theory and Quasiparticles.
 10. Probability and Statistics, Classical Mechanics, Thermodynamics.
 11. General Chemistry, Inorganic Chemistry, Surface and Interface Chemistry.
+12. Berry Phases and Electronic Topology.
 
 The Tier-1 responsibility chain remains explicit:
 
@@ -190,6 +191,28 @@ Surface and interface chemistry
 └── band alignment, interface dipoles, and screening
 ```
 
+### Gauge geometry, Wannier, and topology route
+
+```text
+Bloch-state geometry
+├── phase and composite-band gauge freedom
+├── Berry connection, phase, and curvature
+├── occupied projectors and non-Abelian transport
+└── closed-loop and Brillouin-zone invariants
+
+Polarization and localization
+├── polarization branches and polarization quanta
+├── Wannier functions and hybrid Wannier centres
+├── overlap matrices and Wilson loops
+└── localization obstructions
+
+Electronic topology
+├── Chern numbers and two-band maps
+├── spin–orbit and symmetry constraints
+├── symmetry indicators and their incomplete coverage
+└── bulk–boundary correspondence with boundary convergence
+```
+
 The following responsibilities remain separate:
 
 - A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
@@ -221,14 +244,18 @@ The following responsibilities remain separate:
 - Surface termination, coverage, reconstruction, electrostatic reference, and chemical reservoirs are part of the physical system.
 - Adsorption energy is not an activation barrier, rate, coverage isotherm, or catalytic activity measure.
 - A work function or band alignment requires a converged and comparable potential reference.
+- The Berry connection and individual Bloch phases are gauge-dependent; curvature, projectors, and closed-loop invariants have different transformation properties.
+- At band crossings or inside composite occupied manifolds, arbitrary energy-ordered band labels do not replace an occupied-subspace or non-Abelian treatment.
+- Band inversion, one symmetry indicator, one Wilson loop, or one boundary crossing is not by itself a topology proof.
+- A topology claim must state the invariant, gap and filling, protecting assumptions, spin/SOC/magnetic model, selected subspace, numerical discretization, and boundary controls where applicable.
 
 All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
 Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
 
-Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
+Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. All listed Theory responsibilities now have reviewed pages. The Learning Map remains a relationship layer that expresses prerequisites, branches, and converging paths; it is not a separate fixed course or interactive runtime in the current build.
 
-The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point. The Inorganic Chemistry and Surface and Interface Chemistry pages retain explicit resource-review gaps because no single complete modern open course was established during the systematic review.
+The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point. The Inorganic Chemistry and Surface and Interface Chemistry pages retain explicit resource-review gaps because no single complete modern open course was established during the systematic review. The Berry/topology route uses Martin and Vanderbilt for theory and Wannier90 only as an implementation bridge; software documentation is not scientific validation.
 
 ## Methods and other entrances
 

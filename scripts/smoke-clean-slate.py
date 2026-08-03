@@ -55,6 +55,7 @@ THEORY_ROUTES = [
     "theory/relativistic-electronic-structure-spin-and-magnetism/",
     "theory/linear-response-and-excited-states/",
     "theory/many-body-perturbation-theory-and-quasiparticles/",
+    "theory/berry-phases-and-electronic-topology/",
 ]
 CONTENT_ROUTES = [
     "", "theory/", *THEORY_ROUTES, "methods/", "computational-tools/", "reference/",
@@ -197,7 +198,7 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: forty-three content routes, thirty-eight MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: forty-four content routes, thirty-nine MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":

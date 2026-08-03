@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirty-eight individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirty-nine individually reviewed Theory pages, and a general 404 page.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
 
@@ -52,6 +52,10 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Treat crystal-field diagrams, formal d/f counts, and spin-only moments as interpretive models. Test chemically plausible structural, spin, orbital, and magnetic branches rather than treating one converged initialization as global evidence.
 - Treat surface termination, stoichiometry, reconstruction, adsorbate coverage, slab geometry, electrostatic reference, and chemical reservoirs as parts of the physical system. Surface and adsorption energies are reference-dependent quantities.
 - Keep surface energy, adsorption energy, activation barrier, rate, coverage, catalytic activity, work function, and band alignment distinct. Each requires its own observable-specific convergence and reference checks.
+- Distinguish gauge-dependent connections and phase conventions from gauge-invariant curvature, projectors, closed-loop quantities, and stated observables. Never present a raw Bloch-state phase as a physical measurement.
+- At degeneracies or within composite occupied manifolds, formulate claims through the occupied subspace, projector, non-Abelian connection, or Wilson loop rather than arbitrary energy-ordered band labels.
+- Do not infer topology from band inversion, one symmetry indicator, one edge crossing, or one Wannier interpolation alone. State the invariant, protecting symmetry, gap, filling, selected subspace, spin/SOC/magnetic model, and dimensional setting.
+- Converge topology claims with respect to k-space meshes, loop discretization, subspace and disentanglement windows, structural and Hamiltonian choices, and boundary size/termination when boundary spectra are used.
 - Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
 - Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.

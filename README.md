@@ -2,7 +2,7 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure theory, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, thirty-eight individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, thirty-nine individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
@@ -46,6 +46,7 @@ The production site is a static Plain Astro build. It currently contains the Hom
 - `/theory/relativistic-electronic-structure-spin-and-magnetism/`
 - `/theory/linear-response-and-excited-states/`
 - `/theory/many-body-perturbation-theory-and-quasiparticles/`
+- `/theory/berry-phases-and-electronic-topology/`
 - `/methods/`
 - `/computational-tools/`
 - `/reference/`
