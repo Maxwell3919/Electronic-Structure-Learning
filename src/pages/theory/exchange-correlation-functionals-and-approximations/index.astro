@@ -15,25 +15,24 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Its exact existence follows from the formal theory. Its usable form does not: practical calculations require an approximation whose assumptions, ingredients, implementation, and known failures must be stated.</p>
 
   <h2>What exchange–correlation contains</h2>
-  <p>The exact decomposition can be written as</p>
+  <p>Using the Levy–Lieb internal functional from DFT foundations, the exact Kohn–Sham partition is</p>
   <div class="math-display">
-    <math display="block" aria-label="E x c equals interacting kinetic minus noninteracting kinetic plus electron interaction minus Hartree energy">
+    <math display="block" aria-label="E x c equals F minus T s minus E H">
       <semantics>
         <mrow>
           <msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo>
-          <mo>=</mo>
-          <mo>(</mo><mi>T</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>−</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>)</mo>
-          <mo>+</mo>
-          <mo>(</mo><msub><mi>V</mi><mrow><mi>e</mi><mi>e</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>)</mo><mo>.</mo>
+          <mo>=</mo><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>−</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;[n]=(T[n]-T_s[n])+(V_&#123;ee&#125;[n]-E_&#123;\mathrm&#123;H&#125;&#125;[n]).</annotation>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;[n]=F[n]-T_s[n]-E_&#123;\mathrm&#123;H&#125;&#125;[n].</annotation>
       </semantics>
     </math>
   </div>
-  <p>The first bracket is the kinetic contribution missing from the auxiliary noninteracting system. The second is the difference between the true electron–electron interaction and the classical Hartree energy. Exchange and correlation are therefore not merely two optional empirical corrections.</p>
+  <p>The remainder includes the difference between the interacting and noninteracting kinetic descriptions and the nonclassical part of electron–electron interaction. Separating those two contributions further requires a stated constrained-search or adiabatic-connection convention; they are not independent density functionals obtained by reading kinetic and interaction energies from an arbitrary wavefunction.</p>
 
   <h2>The potential is a functional derivative</h2>
-  <p>The Kohn–Sham equations require the response of the XC energy to a density variation:</p>
+  <p>For a differentiable density functional treated in ordinary multiplicative Kohn–Sham form, the orbital equations require the response of the XC energy to a density variation:</p>
   <div class="math-display">
     <math display="block" aria-label="v x c of r equals functional derivative of E x c with respect to density">
       <semantics>
@@ -46,7 +45,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>An approximation must therefore be assessed not only by the energies it produces but also by the potential, forces, response kernels, spin dependence, and derivatives required by the target calculation.</p>
+  <p>Orbital-dependent meta-GGAs and hybrid functionals are commonly implemented through generalized Kohn–Sham equations containing differential or nonlocal operators rather than one purely multiplicative local potential. The implementation form must therefore be stated before potentials, eigenvalues, response kernels, forces, or stresses are compared.</p>
 
   <h2>Functional families differ by their ingredients</h2>
   <dl class="paired-definitions">
@@ -96,6 +95,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page explains what XC approximations contain, how they are organized, and why their errors are problem-dependent. It does not prescribe one default functional, teach DFT+U or dispersion methods in full, or equate implementation availability with scientific validation.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official Libxc/Cambridge destinations were reviewed on 2 August 2026. Functional selection remains observable-specific and version-sensitive.</p>
+    <p><strong>Review note.</strong> The decomposition and ordinary/generalized Kohn–Sham boundary were re-audited on 3 August 2026 against the Theory report and Martin’s DFT/XC chapters. Functional selection remains observable-specific and version-sensitive.</p>
   </aside>
 </BaseLayout>
