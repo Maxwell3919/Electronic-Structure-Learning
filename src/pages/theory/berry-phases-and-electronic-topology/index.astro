@@ -92,16 +92,22 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </div>
   <p>In a periodic crystal, bulk polarization is defined modulo a polarization quantum. A calculation therefore produces a lattice of branches rather than one unique dipole per arbitrarily chosen cell. Changes along an insulating adiabatic path, with branches tracked continuously, are the physically controlled quantities.</p>
 
-  <h2>A Chern number integrates curvature over a closed Brillouin zone</h2>
-  <p>For a two-dimensional gapped occupied subspace, the first Chern number can be written schematically as</p>
+  <h2>A Chern number integrates occupied-subspace curvature over a closed Brillouin zone</h2>
+  <p>For a two-dimensional gapped occupied subspace, a gauge-covariant expression for the first Chern number is</p>
   <div class="math-display">
-    <math display="block" aria-label="C equals one over two pi sum occupied integral Brillouin zone Omega n z d squared k">
+    <math display="block" aria-label="C equals one over two pi integral over the Brillouin zone of trace Omega x y of k d squared k">
       <semantics>
-        <mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>n</mi><mo>∈</mo><mi>occ</mi></mrow><mo></mo></munderover><msub><mo>∫</mo><mi>BZ</mi></msub><msub><mi>Ω</mi><mrow><mi>n</mi><mi>z</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msup><mi>d</mi><mn>2</mn></msup><mi>k</mi><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\sum_&#123;n\in\mathrm&#123;occ&#125;&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;\Omega_&#123;nz&#125;(\mathbf&#123;k&#125;)\,d^2k.</annotation>
+        <mrow>
+          <mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac>
+          <msub><mo>∫</mo><mi>BZ</mi></msub>
+          <mi mathvariant="normal">Tr</mi><mo>[</mo><msub><mi mathvariant="bold">Ω</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>]</mo>
+          <msup><mi>d</mi><mn>2</mn></msup><mi>k</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;\mathrm&#123;Tr&#125;\,\boldsymbol&#123;\Omega&#125;_&#123;xy&#125;(\mathbf&#123;k&#125;)\,d^2k.</annotation>
       </semantics>
     </math>
   </div>
+  <p>Here <math class="math-inline" aria-label="Omega x y"><semantics><msub><mi mathvariant="bold">Ω</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub><annotation encoding="application/x-tex">\boldsymbol&#123;\Omega&#125;_&#123;xy&#125;</annotation></semantics></math> is the non-Abelian curvature of the occupied connection. If the occupied bands are separately isolated and admit smooth gauges, the trace reduces to the sum of their individual curvatures; the trace form remains meaningful at internal crossings within the occupied manifold.</p>
   <p>Integer quantization assumes a closed manifold, a separated occupied subspace, and consistent conventions. If the gap closes, the occupied manifold can change and the invariant may cease to be defined at the transition.</p>
   <p>A nonzero Chern number obstructs a globally smooth periodic gauge for the full occupied subspace and therefore obstructs a complete set of exponentially localized Wannier functions for that subspace. This is a structural statement, not a failure of one minimization algorithm.</p>
 
@@ -115,7 +121,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>An ordered product around a loop defines a Wilson-loop operator. Its eigenphases can track hybrid Wannier centres and diagnose topological winding. Numerical conclusions depend on path closure, mesh density, occupied or selected subspace, energy windows, disentanglement, and symmetry conventions.</p>
+  <p>At finite mesh spacing, a raw overlap matrix need not be unitary. A discrete parallel transporter is commonly formed from its unitary polar or singular-value-decomposition factor, or from an equivalent orthonormalized construction; the ordered closed-path product of those transporters defines the Wilson-loop operator.</p>
+  <p>Its eigenphases can track hybrid Wannier centres and diagnose topological winding. Numerical conclusions depend on path closure, mesh density, occupied or selected subspace, energy windows, disentanglement, and symmetry conventions.</p>
 
   <h2>Wannier functions require a gauge choice</h2>
   <p>Wannier functions are Fourier transforms of Bloch states after a gauge has been selected across the Brillouin zone. Different smooth gauges redistribute centres and spreads while preserving gauge-invariant information.</p>
