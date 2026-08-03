@@ -32,7 +32,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="H of v equals T plus W plus integral v external times density operator">
       <semantics>
         <mrow>
-          <mover><mi>H</mi><mo>^</mo></mover><msub><mo></mo><mi>v</mi></msub><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>+</mo><mover><mi>W</mi><mo>^</mo></mover>
+          <msub><mover><mi>H</mi><mo>^</mo></mover><mi>v</mi></msub><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>+</mo><mover><mi>W</mi><mo>^</mo></mover>
           <mo>+</mo><mo>∫</mo><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mover><mi>n</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">\hat&#123;H&#125;_v=\hat&#123;T&#125;+\hat&#123;W&#125;+\int v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)\hat&#123;n&#125;(\mathbf&#123;r&#125;)\,d^3r.</annotation>
@@ -65,14 +65,25 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The internal functional <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> is universal within the chosen interaction and kinetic-energy theory: it does not depend on which external potential generated the density.</p>
   <p>The exact ground-state energy follows from a global minimization over admissible densities, with the correct particle number:</p>
   <div class="math-display">
-    <math display="block" aria-label="E zero equals minimum over admissible densities of E v of n">
+    <math display="block" aria-label="E zero equals minimum over nonnegative densities integrating to N of E v of n">
       <semantics>
-        <mrow><msub><mi>E</mi><mn>0</mn></msub><mo>=</mo><munder><mo>min</mo><mrow><mi>n</mi><mo>→</mo><mi>N</mi></mrow></munder><msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">E_0=\min_&#123;n\to N&#125;E_v[n].</annotation>
+        <mrow>
+          <msub><mi>E</mi><mn>0</mn></msub><mo>=</mo>
+          <munder>
+            <mo>min</mo>
+            <mrow>
+              <mi>n</mi><mo>≥</mo><mn>0</mn><mo>,</mo>
+              <mspace width="0.35em"/>
+              <mo>∫</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>=</mo><mi>N</mi>
+            </mrow>
+          </munder>
+          <msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_0=\min_&#123;n\ge 0,\;\int n(\mathbf&#123;r&#125;)\,d^3r=N&#125;E_v[n].</annotation>
       </semantics>
     </math>
   </div>
-  <p>A stationary density is not automatically the global minimum. Approximate functionals can also introduce false minima or incorrect ordering among competing states.</p>
+  <p>Nonnegativity and normalization are necessary but not the complete admissibility conditions; representability is treated below. A stationary density is not automatically the global minimum. Approximate functionals can also introduce false minima or incorrect ordering among competing states.</p>
 
   <h2>Levy–Lieb constrained search defines the universal functional</h2>
   <p>A direct definition separates the internal many-electron problem from the external potential:</p>
