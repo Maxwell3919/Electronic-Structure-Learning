@@ -21,13 +21,13 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <semantics>
         <mrow>
           <mover><mi>H</mi><mo>^</mo></mover><mo>=</mo>
-          <munderover><mo>∑</mo><mi>i</mi><mi>N</mi></munderover>
+          <munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover>
           <mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msubsup><mo>∇</mo><mi>i</mi><mn>2</mn></msubsup><mo>+</mo><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>)</mo><mo>]</mo>
           <mo>+</mo>
-          <munderover><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow><mi>N</mi></munderover>
+          <munder><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow></munder>
           <mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\hat&#123;H&#125;=\sum_&#123;i=1&#125;^&#123;N&#125;[-\frac&#123;1&#125;&#123;2&#125;\nabla_i^2+v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;_i)]+\sum_&#123;i&lt;j&#125;^&#123;N&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;.</annotation>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;=\sum_&#123;i=1&#125;^&#123;N&#125;[-\frac&#123;1&#125;&#123;2&#125;\nabla_i^2+v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;_i)]+\sum_&#123;i&lt;j&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -84,9 +84,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <semantics>
         <mrow>
           <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mi>N</mi>
-          <munderover><mo>∑</mo><mi>σ</mi><mspace width="0.2em"/></munderover>
-          <mo>∫</mo><msup><mo>|</mo><mn>2</mn></msup>
-          <mi>Ψ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mi>σ</mi><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo><msup><mo>|</mo><mn>2</mn></msup>
+          <munder><mo>∑</mo><mi>σ</mi></munder>
+          <mo>∫</mo>
+          <msup>
+            <mrow><mo>|</mo><mi>Ψ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mi>σ</mi><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo><mo>|</mo></mrow>
+            <mn>2</mn>
+          </msup>
           <mi>d</mi><msub><mi>x</mi><mn>2</mn></msub><mo>⋯</mo><mi>d</mi><msub><mi>x</mi><mi>N</mi></msub><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=N\sum_\sigma\int|\Psi(\mathbf&#123;r&#125;\sigma,x_2,\ldots,x_N)|^2\,dx_2\cdots dx_N.</annotation>
