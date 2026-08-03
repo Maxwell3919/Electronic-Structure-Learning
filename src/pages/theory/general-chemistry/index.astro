@@ -15,7 +15,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>It is not a compulsory full-course prerequisite for every electronic-structure learner. Readers with established chemistry training can enter through Quantum Chemistry, Solid-State Chemistry, or the relevant electronic-structure module instead.</p>
 
   <h2>Composition fixes the first electron-counting problem</h2>
-  <p>Before discussing orbitals or density, a calculation must identify nuclei, total charge, and electron number. For nuclei with charges <math class="math-inline" aria-label="Z I"><semantics><msub><mi>Z</mi><mi>I</mi></msub><annotation encoding="application/x-tex">Z_I</annotation></semantics></math> and system charge <math class="math-inline" aria-label="q"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>,</p>
+  <p>Before discussing orbitals or density, a calculation must identify nuclei, total charge, and electron number. For an all-electron formulation with nuclear charges <math class="math-inline" aria-label="Z I"><semantics><msub><mi>Z</mi><mi>I</mi></msub><annotation encoding="application/x-tex">Z_I</annotation></semantics></math> and system charge <math class="math-inline" aria-label="q"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>,</p>
   <div class="math-display">
     <math display="block" aria-label="electron number equals sum of nuclear charges minus system charge">
       <semantics>
@@ -24,7 +24,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>This count is exact once the composition and charge convention are fixed. Assigning those electrons to atoms, bonds, oxidation states, orbitals, or density basins is a separate interpretive step.</p>
+  <p>In a pseudopotential or frozen-core PAW calculation, the explicitly optimized electron count instead uses each dataset's declared valence charge. The full physical electron count, the finite valence-only Hamiltonian, and the frozen-core partition must therefore be kept distinct and the dataset lineage recorded.</p>
+  <p>The electron count is exact once the composition, charge convention, and core treatment are fixed. Assigning those electrons to atoms, bonds, oxidation states, orbitals, or density basins is a separate interpretive step.</p>
   <p>Stoichiometric coefficients preserve each element and net charge. A chemically plausible formula is not automatically the experimentally realized phase, defect state, protonation state, or magnetic configuration.</p>
 
   <h2>Periodic trends are useful patterns, not universal laws</h2>
