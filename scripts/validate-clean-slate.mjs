@@ -11,6 +11,7 @@ const builtMode = process.argv.includes('--built');
 
 const theorySlugs = [
   'atomic-and-molecular-physics',
+  'berry-phases-and-electronic-topology',
   'brillouin-zone-sampling',
   'calculus-and-analysis',
   'chemical-bonding-and-molecular-structure',
@@ -109,6 +110,7 @@ const reviewedTheoryPages = {
   'relativistic-electronic-structure-spin-and-magnetism': ['A magnetic calculation searches a nonlinear landscape', 'Resource-review boundary'],
   'linear-response-and-excited-states': ['A response function is a derivative with a declared perturbation', 'Excitation energies require the correct particle-number sector'],
   'many-body-perturbation-theory-and-quasiparticles': ['The Dyson equation replaces a static potential by an energy-dependent self-energy', 'GW denotes a family, not one uniquely defined calculation'],
+  'berry-phases-and-electronic-topology': ['The occupied subspace is more fundamental than individual band labels', 'Band inversion is a clue, not a topological invariant'],
 };
 
 const expectedTheoryAnchors = [
@@ -197,7 +199,7 @@ if (sourceMode) {
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['General Chemistry', 'Inorganic Chemistry', 'Surface and Interface Chemistry']) {
+  for (const label of ['General Chemistry', 'Inorganic Chemistry', 'Surface and Interface Chemistry', 'Berry Phases and Electronic Topology']) {
     assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
   }
   checkReviewedPages(root, 'source');
