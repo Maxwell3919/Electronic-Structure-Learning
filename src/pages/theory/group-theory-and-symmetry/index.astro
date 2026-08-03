@@ -19,7 +19,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The phrase “the symmetry of the material” is incomplete until the object is specified: nuclear coordinates, charge density, spin density, Hamiltonian, external field, magnetic order, or an approximate numerical representation can have different symmetry groups.</p>
 
   <h2>Representations describe how symmetry acts on a space</h2>
-  <p>A representation assigns a linear operator or matrix to every group element while preserving composition:</p>
+  <p>A representation assigns a linear operator or matrix to every ordinary unitary group element while preserving composition:</p>
   <div class="math-display">
     <math display="block" aria-label="D of g one g two equals D of g one times D of g two">
       <semantics>
@@ -29,6 +29,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>The same abstract group can have many representations: coordinates, atomic orbitals, plane waves, vibrational displacements, spinors, Bloch states, and tensors transform differently.</p>
+  <p>Antiunitary symmetries such as time reversal are not represented by ordinary complex-linear matrices alone. Magnetic groups require corepresentations or an equivalent formalism that keeps complex conjugation and antiunitary composition explicit.</p>
 
   <h2>Irreducible representations define invariant sectors</h2>
   <p>A reducible representation can be transformed into independent blocks. An irreducible representation cannot be decomposed further while preserving the group action.</p>
@@ -36,6 +37,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Characters compress representation information</h2>
   <p>The character of an operation is the trace of its representation matrix. Characters are constant on conjugacy classes and allow a reducible representation to be decomposed without constructing every change-of-basis matrix.</p>
+  <p>For a finite group, or for a finite point or little co-group after translational phases have been handled, the multiplicity of an irreducible representation is</p>
   <div class="math-display">
     <math display="block" aria-label="multiplicity n alpha equals one over group order sum over g character alpha conjugate times character Gamma">
       <semantics>
@@ -50,10 +52,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>Character tables are summaries of a chosen group and convention. They are not substitutes for identifying the actual symmetry operations, coordinate axes, basis functions, and physical operator.</p>
+  <p>Continuous groups require integration with an invariant measure, while full space-group representations retain the translation and wavevector dependence. Character tables are summaries of a chosen finite group or co-group and convention; they are not substitutes for identifying the actual symmetry operations, coordinate axes, basis functions, and physical operator.</p>
 
   <h2>Symmetry-adapted combinations reduce a problem</h2>
-  <p>Projection operators can extract the component of a trial function transforming as a chosen irreducible representation. Schematically,</p>
+  <p>For the same finite-group setting, a character projection operator extracts the full isotypic component transforming as a chosen irreducible representation. Schematically,</p>
   <div class="math-display">
     <math display="block" aria-label="projection operator P alpha equals d alpha over group order sum g character alpha conjugate U g">
       <semantics>
@@ -67,18 +69,19 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>Symmetry adaptation can reduce matrix dimensions, classify modes, construct molecular orbitals, and prevent mixing between forbidden sectors. A code may exploit only a subset of the exact symmetry because of implementation, magnetic order, k-point choice, or numerical tolerance.</p>
+  <p>Resolving individual rows or repeated copies can require matrix-element projection operators beyond this character projector. Symmetry adaptation can reduce matrix dimensions, classify modes, construct molecular orbitals, and prevent mixing between forbidden sectors. A code may exploit only a subset of the exact symmetry because of implementation, magnetic order, k-point choice, or numerical tolerance.</p>
 
   <h2>Direct products express coupling and selection rules</h2>
-  <p>A matrix element can be nonzero only when the combined symmetry of final state, operator, and initial state contains the totally symmetric representation:</p>
+  <p>A matrix element can be nonzero only when the combined symmetry of the conjugate final state, operator, and initial state contains the totally symmetric representation:</p>
   <div class="math-display">
-    <math display="block" aria-label="Gamma final tensor Gamma operator tensor Gamma initial contains totally symmetric representation">
+    <math display="block" aria-label="conjugate Gamma final tensor Gamma operator tensor Gamma initial contains totally symmetric representation">
       <semantics>
-        <mrow><msub><mi>Γ</mi><mi>f</mi></msub><mo>⊗</mo><msub><mi>Γ</mi><mi>O</mi></msub><mo>⊗</mo><msub><mi>Γ</mi><mi>i</mi></msub><mo>⊃</mo><msub><mi>Γ</mi><mi>tot</mi></msub><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\Gamma_f\otimes\Gamma_O\otimes\Gamma_i\supset\Gamma_&#123;\mathrm&#123;tot&#125;&#125;.</annotation>
+        <mrow><msup><msub><mi>Γ</mi><mi>f</mi></msub><mo>*</mo></msup><mo>⊗</mo><msub><mi>Γ</mi><mi>O</mi></msub><mo>⊗</mo><msub><mi>Γ</mi><mi>i</mi></msub><mo>⊃</mo><msub><mi>Γ</mi><mi>tot</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Gamma_f^*\otimes\Gamma_O\otimes\Gamma_i\supset\Gamma_&#123;\mathrm&#123;tot&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
+  <p>For real irreducible representations the conjugate representation is equivalent to the original one, which is why the star is sometimes omitted in elementary tables. It cannot be omitted generically for complex little-group representations.</p>
   <p>This principle underlies optical, infrared, Raman, vibronic, and perturbative selection rules. Symmetry can forbid a transition within an idealized model, but disorder, phonons, fields, spin–orbit coupling, finite temperature, and lower-symmetry environments can relax the rule.</p>
 
   <h2>Point groups, space groups, and little groups have different roles</h2>
