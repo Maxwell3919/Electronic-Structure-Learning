@@ -16,16 +16,16 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Oxidation state is formal bookkeeping</h2>
   <p>Oxidation states assign bonding electrons by an agreed ionic convention. They support charge balance, redox reasoning, and approximate electron counting, but they are not obtained by integrating a unique observable around each atom.</p>
-  <p>For a transition metal in group <math class="math-inline" aria-label="g"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> with formal oxidation state <math class="math-inline" aria-label="x"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>, a common first estimate is</p>
+  <p>For a transition metal in group <math class="math-inline" aria-label="g"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> with formal oxidation state <math class="math-inline" aria-label="x"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>, the usual group-number convention assigns the formal d count</p>
   <div class="math-display">
     <math display="block" aria-label="formal d electron count equals group number minus oxidation state">
       <semantics>
-        <mrow><msub><mi>n</mi><mi>d</mi></msub><mo>≈</mo><mi>g</mi><mo>−</mo><mi>x</mi><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">n_d\approx g-x.</annotation>
+        <mrow><msubsup><mi>n</mi><mi>d</mi><mi>formal</mi></msubsup><mo>=</mo><mi>g</mi><mo>−</mo><mi>x</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">n_d^&#123;\mathrm&#123;formal&#125;&#125;=g-x.</annotation>
       </semantics>
     </math>
   </div>
-  <p>This is a formal d count. Covalency, ligand holes, mixed valence, charge transfer, hybridization, and basis-dependent projections can make a calculated d occupation non-integer and different from the formal count without invalidating charge balance.</p>
+  <p>This equality defines a formal bookkeeping assignment under the stated convention. It is not an equality for a computed real-space or orbital-projected occupation. Covalency, ligand holes, mixed valence, charge transfer, hybridization, and the projection scheme can make a calculated d occupation non-integer and different from the formal count without invalidating charge balance.</p>
 
   <h2>Coordination geometry defines a local symmetry problem</h2>
   <p>Tetrahedral, square-planar, octahedral, trigonal, and lower-symmetry coordination environments split and mix metal-centred orbitals differently. Coordination number alone is insufficient: bond angles, distortions, ligand identity, covalency, and extended connectivity matter.</p>
