@@ -18,6 +18,7 @@ The sixth pass reviewed:
 - Classical Mechanics;
 - Electromagnetism;
 - Physical Chemistry;
+- Hartree and Hartree–Fock Theory, added after a coverage reconciliation found that it had not been explicitly listed in passes 1–5;
 - prerequisite and onward-link coherence in those pages;
 - the current external resource destinations listed by those pages;
 - shared keyboard-navigation and source-level accessibility structure;
@@ -60,9 +61,9 @@ No concrete scientific or MathML defect requiring correction was found. The syst
 
 Status: **Major admissible-domain and spectral-infimum repair completed**.
 
-Finding FA-1: the Rayleigh quotient was introduced for a “normalized trial state outside the null space.” A Rayleigh quotient requires a nonzero trial state in the relevant operator or quadratic-form domain; “outside the null space” is neither the general condition nor a substitute for domain membership.
+Finding FA-1: the Rayleigh quotient was introduced for a “normalized trial state outside the null space.” A Rayleigh quotient requires a nonzero trial state in the relevant domain; “outside the null space” is neither the general condition nor a substitute for domain membership.
 
-Action completed: the page now uses a nonzero admissible trial state and distinguishes the operator domain from the quadratic-form domain.
+Action completed: the displayed operator expectation is now restricted to nonzero states in the operator domain. The page separately states that a semibounded Hamiltonian can be treated through its closed quadratic form on the form domain, where the numerator is the quadratic-form value rather than an assumed operator expectation.
 
 Finding FA-2: the page said minimizing the quotient gives the ground-state energy under suitable conditions, but did not distinguish the bottom of the spectrum from an attained ground-state eigenvalue.
 
@@ -132,9 +133,34 @@ The page already:
 
 No concrete scientific or MathML defect requiring correction was identified.
 
+### Hartree and Hartree–Fock Theory
+
+Status: **Coverage reconciliation and minor MathML/navigation repair completed**.
+
+A reconciliation of the first five audit records showed that this page had not been explicitly assigned to a prior pass, despite being one of the thirty-nine reviewed Theory routes. The page was therefore reviewed directly before closing the content-wide cycle.
+
+The page already:
+
+- separates the Hartree product ansatz from the antisymmetric Slater determinant;
+- derives exchange from antisymmetry rather than an empirical force;
+- separates Coulomb and exchange contributions and records self-interaction cancellation within the determinant expression;
+- identifies Hartree–Fock as a nonlinear SCF problem built from linear fixed-Fock eigenproblems;
+- treats the occupied subspace as more fundamental than one canonical orbital set;
+- separates restricted, unrestricted, and restricted-open-shell ansätze;
+- limits Koopmans' theorem and orbital-energy interpretation;
+- separates single-determinant optimality, basis error, correlation, stability, and scientific validation.
+
+Finding HF-1: the visual MathML for the Hartree product showed `i` as the lower limit while the TeX annotation specified `i = 1`.
+
+Action completed: the native MathML lower limit now matches the TeX expression.
+
+Finding HF-2: the connections paragraph said later pages “will” compare Hartree–Fock exchange and SCF convergence, although those pages are already published.
+
+Action completed: the paragraph now links directly to Exchange–Correlation Functionals and Approximations and Self-Consistent Field Methods and states their current responsibilities.
+
 ## Cross-page navigation result
 
-The eight-page support route is coherent as a branching dependency structure:
+The nine-page support route is coherent as a branching dependency structure:
 
 ```text
 calculus and limits
@@ -142,7 +168,8 @@ calculus and limits
 │   ├── electromagnetism and Poisson problems
 │   └── weak formulations
 ├── functional analysis and variational spaces
-│   └── finite trial spaces and DFT constrained variation
+│   ├── finite trial spaces
+│   └── Hartree–Fock / DFT constrained variation
 └── numerical analysis
     ├── conditioning / stability / solver error
     └── deterministic convergence boundaries
@@ -157,7 +184,7 @@ The exact-route build validator already checks that every internal link resolves
 
 ## External resource reachability snapshot
 
-The following seventeen distinct destinations listed by the reviewed pages were checked on 2026-08-03:
+The following nineteen distinct destinations listed by the reviewed pages were checked on 2026-08-03:
 
 1. MIT OpenCourseWare 18.01SC — reachable.
 2. MIT OpenCourseWare 18.100A — reachable.
@@ -176,6 +203,8 @@ The following seventeen distinct destinations listed by the reviewed pages were 
 15. MIT OpenCourseWare 8.02 — reachable.
 16. MIT OpenCourseWare 5.60 — reachable.
 17. MIT OpenCourseWare 5.61 — reachable.
+18. Wiley, Helgaker–Jørgensen–Olsen, *Molecular Electronic-Structure Theory* — official book record is discoverable and identifies the Hartree–Fock chapter; direct automated retrieval returned HTTP 403, so full-page access is not claimed.
+19. Cambridge, Martin, Chapter 3 “Theoretical Background” — official chapter record is discoverable; publisher access is restricted and a direct audit fetch returned a cache miss.
 
 No confirmed 404 was found in this bounded set. Reachability is a dated network observation, not a guarantee of permanent availability, regional access, full-text permission, exercise-solution rights, or pedagogical suitability.
 
@@ -218,7 +247,7 @@ No structured beginner reading trial, comprehension test, navigation study, or c
 
 ## Content-wide conclusion
 
-Across six bounded passes, all thirty-nine Theory pages have now been included in the rolling scientific/editorial review. No blocker, broad scientific reversal, or reason to rebuild the Theory architecture was found. The accepted corrections were local and evidence-driven: mathematical-tree repairs, convention declarations, approximation-scope boundaries, cross-page responsibility repairs, and one shared keyboard-navigation improvement.
+Across six bounded passes, all thirty-nine Theory pages have now been explicitly included in the rolling scientific/editorial review. The coverage statement was reconciled against the route list rather than inferred from page count alone. No blocker, broad scientific reversal, or reason to rebuild the Theory architecture was found. The accepted corrections were local and evidence-driven: mathematical-tree repairs, convention declarations, approximation-scope boundaries, cross-page responsibility repairs, and one shared keyboard-navigation improvement.
 
 This closes the first content-wide quality-audit cycle. Remaining work is no longer an undifferentiated request to “review all Theory content.” It consists of separately evidenced maintenance and validation tasks:
 
