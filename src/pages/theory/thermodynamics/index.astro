@@ -47,8 +47,17 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>At fixed <math class="math-inline" aria-label="T and V"><semantics><mrow><mi>T</mi><mtext> and </mtext><mi>V</mi></mrow><annotation encoding="application/x-tex">T\text&#123; and &#125;V</annotation></semantics></math>, stable equilibrium minimizes Helmholtz free energy under the allowed variations. At fixed <math class="math-inline" aria-label="T and p"><semantics><mrow><mi>T</mi><mtext> and </mtext><mi>p</mi></mrow><annotation encoding="application/x-tex">T\text&#123; and &#125;p</annotation></semantics></math>, Gibbs free energy is the relevant potential. Open systems require chemical-potential terms or a grand potential.</p>
-  <p>“Lowest energy” is therefore incomplete unless the potential, constraints, composition space, and allowed phases are declared.</p>
+  <p>For a system exchanging particles with reservoirs at fixed chemical potentials, the grand potential is</p>
+  <div class="math-display">
+    <math display="block" aria-label="grand potential Omega equals U minus T S minus sum mu i N i equals F minus sum mu i N i">
+      <semantics>
+        <mrow><mi>Ω</mi><mo>=</mo><mi>U</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>−</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>μ</mi><mi>i</mi></msub><msub><mi>N</mi><mi>i</mi></msub><mo>=</mo><mi>F</mi><mo>−</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>μ</mi><mi>i</mi></msub><msub><mi>N</mi><mi>i</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Omega=U-TS-\sum_i\mu_iN_i=F-\sum_i\mu_iN_i.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>At fixed <math class="math-inline" aria-label="T and V"><semantics><mrow><mi>T</mi><mtext> and </mtext><mi>V</mi></mrow><annotation encoding="application/x-tex">T\text&#123; and &#125;V</annotation></semantics></math>, stable equilibrium minimizes Helmholtz free energy under the allowed variations. At fixed <math class="math-inline" aria-label="T and p"><semantics><mrow><mi>T</mi><mtext> and </mtext><mi>p</mi></mrow><annotation encoding="application/x-tex">T\text&#123; and &#125;p</annotation></semantics></math>, Gibbs free energy is the relevant potential. At fixed temperature, volume, and chemical potentials, the grand potential is the corresponding equilibrium potential.</p>
+  <p>“Lowest energy” is therefore incomplete unless the potential, constraints, composition space, reservoirs, and allowed phases are declared. The symbol <math class="math-inline" aria-label="Omega"><semantics><mi>Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math> here denotes a thermodynamic potential; it is unrelated to Berry curvature despite the shared symbol used in another context.</p>
 
   <h2>Chemical potential is the free-energy cost of composition change</h2>
   <p>For Gibbs free energy,</p>

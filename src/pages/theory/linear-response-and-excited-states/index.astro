@@ -15,7 +15,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page separates three responsibilities that are often compressed into one label: derivatives of a ground state, time-dependent density response, and neutral excitation spectra. Charged quasiparticle addition and removal energies belong to <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.</p>
 
   <h2>A response function is a derivative with a declared perturbation</h2>
-  <p>For an external field <math class="math-inline" aria-label="f of t"><semantics><mrow><mi>f</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(t)</annotation></semantics></math> coupled to an operator, the first-order change of an observable can be written</p>
+  <p>For a perturbation convention <math class="math-inline" aria-label="delta H equals minus f B"><semantics><mrow><mi>δ</mi><mover><mi>H</mi><mo>^</mo></mover><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>f</mi><mo>(</mo><mi>t</mi><mo>)</mo><mover><mi>B</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\delta\hat H(t)=-f(t)\hat B</annotation></semantics></math>, the first-order change of an observable can be written</p>
   <div class="math-display">
     <math display="block" aria-label="delta A equals integral susceptibility times f">
       <semantics>
@@ -24,15 +24,15 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>The susceptibility depends on the observable, perturbing operator, reference state, boundary conditions, frequency, wavevector, temperature, and approximation. “The dielectric constant” or “the polarizability” is incomplete unless these choices are stated.</p>
+  <p>The susceptibility depends on the observable, perturbing operator, coupling-sign convention, reference state, boundary conditions, frequency, wavevector, temperature, and approximation. “The dielectric constant” or “the polarizability” is incomplete unless these choices are stated.</p>
 
   <h2>Causality fixes the structure of the retarded response</h2>
-  <p>For an equilibrium quantum system, the retarded Kubo response is</p>
+  <p>For the perturbation convention above, the equilibrium retarded Kubo response is</p>
   <div class="math-display">
     <math display="block" aria-label="retarded Kubo response function">
       <semantics>
-        <mrow><msub><mi>χ</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>i</mi><mi>θ</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>⟨</mo><mo>[</mo><mover><mi>A</mi><mo>^</mo></mover><mo>(</mo><mi>t</mi><mo>)</mo><mo>,</mo><mover><mi>B</mi><mo>^</mo></mover><mo>(</mo><mn>0</mn><mo>)</mo><mo>]</mo><mo>⟩</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\chi_&#123;AB&#125;(t)=-i\theta(t)\langle[\hat A(t),\hat B(0)]\rangle.</annotation>
+        <mrow><msub><mi>χ</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mi>i</mi><mi>ℏ</mi></mfrac><mi>θ</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>⟨</mo><mo>[</mo><mover><mi>A</mi><mo>^</mo></mover><mo>(</mo><mi>t</mi><mo>)</mo><mo>,</mo><mover><mi>B</mi><mo>^</mo></mover><mo>(</mo><mn>0</mn><mo>)</mo><mo>]</mo><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\chi_&#123;AB&#125;(t)=-\frac&#123;i&#125;&#123;\hbar&#125;\theta(t)\langle[\hat A(t),\hat B(0)]\rangle.</annotation>
       </semantics>
     </math>
   </div>
@@ -75,12 +75,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <div class="math-display">
     <math display="block" aria-label="TDDFT Dyson equation for density response">
       <semantics>
-        <mrow><mi>χ</mi><mo>=</mo><msub><mi>χ</mi><mi>s</mi></msub><mo>+</mo><msub><mi>χ</mi><mi>s</mi></msub><mo>(</mo><mi>v</mi><mo>+</mo><msub><mi>f</mi><mi>xc</mi></msub><mo>)</mo><mi>χ</mi><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\chi=\chi_s+\chi_s(v+f_&#123;\mathrm&#123;xc&#125;&#125;)\chi.</annotation>
+        <mrow><mi>χ</mi><mo>=</mo><msub><mi>χ</mi><mi>s</mi></msub><mo>+</mo><msub><mi>χ</mi><mi>s</mi></msub><mo>(</mo><msub><mi>v</mi><mi>C</mi></msub><mo>+</mo><msub><mi>f</mi><mi>xc</mi></msub><mo>)</mo><mi>χ</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\chi=\chi_s+\chi_s(v_&#123;\mathrm&#123;C&#125;&#125;+f_&#123;\mathrm&#123;xc&#125;&#125;)\chi.</annotation>
       </semantics>
     </math>
   </div>
-  <p>Here <math class="math-inline" aria-label="chi s"><semantics><msub><mi>χ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\chi_s</annotation></semantics></math> is the Kohn–Sham response and <math class="math-inline" aria-label="f xc"><semantics><msub><mi>f</mi><mi>xc</mi></msub><annotation encoding="application/x-tex">f_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math> is the exchange–correlation kernel. The kernel, not only the ground-state potential, controls excitation corrections and collective effects.</p>
+  <p>Here <math class="math-inline" aria-label="chi s"><semantics><msub><mi>χ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\chi_s</annotation></semantics></math> is the Kohn–Sham response, <math class="math-inline" aria-label="v C"><semantics><msub><mi>v</mi><mi>C</mi></msub><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;C&#125;&#125;</annotation></semantics></math> is the Coulomb kernel, and <math class="math-inline" aria-label="f xc"><semantics><msub><mi>f</mi><mi>xc</mi></msub><annotation encoding="application/x-tex">f_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math> is the exchange–correlation kernel, schematically <math class="math-inline" aria-label="delta v xc over delta n"><semantics><mfrac><mrow><mi>δ</mi><msub><mi>v</mi><mi>xc</mi></msub></mrow><mrow><mi>δ</mi><mi>n</mi></mrow></mfrac><annotation encoding="application/x-tex">\delta v_&#123;\mathrm&#123;xc&#125;&#125;/\delta n</annotation></semantics></math>, in the declared time or frequency representation. The kernel, not only the ground-state potential, controls excitation corrections and collective effects.</p>
 
   <h2>Time propagation, Casida equations, and frequency-domain solvers are formulations of the same response problem</h2>
   <ul>

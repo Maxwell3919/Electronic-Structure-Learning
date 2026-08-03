@@ -19,12 +19,25 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <div class="math-display">
     <math display="block" aria-label="Z equals trace exponential minus beta H">
       <semantics>
-        <mrow><mi>Z</mi><mo>=</mo><mi>Tr</mi><mspace width="0.2em"/><msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><mover><mi>H</mi><mo>^</mo></mover></mrow></msup><mo>,</mo><mspace width="0.5em"/><mi>β</mi><mo>=</mo><mfrac><mn>1</mn><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi></mrow></mfrac><mo>.</mo></mrow>
+        <mrow><mi>Z</mi><mo>=</mo><mi mathvariant="normal">Tr</mi><mspace width="0.2em"/><msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><mover><mi>H</mi><mo>^</mo></mover></mrow></msup><mo>,</mo><mspace width="0.5em"/><mi>β</mi><mo>=</mo><mfrac><mn>1</mn><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi></mrow></mfrac><mo>.</mo></mrow>
         <annotation encoding="application/x-tex">Z=\mathrm&#123;Tr&#125;\,e^&#123;-\beta\hat&#123;H&#125;&#125;,\quad\beta=1/(k_&#123;\mathrm&#123;B&#125;&#125;T).</annotation>
       </semantics>
     </math>
   </div>
   <p>The microcanonical, canonical, and grand-canonical ensembles fix different combinations of energy, particle number, volume, temperature, and chemical potential. Their equivalence requires a thermodynamic limit and appropriate regularity; finite systems and phase coexistence can retain ensemble-specific behavior.</p>
+  <p>When particle number can exchange with a reservoir, the grand partition function and grand potential are</p>
+  <div class="math-display">
+    <math display="block" aria-label="Xi equals trace exponential minus beta H minus mu N and Omega equals minus k B T log Xi">
+      <semantics>
+        <mrow>
+          <mi>Ξ</mi><mo>=</mo><mi mathvariant="normal">Tr</mi><mspace width="0.2em"/><msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>−</mo><mi>μ</mi><mover><mi>N</mi><mo>^</mo></mover><mo>)</mo></mrow></msup><mo>,</mo>
+          <mspace width="0.8em"/><mi>Ω</mi><mo>=</mo><mo>−</mo><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi><mi>ln</mi><mi>Ξ</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Xi=\mathrm&#123;Tr&#125;\,e^&#123;-\beta(\hat&#123;H&#125;-\mu\hat&#123;N&#125;)&#125;,\qquad\Omega=-k_&#123;\mathrm&#123;B&#125;&#125;T\ln\Xi.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The reservoir, conserved quantities, and allowed particle-number sectors must be declared. A computational occupation parameter does not by itself define a physical grand-canonical experiment.</p>
 
   <h2>Free energies are generated from partition functions</h2>
   <p>The Helmholtz free energy follows from</p>
@@ -49,6 +62,18 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>The chemical potential is fixed by the particle-number constraint and generally varies with temperature. Metals require dense sampling near the Fermi surface because small occupation changes can affect energies, forces, response, and entropy.</p>
+
+  <h2>Bose–Einstein occupations describe nonconserved bosonic modes</h2>
+  <p>For a bosonic mode of energy <math class="math-inline" aria-label="hbar omega"><semantics><mrow><mi>ℏ</mi><mi>ω</mi></mrow><annotation encoding="application/x-tex">\hbar\omega</annotation></semantics></math> and zero chemical potential, the equilibrium occupation is</p>
+  <div class="math-display">
+    <math display="block" aria-label="n B omega equals one over exponential beta hbar omega minus one">
+      <semantics>
+        <mrow><msub><mi>n</mi><mi>B</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mi>e</mi><mrow><mi>β</mi><mi>ℏ</mi><mi>ω</mi></mrow></msup><mo>−</mo><mn>1</mn></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">n_&#123;\mathrm&#123;B&#125;&#125;(\omega)=\frac&#123;1&#125;&#123;e^&#123;\beta\hbar\omega&#125;-1&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Phonons in thermal equilibrium usually use zero chemical potential because their number is not conserved. Other bosonic systems can require a chemical potential when an associated number is conserved or externally constrained. Bose occupation does not impose Pauli exclusion, so low-energy modes can acquire large populations.</p>
 
   <h2>Electronic entropy is part of a finite-temperature variational problem</h2>
   <p>For independent fermionic occupations,</p>
@@ -81,12 +106,16 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Fluctuations connect response to equilibrium correlations</h2>
   <p>Susceptibilities, heat capacities, compressibilities, and transport coefficients can be expressed through fluctuations or correlation functions under stated ensembles. This connection motivates linear response and many-body Green-function methods, but a finite trajectory or finite cell samples only an approximation to the ensemble.</p>
 
+  <h2>Phase transitions require thermodynamic-limit and finite-size reasoning</h2>
+  <p>Nonanalytic free energies and true spontaneous symmetry breaking are thermodynamic-limit statements. Finite cells and finite trajectories usually round singularities, restrict correlation lengths, and can switch among competing states only on sampled timescales.</p>
+  <p>A phase-transition claim therefore needs an order parameter or response criterion, finite-size or correlation-length analysis, equilibration and sampling checks, and control of the relevant ensemble. One heat-capacity peak or one abrupt change in a single simulation cell is not by itself a thermodynamic phase boundary.</p>
+
   <h2>Connections through the Atlas</h2>
   <ul>
     <li><a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> translates ensembles and free energies into chemical equilibrium and kinetic questions.</li>
     <li><a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a> separates k-space integration, occupations, and smearing convergence.</li>
     <li><a href={href('/theory/self-consistent-field-methods/')}>SCF Methods</a> treats occupation changes as part of the nonlinear solution.</li>
-    <li>Many-Body Physics will extend equilibrium ensembles to Green functions, collective modes, and interacting quasiparticles.</li>
+    <li><a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> extends equilibrium ensembles to Green functions, collective modes, and interacting quasiparticles.</li>
   </ul>
 
   <h2>Study routes</h2>
