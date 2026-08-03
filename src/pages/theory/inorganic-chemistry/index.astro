@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Inorganic Chemistry" description="Oxidation states, coordination, ligand and crystal fields, d/f electrons, spin states, distortions, and spectroscopy for electronic-structure interpretation." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Inorganic Chemistry</span>
+  </nav>
+
+  <h1>Inorganic Chemistry</h1>
+  <p class="lede">Inorganic chemistry provides the language used to reason about oxidation states, coordination environments, d- and f-electron configurations, magnetism, distortions, and spectroscopy.</p>
+  <p>The page is deliberately narrower than a complete inorganic-chemistry course. It focuses on concepts that change how transition-metal, main-group, and magnetic electronic-structure calculations are constructed and interpreted.</p>
+
+  <h2>Oxidation state is formal bookkeeping</h2>
+  <p>Oxidation states assign bonding electrons by an agreed ionic convention. They support charge balance, redox reasoning, and approximate electron counting, but they are not obtained by integrating a unique observable around each atom.</p>
+  <p>For a transition metal in group <math class="math-inline" aria-label="g"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> with formal oxidation state <math class="math-inline" aria-label="x"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>, a common first estimate is</p>
+  <div class="math-display">
+    <math display="block" aria-label="formal d electron count equals group number minus oxidation state">
+      <semantics>
+        <mrow><msub><mi>n</mi><mi>d</mi></msub><mo>≈</mo><mi>g</mi><mo>−</mo><mi>x</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">n_d\approx g-x.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This is a formal d count. Covalency, ligand holes, mixed valence, charge transfer, hybridization, and basis-dependent projections can make a calculated d occupation non-integer and different from the formal count without invalidating charge balance.</p>
+
+  <h2>Coordination geometry defines a local symmetry problem</h2>
+  <p>Tetrahedral, square-planar, octahedral, trigonal, and lower-symmetry coordination environments split and mix metal-centred orbitals differently. Coordination number alone is insufficient: bond angles, distortions, ligand identity, covalency, and extended connectivity matter.</p>
+  <p>Point-group labels organize degeneracies and selection rules. In solids, local coordination coexists with translational symmetry and band formation, so a local crystal-field picture and a Bloch-band description answer different parts of the problem.</p>
+
+  <h2>Ligand- and crystal-field models compress orbital-energy patterns</h2>
+  <p>In an ideal octahedral field, the five d orbitals split into lower <math class="math-inline" aria-label="t two g"><semantics><msub><mi>t</mi><mrow><mn>2</mn><mi>g</mi></mrow></msub><annotation encoding="application/x-tex">t_&#123;2g&#125;</annotation></semantics></math> and higher <math class="math-inline" aria-label="e g"><semantics><msub><mi>e</mi><mi>g</mi></msub><annotation encoding="application/x-tex">e_g</annotation></semantics></math> subsets. A conventional crystal-field stabilization expression is</p>
+  <div class="math-display">
+    <math display="block" aria-label="octahedral crystal field stabilization energy">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>CF</mi></msub><mo>=</mo><mo>(</mo><mo>−</mo><mn>0.4</mn><msub><mi>n</mi><mrow><mi>t</mi><mn>2</mn><mi>g</mi></mrow></msub><mo>+</mo><mn>0.6</mn><msub><mi>n</mi><mrow><mi>e</mi><mi>g</mi></mrow></msub><mo>)</mo><msub><mi>Δ</mi><mi>o</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;CF&#125;&#125;=(-0.4n_&#123;t_&#123;2g&#125;&#125;+0.6n_&#123;e_g&#125;)\Delta_o.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This expression belongs to an idealized ionic model. Ligand-field and molecular-orbital descriptions add covalent mixing, ligand orbitals, charge transfer, and symmetry-adapted combinations. The splitting parameter is environment-dependent rather than an intrinsic constant of the metal ion.</p>
+
+  <h2>Spin state is a competition, not a label fixed by composition</h2>
+  <p>Crystal-field splitting competes with pairing, exchange, covalency, spin–orbit coupling, and structural relaxation. High-spin and low-spin states can exchange order across ligands, pressure, temperature, oxidation state, or functional choice.</p>
+  <p>A spin-only estimate of an effective moment is</p>
+  <div class="math-display">
+    <math display="block" aria-label="spin only effective magnetic moment">
+      <semantics>
+        <mrow><msub><mi>μ</mi><mi>eff</mi></msub><mo>≈</mo><msub><mi>g</mi><mi>e</mi></msub><msqrt><mrow><mi>S</mi><mo>(</mo><mi>S</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></msqrt><msub><mi>μ</mi><mi>B</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\mu_&#123;\mathrm&#123;eff&#125;&#125;\approx g_e\sqrt&#123;S(S+1)&#125;\mu_&#123;\mathrm&#123;B&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Orbital contributions, magnetic anisotropy, covalency, temperature, and collective order can invalidate a spin-only interpretation. A converged spin-polarized calculation identifies one self-consistent branch, not automatically the global magnetic ground state.</p>
+
+  <h2>Jahn–Teller and related distortions couple electrons to structure</h2>
+  <p>Partially occupied degenerate states can lower their energy by reducing symmetry and coupling to nuclear motion. Static distortions, dynamic Jahn–Teller behavior, spin-state changes, charge order, and cooperative lattice effects require different models.</p>
+  <p>A geometry optimization that preserves the starting symmetry may suppress the relevant distortion. Conversely, a lower-symmetry numerical solution must still be tested for force, cell, electronic, magnetic, and supercell convergence.</p>
+
+  <h2>Spectroscopy tests state and symmetry assignments</h2>
+  <p>Electronic absorption, infrared, Raman, photoelectron, Mössbauer, EPR, and X-ray spectroscopies probe different operators and timescales. Crystal-field diagrams can organize transitions, while vibrational symmetry and selection rules connect geometry to spectra.</p>
+  <p>A calculated Kohn–Sham density of states is not a universal simulated spectrum. Transition matrix elements, charged or neutral excitation sectors, multiplet effects, vibronic coupling, spin–orbit coupling, core holes, and line broadening can all be decisive.</p>
+
+  <h2>Consequences for transition-metal electronic structure</h2>
+  <ul>
+    <li>Test several chemically plausible oxidation, spin, orbital, and structural branches rather than relying on one initialization.</li>
+    <li>State whether orbital occupations come from formal counting, projections, density matrices, or a localized model.</li>
+    <li>Do not infer a Hubbard parameter, exchange–correlation functional, or magnetic order from oxidation state alone.</li>
+    <li>Include relativistic and multiplet physics when the target observable requires them.</li>
+  </ul>
+
+  <h2>Study route</h2>
+  <p><a href="https://ocw.mit.edu/courses/5-112-principles-of-chemical-science-fall-2005/">MIT OpenCourseWare 5.112, <cite>Principles of Chemical Science</cite></a> is the most useful open bridge in the reviewed set for molecular orbitals, crystal-field theory, coordination complexes, color, magnetism, and bonding in metals and semiconductors. It is an advanced introductory chemistry course, not a complete modern inorganic curriculum.</p>
+  <p><a href="https://ocw.mit.edu/courses/5-05-principles-of-inorganic-chemistry-iii-spring-2005/">MIT OpenCourseWare 5.05, <cite>Principles of Inorganic Chemistry III</cite></a> is a graduate continuation focused on main-group synthesis, structure, bonding, and mechanisms. Its scope is deliberately narrower than this page.</p>
+  <p><a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9780470405840">Kazuo Nakamoto, <cite>Infrared and Raman Spectra of Inorganic and Coordination Compounds, Part A</cite></a> provides the spectroscopy bridge through normal modes, symmetry, force constants, and DFT vibrational-frequency calculations. It is a paid or institutional reference rather than a first course.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not treat oxidation state as a computed charge, crystal-field diagrams as full many-electron solutions, or formal d counts as unique orbital populations. The systematic review did not identify one modern, complete, openly accessible inorganic-chemistry course suitable as a sole recommendation; the resources above remain a compact, explicitly limited combination.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official MIT 5.112, MIT 5.05, and Wiley Nakamoto destinations were reviewed on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
