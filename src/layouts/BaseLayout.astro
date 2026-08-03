@@ -27,6 +27,7 @@ const navigation = [
     <title>{title} · Electronic Structure Atlas</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <a class="site-name" href={href('/')} aria-current={current === 'home' ? 'page' : undefined}>
         Electronic Structure Atlas
@@ -39,7 +40,7 @@ const navigation = [
         ))}
       </nav>
     </header>
-    <main>
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
     <footer>

@@ -22,7 +22,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
         <mrow>
           <mi mathvariant="double-struck">E</mi><mo>[</mo><mi>X</mi><mo>]</mo><mo>=</mo><mo>∫</mo><mi>x</mi><mi>p</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi><mo>,</mo>
           <mspace width="1em"/>
-          <mi>Var</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><mi mathvariant="double-struck">E</mi><mo>[</mo><mo>(</mo><mi>X</mi><mo>−</mo><mi mathvariant="double-struck">E</mi><mo>[</mo><mi>X</mi><mo>]</mo><mo>)</mo><msup><mo></mo><mn>2</mn></msup><mo>]</mo><mo>.</mo>
+          <mi mathvariant="normal">Var</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>=</mo><mi mathvariant="double-struck">E</mi><mo>[</mo><msup><mrow><mo>(</mo><mi>X</mi><mo>−</mo><mi mathvariant="double-struck">E</mi><mo>[</mo><mi>X</mi><mo>]</mo><mo>)</mo></mrow><mn>2</mn></msup><mo>]</mo><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">\mathbb&#123;E&#125;[X]=\int x p(x)\,dx,\qquad \operatorname&#123;Var&#125;(X)=\mathbb&#123;E&#125;[(X-\mathbb&#123;E&#125;[X])^2].</annotation>
       </semantics>
@@ -52,10 +52,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>If the samples are identically distributed, independent, and have finite variance <math class="math-inline" aria-label="sigma squared"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\sigma^2</annotation></semantics></math>, then <math class="math-inline" aria-label="variance of sample mean"><semantics><mrow><mi>Var</mi><mo>(</mo><mover><mi>X</mi><mo>¯</mo></mover><mo>)</mo><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>/</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">\operatorname&#123;Var&#125;(\bar&#123;X&#125;)=\sigma^2/N</annotation></semantics></math>. This familiar scaling fails when samples are strongly correlated, heavy-tailed, nonstationary, or selected after inspection.</p>
+  <p>If the samples are identically distributed, independent, and have finite variance <math class="math-inline" aria-label="sigma squared"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\sigma^2</annotation></semantics></math>, then <math class="math-inline" aria-label="variance of sample mean"><semantics><mrow><mi mathvariant="normal">Var</mi><mo>(</mo><mover><mi>X</mi><mo>¯</mo></mover><mo>)</mo><mo>=</mo><msup><mi>σ</mi><mn>2</mn></msup><mo>/</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">\operatorname&#123;Var&#125;(\bar&#123;X&#125;)=\sigma^2/N</annotation></semantics></math>. This familiar scaling fails when samples are strongly correlated, heavy-tailed, nonstationary, or selected after inspection.</p>
 
   <h2>Correlated trajectories contain fewer independent samples than frames</h2>
-  <p>Molecular dynamics and Markov-chain Monte Carlo generate time-correlated data. For a normalized autocorrelation function <math class="math-inline" aria-label="rho of k"><semantics><mrow><mi>ρ</mi><mo>(</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\rho(k)</annotation></semantics></math>, an integrated autocorrelation time may be written</p>
+  <p>Molecular dynamics and Markov-chain Monte Carlo generate time-correlated data. For a normalized autocorrelation function <math class="math-inline" aria-label="rho of k"><semantics><mrow><mi>ρ</mi><mo>(</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\rho(k)</annotation></semantics></math>, one common convention defines the integrated autocorrelation time as</p>
   <div class="math-display">
     <math display="block" aria-label="integrated autocorrelation time">
       <semantics>
@@ -64,7 +64,17 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>The effective sample size is then smaller than the number of stored frames. Equilibration, stationarity, autocorrelation, rare transitions, and multiple independent chains must be assessed before quoting a sampling uncertainty.</p>
+  <p>Under this convention, the effective sample size for estimating a mean is approximately</p>
+  <div class="math-display">
+    <math display="block" aria-label="effective sample size approximately N over two tau int">
+      <semantics>
+        <mrow><msub><mi>N</mi><mi>eff</mi></msub><mo>≈</mo><mfrac><mi>N</mi><mrow><mn>2</mn><msub><mi>τ</mi><mi>int</mi></msub></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">N_&#123;\mathrm&#123;eff&#125;&#125;\approx\frac&#123;N&#125;&#123;2\tau_&#123;\mathrm&#123;int&#125;&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Other texts absorb the factor of two into the definition of autocorrelation time, so the convention must be stated. In finite data the infinite sum also requires a window or truncation rule; noisy long-lag estimates cannot simply be accumulated without control.</p>
+  <p>Equilibration, stationarity, autocorrelation, rare transitions, and multiple independent chains must be assessed before quoting a sampling uncertainty.</p>
 
   <h2>Monte Carlo replaces difficult integrals with stochastic estimators</h2>
   <p>For samples drawn from a density <math class="math-inline" aria-label="p"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>, an expectation can be estimated by</p>

@@ -19,11 +19,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Constraints can remove degrees of freedom or introduce reaction forces. A constrained relaxation or molecular-dynamics trajectory therefore solves a different problem from the unconstrained system.</p>
 
   <h2>The Lagrangian converts forces and constraints into equations of motion</h2>
-  <p>For a Lagrangian <math class="math-inline" aria-label="L equals T minus V"><semantics><mrow><mi>L</mi><mo>=</mo><mi>T</mi><mo>−</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">L=T-V</annotation></semantics></math>, Hamilton's principle makes the action stationary:</p>
+  <p>For a Lagrangian <math class="math-inline" aria-label="L equals T minus V"><semantics><mrow><mi>L</mi><mo>=</mo><mi>T</mi><mo>−</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">L=T-V</annotation></semantics></math>, Hamilton's principle makes the action stationary under variations whose endpoint configurations are fixed:</p>
   <div class="math-display">
     <math display="block" aria-label="delta action equals zero">
       <semantics>
-        <mrow><mi>δ</mi><mi>S</mi><mo>=</mo><mi>δ</mi><mo>∫</mo><msub><mi>t</mi><mn>0</mn></msub><msup><mi>t</mi><mn>1</mn></msup><mi>L</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>,</mo><mover><mi mathvariant="bold">q</mi><mo>˙</mo></mover><mo>,</mo><mi>t</mi><mo>)</mo><mi>d</mi><mi>t</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <mrow><mi>δ</mi><mi>S</mi><mo>=</mo><mi>δ</mi><msubsup><mo>∫</mo><msub><mi>t</mi><mn>0</mn></msub><msub><mi>t</mi><mn>1</mn></msub></msubsup><mi>L</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>,</mo><mover><mi mathvariant="bold">q</mi><mo>˙</mo></mover><mo>,</mo><mi>t</mi><mo>)</mo><mi>d</mi><mi>t</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
         <annotation encoding="application/x-tex">\delta S=\delta\int_&#123;t_0&#125;^&#123;t_1&#125;L(\mathbf&#123;q&#125;,\dot&#123;\mathbf&#123;q&#125;&#125;,t)\,dt=0.</annotation>
       </semantics>
     </math>
