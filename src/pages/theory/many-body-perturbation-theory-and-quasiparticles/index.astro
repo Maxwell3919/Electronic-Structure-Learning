@@ -66,7 +66,18 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <div class="math-display">
     <math display="block" aria-label="Z n equals one minus frequency derivative of real self energy matrix element inverse">
       <semantics>
-        <mrow><msub><mi>Z</mi><mi>n</mi></msub><mo>=</mo><msup><mo>[</mo><mn>1</mn><mo>−</mo><msub><mo>(</mo><mfrac><mi>∂</mi><mrow><mi>∂</mi><mi>ω</mi></mrow></mfrac><mi mathvariant="normal">Re</mi><mo>⟨</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>|</mo><mi>Σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>|</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>⟩</mo><mo>)</mo><mrow><mi>ω</mi><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub></mrow></msub><mo>]</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>.</mo></mrow>
+        <mrow>
+          <msub><mi>Z</mi><mi>n</mi></msub><mo>=</mo>
+          <msup>
+            <mrow><mo>[</mo><mn>1</mn><mo>−</mo>
+              <msub>
+                <mrow><mfrac><mi>∂</mi><mrow><mi>∂</mi><mi>ω</mi></mrow></mfrac><mi mathvariant="normal">Re</mi><mo>⟨</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>|</mo><mi>Σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>|</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>⟩</mo></mrow>
+                <mrow><mi>ω</mi><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub></mrow>
+              </msub>
+            <mo>]</mo></mrow>
+            <mrow><mo>−</mo><mn>1</mn></mrow>
+          </msup><mo>.</mo>
+        </mrow>
         <annotation encoding="application/x-tex">Z_n=[1-\left.\partial_\omega\mathrm&#123;Re&#125;\langle\phi_n|\Sigma(\omega)|\phi_n\rangle\right|_&#123;\omega=\varepsilon_n&#125;]^&#123;-1&#125;.</annotation>
       </semantics>
     </math>
