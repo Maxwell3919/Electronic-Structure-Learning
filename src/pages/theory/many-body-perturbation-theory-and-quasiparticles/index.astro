@@ -53,16 +53,25 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Vertex corrections are omitted at this level. The notation hides choices about the starting Green function, polarizability, frequency treatment, self-consistency, spin, relativistic effects, and core–valence partition.</p>
 
   <h2>Quasiparticle energies solve an energy-dependent equation</h2>
-  <p>For a reference orbital <math class="math-inline" aria-label="phi n"><semantics><msub><mi>φ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\phi_n</annotation></semantics></math>, a diagonal quasiparticle equation is often approximated by</p>
+  <p>For a reference orbital <math class="math-inline" aria-label="phi n"><semantics><msub><mi>φ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\phi_n</annotation></semantics></math>, a real-energy diagonal linearization around the reference eigenvalue is often written</p>
   <div class="math-display">
     <math display="block" aria-label="quasiparticle energy correction equation">
       <semantics>
-        <mrow><msub><mi>E</mi><mi>n</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>+</mo><msub><mi>Z</mi><mi>n</mi></msub><mo>⟨</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>|</mo><mi>Σ</mi><mo>(</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>)</mo><mo>−</mo><msub><mi>v</mi><mi>xc</mi></msub><mo>|</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">E_n=\varepsilon_n+Z_n\langle\phi_n|\Sigma(\varepsilon_n)-v_&#123;\mathrm&#123;xc&#125;&#125;|\phi_n\rangle.</annotation>
+        <mrow><msub><mi>E</mi><mi>n</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>+</mo><msub><mi>Z</mi><mi>n</mi></msub><mi mathvariant="normal">Re</mi><mo>⟨</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>|</mo><mi>Σ</mi><mo>(</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>)</mo><mo>−</mo><msub><mi>v</mi><mi>xc</mi></msub><mo>|</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_n=\varepsilon_n+Z_n\,\mathrm&#123;Re&#125;\langle\phi_n|\Sigma(\varepsilon_n)-v_&#123;\mathrm&#123;xc&#125;&#125;|\phi_n\rangle.</annotation>
       </semantics>
     </math>
   </div>
-  <p>The renormalization factor derives from the energy derivative of the self-energy. Linearization, diagonal approximations, and neglect of off-diagonal mixing can fail near degeneracies, band inversions, strong hybridization, or satellite structures.</p>
+  <p>The corresponding renormalization factor is</p>
+  <div class="math-display">
+    <math display="block" aria-label="Z n equals one minus frequency derivative of real self energy matrix element inverse">
+      <semantics>
+        <mrow><msub><mi>Z</mi><mi>n</mi></msub><mo>=</mo><msup><mo>[</mo><mn>1</mn><mo>−</mo><msub><mo>(</mo><mfrac><mi>∂</mi><mrow><mi>∂</mi><mi>ω</mi></mrow></mfrac><mi mathvariant="normal">Re</mi><mo>⟨</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>|</mo><mi>Σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>|</mo><msub><mi>φ</mi><mi>n</mi></msub><mo>⟩</mo><mo>)</mo><mrow><mi>ω</mi><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub></mrow></msub><mo>]</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">Z_n=[1-\left.\partial_\omega\mathrm&#123;Re&#125;\langle\phi_n|\Sigma(\omega)|\phi_n\rangle\right|_&#123;\omega=\varepsilon_n&#125;]^&#123;-1&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This formula targets the real quasiparticle energy. A complex pole or spectral-function calculation retains the imaginary self-energy and lifetime information rather than discarding it. Linearization, diagonal approximations, and neglect of off-diagonal mixing can fail near degeneracies, band inversions, strong hybridization, or satellite structures.</p>
 
   <h2>GW denotes a family, not one uniquely defined calculation</h2>
   <dl class="paired-definitions">
@@ -78,7 +87,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>These variants do not form a universal accuracy ladder. Vertex corrections, cancellation of errors, starting-point quality, and the target observable can reverse simple expectations.</p>
 
   <h2>Neutral excitations require an electron–hole equation</h2>
-  <p>After quasiparticle energies and screening are constructed, the Bethe–Salpeter equation is often represented as an effective electron–hole eigenproblem,</p>
+  <p>After quasiparticle energies and screening are constructed, a static-kernel resonant or Tamm–Dancoff form of the Bethe–Salpeter equation can be written as an effective electron–hole eigenproblem,</p>
   <div class="math-display">
     <math display="block" aria-label="BSE electron hole eigenvalue equation">
       <semantics>
@@ -87,7 +96,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>The basis labels occupied–empty transitions. The kernel includes direct screened attraction and exchange-like terms under the chosen approximation. Its eigenvalues describe neutral excitations; they are not quasiparticle addition/removal energies.</p>
+  <p>The basis labels occupied–empty transitions. The kernel includes direct screened attraction and exchange-like terms under the chosen approximation. Its eigenvalues describe neutral excitations; they are not quasiparticle addition/removal energies. The full BSE can couple resonant and antiresonant sectors, so the simple eigenproblem above must not be presented as formulation-independent.</p>
 
   <h2>Optical gaps, fundamental gaps, and exciton binding are distinct</h2>
   <p>The fundamental gap is a charged excitation difference. The lowest bright optical excitation is a neutral transition with nonzero oscillator strength. A schematic exciton binding energy is</p>
