@@ -15,7 +15,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The appropriate mesh depends on the cell, symmetry, occupations, Fermi-surface geometry, method, and target observable. No universal k-point density proves convergence for every material or property.</p>
 
   <h2>Periodic observables are Brillouin-zone integrals</h2>
-  <p>For a cell-periodic quantity <math class="math-inline" aria-label="A of k"><semantics><mrow><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(\mathbf&#123;k&#125;)</annotation></semantics></math>, a normalized Brillouin-zone average has the form</p>
+  <p>For a k-dependent Brillouin-zone integrand or observable contribution <math class="math-inline" aria-label="A of k"><semantics><mrow><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(\mathbf&#123;k&#125;)</annotation></semantics></math>, a normalized average has the form</p>
   <div class="math-display">
     <math display="block" aria-label="average A equals one over Brillouin zone volume integral over Brillouin zone A of k d cubed k approximately sum k w k A k">
       <semantics>
@@ -27,7 +27,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>The weights include the volume represented by each point and may include symmetry multiplicity. A finite sum is exact only for a restricted class of functions; real band energies, occupations, densities, forces, and responses must be checked for quadrature error.</p>
+  <p>The weights include the reciprocal-space volume represented by each point and may include symmetry multiplicity. Their numerical normalization depends on whether the formula is written as an average, a full integral, or an irreducible-zone sum. A finite sum is exact only for a restricted class of functions; real band energies, occupations, densities, forces, and responses must be checked for quadrature error.</p>
 
   <h2>A mesh belongs to a reciprocal cell</h2>
   <p>Uniform meshes are specified relative to reciprocal primitive vectors. Changing from a primitive cell to a supercell shrinks the Brillouin zone, so a numerically identical mesh no longer represents the same sampling density.</p>
@@ -101,6 +101,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page treats reciprocal-space numerical integration. Bloch theory belongs to Solid-State Physics, crystallographic conventions to Crystallography, and illustrative band structures do not substitute for integration or full-zone searches.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official Martin, Bilbao, and SIESTA destinations were reviewed on 3 August 2026. No universal mesh density or smearing width is recommended.</p>
+    <p><strong>Review note.</strong> The integrand and weight-normalization terminology was re-audited on 3 August 2026 against the Theory report and Martin’s Brillouin-zone integration discussion. No universal mesh density or smearing width is recommended.</p>
   </aside>
 </BaseLayout>
