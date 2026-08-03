@@ -23,8 +23,10 @@ const theorySlugs = [
   'exchange-correlation-functionals-and-approximations',
   'fourier-analysis',
   'functional-analysis-and-variational-methods',
+  'general-chemistry',
   'group-theory-and-symmetry',
   'hartree-and-hartree-fock-theory',
+  'inorganic-chemistry',
   'kohn-sham-density-functional-theory',
   'linear-algebra',
   'linear-response-and-excited-states',
@@ -44,6 +46,7 @@ const theorySlugs = [
   'solid-state-chemistry',
   'solid-state-physics',
   'statistical-mechanics',
+  'surface-and-interface-chemistry',
   'thermodynamics',
 ];
 
@@ -56,9 +59,14 @@ const expectedPages = [
   'src/pages/theory/index.astro',
   ...theorySlugs.map((slug) => `src/pages/theory/${slug}/index.astro`),
 ].sort();
+
 const expectedHtml = [
-  '404.html', 'computational-tools/index.html', 'index.html', 'methods/index.html',
-  'reference/index.html', 'theory/index.html',
+  '404.html',
+  'computational-tools/index.html',
+  'index.html',
+  'methods/index.html',
+  'reference/index.html',
+  'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
 
@@ -71,19 +79,22 @@ const reviewedTheoryPages = {
   'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
   'probability-and-statistics': ['A random variable is a function on possible outcomes', 'Statistical uncertainty and systematic error answer different questions'],
   'group-theory-and-symmetry': ['Representations describe how symmetry acts on a space', 'Symmetry reduction is not automatically physically harmless'],
-  'classical-mechanics': ['The Lagrangian converts forces and constraints into equations of motion', 'Small oscillations reduce coupled displacements to normal modes'],
+  'classical-mechanics': ['Coordinates and constraints define the mechanical problem', 'Small oscillations reduce coupled displacements to normal modes'],
   'electromagnetism': ['Charge density determines an electrostatic potential only after boundary conditions are stated', 'Longitudinal and transverse fields lead to different approximations'],
   'quantum-mechanics': ['Identical electrons require antisymmetry'],
-  'thermodynamics': ['Legendre transforms choose natural control variables', 'Zero-temperature electronic energies are ingredients, not complete free energies'],
+  'thermodynamics': ['A thermodynamic state is specified by variables and constraints', 'Zero-temperature electronic energies are ingredients, not complete free energies'],
   'statistical-mechanics': ['An ensemble states what is controlled and what fluctuates', 'Numerical smearing and physical temperature must remain separate'],
   'atomic-and-molecular-physics': ['Hydrogenic states provide a reference language', 'Selection rules are symmetry statements'],
   'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
   'crystallography': ['A crystal combines a lattice with a basis', 'Structure standardization is useful but not neutral provenance'],
   'many-body-physics': ['Fock space allows particle occupations to vary', 'Diagrammatic and path-integral methods are optional continuations'],
+  'general-chemistry': ['Composition fixes the first electron-counting problem', 'Lewis structures and formal charge compress valence bookkeeping'],
   'physical-chemistry': ['Energy alone does not determine equilibrium', 'Electronic-structure calculations enter through a model stack'],
   'quantum-chemistry': ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
   'chemical-bonding-and-molecular-structure': ['Chemical bonding is not represented by one unique quantum-mechanical observable', 'Multiple analyses should not be forced to agree'],
+  'inorganic-chemistry': ['Oxidation state is formal bookkeeping', 'Spin state is a competition, not a label fixed by composition'],
   'solid-state-chemistry': ['A chemical formula does not uniquely determine a crystal structure', 'Defect formation energies depend on reservoirs and Fermi level'],
+  'surface-and-interface-chemistry': ['A surface model is defined by a termination and environment', 'Adsorption energy depends on references and sign convention'],
   'many-electron-problem': ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
   'hartree-and-hartree-fock-theory': ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem"],
   'density-functional-theory-foundations': ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory'],
@@ -118,7 +129,10 @@ const expectedTheoryAnchors = [
   'berry-phases-and-electronic-topology', 'learning-map',
 ];
 
-const internalRoutes = new Set(['', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`), 'methods/', 'computational-tools/', 'reference/']);
+const internalRoutes = new Set([
+  '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
+  'methods/', 'computational-tools/', 'reference/',
+]);
 const deadCambridgeId = '8C2B8F7F4C94A903A9018E9D8A42B9A7';
 const count = (text, expression) => (text.match(expression) ?? []).length;
 
@@ -140,7 +154,9 @@ const checkMathMl = (text, label, source = false) => {
 
 const checkReviewedPages = (baseDirectory, mode) => {
   for (const [slug, markers] of Object.entries(reviewedTheoryPages)) {
-    const relative = mode === 'source' ? `src/pages/theory/${slug}/index.astro` : `theory/${slug}/index.html`;
+    const relative = mode === 'source'
+      ? `src/pages/theory/${slug}/index.astro`
+      : `theory/${slug}/index.html`;
     const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
     for (const marker of markers) assert(text.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
     checkMathMl(text, relative, mode === 'source');
@@ -151,8 +167,13 @@ if (sourceMode) {
   const tracked = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   const actualPages = tracked.filter((file) => file.startsWith('src/pages/')).sort();
   assert(JSON.stringify(actualPages) === JSON.stringify(expectedPages), `public page sources must match the reviewed static set: ${actualPages.join(', ')}`);
-  for (const directory of ['src/content', 'src/components', 'src/data', 'src/lib', 'schemas', 'templates']) assert(!fs.existsSync(path.join(root, directory)), `legacy directory still exists: ${directory}`);
-  for (const prefix of ['part-', 'practice-sholl-steckel', 'learning-paths', 'reading-system', 'labs', 'cases', 'interactive-labs', 'literature', 'book-map']) assert(!tracked.some((file) => file.includes(prefix)), `legacy tracked path remains: ${prefix}`);
+
+  for (const directory of ['src/content', 'src/components', 'src/data', 'src/lib', 'schemas', 'templates']) {
+    assert(!fs.existsSync(path.join(root, directory)), `legacy directory still exists: ${directory}`);
+  }
+  for (const prefix of ['part-', 'practice-sholl-steckel', 'learning-paths', 'reading-system', 'labs', 'cases', 'interactive-labs', 'literature', 'book-map']) {
+    assert(!tracked.some((file) => file.includes(prefix)), `legacy tracked path remains: ${prefix}`);
+  }
   const expectedScripts = ['scripts/smoke-clean-slate.py', 'scripts/validate-build-budget.mjs', 'scripts/validate-clean-slate.mjs'];
   assert(JSON.stringify(tracked.filter((file) => file.startsWith('scripts/')).sort()) === JSON.stringify(expectedScripts), 'scripts must remain the minimal suite');
 
@@ -165,20 +186,30 @@ if (sourceMode) {
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
   assert(!sources.includes(deadCambridgeId), 'dead Cambridge Linear Algebra resource remains in public source');
-  for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) assert(!sources.toLowerCase().includes(term), `legacy content or UI term remains in public source: ${term}`);
-  for (const privatePath of [['/home', 'talos'].join('/'), ['/Users', ''].join('')]) assert(!sources.includes(privatePath), `private local path remains in public source: ${privatePath}`);
+  for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
+    assert(!sources.toLowerCase().includes(term), `legacy content or UI term remains in public source: ${term}`);
+  }
+  for (const privatePath of [['/home', 'talos'].join('/'), ['/Users', ''].join('')]) {
+    assert(!sources.includes(privatePath), `private local path remains in public source: ${privatePath}`);
+  }
   assert(!tracked.some((file) => /(?:^|\/)(?:POTCAR|.*\.(?:pdf|zip|key|pem))$/i.test(file)), 'restricted or archive file remains tracked');
 
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['Probability and Statistics', 'Classical Mechanics', 'Thermodynamics', 'Functional Analysis and Variational Methods', 'Many-Body Physics', 'Linear Response and Excited States', 'Many-Body Perturbation Theory and Quasiparticles']) assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
+  for (const label of ['General Chemistry', 'Inorganic Chemistry', 'Surface and Interface Chemistry']) {
+    assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
+  }
   checkReviewedPages(root, 'source');
 
   const methods = fs.readFileSync(path.join(root, 'src/pages/methods/index.astro'), 'utf8');
-  for (const marker of ['Ground-State Density-Functional Methods', 'From methods to a reliable workflow', 'DFT-Research-Workflow']) assert(methods.includes(marker), `Methods page is missing reviewed marker: ${marker}`);
+  for (const marker of ['Ground-State Density-Functional Methods', 'From methods to a reliable workflow', 'DFT-Research-Workflow']) {
+    assert(methods.includes(marker), `Methods page is missing reviewed marker: ${marker}`);
+  }
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
-  for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
+  for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) {
+    assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
+  }
   assert(!styles.includes('.equation'), 'removed code-style equation rule remains in the stylesheet');
 }
 
@@ -197,6 +228,7 @@ if (builtMode) {
   assert(JSON.stringify(htmlFiles) === JSON.stringify(expectedHtml), `built HTML must match the reviewed static set: ${htmlFiles.join(', ')}`);
   assert(!files.some((file) => file.endsWith('.js')), 'built site contains JavaScript');
   assert(!files.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
+
   for (const htmlFile of htmlFiles) {
     const html = fs.readFileSync(path.join(dist, htmlFile), 'utf8');
     assert(!html.includes(deadCambridgeId), `dead Cambridge resource remains in built HTML: ${htmlFile}`);

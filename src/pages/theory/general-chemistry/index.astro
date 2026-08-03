@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="General Chemistry" description="Atoms, composition, periodic trends, bonding, redox, equilibrium, and kinetics as a chemistry-background route into electronic structure." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">General Chemistry</span>
+  </nav>
+
+  <h1>General Chemistry</h1>
+  <p class="lede">General chemistry is a background-repair route for readers who need the chemical language used to describe composition, atoms, bonding, reactions, and material environments.</p>
+  <p>It is not a compulsory full-course prerequisite for every electronic-structure learner. Readers with established chemistry training can enter through Quantum Chemistry, Solid-State Chemistry, or the relevant electronic-structure module instead.</p>
+
+  <h2>Composition fixes the first electron-counting problem</h2>
+  <p>Before discussing orbitals or density, a calculation must identify nuclei, total charge, and electron number. For nuclei with charges <math class="math-inline" aria-label="Z I"><semantics><msub><mi>Z</mi><mi>I</mi></msub><annotation encoding="application/x-tex">Z_I</annotation></semantics></math> and system charge <math class="math-inline" aria-label="q"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>,</p>
+  <div class="math-display">
+    <math display="block" aria-label="electron number equals sum of nuclear charges minus system charge">
+      <semantics>
+        <mrow><msub><mi>N</mi><mi>e</mi></msub><mo>=</mo><munderover><mo>∑</mo><mi>I</mi><mo></mo></munderover><msub><mi>Z</mi><mi>I</mi></msub><mo>−</mo><mi>q</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">N_e=\sum_I Z_I-q.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>This count is exact once the composition and charge convention are fixed. Assigning those electrons to atoms, bonds, oxidation states, orbitals, or density basins is a separate interpretive step.</p>
+  <p>Stoichiometric coefficients preserve each element and net charge. A chemically plausible formula is not automatically the experimentally realized phase, defect state, protonation state, or magnetic configuration.</p>
+
+  <h2>Periodic trends are useful patterns, not universal laws</h2>
+  <p>Atomic size, ionization energy, electron affinity, electronegativity, common valence, and preferred coordination vary across the periodic table. These trends help anticipate charge transfer, bond polarity, orbital energy ordering, and likely oxidation states.</p>
+  <p>Trends can reverse when coordination, relativistic effects, spin state, crystal field, pressure, or oxidation state changes. They guide model construction but do not replace a calculation or measurement for the actual environment.</p>
+
+  <h2>Lewis structures and formal charge compress valence bookkeeping</h2>
+  <p>Lewis structures, octet rules, resonance forms, VSEPR, and hybridization provide compact models for molecular connectivity and shape. Formal oxidation numbers satisfy a charge-balance relation such as</p>
+  <div class="math-display">
+    <math display="block" aria-label="sum of stoichiometric coefficients times oxidation numbers equals total charge">
+      <semantics>
+        <mrow><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>ν</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mi>q</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\sum_i \nu_i x_i=q.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The integers <math class="math-inline" aria-label="x i"><semantics><msub><mi>x</mi><mi>i</mi></msub><annotation encoding="application/x-tex">x_i</annotation></semantics></math> are formal assignments. They should not be silently equated with partial charges, Bader charges, orbital populations, or a unique number of electrons localized on an atom.</p>
+  <p>Delocalized, multicentre, metallic, mixed-valence, and strongly correlated systems can require several complementary pictures. The purpose of a bonding model is to answer a declared chemical question, not to provide a literal image of the many-electron state.</p>
+
+  <h2>Acid–base and redox language identifies exchanged particles</h2>
+  <p>Acid–base models track proton or electron-pair donation and acceptance; redox models track formal electron transfer. Both depend on the chosen reaction, environment, and reference species.</p>
+  <p>In electronic-structure work these ideas appear in charge states, protonation, electrochemical reservoirs, defect chemistry, and adsorption. A charged calculation still needs an explicit boundary condition, compensating convention, and thermodynamic reference before it supports a reaction or stability claim.</p>
+
+  <h2>Equilibrium and kinetics answer different questions</h2>
+  <p>Thermodynamics compares state functions under stated constraints. Kinetics concerns pathways and rates. A favorable reaction free energy does not imply a small activation barrier, and a relaxed product structure does not establish that it forms on an accessible timescale.</p>
+  <p><a href={href('/theory/thermodynamics/')}>Thermodynamics</a> develops state functions and equilibrium; <a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> connects those quantities to chemical rates and spectra. This page retains only the vocabulary needed to enter those subjects.</p>
+
+  <h2>How general chemistry connects to electronic structure</h2>
+  <ul>
+    <li><strong>Composition and charge</strong> determine nuclei, electron count, spin possibilities, and reservoir terms.</li>
+    <li><strong>Periodic trends</strong> guide basis, core treatment, relativistic awareness, likely oxidation states, and initial magnetic configurations.</li>
+    <li><strong>Bonding models</strong> help interpret orbitals, densities, geometries, and projected spectra while remaining model-dependent.</li>
+    <li><strong>Redox and equilibrium</strong> connect to defects, electrochemistry, surfaces, adsorption, and chemical potentials.</li>
+  </ul>
+
+  <h2>Study route</h2>
+  <p><a href="https://ocw.mit.edu/courses/5-111sc-principles-of-chemical-science-fall-2014/">MIT OpenCourseWare 5.111SC, <cite>Principles of Chemical Science</cite></a> is the preferred background-repair course. It begins with atoms and electronic structure, then develops bonding, thermodynamics and equilibrium, transition metals and redox, and kinetics. Its videos, notes, problems, and solutions make it suitable for independent study.</p>
+  <p><a href="https://ocw.mit.edu/courses/3-091sc-introduction-to-solid-state-chemistry-fall-2010/">MIT OpenCourseWare 3.091SC, <cite>Introduction to Solid-State Chemistry</cite></a> is a materials-oriented alternative for readers whose main goal is crystals, defects, semiconductors, and composition–property relations.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not reproduce a complete general-chemistry curriculum, teach laboratory operations, or cover all solution chemistry. It also does not treat formal charge, oxidation state, hybridization, or Lewis structures as unique quantum-mechanical observables.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. The official MIT 5.111SC and 3.091SC destinations were reviewed on 3 August 2026.</p>
+  </aside>
+</BaseLayout>

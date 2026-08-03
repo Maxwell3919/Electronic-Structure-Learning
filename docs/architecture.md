@@ -16,7 +16,7 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
-The reviewed content has developed in ten batches:
+The reviewed content has developed in eleven batches:
 
 1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
 2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
@@ -28,6 +28,7 @@ The reviewed content has developed in ten batches:
 8. Electromagnetism, Statistical Mechanics, Solid-State Chemistry.
 9. Functional Analysis and Variational Methods, Many-Body Physics, Linear Response and Excited States, Many-Body Perturbation Theory and Quasiparticles.
 10. Probability and Statistics, Classical Mechanics, Thermodynamics.
+11. General Chemistry, Inorganic Chemistry, Surface and Interface Chemistry.
 
 The Tier-1 responsibility chain remains explicit:
 
@@ -167,6 +168,28 @@ Thermodynamics
 └── zero-temperature energies versus finite-temperature stability
 ```
 
+### Chemical composition, coordination, and surfaces route
+
+```text
+General chemistry
+├── composition, charge, and electron counting
+├── periodic trends and bonding models
+├── acid–base and redox language
+└── equilibrium versus kinetics vocabulary
+
+Inorganic chemistry
+├── formal oxidation states and d/f counts
+├── coordination and ligand/crystal fields
+├── spin states, magnetism, and distortions
+└── spectroscopy and transition-metal interpretation
+
+Surface and interface chemistry
+├── termination, stoichiometry, and slab references
+├── surface and adsorption energies
+├── work functions, reconstruction, and surface states
+└── band alignment, interface dipoles, and screening
+```
+
 The following responsibilities remain separate:
 
 - A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
@@ -193,6 +216,11 @@ The following responsibilities remain separate:
 - The number of stored trajectory frames is not automatically the number of independent samples.
 - Electronic-force convergence, trajectory integration, local harmonic stability, thermodynamic stability, and kinetic accessibility are distinct conclusions.
 - Internal energy, Helmholtz free energy, Gibbs free energy, grand potential, and zero-temperature electronic energy answer different constrained questions.
+- Formal charge, oxidation state, partial charge, density-basin charge, and projected orbital occupation are not interchangeable.
+- Crystal-field diagrams and formal d counts are interpretive models rather than full many-electron solutions.
+- Surface termination, coverage, reconstruction, electrostatic reference, and chemical reservoirs are part of the physical system.
+- Adsorption energy is not an activation barrier, rate, coverage isotherm, or catalytic activity measure.
+- A work function or band alignment requires a converged and comparable potential reference.
 
 All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
 
@@ -200,7 +228,7 @@ Mathematics is authored as native MathML inside the static Astro source. Display
 
 Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. The Learning Map expresses relationships between detailed concepts and does not prescribe one fixed course sequence.
 
-The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point.
+The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point. The Inorganic Chemistry and Surface and Interface Chemistry pages retain explicit resource-review gaps because no single complete modern open course was established during the systematic review.
 
 ## Methods and other entrances
 

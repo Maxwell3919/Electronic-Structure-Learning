@@ -8,7 +8,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 <BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
   <h1>Theory</h1>
   <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-five subjects now have individually reviewed pages; the remaining entries still mark responsibilities to be developed separately.</p>
+  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-eight subjects now have individually reviewed pages; the remaining entry still marks a responsibility to be developed separately.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -45,13 +45,13 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <h2 id="chemical-foundations">Chemical Foundations</h2>
     <p>The concepts used to interpret atoms, bonds, molecules, solids, surfaces, and composition-dependent behavior.</p>
     <ul>
-      <li id="general-chemistry">General Chemistry</li>
+      <li id="general-chemistry"><a href={href('/theory/general-chemistry/')}>General Chemistry</a> <span class="item-summary">— atoms, composition, periodic trends, bonding, redox, equilibrium, and kinetics vocabulary.</span></li>
       <li id="physical-chemistry"><a href={href('/theory/physical-chemistry/')}>Physical Chemistry</a> <span class="item-summary">— thermodynamic, kinetic, quantum, and spectroscopic model layers for chemical questions.</span></li>
       <li id="quantum-chemistry"><a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> <span class="item-summary">— molecular Hamiltonians, Born–Oppenheimer separation, orbitals, antisymmetry, and correlation.</span></li>
       <li id="chemical-bonding-and-molecular-structure"><a href={href('/theory/chemical-bonding-and-molecular-structure/')}>Chemical Bonding and Molecular Structure</a> <span class="item-summary">— orbital, density, symmetry, energy, and formal chemical interpretations.</span></li>
-      <li id="inorganic-chemistry">Inorganic Chemistry</li>
+      <li id="inorganic-chemistry"><a href={href('/theory/inorganic-chemistry/')}>Inorganic Chemistry</a> <span class="item-summary">— oxidation states, coordination, ligand fields, d/f configurations, spin states, and distortions.</span></li>
       <li id="solid-state-chemistry"><a href={href('/theory/solid-state-chemistry/')}>Solid-State Chemistry</a> <span class="item-summary">— composition, structure types, defects, nonstoichiometry, doping, and phase relations.</span></li>
-      <li id="surface-and-interface-chemistry">Surface and Interface Chemistry</li>
+      <li id="surface-and-interface-chemistry"><a href={href('/theory/surface-and-interface-chemistry/')}>Surface and Interface Chemistry</a> <span class="item-summary">— surface energy, adsorption, work functions, reconstruction, alignment, and interface dipoles.</span></li>
     </ul>
   </section>
 

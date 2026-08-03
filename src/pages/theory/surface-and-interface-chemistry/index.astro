@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Surface and Interface Chemistry" description="Surface energies, adsorption, work functions, reconstructions, band alignment, interface dipoles, charge transfer, and slab-model boundaries." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Theory</a><span aria-hidden="true">/</span><span aria-current="page">Surface and Interface Chemistry</span>
+  </nav>
+
+  <h1>Surface and Interface Chemistry</h1>
+  <p class="lede">A surface terminates a bulk material; an interface joins two environments. Both create coordination, electrostatic, structural, and electronic conditions that do not exist in either isolated bulk reference.</p>
+  <p>This page develops the chemical and electronic quantities needed to interpret slabs, adsorption, heterointerfaces, work functions, band alignment, and reconstruction. Detailed execution belongs in Methods and DFT Research Workflow.</p>
+
+  <h2>A surface model is defined by a termination and environment</h2>
+  <p>A Miller index does not uniquely specify a surface calculation. Termination, stoichiometry, reconstruction, adsorbate coverage, charge state, solvent or gas environment, magnetic order, and lateral cell all affect the physical system.</p>
+  <p>A periodic slab introduces two-dimensional repetition and an artificial normal direction. Slab thickness, vacuum thickness, dipole correction, k-point mesh, relaxed layers, and symmetry are separate convergence controls.</p>
+
+  <h2>Surface energy compares a slab with a declared bulk reservoir</h2>
+  <p>For a symmetric stoichiometric slab with two equivalent faces, a common expression is</p>
+  <div class="math-display">
+    <math display="block" aria-label="surface energy equals slab energy minus number of bulk units times bulk energy divided by two area">
+      <semantics>
+        <mrow><mi>γ</mi><mo>=</mo><mfrac><mrow><msub><mi>E</mi><mi>slab</mi></msub><mo>−</mo><mi>N</mi><msub><mi>E</mi><mi>bulk</mi></msub></mrow><mrow><mn>2</mn><mi>A</mi></mrow></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\gamma=\frac&#123;E_&#123;\mathrm&#123;slab&#125;&#125;-NE_&#123;\mathrm&#123;bulk&#125;&#125;&#125;&#123;2A&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The factor of two applies only when the two faces are equivalent. Polar, asymmetric, nonstoichiometric, reconstructed, charged, or adsorbate-covered surfaces require additional chemical-potential and electrostatic terms.</p>
+  <p>Bulk and slab references must use compatible Hamiltonians, pseudopotentials, basis settings, k-space treatment, magnetic states, and energy conventions. Numerical cancellation does not rescue inconsistent references.</p>
+
+  <h2>Adsorption energy depends on references and sign convention</h2>
+  <p>One common convention is</p>
+  <div class="math-display">
+    <math display="block" aria-label="adsorption energy equals combined system minus clean slab minus adsorbate reference">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>ads</mi></msub><mo>=</mo><msub><mi>E</mi><mrow><mi>slab</mi><mo>+</mo><mi>adsorbate</mi></mrow></msub><mo>−</mo><msub><mi>E</mi><mi>slab</mi></msub><mo>−</mo><msub><mi>E</mi><mi>reference</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;ads&#125;&#125;=E_&#123;\mathrm&#123;slab+adsorbate&#125;&#125;-E_&#123;\mathrm&#123;slab&#125;&#125;-E_&#123;\mathrm&#123;reference&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Under this convention, negative values are exothermic. Other communities reverse the sign. The adsorbate reference may be an isolated atom, molecule, gas reservoir, solution species, or chemical-potential combination; each answers a different question.</p>
+  <p>Adsorption energy is not an activation barrier, rate constant, coverage isotherm, catalytic turnover frequency, or proof of a unique adsorption site. Those require pathway, entropy, pressure, temperature, and competing-state models.</p>
+
+  <h2>Work function links an electronic chemical potential to vacuum</h2>
+  <p>For a metallic or sufficiently well-defined slab,</p>
+  <div class="math-display">
+    <math display="block" aria-label="work function equals vacuum potential minus Fermi energy">
+      <semantics>
+        <mrow><mi>Φ</mi><mo>=</mo><msub><mi>V</mi><mi>vac</mi></msub><mo>−</mo><msub><mi>E</mi><mi>F</mi></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Phi=V_&#123;\mathrm&#123;vac&#125;&#125;-E_&#123;\mathrm&#123;F&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The vacuum potential must reach a flat, converged reference region. Asymmetric slabs, surface dipoles, electric fields, charged cells, finite vacuum, and image interactions can prevent a unique plateau.</p>
+  <p>For insulators and semiconductors, the relevant electron chemical potential also depends on doping, defects, band bending, and surface states. A single neutral slab calculation does not determine every experimental work-function condition.</p>
+
+  <h2>Reconstruction and surface states arise from broken bulk coordination</h2>
+  <p>Surface atoms may relax, reconstruct, change oxidation state, magnetize, or form new bonds. Dangling-bond and resonance states can appear in projected spectra, while bulk-like states evolve with slab thickness.</p>
+  <p>A surface band on a selected high-symmetry path is not proof of a localized surface state. Localization, layer projection, full two-dimensional Brillouin-zone behavior, slab-thickness convergence, and separation from the opposite face must be checked.</p>
+
+  <h2>Interfaces require a common structural and electrostatic reference</h2>
+  <p>At an interface, strain, registry, stoichiometry, intermixing, defects, orientation, and termination can change bonding and band edges. Band alignment may be estimated through electrostatic-potential lineups, core levels, vacuum references, or explicit heterostructures; these schemes have different assumptions.</p>
+  <p>Charge-density differences visualize redistribution relative to chosen fragments. Their sign and magnitude depend on geometry and reference densities. A density-difference plot alone does not define a unique transferred charge or establish a causal bonding mechanism.</p>
+
+  <h2>Interface dipoles and screening are dimensional</h2>
+  <p>Charge rearrangement creates potential steps, modifies work functions, and can shift band alignment. Screening normal to a two-dimensional layer differs from bulk three-dimensional screening, and periodic-image interactions can distort long-range fields.</p>
+  <p>Heterostructure calculations must distinguish genuine interface states from folded bulk bands, finite-size hybridization, artificial electric fields, and k-point path omissions.</p>
+
+  <h2>Convergence follows the target observable</h2>
+  <ul>
+    <li><strong>Surface energy:</strong> slab thickness, surface area, k mesh, bulk reference, relaxation depth, and termination.</li>
+    <li><strong>Adsorption:</strong> coverage, site, cell size, adsorbate reference, spin, geometry, dispersion model, and competing products.</li>
+    <li><strong>Work function:</strong> vacuum plateau, slab dipole, electrostatic reference, Fermi level, and surface state.</li>
+    <li><strong>Band alignment:</strong> lineup method, strain, interface structure, quasiparticle corrections, and electrostatic convergence.</li>
+  </ul>
+  <p>Convergence of total energy per atom is not sufficient evidence for any of these observables.</p>
+
+  <h2>Connections through the Atlas</h2>
+  <p><a href={href('/theory/crystallography/')}>Crystallography</a> defines orientations and surface cells; <a href={href('/theory/electromagnetism/')}>Electromagnetism</a> supplies potential references and dielectric boundaries; <a href={href('/theory/thermodynamics/')}>Thermodynamics</a> supplies chemical potentials and surface stability; <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> treats screening and optical response.</p>
+
+  <h2>Study and implementation routes</h2>
+  <p><a href="https://www.cambridge.org/core/books/modern-techniques-of-surface-science/46441C87E3A42E5E03C42BCDDFD760AF">D. Phil Woodruff, <cite>Modern Techniques of Surface Science</cite>, 3rd ed.</a> is the reviewed reference for surface composition, structure, microscopy, electronic structure, and adsorbed molecules. It is paid or institutionally accessed and emphasizes characterization techniques rather than a complete first-principles workflow.</p>
+  <p><a href="https://wiki.fysik.dtu.dk/ase/ase/build/surface.html">ASE surface-building documentation</a> provides an implementation bridge for constructing common surfaces, adding vacuum, and placing adsorbates. It documents geometry construction only; it does not validate slab thickness, adsorption sites, energy references, or scientific convergence.</p>
+
+  <h2>Boundary of this page</h2>
+  <p>This page does not prescribe universal slab dimensions, vacuum, dipole corrections, adsorption references, surface terminations, or band-alignment methods. The systematic review did not identify one open, complete, stable, theory-oriented course covering the full page, so the current resource set remains explicitly limited.</p>
+
+  <aside class="review-note">
+    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official Cambridge Woodruff and ASE documentation destinations were reviewed on 3 August 2026.</p>
+  </aside>
+</BaseLayout>
