@@ -92,6 +92,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Study route</h2>
   <p><a href="https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/">MIT OpenCourseWare 18.102, <cite>Introduction to Functional Analysis</cite></a> covers normed spaces, completeness, duality, Hilbert spaces, self-adjoint operators, compactness, and spectral theory. It assumes prior real analysis and linear algebra and is broader than the minimum needed for ordinary DFT use.</p>
+  <p><a href="https://www.nptel.ac.in/courses/111106147">NPTEL / Institute of Mathematical Sciences, <cite>Functional Analysis</cite>, taught by Prof. S. Kesavan</a> provides a full master's-level continuation through normed and Banach spaces, weak and weak-star topologies, Hilbert spaces, unbounded operators, compact operators, Riesz–Fredholm theory, and compact self-adjoint spectra. It is especially useful for readers approaching modern PDE and variational arguments after a first analysis course. It assumes real analysis, topology, and linear algebra, with measure theory desirable; it does not prove density-functional existence results or validate a finite electronic-structure discretization.</p>
   <p><a href="https://www.cambridge.org/core/books/electronic-structure/functional-equations/0E8C4193AC900DD417E2F003DE9FEA0C">Martin, <cite>Electronic Structure</cite>, Appendix A: Functional Equations</a> supplies an electronic-structure bridge for functional derivatives and constrained variation. Publisher access may be required.</p>
   <p><a href="https://github.com/JSchoeberl/iFEM">Joachim Schöberl and colleagues at TU Wien, <cite>iFEM</cite></a> is an openly maintained Jupyter-book course that connects Sobolev spaces, weak formulations, variational statements, finite elements, iterative solvers, and multigrid. Its notebooks can be read online and can also be run through Binder or JupyterLite, making it a useful transition from abstract spaces to a concrete real-space discretization. It assumes calculus, linear algebra, and some programming, and it is not an electronic-structure course: Hamiltonian modelling, SCF, and observable-specific convergence remain separate questions.</p>
 
@@ -99,6 +100,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page does not prove all existence theorems behind quantum mechanics or DFT, and it does not imply that a variational energy bound validates every observable. Operator domains, admissible spaces, constraints, discretization, and convergence remain part of the claim.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope follows the Theory systematic-review report. Official MIT and Cambridge destinations were rechecked on 3 August 2026.</p>
+    <p><strong>Review note.</strong> Scope and resource roles were reviewed through 4 August 2026 against the Theory systematic-review report. Official MIT, NPTEL/IMSc, Cambridge, and iFEM destinations were checked; none is treated as a proof of a material-specific DFT or discretization claim.</p>
   </aside>
 </BaseLayout>
