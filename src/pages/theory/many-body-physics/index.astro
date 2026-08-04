@@ -19,8 +19,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <div class="math-display">
     <math display="block" aria-label="fermionic anticommutation relations">
       <semantics>
-        <mrow><mo>{</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>}</mo><mo>=</mo><msub><mi>δ</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>,</mo><mspace width="0.5em"/><mo>{</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>}</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\{\hat c_p,\hat c_q^\dagger\}=\delta_{pq},\quad\{\hat c_p,\hat c_q\}=0.</annotation>
+        <mrow><mo>&#123;</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>&#125;</mo><mo>=</mo><msub><mi>δ</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>,</mo><mspace width="0.5em"/><mo>&#123;</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>&#125;</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\&#123;\hat c_p,\hat c_q^\dagger\&#125;=\delta_&#123;pq&#125;,\quad\&#123;\hat c_p,\hat c_q\&#125;=0.</annotation>
       </semantics>
     </math>
   </div>
@@ -32,11 +32,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="second quantized interacting Hamiltonian">
       <semantics>
         <mrow><mover><mi>H</mi><mo>^</mo></mover><mo>=</mo><munderover><mo>∑</mo><mrow><mi>p</mi><mi>q</mi></mrow><mo></mo></munderover><msub><mi>h</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi><mo>†</mo></msubsup><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munderover><mo>∑</mo><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow><mo></mo></munderover><msub><mi>v</mi><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow></msub><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi><mo>†</mo></msubsup><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><msub><mover><mi>c</mi><mo>^</mo></mover><mi>s</mi></msub><msub><mover><mi>c</mi><mo>^</mo></mover><mi>r</mi></msub><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\hat H=\sum_{pq}h_{pq}\hat c_p^\dagger\hat c_q+\tfrac12\sum_{pqrs}v_{pqrs}\hat c_p^\dagger\hat c_q^\dagger\hat c_s\hat c_r.</annotation>
+        <annotation encoding="application/x-tex">\hat H=\sum_&#123;pq&#125;h_&#123;pq&#125;\hat c_p^\dagger\hat c_q+\tfrac12\sum_&#123;pqrs&#125;v_&#123;pqrs&#125;\hat c_p^\dagger\hat c_q^\dagger\hat c_s\hat c_r.</annotation>
       </semantics>
     </math>
   </div>
-  <p>Here the displayed factor <math class="math-inline" aria-label="one half"><semantics><mfrac><mn>1</mn><mn>2</mn></mfrac><annotation encoding="application/x-tex">\tfrac12</annotation></semantics></math> assumes unsymmetrized two-body matrix elements <math class="math-inline" aria-label="v p q r s"><semantics><msub><mi>v</mi><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow></msub><annotation encoding="application/x-tex">v_{pqrs}</annotation></semantics></math>. If antisymmetrized integrals are used with the same operator ordering, the conventional prefactor is <math class="math-inline" aria-label="one quarter"><semantics><mfrac><mn>1</mn><mn>4</mn></mfrac><annotation encoding="application/x-tex">\tfrac14</annotation></semantics></math>. Mixing the integral and prefactor conventions changes the Hamiltonian.</p>
+  <p>Here the displayed factor <math class="math-inline" aria-label="one half"><semantics><mfrac><mn>1</mn><mn>2</mn></mfrac><annotation encoding="application/x-tex">\tfrac12</annotation></semantics></math> assumes unsymmetrized two-body matrix elements <math class="math-inline" aria-label="v p q r s"><semantics><msub><mi>v</mi><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow></msub><annotation encoding="application/x-tex">v_&#123;pqrs&#125;</annotation></semantics></math>. If antisymmetrized integrals are used with the same operator ordering, the conventional prefactor is <math class="math-inline" aria-label="one quarter"><semantics><mfrac><mn>1</mn><mn>4</mn></mfrac><annotation encoding="application/x-tex">\tfrac14</annotation></semantics></math>. Mixing the integral and prefactor conventions changes the Hamiltonian.</p>
   <p>The algebra is independent of whether the basis consists of orbitals, Bloch states, Wannier functions, spinors, or another representation. Numerical cost and interpretation still depend strongly on that choice.</p>
 
   <h2>Green functions connect propagation to addition and removal spectra</h2>
@@ -45,7 +45,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="time ordered one particle Green function">
       <semantics>
         <mrow><msub><mi>G</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>−</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><mo>−</mo><mi>i</mi><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mi>T</mi><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>(</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">G_{pq}(t-t')=-i\langle\Psi|T\hat c_p(t)\hat c_q^\dagger(t')|\Psi\rangle.</annotation>
+        <annotation encoding="application/x-tex">G_&#123;pq&#125;(t-t')=-i\langle\Psi|T\hat c_p(t)\hat c_q^\dagger(t')|\Psi\rangle.</annotation>
       </semantics>
     </math>
   </div>
@@ -59,7 +59,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="Green function near quasiparticle pole">
       <semantics>
         <mrow><mi>G</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>≈</mo><mfrac><mi>Z</mi><mrow><mi>ω</mi><mo>−</mo><msub><mi>ε</mi><mi>QP</mi></msub><mo>+</mo><mi>i</mi><mi>Γ</mi></mrow></mfrac><mo>+</mo><msub><mi>G</mi><mi>incoh</mi></msub><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">G(\omega)\approx\frac{Z}{\omega-\varepsilon_{\mathrm{QP}}+i\Gamma}+G_{\mathrm{incoh}}.</annotation>
+        <annotation encoding="application/x-tex">G(\omega)\approx\frac&#123;Z&#125;&#123;\omega-\varepsilon_&#123;\mathrm&#123;QP&#125;&#125;+i\Gamma&#125;+G_&#123;\mathrm&#123;incoh&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
