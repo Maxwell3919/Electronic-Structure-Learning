@@ -98,6 +98,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Study routes and implementation bridges</h2>
   <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/pseudopotentials/54AAC259A40AFDE3791101FE0DBF83B3">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> provides the theory spine for pseudization, scattering, nonlocality, ultrasoft methods, and PAW. Full text may require institutional access.</p>
+  <p><a href="https://www.bilibili.com/video/BV18k4y1Y7jv/"><cite lang="zh-CN">密度泛函理论 DFT 初级入门：赝势、电子—原子核作用势</cite> by 于博微课</a> is a creator-uploaded Chinese conceptual route through why pseudopotentials are introduced, true and pseudo atoms and wavefunctions, comparison with all-electron methods, norm-conserving and ultrasoft constructions, PAW, and the relation among the dataset, cutoff energy, and k sampling. It is useful before the formal and implementation sources below, but it is not a dataset-generation or validation course: phase shifts, logarithmic derivatives, ghost states, semicore choices, relativistic lineage, and observable-specific transferability still require independent evidence.</p>
   <p><a href="https://pseudopotentials.quantum-espresso.org/">Quantum ESPRESSO pseudopotential portal</a> links supported formats and curated sources to plane-wave practice. It does not remove the need to test the actual system and observable.</p>
   <p><a href="https://sssp.materialscloud.org/">SSSP</a> supplies precision- and efficiency-oriented pseudopotential tables built from a defined verification protocol. A table entry is evidence about covered tests, not a universal ranking.</p>
   <p><a href="https://gpaw.readthedocs.io/algorithms.html">GPAW algorithm documentation</a> provides an implementation bridge for PAW transformation and multiple smooth representations.</p>
@@ -107,6 +108,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page explains the approximation and its evidence requirements. It does not recommend one universal library, valence partition, dataset, cutoff, or PAW setup for all materials.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official Martin, Quantum ESPRESSO, SSSP, and GPAW destinations were reviewed on 3 August 2026. Dataset suitability remains system- and observable-specific.</p>
+    <p><strong>Review note.</strong> Scope and resource roles were reviewed through 4 August 2026. Official Martin, Quantum ESPRESSO, SSSP, GPAW, and ABINIT destinations and the creator-uploaded Chinese orientation route were checked; dataset suitability remains system-, version-, and observable-specific.</p>
   </aside>
 </BaseLayout>
