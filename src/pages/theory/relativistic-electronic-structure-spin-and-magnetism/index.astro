@@ -98,14 +98,15 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p><a href="https://gpaw.readthedocs.io/documentation/soc/soc.html">GPAW spin–orbit and noncollinear documentation</a> provides a current implementation bridge for spinors, constrained directions, and PAW-based SOC. It is not a complete relativity or magnetism course.</p>
   <p><a href="https://octopus-code.org/documentation/main/variables/hamiltonian/relativisticcorrection/">Octopus relativistic-correction reference</a> documents implementation choices. It should not be used alone to establish conceptual prerequisites or method suitability.</p>
   <p><a href="https://note-collection.issp.u-tokyo.ac.jp/katsumoto/magnetism2022/note01-14_en.pdf">Shingo Katsumoto’s University of Tokyo <cite>Lecture note on Magnetism</cite></a> starts with magnetic response, spin magnetic moments, spin–orbit interaction, and localized-electron magnetism before moving to collective models. It gives a readable theory bridge for readers who know quantum mechanics and statistical mechanics; it is a 2022 course note rather than a guide to relativistic electronic-structure implementations or magnetic-ground-state searches.</p>
+  <p><a href="https://www.bilibili.com/video/BV1iRSpBmE27/"><cite lang="zh-CN">中国人民大学物理系 2025 年《量子力学》自旋与自旋轨道耦合单元</cite></a> is part of a faculty-uploaded full Chinese course. Lectures 25–27 connect the electron-spin formalism, spinor rotations, spin–orbit coupling, atomic fine structure, and the anomalous Zeeman effect. This is a useful one-electron bridge before solid-state SOC, but it does not teach relativistic pseudopotential construction, noncollinear magnetic order, magnetic space groups, or ground-state searches among competing spin textures.</p>
 
   <h2>Boundary and review gap</h2>
   <p>This page establishes the minimum conceptual and computational boundaries needed to read relativistic and magnetic calculations. It does not provide a complete derivation of the Dirac equation, a comprehensive theory of magnetism, a magnetic-space-group course, or a universal protocol for selecting magnetic ground states.</p>
   <aside class="callout">
-    <p><strong>Resource-review boundary.</strong> The routes deliberately separate the Dirac/SOC and magnetism concepts, an implementation bridge, and a maintained course note. None removes the need to compare magnetic states, use compatible relativistic datasets, and converge the observable actually being claimed.</p>
+    <p><strong>Resource-review boundary.</strong> The routes deliberately separate the Dirac/SOC and magnetism concepts, an implementation bridge, and maintained course material. None removes the need to compare magnetic states, use compatible relativistic datasets, and converge the observable actually being claimed.</p>
   </aside>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Page scope and official Martin, GPAW, Octopus, and University of Tokyo destinations were reviewed on 4 August 2026. A dedicated Chinese-language electronic-structure SOC course remains a useful future gap.</p>
+    <p><strong>Review note.</strong> Page scope and official Martin, GPAW, Octopus, University of Tokyo, and China Renmin University destinations were reviewed through 4 August 2026. The Chinese course closes the one-electron spin/SOC language gap; a dedicated Chinese route for relativistic solid-state implementations and magnetic-space-group reasoning remains unresolved.</p>
   </aside>
 </BaseLayout>
