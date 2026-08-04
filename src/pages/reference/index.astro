@@ -2,8 +2,41 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Reference" description="Reviewed resources for electronic-structure study and practice." current="reference">
+<BaseLayout title="Reference" description="Reviewed collections, official tutorials, benchmarks, and data stewardship resources." current="reference">
   <h1>Reference</h1>
-  <p class="lede">Resources will be included only after their source, licensing boundary, scope, intended stage, and specific reason for recommendation have been checked.</p>
-  <p>No resource list is published in this clean baseline. Familiar titles are not evidence of review.</p>
+  <p class="lede">A small index of durable collections for finding a coherent next route. These links identify a collection and its boundary; they are not an unannotated bibliography or a substitute for page-local study guidance.</p>
+
+  <h2>Open learning collections</h2>
+  <dl>
+    <dt><a href="https://www.materialscloud.org/learn">Materials Cloud Learn</a></dt>
+    <dd>Recorded computational-materials schools and educational material, including AiiDA, Quantum ESPRESSO, and Wannier90 routes. Individual schools, software environments, and exercises are date- and version-bound.</dd>
+    <dt><a href="https://education.molssi.org/">MolSSI Education</a></dt>
+    <dd>Open tutorials in programming, software-development practice, and molecular modelling for novice through intermediate learners. Its molecular-science examples do not replace a periodic electronic-structure validation protocol.</dd>
+  </dl>
+
+  <h2>Official code tutorial portals</h2>
+  <dl>
+    <dt><a href="https://www.quantum-espresso.org/learn/">Quantum ESPRESSO Learn</a></dt>
+    <dd>Foundation-maintained workshop lectures and tutorials for electronic-structure methods and Quantum ESPRESSO. School material is tied to its release, input conventions, and stated physical model; a completed exercise is not observable convergence.</dd>
+    <dt><a href="https://docs.abinit.org/tutorial/">ABINIT tutorials</a></dt>
+    <dd>Structured official tutorial sequence from basic calculations through DFPT, electron–phonon, many-body, and parallel topics. The documented prerequisite graph and code version matter; examples do not provide universal parameter defaults.</dd>
+  </dl>
+
+  <h2>Benchmarks and verification collections</h2>
+  <dl>
+    <dt><a href="https://sssp.materialscloud.org/">SSSP</a></dt>
+    <dd>Materials Cloud collection for pseudopotential precision and efficiency verification. It supports comparisons within its covered tests; library selection never replaces system- and observable-specific validation.</dd>
+    <dt><a href="https://www.pseudo-dojo.org/">PseudoDojo</a></dt>
+    <dd>Pseudopotential generation and grading project with documented datasets and quality controls. Transferability, chosen functional, relativistic treatment, and the target observable remain separate scientific decisions.</dd>
+  </dl>
+
+  <h2>FAIR data, provenance, and preservation</h2>
+  <dl>
+    <dt><a href="https://www.go-fair.org/fair-principles/">FAIR Principles</a></dt>
+    <dd>Guidance for making digital assets findable, accessible, interoperable, and reusable, including identifiers, metadata, licences, provenance, and community standards. FAIR metadata does not itself establish data correctness or scientific acceptance.</dd>
+    <dt><a href="https://archive.materialscloud.org/">Materials Cloud Archive</a></dt>
+    <dd>Materials-data record collection connected to computational tools and services. A record’s DOI or availability must still be checked for completeness, method, version, licence, and suitability for the intended claim.</dd>
+  </dl>
+
+  <p class="review-note">Reviewed first public set: 2026-08-04. Access, maintenance, and scope were checked at the linked primary destinations. Additional candidates remain in the repository’s dated external-resource audit until their distinct role and current destination are rechecked.</p>
 </BaseLayout>
