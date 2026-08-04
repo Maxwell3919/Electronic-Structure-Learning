@@ -32,7 +32,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="Hamiltonian operator acting on psi n equals E n psi n">
       <semantics>
         <mrow><mover><mi>H</mi><mo>^</mo></mover><msub><mi>ψ</mi><mi>n</mi></msub><mo>=</mo><msub><mi>E</mi><mi>n</mi></msub><msub><mi>ψ</mi><mi>n</mi></msub><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\hat&#123;H&#125;\psi_n=E_n\psi_n.</annotation>
+        <annotation encoding="application/x-tex">\hat{H}\psi_n=E_n\psi_n.</annotation>
       </semantics>
     </math>
   </div>
@@ -44,7 +44,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="laplacian of Hartree potential equals minus four pi times density">
       <semantics>
         <mrow><msup><mo>∇</mo><mn>2</mn></msup><msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mo>−</mo><mn>4</mn><mi>π</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">\nabla^2 v_&#123;\mathrm&#123;H&#125;&#125;(\mathbf&#123;r&#125;)=-4\pi n(\mathbf&#123;r&#125;).</annotation>
+        <annotation encoding="application/x-tex">\nabla^2 v_{\mathrm{H}}(\mathbf{r})=-4\pi n(\mathbf{r}).</annotation>
       </semantics>
     </math>
   </div>
@@ -60,7 +60,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="minus derivative of p derivative y plus q y equals lambda w y">
       <semantics>
         <mrow><mo>−</mo><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><mi>p</mi><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>)</mo><mo>+</mo><mi>q</mi><mi>y</mi><mo>=</mo><mi>λ</mi><mi>w</mi><mi>y</mi><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">-\frac&#123;d&#125;&#123;dx&#125;\left(p\frac&#123;dy&#125;&#123;dx&#125;\right)+qy=\lambda wy.</annotation>
+        <annotation encoding="application/x-tex">-\frac{d}{dx}\left(p\frac{dy}{dx}\right)+qy=\lambda wy.</annotation>
       </semantics>
     </math>
   </div>
@@ -72,7 +72,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <math display="block" aria-label="L acting on G of r r prime equals delta of r minus r prime">
       <semantics>
         <mrow><mi>L</mi><mi>G</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><mi>δ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">L G(\mathbf&#123;r&#125;,\mathbf&#123;r&#125;')=\delta(\mathbf&#123;r&#125;-\mathbf&#123;r&#125;').</annotation>
+        <annotation encoding="application/x-tex">L G(\mathbf{r},\mathbf{r}')=\delta(\mathbf{r}-\mathbf{r}').</annotation>
       </semantics>
     </math>
   </div>
@@ -93,6 +93,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Study routes</h2>
   <p><a href="https://www.mat.univie.ac.at/~gerald/ftp/book-ode/ode.pdf">Gerald Teschl, <cite>Ordinary Differential Equations and Dynamical Systems</cite></a> is a rigorous route through existence, uniqueness, linear systems, Sturm–Liouville problems, and dynamical systems. The author-hosted text is open; its main emphasis is ODEs rather than a complete PDE curriculum.</p>
   <p><a href="https://www.cambridge.org/highereducation/books/mathematical-methods-for-physics-and-engineering/FC466374D5B94E86D969100070CA6483">Riley, Hobson, and Bence, <cite>Mathematical Methods for Physics and Engineering</cite>, 3rd ed.</a> is a broad physics-oriented reference for differential equations, separation, special functions, and Green functions. It is paid or institutionally accessed and should not be treated as a rigorous PDE existence text.</p>
+  <p><a href="https://ocw.mit.edu/courses/18-303-linear-partial-differential-equations-fall-2006/">MIT OpenCourseWare 18.303, <cite>Linear Partial Differential Equations</cite></a> is the complete open undergraduate PDE route missing from the earlier review. It covers diffusion, Laplace and Poisson equations, wave equations, separation of variables, Fourier series and transforms, eigenvalue problems, and Green functions. Its emphasis is classical linear applied PDEs; it does not replace modern weak-solution, nonlinear-PDE, or Sobolev-space theory.</p>
+  <p><a href="https://www.bilibili.com/video/BV1ML41167Wd/"><cite lang="zh-CN">基础偏微分方程（数学物理方程）</cite> by 热爱数学的卢员外</a> is a self-produced Chinese sequence that develops differential operators, Fourier transforms, distributions, convolution, fundamental solutions, Poisson Green functions, boundary-value problems, minimum principles, and the heat equation. It provides a direct Chinese bridge to the Poisson and Green-function language used in electronic structure, but it is not a complete existence-and-regularity course or a numerical solver manual.</p>
   <p><a href="https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/">MIT OpenCourseWare 18.330</a> is the numerical continuation for finite differences, interpolation, quadrature, and error analysis. Numerical methods are downstream of the continuous problem defined here.</p>
   <p><a href="https://www.jirka.org/diffyqs/">Jiří Lebl, <cite>Notes on Diffy Qs: Differential Equations for Engineers</cite></a> is an author-maintained open text and web course for readers with basic calculus. It joins first- and higher-order ODEs, systems, Fourier series and PDEs, eigenvalue problems, Laplace transforms, and nonlinear systems, with optional browser-based demonstrations. It is a strong route for seeing why initial or boundary data are part of the model; it does not replace a full functional-analytic treatment of PDE existence or regularity.</p>
 
@@ -100,6 +102,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This page does not attempt a full modern PDE course, distribution theory, Sobolev theory, or numerical solver manual. It establishes enough structure to distinguish an operator from its domain, an equation from its boundary conditions, and a continuous physical problem from its discretization.</p>
 
   <aside class="review-note">
-    <p><strong>Review note.</strong> Scope and official University of Vienna, Cambridge, and MIT destinations were reviewed on 3 August 2026. The report explicitly identifies the absence of a fully reviewed open PDE course as a remaining resource gap.</p>
+    <p><strong>Review note.</strong> Scope and official University of Vienna, Cambridge, MIT 18.303/18.330, and the self-produced Chinese PDE route were reviewed through 4 August 2026. The earlier absence of a fully reviewed open classical PDE course is now closed; modern weak-solution and nonlinear-PDE coverage remains outside this page.</p>
   </aside>
 </BaseLayout>
