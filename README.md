@@ -2,7 +2,7 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure foundations, guided reading, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It contains the Home page, five subject entrances, thirty-nine individually reviewed Foundations pages, two Guided Reading pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It contains the Home page, five subject entrances, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
@@ -48,7 +48,9 @@ The production site is a static Plain Astro build. It contains the Home page, fi
 - `/theory/many-body-perturbation-theory-and-quasiparticles/`
 - `/theory/berry-phases-and-electronic-topology/`
 - `/reading/`
-- `/reading/martin/`
+- `/reading/books/`
+- `/reading/books/martin/`
+- `/reading/martin/` — compatibility redirect to the canonical Martin route
 - `/methods/`
 - `/computational-tools/`
 - `/reference/`
@@ -58,9 +60,21 @@ The production site is a static Plain Astro build. It contains the Home page, fi
 
 Foundations is the knowledge, prerequisite, relationship, and reviewed-resource map. The first implementation phase changes the public label and landing-page role without breaking the established `/theory/` routes.
 
-Guided Reading supplies continuous source-aligned narratives. Its first route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, as twenty-eight chapters and eighteen appendices. The route overview exposes this forty-six-unit source spine without publishing empty chapter pages. Chapters 1, 7, and 11 are the first planned full reading units.
+Guided Reading supplies continuous source-aligned narratives and is organized by source type. Books live under `/reading/books/`; lecture routes will be added only when a complete reviewed guide exists.
+
+The first book route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, as twenty-eight chapters and eighteen appendices. The route overview exposes this forty-six-unit source spine without publishing empty chapter pages. Content begins with Chapter 1 and proceeds through the book in order; appendices are added when the main sequence first needs them.
 
 The guide uses original prose and original or openly licensed diagrams. Textbook PDFs, complete extracted textbook text, copied figures, and page scans are not stored or published.
+
+## Internal writing guidance
+
+Book-guide writing guidance for maintainers and automated agents is stored at:
+
+```text
+.github/agent-guides/book-guided-reading-style.md
+```
+
+It is not rendered or linked from the public website. The repository is public, so the file remains visible to anyone browsing GitHub.
 
 ## Local verification
 
@@ -71,11 +85,11 @@ npm ci --no-audit --no-fund
 npm run check
 ```
 
-The deployed browser smoke is intentionally separate because it verifies the GitHub Pages base path, final deployment SHA, keyboard access, native MathML, narrow screens, and operation with JavaScript disabled.
+The deployed browser smoke is intentionally separate because it verifies the GitHub Pages base path, final deployment SHA, keyboard access, native MathML, narrow screens, configured redirects, and operation with JavaScript disabled.
 
 ## Legacy site
 
-The retired source-aligned course site, its practice cross-reference, interactive components, and validation system remain available only through the annotated tag `legacy/atlas-v3-martin-site-20260802`. See [`docs/legacy-site.md`](docs/legacy-site.md). The current Guided Reading framework is a clean static implementation and does not restore that legacy course system. Old public URLs are not compatibility targets.
+The retired source-aligned course site, its practice cross-reference, interactive components, and validation system remain available only through the annotated tag `legacy/atlas-v3-martin-site-20260802`. See [`docs/legacy-site.md`](docs/legacy-site.md). The current Guided Reading framework is a clean static implementation and does not restore that legacy course system. Old public URLs are not compatibility targets unless an explicit redirect is configured.
 
 ## Boundaries
 
