@@ -1,6 +1,8 @@
 # Electronic Structure Atlas architecture
 
-Electronic Structure Atlas is a small, static, content-first website. Its public information architecture has six entries:
+Electronic Structure Atlas is a small, static, content-first website for understanding electronic structure and entering practical research. It separates the knowledge a reader may need, continuous reading routes through important sources, conceptual method families, software context, and reviewed references.
+
+The public information architecture is:
 
 ```text
 Home
@@ -15,265 +17,232 @@ The implementation uses Plain Astro pages, one shared layout, and one global sty
 
 ## Foundations
 
-Foundations is the public name of the knowledge, prerequisite, relationship, and reviewed-resource map currently served from `/theory/`. The route is retained during the first migration phase so the thirty-nine reviewed pages and existing links are not broken. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
+Foundations is the public name of the knowledge, prerequisite, relationship, and reviewed-resource map currently served from `/theory/`. The route remains unchanged during the first migration phase so the thirty-nine reviewed pages and existing links are not broken.
 
-The reviewed content has developed in twelve batches:
+Foundations answers four questions:
 
-1. Linear Algebra, Calculus and Analysis, Numerical Analysis.
-2. Quantum Mechanics, Solid-State Physics, Quantum Chemistry.
-3. The Many-Electron Problem, Hartree and Hartree–Fock Theory, Density Functional Theory: Foundations.
-4. Kohn–Sham Density Functional Theory, Exchange–Correlation Functionals and Approximations, Self-Consistent Field Methods, Discretization and Basis Representations.
-5. Differential Equations, Fourier Analysis, Crystallography, Group Theory and Symmetry.
-6. Plane-Wave and Real-Space Methods, Pseudopotentials/PAW/Core–Valence Treatments, Brillouin-Zone Sampling, Relativistic Electronic Structure/Spin/Magnetism.
-7. Atomic and Molecular Physics, Physical Chemistry, Chemical Bonding and Molecular Structure, Localized-Orbital Methods.
-8. Electromagnetism, Statistical Mechanics, Solid-State Chemistry.
-9. Functional Analysis and Variational Methods, Many-Body Physics, Linear Response and Excited States, Many-Body Perturbation Theory and Quasiparticles.
-10. Probability and Statistics, Classical Mechanics, Thermodynamics.
-11. General Chemistry, Inorganic Chemistry, Surface and Interface Chemistry.
-12. Berry Phases and Electronic Topology.
+```text
+What knowledge may be needed?
+How are the subjects connected?
+Which gap is blocking the reader now?
+Where can that gap be repaired?
+```
 
-The Tier-1 responsibility chain remains explicit:
+It is not one mandatory curriculum. Broad prerequisite domains and focused electronic-structure topics intentionally have different levels of granularity. Readers should begin research before completing every page and return to Foundations when a specific concept becomes a real obstacle.
+
+The central electronic-structure chain remains explicit:
 
 ```text
 interacting many-electron problem
 → density-functional foundations
 → auxiliary Kohn–Sham system
 → exchange–correlation approximation
-→ nonlinear SCF solution
+→ nonlinear self-consistent solution
 → finite numerical representation
 ```
 
-Tier 2 and Tier 3 are branching maps rather than fixed linear sequences.
+Other routes branch through periodic systems, localized orbitals, chemistry, finite temperature, response, many-body theory, Berry phases, and topology. Foundations keeps those relationships visible without forcing them into a single textbook order.
 
-### Periodic plane-wave and real-space route
-
-```text
-Fourier analysis
-├── plane-wave basis and FFT grids
-└── Brillouin-zone integration
-
-Crystallography and group theory
-├── reciprocal cells and k-vector conventions
-├── symmetry reduction
-└── magnetic and double-group extensions
-
-Discretization
-├── plane-wave spectral spaces
-├── real-space finite differences / finite elements / multiresolution
-└── observable-specific representation convergence
-
-Core treatment
-├── frozen-core pseudopotentials
-├── ultrasoft augmentation
-└── PAW transformation and reconstruction
-
-Relativity and magnetism
-├── scalar-relativistic Hamiltonians
-├── collinear and noncollinear spin
-├── spin–orbit coupling
-└── magnetic symmetry and anisotropy
-```
-
-### Molecular and localized-orbital route
-
-```text
-Quantum mechanics and group theory
-├── atomic terms, angular momenta, fields, and spectra
-└── molecular rotation, vibration, transitions, and selection rules
-
-Physical chemistry
-├── thermodynamic potentials and chemical potentials
-├── barriers, rates, and kinetic models
-└── spectroscopy and finite-temperature interpretation
-
-Quantum chemistry and chemical bonding
-├── molecular Hamiltonians and approximate electronic states
-├── orbital, density, symmetry, and energy interpretations
-└── method-dependent charges, bond orders, and decompositions
-
-Localized-orbital methods
-├── Gaussian, Slater, and numerical atom-centred functions
-├── nonorthogonal generalized eigenproblems
-├── periodic Bloch sums and tight-binding models
-└── basis, grid, Pulay, and BSSE convergence
-```
-
-### Fields, finite temperature, and composition route
-
-```text
-Electromagnetism
-├── Coulomb fields and Poisson equations
-├── electrostatic boundaries and references
-├── multipoles and polarization
-└── dielectric and optical-response foundations
-
-Statistical mechanics
-├── ensembles and partition functions
-├── Fermi occupations and electronic entropy
-├── phonon and finite-temperature free energies
-└── fluctuations and response
-
-Solid-state chemistry
-├── composition and structure types
-├── defects, nonstoichiometry, and doping
-├── chemical potentials and competing phases
-└── synthesis-aware structure–property interpretation
-```
-
-### Advanced variational and excitation route
-
-```text
-Functional analysis and variational methods
-├── Hilbert spaces and operator domains
-├── Rayleigh–Ritz and constrained stationarity
-├── functional derivatives and weak formulations
-└── continuum-to-discrete convergence boundaries
-
-Many-body physics
-├── second quantization and Fock space
-├── Green functions and spectral functions
-├── quasiparticles and collective modes
-└── broken symmetry and correlation frameworks
-
-Linear response and excited states
-├── finite differences and DFPT
-├── Kubo and density response
-├── TDDFT: real time, Casida, and Sternheimer
-└── neutral excitations and spectra
-
-Many-body perturbation theory
-├── Dyson equation and self-energy
-├── screened interaction and GW variants
-├── quasiparticle addition/removal energies
-└── BSE electron–hole excitations
-```
-
-### Uncertainty, nuclear motion, and macroscopic equilibrium route
-
-```text
-Probability and statistics
-├── random variables and estimators
-├── correlated sampling and effective sample size
-├── inference, resampling, and benchmark metrics
-└── sampling uncertainty versus numerical and model error
-
-Classical mechanics
-├── generalized coordinates and constraints
-├── Lagrangian and Hamiltonian dynamics
-├── Born–Oppenheimer forces and trajectories
-└── harmonic normal modes and integration error
-
-Thermodynamics
-├── state variables and laws
-├── Helmholtz, Gibbs, and grand potentials
-├── chemical potentials and phase coexistence
-└── zero-temperature energies versus finite-temperature stability
-```
-
-### Chemical composition, coordination, and surfaces route
-
-```text
-General chemistry
-├── composition, charge, and electron counting
-├── periodic trends and bonding models
-├── acid–base and redox language
-└── equilibrium versus kinetics vocabulary
-
-Inorganic chemistry
-├── formal oxidation states and d/f counts
-├── coordination and ligand/crystal fields
-├── spin states, magnetism, and distortions
-└── spectroscopy and transition-metal interpretation
-
-Surface and interface chemistry
-├── termination, stoichiometry, and slab references
-├── surface and adsorption energies
-├── work functions, reconstruction, and surface states
-└── band alignment, interface dipoles, and screening
-```
-
-### Gauge geometry, Wannier, and topology route
-
-```text
-Bloch-state geometry
-├── phase and composite-band gauge freedom
-├── Berry connection, phase, and curvature
-├── occupied projectors and non-Abelian transport
-└── closed-loop and Brillouin-zone invariants
-
-Polarization and localization
-├── polarization branches and polarization quanta
-├── Wannier functions and hybrid Wannier centres
-├── overlap matrices and Wilson loops
-└── localization obstructions
-
-Electronic topology
-├── Chern numbers and two-band maps
-├── spin–orbit and symmetry constraints
-├── symmetry indicators and their incomplete coverage
-└── bulk–boundary correspondence with boundary convergence
-```
-
-The following responsibilities remain separate:
-
-- A reciprocal-lattice vector in a plane-wave expansion is not a sampled Bloch k point.
-- An FFT or real-space grid is not automatically the orbital basis.
-- A pseudopotential-library verification result is not a validation of every target compound or observable.
-- An SCF integration mesh, a denser NSCF/DOS mesh, and an illustrative band path are different objects.
-- Scalar relativity, spin polarization, noncollinearity, and SOC are not interchangeable accuracy levels.
-- One converged magnetic branch is not proof of the global magnetic ground state.
-- Atomic and molecular spectra require transition operators and state models; they are not recovered from arbitrary ground-state Kohn–Sham eigenvalue differences.
-- Electronic total energies, thermodynamic free energies, reaction barriers, rates, and spectra belong to different model layers.
-- Orbital pictures, charge partitions, density topology, bond orders, and energy decompositions are distinct interpretation frameworks.
-- Empirical tight binding and full self-consistent localized-basis electronic structure may share matrix algebra but do not support the same claims.
-- Basis labels and radial cutoffs from different codes are not directly interchangeable; convergence remains system- and observable-specific.
-- Electrostatic boundary conditions, Coulomb kernels, potential references, and charged-cell conventions are part of the model.
-- Physical electronic temperature, numerical smearing, vibrational free energy, and trajectory sampling are distinct approximations.
-- Formal oxidation states, partitioned charges, defect charge states, carrier concentrations, and nominal dopant counts are distinct quantities.
-- Zero-temperature energy or convex-hull results do not by themselves establish finite-temperature phase stability or synthesis accessibility.
-- A continuum variational energy bound does not establish convergence of every density, force, response, or excitation observable.
-- The Many-Electron Problem defines the interacting problem; Many-Body Physics supplies a formal language for it.
-- DFPT, TDDFT, GW, and BSE have distinct perturbations, particle-number sectors, kernels, and convergence controls.
-- Kohn–Sham gaps, charged quasiparticle gaps, neutral optical excitations, and exciton binding energies are not interchangeable.
-- GW starting points and self-consistency variants do not form a universal accuracy ladder.
-- Sampling uncertainty, deterministic numerical error, model discrepancy, and experimental uncertainty are distinct evidence categories.
-- The number of stored trajectory frames is not automatically the number of independent samples.
-- Electronic-force convergence, trajectory integration, local harmonic stability, thermodynamic stability, and kinetic accessibility are distinct conclusions.
-- Internal energy, Helmholtz free energy, Gibbs free energy, grand potential, and zero-temperature electronic energy answer different constrained questions.
-- Formal charge, oxidation state, partial charge, density-basin charge, and projected orbital occupation are not interchangeable.
-- Crystal-field diagrams and formal d counts are interpretive models rather than full many-electron solutions.
-- Surface termination, coverage, reconstruction, electrostatic reference, and chemical reservoirs are part of the physical system.
-- Adsorption energy is not an activation barrier, rate, coverage isotherm, or catalytic activity measure.
-- A work function or band alignment requires a converged and comparable potential reference.
-- The Berry connection and individual Bloch phases are gauge-dependent; curvature, projectors, and closed-loop invariants have different transformation properties.
-- At band crossings or inside composite occupied manifolds, arbitrary energy-ordered band labels do not replace an occupied-subspace or non-Abelian treatment.
-- Band inversion, one symmetry indicator, one Wilson loop, or one boundary crossing is not by itself a topology proof.
-- A topology claim must state the invariant, gap and filling, protecting assumptions, spin/SOC/magnetic model, selected subspace, numerical discretization, and boundary controls where applicable.
-
-All reviewed pages share navigation, source discipline, mathematical presentation, and evidence boundaries, but they do not follow a mandatory public section template. Their internal order follows the reasoning structure of each subject.
-
-Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
-
-Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. All listed Foundations responsibilities have reviewed pages. The Learning Map remains a relationship layer that expresses prerequisites, branches, and converging paths; it is not a separate fixed course or interactive runtime in the current build.
-
-The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point. The Inorganic Chemistry and Surface and Interface Chemistry pages retain explicit resource-review gaps because no single complete modern open course was established during the systematic review. The Berry/topology route uses Martin and Vanderbilt for theory and Wannier90 only as an implementation bridge; software documentation is not scientific validation.
+All mathematical expressions use static native MathML with TeX annotations. The pages share source discipline and scientific boundaries, but their internal organization follows the needs of each subject rather than one visible template.
 
 ## Guided Reading
 
-Guided Reading supplies continuous source-aligned narratives when a branching knowledge map is not sufficient. The first route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, through twenty-eight chapters and eighteen appendices. A small manifest records the seven parts and forty-six stable units; the Martin overview is its current public consumer.
+Guided Reading provides continuous explanations organized around a particular book, lecture series, or other coherent source. It is used when a branching knowledge map cannot supply the narrative needed to understand why one idea leads to the next.
 
-The framework does not publish empty chapter pages. Each completed unit must use original prose and explain the motivating problem, source position, decisive formalism, physical meaning, assumptions, research relevance, modern extension, and limits. Stable source-aligned explanation is kept distinct from dated modern-research overlays. Martin pages link to Foundations rather than copying its course inventories or complete concept explanations.
+The root is organized by source type rather than by individual author:
 
-The first full units will be Chapters 1, 7, and 11, chosen to establish standards for historical compression, central DFT formalism, and the theory-to-practice bridge. Textbook PDFs, complete extracted text, copied figures, page scans, progress tracking, and legacy course controls are excluded.
+```text
+Guided Reading
+├── Books
+│   └── Martin · Electronic Structure
+└── Lectures
+    └── added only when a complete reviewed route exists
+```
 
-## Methods and other entrances
+The current canonical routes are:
 
-Methods provides a concise conceptual map of method families and what scientific problems they address. It does not duplicate operation contracts, executable recipes, convergence workflows, provenance, or reproducibility packaging maintained by DFT Research Workflow.
+```text
+/reading/
+/reading/books/
+/reading/books/martin/
+```
 
-Computational Tools keeps commands and file semantics inside their software and program context. Reference accepts resources only after source, license, scope, and recommendation reasons are checked.
+The former `/reading/martin/` route remains only as a compatibility redirect to `/reading/books/martin/`. It is not the canonical location of the Martin guide.
 
-The site defaults to English and system serif fonts. Pages use white space and typographic hierarchy rather than cards, dashboards, reading modes, status badges, or decorative interaction.
+A Lectures landing page is not published until at least one lecture route has enough reviewed content to justify it. Empty categories and empty chapter pages are not exposed merely to display a future plan.
 
-The former source-aligned course, practice cross-reference, learning paths, labs, cases, literature layer, interactive components, and their validation system are not restored. They remain recoverable from Git history and the tag documented in `docs/legacy-site.md`; their former URLs are intentionally unsupported. The current Guided Reading overview and manifest are a new bounded implementation.
+### Books
 
-Future content is added manually, one reviewed responsibility or reading unit at a time. A successful build or browser smoke verifies only the declared structural and runtime behavior, not scientific acceptance or learning effectiveness.
+A book guide preserves the source's chapter order and reasoning structure while making the explanation shorter, clearer, and more useful for present research. It does not reproduce the book, replace prerequisite courses, or turn every chapter into the same visible template.
+
+Each completed chapter follows these principles:
+
+- The page title uses the original chapter title.
+- A one-sentence **Core Idea** states what the chapter is trying to establish.
+- The body follows the source's natural sequence and is divided into as many themes as the argument requires.
+- Each theme retains only the key concepts, necessary contributors, physical meaning, and decisive formulas.
+- Adjacent minor sections may be merged when they form one continuous argument, but the source's causal order is not rearranged.
+- Simple original diagrams are added only when they clarify development, causality, hierarchy, geometry, or the flow from one model to another.
+- Repeated explanations are replaced by links to Foundations or earlier guide pages.
+- Public prose avoids administrative language such as “contract,” “protocol,” “compliance,” “acceptance gate,” or “status” when describing how a reader should learn.
+
+The guide should remain substantially shorter than the source. Its purpose is to help the reader reconstruct and understand the argument, not to preserve every derivation, citation, historical detail, or example.
+
+### Historical material
+
+Historical discussion is retained when it explains a conceptual transition. Secondary biography, priority disputes, institutional history, and long lists of names are compressed.
+
+A useful historical sequence is:
+
+```text
+observation or conceptual difficulty
+→ new physical idea
+→ calculable formulation
+→ influence on present methods
+```
+
+A timeline is appropriate when chronology itself makes the development easier to see. The timeline must still show why each step changed the physics.
+
+### Present research depth
+
+Age alone does not determine how much space a topic receives. More detail is given when a concept:
+
+- is required by later chapters;
+- remains part of current calculations or interpretation;
+- is a direct ancestor of an active method;
+- has a limited domain that researchers often misuse;
+- changes how a problem is formulated, computed, validated, or interpreted.
+
+A method that is mainly historical may still need careful explanation if modern methods inherit its central idea. A modern topic is not expanded merely because it is recent.
+
+### Formulas
+
+A formula is retained when it does at least one of the following:
+
+1. defines an object used repeatedly later;
+2. completes the chapter's decisive conceptual step;
+3. makes an approximation or validity condition explicit;
+4. connects directly to a quantity used in electronic-structure research.
+
+Intermediate algebra, immediately recoverable mathematical steps, several equivalent forms with no added physical meaning, and formulas used only for secondary examples are normally omitted.
+
+The surrounding prose should make clear what the expression means, why it matters physically, and under which assumptions it is valid. These explanations are integrated naturally rather than repeated under fixed labels.
+
+### Source-aligned explanation and later developments
+
+The source's argument is written first. Later developments are then added only when they directly change the reader's understanding of the chapter, its present use, or its limitations.
+
+Modern material may explain:
+
+- how the theory is used today;
+- which extensions became important after the source was written;
+- which interpretation is now known to require more care;
+- what further literature is needed for a specialized research direction.
+
+Source-derived explanation and later additions must remain distinguishable. A modern extension must not be written as though it appeared in the original source.
+
+The aim is not to claim that one guide reaches every frontier. A completed route should allow the reader to locate a modern paper within the field, recognize the assumptions behind its methods, and identify the additional theory needed for that particular research problem.
+
+### Lectures
+
+A lecture guide follows the same source-fidelity and modern-context principles, but its structure is based on the actual lecture sequence rather than being forced into book chapters. A lecture route may combine adjacent sessions when they form one argument and should link to the corresponding Foundations and book-guide pages instead of repeating them.
+
+Lecture routes are added only after the source, access, authorship, sequence, and technical scope have been reviewed.
+
+## Martin · Electronic Structure
+
+Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, is the first book route. It remains one source-aligned reading path, not the taxonomy of the whole Atlas.
+
+The route contains:
+
+```text
+6 main parts
+28 chapters
+18 appendices
+46 stable reading units in total
+```
+
+The site follows Martin from Chapter 1 through Chapter 28 in order. Appendices are added when the main reading sequence first needs them. The reading unit list is stored in a small static manifest and does not contain extracted textbook text.
+
+The chapter sequence is not given uniform depth. Historical transitions are compressed where possible; the many-electron problem, density-functional theory, Kohn–Sham theory, exchange–correlation approximations, numerical representations, response, excited states, Wannier functions, Berry phases, and topology receive the depth required by present research use and common interpretation errors.
+
+Martin pages link back to Foundations for prerequisite repair and forward to Methods or DFT Research Workflow when the discussion reaches method selection or practical execution.
+
+## Internal book-writing guidance
+
+The detailed writing guidance used by maintainers and automated agents is stored at:
+
+```text
+.github/agent-guides/book-guided-reading-style.md
+```
+
+This file is not rendered or linked from the public website. Because the project repository is public, it is still accessible to someone browsing GitHub; “internal” here means repository guidance rather than private information.
+
+Before creating or revising a book-guide page, an agent must read that file together with `AGENTS.md`, this architecture document, the relevant source chapter, and the current page being edited.
+
+## Methods and Computational Tools
+
+Methods provides a concise conceptual map of method families and the scientific questions they address. It does not duplicate executable operations, convergence studies, provenance, or reproducibility procedures maintained by DFT Research Workflow.
+
+Computational Tools keeps software commands, input semantics, programs, databases, and supporting utilities in their proper implementation context. A code tutorial does not establish the validity of a physical approximation or the reliability of a result for a new system.
+
+Guided Reading links to Methods when a source introduces or compares a method family. It links to Computational Tools or DFT Research Workflow only when the reader is ready to move from theory to implementation.
+
+## Reference
+
+Reference collects books, courses, websites, repositories, and other resources only after their authorship, access, scope, role, and limitations have been reviewed. It is not a bulk link directory.
+
+Resources used inside Foundations or Guided Reading should have a clear reason for inclusion. Popularity, institutional branding, citation count, or software availability is not sufficient by itself.
+
+## Source and copyright boundaries
+
+All public explanations use original prose. The repository does not store or publish:
+
+- textbook PDFs;
+- complete extracted textbook text;
+- copied textbook figures or page scans;
+- licensed software documentation copied in bulk;
+- private notes, credentials, or restricted files;
+- large raw calculation outputs or restart data.
+
+Original diagrams are preferred. Openly licensed external figures may be used only when the license, source, and purpose are recorded. Textbook extraction may be used privately as a reading aid, but it is not public site content or route authority.
+
+## Routes and source data
+
+The established Foundations routes remain under `/theory/` during the current phase. A future move to `/foundations/` requires a complete internal-link inventory, configured redirects, sitemap updates, exact-main deployment verification, and live browser smoke.
+
+Guided Reading uses small source-specific manifests under `src/reading/`. These manifests may record order, identifiers, titles, routes, and reviewed cross-links. They do not form a general content-management system and do not contain copied source text.
+
+The Martin manifest is grouped beneath Books:
+
+```text
+src/reading/books/martin.ts
+```
+
+Future source manifests should follow the same hierarchy rather than accumulating unrelated sources in the Guided Reading root.
+
+## Visual and technical character
+
+The site remains English-first, fully static, white-background, system-serif, and readable without JavaScript. It uses typographic hierarchy and white space rather than cards, dashboards, progress indicators, reading modes, or decorative interaction.
+
+Every public behavior change must preserve:
+
+- correct GitHub Pages base paths;
+- keyboard navigation;
+- readable 390-pixel layouts;
+- no page-level horizontal overflow;
+- no client JavaScript;
+- native MathML with TeX annotations;
+- the declared static page and build-size limits.
+
+A successful build verifies structure and rendering only. It does not establish scientific accuracy or learning effectiveness.
+
+## Content development
+
+Guide content is added sequentially from the beginning of each source. For Martin, work begins with Chapter 1 and continues through the book in order. Each chapter is reviewed against the source before publication, then checked for unnecessary repetition, formula selection, historical compression, modern relevance, internal links, mathematical rendering, and copyright boundaries.
+
+The governing editorial question is:
+
+> Does this addition materially improve how a researcher understands, formulates, computes, validates, or interprets an electronic-structure problem?
+
+Content that does not pass that test is shortened, linked elsewhere, or omitted.

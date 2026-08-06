@@ -7,7 +7,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
 <BaseLayout
   title="Guided Reading"
-  description="Continuous, source-aligned routes through electronic-structure theory and methods."
+  description="Continuous, source-aligned routes through electronic-structure books and lectures."
   current="reading"
 >
   <h1>Guided Reading</h1>
@@ -15,16 +15,23 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     Follow a coherent source sequence when a knowledge map is not enough. Guided Reading explains why ideas appear in a particular order, connects decisive equations to their physical meaning, and points back to the Atlas whenever a prerequisite needs repair.
   </p>
   <p>
-    These routes are original guides rather than textbook reproductions. They preserve the sequence of a reviewed source while separating enduring theory from later developments, current use, and known limitations.
+    These routes are original guides rather than reproductions. They preserve the sequence of a reviewed source while distinguishing its enduring argument from later developments, current use, and known limitations.
   </p>
 
-  <section aria-labelledby="martin-route">
-    <h2 id="martin-route">Martin · Electronic Structure</h2>
+  <section aria-labelledby="books">
+    <h2 id="books">Books</h2>
     <p>
-      Richard M. Martin’s <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition, supplies the first continuous route: twenty-eight chapters and eighteen appendices, from the many-electron problem and density-functional theory to practical representations, material properties, Berry phases, and topology.
+      Book guides follow the chapter order and reasoning structure of a major source while compressing secondary detail and expanding the ideas that matter most for present electronic-structure research.
     </p>
     <p>
-      <a href={href('/reading/martin/')}>Open the Martin reading route</a>
+      <a href={href('/reading/books/')}>Browse book guides</a>
+    </p>
+  </section>
+
+  <section aria-labelledby="lectures">
+    <h2 id="lectures">Lectures</h2>
+    <p>
+      Lecture guides will be added when a complete sequence has been reviewed for authorship, access, scope, and continuity. No empty lecture section is published in advance.
     </p>
   </section>
 

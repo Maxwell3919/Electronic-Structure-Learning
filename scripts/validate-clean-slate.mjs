@@ -56,8 +56,9 @@ const expectedPages = [
   'src/pages/computational-tools/index.astro',
   'src/pages/index.astro',
   'src/pages/methods/index.astro',
+  'src/pages/reading/books/index.astro',
+  'src/pages/reading/books/martin/index.astro',
   'src/pages/reading/index.astro',
-  'src/pages/reading/martin/index.astro',
   'src/pages/reference/index.astro',
   'src/pages/theory/index.astro',
   ...theorySlugs.map((slug) => `src/pages/theory/${slug}/index.astro`),
@@ -68,6 +69,8 @@ const expectedHtml = [
   'computational-tools/index.html',
   'index.html',
   'methods/index.html',
+  'reading/books/index.html',
+  'reading/books/martin/index.html',
   'reading/index.html',
   'reading/martin/index.html',
   'reference/index.html',
@@ -96,7 +99,8 @@ const expectedTheoryAnchors = [
 
 const internalRoutes = new Set([
   '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
-  'reading/', 'reading/martin/', 'methods/', 'computational-tools/', 'reference/',
+  'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/',
+  'methods/', 'computational-tools/', 'reference/',
 ]);
 const count = (text, expression) => (text.match(expression) ?? []).length;
 
@@ -139,7 +143,7 @@ const checkTheoryPages = (baseDirectory, mode) => {
 };
 
 const checkReadingManifest = () => {
-  const relative = 'src/reading/martin.ts';
+  const relative = 'src/reading/books/martin.ts';
   const text = fs.readFileSync(path.join(root, relative), 'utf8');
   const chapters = count(text, /chapter\(\d+,/g);
   const appendices = count(text, /appendix\('[A-R]',/g);
@@ -163,6 +167,7 @@ if (sourceMode) {
   for (const prefix of ['part-', 'practice-sholl-steckel', 'learning-paths', 'reading-system', 'labs', 'cases', 'interactive-labs', 'literature', 'book-map']) {
     assert(!tracked.some((file) => file.includes(prefix)), `legacy tracked path remains: ${prefix}`);
   }
+  assert(!tracked.some((file) => file.startsWith('src/pages/reading/lectures/')), 'empty lecture routes must not be published');
   const expectedScripts = ['scripts/smoke-clean-slate.py', 'scripts/validate-build-budget.mjs', 'scripts/validate-clean-slate.mjs'];
   assert(JSON.stringify(tracked.filter((file) => file.startsWith('scripts/')).sort()) === JSON.stringify(expectedScripts), 'scripts must remain the minimal suite');
 
@@ -174,8 +179,8 @@ if (sourceMode) {
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the GitHub Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
-  for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
-    assert(!sources.toLowerCase().includes(term), `legacy content or UI term remains in public source: ${term}`);
+  for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'reading contract', 'card grid', 'status badge']) {
+    assert(!sources.toLowerCase().includes(term), `legacy or administrative content remains in public source: ${term}`);
   }
   for (const privatePath of [['/home', 'talos'].join('/'), ['/Users', ''].join('')]) {
     assert(!sources.includes(privatePath), `private local path remains in public source: ${privatePath}`);
@@ -194,20 +199,39 @@ if (sourceMode) {
 
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   assert(theorySource.includes('<h1>How Much Theory Do You Need?</h1>'), 'Foundations landing title is not applied');
-  assert(theorySource.includes('/reading/martin/'), 'Foundations landing does not continue to Martin Guided Reading');
+  assert(theorySource.includes('/reading/martin/'), 'Foundations landing does not retain the configured Martin compatibility route');
   for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Foundations source is missing directory anchor: ${anchor}`);
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Foundations directory is missing reviewed page link: ${slug}`);
   checkTheoryPages(root, 'source');
 
   const reading = fs.readFileSync(path.join(root, 'src/pages/reading/index.astro'), 'utf8');
-  for (const marker of ['Guided Reading', 'Martin · Electronic Structure', '/reading/martin/', '/theory/']) {
+  for (const marker of ['Guided Reading', 'Books', 'Lectures', '/reading/books/', '/theory/']) {
     assert(reading.includes(marker), `Guided Reading entrance is missing: ${marker}`);
   }
-  const martin = fs.readFileSync(path.join(root, 'src/pages/reading/martin/index.astro'), 'utf8');
-  for (const marker of ['martinParts', 'martinReadingUnits.length', 'Reading contract', 'Source spine', 'Chapters 1, 7, and 11']) {
+  const books = fs.readFileSync(path.join(root, 'src/pages/reading/books/index.astro'), 'utf8');
+  for (const marker of ['<h1>Books</h1>', 'Martin · Electronic Structure', '/reading/books/martin/', '/theory/']) {
+    assert(books.includes(marker), `Books entrance is missing: ${marker}`);
+  }
+  const martin = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/index.astro'), 'utf8');
+  for (const marker of ['martinParts', 'martinReadingUnits.length', 'How this guide is written', 'Source spine', 'Chapter 1', 'source order']) {
     assert(martin.includes(marker), `Martin overview is missing: ${marker}`);
   }
   checkReadingManifest();
+
+  const styleGuidePath = '.github/agent-guides/book-guided-reading-style.md';
+  assert(tracked.includes(styleGuidePath), `${styleGuidePath} is not tracked`);
+  const styleGuide = fs.readFileSync(path.join(root, styleGuidePath), 'utf8');
+  for (const marker of ['Core Idea', 'Historical material', 'Depth selection', 'Formulas', 'Source-aligned explanation and modern additions']) {
+    assert(styleGuide.includes(marker), `${styleGuidePath} is missing: ${marker}`);
+  }
+  const agents = fs.readFileSync(path.join(root, 'AGENTS.md'), 'utf8');
+  assert(agents.includes(styleGuidePath), 'AGENTS.md does not require the book-writing guide');
+  const architecture = fs.readFileSync(path.join(root, 'docs/architecture.md'), 'utf8');
+  for (const marker of ['/reading/books/martin/', 'src/reading/books/martin.ts', styleGuidePath, 'Content development']) {
+    assert(architecture.includes(marker), `architecture is missing: ${marker}`);
+  }
+  const astroConfig = fs.readFileSync(path.join(root, 'astro.config.mjs'), 'utf8');
+  assert(astroConfig.includes("'/reading/martin/': '/reading/books/martin/'"), 'Martin compatibility redirect is missing');
 
   const methods = fs.readFileSync(path.join(root, 'src/pages/methods/index.astro'), 'utf8');
   for (const marker of ['Ground-State Density-Functional Methods', 'From methods to a reliable workflow', 'DFT-Research-Workflow']) {
@@ -249,8 +273,12 @@ if (builtMode) {
     assert(theoryBuilt.includes('How Much Theory Do You Need?'), 'built Foundations landing title is missing');
     const readingBuilt = fs.readFileSync(path.join(dist, 'reading/index.html'), 'utf8');
     assert(readingBuilt.includes('Guided Reading'), 'built Guided Reading entrance is missing');
-    const martinBuilt = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
+    const booksBuilt = fs.readFileSync(path.join(dist, 'reading/books/index.html'), 'utf8');
+    assert(booksBuilt.includes('Martin · Electronic Structure'), 'built Books entrance is missing Martin');
+    const martinBuilt = fs.readFileSync(path.join(dist, 'reading/books/martin/index.html'), 'utf8');
     assert(martinBuilt.includes('46 stable units'), 'built Martin overview does not expose the 46-unit spine');
+    const redirectBuilt = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
+    assert(redirectBuilt.includes('reading/books/martin'), 'built Martin compatibility redirect does not target the canonical route');
   }
 }
 
