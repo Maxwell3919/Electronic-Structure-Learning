@@ -107,23 +107,21 @@ const chapterSynthesis = chapterContent?.synthesis;
       <h1>{unit.title}</h1>
       <p><strong>Core Idea.</strong> {unit.coreIdea}</p>
 
+      <section aria-labelledby="unit-overview">
+        <h2 id="unit-overview">{unit.kind === 'appendix' ? 'Appendix overview' : 'Chapter overview'}</h2>
+        <p>{unit.overview}</p>
+      </section>
+
       {chapterContent ? (
         <>
-          <section aria-labelledby="unit-overview">
-            <h2 id="unit-overview">Chapter overview</h2>
-            <p>{unit.overview}</p>
-          </section>
-
-          <section aria-labelledby="unit-structure">
+          <nav aria-labelledby="unit-structure">
             <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
             <ol class="source-outline">
               {chapterSectionLinks.map((entry) => (
-                <li>
-                  <a href={`#${entry.id}`}>{entry.label}</a>
-                </li>
+                <li><a href={`#${entry.id}`}>{entry.label}</a></li>
               ))}
             </ol>
-          </section>
+          </nav>
 
           {ChapterComponent && <ChapterComponent />}
 
@@ -136,27 +134,22 @@ const chapterSynthesis = chapterContent?.synthesis;
 
           {chapterSynthesis && (
             <section aria-labelledby="unit-synthesis">
-              <h2 id="unit-synthesis">Synthesis</h2>
+              <h2 id="unit-synthesis">Chapter synthesis</h2>
               <p>{chapterSynthesis}</p>
             </section>
           )}
         </>
       ) : (
-        <>
-          <section aria-labelledby="unit-overview">
-            <h2 id="unit-overview">{unit.kind === 'appendix' ? 'Appendix overview' : 'Chapter overview'}</h2>
-            <p>{unit.overview}</p>
-          </section>
-
-        </>
+        <section aria-labelledby="unit-sequence">
+          <h2 id="unit-sequence">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
+          <p>
+            The outline below follows Martin’s internal sequence. Detailed section-by-section reading will be added within this page rather than split into separate routes.
+          </p>
+          <ol class="source-outline">
+            {unit.sections.map((section) => <li>{section}</li>)}
+          </ol>
+        </section>
       )}
-
-      <section aria-labelledby="unit-sequence">
-        <h2 id="unit-sequence">Source sequence</h2>
-        <ol class="source-outline">
-          {unit.sections.map((section) => <li>{section}</li>)}
-        </ol>
-      </section>
 
       <p>
         Return to <a href={href(parentPart.route)}>Part {parentPart.numeral} · {parentPart.title}</a> for the role of this unit in the larger argument.
