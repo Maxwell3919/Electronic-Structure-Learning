@@ -5,6 +5,6 @@ export default defineConfig({
   base: '/Electronic-Structure-Learning',
   output: 'static',
   redirects: {
-    '/reading/martin/': '/reading/books/martin/',
+    '/reading/martin/': '/Electronic-Structure-Learning/reading/books/martin/',
   },
 });
