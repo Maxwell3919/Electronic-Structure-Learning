@@ -140,7 +140,7 @@ if (sourceMode) {
     assert(book.includes(marker), `Martin book page is missing ${marker}`);
   }
   const routePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/[slug].astro'), 'utf8');
-  for (const marker of ['getStaticPaths', 'Core Idea.', 'Chapter structure', 'Appendix structure', 'Read Chapter', 'Read Appendix']) {
+  for (const marker of ['getStaticPaths', 'Core Idea.', 'Chapter structure', 'Appendix structure', 'entry.contribution', 'href(entry.route)']) {
     assert(routePage.includes(marker), `Martin route page is missing ${marker}`);
   }
   assert(!routePage.includes('Read Section'), 'Martin route page creates section-level navigation');
