@@ -168,6 +168,143 @@ The chapter sequence is not given uniform depth. Historical transitions are comp
 
 Martin pages link back to Foundations for prerequisite repair and forward to Methods or DFT Research Workflow when the discussion reaches method selection or practical execution.
 
+### Martin reading-page hierarchy
+
+The Martin route uses three public reading levels. Sections inside a chapter remain part of the chapter page and do not become additional routes.
+
+```text
+Martin book page
+→ Part page
+→ Chapter or Appendix page
+→ sections inside that page
+```
+
+The hierarchy is designed so that every level answers a different question:
+
+```text
+Book page
+= What role does each Part play in the book?
+
+Part page
+= How do the chapters in this Part build one argument?
+
+Chapter page
+= What concepts, equations, assumptions, and physical conclusions does the chapter establish?
+```
+
+The three levels must not repeat the same summary at increasing length. The book page describes the role of a Part in the whole source; the Part page explains the progression among its chapters; the Chapter page carries the actual scientific explanation.
+
+#### Martin book page
+
+The canonical book landing page is:
+
+```text
+/reading/books/martin/
+```
+
+The source spine on this page is organized by Part rather than presented as one uninterrupted chapter list. Each Part entry contains:
+
+- the original Part number and title;
+- a concise introduction strongly aligned with Martin's description and chapter sequence;
+- the main problem or conceptual transition developed in that Part;
+- the chapter titles contained in the Part;
+- one clear link to the Part page.
+
+The Part introduction should explain why that Part exists and how it prepares the next stage of the book. It should not summarize each chapter in detail.
+
+The preferred link text is specific and descriptive:
+
+```text
+Read Part I →
+Read Part II →
+```
+
+Generic phrases such as `Click here`, `Read more`, or `Open` without a named destination are avoided.
+
+#### Part pages
+
+The canonical route pattern is:
+
+```text
+/reading/books/martin/part-i/
+/reading/books/martin/part-ii/
+...
+/reading/books/martin/part-vii/
+```
+
+Parts I–VI cover the six main parts of the book. Part VII represents the appendices as the source spine currently groups them.
+
+Each Part page contains:
+
+- the original Part number and title;
+- a Part-level introduction explaining its place in the book;
+- a concise account of the causal or conceptual progression across the included chapters;
+- one entry for every chapter in that Part;
+- a source-aligned chapter summary beneath each chapter title;
+- one link from each chapter entry to the completed Chapter page.
+
+The chapter summaries on a Part page explain why each chapter appears at that point and what it contributes to the Part. They remain shorter than the Chapter page and avoid reproducing formulas or extended derivations unless a single relation is indispensable for understanding the Part-level progression.
+
+The preferred link text names the destination:
+
+```text
+Read Chapter 1 →
+Read Chapter 2 →
+```
+
+Part VII uses the same structure for appendices:
+
+```text
+Read Appendix A →
+Read Appendix B →
+```
+
+Part pages may include simple previous-Part and next-Part navigation. They do not contain progress bars, completion states, reading dashboards, or empty placeholders.
+
+#### Chapter and Appendix pages
+
+The canonical route patterns are:
+
+```text
+/reading/books/martin/chapter-01/
+/reading/books/martin/chapter-02/
+...
+/reading/books/martin/chapter-28/
+
+/reading/books/martin/appendix-a/
+...
+/reading/books/martin/appendix-r/
+```
+
+A Chapter or Appendix page is the smallest independent reading page in the Martin guide. Its internal sections are headings within the same page. Section titles do not receive separate public routes or repeated blue links.
+
+A Chapter page begins with the original chapter title and a one-sentence **Core Idea**, then follows the source's own reasoning through the number of themes naturally required. It applies the book-writing guidance already defined in this document and `.github/agent-guides/book-guided-reading-style.md`.
+
+A completed Chapter page may include:
+
+- source-aligned thematic sections;
+- necessary historical compression;
+- decisive formulas with physical meaning and assumptions;
+- a simple original diagram when sequence, causality, hierarchy, or geometry is otherwise difficult to see;
+- a clearly separated modern perspective when it directly affects present research;
+- a short synthesis when it helps connect to the next chapter.
+
+It does not add separate `Read Section` links or split the source into a page for every subsection. Previous-Chapter and next-Chapter navigation may appear at the end of the page to support continuous reading.
+
+Appendix pages follow the same principle but retain their tool-like role. They are written when the main chapter sequence first requires them rather than being published as empty routes in advance.
+
+#### Breadcrumbs and navigation
+
+Public pages use breadcrumbs that reflect the actual source hierarchy:
+
+```text
+Guided Reading / Books / Martin / Part I / Chapter 1
+```
+
+The Martin book page links to Part pages. Part pages link to Chapter or Appendix pages. Chapter and Appendix pages do not create another navigational layer for internal sections.
+
+A route is published only when its page has reviewed explanatory content. A list of future units may remain in the source manifest, but the public site does not create empty Part, Chapter, Appendix, or section pages merely to display the eventual structure.
+
 ## Internal book-writing guidance
 
 The detailed writing guidance used by maintainers and automated agents is stored at:
