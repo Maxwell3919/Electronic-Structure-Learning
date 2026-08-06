@@ -143,7 +143,10 @@ if (sourceMode) {
   for (const marker of ['getStaticPaths', 'Core Idea.', 'Chapter structure', 'Appendix structure', 'entry.contribution', 'href(entry.route)']) {
     assert(routePage.includes(marker), `Martin route page is missing ${marker}`);
   }
+  assert(routePage.includes('class="source-outline"'), 'Martin source outline lacks its marker-suppression class');
   assert(!routePage.includes('Read Section'), 'Martin route page creates section-level navigation');
+  const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
+  assert(styles.includes('.source-outline') && styles.includes('list-style: none'), 'Martin source outline does not suppress automatic list markers');
   checkReadingManifest();
 
   const agents = fs.readFileSync(path.join(root, 'AGENTS.md'), 'utf8');
@@ -182,7 +185,7 @@ if (builtMode) {
     const partI = fs.readFileSync(path.join(dist, 'reading/books/martin/part-i/index.html'), 'utf8');
     assert(partI.includes('Read Chapter 1'), 'built Part I does not link Chapter 1');
     const chapter1 = fs.readFileSync(path.join(dist, 'reading/books/martin/chapter-01/index.html'), 'utf8');
-    for (const marker of ['Core Idea.', 'Chapter overview', '1.1 Quantum Theory and the Origins of Electronic Structure']) {
+    for (const marker of ['Core Idea.', 'Chapter overview', '1.1 Quantum Theory and the Origins of Electronic Structure', 'class="source-outline"']) {
       assert(chapter1.includes(marker), `built Chapter 1 is missing ${marker}`);
     }
     const appendixR = fs.readFileSync(path.join(dist, 'reading/books/martin/appendix-r/index.html'), 'utf8');
