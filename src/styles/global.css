@@ -92,6 +92,7 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .section-list { margin-top: 2.4rem; padding: 0; list-style: none; }
 .section-list li + li { margin-top: 1rem; }
 .section-list a { font-size: 1.15rem; }
+.source-outline { padding-left: 0; list-style: none; }
 .secondary, .item-summary { color: #666666; }
 .item-summary { font-size: 0.96em; }
 
