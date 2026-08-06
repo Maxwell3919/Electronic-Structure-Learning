@@ -111,7 +111,7 @@ const unitLabel = unit ? `${unit.kind === 'appendix' ? 'Appendix' : 'Chapter'} $
         <p>
           The outline below follows Martin’s internal sequence. Detailed section-by-section reading will be added within this page rather than split into separate routes.
         </p>
-        <ol>
+        <ol class="source-outline">
           {unit.sections.map((section) => <li>{section}</li>)}
         </ol>
       </section>
