@@ -5,10 +5,10 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Theory" description="Foundations for electronic-structure theory." current="theory">
-  <h1>Theory</h1>
-  <p class="lede">Electronic-structure theory rests on mathematics, physics, chemistry, and the theories developed specifically for interacting electrons.</p>
-  <p class="secondary">The directory remains a map rather than a fixed curriculum. Thirty-nine subjects have individually reviewed pages; the route sections below connect them according to the learner's present knowledge gap rather than prescribing one universal order.</p>
+<BaseLayout title="Foundations" description="A map of the knowledge needed to understand electronic structure." current="theory">
+  <h1>How Much Theory Do You Need?</h1>
+  <p class="lede">Electronic structure draws on mathematics, physics, chemistry, numerical analysis, and theories developed specifically for interacting electrons.</p>
+  <p class="secondary">Foundations is a knowledge and learning-resource map rather than a fixed curriculum. Thirty-nine subjects have individually reviewed pages; use the routes below to repair the knowledge gaps that matter for the question you are trying to understand.</p>
 
   <section aria-labelledby="mathematical-foundations">
     <h2 id="mathematical-foundations">Mathematical Foundations</h2>
@@ -134,5 +134,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
     <h3>Advanced response, correlation, and topology route</h3>
     <p>Start only after the ground-state Kohn–Sham construction, representation choices, and sampling are clear. Combine <a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a>, <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a>, and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>. Continue to <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a>, <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>, or <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a> according to the observable. These branches are not interchangeable: ground-state derivatives, neutral excitations, charged quasiparticles, and topological invariants require different formalisms and evidence.</p>
+  </section>
+
+  <section aria-labelledby="continue-guided-reading">
+    <h2 id="continue-guided-reading">Continue with structured reading</h2>
+    <p>Once the relevant prerequisites are sufficiently clear, move from this map into a continuous account of how electronic-structure ideas develop, connect, and become practical methods.</p>
+    <p><a href={href('/reading/martin/')}>Martin · Electronic Structure</a></p>
   </section>
 </BaseLayout>
