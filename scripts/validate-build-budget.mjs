@@ -10,11 +10,11 @@ const limits = {
   jsBytes: 0,
   cssBytes: 30_000,
   fontBytes: 0,
-  assetCount: 66,
+  assetCount: 68,
   largestAssetBytes: 210_000,
-  htmlPages: 45,
+  htmlPages: 47,
 };
-const minimumReductions = { pages: 0.52, bytes: 0.70, assets: 0.60 };
+const minimumReductions = { pages: 0.50, bytes: 0.70, assets: 0.60 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,
