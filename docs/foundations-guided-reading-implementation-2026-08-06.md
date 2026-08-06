@@ -2,14 +2,17 @@
 
 Date: 2026-08-06
 
-This change implements Stage A of `docs/foundations-guided-reading-plan.md`.
+This document records the initial Stage-A implementation. It is a historical snapshot rather than the current route or writing authority. Current decisions are defined in `docs/architecture.md` and `.github/agent-guides/book-guided-reading-style.md`.
 
-- The public `Theory` label becomes `Foundations` while the established `/theory/` routes remain unchanged.
-- The Foundations landing title becomes `How Much Theory Do You Need?` and links onward to structured reading.
-- `/reading/` and `/reading/martin/` are added as real static entrances.
-- A small source manifest records Martin's seven parts, twenty-eight chapters, and eighteen appendices.
-- No empty chapter or appendix routes are published.
-- No client JavaScript, new dependency, search layer, CMS, progress system, textbook PDF, extracted full text, or copied figure is added.
-- Chapters 1, 7, and 11 remain the first planned full reading pages.
+The initial change:
 
-The browser and build contracts are extended to cover the new navigation, two routes, forty-six-unit source spine, exact static page set, GitHub Pages base path, zero client JavaScript, narrow screens, and no-JavaScript operation.
+- changed the public `Theory` label to `Foundations` while retaining the established `/theory/` routes;
+- changed the Foundations landing title to `How Much Theory Do You Need?`;
+- added the first static Guided Reading and Martin overview pages;
+- added a small source manifest for Martin's seven parts, twenty-eight chapters, and eighteen appendices;
+- published no empty chapter or appendix routes;
+- added no client JavaScript, new dependency, search layer, CMS, progress system, textbook PDF, extracted full text, or copied figure.
+
+Later on the same date, Guided Reading was reorganized by source type. The canonical Martin route became `/reading/books/martin/`, with `/reading/martin/` retained only as a compatibility redirect. Book content now begins with Chapter 1 and proceeds through Martin in source order; the earlier proposal to begin with Chapters 1, 7, and 11 is no longer active.
+
+Static and live-browser checks cover navigation, the forty-six-unit source spine, the exact page set, GitHub Pages base paths, the compatibility redirect, zero client JavaScript, narrow screens, and operation with JavaScript disabled.
