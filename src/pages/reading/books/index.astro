@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout
+  title="Books · Guided Reading"
+  description="Source-aligned reading guides for important electronic-structure books."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <span>Books</span>
+  </nav>
+
+  <h1>Books</h1>
+  <p class="lede">
+    Book guides preserve a source’s reasoning order while shortening secondary detail, clarifying decisive equations, and connecting the material to present electronic-structure research.
+  </p>
+  <p>
+    Each route remains tied to its own source. The Atlas does not combine several books into one artificial chapter sequence, and a book guide does not replace the prerequisite map in <a href={href('/theory/')}>Foundations</a>.
+  </p>
+
+  <section aria-labelledby="martin">
+    <h2 id="martin">Martin · Electronic Structure</h2>
+    <p>
+      Richard M. Martin’s <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition, provides a continuous route from the many-electron problem and density-functional theory through numerical methods, material properties, Berry phases, and topology.
+    </p>
+    <p>
+      <a href={href('/reading/books/martin/')}>Open the Martin book guide</a>
+    </p>
+  </section>
+</BaseLayout>
