@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { martinParts, martinReadingSlugs, martinReadingUnits } from '../../../../reading/books/martin';
+
+export function getStaticPaths() {
+  return martinReadingSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const slug = Astro.params.slug ?? '';
+const part = martinParts.find((candidate) => candidate.slug === slug);
+const unit = martinReadingUnits.find((candidate) => candidate.slug === slug);
+const parentPart = unit ? martinParts.find((candidate) => candidate.units.some((entry) => entry.slug === unit.slug)) : undefined;
+
+const partIndex = part ? martinParts.findIndex((candidate) => candidate.slug === part.slug) : -1;
+const previousPart = partIndex > 0 ? martinParts[partIndex - 1] : undefined;
+const nextPart = partIndex >= 0 && partIndex < martinParts.length - 1 ? martinParts[partIndex + 1] : undefined;
+
+const unitIndex = unit ? martinReadingUnits.findIndex((candidate) => candidate.slug === unit.slug) : -1;
+const previousUnit = unitIndex > 0 ? martinReadingUnits[unitIndex - 1] : undefined;
+const nextUnit = unitIndex >= 0 && unitIndex < martinReadingUnits.length - 1 ? martinReadingUnits[unitIndex + 1] : undefined;
+
+const pageTitle = part
+  ? `Part ${part.numeral} · ${part.title}`
+  : unit
+    ? unit.title
+    : 'Martin · Electronic Structure';
+const description = part
+  ? part.summary
+  : unit
+    ? unit.coreIdea
+    : 'A guided route through Martin’s Electronic Structure.';
+const unitLabel = unit ? `${unit.kind === 'appendix' ? 'Appendix' : 'Chapter'} ${unit.number}` : '';
+---
+
+<BaseLayout title={pageTitle} description={description} current="reading">
+  {part && (
+    <>
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href={href('/reading/')}>Guided Reading</a>
+        <span aria-hidden="true">/</span>
+        <a href={href('/reading/books/')}>Books</a>
+        <span aria-hidden="true">/</span>
+        <a href={href('/reading/books/martin/')}>Martin</a>
+        <span aria-hidden="true">/</span>
+        <span>Part {part.numeral}</span>
+      </nav>
+
+      <h1>Part {part.numeral} · {part.title}</h1>
+      <p class="lede">{part.summary}</p>
+
+      <section aria-labelledby="part-progression">
+        <h2 id="part-progression">How this Part develops</h2>
+        <p>{part.progression}</p>
+      </section>
+
+      <section aria-labelledby="part-chapters">
+        <h2 id="part-chapters">{part.numeral === 'VII' ? 'Appendices in this Part' : 'Chapters in this Part'}</h2>
+        {part.units.map((entry) => (
+          <section aria-labelledby={entry.id}>
+            <h3 id={entry.id}>{entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} · {entry.title}</h3>
+            <p>{entry.contribution}</p>
+            <p>
+              <a href={href(entry.route)}>
+                Read {entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} →
+              </a>
+            </p>
+          </section>
+        ))}
+      </section>
+
+      {(previousPart || nextPart) && (
+        <nav aria-label="Part navigation">
+          <p>
+            {previousPart && <a href={href(previousPart.route)}>← Part {previousPart.numeral} · {previousPart.title}</a>}
+          </p>
+          <p>
+            {nextPart && <a href={href(nextPart.route)}>Part {nextPart.numeral} · {nextPart.title} →</a>}
+          </p>
+        </nav>
+      )}
+    </>
+  )}
+
+  {unit && parentPart && (
+    <>
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href={href('/reading/')}>Guided Reading</a>
+        <span aria-hidden="true">/</span>
+        <a href={href('/reading/books/')}>Books</a>
+        <span aria-hidden="true">/</span>
+        <a href={href('/reading/books/martin/')}>Martin</a>
+        <span aria-hidden="true">/</span>
+        <a href={href(parentPart.route)}>Part {parentPart.numeral}</a>
+        <span aria-hidden="true">/</span>
+        <span>{unitLabel}</span>
+      </nav>
+
+      <p class="secondary">{unitLabel}</p>
+      <h1>{unit.title}</h1>
+      <p><strong>Core Idea.</strong> {unit.coreIdea}</p>
+
+      <section aria-labelledby="unit-overview">
+        <h2 id="unit-overview">{unit.kind === 'appendix' ? 'Appendix overview' : 'Chapter overview'}</h2>
+        <p>{unit.overview}</p>
+      </section>
+
+      <section aria-labelledby="unit-structure">
+        <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
+        <p>
+          The outline below follows Martin’s internal sequence. Detailed section-by-section reading will be added within this page rather than split into separate routes.
+        </p>
+        <ol>
+          {unit.sections.map((section) => <li>{section}</li>)}
+        </ol>
+      </section>
+
+      <p>
+        Return to <a href={href(parentPart.route)}>Part {parentPart.numeral} · {parentPart.title}</a> for the role of this unit in the larger argument.
+      </p>
+
+      {(previousUnit || nextUnit) && (
+        <nav aria-label="Reading unit navigation">
+          <p>
+            {previousUnit && (
+              <a href={href(previousUnit.route)}>
+                ← {previousUnit.kind === 'appendix' ? `Appendix ${previousUnit.number}` : `Chapter ${previousUnit.number}`} · {previousUnit.title}
+              </a>
+            )}
+          </p>
+          <p>
+            {nextUnit && (
+              <a href={href(nextUnit.route)}>
+                {nextUnit.kind === 'appendix' ? `Appendix ${nextUnit.number}` : `Chapter ${nextUnit.number}`} · {nextUnit.title} →
+              </a>
+            )}
+          </p>
+        </nav>
+      )}
+    </>
+  )}
+</BaseLayout>
