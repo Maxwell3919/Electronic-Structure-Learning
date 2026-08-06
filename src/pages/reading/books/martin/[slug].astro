@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { martinParts, martinReadingSlugs, martinReadingUnits } from '../../../../reading/books/martin';
+import { getMartinChapterContent } from '../../../../reading/books/martin/chapter-content';
 
 export function getStaticPaths() {
   return martinReadingSlugs.map((slug) => ({ params: { slug } }));
@@ -32,6 +33,11 @@ const description = part
     ? unit.coreIdea
     : 'A guided route through Martin’s Electronic Structure.';
 const unitLabel = unit ? `${unit.kind === 'appendix' ? 'Appendix' : 'Chapter'} ${unit.number}` : '';
+const chapterContent = unit ? await getMartinChapterContent(unit.slug) : undefined;
+const ChapterComponent = chapterContent?.default as any;
+const chapterSectionLinks = chapterContent?.sectionLinks ?? [];
+const chapterModernPerspective = chapterContent?.modernPerspective ?? [];
+const chapterSynthesis = chapterContent?.synthesis;
 ---
 
 <BaseLayout title={pageTitle} description={description} current="reading">
@@ -106,15 +112,44 @@ const unitLabel = unit ? `${unit.kind === 'appendix' ? 'Appendix' : 'Chapter'} $
         <p>{unit.overview}</p>
       </section>
 
-      <section aria-labelledby="unit-structure">
-        <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
-        <p>
-          The outline below follows Martin’s internal sequence. Detailed section-by-section reading will be added within this page rather than split into separate routes.
-        </p>
-        <ol class="source-outline">
-          {unit.sections.map((section) => <li>{section}</li>)}
-        </ol>
-      </section>
+      {chapterContent ? (
+        <>
+          <nav aria-labelledby="unit-structure">
+            <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
+            <ol class="source-outline">
+              {chapterSectionLinks.map((entry) => (
+                <li><a href={`#${entry.id}`}>{entry.label}</a></li>
+              ))}
+            </ol>
+          </nav>
+
+          {ChapterComponent && <ChapterComponent />}
+
+          {chapterModernPerspective.length > 0 && (
+            <section aria-labelledby="unit-modern-perspective">
+              <h2 id="unit-modern-perspective">Modern perspective</h2>
+              {chapterModernPerspective.map((item) => <p>{item}</p>)}
+            </section>
+          )}
+
+          {chapterSynthesis && (
+            <section aria-labelledby="unit-synthesis">
+              <h2 id="unit-synthesis">Chapter synthesis</h2>
+              <p>{chapterSynthesis}</p>
+            </section>
+          )}
+        </>
+      ) : (
+        <section aria-labelledby="unit-sequence">
+          <h2 id="unit-sequence">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
+          <p>
+            The outline below follows Martin’s internal sequence. Detailed section-by-section reading will be added within this page rather than split into separate routes.
+          </p>
+          <ol class="source-outline">
+            {unit.sections.map((section) => <li>{section}</li>)}
+          </ol>
+        </section>
+      )}
 
       <p>
         Return to <a href={href(parentPart.route)}>Part {parentPart.numeral} · {parentPart.title}</a> for the role of this unit in the larger argument.
