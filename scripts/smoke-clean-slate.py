@@ -58,7 +58,8 @@ THEORY_ROUTES = [
     "theory/berry-phases-and-electronic-topology/",
 ]
 CONTENT_ROUTES = [
-    "", "theory/", *THEORY_ROUTES, "methods/", "computational-tools/", "reference/",
+    "", "theory/", *THEORY_ROUTES, "reading/", "reading/martin/",
+    "methods/", "computational-tools/", "reference/",
 ]
 BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
@@ -139,6 +140,15 @@ def inspect(driver, mode, expected_width=None):
             if not driver.find_elements(By.CSS_SELECTOR, "main .math-display math[display='block']"):
                 raise AssertionError(f"display MathML missing in {mode}: {url}")
 
+        if route == "":
+            labels = [item.text for item in driver.find_elements(By.CSS_SELECTOR, "header nav a")]
+            if "Foundations" not in labels or "Guided Reading" not in labels:
+                raise AssertionError(f"new framework navigation missing in {mode}: {labels}")
+        if route == "theory/" and "How Much Theory Do You Need?" not in driver.find_element(By.TAG_NAME, "h1").text:
+            raise AssertionError(f"Foundations landing title missing in {mode}")
+        if route == "reading/martin/" and "46 stable units" not in driver.find_element(By.TAG_NAME, "main").text:
+            raise AssertionError(f"Martin source spine count missing in {mode}")
+
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             raw_href = anchor.get_dom_attribute("href") or ""
             raw_parsed = urlparse(raw_href)
@@ -198,7 +208,7 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: forty-four content routes, thirty-nine MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: forty-six content routes, thirty-nine MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
