@@ -57,11 +57,16 @@ THEORY_ROUTES = [
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/berry-phases-and-electronic-topology/",
 ]
+CANONICAL_READING_ROUTES = ["reading/", "reading/books/", "reading/books/martin/"]
+COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
-    "", "theory/", *THEORY_ROUTES, "reading/", "reading/martin/",
+    "", "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
     "methods/", "computational-tools/", "reference/",
 ]
-BROWSER_ROUTES = [*CONTENT_ROUTES, "404.html"]
+BROWSER_ROUTES = [
+    "", "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES,
+    "methods/", "computational-tools/", "reference/", "404.html",
+]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
 DEAD_CAMBRIDGE_ID = "8C2B8F7F4C94A903A9018E9D8A42B9A7"
 
@@ -146,7 +151,11 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"new framework navigation missing in {mode}: {labels}")
         if route == "theory/" and "How Much Theory Do You Need?" not in driver.find_element(By.TAG_NAME, "h1").text:
             raise AssertionError(f"Foundations landing title missing in {mode}")
-        if route == "reading/martin/" and "46 stable units" not in driver.find_element(By.TAG_NAME, "main").text:
+        if route == "reading/" and "Books" not in driver.find_element(By.TAG_NAME, "main").text:
+            raise AssertionError(f"Guided Reading source hierarchy missing in {mode}")
+        if route == "reading/books/" and "Martin · Electronic Structure" not in driver.find_element(By.TAG_NAME, "main").text:
+            raise AssertionError(f"Books entrance missing Martin in {mode}")
+        if route == "reading/books/martin/" and "46 stable units" not in driver.find_element(By.TAG_NAME, "main").text:
             raise AssertionError(f"Martin source spine count missing in {mode}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
@@ -158,6 +167,16 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"internal link escapes Pages base: {anchor.get_attribute('href')}")
         checks.append({"route": route or "/", "mode": mode, "math_nodes": math_count, **metrics})
     return checks
+
+
+def check_compatibility_redirect(driver):
+    old_url = urljoin(BASE_URL, "reading/martin/")
+    expected_path = urlparse(urljoin(BASE_URL, "reading/books/martin/")).path.rstrip("/")
+    driver.get(old_url)
+    WebDriverWait(driver, 20).until(
+        lambda current: urlparse(current.current_url).path.rstrip("/") == expected_path
+    )
+    return {"from": old_url, "to": driver.current_url}
 
 
 def main():
@@ -187,6 +206,7 @@ def main():
     desktop = make_driver()
     try:
         report["checks"].extend(inspect(desktop, "desktop"))
+        report["compatibility_redirect"] = check_compatibility_redirect(desktop)
         desktop.get(BASE_URL)
         desktop.find_element(By.TAG_NAME, "body").send_keys(Keys.TAB)
         if desktop.execute_script("return document.activeElement.tagName") != "A":
@@ -204,11 +224,12 @@ def main():
     no_javascript = make_driver(javascript=False, width=390, height=844)
     try:
         report["checks"].extend(inspect(no_javascript, "no-javascript", expected_width=390))
+        report["compatibility_redirect_no_javascript"] = check_compatibility_redirect(no_javascript)
     finally:
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: forty-six content routes, thirty-nine MathML pages, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: forty-eight content routes, thirty-nine MathML pages, Martin compatibility redirect, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
