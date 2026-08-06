@@ -1,20 +1,21 @@
 # Electronic Structure Atlas architecture
 
-Electronic Structure Atlas is a small, static, content-first website. Its public information architecture has five entries:
+Electronic Structure Atlas is a small, static, content-first website. Its public information architecture has six entries:
 
 ```text
 Home
-Theory
+Foundations
+Guided Reading
 Methods
 Computational Tools
 Reference
 ```
 
-The implementation uses Plain Astro pages, one shared layout, and one global stylesheet. It has no Starlight layer, content registry, search index, client hydration, packaged fonts, interactive runtime, backend, account system, or database.
+The implementation uses Plain Astro pages, one shared layout, and one global stylesheet. It has no Starlight layer, general content registry, search index, client hydration, packaged fonts, interactive runtime, backend, account system, or database.
 
-## Theory
+## Foundations
 
-Theory connects mathematical, physical, chemical, and electronic-structure foundations. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
+Foundations is the public name of the knowledge, prerequisite, relationship, and reviewed-resource map currently served from `/theory/`. The route is retained during the first migration phase so the thirty-nine reviewed pages and existing links are not broken. Its directory remains organized at two subject levels. Foundational entries are broad course-like domains; Electronic Structure Theory entries are narrower theory and method modules. Their different granularity is intentional.
 
 The reviewed content has developed in twelve batches:
 
@@ -253,9 +254,17 @@ All reviewed pages share navigation, source discipline, mathematical presentatio
 
 Mathematics is authored as native MathML inside the static Astro source. Display equations use a shared scroll-contained wrapper, while inline expressions remain part of the prose. Every expression carries a TeX annotation inside MathML `<semantics>` for source readability and downstream reuse. The site does not load MathJax, KaTeX, packaged math fonts, or client-side equation scripts.
 
-Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. All listed Theory responsibilities now have reviewed pages. The Learning Map remains a relationship layer that expresses prerequisites, branches, and converging paths; it is not a separate fixed course or interactive runtime in the current build.
+Books, course websites, resource evaluations, and detailed concept graphs are added only as separately reviewed content. Broken external resources are removed when their official destination cannot be verified. All listed Foundations responsibilities have reviewed pages. The Learning Map remains a relationship layer that expresses prerequisites, branches, and converging paths; it is not a separate fixed course or interactive runtime in the current build.
 
 The relativistic/spin/magnetism page remains subject to the dedicated second-round textbook/course comparison identified by the systematic review. The MBPT page is separated from Linear Response because charged self-energy corrections and electron–hole calculations have distinct objects, workflows, and convergence boundaries. Probability and Statistics uses MIT 18.05 as its introductory route; MIT 18.175 remains an advanced continuation rather than the default entry point. The Inorganic Chemistry and Surface and Interface Chemistry pages retain explicit resource-review gaps because no single complete modern open course was established during the systematic review. The Berry/topology route uses Martin and Vanderbilt for theory and Wannier90 only as an implementation bridge; software documentation is not scientific validation.
+
+## Guided Reading
+
+Guided Reading supplies continuous source-aligned narratives when a branching knowledge map is not sufficient. The first route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, through twenty-eight chapters and eighteen appendices. A small manifest records the seven parts and forty-six stable units; the Martin overview is its current public consumer.
+
+The framework does not publish empty chapter pages. Each completed unit must use original prose and explain the motivating problem, source position, decisive formalism, physical meaning, assumptions, research relevance, modern extension, and limits. Stable source-aligned explanation is kept distinct from dated modern-research overlays. Martin pages link to Foundations rather than copying its course inventories or complete concept explanations.
+
+The first full units will be Chapters 1, 7, and 11, chosen to establish standards for historical compression, central DFT formalism, and the theory-to-practice bridge. Textbook PDFs, complete extracted text, copied figures, page scans, progress tracking, and legacy course controls are excluded.
 
 ## Methods and other entrances
 
@@ -265,6 +274,6 @@ Computational Tools keeps commands and file semantics inside their software and 
 
 The site defaults to English and system serif fonts. Pages use white space and typographic hierarchy rather than cards, dashboards, reading modes, status badges, or decorative interaction.
 
-The former source-aligned course, practice cross-reference, learning paths, labs, cases, literature layer, interactive components, and their validation system are not part of the current build. They remain recoverable from Git history and the tag documented in `docs/legacy-site.md`; their former URLs are intentionally unsupported.
+The former source-aligned course, practice cross-reference, learning paths, labs, cases, literature layer, interactive components, and their validation system are not restored. They remain recoverable from Git history and the tag documented in `docs/legacy-site.md`; their former URLs are intentionally unsupported. The current Guided Reading overview and manifest are a new bounded implementation.
 
-Future content is added manually, one reviewed responsibility at a time. A successful build or browser smoke verifies only the declared structural and runtime behavior, not scientific acceptance or learning effectiveness.
+Future content is added manually, one reviewed responsibility or reading unit at a time. A successful build or browser smoke verifies only the declared structural and runtime behavior, not scientific acceptance or learning effectiveness.
