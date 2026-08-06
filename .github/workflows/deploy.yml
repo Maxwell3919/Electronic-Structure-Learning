@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -50,18 +51,87 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 55
     outputs:
       page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Create and monitor Pages deployment without forced cancellation
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/github-script@v9
         with:
-          timeout: 1800000
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+            const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
+              owner,
+              repo,
+              run_id: context.runId,
+              per_page: 100,
+            });
+            const pagesArtifacts = artifacts.filter((artifact) => artifact.name === 'github-pages' && !artifact.expired);
+            if (pagesArtifacts.length !== 1) {
+              throw new Error(`Expected one non-expired github-pages artifact; found ${pagesArtifacts.length}.`);
+            }
+
+            const oidcToken = await core.getIDToken();
+            const created = await github.request('POST /repos/{owner}/{repo}/pages/deployments', {
+              owner,
+              repo,
+              artifact_id: pagesArtifacts[0].id,
+              environment: 'github-pages',
+              pages_build_version: context.sha,
+              oidc_token: oidcToken,
+            });
+
+            const deploymentId = created.data.id || context.sha;
+            const pageUrl = created.data.page_url || `https://${owner.toLowerCase()}.github.io/${repo}/`;
+            core.setOutput('page_url', pageUrl);
+            core.info(`Created Pages deployment ${deploymentId}.`);
+
+            const finalErrors = new Set([
+              'deployment_failed',
+              'deployment_content_failed',
+              'deployment_cancelled',
+              'deployment_lost',
+            ]);
+            const deadline = Date.now() + 50 * 60 * 1000;
+            let transientErrors = 0;
+
+            while (Date.now() < deadline) {
+              await sleep(5000);
+              try {
+                const response = await github.request(
+                  'GET /repos/{owner}/{repo}/pages/deployments/{deploymentId}',
+                  { owner, repo, deploymentId },
+                );
+                const status = response.data.status;
+                core.info(`Pages deployment status: ${status}`);
+                transientErrors = 0;
+                if (status === 'succeed') {
+                  core.info('Pages deployment succeeded.');
+                  return;
+                }
+                if (finalErrors.has(status)) {
+                  throw new Error(`Pages deployment ended with ${status}.`);
+                }
+              } catch (error) {
+                if (String(error.message || '').startsWith('Pages deployment ended with')) {
+                  throw error;
+                }
+                transientErrors += 1;
+                core.warning(`Pages status request failed (${transientErrors}): ${error.message}`);
+                if (transientErrors >= 20) {
+                  throw new Error('Too many consecutive Pages status errors. The deployment was not cancelled.');
+                }
+              }
+            }
+
+            throw new Error('Pages deployment did not finish within 50 minutes. It was deliberately left queued rather than cancelled.');
 
   smoke:
     name: Live Pages browser smoke
