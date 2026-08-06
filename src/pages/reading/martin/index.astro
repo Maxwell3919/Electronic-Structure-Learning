@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { martinParts, martinReadingUnits } from '../../../reading/martin';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout
+  title="Martin · Electronic Structure"
+  description="A guided route through Richard M. Martin's Electronic Structure, second edition."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <span>Martin</span>
+  </nav>
+
+  <h1>Martin · Electronic Structure</h1>
+  <p class="lede">
+    A continuous guide to Richard M. Martin’s <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition. The route preserves the book’s sequence while using original explanations, explicit scope boundaries, and dated modern extensions.
+  </p>
+  <p>
+    The book is a research-level bridge across the many-electron problem, density-functional theory, numerical representations, material properties, Berry phases, and topology. It is not used as the sole taxonomy of the Atlas, and it does not replace prerequisite courses collected in <a href={href('/theory/')}>Foundations</a>.
+  </p>
+
+  <section aria-labelledby="reading-contract">
+    <h2 id="reading-contract">Reading contract</h2>
+    <p>
+      Each completed unit will identify the motivating problem, decisive formalism, physical meaning, assumptions, research relevance, modern extension, and limits. Historical material will be compressed into causal timelines when chronology is not itself part of the argument.
+    </p>
+    <p>
+      No textbook pages, figures, or extracted full text are published here. The current framework exposes the complete source spine—{martinReadingUnits.length} stable units—without publishing empty chapter pages.
+    </p>
+  </section>
+
+  <section aria-labelledby="source-spine">
+    <h2 id="source-spine">Source spine</h2>
+    {martinParts.map((part) => (
+      <section aria-labelledby={part.id}>
+        <h3 id={part.id}>Part {part.numeral} · {part.title}</h3>
+        <ol start={part.units[0]?.kind === 'chapter' ? Number(part.units[0].number) : undefined}>
+          {part.units.map((unit) => (
+            <li>
+              <span>{unit.kind === 'appendix' ? `Appendix ${unit.number}` : `Chapter ${unit.number}`}: {unit.title}</span>
+              {unit.route && <> — <a href={href(unit.route)}>Read</a></>}
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </section>
+
+  <section aria-labelledby="implementation-order">
+    <h2 id="implementation-order">Implementation order</h2>
+    <p>
+      Chapters 1, 7, and 11 will be built first as editorial standards for historical compression, central formalism, and the theory-to-practice bridge. The remaining chapters will then be written in source order; appendices will be added when the main route first needs them.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,13 +1,13 @@
 # Electronic Structure Atlas
 
-Electronic Structure Atlas is a small, public map of electronic-structure theory, research methods, computational tools, and reviewed references.
+Electronic Structure Atlas is a small, public map of electronic-structure foundations, guided reading, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It currently contains the Home page, four subject entrances, thirty-nine individually reviewed Theory pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It contains the Home page, five subject entrances, thirty-nine individually reviewed Foundations pages, two Guided Reading pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
 - `/`
-- `/theory/`
+- `/theory/` — publicly presented as **Foundations** while existing routes are retained
 - `/theory/linear-algebra/`
 - `/theory/calculus-and-analysis/`
 - `/theory/differential-equations/`
@@ -47,10 +47,20 @@ The production site is a static Plain Astro build. It currently contains the Hom
 - `/theory/linear-response-and-excited-states/`
 - `/theory/many-body-perturbation-theory-and-quasiparticles/`
 - `/theory/berry-phases-and-electronic-topology/`
+- `/reading/`
+- `/reading/martin/`
 - `/methods/`
 - `/computational-tools/`
 - `/reference/`
 - `/404.html`
+
+## Foundations and Guided Reading
+
+Foundations is the knowledge, prerequisite, relationship, and reviewed-resource map. The first implementation phase changes the public label and landing-page role without breaking the established `/theory/` routes.
+
+Guided Reading supplies continuous source-aligned narratives. Its first route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, as twenty-eight chapters and eighteen appendices. The route overview exposes this forty-six-unit source spine without publishing empty chapter pages. Chapters 1, 7, and 11 are the first planned full reading units.
+
+The guide uses original prose and original or openly licensed diagrams. Textbook PDFs, complete extracted textbook text, copied figures, and page scans are not stored or published.
 
 ## Local verification
 
@@ -65,8 +75,8 @@ The deployed browser smoke is intentionally separate because it verifies the Git
 
 ## Legacy site
 
-The retired source-aligned course site, its practice cross-reference, interactive components, and validation system remain available only through the annotated tag `legacy/atlas-v3-martin-site-20260802`. See [`docs/legacy-site.md`](docs/legacy-site.md). Old public URLs are not compatibility targets.
+The retired source-aligned course site, its practice cross-reference, interactive components, and validation system remain available only through the annotated tag `legacy/atlas-v3-martin-site-20260802`. See [`docs/legacy-site.md`](docs/legacy-site.md). The current Guided Reading framework is a clean static implementation and does not restore that legacy course system. Old public URLs are not compatibility targets.
 
 ## Boundaries
 
-New scientific content is added individually after source and scope review. Topic pages are shaped by the subject rather than forced into one public template. Mathematical notation uses static native MathML with TeX annotations. The Methods entrance is a concise conceptual map; execution, convergence, validation, and provenance workflows remain in DFT Research Workflow. This repository does not store textbook PDFs, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.
+New scientific content is added individually after source and scope review. Foundations pages are shaped by the subject rather than forced into one public template. Mathematical notation uses static native MathML with TeX annotations. Guided Reading preserves a reviewed source sequence but links to Foundations instead of duplicating its concept explanations or course inventories. The Methods entrance is a concise conceptual map; execution, convergence, validation, and provenance workflows remain in DFT Research Workflow. This repository does not store textbook PDFs, extracted full texts, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.

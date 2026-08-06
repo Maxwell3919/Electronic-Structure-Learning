@@ -4,11 +4,12 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Home" description="A concise atlas of electronic-structure theory, methods, and computational tools." current="home">
+<BaseLayout title="Home" description="A concise atlas of electronic-structure foundations, guided reading, methods, and computational tools." current="home">
   <h1>Electronic Structure Atlas</h1>
-  <p class="lede">A concise public map of the theory, research methods, and computational tools used to understand electronic structure.</p>
+  <p class="lede">A concise public map of the knowledge, theory, research methods, and computational tools used to understand electronic structure.</p>
   <ul class="section-list">
-    <li><a href={href('/theory/')}>Theory</a> — mathematical, physical, chemical, and electronic-structure foundations.</li>
+    <li><a href={href('/theory/')}>Foundations</a> — what knowledge is needed, how subjects connect, and where to study them.</li>
+    <li><a href={href('/reading/')}>Guided Reading</a> — continuous, source-aligned routes through electronic-structure theory and methods.</li>
     <li><a href={href('/methods/')}>Methods</a> — scientific methods, their assumptions, inputs, outputs, and limits.</li>
     <li><a href={href('/computational-tools/')}>Computational Tools</a> — software packages, programs, workflows, databases, and supporting utilities.</li>
     <li><a href={href('/reference/')}>Reference</a> — carefully reviewed resources with explicit reasons for inclusion.</li>

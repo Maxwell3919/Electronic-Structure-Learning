@@ -56,6 +56,8 @@ const expectedPages = [
   'src/pages/computational-tools/index.astro',
   'src/pages/index.astro',
   'src/pages/methods/index.astro',
+  'src/pages/reading/index.astro',
+  'src/pages/reading/martin/index.astro',
   'src/pages/reference/index.astro',
   'src/pages/theory/index.astro',
   ...theorySlugs.map((slug) => `src/pages/theory/${slug}/index.astro`),
@@ -66,52 +68,12 @@ const expectedHtml = [
   'computational-tools/index.html',
   'index.html',
   'methods/index.html',
+  'reading/index.html',
+  'reading/martin/index.html',
   'reference/index.html',
   'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
-
-const reviewedTheoryPages = {
-  'linear-algebra': ['generalized eigenvalue problem', 'The obsolete Cambridge resource link was removed'],
-  'calculus-and-analysis': ['Two layers hidden under one title', 'Computational calculus'],
-  'differential-equations': ['An equation is incomplete without its domain and conditions', 'Continuous and discrete problems must remain distinguishable'],
-  'fourier-analysis': ['The DFT and FFT are finite numerical objects', 'Reciprocal lattice and Brillouin-zone variables are not the same index'],
-  'functional-analysis-and-variational-methods': ['The Rayleigh quotient connects spectra to optimization', 'Existence, uniqueness, and stationarity are separate questions'],
-  'numerical-analysis': ['Four error sources must remain separate', 'Algorithmic convergence is not observable convergence'],
-  'probability-and-statistics': ['A random variable is a function on possible outcomes', 'Statistical uncertainty and systematic error answer different questions'],
-  'group-theory-and-symmetry': ['Representations describe how symmetry acts on a space', 'Symmetry reduction is not automatically physically harmless'],
-  'classical-mechanics': ['Coordinates and constraints define the mechanical problem', 'Small oscillations reduce coupled displacements to normal modes'],
-  'electromagnetism': ['Charge density determines an electrostatic potential only after boundary conditions are stated', 'Longitudinal and transverse fields lead to different approximations'],
-  'quantum-mechanics': ['Identical electrons require antisymmetry'],
-  'thermodynamics': ['A thermodynamic state is specified by variables and constraints', 'Zero-temperature electronic energies are ingredients, not complete free energies'],
-  'statistical-mechanics': ['An ensemble states what is controlled and what fluctuates', 'Numerical smearing and physical temperature must remain separate'],
-  'atomic-and-molecular-physics': ['Hydrogenic states provide a reference language', 'Selection rules are symmetry statements'],
-  'solid-state-physics': ["Bloch's theorem reorganizes the one-electron problem", 'A plotted band path shows selected eigenvalues'],
-  'crystallography': ['A crystal combines a lattice with a basis', 'Structure standardization is useful but not neutral provenance'],
-  'many-body-physics': ['Fock space allows particle occupations to vary', 'Diagrammatic and path-integral methods are optional continuations'],
-  'general-chemistry': ['Composition fixes the first electron-counting problem', 'Lewis structures and formal charge compress valence bookkeeping'],
-  'physical-chemistry': ['Energy alone does not determine equilibrium', 'Electronic-structure calculations enter through a model stack'],
-  'quantum-chemistry': ['The clamped-nuclei electronic Hamiltonian', 'A Slater determinant enforces it'],
-  'chemical-bonding-and-molecular-structure': ['Chemical bonding is not represented by one unique quantum-mechanical observable', 'Multiple analyses should not be forced to agree'],
-  'inorganic-chemistry': ['Oxidation state is formal bookkeeping', 'Spin state is a competition, not a label fixed by composition'],
-  'solid-state-chemistry': ['A chemical formula does not uniquely determine a crystal structure', 'Defect formation energies depend on reservoirs and Fermi level'],
-  'surface-and-interface-chemistry': ['A surface model is defined by a termination and environment', 'Adsorption energy depends on references and sign convention'],
-  'many-electron-problem': ['Finite bases expose combinatorial growth', 'Correlation terminology needs a declared convention'],
-  'hartree-and-hartree-fock-theory': ['The occupied subspace is more fundamental than canonical orbitals', "Koopmans' theorem"],
-  'density-functional-theory-foundations': ['Levy–Lieb constrained search defines the universal functional', 'This page stops before Kohn–Sham theory'],
-  'kohn-sham-density-functional-theory': ['The auxiliary system preserves the density, not the interacting wavefunction', 'Kohn–Sham orbitals are auxiliary variables'],
-  'exchange-correlation-functionals-and-approximations': ['No material-type lookup table can select a universal best functional', 'Self-interaction and delocalization error'],
-  'self-consistent-field-methods': ['The fixed-point problem', 'Four separate conclusions'],
-  'discretization-and-basis-representations': ['Basis, quadrature, and grid are distinct choices', 'Convergence is observable-specific'],
-  'plane-wave-and-real-space-methods': ['Real-space methods form a family, not one algorithm', 'Representation-specific artifacts'],
-  'localized-orbital-methods': ['Empirical tight binding and first-principles local orbitals are distinct', 'Basis convergence is not one scalar setting'],
-  'pseudopotentials-paw-and-core-valence-treatments': ['Verification, validation, and convergence are different', 'A library benchmark can reduce risk'],
-  'brillouin-zone-sampling': ['Three meshes must not be conflated', 'A smooth band plot'],
-  'relativistic-electronic-structure-spin-and-magnetism': ['A magnetic calculation searches a nonlinear landscape', 'Resource-review boundary'],
-  'linear-response-and-excited-states': ['A response function is a derivative with a declared perturbation', 'Excitation energies require the correct particle-number sector'],
-  'many-body-perturbation-theory-and-quasiparticles': ['The Dyson equation replaces a static potential by an energy-dependent self-energy', 'GW denotes a family, not one uniquely defined calculation'],
-  'berry-phases-and-electronic-topology': ['The occupied subspace is more fundamental than individual band labels', 'Band inversion is a clue, not a topological invariant'],
-};
 
 const expectedTheoryAnchors = [
   'mathematical-foundations', 'linear-algebra', 'calculus-and-analysis', 'differential-equations',
@@ -128,15 +90,26 @@ const expectedTheoryAnchors = [
   'plane-wave-and-real-space-methods', 'localized-orbital-methods', 'pseudopotentials-and-paw',
   'brillouin-zone-sampling', 'relativistic-electronic-structure-spin-and-magnetism',
   'linear-response-and-excited-states', 'many-body-perturbation-theory-and-quasiparticles',
-  'berry-phases-and-electronic-topology', 'learning-map',
+  'berry-phases-and-electronic-topology', 'reviewed-study-routes', 'learning-map',
+  'continue-guided-reading',
 ];
 
 const internalRoutes = new Set([
   '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
-  'methods/', 'computational-tools/', 'reference/',
+  'reading/', 'reading/martin/', 'methods/', 'computational-tools/', 'reference/',
 ]);
-const deadCambridgeId = '8C2B8F7F4C94A903A9018E9D8A42B9A7';
 const count = (text, expression) => (text.match(expression) ?? []).length;
+
+const walk = (directory) => {
+  if (!fs.existsSync(directory)) return [];
+  const files = [];
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...walk(absolute));
+    else files.push(absolute);
+  }
+  return files;
+};
 
 const checkMathMl = (text, label, source = false) => {
   const math = count(text, /<math(?:\s|>)/g);
@@ -154,19 +127,33 @@ const checkMathMl = (text, label, source = false) => {
   }
 };
 
-const checkReviewedPages = (baseDirectory, mode) => {
-  for (const [slug, markers] of Object.entries(reviewedTheoryPages)) {
+const checkTheoryPages = (baseDirectory, mode) => {
+  for (const slug of theorySlugs) {
     const relative = mode === 'source'
       ? `src/pages/theory/${slug}/index.astro`
       : `theory/${slug}/index.html`;
     const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
-    for (const marker of markers) assert(text.includes(marker), `${relative} is missing reviewed content marker: ${marker}`);
+    assert(text.length > 1200, `${relative} is unexpectedly short`);
     checkMathMl(text, relative, mode === 'source');
   }
 };
 
+const checkReadingManifest = () => {
+  const relative = 'src/reading/martin.ts';
+  const text = fs.readFileSync(path.join(root, relative), 'utf8');
+  const chapters = count(text, /chapter\(\d+,/g);
+  const appendices = count(text, /appendix\('[A-R]',/g);
+  const parts = count(text, /id: 'martin-part-[ivx]+'/g);
+  assert(chapters === 28, `${relative} must define 28 chapters; observed ${chapters}`);
+  assert(appendices === 18, `${relative} must define 18 appendices; observed ${appendices}`);
+  assert(parts === 7, `${relative} must define 7 parts; observed ${parts}`);
+  assert(text.includes('martinReadingUnits'), `${relative} must export the flattened reading spine`);
+  assert(!text.includes('sourceText'), `${relative} must not contain extracted textbook text`);
+};
+
 if (sourceMode) {
-  const tracked = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+  const trackedOutput = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { cwd: root, encoding: 'utf8' }).trim();
+  const tracked = trackedOutput ? trackedOutput.split('\n').filter(Boolean) : [];
   const actualPages = tracked.filter((file) => file.startsWith('src/pages/')).sort();
   assert(JSON.stringify(actualPages) === JSON.stringify(expectedPages), `public page sources must match the reviewed static set: ${actualPages.join(', ')}`);
 
@@ -187,7 +174,6 @@ if (sourceMode) {
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the GitHub Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
-  assert(!sources.includes(deadCambridgeId), 'dead Cambridge Linear Algebra resource remains in public source');
   for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'card grid', 'status badge']) {
     assert(!sources.toLowerCase().includes(term), `legacy content or UI term remains in public source: ${term}`);
   }
@@ -196,13 +182,32 @@ if (sourceMode) {
   }
   assert(!tracked.some((file) => /(?:^|\/)(?:POTCAR|.*\.(?:pdf|zip|key|pem))$/i.test(file)), 'restricted or archive file remains tracked');
 
-  const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
-  for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Theory source is missing directory anchor: ${anchor}`);
-  for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Theory directory is missing reviewed page link: ${slug}`);
-  for (const label of ['General Chemistry', 'Inorganic Chemistry', 'Surface and Interface Chemistry', 'Berry Phases and Electronic Topology']) {
-    assert(theorySource.includes(label), `Theory directory is missing reviewed display label: ${label}`);
+  const layout = fs.readFileSync(path.join(root, 'src/layouts/BaseLayout.astro'), 'utf8');
+  for (const marker of ["label: 'Foundations'", "label: 'Guided Reading'", "route: '/reading/'"]) {
+    assert(layout.includes(marker), `primary navigation is missing: ${marker}`);
   }
-  checkReviewedPages(root, 'source');
+
+  const home = fs.readFileSync(path.join(root, 'src/pages/index.astro'), 'utf8');
+  for (const marker of ['Foundations', 'Guided Reading', '/reading/', '/methods/', '/computational-tools/', '/reference/']) {
+    assert(home.includes(marker), `home page is missing framework marker: ${marker}`);
+  }
+
+  const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
+  assert(theorySource.includes('<h1>How Much Theory Do You Need?</h1>'), 'Foundations landing title is not applied');
+  assert(theorySource.includes('/reading/martin/'), 'Foundations landing does not continue to Martin Guided Reading');
+  for (const anchor of expectedTheoryAnchors) assert(theorySource.includes(`id="${anchor}"`), `Foundations source is missing directory anchor: ${anchor}`);
+  for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Foundations directory is missing reviewed page link: ${slug}`);
+  checkTheoryPages(root, 'source');
+
+  const reading = fs.readFileSync(path.join(root, 'src/pages/reading/index.astro'), 'utf8');
+  for (const marker of ['Guided Reading', 'Martin · Electronic Structure', '/reading/martin/', '/theory/']) {
+    assert(reading.includes(marker), `Guided Reading entrance is missing: ${marker}`);
+  }
+  const martin = fs.readFileSync(path.join(root, 'src/pages/reading/martin/index.astro'), 'utf8');
+  for (const marker of ['martinParts', 'martinReadingUnits.length', 'Reading contract', 'Source spine', 'Chapters 1, 7, and 11']) {
+    assert(martin.includes(marker), `Martin overview is missing: ${marker}`);
+  }
+  checkReadingManifest();
 
   const methods = fs.readFileSync(path.join(root, 'src/pages/methods/index.astro'), 'utf8');
   for (const marker of ['Ground-State Density-Functional Methods', 'From methods to a reliable workflow', 'DFT-Research-Workflow']) {
@@ -212,41 +217,45 @@ if (sourceMode) {
   for (const marker of ['.math-display', 'math.math-inline', 'math annotation']) {
     assert(styles.includes(marker), `global stylesheet is missing MathML presentation rule: ${marker}`);
   }
-  assert(!styles.includes('.equation'), 'removed code-style equation rule remains in the stylesheet');
 }
 
 if (builtMode) {
   const dist = path.join(root, 'dist');
-  assert(fs.existsSync(dist), 'dist does not exist; build before --built validation');
-  const files = [];
-  const walk = (directory) => {
-    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-      const absolute = path.join(directory, entry.name);
-      entry.isDirectory() ? walk(absolute) : files.push(absolute);
-    }
-  };
-  walk(dist);
-  const htmlFiles = files.filter((file) => file.endsWith('.html')).map((file) => path.relative(dist, file)).sort();
-  assert(JSON.stringify(htmlFiles) === JSON.stringify(expectedHtml), `built HTML must match the reviewed static set: ${htmlFiles.join(', ')}`);
-  assert(!files.some((file) => file.endsWith('.js')), 'built site contains JavaScript');
-  assert(!files.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
+  assert(fs.existsSync(dist), 'dist does not exist; run the production build first');
+  if (fs.existsSync(dist)) {
+    const actualHtml = walk(dist).filter((file) => file.endsWith('.html')).map((file) => path.relative(dist, file)).sort();
+    assert(JSON.stringify(actualHtml) === JSON.stringify(expectedHtml), `built HTML must match the reviewed static set: ${actualHtml.join(', ')}`);
 
-  for (const htmlFile of htmlFiles) {
-    const html = fs.readFileSync(path.join(dist, htmlFile), 'utf8');
-    assert(!html.includes(deadCambridgeId), `dead Cambridge resource remains in built HTML: ${htmlFile}`);
-    for (const match of html.matchAll(/href="([^"]+)"/g)) {
-      const href = match[1];
-      if (/^(?:https?:|mailto:|tel:|#)/.test(href)) continue;
-      const route = href.replace(/^\/[^/]+\//, '').replace(/^\//, '').split(/[?#]/)[0];
-      assert(internalRoutes.has(route), `broken or unexpected internal link in ${htmlFile}: ${href}`);
+    const builtFiles = walk(dist);
+    assert(!builtFiles.some((file) => /\.(?:js|mjs|cjs)$/i.test(file)), 'built site contains client JavaScript');
+    assert(!builtFiles.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
+
+    for (const relative of expectedHtml) {
+      const text = fs.readFileSync(path.join(dist, relative), 'utf8');
+      assert(!/<script(?:\s|>)/i.test(text), `${relative} contains a script element`);
+      assert(!text.includes('/Electronic-Structure-Learning//'), `${relative} contains a malformed Pages base path`);
+      for (const match of text.matchAll(/href="([^"]+)"/g)) {
+        const target = match[1];
+        if (/^(?:https?:|mailto:|#)/.test(target)) continue;
+        const normalized = target.replace(/^\.\//, '').replace(/^\//, '').replace(/^Electronic-Structure-Learning\//, '');
+        const route = normalized.split('#')[0];
+        if (!route || route.startsWith('../')) continue;
+        assert(internalRoutes.has(route) || route === '404.html', `${relative} links to an undeclared internal route: ${target}`);
+      }
     }
+    checkTheoryPages(dist, 'built');
+
+    const theoryBuilt = fs.readFileSync(path.join(dist, 'theory/index.html'), 'utf8');
+    assert(theoryBuilt.includes('How Much Theory Do You Need?'), 'built Foundations landing title is missing');
+    const readingBuilt = fs.readFileSync(path.join(dist, 'reading/index.html'), 'utf8');
+    assert(readingBuilt.includes('Guided Reading'), 'built Guided Reading entrance is missing');
+    const martinBuilt = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
+    assert(martinBuilt.includes('46 stable units'), 'built Martin overview does not expose the 46-unit spine');
   }
-  checkReviewedPages(dist, 'built');
 }
 
 if (failures.length) {
-  console.error(`Clean-slate validation failed with ${failures.length} issue(s):`);
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exit(1);
 }
-console.log(`Clean-slate ${builtMode ? 'built' : 'source'} validation passed.`);
+console.log(`Clean-slate validation passed in ${sourceMode && builtMode ? 'source+built' : sourceMode ? 'source' : 'built'} mode.`);

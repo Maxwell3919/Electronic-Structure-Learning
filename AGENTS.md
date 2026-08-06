@@ -4,9 +4,9 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Theory, Methods, Computational Tools, Reference, thirty-nine individually reviewed Theory pages, and a general 404 page.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently limited to Home, Foundations, Guided Reading, Methods, Computational Tools, Reference, thirty-nine individually reviewed Foundations pages, two Guided Reading overview pages, and a general 404 page. The established Foundations routes remain under `/theory/` during the first migration phase.
 
-The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. New work does not inherit legacy content or URL-compatibility obligations by default.
+The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. The current Guided Reading framework is a clean implementation and does not inherit legacy progress, practice, status, or URL-compatibility obligations.
 
 ## Before changing the repository
 
@@ -23,12 +23,15 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Keep navigation usable without JavaScript and on narrow screens.
 - Author mathematical notation with native MathML. Every mathematical expression must include a TeX annotation inside `<semantics>`; display equations use the shared `.math-display` wrapper. Do not present equations as code-styled Unicode text, images, or client-rendered MathJax/KaTeX output.
 - Keep display mathematics horizontally contained at narrow widths. Internal equation scrolling is acceptable; page-level horizontal overflow is not.
-- Do not restore legacy Part, Chapter, Appendix, practice, learning-path, reading-system, lab, case, literature, status, or progress structures merely because they exist in history.
+- Foundations remains the knowledge, prerequisite, relationship, and reviewed-resource map. Do not turn it into one mandatory course or flatten broad subjects and focused electronic-structure modules into one granularity.
+- Guided Reading may use a small source-aligned manifest with a real public overview. Do not publish empty chapter pages, progress badges, source-page markers, authoring prompts, or a general reading-management system.
+- Do not restore legacy Part, Chapter, Appendix, practice, learning-path, lab, case, literature, status, or progress structures merely because they exist in history. Source-aligned identifiers in the reviewed Martin manifest are permitted only for the current static Guided Reading consumer.
 
 ## Content and evidence
 
 - Add content individually after scientific and source review; do not generate bulk filler.
-- Do not impose one visible section contract on all Theory pages. Let each subject determine its explanatory order while keeping scope, sources, and limitations explicit.
+- Use original prose for Guided Reading. Preserve a reviewed source sequence while separating the stable conceptual spine from dated modern extensions. Link to Foundations rather than duplicating its complete concept explanations or course inventories.
+- Do not impose one visible section contract on all Foundations pages. Let each subject determine its explanatory order while keeping scope, sources, and limitations explicit.
 - Keep DFT foundations, Kohn–Sham construction, XC approximation, SCF solution, and numerical representation as distinct responsibilities. Do not merge them into a generic “DFT” page.
 - Keep reciprocal-space vectors, plane-wave basis size, FFT grids, and Brillouin-zone sampling distinct. Do not present a band path as a BZ integration mesh or full-zone search.
 - Treat pseudopotential and PAW datasets as versioned scientific inputs. Library verification does not replace system- and observable-specific validation.
@@ -56,9 +59,9 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - At degeneracies or within composite occupied manifolds, formulate claims through the occupied subspace, projector, non-Abelian connection, or Wilson loop rather than arbitrary energy-ordered band labels.
 - Do not infer topology from band inversion, one symmetry indicator, one edge crossing, or one Wannier interpolation alone. State the invariant, protecting symmetry, gap, filling, selected subspace, spin/SOC/magnetic model, and dimensional setting.
 - Converge topology claims with respect to k-space meshes, loop discretization, subspace and disentanglement windows, structural and Hamiltonian choices, and boundary size/termination when boundary spectra are used.
-- Keep theory, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
+- Keep foundations, guided reading, methods, tools, and references distinct. Methods must not become a paper-reading database or duplicate DFT Research Workflow operation contracts.
 - Distinguish program execution, SCF convergence, representation and sampling convergence, observable convergence, and scientific support.
-- Use original prose. Do not commit textbook pages, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
+- Use original prose. Do not commit textbook pages, complete extracted textbook text, copyrighted figures, licensed software content, large outputs, credentials, private paths, or restricted files.
 - Remove or replace dead external resources when the official destination can no longer be verified. Do not preserve a broken link merely because it appeared in an earlier review.
 
 ## Verification
@@ -71,7 +74,7 @@ npm run check
 git diff --check
 ```
 
-Changes affecting public behavior also require the clean-slate browser smoke at desktop and 390-pixel widths with JavaScript enabled and disabled. Theory pages containing mathematics must additionally verify visible native MathML, TeX annotations, and no page-level horizontal overflow. A successful build verifies only the covered structure and runtime behavior; it does not constitute scientific review.
+Changes affecting public behavior also require the clean-slate browser smoke at desktop and 390-pixel widths with JavaScript enabled and disabled. Foundations pages containing mathematics must additionally verify visible native MathML, TeX annotations, and no page-level horizontal overflow. A successful build verifies only the covered structure and runtime behavior; it does not constitute scientific review.
 
 ## Deployment
 
