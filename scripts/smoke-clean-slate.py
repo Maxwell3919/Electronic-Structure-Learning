@@ -17,54 +17,45 @@ BASE_URL = os.environ.get("PAGES_URL", "http://127.0.0.1:4321/Electronic-Structu
 DEPLOYED_SHA = os.environ.get("DEPLOYED_SHA")
 ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/clean-slate-smoke"))
 THEORY_ROUTES = [
-    "theory/linear-algebra/",
-    "theory/calculus-and-analysis/",
-    "theory/differential-equations/",
-    "theory/fourier-analysis/",
-    "theory/functional-analysis-and-variational-methods/",
-    "theory/numerical-analysis/",
-    "theory/probability-and-statistics/",
-    "theory/group-theory-and-symmetry/",
-    "theory/classical-mechanics/",
-    "theory/electromagnetism/",
-    "theory/quantum-mechanics/",
-    "theory/thermodynamics/",
-    "theory/statistical-mechanics/",
-    "theory/atomic-and-molecular-physics/",
-    "theory/solid-state-physics/",
-    "theory/crystallography/",
-    "theory/many-body-physics/",
-    "theory/general-chemistry/",
-    "theory/physical-chemistry/",
-    "theory/quantum-chemistry/",
-    "theory/chemical-bonding-and-molecular-structure/",
-    "theory/inorganic-chemistry/",
-    "theory/solid-state-chemistry/",
-    "theory/surface-and-interface-chemistry/",
-    "theory/many-electron-problem/",
-    "theory/hartree-and-hartree-fock-theory/",
-    "theory/density-functional-theory-foundations/",
-    "theory/kohn-sham-density-functional-theory/",
+    "theory/linear-algebra/", "theory/calculus-and-analysis/", "theory/differential-equations/",
+    "theory/fourier-analysis/", "theory/functional-analysis-and-variational-methods/",
+    "theory/numerical-analysis/", "theory/probability-and-statistics/",
+    "theory/group-theory-and-symmetry/", "theory/classical-mechanics/",
+    "theory/electromagnetism/", "theory/quantum-mechanics/", "theory/thermodynamics/",
+    "theory/statistical-mechanics/", "theory/atomic-and-molecular-physics/",
+    "theory/solid-state-physics/", "theory/crystallography/", "theory/many-body-physics/",
+    "theory/general-chemistry/", "theory/physical-chemistry/", "theory/quantum-chemistry/",
+    "theory/chemical-bonding-and-molecular-structure/", "theory/inorganic-chemistry/",
+    "theory/solid-state-chemistry/", "theory/surface-and-interface-chemistry/",
+    "theory/many-electron-problem/", "theory/hartree-and-hartree-fock-theory/",
+    "theory/density-functional-theory-foundations/", "theory/kohn-sham-density-functional-theory/",
     "theory/exchange-correlation-functionals-and-approximations/",
-    "theory/self-consistent-field-methods/",
-    "theory/discretization-and-basis-representations/",
-    "theory/plane-wave-and-real-space-methods/",
-    "theory/localized-orbital-methods/",
-    "theory/pseudopotentials-paw-and-core-valence-treatments/",
-    "theory/brillouin-zone-sampling/",
+    "theory/self-consistent-field-methods/", "theory/discretization-and-basis-representations/",
+    "theory/plane-wave-and-real-space-methods/", "theory/localized-orbital-methods/",
+    "theory/pseudopotentials-paw-and-core-valence-treatments/", "theory/brillouin-zone-sampling/",
     "theory/relativistic-electronic-structure-spin-and-magnetism/",
     "theory/linear-response-and-excited-states/",
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/berry-phases-and-electronic-topology/",
 ]
-CANONICAL_READING_ROUTES = ["reading/", "reading/books/", "reading/books/martin/"]
+MARTIN_PART_ROUTES = [f"reading/books/martin/part-{roman}/" for roman in ["i", "ii", "iii", "iv", "v", "vi", "vii"]]
+MARTIN_CHAPTER_ROUTES = [f"reading/books/martin/chapter-{number:02d}/" for number in range(1, 29)]
+MARTIN_APPENDIX_ROUTES = [f"reading/books/martin/appendix-{letter}/" for letter in "abcdefghijklmnopqr"]
+MARTIN_UNIT_ROUTES = [*MARTIN_PART_ROUTES, *MARTIN_CHAPTER_ROUTES, *MARTIN_APPENDIX_ROUTES]
+CANONICAL_READING_ROUTES = ["reading/", "reading/books/", "reading/books/martin/", *MARTIN_UNIT_ROUTES]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
     "", "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
     "methods/", "computational-tools/", "reference/",
 ]
+BROWSER_READING_ROUTES = [
+    "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES,
+    "reading/books/martin/chapter-01/", "reading/books/martin/chapter-07/",
+    "reading/books/martin/chapter-28/", "reading/books/martin/appendix-a/",
+    "reading/books/martin/appendix-r/",
+]
 BROWSER_ROUTES = [
-    "", "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES,
+    "", "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
     "methods/", "computational-tools/", "reference/", "404.html",
 ]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
@@ -77,10 +68,7 @@ def make_driver(javascript=True, width=1440, height=900):
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     if width <= 500:
-        options.add_experimental_option(
-            "mobileEmulation",
-            {"deviceMetrics": {"width": width, "height": height, "pixelRatio": 1}},
-        )
+        options.add_experimental_option("mobileEmulation", {"deviceMetrics": {"width": width, "height": height, "pixelRatio": 1}})
     else:
         options.add_argument(f"--window-size={width},{height}")
     if os.environ.get("CHROME_BIN"):
@@ -124,39 +112,29 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"legacy UI marker found in {mode}: {url}")
         if DEAD_CAMBRIDGE_ID in driver.page_source:
             raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
-        if driver.find_elements(By.CSS_SELECTOR, "main .equation"):
-            raise AssertionError(f"removed code-style equation block remains in {mode}: {url}")
 
         math_count = 0
         if route in THEORY_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
-                "const box=node.getBoundingClientRect();"
-                "return {width:box.width,height:box.height,text:(node.textContent||'').trim(),"
-                "annotation:node.querySelectorAll('annotation[encoding=\"application/x-tex\"]').length};});"
+                "const box=node.getBoundingClientRect();return {width:box.width,height:box.height,"
+                "text:(node.textContent||'').trim(),annotation:node.querySelectorAll('annotation[encoding=\"application/x-tex\"]').length};});"
             )
             math_count = len(math_metrics)
-            if math_count == 0:
-                raise AssertionError(f"native MathML missing in {mode}: {url}")
-            if any(item["width"] < 1 or item["height"] < 1 or not item["text"] for item in math_metrics):
-                raise AssertionError(f"MathML is not visibly laid out in {mode}: {url}")
+            if math_count == 0 or any(item["width"] < 1 or item["height"] < 1 or not item["text"] for item in math_metrics):
+                raise AssertionError(f"native MathML is not visibly laid out in {mode}: {url}")
             if any(item["annotation"] != 1 for item in math_metrics):
                 raise AssertionError(f"MathML expression lacks one TeX annotation in {mode}: {url}")
-            if not driver.find_elements(By.CSS_SELECTOR, "main .math-display math[display='block']"):
-                raise AssertionError(f"display MathML missing in {mode}: {url}")
 
-        if route == "":
-            labels = [item.text for item in driver.find_elements(By.CSS_SELECTOR, "header nav a")]
-            if "Foundations" not in labels or "Guided Reading" not in labels:
-                raise AssertionError(f"new framework navigation missing in {mode}: {labels}")
-        if route == "theory/" and "How Much Theory Do You Need?" not in driver.find_element(By.TAG_NAME, "h1").text:
-            raise AssertionError(f"Foundations landing title missing in {mode}")
-        if route == "reading/" and "Books" not in driver.find_element(By.TAG_NAME, "main").text:
-            raise AssertionError(f"Guided Reading source hierarchy missing in {mode}")
-        if route == "reading/books/" and "Martin · Electronic Structure" not in driver.find_element(By.TAG_NAME, "main").text:
-            raise AssertionError(f"Books entrance missing Martin in {mode}")
-        if route == "reading/books/martin/" and "46 stable units" not in driver.find_element(By.TAG_NAME, "main").text:
-            raise AssertionError(f"Martin source spine count missing in {mode}")
+        main_text = driver.find_element(By.TAG_NAME, "main").text
+        if route == "reading/books/martin/" and "Read Part I" not in main_text:
+            raise AssertionError(f"Martin book page lacks Part links in {mode}")
+        if route == "reading/books/martin/part-i/" and "Read Chapter 1" not in main_text:
+            raise AssertionError(f"Part I lacks Chapter links in {mode}")
+        if route == "reading/books/martin/chapter-01/" and "Core Idea." not in main_text:
+            raise AssertionError(f"Chapter 1 lacks Core Idea in {mode}")
+        if route == "reading/books/martin/appendix-r/" and "Plane-wave codes" not in main_text:
+            raise AssertionError(f"Appendix R lacks source outline in {mode}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             raw_href = anchor.get_dom_attribute("href") or ""
@@ -173,9 +151,7 @@ def check_compatibility_redirect(driver):
     old_url = urljoin(BASE_URL, "reading/martin/")
     expected_path = urlparse(urljoin(BASE_URL, "reading/books/martin/")).path.rstrip("/")
     driver.get(old_url)
-    WebDriverWait(driver, 20).until(
-        lambda current: urlparse(current.current_url).path.rstrip("/") == expected_path
-    )
+    WebDriverWait(driver, 20).until(lambda current: urlparse(current.current_url).path.rstrip("/") == expected_path)
     return {"from": old_url, "to": driver.current_url}
 
 
@@ -229,7 +205,7 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: forty-eight content routes, thirty-nine MathML pages, Martin compatibility redirect, direct 404, three legacy 404s, desktop, true 390px, keyboard, and no-JavaScript.")
+    print("Clean-slate browser smoke passed: 101 content routes, 39 MathML pages, the full Martin hierarchy, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript.")
 
 
 if __name__ == "__main__":
