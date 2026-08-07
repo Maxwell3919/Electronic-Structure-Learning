@@ -1,0 +1,382 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-8-1-overview', label: '8.1 Overview' },
+  { id: 'section-8-2-xc-hole', label: '8.2 Exc and the Exchange–Correlation Hole' },
+  { id: 'section-8-3-lsda', label: '8.3 Local (Spin) Density Approximation (LSDA)' },
+  { id: 'section-8-4-why-local-works', label: '8.4 How Can the Local Approximation Possibly Work As Well As It Does?' },
+  { id: 'section-8-5-gga', label: '8.5 Generalized-Gradient Approximations (GGAs)' },
+  { id: 'section-8-6-vxc', label: '8.6 LDA and GGA Expressions for the Potential Vxc' },
+  { id: 'section-8-7-ada-wda', label: '8.7 Average and Weighted Density Formulations: ADA and WDA' },
+  { id: 'section-8-8-fitted', label: '8.8 Functionals Fitted to Databases' },
+];
+
+export const modernPerspective = [
+  'The choice of exchange–correlation approximation is a model choice, not merely a numerical setting. A functional that performs well for equilibrium structures can still give poor reaction energies, magnetic energy differences, charge-transfer states, surface energetics, or band gaps. Numerical convergence within one functional therefore does not establish accuracy of the functional for a new observable.',
+  'Energy and potential quality are distinct. Two approximations can produce similar total energies while generating noticeably different functional derivatives, densities, orbital energies, forces, or response functions. Correct asymptotic behavior, self-interaction cancellation, derivative discontinuities, and smooth numerical derivatives are properties that must be examined separately from the integrated exchange–correlation energy.',
+  'Broken-symmetry semilocal solutions can mimic some energetic consequences of strong static correlation, as in stretched H2, but the symmetry breaking changes the auxiliary state rather than reconstructing the exact entangled singlet. A lower self-consistent energy is therefore not evidence that the missing many-body structure has been recovered.',
+  'Database-fitted and machine-learned functionals can encode information unavailable to simple analytic forms, but transferability depends on their training domain and on which exact constraints are retained. Benchmark performance should therefore be interpreted together with chemical coverage, density regimes, dimensionality, spin states, and observables represented in the fit.',
+];
+
+export const synthesis =
+  'Chapter 8 explains why practical Kohn–Sham DFT can work despite the unknown exact exchange–correlation functional. The exchange–correlation hole provides the physical object that connects Pauli exclusion, Coulomb correlation, self-interaction cancellation, and the coupling-constant average to the energy. LSDA replaces that hole locally by the one from a homogeneous electron gas, while GGA adds dimensionless information about density variation and enforces selected constraints when a naive gradient expansion fails. The success of these approximations depends partly on integrated and spherical-average properties of the hole, which are less demanding than reproducing its full shape, but their failures become visible in self-interaction, asymptotic potentials, stretched bonds, strongly nonlocal correlation, and large-gradient regimes. The functional derivative then introduces a second layer of responsibility because a useful energy functional must also generate a stable and physically meaningful Kohn–Sham potential. Chapter 9 continues from this point by allowing orbitals, kinetic-energy density, explicit nonlocality, and generalized Kohn–Sham operators to carry information that a semilocal density functional cannot represent.';
+---
+
+<section aria-labelledby="section-8-1-overview">
+  <h2 id="section-8-1-overview">8.1 Overview</h2>
+  <p>
+    Chapter 7 isolates the unknown many-electron physics of the Kohn–Sham construction in the exchange–correlation functional. Chapter 8 asks the practical question that makes density-functional theory useful: how can that formally complicated functional be approximated by expressions simple enough to evaluate for atoms, molecules, and solids? Martin organizes the answer around the exchange–correlation hole rather than around a list of named functionals. The hole supplies a physical picture of what exchange and correlation must accomplish, and its exact constraints guide approximations even when its detailed shape is unknown.
+  </p>
+  <p>
+    The first approximation is local. At every point in an inhomogeneous system, LSDA uses the exchange–correlation energy of a homogeneous electron gas having the same local spin densities. The next step is semilocal: a GGA also senses how rapidly those densities change in the immediate neighborhood. These are the first two levels in the hierarchy developed across Chapters 8 and 9. Their importance comes from the fact that they are inexpensive, broadly applicable, and often accurate enough for ground-state structures and energetics to make Kohn–Sham DFT a standard electronic-structure method.
+  </p>
+  <p>
+    Their limitations are equally important. Long-range dispersion requires correlations between spatially separated fluctuations; stretched bonds can require strong static correlation; finite systems expose incorrect self-interaction and asymptotic potentials; and large density gradients probe regimes where a simple local expansion is no longer controlled. Martin therefore uses this chapter to establish both the physical reasons for the success of locality and the conditions that motivate the more nonlocal or orbital-dependent constructions of Chapter 9. The broader taxonomy is linked in <a href={href('theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-2-xc-hole">
+  <h2 id="section-8-2-xc-hole">8.2 Exc and the Exchange–Correlation Hole</h2>
+  <p>
+    The exchange–correlation energy can always be written as an integral of an energy per electron. This notation is useful because it separates the local position at which an electron is considered from the generally nonlocal density dependence of the exact functional:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="exchange correlation energy written as energy per electron">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <msub><mi>ε</mi><mi>xc</mi></msub><mo>(</mo><mo>[</mo><mi>n</mi><mo>]</mo><mo>,</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;[n]=\int d^3r\,n(r)\epsilon_&#123;xc&#125;([n],r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The Hartree term treats the electron density as a classical continuous charge distribution and therefore contains the average Coulomb interaction, including an unphysical interaction of each element of the density with itself. Exchange and correlation describe how the actual conditional probability for another electron differs from that Hartree picture. Around an electron fixed at <em>r</em>, the exchange–correlation hole <em>n</em><sub>xc</sub>(<em>r</em>, <em>r</em>′) measures the corresponding deficit or redistribution of electronic probability. Its interaction contribution per electron is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="interaction energy from exchange correlation hole">
+      <semantics>
+        <mrow>
+          <msubsup><mi>ε</mi><mi>xc</mi><mi>int</mi></msubsup><mo>(</mo><mo>[</mo><mi>n</mi><mo>]</mo><mo>,</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mfrac>
+            <mrow><msub><mi>n</mi><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>,</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo></mrow>
+            <mrow><mo>|</mo><mi>r</mi><mo>−</mo><msup><mi>r</mi><mo>′</mo></msup><mo>|</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\epsilon_&#123;xc&#125;^&#123;\mathrm&#123;int&#125;&#125;([n],r)=\frac&#123;1&#125;&#123;2&#125;\int d^3r'\,\frac&#123;n_&#123;xc&#125;(r,r')&#125;&#123;|r-r'|&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Several constraints follow immediately. The exchange hole comes entirely from antisymmetry and removes one same-spin electron from the conditional distribution; it is never positive in Martin's convention. The correlation hole redistributes probability and therefore has zero net weight: its short-range depletion must be compensated elsewhere. Only the spherical average of the hole around the reference electron contributes to the Coulomb energy because the kernel depends only on the scalar separation. Consequently, an approximation can produce a useful energy even when the full angular structure of its hole is inaccurate.
+  </p>
+  <p>
+    The interaction hole alone is not the complete correlation energy because correlation also changes the kinetic energy relative to the auxiliary Kohn–Sham system. The adiabatic-connection or coupling-constant construction incorporates both effects. Imagine scaling the electron–electron interaction continuously by a parameter λ while adjusting the external potential so that the density remains fixed. At λ=0 the state is the noninteracting Kohn–Sham reference; at λ=1 it is the physical interacting system. Averaging the hole along this path defines
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="coupling constant averaged exchange correlation hole">
+      <semantics>
+        <mrow>
+          <msub><mover><mi>n</mi><mo>¯</mo></mover><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>,</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo>
+          <msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>d</mi><mi>λ</mi>
+          <msubsup><mi>n</mi><mi>xc</mi><mi>λ</mi></msubsup><mo>(</mo><mi>r</mi><mo>,</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\bar n_&#123;xc&#125;(r,r')=\int_0^1 d\lambda\,n_&#123;xc&#125;^\lambda(r,r').</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    With that averaged hole, the exact Kohn–Sham exchange–correlation functional takes a Coulomb-like form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="exact exchange correlation energy from coupling constant averaged hole">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo>
+          <mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mfrac>
+            <mrow><msub><mover><mi>n</mi><mo>¯</mo></mover><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>,</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo></mrow>
+            <mrow><mo>|</mo><mi>r</mi><mo>−</mo><msup><mi>r</mi><mo>′</mo></msup><mo>|</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;[n]=\frac&#123;1&#125;&#123;2&#125;\int d^3r\,n(r)\int d^3r'\,\frac&#123;\bar n_&#123;xc&#125;(r,r')&#125;&#123;|r-r'|&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This relation is the conceptual center of the chapter. It explains why hole normalization, short-range behavior, spin structure, scaling, and other exact constraints are useful when designing an approximate functional. An arbitrary formula for the energy can violate these conditions even if it fits a few numbers; an approximation associated with a physically admissible hole inherits nontrivial structure automatically. The underlying many-electron probability concepts connect back to <a href={href('theory/many-electron-problem/')}>The Many-Electron Problem</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-3-lsda">
+  <h2 id="section-8-3-lsda">8.3 Local (Spin) Density Approximation (LSDA)</h2>
+  <p>
+    The homogeneous electron gas supplies a reference hole whose density and spin-polarization dependence can be characterized accurately. Exchange is known analytically, while correlation has been determined to high precision by many-body calculations and parameterized for practical use. LSDA transfers this homogeneous-gas information point by point to an inhomogeneous system: the exchange–correlation energy density at <em>r</em> is approximated by that of a uniform gas having the same local spin densities.
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local spin density approximation exchange correlation energy">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>xc</mi><mi>LSDA</mi></msubsup><mo>[</mo><msup><mi>n</mi><mo>↑</mo></msup><mo>,</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>]</mo><mo>=</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <msubsup><mi>ε</mi><mi>xc</mi><mi>hom</mi></msubsup>
+          <mo>(</mo><msup><mi>n</mi><mo>↑</mo></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>,</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;^&#123;LSDA&#125;[n^\uparrow,n^\downarrow]=\int d^3r\,n(r)\epsilon_&#123;xc&#125;^&#123;hom&#125;(n^\uparrow(r),n^\downarrow(r)).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The spin dependence can equivalently be expressed through the total density and the local fractional spin polarization
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local spin polarization">
+      <semantics>
+        <mrow>
+          <mi>ζ</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac>
+            <mrow><msup><mi>n</mi><mo>↑</mo></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>−</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>(</mo><mi>r</mi><mo>)</mo></mrow>
+            <mrow><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\zeta(r)=\frac&#123;n^\uparrow(r)-n^\downarrow(r)&#125;&#123;n(r)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    LDA is the unpolarized special case. The crucial approximation is therefore spatial locality, not the use of an empirical atomic fit: at each position the real, inhomogeneous coupling-constant-averaged hole is replaced by the hole of a homogeneous gas at the local density and polarization. Because the uniform-gas exchange and correlation data are themselves well defined, a carefully converged LSDA calculation directly tests the consequences of this local transfer.
+  </p>
+  <p>
+    Density enters twice in this logic. It chooses the reference electron-gas state, and through that state it determines a characteristic exchange–correlation-hole size. High-density regions have a relatively compact local reference hole; lower-density regions have a broader one. The approximation therefore contains a density-dependent length scale even though it contains no explicit density gradient. This helps explain why LSDA is richer than simply assigning a constant energy per electron everywhere.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-4-why-local-works">
+  <h2 id="section-8-4-why-local-works">8.4 How Can the Local Approximation Possibly Work As Well As It Does?</h2>
+  <p>
+    Atoms and covalent solids are visibly inhomogeneous, so the accuracy of a homogeneous-gas approximation cannot be justified by saying that their densities vary only slowly. Martin instead returns to the hole. An LSDA hole is the exact hole of some homogeneous electron system and therefore obeys important sum rules by construction. Moreover, the energy sees the Coulomb-weighted spherical average of the hole rather than its complete anisotropic shape. An approximation can therefore miss substantial angular detail while retaining the integrated deficit, characteristic range, and spherical average that dominate the energy.
+  </p>
+  <p>
+    Atomic examples make this distinction concrete. Around an electron displaced from the center of an atom, the exact exchange hole can be strongly nonspherical, yet its spherical average resembles the homogeneous-gas hole evaluated at the local density much more closely than the full three-dimensional shape does. LSDA therefore succeeds for an energy for a reason that is subtler than the atom “looking locally uniform.” The relevant averaged object is substantially more transferable than the raw density geometry suggests.
+  </p>
+  <p>
+    The same reasoning has limits. A one-electron atom should have exact cancellation between Hartree self-interaction and exchange and should have no correlation energy. Local approximations do not satisfy this exactly: residual self-interaction distorts the energy and, more visibly, makes the long-range Kohn–Sham potential decay incorrectly. The resulting highest occupied level can be too high and the electron too weakly bound. Thus a tolerable integrated energy does not imply that the functional derivative has the correct asymptotic physics.
+  </p>
+  <p>
+    Stretched H₂ exposes a different failure. Near equilibrium, LSDA can give a remarkably good binding curve because dynamic correlation around the normal bond geometry is captured effectively. At large separation, the exact singlet requires strong correlation between the two electrons while preserving total spin symmetry. An unrestricted semilocal calculation instead lowers its energy by localizing opposite spin densities on opposite atoms. The broken-symmetry density mimics part of the energetic avoidance of double occupancy, but it is not the exact spin singlet. This is an early example of the static-correlation problem that recurs in transition-metal compounds and bond breaking.
+  </p>
+  <p>
+    Silicon provides a solid-state version of the same lesson. Many-body estimates of the exchange and correlation holes vary strongly between bond-center and interstitial regions, but their spherical averages can still be reasonably close to LSDA over much of the important range. Exchange is the larger contribution and carries the major self-interaction cancellation; correlation deepens the short-range hole and compensates that change at longer range. The remaining discrepancies identify exactly where adding information about spatial variation may improve the functional.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-5-gga">
+  <h2 id="section-8-5-gga">8.5 Generalized-Gradient Approximations (GGAs)</h2>
+  <p>
+    The obvious correction to a local approximation is to include density gradients. A formal gradient expansion does this systematically around the slowly varying limit, but Martin stresses that the naive gradient expansion is not a reliable general-purpose functional: realistic densities often enter regimes where the expansion is no longer small, and truncated forms can violate hole sum rules or other exact constraints. A GGA therefore uses the density and its first gradients while modifying the large-gradient behavior so that selected physical conditions remain satisfied.
+  </p>
+  <p>
+    A general spin-dependent GGA can be written as a semilocal energy density or, equivalently, as an exchange reference multiplied by a dimensionless enhancement factor:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="generalized gradient approximation exchange correlation energy">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>xc</mi><mi>GGA</mi></msubsup><mo>=</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <msubsup><mi>ε</mi><mi>x</mi><mi>hom</mi></msubsup><mo>(</mo><mi>n</mi><mo>)</mo>
+          <msub><mi>F</mi><mi>xc</mi></msub><mo>(</mo><msup><mi>n</mi><mo>↑</mo></msup><mo>,</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>,</mo><mo>|</mo><mi>∇</mi><msup><mi>n</mi><mo>↑</mo></msup><mo>|</mo><mo>,</mo><mo>|</mo><mi>∇</mi><msup><mi>n</mi><mo>↓</mo></msup><mo>|</mo><mo>,</mo><mo>…</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;^&#123;GGA&#125;=\int d^3r\,n(r)\epsilon_x^&#123;hom&#125;(n)F_&#123;xc&#125;(n^\uparrow,n^\downarrow,|\nabla n^\uparrow|,|\nabla n^\downarrow|,\ldots).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The raw gradient has dimensions and changes scale when the density is compressed. A more physical measure compares the density variation with the local Fermi wavelength. For an unpolarized density, the standard reduced gradient is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="reduced density gradient">
+      <semantics>
+        <mrow>
+          <mi>s</mi><mo>=</mo>
+          <mfrac>
+            <mrow><mo>|</mo><mi>∇</mi><mi>n</mi><mo>|</mo></mrow>
+            <mrow><mn>2</mn><msub><mi>k</mi><mi>F</mi></msub><mi>n</mi></mrow>
+          </mfrac><mo>,</mo>
+          <mspace width="0.75em"></mspace>
+          <msub><mi>k</mi><mi>F</mi></msub><mo>=</mo><msup><mrow><mo>(</mo><mn>3</mn><msup><mi>π</mi><mn>2</mn></msup><mi>n</mi><mo>)</mo></mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">s=\frac&#123;|\nabla n|&#125;&#123;2k_F n&#125;,\qquad k_F=(3\pi^2n)^&#123;1/3&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Small <em>s</em> means that the density changes little over an electronic length scale, where the gradient expansion provides useful guidance. Large <em>s</em> signals rapidly varying, low-density, surface, tail, or confinement regions where different exact conditions compete. This is why two GGAs that behave similarly around ordinary valence-density gradients can diverge strongly in their large-gradient limits and can rank differently for another observable.
+  </p>
+  <p>
+    Exchange obeys an exact spin-scaling relation, allowing its spin dependence to be reduced to unpolarized exchange functionals:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="exchange spin scaling relation">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>x</mi></msub><mo>[</mo><msup><mi>n</mi><mo>↑</mo></msup><mo>,</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>]</mo><mo>=</mo>
+          <mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <mrow><mo>[</mo><msub><mi>E</mi><mi>x</mi></msub><mo>[</mo><mn>2</mn><msup><mi>n</mi><mo>↑</mo></msup><mo>]</mo><mo>+</mo><msub><mi>E</mi><mi>x</mi></msub><mo>[</mo><mn>2</mn><msup><mi>n</mi><mo>↓</mo></msup><mo>]</mo><mo>]</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_x[n^\uparrow,n^\downarrow]=\frac&#123;1&#125;&#123;2&#125;\left(E_x[2n^\uparrow]+E_x[2n^\downarrow]\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Common GGAs such as B88, PW91, and PBE differ in how their enhancement factors are constructed and constrained, but Martin's more important point is the physical role of the correction. In the range of reduced gradients common to many molecules and solids, GGA exchange usually increases the magnitude of exchange relative to LDA. Rapidly varying atomic densities are affected more strongly than the smoother bonding regions of condensed matter, so atomic reference energies are lowered relative to bonded systems. This often reduces the characteristic LDA overbinding and improves bond energies and equilibrium structures.
+  </p>
+  <p>
+    Correlation behaves differently. Its magnitude is smaller than exchange and generally decreases in very large-gradient, strongly confined regimes, where one-particle level spacings become large relative to interaction-induced rearrangements. A successful GGA therefore cannot be understood as applying the same multiplicative correction to exchange and correlation. It is a constrained semilocal model of two physically different contributions whose errors can partly cancel for some observables and reinforce for others.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-6-vxc">
+  <h2 id="section-8-6-vxc">8.6 LDA and GGA Expressions for the Potential Vxc</h2>
+  <p>
+    A Kohn–Sham calculation does not use the exchange–correlation energy alone. It solves one-particle equations containing the functional derivative of that energy. This makes Section 8.6 especially important: the same approximation that gives a smooth integrated energy can generate a more delicate potential because differentiation amplifies local variation and, for a GGA, introduces derivatives of the density gradients.
+  </p>
+  <p>
+    For LSDA the derivative remains purely local. For each spin channel,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local spin density exchange correlation potential">
+      <semantics>
+        <mrow>
+          <msubsup><mi>v</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mrow><mo>[</mo><msubsup><mi>ε</mi><mi>xc</mi><mi>hom</mi></msubsup>
+          <mo>+</mo><mi>n</mi><mfrac><mrow><mi>∂</mi><msubsup><mi>ε</mi><mi>xc</mi><mi>hom</mi></msubsup></mrow><mrow><mi>∂</mi><msup><mi>n</mi><mi>σ</mi></msup></mrow></mfrac><mo>]</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_&#123;xc&#125;^\sigma(r)=\left[\epsilon_&#123;xc&#125;^&#123;hom&#125;+n\frac&#123;\partial\epsilon_&#123;xc&#125;^&#123;hom&#125;&#125;&#123;\partial n^\sigma&#125;\right]_r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The familiar factor of four thirds in local exchange follows because the homogeneous-gas exchange energy per electron scales as the cube root of the spin density:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local density exchange potential">
+      <semantics>
+        <mrow>
+          <msubsup><mi>v</mi><mi>x</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mn>4</mn><mn>3</mn></mfrac>
+          <msubsup><mi>ε</mi><mi>x</mi><mi>hom</mi></msubsup><mo>(</mo><msup><mi>n</mi><mi>σ</mi></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_x^\sigma(r)=\frac&#123;4&#125;&#123;3&#125;\epsilon_x^&#123;hom&#125;(n^\sigma(r)).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    For a semilocal energy density that depends on <em>n</em><sup>σ</sup> and ∇<em>n</em><sup>σ</sup>, integration by parts converts the variation into a local multiplicative potential of Euler–Lagrange form:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="GGA exchange correlation potential from functional derivative">
+      <semantics>
+        <mrow>
+          <msubsup><mi>v</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mrow><mo>[</mo><msub><mi>ε</mi><mi>xc</mi></msub>
+          <mo>+</mo><mi>n</mi><mfrac><mrow><mi>∂</mi><msub><mi>ε</mi><mi>xc</mi></msub></mrow><mrow><mi>∂</mi><msup><mi>n</mi><mi>σ</mi></msup></mrow></mfrac>
+          <mo>−</mo><mi>∇</mi><mo>·</mo><mrow><mo>(</mo><mi>n</mi><mfrac><mrow><mi>∂</mi><msub><mi>ε</mi><mi>xc</mi></msub></mrow><mrow><mi>∂</mi><mo>(</mo><mi>∇</mi><msup><mi>n</mi><mi>σ</mi></msup><mo>)</mo></mrow></mfrac><mo>)</mo></mrow><mo>]</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_&#123;xc&#125;^\sigma=\epsilon_&#123;xc&#125;+n\frac&#123;\partial\epsilon_&#123;xc&#125;&#125;&#123;\partial n^\sigma&#125;-\nabla\cdot\left(n\frac&#123;\partial\epsilon_&#123;xc&#125;&#125;&#123;\partial(\nabla n^\sigma)&#125;\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This equation exposes a numerical issue hidden in the energy expression. The divergence acts on quantities already containing density gradients, so higher spatial derivatives enter the potential. Near nuclei, in low-density tails, or on insufficiently smooth grids, those derivatives can become large or noisy even when the integrated GGA energy remains well behaved. A pathological potential can therefore be a differentiation problem rather than evidence that the energy integral itself is numerically large.
+  </p>
+  <p>
+    Martin discusses alternative implementations that preserve the same variational derivative while avoiding an explicit unstable higher-derivative formula. One can work with an operator form inside matrix elements, or define the gradient by the same discrete finite-difference/Fourier operator used in the energy and apply the chain rule to that discrete representation. In the latter view the practical potential is simply the derivative of the discretized energy with respect to the discretized density,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="discrete exchange correlation potential as derivative of discrete energy">
+      <semantics>
+        <mrow>
+          <msubsup><mi>v</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>(</mo><msub><mi>r</mi><mi>m</mi></msub><mo>)</mo><mo>=</mo>
+          <mfrac>
+            <mrow><mi>∂</mi><msub><mi>E</mi><mi>xc</mi></msub></mrow>
+            <mrow><mi>∂</mi><msup><mi>n</mi><mi>σ</mi></msup><mo>(</mo><msub><mi>r</mi><mi>m</mi></msub><mo>)</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_&#123;xc&#125;^\sigma(r_m)=\frac&#123;\partial E_&#123;xc&#125;&#125;&#123;\partial n^\sigma(r_m)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The important implementation principle is consistency: the potential must be the derivative of the energy as it is actually represented numerically. Using one discretization for the energy and an inconsistent derivative for the potential can destroy the variational relation, degrading self-consistency, forces, and energy derivatives even though each expression appears individually reasonable. This connects naturally to <a href={href('theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> and <a href={href('theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-7-ada-wda">
+  <h2 id="section-8-7-ada-wda">8.7 Average and Weighted Density Formulations: ADA and WDA</h2>
+  <p>
+    A gradient is only one way to add information beyond the density at a point. Gunnarsson and collaborators instead proposed constructing a nonlocal reference density by averaging the surrounding density with a weight chosen to preserve important hole constraints. The average-density approximation then evaluates the homogeneous-gas exchange–correlation energy at that weighted density rather than at the strictly local value:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="average density approximation exchange correlation energy">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>xc</mi><mi>ADA</mi></msubsup><mo>=</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <msubsup><mi>ε</mi><mi>xc</mi><mi>hom</mi></msubsup><mo>(</mo><mover><mi>n</mi><mo>¯</mo></mover><mo>(</mo><mi>r</mi><mo>)</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;^&#123;ADA&#125;=\int d^3r\,n(r)\epsilon_&#123;xc&#125;^&#123;hom&#125;(\bar n(r)).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The averaged density is itself a nonlocal functional,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="weighted average density">
+      <semantics>
+        <mrow>
+          <mover><mi>n</mi><mo>¯</mo></mover><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mi>w</mi><mo>(</mo><mover><mi>n</mi><mo>¯</mo></mover><mo>(</mo><mi>r</mi><mo>)</mo><mo>;</mo><mo>|</mo><mi>r</mi><mo>−</mo><msup><mi>r</mi><mo>′</mo></msup><mo>|</mo><mo>)</mo>
+          <mi>n</mi><mo>(</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\bar n(r)=\int d^3r'\,w(\bar n(r);|r-r'|)n(r').</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    ADA and the related weighted-density approximation make nonlocality explicit in real space instead of encoding it through a few derivatives. Their attraction is conceptual: the weight can be designed from homogeneous-gas response and hole sum rules, and some dimensional-crossover limits are better behaved than in ordinary LDA or GGA. Their difficulty is equally instructive. Core and valence densities coexist on very different length scales; a naive average can let tightly bound core charge distort the effective density relevant to valence correlation. A useful nonlocal average may therefore require shell separation or another mechanism that knows which density components should influence one another.
+  </p>
+  <p>
+    These approaches did not become the dominant practical successor to GGA, but they expose a theme that becomes central in Chapter 9: once the target physics depends on correlations over a finite spatial region, a single local density and its first gradient may be an insufficient descriptor. The question then becomes how to introduce nonlocal information while retaining exact constraints, computational tractability, and transferability.
+  </p>
+</section>
+
+<section aria-labelledby="section-8-8-fitted">
+  <h2 id="section-8-8-fitted">8.8 Functionals Fitted to Databases</h2>
+  <p>
+    Exact constraints and idealized reference systems are not the only route to an approximate functional. Especially in quantum chemistry, many successful forms contain parameters optimized against databases of molecular energies, geometries, barriers, or other reference data. Such fitting can make an approximation highly accurate inside the chemical and physical domain represented by the database. It also changes the meaning of validation: good agreement with data used to construct or tune a functional is evidence of interpolation, while predictive power is tested by genuinely different systems and observables.
+  </p>
+  <p>
+    Martin cites database-oriented functional families as examples rather than attempting an inventory. The important tradeoff is between specialization and transferability. A theoretically constrained functional derived from uniform-gas, scaling, and hole arguments can fail quantitatively, yet its assumptions may remain interpretable far from a benchmark set. A heavily fitted functional can reproduce a chosen dataset more closely while extrapolating unpredictably when the bonding motif, density regime, spin state, element type, dimensionality, or target observable changes substantially.
+  </p>
+  <p>
+    The same issue applies to machine-learning approaches, which Martin identifies as a promising direction. Learning a flexible mapping from density information to exchange–correlation quantities does not remove the need for physical structure. Electron number, spin, scaling, asymptotic behavior, hole normalization, size consistency, and other exact conditions still constrain a physically admissible functional. The practical question is therefore not whether a functional is “empirical” or “theoretical” in the abstract, but what information it uses, what constraints it obeys, what data determined its parameters, and how far the intended application lies from that domain.
+  </p>
+  <p>
+    Chapter 8 ends with the local and semilocal density-based picture established: the exchange–correlation hole explains what these approximations are trying to model, LSDA supplies the homogeneous-gas baseline, GGA adds controlled local variation, and weighted or fitted forms explore alternative sources of information. The remaining failures point directly to Chapter 9, where the auxiliary orbitals, kinetic-energy density, explicit nonlocal response, and long-range correlation become ingredients of more advanced functionals.
+  </p>
+</section>
