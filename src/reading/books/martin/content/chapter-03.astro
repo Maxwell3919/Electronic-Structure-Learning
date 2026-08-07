@@ -1,0 +1,378 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-3-1-basic-equations', label: '3.1 Basic Equations for Interacting Electrons and Nuclei' },
+  { id: 'section-3-2-coulomb', label: '3.2 Coulomb Interaction in Condensed Matter' },
+  { id: 'section-3-3-force-stress', label: '3.3 Force and Stress Theorems' },
+  { id: 'section-3-4-generalized-force', label: '3.4 Generalized Force Theorem and Coupling Constant Integration' },
+  { id: 'section-3-5-statistical-mechanics', label: '3.5 Statistical Mechanics and the Density Matrix' },
+  { id: 'section-3-6-independent-electrons', label: '3.6 Independent-Electron Approximations' },
+  { id: 'section-3-7-exchange-correlation', label: '3.7 Exchange and Correlation' },
+];
+
+export const modernPerspective = [
+  'The chapter’s separation of exact definitions from computational approximations remains essential. Modern codes may hide the many-body Hamiltonian behind pseudopotentials, basis libraries, self-consistent solvers, and automated workflows, but energies, forces, stresses, occupations, and response quantities are still meaningful only relative to the Hamiltonian and ensemble that define them.',
+  'Force and stress formulas are especially important in practical work because their elegant exact forms assume a stationary electronic state and a representation handled consistently under nuclear motion or strain. In incomplete position-dependent bases, nonlocal potentials, finite self-consistency thresholds, and approximate functionals, additional terms or numerical errors can matter even when the formal Hellmann–Feynman statement is exact.',
+  'The independent-particle language used throughout electronic-structure research should always be tied to its generating theory. Kohn–Sham orbitals belong to an auxiliary noninteracting system, Hartree–Fock orbitals come from a single-determinant variational approximation to the interacting Hamiltonian, and quasiparticle states from many-body theory are different objects even when all three are plotted as “bands.”',
+];
+
+export const synthesis =
+  'Chapter 3 establishes the common theoretical grammar used by the rest of the book: start from the interacting electron–nucleus Hamiltonian, separate slow nuclear motion when justified, define observables and ground states variationally, organize Coulomb terms so extended matter has a finite energy, obtain derivatives as forces and stresses, extend pure states to statistical ensembles, and only then introduce independent-electron and Hartree–Fock approximations. Chapter 4 now adds crystalline translational symmetry, turning these general electronic equations into the reciprocal-space language of Bloch states and bands.';
+---
+
+<section aria-labelledby="section-3-1-basic-equations">
+  <h2 id="section-3-1-basic-equations">3.1 Basic Equations for Interacting Electrons and Nuclei</h2>
+  <p>
+    Martin begins from the full electron–nucleus problem because every later approximation should be traceable to the physical terms it modifies or removes. The microscopic Hamiltonian contains electronic and nuclear kinetic energies together with electron–nucleus attraction, electron–electron repulsion, and nucleus–nucleus repulsion. Nothing in this starting point assumes independent electrons, a crystal, density functional theory, or a particular numerical representation.
+  </p>
+  <p>
+    The first controlled simplification exploits the large nuclear masses. When nuclear motion is slow on the electronic time scale, the Born–Oppenheimer or adiabatic picture treats the nuclear positions as parameters while solving the electronic problem. The small parameter is associated with inverse nuclear mass, not with weak electron–electron interaction. This distinction is important: fixing the nuclei does not make the electrons independent.
+  </p>
+  <p>
+    For fixed nuclear positions, the electronic Hamiltonian can be organized as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="decomposition of the electronic Hamiltonian">
+      <semantics>
+        <mrow>
+          <mover><mi>H</mi><mo>^</mo></mover><mo>=</mo>
+          <mover><mi>T</mi><mo>^</mo></mover><mo>+</mo>
+          <msub><mover><mi>V</mi><mo>^</mo></mover><mi>ext</mi></msub><mo>+</mo>
+          <msub><mover><mi>V</mi><mo>^</mo></mover><mi>int</mi></msub><mo>+</mo>
+          <msub><mi>E</mi><mrow><mi>I</mi><mi>I</mi></mrow></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat H=\hat T+\hat V_&#123;\mathrm&#123;ext&#125;&#125;+\hat V_&#123;\mathrm&#123;int&#125;&#125;+E_&#123;II&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    <span aria-hidden="true">T̂</span> is the electronic kinetic energy, <span aria-hidden="true">V̂</span><sub>ext</sub> contains the potential acting on electrons from fixed nuclei or other external fields, <span aria-hidden="true">V̂</span><sub>int</sub> is the electron–electron interaction, and <em>E</em><sub>II</sub> is the classical interaction among nuclei. Pseudopotentials later modify the form of the external electron–ion operator, often making it nonlocal, while leaving this logical decomposition intact.
+  </p>
+  <p>
+    The many-electron state is a wavefunction of all electron coordinates, including spin, and must be antisymmetric under exchange of identical electrons. Its dimensionality grows with particle number: even before choosing a numerical representation, the exact state lives in a configuration space built from all electron coordinates rather than ordinary three-dimensional space. This is the source of the many-electron difficulty that motivates reduced descriptions throughout the book. Stationary states satisfy
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="many-body time-independent Schrodinger equation">
+      <semantics>
+        <mrow><mover><mi>H</mi><mo>^</mo></mover><mi>Ψ</mi><mo>=</mo><mi>E</mi><mi>Ψ</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\hat H\Psi=E\Psi.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Although solving this equation directly is impossible for ordinary condensed-matter electron counts, it remains the reference definition. The time-dependent equation is needed when the state itself evolves, while the stationary equation defines the energy eigenstates used for ground-state and spectral arguments. Observables are expectation values in the many-body state. The electron density, for example, is obtained from the density operator rather than introduced as an independent classical field:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="electron density as a many-body expectation value">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <mfrac>
+            <mrow><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mover><mi>n</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo><mi>Ψ</mi><mo>⟩</mo></mrow>
+            <mrow><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mi>Ψ</mi><mo>⟩</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\frac&#123;\langle\Psi|\hat n(\mathbf&#123;r&#125;)|\Psi\rangle&#125;&#123;\langle\Psi|\Psi\rangle&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The density is therefore a reduced quantity extracted from the full many-body state. This is the conceptual bridge to density functional theory: reducing the dimensionality of the description is enormously useful, but the interacting wavefunction remains the underlying object from which the exact density is defined.
+  </p>
+  <p>
+    The ground state has a second special property: it is variational. For any admissible trial wavefunction with the correct particle symmetry, the Rayleigh quotient cannot lie below the exact ground-state energy,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Rayleigh Ritz variational bound">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mn>0</mn></msub><mo>≤</mo>
+          <mfrac>
+            <mrow><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><mi>Ψ</mi><mo>⟩</mo></mrow>
+            <mrow><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mi>Ψ</mi><mo>⟩</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_0\le\frac&#123;\langle\Psi|\hat H|\Psi\rangle&#125;&#123;\langle\Psi|\Psi\rangle&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This variational structure explains why energy minimization appears throughout electronic structure—from Hartree–Fock and Kohn–Sham theory to basis optimization and structural relaxation. The individual kinetic, attraction, and repulsion terms can each be large, while the physically decisive binding or phase difference may be small because of cancellation. A method can therefore look qualitatively reasonable at the orbital level and still fail for a total-energy difference if those large terms are not balanced consistently.
+  </p>
+  <p>
+    The same structure explains an asymmetry between ground and excited states. The ground state is selected globally by minimization within the allowed symmetry sector, whereas excitations are normally constructed as perturbations, response states, addition/removal states, or constrained states above a known reference. Perturbation theory is useful only after the reference state has been identified. Chapter 2’s distinction between ground-state and excited-state observables is thus rooted directly in the many-body equations.
+  </p>
+  <p>
+    The foundational background is collected in <a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a>, <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a>, and <a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis and Variational Methods</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-3-2-coulomb">
+  <h2 id="section-3-2-coulomb">3.2 Coulomb Interaction in Condensed Matter</h2>
+  <p>
+    Long-range Coulomb interaction creates a bookkeeping problem that becomes fundamental in extended matter. Individual electron–electron, electron–nucleus, and nucleus–nucleus contributions can each be conditionally convergent or divergent even when their physically meaningful sum is finite. Martin therefore states two rules before any practical evaluation: an extended Coulomb system must be neutral, and Coulomb terms must be grouped into neutral combinations.
+  </p>
+  <p>
+    The classical electron–electron contribution associated with a continuous density is the Hartree energy,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Hartree energy of the electron density">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mfrac>
+            <mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow>
+            <mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>|</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_H[n]=\frac&#123;1&#125;&#123;2&#125;\int d^3r\int d^3r'\frac&#123;n(\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This is not the exact electron–electron interaction energy. It is the classical electrostatic energy of the density and even contains a formal self-interaction when the continuous density is interpreted as if each electron repelled itself. The difference between the expectation value of the true interaction and the Hartree term contains the nonclassical effects of exchange and correlation. A useful decomposition is therefore “classical neutral Coulomb energy + kinetic energy + the nonclassical remainder.”
+  </p>
+  <p>
+    In an extended neutral solid, the electron–electron Hartree term, electron–ion attraction, and ion–ion repulsion must be evaluated with compatible boundary conditions and reference conventions. Their separate absolute values are not the physical observable. This is why Ewald summation, reciprocal-space Coulomb kernels, charged-cell corrections, and surface dipoles are not merely numerical implementation details: they define how the electrostatic model is made finite.
+  </p>
+  <aside class="callout" aria-label="Coulomb energy organization">
+    <p><strong>Why the grouping matters</strong></p>
+    <p>Long-range electron–electron + electron–ion + ion–ion terms → combine into a neutral classical Coulomb contribution.</p>
+    <p>True interacting electron repulsion − Hartree repulsion → short-ranged exchange–correlation structure.</p>
+  </aside>
+  <p>
+    This cancellation is a central reason exchange–correlation approximations can focus on comparatively local changes around an electron even though the bare Coulomb interaction is long ranged. It also explains why charged periodic cells, surfaces, and low-dimensional systems require explicit electrostatic conventions rather than an unqualified use of bulk formulas. Appendix F develops the numerical treatment; the Atlas prerequisite is <a href={href('/theory/electromagnetism/')}>Electromagnetism</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-3-3-force-stress">
+  <h2 id="section-3-3-force-stress">3.3 Force and Stress Theorems</h2>
+  <p>
+    Forces and stresses are energy derivatives, but the many-electron state also changes when a nucleus moves or a crystal is strained. The force theorem becomes powerful because an exact stationary electronic state makes the first-order contribution from that implicit wavefunction change vanish. Only the explicit derivative of the Hamiltonian remains.
+  </p>
+  <p>
+    For a nuclear coordinate this gives the Hellmann–Feynman form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Hellmann Feynman force theorem">
+      <semantics>
+        <mrow>
+          <msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mo>∂</mo><mi>E</mi></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac>
+          <mo>=</mo><mo>−</mo><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mfrac><mrow><mo>∂</mo><mover><mi>H</mi><mo>^</mo></mover></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathbf F_I=-\frac&#123;\partial E&#125;&#123;\partial\mathbf R_I&#125;=-\left\langle\Psi\left|\frac&#123;\partial\hat H&#125;&#123;\partial\mathbf R_I&#125;\right|\Psi\right\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    For local Coulomb electron–ion interactions, this can be written entirely as the electrostatic force from the unperturbed electron density and the other nuclei. The result is striking because electronic kinetic, exchange, and correlation energies certainly change when the atom moves, yet their first-order wavefunction variations cancel at stationarity.
+  </p>
+  <p>
+    The theorem is exact under its assumptions, but practical force formulas inherit the representation used in a calculation. Nonlocal pseudopotentials introduce operator terms beyond a density-only expression. If a finite basis changes when nuclei move, the basis itself contributes derivatives—the Pulay terms. Likewise, a poorly converged self-consistent electronic state is not exactly stationary, so the formal cancellation is only approximate. “Hellmann–Feynman force” therefore does not mean that every reported force is automatically exact once an SCF cycle has stopped.
+  </p>
+  <p>
+    This distinction is operationally important in geometry optimization and phonon calculations. The derivative of the numerically represented energy must agree with the implemented force to the accuracy required by the problem. A small force threshold is meaningful only after basis, integration, pseudopotential, and self-consistency errors are small enough that the force represents the intended Hamiltonian rather than the incompleteness of the calculation.
+  </p>
+  <p>
+    Stress is the same generalized-force idea applied to strain. For a cell of volume Ω,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="stress as an energy derivative with respect to strain">
+      <semantics>
+        <mrow>
+          <msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>Ω</mi></mfrac>
+          <mfrac><mrow><mo>∂</mo><mi>E</mi></mrow><mrow><mo>∂</mo><msub><mi>ε</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\sigma_&#123;\alpha\beta&#125;=-\frac&#123;1&#125;&#123;\Omega&#125;\frac&#123;\partial E&#125;&#123;\partial\epsilon_&#123;\alpha\beta&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Isotropic strain reduces the tensor relation to pressure and the virial theorem; anisotropic strain provides the full stress tensor used for cell optimization and elasticity. For purely Coulombic particles in equilibrium, the trace produces the familiar virial relation connecting pressure to kinetic and potential energies. The conceptual point is broader than the explicit formula: once the electronic energy is a stationary functional, physically useful mechanical observables can be obtained as derivatives without separately differentiating every hidden electronic degree of freedom.
+  </p>
+</section>
+
+<section aria-labelledby="section-3-4-generalized-force">
+  <h2 id="section-3-4-generalized-force">3.4 Generalized Force Theorem and Coupling Constant Integration</h2>
+  <p>
+    Nuclear position and strain are only two examples of parameters in a Hamiltonian. Martin generalizes the force theorem to any continuous parameter λ. If the system remains in the relevant stationary state as λ changes, the energy derivative is the expectation value of the Hamiltonian derivative, and a finite energy difference can be reconstructed by integration:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="generalized force theorem and coupling constant integration">
+      <semantics>
+        <mtable>
+          <mtr><mtd><mfrac><mrow><mo>∂</mo><mi>E</mi></mrow><mrow><mo>∂</mo><mi>λ</mi></mrow></mfrac><mo>=</mo><mo>⟨</mo><msub><mi>Ψ</mi><mi>λ</mi></msub><mo>|</mo><mfrac><mrow><mo>∂</mo><mover><mi>H</mi><mo>^</mo></mover></mrow><mrow><mo>∂</mo><mi>λ</mi></mrow></mfrac><mo>|</mo><msub><mi>Ψ</mi><mi>λ</mi></msub><mo>⟩</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>Δ</mi><mi>E</mi><mo>=</mo><msubsup><mo>∫</mo><msub><mi>λ</mi><mn>1</mn></msub><msub><mi>λ</mi><mn>2</mn></msub></msubsup><mi>d</mi><mi>λ</mi><mfrac><mrow><mo>∂</mo><mi>E</mi></mrow><mrow><mo>∂</mo><mi>λ</mi></mrow></mfrac><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\frac&#123;\partial E&#125;&#123;\partial\lambda&#125;=\langle\Psi_\lambda|\frac&#123;\partial\hat H&#125;&#123;\partial\lambda&#125;|\Psi_\lambda\rangle,\qquad \Delta E=\int_&#123;\lambda_1&#125;^&#123;\lambda_2&#125;d\lambda\,\frac&#123;\partial E&#125;&#123;\partial\lambda&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This turns an energy-difference problem into a path integral through a family of Hamiltonians. The path can be physically realizable or merely a theoretical construction. The result depends only on the endpoint energies when the states are followed consistently, but the intermediate representation can make a difficult difference interpretable. A particularly important choice scales the electron–electron interaction from zero to its full strength. The intermediate systems are artificial, but the integral connects a tractable reference to the interacting system and exposes how interaction energy accumulates.
+  </p>
+  <p>
+    Martin uses the word “adiabatic” here in the sense of continuously following a ground state as the Hamiltonian changes. This should not be confused with the Born–Oppenheimer approximation, where slow nuclear motion justifies separating electronic and nuclear time scales. Both ideas involve continuous evolution, but the parameter being varied and the physical approximation are different.
+  </p>
+  <aside class="callout" aria-label="Adiabatic connection in interaction strength">
+    <p><strong>Adiabatic connection</strong></p>
+    <p>λ = 0: chosen noninteracting reference → continuously increase interaction → λ = 1: full interacting system.</p>
+  </aside>
+  <p>
+    Later density-functional constructions use a refined version of this idea in which the density is held fixed while interaction strength changes. Coupling-constant integration is therefore not a computational curiosity: it is one of the bridges between many-body correlation physics and exchange–correlation functionals. The mathematical background is linked from <a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis and Variational Methods</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-3-5-statistical-mechanics">
+  <h2 id="section-3-5-statistical-mechanics">3.5 Statistical Mechanics and the Density Matrix</h2>
+  <p>
+    A single ground-state wavefunction is sufficient only at zero temperature for a pure state. At finite temperature the system occupies an ensemble of many eigenstates. The density matrix replaces one wavefunction as the object that carries the statistical weights while retaining the quantum-mechanical state structure.
+  </p>
+  <p>
+    In the canonical ensemble with fixed particle number,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="canonical equilibrium density matrix and expectation value">
+      <semantics>
+        <mtable>
+          <mtr><mtd><mover><mi>ρ</mi><mo>^</mo></mover><mo>=</mo><mfrac><mrow><mi>exp</mi><mo>(</mo><mo>−</mo><mi>β</mi><mover><mi>H</mi><mo>^</mo></mover><mo>)</mo></mrow><mi>Z</mi></mfrac><mo>,</mo><mspace width="1em"/><mi>Z</mi><mo>=</mo><mi>Tr</mi><mspace width="0.2em"/><mi>exp</mi><mo>(</mo><mo>−</mo><mi>β</mi><mover><mi>H</mi><mo>^</mo></mover><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mo>⟨</mo><mover><mi>O</mi><mo>^</mo></mover><mo>⟩</mo><mo>=</mo><mi>Tr</mi><mo>(</mo><mover><mi>ρ</mi><mo>^</mo></mover><mover><mi>O</mi><mo>^</mo></mover><mo>)</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\hat\rho=\frac&#123;e^&#123;-\beta\hat H&#125;&#125;&#123;Z&#125;,\quad Z=\mathrm&#123;Tr&#125;\,e^&#123;-\beta\hat H&#125;,\qquad \langle\hat O\rangle=\mathrm&#123;Tr&#125;(\hat\rho\hat O).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here β = 1/(<em>k</em><sub>B</sub><em>T</em>). In the Hamiltonian eigenbasis the density matrix is diagonal and the entries are Boltzmann probabilities. The matrix is positive and normalized so that its trace is one. These conditions encode the fact that it represents a probability distribution over quantum states rather than an arbitrary operator. At zero temperature only the ground-state weight survives, so the ensemble expectation reduces smoothly to an ordinary ground-state expectation value.
+  </p>
+  <p>
+    Equilibrium can also be formulated variationally: the physical density matrix minimizes the appropriate free energy rather than the zero-temperature electronic energy alone. This is the finite-temperature analogue of the ground-state variational principle. It is why electronic entropy and occupation terms must be treated consistently when a calculation is intended to represent a physical electronic temperature.
+  </p>
+  <p>
+    When particle number can exchange with a reservoir, the grand-canonical ensemble replaces <span aria-hidden="true">Ĥ</span> by <span aria-hidden="true">Ĥ − μN̂</span>. This introduces the chemical potential and makes the ensemble natural for electron occupations. The distinction matters later when discussing metals, defects, surfaces, and any problem in which electron number is controlled indirectly by a reservoir.
+  </p>
+  <p>
+    The density matrix should not be confused with the real-space electron density. The former is an operator containing statistical and coherence information; the latter is one observable obtained from it. In independent-particle theories the one-body density matrix becomes especially useful because its diagonal gives the density while its off-diagonal decay encodes localization and underlies linear-scaling methods. The relevant prerequisites are <a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> and <a href={href('/theory/thermodynamics/')}>Thermodynamics</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-3-6-independent-electrons">
+  <h2 id="section-3-6-independent-electrons">3.6 Independent-Electron Approximations</h2>
+  <p>
+    Martin now specializes the exact framework to two distinct one-electron constructions that are often conflated: a noninteracting effective-potential theory and Hartree–Fock. Both describe the state through orbitals, but they answer different variational problems and treat electron–electron interaction differently.
+  </p>
+  <p>
+    In a noninteracting or Hartree-like construction, each orbital satisfies a common one-electron equation,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="effective independent electron equation">
+      <semantics>
+        <mrow>
+          <mo>[</mo><mo>−</mo><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><msub><mi>m</mi><mi>e</mi></msub></mrow></mfrac><msup><mo>∇</mo><mn>2</mn></msup><mo>+</mo><msubsup><mi>V</mi><mi>eff</mi><mi>σ</mi></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo>
+          <msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>=</mo><msubsup><mi>ε</mi><mi>i</mi><mi>σ</mi></msubsup><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\left[-\frac&#123;\hbar^2&#125;&#123;2m_e&#125;\nabla^2+V_&#123;\mathrm&#123;eff&#125;&#125;^\sigma(\mathbf&#123;r&#125;)\right]\psi_i^\sigma=\varepsilon_i^\sigma\psi_i^\sigma.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The effective potential may contain average interaction effects, but the auxiliary Hamiltonian itself has no explicit two-electron interaction term. Hartree’s historical mean field and the Kohn–Sham auxiliary system both lead to equations of this form, but the justification is different. Kohn–Sham DFT belongs to this family because its effective potential is constructed so that the auxiliary noninteracting system reproduces the interacting ground-state density. This is why “noninteracting auxiliary system” and “noninteracting physical electrons” must remain separate statements.
+  </p>
+  <p>
+    For occupied orbitals with probabilities <em>f</em><sub>i</sub><sup>σ</sup>, the spin density reduces to the familiar orbital sum
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="spin density from occupied independent particle orbitals">
+      <semantics>
+        <mrow>
+          <msup><mi>n</mi><mi>σ</mi></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <munder><mo>∑</mo><mi>i</mi></munder><msubsup><mi>f</mi><mi>i</mi><mi>σ</mi></msubsup>
+          <msup><mrow><mo>|</mo><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n^\sigma(\mathbf&#123;r&#125;)=\sum_i f_i^\sigma|\psi_i^\sigma(\mathbf&#123;r&#125;)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    At thermal equilibrium those occupations become Fermi–Dirac weights. The many-body trace then collapses to sums over one-particle states, which is one reason independent-particle theory is computationally tractable: an exponentially large occupation-space problem becomes an orbital eigenproblem plus filling.
+  </p>
+  <p>
+    Hartree–Fock is different. It retains the full interacting Hamiltonian but restricts the trial many-electron wavefunction to a single antisymmetric Slater determinant. The determinant enforces fermionic antisymmetry automatically, so exchange is not an optional correction added afterward; it follows from the allowed form of the many-electron state. Minimizing the interacting energy within that restricted class produces the Hartree direct term and a nonlocal, orbital-dependent exchange operator. Exchange exactly removes the spurious self-interaction of an occupied orbital contained in the Hartree term, but correlation beyond a single determinant is absent.
+  </p>
+  <p>
+    The nonlocal exchange operator also changes the computational problem. Unlike a local multiplicative potential, its action on one orbital depends on overlaps with the other occupied orbitals. In a basis representation this generates four-index electron-repulsion integrals and a cost that can be much larger than for semilocal Kohn–Sham calculations. The formal distinction between a local effective potential and orbital-dependent nonlocal exchange therefore becomes a numerical distinction as well.
+  </p>
+  <aside class="callout" aria-label="Independent electron and Hartree Fock distinction">
+    <p><strong>Two one-electron languages</strong></p>
+    <p>Effective noninteracting system → no explicit electron–electron operator in the auxiliary Hamiltonian → interaction effects represented through an effective potential.</p>
+    <p>Hartree–Fock → interacting Hamiltonian + single-determinant trial space → explicit Hartree and exact-exchange terms, but no correlation beyond that determinant.</p>
+  </aside>
+  <p>
+    Koopmans’ theorem gives Hartree–Fock eigenvalues a specific frozen-orbital addition/removal interpretation: an occupied or empty orbital eigenvalue corresponds to the energy change when that orbital is removed or added while all other orbitals are held fixed. Allowing the orbitals to relax leads to ΔSCF energy differences and usually improves finite-system addition/removal energies. Hartree–Fock gaps nevertheless tend to be too large because relaxation and correlation are missing.
+  </p>
+  <p>
+    Neither Koopmans’ statement nor the ΔSCF interpretation transfers automatically to ordinary Kohn–Sham eigenvalues, because the underlying variational constructions are different. This distinction becomes important again in Chapters 7–10 and in the Atlas pages <a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> and <a href={href('/theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-3-7-exchange-correlation">
+  <h2 id="section-3-7-exchange-correlation">3.7 Exchange and Correlation</h2>
+  <p>
+    The density tells where one electron is likely to be found; interaction energy depends on where pairs of electrons are found together. Martin therefore introduces the pair distribution as the natural object for separating uncorrelated motion, exchange imposed by fermionic antisymmetry, and additional Coulomb correlation.
+  </p>
+  <p>
+    A normalized pair distribution can be written schematically as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="normalized pair distribution function">
+      <semantics>
+        <mrow>
+          <mi>g</mi><mo>(</mo><mi mathvariant="bold">r</mi><mi>σ</mi><mo>;</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><msup><mi>σ</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo>
+          <mfrac>
+            <msub><mi>n</mi><mrow><mn>2</mn></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mi>σ</mi><mo>;</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><msup><mi>σ</mi><mo>′</mo></msup><mo>)</mo>
+            <mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mi>σ</mi><mo>)</mo><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><msup><mi>σ</mi><mo>′</mo></msup><mo>)</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">g(\mathbf&#123;r&#125;\sigma;\mathbf&#123;r&#125;'\sigma')=\frac&#123;n_2(\mathbf&#123;r&#125;\sigma;\mathbf&#123;r&#125;'\sigma')&#125;&#123;n(\mathbf&#123;r&#125;\sigma)n(\mathbf&#123;r&#125;'\sigma')&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    For statistically independent particles, <em>g</em> = 1. Deviations measure how the presence of one electron changes the probability of finding another nearby. These deviations become short ranged once the average long-range charge distribution is separated out, which is consistent with the Coulomb grouping introduced in §3.2.
+  </p>
+  <p>
+    Exchange already creates statistical correlation between same-spin electrons even in a single determinant. Antisymmetry forces the probability of finding two identical-spin electrons at the same point to vanish, producing an exchange hole around each electron. The hole is strictly nonpositive and accounts for exactly one missing same-spin electron when expressed as the conditional density around a reference electron. In Hartree–Fock it is determined by the one-body density matrix; its associated negative exchange energy both reflects Pauli avoidance and cancels the unphysical Hartree self-interaction.
+  </p>
+  <p>
+    Coulomb correlation is the remaining rearrangement beyond this exchange-only picture. It is especially important between opposite-spin electrons, which are not kept apart by the Pauli principle. Correlation does not create an additional net missing electron around the reference particle; instead it redistributes the exchange–correlation hole while preserving the relevant sum rule. This is why the correlation hole contains regions of both depletion and enhancement even though the ground-state correlation energy is negative.
+  </p>
+  <p>
+    Allowing correlated many-electron motion expands the variational space beyond one determinant and lowers the ground-state energy relative to Hartree–Fock. With the Hartree–Fock reference, the correlation energy is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="correlation energy relative to Hartree Fock">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>c</mi></msub><mo>=</mo><msub><mi>E</mi><mi>exact</mi></msub><mo>−</mo><msub><mi>E</mi><mi>HF</mi></msub><mo>≤</mo><mn>0</mn><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_c=E_&#123;\mathrm&#123;exact&#125;&#125;-E_&#123;\mathrm&#123;HF&#125;&#125;\le0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Martin emphasizes that “correlation energy” is reference-dependent. Hartree–Fock gives one clean definition because it is the minimum energy inside the single-determinant trial space. Density-functional theory defines exchange and correlation relative to a different auxiliary construction constrained by the density, so numerical values called <em>E</em><sub>c</sub> need a stated reference before they can be compared. The physics is also broader than a potential-energy correction: correlation changes both kinetic and interaction energies, which is why coupling-constant integration becomes useful.
+  </p>
+  <p>
+    This pair-distribution viewpoint also anticipates the homogeneous electron gas of Chapter 5 and the exchange–correlation hole arguments of Chapters 8 and 9. Those later approximations are easier to understand when exchange and correlation are viewed as constraints on how the many-electron probability reorganizes around a reference electron, rather than as a single mysterious correction term.
+  </p>
+  <aside class="callout" aria-label="Exchange and correlation hierarchy">
+    <p><strong>Hierarchy of electronic avoidance</strong></p>
+    <p>Mean density → average Coulomb field.</p>
+    <p>Fermionic antisymmetry → same-spin exchange hole.</p>
+    <p>Explicit Coulomb response beyond one determinant → correlation hole and correlated motion.</p>
+  </aside>
+  <p>
+    This section closes the chapter by reconnecting every practical approximation to the central many-body difficulty introduced at the start. Hartree–Fock treats exchange exactly within a single determinant but omits correlation; Kohn–Sham DFT packages both into an exchange–correlation functional; explicit many-body methods seek the correlated state more directly. The next two chapters use periodic symmetry and the electron gas to make these abstract objects calculable and physically transparent. See <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> and <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> for the corresponding Atlas maps.
+  </p>
+</section>
