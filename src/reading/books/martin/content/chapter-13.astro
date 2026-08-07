@@ -1,0 +1,239 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-13-1-ab-initio-pseudopotential', label: '13.1 Ab initio Pseudopotential Method' },
+  { id: 'section-13-2-self-consistency-screening', label: '13.2 Approach to Self-Consistency and Dielectric Screening' },
+  { id: 'section-13-3-paw', label: '13.3 Projector Augmented Waves (PAWs)' },
+  { id: 'section-13-4-hybrid-hf-plane-waves', label: '13.4 Hybrid Functionals and Hartree–Fock in Plane Wave Methods' },
+  { id: 'section-13-5-supercells', label: '13.5 Supercells: Surfaces, Interfaces, Molecular Dynamics' },
+  { id: 'section-13-6-clusters-molecules', label: '13.6 Clusters and Molecules' },
+  { id: 'section-13-7-applications', label: '13.7 Applications of Plane Wave and Grid Methods' },
+];
+
+export const modernPerspective = [
+  'A successful SCF termination establishes a fixed point for the chosen discretized Hamiltonian. It does not by itself establish plane-wave-cutoff convergence, FFT-grid convergence, Brillouin-zone sampling convergence, supercell convergence, pseudopotential or PAW transferability, or exchange–correlation accuracy. These are separate layers of evidence.',
+  'Modern plane-wave calculations are hybrid real/reciprocal-space algorithms. FFTs make repeated transformations inexpensive, so kinetic and long-range reciprocal-space operations coexist with real-space local potentials, semilocal exchange–correlation terms, densities, and augmentation corrections. The method is defined by this operator decomposition, not by storing every quantity in one representation.',
+  'Periodic supercells change the physical boundary-value problem. Vacuum thickness, slab dipoles, charged-cell conventions, Coulomb truncation or image corrections, lateral cell size, defect concentration, and interface repetition can all alter the result even after the electronic SCF loop is perfectly converged.',
+  'Hybrid exchange and PAW introduce additional convergence dimensions beyond a semilocal norm-conserving calculation. Exact-exchange k-point and Coulomb-singularity treatments, augmentation/projector completeness, semicore choices, relativistic content, and dataset generation remain part of the scientific model and should be reported with the ordinary basis and sampling parameters.',
+];
+
+export const synthesis =
+  'Chapter 13 assembles the ingredients developed earlier into a working first-principles calculation. The pseudopotential Kohn–Sham problem becomes a reciprocal-space total-energy and force problem coupled to a nonlinear density fixed point. Dielectric screening explains why the long-wavelength components of that fixed point can be numerically difficult and why preconditioning and mixing are physical as well as numerical ideas. PAW keeps the computational advantages of smooth functions while restoring atom-centered all-electron information through augmentation. Exact exchange adds a genuinely nonlocal Coulomb operator whose singular and long-range character requires special treatment in periodic plane-wave representations. Supercells then extend the same machinery to phonons, interfaces, surfaces, molecular dynamics, clusters, and molecules, at the price of explicit finite-size and electrostatic-boundary errors. With the plane-wave/grid route complete, Chapter 14 changes representation and asks how much of electronic structure can instead be understood from localized atom-centered orbitals.';
+---
+
+<section aria-labelledby="section-13-1-ab-initio-pseudopotential">
+  <h2 id="section-13-1-ab-initio-pseudopotential">13.1 Ab initio Pseudopotential Method</h2>
+  <p>
+    Chapter 12 supplied a finite plane-wave representation for a fixed one-electron potential. The ab initio pseudopotential method adds the missing variational and self-consistent structure: the ionic potential is generated from an atomic calculation rather than fitted to experimental bands, the density determines Hartree and exchange–correlation terms, and the final orbitals must reproduce the density that generated their own Kohn–Sham potential. The method therefore combines the <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>core–valence approximation</a>, the <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane-wave representation</a>, and the nonlinear Kohn–Sham problem developed in Chapter 7.
+  </p>
+  <p>
+    In reciprocal space the local Kohn–Sham potential separates naturally into ionic, Hartree, and exchange–correlation pieces,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local Kohn Sham potential in reciprocal space">
+      <semantics>
+        <mrow>
+          <msubsup><mi>V</mi><mrow><mi>KS</mi><mo>,</mo><mi>local</mi></mrow><mi>σ</mi></msubsup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo>
+          <msub><mi>V</mi><mi>local</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>+</mo>
+          <msub><mi>V</mi><mi>H</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>+</mo>
+          <msubsup><mi>V</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_&#123;KS,local&#125;^&#123;&#92;sigma&#125;(&#92;mathbf&#123;G&#125;)=V_&#123;local&#125;(&#92;mathbf&#123;G&#125;)+V_H(&#92;mathbf&#123;G&#125;)+V_&#123;xc&#125;^&#123;&#92;sigma&#125;(&#92;mathbf&#123;G&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The nonlocal projector part of the pseudopotential is added separately. This decomposition matters computationally because the kinetic operator and Coulomb kernels are simple in reciprocal space, while the density and semilocal exchange–correlation terms are efficiently evaluated on a real-space FFT grid. A practical plane-wave code therefore moves repeatedly between the two representations rather than choosing one and staying there.
+  </p>
+  <p>
+    Long-range Coulomb terms require a neutral grouping. For a periodic electron density the reciprocal-space Hartree contribution excludes the average component,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="reciprocal space Hartree energy excluding G equals zero">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>H</mi></msub><mo>=</mo><mn>2</mn><mi>π</mi><msup><mi>e</mi><mn>2</mn></msup>
+          <munder><mo>∑</mo><mrow><mi mathvariant="bold">G</mi><mo>≠</mo><mn>0</mn></mrow></munder>
+          <mfrac><mrow><mo>|</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><msup><mo>|</mo><mn>2</mn></msup></mrow><msup><mi>G</mi><mn>2</mn></msup></mfrac><mo>,</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_H=2&#92;pi e^2&#92;sum_&#123;&#92;mathbf&#123;G&#125;&#92;ne 0&#125;&#92;frac&#123;|n(&#92;mathbf&#123;G&#125;)|^2&#125;&#123;G^2&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    while the omitted average electron term, ion–ion interaction, and corresponding electron–ion background terms are combined consistently through an Ewald-type construction. Individual divergent pieces have no independent physical meaning. This is the reciprocal-space form of the neutrality principle introduced in Chapter 3 and developed further in Appendix F.
+  </p>
+  <p>
+    Martin also rewrites the total energy in an eigenvalue-based form built from the trial input density. That expression is stationary only at the self-consistent solution and need not behave as a simple variational upper bound away from it. It can nevertheless approach the final energy faster than the raw density or potential residual. Apparent stability of the total energy during early iterations is therefore not a substitute for demonstrating self-consistency.
+  </p>
+  <p>
+    Once the orbitals are stationary, forces follow from derivatives of the ionic terms and the nonlocal projectors. Plane waves have a useful advantage here: translating an atom does not translate the basis itself, so the usual atom-centered Pulay force associated with a moving incomplete basis is absent. Cell strain is different because the reciprocal lattice and the set selected by a cutoff change with the cell; stress therefore still requires a consistent treatment of representation effects.
+  </p>
+  <aside class="callout" aria-label="full plane wave Kohn Sham loop">
+    <p><strong>The calculation is now a closed loop</strong></p>
+    <p>input density → Kohn–Sham potential → solve the finite plane-wave eigenproblem → output density → mix or precondition → repeat → evaluate stationary energy, forces, stress, and target observables.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-13-2-self-consistency-screening">
+  <h2 id="section-13-2-self-consistency-screening">13.2 Approach to Self-Consistency and Dielectric Screening</h2>
+  <p>
+    The same electronic screening that makes matter respond to an external perturbation also controls how an SCF error propagates. Martin uses the plane-wave representation to make this connection explicit. The simplest iteration is linear mixing of input and output potentials,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="linear potential mixing">
+      <semantics>
+        <mrow>
+          <msubsup><mi>V</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow><mi>in</mi></msubsup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo>
+          <mi>α</mi><msubsup><mi>V</mi><mi>i</mi><mi>out</mi></msubsup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>+</mo>
+          <mo>(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo>)</mo><msubsup><mi>V</mi><mi>i</mi><mi>in</mi></msubsup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_&#123;i+1&#125;^&#123;in&#125;(&#92;mathbf&#123;G&#125;)=&#92;alpha V_i^&#123;out&#125;(&#92;mathbf&#123;G&#125;)+(1-&#92;alpha)V_i^&#123;in&#125;(&#92;mathbf&#123;G&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Near the fixed point, the nonlinear map can be linearized. The dielectric matrix relates an error in the trial potential to the corresponding error after solving the electronic problem,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="dielectric matrix relation for SCF error">
+      <semantics>
+        <mrow>
+          <mi>δ</mi><msup><mi>V</mi><mi>out</mi></msup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo>
+          <munder><mo>∑</mo><msup><mi mathvariant="bold">G</mi><mo>′</mo></msup></munder>
+          <mi>ε</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>,</mo><msup><mi mathvariant="bold">G</mi><mo>′</mo></msup><mo>)</mo>
+          <mi>δ</mi><msup><mi>V</mi><mi>in</mi></msup><mo>(</mo><msup><mi mathvariant="bold">G</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;delta V^&#123;out&#125;(&#92;mathbf&#123;G&#125;)=&#92;sum_&#123;&#92;mathbf&#123;G&#125;'&#125;&#92;epsilon(&#92;mathbf&#123;G&#125;,&#92;mathbf&#123;G&#125;')&#92;delta V^&#123;in&#125;(&#92;mathbf&#123;G&#125;').</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Large dielectric eigenvalues amplify particular error modes. The dangerous modes are often the longest wavelengths, especially in large cells and metals. Charge can then move over large distances at little energetic cost, producing the familiar <em>charge-sloshing</em> instability. In a simple diagonal picture, stable linear mixing requires a step small enough to compensate the largest response; Martin summarizes the long-wavelength condition as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="linear mixing stability bound">
+      <semantics>
+        <mrow><mi>α</mi><mo>&lt;</mo><mfrac><mn>1</mn><mi>ε</mi><mo>(</mo><msub><mi>G</mi><mi>min</mi></msub><mo>)</mo></mfrac><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;alpha&lt;&#92;frac&#123;1&#125;&#123;&#92;epsilon(G_&#123;min&#125;)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The deeper lesson is that SCF mixing is an approximate inverse-response problem. If the exact dielectric matrix were known, it could be used to correct the trial potential almost directly. In practice one uses model dielectric screening for preconditioning and builds better Jacobian information iteratively through Broyden-, Pulay-, or related methods. This connects the physical language of screening to the numerical language of Jacobians and preconditioners developed in <a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> and Numerical Analysis.
+  </p>
+  <p>
+    A small final density residual says that this nonlinear fixed point has been found for the chosen discrete problem. It says nothing yet about whether the basis cutoff, k mesh, pseudopotential, functional, magnetic branch, or supercell is adequate for the intended observable.
+  </p>
+</section>
+
+<section aria-labelledby="section-13-3-paw">
+  <h2 id="section-13-3-paw">13.3 Projector Augmented Waves (PAWs)</h2>
+  <p>
+    PAW retains the global smooth representation that makes plane-wave and grid calculations efficient, but supplements it with atom-centered information inside augmentation regions. The basic object is the smooth auxiliary orbital. A linear transformation reconstructs the corresponding all-electron-like valence state from smooth partial waves, all-electron partial waves, and local projectors. In the multi-atom form used here,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="PAW reconstruction of an all electron wavefunction">
+      <semantics>
+        <mrow>
+          <mo>|</mo><mi>ψ</mi><mo>⟩</mo><mo>=</mo><mo>|</mo><mover><mi>ψ</mi><mo>~</mo></mover><mo>⟩</mo><mo>+</mo>
+          <munder><mo>∑</mo><mrow><mi mathvariant="bold">R</mi><mi>m</mi></mrow></munder>
+          <msub><mi>c</mi><mrow><mi mathvariant="bold">R</mi><mi>m</mi></mrow></msub>
+          <mo>(</mo><mo>|</mo><msub><mi>ψ</mi><mrow><mi mathvariant="bold">R</mi><mi>m</mi></mrow></msub><mo>⟩</mo><mo>−</mo><mo>|</mo><msub><mover><mi>ψ</mi><mo>~</mo></mover><mrow><mi mathvariant="bold">R</mi><mi>m</mi></mrow></msub><mo>⟩</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">|&#92;psi&#92;rangle=|&#92;tilde&#123;&#92;psi&#125;&#92;rangle+&#92;sum_&#123;&#92;mathbf&#123;R&#125;m&#125;c_&#123;&#92;mathbf&#123;R&#125;m&#125;(&#92;left|&#92;psi_&#123;&#92;mathbf&#123;R&#125;m&#125;&#92;right&#92;rangle-&#92;left|&#92;tilde&#123;&#92;psi&#125;_&#123;&#92;mathbf&#123;R&#125;m&#125;&#92;right&#92;rangle).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The correction vanishes outside each augmentation region, so the difficult near-nucleus structure is localized. Smooth parts are handled with FFTs over the whole cell; rapidly varying atom-centered terms are evaluated efficiently on radial and angular grids. This makes PAW conceptually closer to an augmented all-electron method than to simply replacing the nucleus by a soft local potential, even though its outer numerical machinery resembles a pseudopotential calculation.
+  </p>
+  <p>
+    Densities and energies follow the same decomposition: a smooth global contribution plus on-site differences between the full and smooth atomic representations. Compensation charges are chosen so that the on-site difference has no unwanted long-range multipole field outside the augmentation sphere. The result is a clean separation between smooth interstitial electrostatics and local reconstruction.
+  </p>
+  <p>
+    The usefulness of this construction does not remove dataset dependence. Frozen cores, selected valence and semicore states, projector energies, augmentation radii, relativistic treatment, and exchange–correlation assumptions determine which environments the PAW dataset can represent accurately. Converging the smooth plane-wave basis does not test those choices. Chapter 11 explains this distinction in terms of transferability; the corresponding Foundations route is <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-13-4-hybrid-hf-plane-waves">
+  <h2 id="section-13-4-hybrid-hf-plane-waves">13.4 Hybrid Functionals and Hartree–Fock in Plane Wave Methods</h2>
+  <p>
+    Semilocal exchange–correlation potentials are convenient in plane-wave codes because they are local or differential functions of real-space quantities. Hartree–Fock exchange is qualitatively different: each occupied orbital couples nonlocally to every other occupied orbital of the same spin through the Coulomb kernel. A representative reciprocal-space denominator has the form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Coulomb denominator in plane wave exact exchange">
+      <semantics>
+        <mrow><mfrac><mrow><mn>4</mn><mi>π</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msup><mrow><mo>|</mo><mi mathvariant="bold">q</mi><mo>|</mo></mrow><mn>2</mn></msup></mfrac><mo>,</mo><mspace width="0.5em"/><mi mathvariant="bold">q</mi><mo>=</mo><mi mathvariant="bold">k</mi><mo>−</mo><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup><mo>−</mo><mi mathvariant="bold">G</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;frac&#123;4&#92;pi e^2&#125;&#123;|&#92;mathbf&#123;q&#125;|^2&#125;,&#92;qquad &#92;mathbf&#123;q&#125;=&#92;mathbf&#123;k&#125;-&#92;mathbf&#123;k&#125;'-&#92;mathbf&#123;G&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The apparent divergence at small <em>q</em> is integrable in the continuum but cannot be handled by naively omitting or sampling one singular discrete term. Periodic exact-exchange calculations therefore require an explicit singularity treatment or an equivalent reformulation. Screened hybrids such as HSE soften the long-range difficulty by replacing the full Coulomb kernel in the exchange term with a short-range one, but the orbital coupling and computational cost remain much greater than for a semilocal functional.
+  </p>
+  <p>
+    Martin also points to a second strategy: transform the occupied Bloch manifold into localized Wannier-like functions and evaluate exchange between spatially overlapping pairs. The representation changes, while the nonlocal exchange physics does not. This anticipates Chapter 23 and illustrates a recurring idea in electronic structure: a difficult global operation can become sparse when the same occupied subspace is expressed in a localized gauge.
+  </p>
+  <p>
+    Hybrid calculations therefore add their own numerical controls. Exchange sums must converge with k-point sampling and the selected Coulomb/singularity treatment, in addition to the ordinary orbital cutoff, density grid, and SCF thresholds. Better agreement of a generalized-Kohn–Sham band gap does not convert the full auxiliary spectrum into an exact quasiparticle spectrum; that interpretive boundary remains the one established in Chapter 9 and <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-13-5-supercells">
+  <h2 id="section-13-5-supercells">13.5 Supercells: Surfaces, Interfaces, Molecular Dynamics</h2>
+  <p>
+    Plane waves are naturally periodic, so nonprimitive and even nominally nonperiodic problems are often converted into larger periodic cells. This is the supercell method. A defect, displaced plane, interface, slab, adsorbate, or molecular configuration is repeated periodically; increasing the cell size then becomes a controlled finite-size sequence toward the desired isolated or dilute limit.
+  </p>
+  <p>
+    For frozen phonons, the supercell determines which commensurate displacement wavevectors can be represented. A sufficiently large cell can also recover real-space force constants and, from them, interpolate a phonon dispersion. The relevant convergence object is the range of the force constants and the commensurate q sampling, not merely whether one displaced supercell calculation has converged electronically.
+  </p>
+  <p>
+    Interfaces and surfaces expose the central weakness of artificial periodicity: long-range electrostatics can couple one repeated object to the next. Vacuum thickness alone is not a universal cure. Slab dipoles, charged defects, polar interfaces, net fields, image charges, and the chosen Coulomb boundary condition may require dedicated corrections or truncated kernels. These issues are part of the physical model, as emphasized in <a href={href('/theory/surface-and-interface-chemistry/')}>Surface and Interface Chemistry</a> and Appendix F.
+  </p>
+  <p>
+    Molecular dynamics uses the same electronic machinery at a sequence of nuclear configurations. Periodic boundaries are often advantageous because they suppress artificial container walls and mimic bulk matter. But an SCF solution at every time step does not by itself establish an equilibrated or statistically converged trajectory. Chapter 19 will add the nuclear integration, ensemble, time-step, and sampling questions that lie beyond this chapter's electronic-structure focus.
+  </p>
+  <aside class="callout" aria-label="supercell error channels">
+    <p><strong>Supercell size is an additional convergence axis</strong></p>
+    <p>electronic SCF convergence → one periodic cell solved.</p>
+    <p>supercell convergence → repeated-image interaction sufficiently small for the intended quantity.</p>
+    <p>thermodynamic or dilute-limit claim → may require further extrapolation, reservoirs, configurational sampling, or finite-temperature physics.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-13-6-clusters-molecules">
+  <h2 id="section-13-6-clusters-molecules">13.6 Clusters and Molecules</h2>
+  <p>
+    Finite systems expose the complementary strengths of the two representations introduced in Chapter 12. Real-space grids can impose open or otherwise tailored boundary conditions directly, avoiding the need to represent large regions of empty space. Plane-wave methods can still be used by embedding the cluster or molecule in a three-dimensional supercell, which preserves the same robust basis, FFT, pseudopotential, and PAW machinery used for crystals.
+  </p>
+  <p>
+    The price of the plane-wave route is finite-size electrostatics. A neutral compact molecule may converge quickly with vacuum, whereas charged systems, large dipoles, diffuse states, polarizable clusters, or long-range response can interact strongly with their periodic images. The observable determines the required cell size and correction scheme. Converging a total energy difference does not automatically mean that an absolute electrostatic potential, dipole moment, excitation, or charged addition/removal energy is converged to the same precision.
+  </p>
+  <p>
+    Martin uses these examples to emphasize method generality rather than to claim that one representation is universally best. Real-space finite-difference calculations are especially natural for finite-system ground states and time-dependent response; plane waves provide a parameter-independent global basis that can reveal effects missed by simplified structural models. The appropriate choice depends on boundary conditions, spatial localization, desired observable, and the cost of reaching controlled convergence.
+  </p>
+</section>
+
+<section aria-labelledby="section-13-7-applications">
+  <h2 id="section-13-7-applications">13.7 Applications of Plane Wave and Grid Methods</h2>
+  <p>
+    Martin closes the chapter by pointing outward rather than introducing another algorithm. The same computational core recurs throughout the book: total-energy comparisons and pressure-driven structural transitions; phonons and effective charges; polarization; surfaces and interfaces; molecular dynamics; electronic bands; optical calculations; and topological materials. The breadth of applications is a consequence of having a general total-energy and one-electron framework whose geometry and perturbations can be changed without rebuilding the basis around each new structure.
+  </p>
+  <p>
+    This generality should not be mistaken for universal validity. The representation may be converged while the exchange–correlation approximation fails; a good pseudopotential may still omit a relevant semicore state; a stable SCF branch may not be the lowest magnetic or structural state; and a periodic supercell may solve the wrong electrostatic boundary-value problem. The practical power of plane waves comes from making many numerical controls systematic, which makes the remaining physical approximations easier—not unnecessary—to identify.
+  </p>
+  <p>
+    A useful research-level decomposition is therefore
+  </p>
+  <aside class="callout" aria-label="research interpretation hierarchy">
+    <p><strong>Keep the evidence layers separate</strong></p>
+    <p>physical model → Hamiltonian approximation → finite representation → SCF solution → observable → scientific claim.</p>
+  </aside>
+  <p>
+    Chapter 13 completes the plane-wave/grid pair of Part IV. The next two chapters deliberately change basis philosophy: Chapter 14 builds intuition from localized atomic orbitals and tight-binding matrix elements, and Chapter 15 asks how localized bases become full first-principles calculations.
+  </p>
+</section>
