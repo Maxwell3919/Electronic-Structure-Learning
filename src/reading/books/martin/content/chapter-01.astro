@@ -14,41 +14,42 @@ export const sectionLinks = [
 ];
 
 export const modernPerspective = [
-  'The hierarchy introduced here still organizes present calculations. Independent-particle states provide a useful working language, density-functional theory supplies the dominant ground-state framework, and explicit many-body or response methods are introduced when the target observable lies outside that framework or when correlation changes the qualitative phase.',
-  'The success of an effective one-electron description does not make the underlying electrons independent. Every interpretation depends on the auxiliary system, the treatment of exchange and correlation, the spin and spin–orbit model, and the observable being inferred from the calculated states.',
+  'Effective one-electron states remain the working language for much of electronic structure, but their physical interpretation depends on the theory that generated them and on the observable being inferred.',
+  'Kohn–Sham density functional theory is primarily a ground-state framework. Its auxiliary eigenvalues are extremely useful, but quasiparticle, optical, response, or explicitly correlated methods are needed when the target observable lies outside that ground-state role.',
+  'The continuity arguments that make band theory powerful also identify its limits: a phase transition, strong correlation, superconductivity, or a topological change associated with a gap closing can invalidate a simple continuation from the chosen independent-electron reference.',
 ];
 
 export const synthesis =
-  'Chapter 1 explains how electronic structure became calculable without making the interacting-electron problem disappear. Chapter 2 now turns from this conceptual history to the structures, phases, responses, and excitation spectra that the theory is expected to describe.';
+  'Chapter 1 explains how electronic structure became calculable without making the interacting-electron problem disappear: quantum mechanics defines the states, effective one-electron pictures make them usable, correlation sets the limits of that simplification, and density functional theory turns selected properties of the interacting system into a practical computational problem. Chapter 2 now surveys the structures, phases, responses, and excitation spectra that these ideas must describe.';
 ---
 
 <section aria-labelledby="section-1-1-quantum-theory">
   <h2 id="section-1-1-quantum-theory">1.1 Quantum Theory and the Origins of Electronic Structure</h2>
   <p>
-    Electronic-structure theory begins with the recognition that electrons and nuclei determine both the stability of matter and its observable properties. The discovery of the electron in the 1890s and Rutherford’s nuclear model exposed a fatal problem for classical physics: opposite charges should collapse rather than form stable atoms.
+    Electronic-structure theory begins when electrons and nuclei become the microscopic constituents of matter. Lorentz and Zeeman connected spectra and magnetic response to charged particles, Thomson established the electron experimentally, and Rutherford’s nuclear model concentrated the positive charge into a small massive nucleus. This immediately exposed a classical contradiction: an electron attracted to a nucleus should not form a stable atom with a discrete spectrum.
   </p>
   <p>
-    Quantum theory replaced unrestricted classical motion with allowed quantum states. Planck and Einstein established quantization for radiation; Bohr connected discrete atomic levels with spectra; de Broglie, Schrödinger, and Heisenberg supplied the wave and operator formulations of quantum mechanics. Pauli’s exclusion principle and Fermi–Dirac statistics then explained how many electrons occupy atomic states and why the periodic table has its observed structure.
+    Quantization supplied the missing idea. Planck and Einstein established discrete energy exchange for radiation; Bohr used allowed electronic levels to explain atomic stability and spectra; de Broglie, Schrödinger, and Heisenberg then replaced the model orbit with a general quantum mechanics of states. Pauli’s exclusion principle and Fermi–Dirac statistics explained how many electrons can occupy those states and supplied the organizing principle behind the periodic table.
   </p>
   <aside class="callout" aria-label="Development from classical instability to electronic structure">
     <p><strong>Conceptual sequence</strong></p>
-    <p>Classical instability → quantized atomic states → wave mechanics → exclusion and spin → relativistic spin–orbit coupling.</p>
+    <p>Classical instability → discrete quantum states → wave mechanics → exclusion and statistics → spin → relativistic spin–orbit coupling.</p>
   </aside>
   <p>
-    Dirac’s relativistic theory completed the basic framework for spin-one-half particles. In most molecules and solids, a nonrelativistic Hamiltonian supplemented by spin–orbit coupling is sufficient, but this term can alter the character of the electronic states rather than merely shift their energies. Its later role in topological materials is therefore rooted in the foundations of quantum theory.
+    Spin and exchange symmetry made the theory genuinely many-electron, while Dirac’s relativistic formulation produced spin–orbit interaction as an intrinsic consequence. In many molecules and solids a nonrelativistic Hamiltonian with an added spin–orbit term is sufficient, but the effect can change the character of the states rather than merely shift their energies. This is why a foundational relativistic correction reappears later in the theory of topological materials.
   </p>
   <p>
-    Quantum mechanics also placed chemical bonding on a microscopic basis. When atoms combine, electronic wavefunctions can extend over more than one nucleus. Their redistribution can lower the total energy and create bonding states that are qualitatively different from isolated atomic levels. The same task—construct the allowed electronic states and determine their occupation—extends from molecules to crystals.
-  </p>
-  <p>
-    Prerequisites are mapped in <a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
+    Quantum mechanics also placed chemical bonding on a microscopic basis. When atoms approach, electronic wavefunctions can extend over several nuclei; the resulting delocalization and electron–nucleus attraction can lower the total energy and create states qualitatively different from isolated atomic levels. The basic task of electronic structure is therefore to determine the allowed electronic states of the combined system, determine their occupation, and connect them to stability and observable properties. Background is mapped in <a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
   </p>
 </section>
 
 <section aria-labelledby="section-1-2-independent-electrons">
   <h2 id="section-1-2-independent-electrons">1.2 Why Is the Independent-Electron Picture So Successful?</h2>
   <p>
-    The physical system contains strong electron–electron interactions, yet much of electronic-structure theory is expressed through effective one-electron states. The working simplification is to replace the full many-electron equation with orbitals moving in an effective potential that contains the nuclei and some averaged consequences of the other electrons:
+    The central tension of electronic structure appears here. The real Hamiltonian contains electron–electron Coulomb interaction, yet independent-particle concepts organize metals, semiconductors, insulators, bonding, band structures, and much of density functional theory. Their usefulness therefore depends on whether the interacting system can be represented by a stable effective one-electron reference, not on the interaction being small or absent.
+  </p>
+  <p>
+    The basic construction replaces the full many-electron equation by orbitals moving in an effective potential that contains the nuclei and some averaged or effective representation of the other electrons:
   </p>
   <div class="math-display">
     <math display="block" aria-label="effective one-electron Schrödinger equation">
@@ -66,7 +67,10 @@ export const synthesis =
     </math>
   </div>
   <p>
-    The orbitals and eigenvalues provide a compact language for bonding and electronic motion. Their occupations specify the auxiliary state. For electrons in thermal equilibrium, the occupation of a level follows the Fermi–Dirac distribution,
+    This turns a coupled many-electron problem into a set of orbitals <em>ψ</em><sub>i</sub> and eigenvalues <em>ε</em><sub>i</sub>. The simplification is powerful, but the effective potential is theory-dependent: a successful orbital picture does not imply that the physical electrons have become independent.
+  </p>
+  <p>
+    The spectrum becomes a many-electron state only after the levels are occupied. In thermal equilibrium electrons follow the Fermi–Dirac distribution,
   </p>
   <div class="math-display">
     <math display="block" aria-label="Fermi–Dirac occupation">
@@ -80,133 +84,164 @@ export const synthesis =
     </math>
   </div>
   <p>
-    Pauli and Sommerfeld used this filling rule to repair the classical theory of metals. At low temperature, only states near the Fermi energy can readily change occupation. Electrical conduction, electronic heat capacity, and weak paramagnetism are therefore controlled by a small region of the spectrum rather than by all electrons equally.
+    At zero temperature the lowest states fill up to the Fermi energy. At temperatures or magnetic fields small compared with characteristic electronic energies, deep occupied states remain essentially frozen and only states near the Fermi energy readily change occupation. Pauli and Sommerfeld used this fact to repair the classical theory of metals: conduction, electronic heat capacity, and weak paramagnetism are controlled mainly by a small energetic region near the Fermi level rather than by all electrons equally.
   </p>
   <p>
-    Bloch’s theorem supplied the decisive extension from a free-electron gas to a crystal. A periodic potential does not localize every electron at a nucleus. Its eigenstates extend through the perfect lattice, are labeled by crystal momentum, and form energy bands. Resistance arises from departures from perfect periodicity—thermal motion, defects, surfaces, or other perturbations—not from the mere existence of a periodic array of nuclei.
+    Bloch’s theorem then explains why a crystal lattice does not destroy electronic mobility. In a perfect periodic potential, eigenstates can extend through the crystal and are labeled by crystal momentum. Periodicity reorganizes the spectrum into bands but does not itself act as random scattering; resistance appears when perfect periodicity is disturbed by thermal motion, defects, boundaries, disorder, or other perturbations.
+  </p>
+  <p>
+    Combining Bloch states with Pauli filling gives the basic classification of solids. For each spin, a band contains one state per unit cell, so electron counting determines whether bands are filled or partially occupied:
+  </p>
+  <p>
+    The passage from atomic levels to bands is not always a gentle broadening. In covalent solids the character of the states can reorganize as atoms are brought together, producing bonding and antibonding bands that look qualitatively different from the isolated-atom spectrum. Kimball used this evolution to make the metal–insulator distinction visually clear long before modern electronic-structure calculations were routine. The important point is that an independent-electron model can still capture a major qualitative reconstruction of the states when the correct crystal potential and symmetry are present.
   </p>
   <aside class="callout" aria-label="Evolution from atomic levels to electronic bands">
     <p><strong>From atoms to a solid</strong></p>
-    <p>Discrete atomic levels → splitting and broadening as atoms interact → allowed bands separated by gaps.</p>
+    <p>Discrete atomic levels → splitting and reorganization as atoms interact → allowed bands → filling fixed by the electron count.</p>
     <ul>
       <li><strong>Metal:</strong> at least one band is partially filled.</li>
-      <li><strong>Insulator:</strong> filled bands are separated from empty bands by a finite gap.</li>
-      <li><strong>Semiconductor:</strong> the same filling pattern occurs with a smaller gap, so temperature or doping can create mobile carriers.</li>
+      <li><strong>Insulator:</strong> occupied bands are filled and separated from empty bands by a finite gap.</li>
+      <li><strong>Semiconductor:</strong> the filling pattern is insulating, but the gap is small enough that temperature or doping can create mobile carriers.</li>
     </ul>
   </aside>
   <p>
-    The classification often survives interactions when the interacting phase is continuously connected to the independent-electron reference. A metal generally remains metallic and a filled-band insulator remains insulating unless a phase transition changes the state. This continuity explains the reach of band theory while identifying exceptional cases—superconductors, Mott insulators, and other correlated phases—where the simple connection fails.
+    The independent-electron classification often survives the return to the interacting problem by continuity. Imagine increasing the electron–electron interaction smoothly from the reference system toward the real material. If no phase transition intervenes, the detailed energies and wavefunctions may change while the qualitative identity of the phase survives. A partially filled-band metal therefore remains a natural starting point for an interacting metal, and a filled-band insulator remains a natural starting point for an interacting insulator.
   </p>
   <p>
-    This argument leads into <a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a>, <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a>, and Martin’s detailed treatment of periodic bands in Chapter 4.
+    Later work associated with Landau and Luttinger made this continuity more systematic for Fermi systems, including the persistence of Fermi-surface information under interactions so long as the system does not reorganize into another phase. The exceptions are as important as the rule. Superconductivity, a correlation-driven insulator, or another collective phase signals that the original reference cannot be continued harmlessly; the change itself is new physics rather than merely a better band energy.
+  </p>
+  <p>
+    Martin also points out that topology gives this logic another form. A gapped topological phase cannot change continuously while the relevant gap and required conditions remain intact; a qualitative transition such as a gap closing is required. Effective one-electron states are thus useful because they provide a reference language whose domain can be tested. This argument leads into <a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a>, <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a>, and Martin’s periodic-band treatment in Chapter 4.
   </p>
 </section>
 
 <section aria-labelledby="section-1-3-quantitative-calculations">
   <h2 id="section-1-3-quantitative-calculations">1.3 Emergence of Quantitative Calculations</h2>
   <p>
-    Once quantum mechanics supplied the governing equations, the central problem became numerical: how can realistic many-electron atoms and solids be represented with finite effort? Hartree introduced the self-consistent field idea—solve one-electron equations in a potential generated by the nucleus and the other electrons, update that potential, and repeat until input and output agree. Fock placed the procedure on an antisymmetric determinant and introduced exact exchange within the single-determinant approximation. Hylleraas showed through accurate two-electron calculations how explicit correlation improves beyond that picture.
+    Once quantum mechanics supplied the equations, the central challenge became numerical: how can realistic multielectron atoms and solids be represented with finite effort? Hartree introduced the self-consistent field idea—solve each electron in the current field of the nucleus and the other electrons, update that field from the resulting state, and repeat. Fock placed the procedure on an antisymmetric determinant and included exchange within the single-determinant approximation, while Hylleraas showed through accurate two-electron calculations what explicit correlation adds beyond that picture.
   </p>
   <p>
-    Early calculations for solids introduced ideas that remain visible in modern methods. Wigner and Seitz divided a crystal into atomic cells, reducing part of the problem to an approximately spherical calculation around each site. Their sodium calculations obtained realistic equilibrium behavior and showed that a wavefunction can be atomic-like near a nucleus while producing a nearly free-electron band across the crystal.
+    Solids added a multiscale representation problem. Near nuclei wavefunctions vary rapidly and retain atomic character; in bonding and interstitial regions they can be much smoother and more extended. Wigner and Seitz exploited atomic cells to simplify this geometry, and their sodium calculations showed that atomic-like behavior near each nucleus can coexist with nearly free-electron bands across the crystal.
   </p>
   <p>
-    The difficulty in a general solid is to describe both rapidly varying core-region states and smoother bonding states. Several enduring strategies emerged:
+    Their work also connected electronic structure to total-energy prediction. By evaluating how the electronic and total energies change with the size of the atomic cell, and later including an estimate of correlation, they obtained an equilibrium description of sodium in striking agreement with experiment. The example foreshadows the modern use of electronic total energies to compare structures rather than calculating bands only as spectroscopic objects.
+  </p>
+  <p>
+    Several modern method families can already be recognized in the solutions developed during this period:
   </p>
   <ul>
-    <li><strong>Augmented plane waves:</strong> use atomic-like functions near nuclei and plane-wave-like functions between them, matched at region boundaries.</li>
-    <li><strong>Orthogonalized plane waves and pseudopotentials:</strong> represent the effect of core states through orthogonality or an effective valence potential.</li>
-    <li><strong>Cellular and multiple-scattering methods:</strong> exploit atomic regions and the scattering information carried between them.</li>
+    <li><strong>Augmented plane waves:</strong> use atomic-like functions near nuclei and plane-wave-like functions in smoother regions, matched at their boundaries.</li>
+    <li><strong>Orthogonalized plane waves:</strong> build valence states that remain orthogonal to the core states.</li>
+    <li><strong>Effective potentials and pseudopotential ideas:</strong> replace detailed core behavior by an effective action on the valence electrons when core states are not the target.</li>
   </ul>
   <p>
-    These were practical responses to the same multiscale structure that modern basis sets, pseudopotentials, projector augmented waves, and all-electron methods still address. Computer calculations in the 1950s made semiconductor band structures quantitatively accessible, but agreement for one gap or band did not imply equal accuracy for every state. That distinction between a successful representation and a fully validated observable remains essential.
+    Early computer calculations made difficult semiconductor bands quantitative, but they also exposed a validation lesson. Calculations for Ge could reproduce important valence features and a gap while still obtaining parts of the conduction spectrum incorrectly. Agreement for one band, one gap, or one reciprocal-space direction does not establish accuracy for every state relevant to a physical conclusion.
   </p>
 </section>
 
 <section aria-labelledby="section-1-4-correlation">
   <h2 id="section-1-4-correlation">1.4 The Greatest Challenge: Electron Interaction and Correlation</h2>
   <p>
-    Independent-electron methods succeed because they encode important average effects and because many phases are continuously connected to a one-electron reference. Their deepest limitation is that Coulomb interaction correlates electronic motion: the probability of finding one electron depends on where the others are and on their spins.
+    Independent-electron success sharpens the many-body question: which effects can be absorbed into an effective one-electron description, and which require genuinely correlated electronic motion? Exchange is the first unmistakable example. Antisymmetry makes the spatial distribution depend on spin and changes the energy of different spin arrangements; Heisenberg and Dirac connected this exchange energy to the microscopic origin of magnetism.
   </p>
   <p>
-    Exchange was recognized early as the quantum origin of magnetism. Antisymmetry reduces the probability of equal-spin electrons occupying the same region and produces an energy that depends on spin arrangement. Heisenberg and Dirac used this principle to explain magnetic coupling within quantum mechanics.
+    Correlation extends beyond exchange. Coulomb repulsion couples the motion and occupation of electrons even after antisymmetry is enforced, so the probability of one electronic configuration depends on how the other electrons arrange themselves. This matters especially for localized orbitals and nearly competing configurations, where moving one electron can strongly change the energy of the others. Accurate atomic and molecular calculations had already shown that such correlated motion cannot always be represented by one determinant.
   </p>
   <p>
-    Correlation extends beyond antisymmetry. It is especially important for localized orbitals and near-degenerate configurations. Wigner, Mott, de Boer, and Verwey framed the central condensed-matter competition as band formation versus atomic-like interaction: kinetic energy favors delocalization, whereas strong local repulsion can prevent motion even when a simple band count predicts a metal. Transition-metal compounds such as NiO made clear that a partially filled one-electron band is not sufficient evidence for metallic behavior.
+    In solids, Wigner, Mott, de Boer, Verwey, and Peierls framed the central competition as band formation versus atomic-like interaction. Delocalization lowers kinetic energy and broadens states into bands; localization keeps electrons closer to atomic configurations and makes their mutual repulsion more consequential. Narrow, partially filled <em>d</em> bands are therefore a natural trouble spot because the scale associated with local interaction can compete directly with the band width.
   </p>
-  <aside class="callout">
-    <p><strong>Two levels of failure</strong></p>
-    <p>An independent-electron approximation may give inaccurate energies while retaining the correct phase, or interaction may create a qualitatively different phase—magnetic order, a Mott insulator, superconductivity, or another correlated state. The second case cannot be repaired by merely refining the parameters of the same one-electron picture.</p>
+  <aside class="callout" aria-label="Competition between band formation and local interaction">
+    <p><strong>Competing tendencies</strong></p>
+    <p>Strong hopping and broad bands → delocalization → band-like behavior.</p>
+    <p>Strong local interaction and narrow bands → localization → atomic-like correlated behavior.</p>
   </aside>
   <p>
-    The corresponding frameworks are separated in <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> and <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
+    NiO became the classic warning. A simple partially filled-band count suggests a metal, yet the material is insulating. The problem is qualitative rather than a small numerical error: interaction reorganizes the low-energy state so strongly that the phase is not continuously described by the naive band reference. This is the conceptual core of the Mott problem and of later work on strongly correlated <em>d</em>-electron systems.
+  </p>
+  <p>
+    Two levels of failure should therefore be distinguished. A one-electron approximation may preserve the correct phase but give inaccurate energies or gaps, in which case a better effective description may be enough. More fundamentally, interaction may produce a different phase—such as magnetic order, a correlated insulator, or superconductivity—and then the theory must represent that collective many-electron organization. The corresponding Atlas layers are <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a>, <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a>, and <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
   </p>
 </section>
 
 <section aria-labelledby="section-1-5-dft">
   <h2 id="section-1-5-dft">1.5 Density Functional Theory</h2>
   <p>
-    Hohenberg and Kohn changed the formulation of the problem in 1964 by proving that the ground-state density determines the ground-state properties of an interacting electron system in principle. Kohn and Sham then introduced an auxiliary noninteracting system whose orbitals reproduce that density. The construction made a theory of the interacting system computationally accessible through one-electron equations.
+    Hohenberg and Kohn changed the formulation of the ground-state problem in 1964 by establishing that the properties of an interacting electron system can, in principle, be expressed as functionals of the electron density. The interaction has not disappeared; the change is that the ground state can be encoded in the density rather than requiring the full many-electron wavefunction as the primary variable.
   </p>
   <p>
-    The distinction is decisive: Kohn–Sham density functional theory uses independent-particle machinery, but it does not assert that the real electrons are independent. The auxiliary orbitals are chosen to reproduce selected ground-state quantities. Exchange and correlation are collected into
+    That change of variable is conceptually important because it separates the exact many-electron physics from the particular representation used to compute it. DFT is a theory of the interacting system: the density belongs to the real electrons, and the formal energy functional is defined so that its minimum yields the interacting ground state. The later appearance of one-electron orbitals is therefore a computational construction inside DFT, not a return to the claim that the real system is noninteracting.
+  </p>
+  <p>
+    This theorem is a formal foundation, not yet a practical algorithm. It does not provide the usable exact energy functional or a direct procedure for constructing the density of a real material. Kohn and Sham supplied the computational breakthrough by introducing an auxiliary noninteracting system whose orbitals reproduce the interacting ground-state density. One-electron machinery is therefore restored for a precisely defined purpose without asserting that the physical electrons are independent.
+  </p>
+  <aside class="callout" aria-label="From the interacting problem to Kohn-Sham density functional theory">
+    <p><strong>Change of formulation</strong></p>
+    <p>Interacting ground state → density as the basic variable → auxiliary Kohn–Sham orbitals reproduce that density → practical density and total-energy calculations.</p>
+  </aside>
+  <p>
+    Kohn and Sham also made a deliberate choice about what the auxiliary system should reproduce. By targeting the ground-state density and total energy rather than the complete interacting excitation spectrum, they created a problem for which useful approximations could be built while retaining the efficiency of orbital methods. This limited target is not a weakness added after the fact; it is part of why the construction became practical.
+  </p>
+  <p>
+    Exchange and correlation enter through the exchange–correlation functional
     <math class="math-inline" aria-label="exchange–correlation energy functional of density">
       <semantics>
         <mrow><msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow>
         <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;[n]</annotation>
       </semantics>
-    </math>,
-    whose exact form is unknown and must be approximated in practical work.
+    </math>.
+    Its exact form is unknown, so practical DFT requires approximations. The early local-density and generalized-gradient approaches drew heavily on many-body information from the electron gas; their success motivated the wider hierarchy of functionals treated later in Chapters 8 and 9.
   </p>
   <p>
-    The Hohenberg–Kohn result is an existence and variational statement; it does not by itself provide an orbital algorithm. The Kohn–Sham construction supplies the auxiliary system, while local, semilocal, hybrid, and other approximations decide how exchange and correlation are represented. Martin treats these as separate layers in Chapters 6–9.
+    The crucial point is the restricted target. Kohn–Sham DFT is constructed to reproduce selected ground-state quantities, especially the density and total energy, rather than every property of the interacting spectrum. This explains both its enormous practical reach and its interpretation boundaries: solving the chosen Kohn–Sham equations to numerical convergence does not make the exchange–correlation approximation exact or turn every auxiliary eigenvalue into a general excitation energy.
   </p>
   <p>
-    DFT became dominant because densities, total energies, structures, forces, and many related ground-state properties can often be obtained accurately enough for real materials. Its domain must still be respected: ordinary ground-state Kohn–Sham eigenvalues are not automatically exact charged or neutral excitation energies, and numerical convergence does not remove error from the chosen functional.
-  </p>
-  <p>
-    The Atlas follows the same division: <a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> → <a href={href('/theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a> → <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+    Martin therefore separates the logical layers of Part II, and the Atlas follows the same division: <a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> → <a href={href('/theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a> → <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
   </p>
 </section>
 
 <section aria-labelledby="section-1-6-research">
   <h2 id="section-1-6-research">1.6 Electronic Structure Is Now an Essential Part of Research</h2>
   <p>
-    Electronic-structure theory expanded from calculations on simple crystals to ordinary research practice as algorithms and computing power improved. Car and Parrinello’s 1985 work was especially influential because it linked electronic calculations to nuclear motion. Related approaches made structure optimization, liquids, reactions, surfaces, and finite-temperature processes accessible rather than restricting calculations to small high-symmetry solids.
+    As DFT, algorithms, and computing power improved, electronic structure moved from specialized calculations on simple crystals into ordinary research practice. Car and Parrinello’s 1985 work was especially influential because it connected electronic calculations with nuclear motion and helped make complex structures, surfaces, liquids, reactions, and temperature-dependent atomic configurations accessible.
   </p>
   <p>
-    Calculations now help interpret measurements, distinguish competing structures, predict phases and properties, and expose microscopic mechanisms that experiments do not observe directly. Experiment remains decisive: a low calculated energy does not by itself establish that a structure can be synthesized, survives defects and temperature, or is kinetically accessible.
+    Theory can now interpret measurements, compare competing structures, predict phases and properties, and expose microscopic mechanisms that experiments do not observe directly. Martin emphasizes this breadth through examples ranging from carbon nanostructures and layered materials to superconductors and matter at extreme pressure.
   </p>
   <p>
-    Martin emphasizes the breadth of this integration. Fullerenes, nanotubes, graphene, superconductors, layered systems, oxide interfaces, and geophysical matter at extreme pressure all depend on determining electronic states and energies for realistic atomic arrangements. Chapter 2 develops these targets through concrete properties and examples.
+    Calculation still supplies only one layer of the physical problem. A low electronic energy for an ideal structure does not establish synthesizability, kinetic accessibility, finite-temperature stability, or robustness to defects. Electronic structure is powerful because it provides a quantitative microscopic description that can be combined with those additional questions. Chapter 2 develops the range of target properties through concrete examples.
   </p>
 </section>
 
 <section aria-labelledby="section-1-7-materials-design">
   <h2 id="section-1-7-materials-design">1.7 Materials by Design</h2>
   <p>
-    Materials by design extends electronic-structure calculation from explaining known systems to searching composition and structure for desired behavior. “Material” includes bulk crystals, molecules, clusters, defects, surfaces, interfaces, liquids, and layered combinations. The first question is energetic—whether a configuration is stable or sufficiently metastable—and the second is functional—whether it has the required mechanical, electronic, optical, magnetic, or superconducting properties.
+    Materials by design reverses the usual direction of explanation: instead of starting from a known system and asking why it behaves as it does, one searches composition and structure for a desired property. Martin uses “materials” broadly to include molecules, clusters, bulk crystals, defects, surfaces, interfaces, liquids, and layered combinations.
   </p>
   <p>
-    No single theory solves this entire problem. DFT is central because it is the broadly feasible first-principles method for comparing energies and ground-state properties across large candidate sets. Improved functionals extend the range of bonding that can be treated, while explicit many-body methods provide benchmarks or corrections where density-functional approximations are inadequate.
+    The search contains two distinct questions. Is the proposed structure stable or sufficiently metastable under realistic conditions, and does that state have the desired mechanical, electronic, optical, magnetic, or superconducting property? A favorable property calculation has little meaning if the corresponding atomic arrangement is not physically accessible.
   </p>
   <p>
-    Large materials-data initiatives arise from this capability, but databases and search algorithms inherit the approximations and numerical choices used to create them. A ranked candidate list is therefore evidence inside a defined model, not proof of finite-temperature stability, synthesizability, or the accuracy of every predicted property. Martin’s emphasis remains on the physical theory and computational methods that give such searches meaning.
+    No single theory solves the entire design problem. DFT is central because it makes quantitative comparisons of structures and many ground-state properties feasible across large candidate sets, while improved functionals and explicit many-body methods address cases where standard approximations are insufficient. Large materials databases and discovery programs inherit these underlying approximations, so a computational ranking is evidence within a specified model rather than automatic proof of stability or synthesizability.
   </p>
 </section>
 
 <section aria-labelledby="section-1-8-topology">
   <h2 id="section-1-8-topology">1.8 Topology of Electronic Structure</h2>
   <p>
-    Topology introduced a new form of electronic classification. Ordinary band theory describes energies, occupations, and gaps at each crystal momentum. Topological theory asks how the occupied states are organized globally across the Brillouin zone and identifies properties that cannot change continuously while the relevant gap and protecting symmetries remain intact.
+    Topology adds a global level of classification to band theory. Ordinary band-structure language asks which energies occur at each crystal momentum, which states are occupied, and whether a gap exists. Topological electronic structure asks how the occupied states are organized across the Brillouin zone and whether that organization can be changed continuously while the relevant gap and protecting conditions remain intact.
   </p>
   <p>
-    The quantum Hall effect supplied the first major electronic example: Thouless and collaborators related its quantized response to an integer topological invariant. Kane and Mele, and independently Bernevig and Zhang, showed that spin–orbit coupling can produce related insulating phases without an external magnetic field. Their boundaries support states tied to the bulk electronic structure.
+    The quantum Hall effect supplied the decisive precedent: Thouless and collaborators connected its quantized response to an integer topological invariant. Kane and Mele, and Bernevig and Zhang, then showed that spin–orbit coupling can produce related insulating phases without the strong external magnetic field required for the conventional quantum Hall effect. Spin–orbit interaction, introduced at the beginning of the chapter as a relativistic consequence, thus reappears as an ingredient that can change the global band structure.
   </p>
   <p>
-    Martin also points backward to Shockley’s 1939 analysis. A simple one-dimensional band model already showed that changing the character of the bulk bands can force a gap closing and create a surface state. Modern theory places this transition in the language of Berry phases, invariants, and bulk–boundary correspondence.
+    Martin also points backward to Shockley’s 1939 model, where a change in the character of the bulk bands is associated with a gap closing and a surface state. Modern theory places this type of transition in the language of Berry phases, invariants, and bulk–boundary correspondence. The important lesson is that a simple band model can contain information beyond energy dispersion and electron counting alone.
   </p>
+  <aside class="callout" aria-label="Continuity and topological change">
+    <p><strong>Topological continuity</strong></p>
+    <p>Gapped phase → continuous deformation with the relevant gap open → same topological class.</p>
+    <p>Topological change → qualitative reconstruction, typically involving closure and reopening of the gap.</p>
+  </aside>
   <p>
-    Topological classification does not replace quantitative electronic-structure calculation. A real-material claim still requires a specified structure, filling, spin treatment, spin–orbit interaction, insulating gap, and relevant band subspace before an invariant is interpreted. Parts V and VI return to these ideas through Wannier functions, Berry phases, and explicit models. The prerequisite map is <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
+    A real-material topological claim still depends on the Hamiltonian being studied—structure, filling, spin treatment, spin–orbit interaction, gap, and the relevant band subspace. Chapters 25–28 return to these ideas in detail. The prerequisite map is <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
   </p>
 </section>
