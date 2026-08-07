@@ -1,0 +1,263 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-10-1-radial', label: '10.1 One-Electron Radial Schrödinger Equation' },
+  { id: 'section-10-2-spherical-self-consistency', label: '10.2 Independent-Particle Equations: Spherical Potentials' },
+  { id: 'section-10-3-spin-orbit', label: '10.3 Spin–Orbit Interaction' },
+  { id: 'section-10-4-open-shell', label: '10.4 Open-Shell Atoms: Nonspherical Potentials' },
+  { id: 'section-10-5-transition-elements', label: '10.5 Example of Atomic States: Transition Elements' },
+  { id: 'section-10-6-delta-scf', label: '10.6 Delta-SCF: Electron Addition, Removal, and Interaction Energies' },
+  { id: 'section-10-7-atomic-sphere', label: '10.7 Atomic Sphere Approximation in Solids' },
+];
+
+export const modernPerspective = [
+  'Atomic calculations remain the generator and validation environment for many basis functions, pseudopotentials, PAW datasets, and localized projectors. An atomic agreement is necessary for such constructions but does not establish transferability to every oxidation state, pressure, magnetic state, or observable in a molecule or solid.',
+  'For open-shell and transition-element atoms, the chosen exchange–correlation approximation and the allowed spin/orbital symmetry can reorder near-degenerate configurations. A converged atomic configuration should therefore be identified by its occupation and symmetry assumptions rather than treated as a unique global ground state merely because one SCF cycle converged.',
+  'Delta-SCF total-energy differences include orbital relaxation and can be much more meaningful than raw ground-state eigenvalue differences for localized addition, removal, or constrained transitions. In extended solids, however, charge compensation, screening, finite-size electrostatics, and the definition of the localized subspace become part of the physical model.',
+  'Atomic-sphere bandwidth estimates remain useful intuition for why compact d and f orbitals tend to form narrow bands while extended s and p orbitals form wider bands. They are qualitative radial diagnostics, not replacements for a periodic full-Brillouin-zone band calculation.',
+];
+
+export const synthesis =
+  'Chapter 10 turns the self-consistent electronic-structure equations into their simplest spatial problem: an atom. Spherical symmetry reduces one-electron, Hartree–Fock, and Kohn–Sham equations to radial differential equations, while open shells show where the symmetry reduction becomes approximate and where multiplet or orbital dependence matters. Relativistic core physics introduces spin–orbit coupling, transition elements expose the sensitivity of localized d states to exchange and correlation, and Delta-SCF shows why total-energy differences can contain relaxation physics absent from a single eigenvalue. Finally, atomic-sphere boundary conditions demonstrate that radial functions already contain useful information about band formation in solids. These same atomic radial functions and scattering properties become the raw material of Chapter 11, where rapidly varying core behavior is replaced by pseudopotential or PAW descriptions for valence calculations.';
+---
+
+<section aria-labelledby="section-10-1-radial">
+  <h2 id="section-10-1-radial">10.1 One-Electron Radial Schrödinger Equation</h2>
+  <p>
+    Part III begins with atoms because spherical geometry removes most spatial complexity without removing the central numerical ideas of electronic structure. For a one-electron atom in a spherical potential, angular momentum separates the wavefunction into a radial factor and a spherical harmonic. Writing the radial function in a form that absorbs the geometric factor gives
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="separation of an atomic orbital into radial and angular factors">
+      <semantics>
+        <mrow>
+          <msub><mi>ψ</mi><mrow><mi>n</mi><mi>l</mi><mi>m</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mrow><msub><mi>φ</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo></mrow><mi>r</mi></mfrac>
+          <msub><mi>Y</mi><mrow><mi>l</mi><mi>m</mi></mrow></msub><mo>(</mo><mi>θ</mi><mo>,</mo><mi>ϕ</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\psi_&#123;nlm&#125;(\mathbf&#123;r&#125;)=\frac&#123;\phi_&#123;nl&#125;(r)&#125;&#123;r&#125;Y_&#123;lm&#125;(\theta,\phi).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The three-dimensional Schrödinger equation then becomes a one-dimensional radial eigenproblem,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="radial Schrödinger equation in a spherical potential">
+      <semantics>
+        <mrow>
+          <mrow><mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>r</mi><mn>2</mn></msup></mrow></mfrac>
+          <mo>+</mo><mfrac><mrow><mi>l</mi><mo>(</mo><mi>l</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mrow><mn>2</mn><msup><mi>r</mi><mn>2</mn></msup></mrow></mfrac>
+          <mo>+</mo><mi>V</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>]</mo></mrow>
+          <msub><mi>φ</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>=</mo><msub><mi>ε</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><msub><mi>φ</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\left[-\frac&#123;1&#125;&#123;2&#125;\frac&#123;d^2&#125;&#123;dr^2&#125;+\frac&#123;l(l+1)&#125;&#123;2r^2&#125;+V(r)\right]\phi_&#123;nl&#125;(r)=\varepsilon_&#123;nl&#125;\phi_&#123;nl&#125;(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The centrifugal term is the price of angular momentum: even when the physical potential is attractive, nonzero <em>l</em> suppresses the wavefunction near the origin. Regular bound solutions behave as φ<sub>nl</sub>∝r<sup>l+1</sup> near the nucleus and decay at large radius. These boundary conditions are not numerical decoration; they select the physical solution of the second-order radial equation.
+  </p>
+  <p>
+    Atomic length scales span orders of magnitude. Core orbitals vary extremely rapidly close to the nucleus, whereas valence tails extend much farther out. A uniform grid in <em>r</em> therefore wastes points in the outer region or undersamples the core. Logarithmic radial coordinates place many points near the origin and progressively fewer farther away, allowing one grid to resolve both regions efficiently. The radial problem is consequently a clean example of the general principle that the numerical representation should reflect the characteristic scales of the physics rather than merely discretize space uniformly. Related numerical ideas are collected in <a href={href('theory/numerical-analysis/')}>Numerical Analysis</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-10-2-spherical-self-consistency">
+  <h2 id="section-10-2-spherical-self-consistency">10.2 Independent-Particle Equations: Spherical Potentials</h2>
+  <p>
+    The radial equation becomes an electronic-structure method when the potential is determined by the electrons themselves. In a closed-shell atom, summing complete angular-momentum shells produces a spherical density. With Martin's radial convention,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="spherical density from occupied atomic shells">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <munderover><mo>∑</mo><mrow><mi>n</mi><mi>l</mi></mrow><mtext>occ</mtext></munderover>
+          <mo>(</mo><mn>2</mn><mi>l</mi><mo>+</mo><mn>1</mn><mo>)</mo>
+          <mfrac><mrow><mo>|</mo><msub><mi>φ</mi><mrow><mi>n</mi><mi>l</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo><msup><mo>|</mo><mn>2</mn></msup></mrow><msup><mi>r</mi><mn>2</mn></msup></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(r)=\sum_&#123;nl\in\mathrm&#123;occ&#125;&#125;(2l+1)\frac&#123;|\phi_&#123;nl&#125;(r)|^2&#125;&#123;r^2&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    In Kohn–Sham DFT, that density generates a spherical effective potential
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="spherical Kohn Sham effective potential for an atom">
+      <semantics>
+        <mrow>
+          <msub><mi>V</mi><mi>eff</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <msub><mi>V</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo>
+          <msub><mi>V</mi><mi>H</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo>
+          <msub><mi>V</mi><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_&#123;eff&#125;(r)=V_&#123;ext&#125;(r)+V_H(r)+V_&#123;xc&#125;(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Each occupied radial orbital is solved in this potential, a new density is formed, and the process is iterated to self-consistency. Hartree–Fock has the same radial eigenproblem for a closed shell, but the exchange operator is nonlocal and orbital dependent rather than one common multiplicative <em>V</em><sub>xc</sub>. The atomic geometry therefore provides a direct comparison between two independent-particle constructions without the reciprocal-space complexity of a crystal. The conceptual distinction is developed in <a href={href('theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> and <a href={href('theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a>.
+  </p>
+  <p>
+    The Hartree potential can be found from the spherical Poisson problem or from equivalent radial integrals. The important point is that the Coulomb field must be recomputed consistently from the current density at every iteration. Deeply bound closed shells are usually well behaved, but weakly bound states and near degeneracies can make the fixed point difficult. Transition-metal atoms are a classic case: 3d and 4s levels can exchange order as the potential changes, so blindly refilling the instantaneous lowest eigenvalues can make the SCF map jump between different occupations.
+  </p>
+  <aside class="callout" aria-label="atomic self consistency loop">
+    <p><strong>Atomic self-consistency</strong></p>
+    <p>choose occupations → solve radial equations → construct spherical density → rebuild Hartree and exchange–correlation terms → mix → repeat.</p>
+  </aside>
+  <p>
+    This is the atomic version of the nonlinear fixed-point problem introduced in Chapter 7. A small radial SCF residual confirms consistency for the chosen occupation and approximation; it does not prove that another occupation, spin state, or nonspherical branch is higher in energy. That distinction becomes unavoidable in open shells.
+  </p>
+</section>
+
+<section aria-labelledby="section-10-3-spin-orbit">
+  <h2 id="section-10-3-spin-orbit">10.3 Spin–Orbit Interaction</h2>
+  <p>
+    Relativistic effects become strongest near a heavy nucleus, where electrons move rapidly in the steep nuclear potential. This locality is computationally useful: scalar-relativistic shifts and spin–orbit coupling can be determined accurately in an atomic-like core region and then carried into molecular or solid-state calculations. In the Pauli limit, the spin–orbit term has the schematic form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="spin orbit interaction from momentum and potential gradient">
+      <semantics>
+        <mrow>
+          <msub><mi>H</mi><mi>SO</mi></msub><mo>=</mo>
+          <mfrac><mrow><mi>e</mi><mi>ℏ</mi></mrow><mrow><mn>4</mn><msubsup><mi>m</mi><mi>e</mi><mn>2</mn></msubsup><msup><mi>c</mi><mn>2</mn></msup></mrow></mfrac>
+          <mrow><mo>(</mo><mi mathvariant="bold">p</mi><mo>×</mo><mi>∇</mi><mi>V</mi><mo>)</mo></mrow><mo>·</mo><mi mathvariant="bold">σ</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">H_&#123;SO&#125;=\frac&#123;e\hbar&#125;&#123;4m_e^2c^2&#125;(\mathbf&#123;p&#125;\times\nabla V)\cdot\boldsymbol&#123;\sigma&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Its absolute energy can be small compared with the electrostatic terms, yet it changes symmetry by coupling spin and orbital motion. It can split otherwise degenerate atomic levels, modify magnetic anisotropy, and open gaps that are forbidden in a spinless or scalar-relativistic description. The qualitative role therefore cannot be judged from its percentage of the total energy.
+  </p>
+  <p>
+    Atomic calculations also explain why relativistic pseudopotentials are effective. One can generate separate atomic channels for total angular momentum <em>j</em>=<em>l</em>±1/2, combine them into a scalar-relativistic average and a spin–orbit contribution, then reuse those short-range operators in a crystal. The dataset thereby becomes part of the relativistic Hamiltonian. A scalar-relativistic pseudopotential used in a later fully relativistic calculation is not automatically equivalent to a dataset generated with explicit spin–orbit projectors. The broader distinction is mapped in <a href={href('theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-10-4-open-shell">
+  <h2 id="section-10-4-open-shell">10.4 Open-Shell Atoms: Nonspherical Potentials</h2>
+  <p>
+    Closed shells are unusually simple because all magnetic sublevels of a shell are filled and their angular dependence cancels in the density. An open shell leaves some spin or magnetic quantum numbers unpaired. The physically meaningful atomic states are then multiplets built from coupled orbital and spin angular momenta, and a single determinant in a spherical potential is generally not an exact description of the many-electron state.
+  </p>
+  <p>
+    Several practical levels of approximation are possible. One can enforce a spherical average over the open shell, permit different radial functions for different spin channels while retaining spherical spatial symmetry, allow occupation-dependent nonspherical potentials, or solve a more complete unrestricted problem. Each level changes the object being optimized. A spherical open-shell calculation can be an excellent generator of transferable radial functions while still discarding multiplet splittings and angular polarization that matter for atomic spectroscopy.
+  </p>
+  <p>
+    The electron–electron interaction reveals why the nonspherical problem is more expensive. The Coulomb kernel can be expanded into spherical multipoles,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="multipole expansion of the Coulomb interaction">
+      <semantics>
+        <mrow>
+          <mfrac><mn>1</mn><mrow><mo>|</mo><msub><mi mathvariant="bold">r</mi><mn>1</mn></msub><mo>−</mo><msub><mi mathvariant="bold">r</mi><mn>2</mn></msub><mo>|</mo></mrow></mfrac><mo>=</mo>
+          <mn>4</mn><mi>π</mi>
+          <munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mo>∞</mo></munderover>
+          <munderover><mo>∑</mo><mrow><mi>m</mi><mo>=</mo><mo>−</mo><mi>k</mi></mrow><mi>k</mi></munderover>
+          <mfrac><mn>1</mn><mrow><mn>2</mn><mi>k</mi><mo>+</mo><mn>1</mn></mrow></mfrac>
+          <mfrac><msubsup><mi>r</mi><mo>&lt;</mo><mi>k</mi></msubsup><msubsup><mi>r</mi><mo>&gt;</mo><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msubsup></mfrac>
+          <msubsup><mi>Y</mi><mrow><mi>k</mi><mi>m</mi></mrow><mo>*</mo></msubsup><mo>(</mo><msub><mi>Ω</mi><mn>2</mn></msub><mo>)</mo>
+          <msub><mi>Y</mi><mrow><mi>k</mi><mi>m</mi></mrow></msub><mo>(</mo><msub><mi>Ω</mi><mn>1</mn></msub><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac&#123;1&#125;&#123;|\mathbf&#123;r&#125;_1-\mathbf&#123;r&#125;_2|&#125;=4\pi\sum_&#123;k=0&#125;^\infty\sum_&#123;m=-k&#125;^k\frac&#123;1&#125;&#123;2k+1&#125;\frac&#123;r_&lt;^k&#125;&#123;r_&gt;^&#123;k+1&#125;&#125;Y_&#123;km&#125;^*(\Omega_2)Y_&#123;km&#125;(\Omega_1).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This converts angular Coulomb and exchange matrix elements into angular coefficients multiplying radial integrals. Hartree–Fock benefits strongly because its two-electron operator can be organized into a finite set of multipoles for a specified shell configuration. In local or semilocal DFT the density-dependent nonlinear <em>v</em><sub>xc</sub>(r,θ) can generate angular components beyond a simple finite truncation, so the numerical route is different even though the physical open-shell problem is the same.
+  </p>
+  <p>
+    The practical lesson extends to solids: specifying “spin polarized” does not uniquely specify the state. Occupation matrices, orbital symmetry, noncollinearity, crystal fields, and possible broken-symmetry branches can all matter. Atomic multiplet language and Kohn–Sham broken-symmetry language are related tools, not interchangeable definitions of the same quantum state.
+  </p>
+</section>
+
+<section aria-labelledby="section-10-5-transition-elements">
+  <h2 id="section-10-5-transition-elements">10.5 Example of Atomic States: Transition Elements</h2>
+  <p>
+    Transition elements are the most useful stress test of the preceding ideas because their outer s and d states differ sharply in spatial character while often remaining close in energy. The s orbital is comparatively extended; the d orbital is compact and strongly affected by exchange, self-interaction, and correlation. Small changes in the approximation can therefore reorder occupations even when the total atomic energy changes by only a modest amount.
+  </p>
+  <p>
+    This is why raw one-particle level order is not the best way to compare configurations. A promotion such as moving an electron between 4s and 3d changes the entire self-consistent density. The physically relevant configuration energy is the difference between separately relaxed total energies. Hartree–Fock-like exact exchange tends to favor localized states differently from LSDA/GGA because self-interaction and correlation are treated in fundamentally different ways; neither trend can be reduced to a universal rigid shift of “the d level.”
+  </p>
+  <p>
+    The atomic distinction between localized and extended orbitals later motivates orbital-dependent corrections such as self-interaction correction and DFT+U. In an isolated atom, the 3d subspace is defined by angular momentum around a unique nucleus. In a crystal, localized orbitals must be constructed or projected from extended states, so the value of an orbital occupation or Hubbard parameter depends on that subspace definition. Atomic physics supplies the qualitative scale and origin of the interaction, not a universal solid-state projector. The functional families themselves are mapped in <a href={href('theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-10-6-delta-scf">
+  <h2 id="section-10-6-delta-scf">10.6 Delta-SCF: Electron Addition, Removal, and Interaction Energies</h2>
+  <p>
+    When the initial and final states can both be represented as self-consistent localized configurations, an excitation, addition, or removal energy can be obtained from their total-energy difference. This ΔSCF construction automatically includes relaxation of all other orbitals around the changed occupation. For removing an electron from state <em>i</em>,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Delta SCF removal energy and transition state approximation">
+      <semantics>
+        <mrow>
+          <mi>Δ</mi><mi>E</mi><mo>=</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo>
+          <mo>≈</mo><msub><mi>ε</mi><mi>i</mi></msub><mo>(</mo><mi>N</mi><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Delta E=E(N-1)-E(N)\approx\epsilon_i\left(N-\frac&#123;1&#125;&#123;2&#125;\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The half-occupation expression is Slater's transition-state approximation. It follows from integrating the derivative of the total energy with respect to occupation and replacing that integral by its midpoint value. The central physics is orbital relaxation: the final state is not obtained by simply deleting an electron while freezing all remaining orbitals.
+  </p>
+  <p>
+    A related second difference estimates an effective interaction for changing the occupation of a localized shell,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="effective interaction from a second difference of total energies">
+      <semantics>
+        <mrow>
+          <mi>U</mi><mo>=</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo><mo>+</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>2</mn><mo>)</mo><mo>−</mo><mn>2</mn><mi>E</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">U=E(N)+E(N-2)-2E(N-1).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    In a free atom this quantity is close to a bare localized interaction. In a solid, other electrons polarize and screen the occupation change, so the effective interaction is smaller and depends on the environment and on the chosen localized subspace. Martin's compensated atomic configurations illustrate how an atom can mimic part of that screening, but the result should be read as a physical estimate rather than a universal material-independent U.
+  </p>
+  <p>
+    ΔSCF also clarifies an interpretation boundary from Chapter 7. A total-energy difference between two separately optimized integer or constrained states is a different theoretical object from a Kohn–Sham eigenvalue difference. They can coincide under special exact relations or approximations, but agreement is not automatic. For extended charged systems, finite-size electrostatics and compensating backgrounds introduce additional model choices absent from the isolated atomic problem.
+  </p>
+</section>
+
+<section aria-labelledby="section-10-7-atomic-sphere">
+  <h2 id="section-10-7-atomic-sphere">10.7 Atomic Sphere Approximation in Solids</h2>
+  <p>
+    The final section uses an atomic radial problem to anticipate band formation. Near a nucleus, crystal wavefunctions retain strong atomic character. Wigner–Seitz reasoning therefore replaces the free-atom boundary condition at infinity by a boundary condition on a sphere representing the local cell. For a given angular momentum, a radial function with zero derivative at the sphere boundary represents a low-energy bonding-like extreme, whereas a node at the boundary represents a high-energy antibonding-like extreme. Their energy separation estimates the width of the corresponding band.
+  </p>
+  <aside class="callout" aria-label="atomic sphere picture of a band">
+    <p><strong>Atomic radial state → band estimate</strong></p>
+    <p>free atomic orbital → place it in an atomic sphere → compare bonding-like and antibonding-like boundary conditions → energy separation estimates band width.</p>
+  </aside>
+  <p>
+    For two nearby radial solutions, a Wronskian identity relates the energy difference to their amplitudes and slopes at the sphere boundary. Approximating both by an atomic-like radial function gives the useful estimate
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="atomic sphere estimate of an electronic band width">
+      <semantics>
+        <mrow>
+          <mi>W</mi><mo>≈</mo><mo>−</mo><mn>2</mn>
+          <mfrac>
+            <mrow><msup><mi>r</mi><mn>2</mn></msup><msup><mi>ψ</mi><mi>a</mi></msup><mo>(</mo><mi>r</mi><mo>)</mo><mfrac><mrow><mi>d</mi><msup><mi>ψ</mi><mi>a</mi></msup></mrow><mrow><mi>d</mi><mi>r</mi></mrow></mfrac><mo>|</mo><msub><mi>r</mi><mn>0</mn></msub></mrow>
+            <mrow><msubsup><mo>∫</mo><mn>0</mn><msub><mi>r</mi><mn>0</mn></msub></msubsup><mi>d</mi><mi>r</mi><msup><mi>r</mi><mn>2</mn></msup><msup><mrow><mo>(</mo><msup><mi>ψ</mi><mi>a</mi></msup><mo>)</mo></mrow><mn>2</mn></msup></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">W\approx-2\frac&#123;r_0^2\psi^a(r_0)\left.d\psi^a/dr\right|_&#123;r_0&#125;&#125;&#123;\int_0^&#123;r_0&#125;dr\,r^2(\psi^a)^2&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The numerator measures how much the atomic orbital reaches the cell boundary. Compact orbitals have little amplitude there and therefore weak intersite coupling and narrow bands; extended orbitals overlap strongly and form broad bands. This relation explains, at a radial level, why transition-metal d bands are generally much narrower than s bands and why compression can strongly increase bandwidths as neighboring atomic tails overlap more.
+  </p>
+  <p>
+    The approximation deliberately discards crystal anisotropy and full k dependence. Its value is conceptual and preparatory: the same atomic-like radial solutions appear in augmented-plane-wave, muffin-tin, LMTO, and multiple-scattering methods, where the boundary matching is performed within the actual periodic crystal problem. Chapter 10 therefore ends exactly where the rest of the book needs it to: atomic calculations are no longer isolated-atom exercises, but reusable building blocks for condensed-matter electronic structure.
+  </p>
+</section>
