@@ -1,0 +1,462 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-7-1-replacing-problem', label: '7.1 Replacing One Problem with Another' },
+  { id: 'section-7-2-variational-equations', label: '7.2 The Kohn–Sham Variational Equations' },
+  { id: 'section-7-3-self-consistent-equations', label: '7.3 Solution of the Self-Consistent Coupled Kohn–Sham Equations' },
+  { id: 'section-7-4-self-consistency', label: '7.4 Achieving Self-Consistency' },
+  { id: 'section-7-5-force-stress', label: '7.5 Force and Stress' },
+  { id: 'section-7-6-vxc', label: '7.6 Interpretation of the Exchange–Correlation Potential Vxc' },
+  { id: 'section-7-7-eigenvalues', label: '7.7 Meaning of the Eigenvalues' },
+  { id: 'section-7-8-exact-ks', label: '7.8 Intricacies of Exact Kohn–Sham Theory' },
+  { id: 'section-7-9-tddft', label: '7.9 Time-Dependent Density Functional Theory' },
+  { id: 'section-7-10-generalizations', label: '7.10 Other Generalizations of the Kohn–Sham Approach' },
+];
+
+export const modernPerspective = [
+  'Self-consistency is a nonlinear fixed-point problem inside a chosen Hamiltonian, exchange–correlation approximation, basis, pseudopotential or all-electron treatment, k-point sampling, and occupation model. A small SCF residual therefore establishes consistency of that numerical problem; it does not by itself establish basis convergence, Brillouin-zone convergence, structural accuracy, or validity of the exchange–correlation approximation.',
+  'Kohn–Sham orbitals are auxiliary objects chosen to reproduce the ground-state density. The exact finite-system HOMO has the special ionization-energy relation, and Janak’s theorem gives derivatives with respect to occupations, but generic Kohn–Sham eigenvalues are not many-body quasiparticle energies. Fundamental charged gaps, neutral optical excitations, and Kohn–Sham gaps remain distinct quantities even when their numerical values happen to be close.',
+  'Finite occupations can represent a physical electronic temperature or can be introduced only as a numerical integration aid. Those uses have different thermodynamic meanings. When smearing is numerical, the reported zero-temperature energy and forces must follow the code’s corresponding free-energy or entropy-correction convention rather than treating the smearing width as a literal material temperature.',
+  'Modern generalized Kohn–Sham methods deliberately relax the original requirement of a purely local multiplicative potential. Hybrid and other orbital-dependent functionals can therefore have nonlocal effective operators. This changes the auxiliary problem and often improves band gaps, but it does not turn every generalized-Kohn–Sham eigenvalue into an exact excitation energy.',
+];
+
+export const synthesis =
+  'Chapter 7 turns the existence result of Chapter 6 into the working architecture of practical density-functional calculations. The interacting ground-state density is reproduced by an auxiliary noninteracting system; its orbitals carry the difficult fermionic kinetic structure explicitly through Ts, while Hartree electrostatics is treated classically and all remaining kinetic and interaction differences are assigned to Exc. Variation gives the Kohn–Sham equations, whose effective potential depends on the density and therefore requires a self-consistent fixed point. Variational stationarity explains total-energy, force, and stress formulas, while the behavior of vxc and the derivative discontinuity limits naive interpretations of eigenvalues and gaps. TDDFT and generalized Kohn–Sham theories then show how the auxiliary-system idea can be extended. Chapters 8 and 9 take up the unresolved ingredient that controls practical accuracy: how Exc is approximated.';
+---
+
+<section aria-labelledby="section-7-1-replacing-problem">
+  <h2 id="section-7-1-replacing-problem">7.1 Replacing One Problem with Another</h2>
+  <p>
+    Chapter 6 establishes that the interacting ground-state energy can be written as a functional of the density, but it does not provide a usable expression for the kinetic energy of interacting fermions. Kohn and Sham change the question. Instead of trying to write every contribution explicitly in terms of <em>n</em>(r), they introduce an auxiliary system of noninteracting fermions whose ground-state density is required to equal the density of the real interacting system. The difficult fermionic kinetic structure is then carried by orbitals of this auxiliary problem.
+  </p>
+  <p>
+    The construction assumes that the interacting ground-state density is <em>noninteracting-v-representable</em>: some local one-particle potential must have that density as the ground-state density of noninteracting particles. Martin emphasizes that this is an ansatz rather than a general theorem for all realistic systems. Subject to that assumption, the auxiliary Hamiltonian for spin σ is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="auxiliary Kohn Sham one particle Hamiltonian">
+      <semantics>
+        <mrow>
+          <msubsup><mi>Ĥ</mi><mi>s</mi><mi>σ</mi></msubsup><mo>=</mo>
+          <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>∇</mi><mn>2</mn></msup>
+          <mo>+</mo><msubsup><mi>v</mi><mi>s</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat H_s^\sigma=-\frac&#123;1&#125;&#123;2&#125;\nabla^2+v_s^\sigma(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Filling the lowest auxiliary orbitals gives the spin-resolved density. For integer occupations this is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="density from occupied Kohn Sham orbitals">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <munderover><mo>∑</mo><mi>σ</mi><mo></mo></munderover>
+          <munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><msup><mi>N</mi><mi>σ</mi></msup></munderover>
+          <msup><mrow><mo>|</mo><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(r)=\sum_\sigma\sum_&#123;i=1&#125;^&#123;N^\sigma&#125;|\psi_i^\sigma(r)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The central gain is the noninteracting kinetic energy, which is explicit in the orbitals even though it is only implicit as a density functional:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="noninteracting Kohn Sham kinetic energy">
+      <semantics>
+        <mrow>
+          <msub><mi>T</mi><mi>s</mi></msub><mo>=</mo>
+          <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <munderover><mo>∑</mo><mi>σ</mi><mo></mo></munderover>
+          <munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover>
+          <mo>⟨</mo><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>|</mo><msup><mi>∇</mi><mn>2</mn></msup><mo>|</mo><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">T_s=-\frac&#123;1&#125;&#123;2&#125;\sum_\sigma\sum_i\langle\psi_i^\sigma|\nabla^2|\psi_i^\sigma\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Kohn–Sham theory partitions the exact ground-state energy into pieces that can be evaluated from the auxiliary system plus one remainder:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Kohn Sham total energy decomposition">
+      <semantics>
+        <mrow>
+          <mi>E</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>+</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E[n]=T_s[n]+\int d^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;(r)n(r)+E_H[n]+E_&#123;xc&#125;[n]+E_&#123;II&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here <em>E</em><sub>H</sub> is the classical Hartree self-interaction of the density and <em>E</em><sub>II</sub> is the ion–ion energy. The definition of exchange–correlation is therefore broader than “exchange plus a small correction to Coulomb repulsion.” It contains every difference between the interacting internal energy and the chosen noninteracting-plus-Hartree reference:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="definition of the exact exchange correlation energy in Kohn Sham theory">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo>
+          <mrow><mo>(</mo><mi>T</mi><mo>−</mo><msub><mi>T</mi><mi>s</mi></msub><mo>)</mo></mrow>
+          <mo>+</mo><mrow><mo>(</mo><msub><mi>E</mi><mi>int</mi></msub><mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>)</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;[n]=(T-T_s)+(E_&#123;\mathrm&#123;int&#125;&#125;-E_H).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Thus correlation affects kinetic energy as well as electron–electron interaction energy. The Hartree term also contains the classical self-interaction of each element of the density with itself; the exact exchange–correlation functional must cancel that unphysical contribution as part of its broader job. This is one reason the partition is exact only as a sum: individual terms are chosen for calculational usefulness, while their combination must reproduce the interacting internal energy.
+  </p>
+  <p>
+    The auxiliary orbitals should therefore be read as coordinates for an exact reformulation, not as a claim that the real electrons have become independent. The real system still contains the full Coulomb interaction and has a many-body wavefunction. The noninteracting system is engineered to reproduce one privileged object—the ground-state density—while making the dominant fermionic kinetic structure calculable through ordinary one-particle methods. If the exact <em>E</em><sub>xc</sub> were known and the required auxiliary system existed, the Kohn–Sham construction would reproduce the exact interacting ground-state density and energy. Practical accuracy is limited by the approximation to this remainder, which is why Chapters 8 and 9 are devoted to <a href={href('theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-2-variational-equations">
+  <h2 id="section-7-2-variational-equations">7.2 The Kohn–Sham Variational Equations</h2>
+  <p>
+    The Kohn–Sham equations follow by minimizing the total-energy functional with respect to the auxiliary orbitals while preserving their orthonormality. The kinetic term varies directly with the orbitals; the external, Hartree, and exchange–correlation terms vary through the density. Lagrange multipliers enforcing orbital orthonormality become the Kohn–Sham eigenvalues.
+  </p>
+  <p>
+    After diagonalizing the Lagrange-multiplier matrix within the occupied subspace, each orbital obeys a Schrödinger-like equation
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Kohn Sham one electron equation">
+      <semantics>
+        <mrow>
+          <mrow><mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>∇</mi><mn>2</mn></msup><mo>+</mo><msubsup><mi>v</mi><mi>KS</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>]</mo></mrow>
+          <msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>=</mo><msubsup><mi>ε</mi><mi>i</mi><mi>σ</mi></msubsup><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\left[-\frac&#123;1&#125;&#123;2&#125;\nabla^2+v_&#123;KS&#125;^\sigma(r)\right]\psi_i^\sigma(r)=\epsilon_i^\sigma\psi_i^\sigma(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The effective local potential is the sum of three conceptually different contributions:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="decomposition of the Kohn Sham effective potential">
+      <semantics>
+        <mrow>
+          <msubsup><mi>v</mi><mi>KS</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>+</mo><msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>+</mo><msubsup><mi>v</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>,</mo>
+          <mspace width="1em"></mspace>
+          <msubsup><mi>v</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>=</mo>
+          <mfrac><mrow><mi>δ</mi><msub><mi>E</mi><mi>xc</mi></msub></mrow><mrow><mi>δ</mi><msup><mi>n</mi><mi>σ</mi></msup></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_&#123;KS&#125;^\sigma(r)=v_&#123;\mathrm&#123;ext&#125;&#125;(r)+v_H(r)+v_&#123;xc&#125;^\sigma(r),\qquad v_&#123;xc&#125;^\sigma=\frac&#123;\delta E_&#123;xc&#125;&#125;&#123;\delta n^\sigma&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The external potential specifies the nuclei and applied scalar fields. The Hartree potential is the classical electrostatic potential generated by the electron density,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Hartree potential">
+      <semantics>
+        <mrow>
+          <msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mfrac><mrow><mi>n</mi><mo>(</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi>r</mi><mo>−</mo><msup><mi>r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_H(r)=\int d^3r'\,\frac&#123;n(r')&#125;&#123;|r-r'|&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The exchange–correlation potential is the functional derivative of the remaining many-body energy. It is this derivative, rather than <em>E</em><sub>xc</sub> alone, that enters the one-particle equations. The orbitals are varied subject to orthonormality; the corresponding Lagrange-multiplier matrix can be diagonalized, producing the canonical Kohn–Sham eigenvalues. Rotations within a fully occupied subspace do not change the density or <em>T</em><sub>s</sub>, so the individual canonical orbitals are a convenient representation of the occupied subspace rather than separately observable particles.
+  </p>
+  <p>
+    The local multiplicative form of <em>v</em><sub>KS</sub> is central to the original construction. Applying the Hohenberg–Kohn logic to the auxiliary noninteracting problem implies that, at the ground-state solution, a given noninteracting-v-representable density determines this local potential up to an additive constant. In a spin-polarized calculation the two spin channels can have different effective potentials even when the external nuclear potential is spin independent, because the exchange–correlation functional depends on both spin densities.
+  </p>
+  <p>
+    The equations are formally independent of which approximation is later chosen for <em>E</em><sub>xc</sub>. If the exact functional were available, the density at the self-consistent minimum would be the exact interacting ground-state density. The calculational simplification and the approximation are therefore logically distinct: Kohn–Sham theory supplies the auxiliary equations; LDA, GGA, hybrids, and other choices later specify how the unknown exchange–correlation contribution is represented. This construction is developed separately in <a href={href('theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-3-self-consistent-equations">
+  <h2 id="section-7-3-self-consistent-equations">7.3 Solution of the Self-Consistent Coupled Kohn–Sham Equations</h2>
+  <p>
+    The Kohn–Sham equations are nonlinear because the Hamiltonian contains a potential that is itself a functional of the density generated by its eigenfunctions. For a trial input potential, the one-particle problem can be treated as a well-defined solver: it produces orbitals, eigenvalues, occupations, and an output density. That output density generates a new Hartree and exchange–correlation potential. The physical solution is the fixed point at which the input and output descriptions agree.
+  </p>
+  <aside class="callout" aria-label="Kohn Sham self consistency cycle">
+    <p><strong>One Kohn–Sham iteration</strong></p>
+    <p>input density or potential → build KS Hamiltonian → solve occupied states → construct output density → update density or potential → repeat.</p>
+    <p>At self-consistency, the density used to build the Hamiltonian equals the density produced by its occupied states.</p>
+  </aside>
+  <p>
+    In compact form the iteration is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Kohn Sham self consistent iteration">
+      <semantics>
+        <mrow>
+          <msub><mi>v</mi><mn>0</mn></msub><mo>→</mo><msub><mi>n</mi><mn>0</mn></msub><mo>→</mo>
+          <msub><mi>v</mi><mn>1</mn></msub><mo>→</mo><msub><mi>n</mi><mn>1</mn></msub><mo>→</mo><mo>⋯</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_0\rightarrow n_0\rightarrow v_1\rightarrow n_1\rightarrow\cdots.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Martin devotes substantial space to the fact that several total-energy functionals can share the same stationary self-consistent solution while behaving differently away from it. This matters because a practical iteration is usually evaluated before exact self-consistency has been reached. The Kohn–Sham energy viewed as a functional of the input potential is variational at the solution, so its leading error is second order in a sufficiently small potential or density error. A trial potential therefore gives an energy above the stationary Kohn–Sham value within the assumptions of the functional.
+  </p>
+  <p>
+    Harris–Foulkes-type functionals reorganize the same ingredients around an input density. Near self-consistency their first-order error cancels, so a reasonable superposition of atomic densities can give a surprisingly accurate total energy after only one diagonalization. That observation underlies useful non-self-consistent approximations and helps explain why eigenvalue-based tight-binding-like energy models can sometimes work. The price is conceptual: such a functional is stationary at the correct density but is not generally a variational upper bound. Computing both a variational potential functional and a stationary density functional can therefore reveal how much of the current total-energy difference is associated with lack of self-consistency.
+  </p>
+  <p>
+    A particularly important bookkeeping point is that the total energy is not the sum of Kohn–Sham eigenvalues. The eigenvalue sum already contains the expectation value of the Hartree and exchange–correlation potentials, so those contributions must be corrected for double counting. For a self-consistent spin-independent notation,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Kohn Sham total energy expressed with eigenvalue sum and double counting corrections">
+      <semantics>
+        <mrow>
+          <mi>E</mi><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>f</mi><mi>i</mi></msub><msub><mi>ε</mi><mi>i</mi></msub>
+          <mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>+</mo><msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
+          <mo>−</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><msub><mi>v</mi><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E=\sum_i f_i\epsilon_i-E_H[n]+E_&#123;xc&#125;[n]-\int d^3r\,n(r)v_&#123;xc&#125;(r)+E_&#123;II&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The occupations <em>f</em><sub>i</sub> become especially important for metals and finite-temperature formulations. Mermin’s finite-temperature extension gives the independent-fermion entropy
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="independent fermion entropy for fractional occupations">
+      <semantics>
+        <mrow>
+          <mi>S</mi><mo>=</mo><mo>−</mo><msub><mi>k</mi><mi>B</mi></msub>
+          <munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover>
+          <mrow><mo>[</mo><msub><mi>f</mi><mi>i</mi></msub><mi>ln</mi><msub><mi>f</mi><mi>i</mi></msub>
+          <mo>+</mo><mrow><mo>(</mo><mn>1</mn><mo>−</mo><msub><mi>f</mi><mi>i</mi></msub><mo>)</mo></mrow>
+          <mi>ln</mi><mrow><mo>(</mo><mn>1</mn><mo>−</mo><msub><mi>f</mi><mi>i</mi></msub><mo>)</mo></mrow><mo>]</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">S=-k_B\sum_i\left[f_i\ln f_i+(1-f_i)\ln(1-f_i)\right].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This finite-temperature structure can represent real electronic thermodynamics, but fractional occupations are also widely used simply to smooth Brillouin-zone integration and improve numerical behavior in metals. The distinction is physical, not cosmetic: the internal energy, free energy, entropy term, and reported zero-temperature extrapolation are different quantities. Martin points out that for a Fermi liquid the leading low-temperature corrections to <em>E</em>(T) and <em>F</em>(T) have opposite signs, so suitable combinations can cancel the quadratic temperature error. That idea is the theoretical ancestor of practical “entropy correction” conventions used when a finite smearing width is introduced only to stabilize metallic integration.
+  </p>
+  <p>
+    The broader lesson from the alternative functionals is stationarity. Once the input and output density agree, all correctly constructed forms collapse to the same Kohn–Sham energy. Away from that point they answer slightly different variational questions, so their numerical values should not be interchanged without knowing which density, potential, occupations, and entropy terms were used. The thermodynamic setting is linked from <a href={href('theory/statistical-mechanics/')}>Statistical Mechanics</a> and the numerical fixed-point problem from <a href={href('theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-4-self-consistency">
+  <h2 id="section-7-4-self-consistency">7.4 Achieving Self-Consistency</h2>
+  <p>
+    Directly feeding the output density of one iteration into the next often fails. A small change in density changes the Hartree and exchange–correlation potentials; the new potential can then create a larger density change, especially in long-wavelength, highly polarizable modes. Metals, large cells, surfaces, and heterogeneous systems are therefore prone to oscillation or “charge sloshing.” The SCF algorithm must control this feedback.
+  </p>
+  <p>
+    The simplest stabilizer is linear mixing:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="linear density mixing in a self consistent field iteration">
+      <semantics>
+        <mrow>
+          <msubsup><mi>n</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow><mi>in</mi></msubsup><mo>=</mo>
+          <msubsup><mi>n</mi><mi>i</mi><mi>in</mi></msubsup>
+          <mo>+</mo><mi>α</mi><mrow><mo>(</mo><msubsup><mi>n</mi><mi>i</mi><mi>out</mi></msubsup><mo>−</mo><msubsup><mi>n</mi><mi>i</mi><mi>in</mi></msubsup><mo>)</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n_&#123;i+1&#125;^&#123;\mathrm&#123;in&#125;&#125;=n_i^&#123;\mathrm&#123;in&#125;&#125;+\alpha\left(n_i^&#123;\mathrm&#123;out&#125;&#125;-n_i^&#123;\mathrm&#123;in&#125;&#125;\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Small α damps unstable modes but can make a rigid system converge needlessly slowly. Near the fixed point, the relation between an input error and an output error is linear and can be described by a response operator or Jacobian. If that operator were known exactly, one Newton-like update would approximately cancel the residual:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="inverse Jacobian self consistent field update">
+      <semantics>
+        <mrow>
+          <msubsup><mi>n</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow><mi>in</mi></msubsup><mo>=</mo>
+          <msubsup><mi>n</mi><mi>i</mi><mi>in</mi></msubsup>
+          <mo>−</mo><msubsup><mi>J</mi><mi>i</mi><mrow><mo>−</mo><mn>1</mn></mrow></msubsup>
+          <mrow><mo>(</mo><msubsup><mi>n</mi><mi>i</mi><mi>out</mi></msubsup><mo>−</mo><msubsup><mi>n</mi><mi>i</mi><mi>in</mi></msubsup><mo>)</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n_&#123;i+1&#125;^&#123;\mathrm&#123;in&#125;&#125;=n_i^&#123;\mathrm&#123;in&#125;&#125;-J_i^&#123;-1&#125;\left(n_i^&#123;\mathrm&#123;out&#125;&#125;-n_i^&#123;\mathrm&#123;in&#125;&#125;\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The Jacobian has a direct physical interpretation. One factor is the independent-particle density response to a change in potential; the other is the change in Hartree plus exchange–correlation potential produced by a change in density. Their product tells how an input density error is amplified or damped after one Kohn–Sham solve. Rigid wide-gap systems tend to have benign response eigenvalues, while soft metallic and surface modes can make the fixed-point map strongly ill-conditioned. In reciprocal space the most troublesome modes are often long wavelength because the Coulomb kernel grows strongly as the wavevector approaches zero.
+  </p>
+  <p>
+    Computing the full response exactly would usually cost more than solving the original SCF problem. Broyden, DIIS, Pulay-type, and related quasi-Newton methods instead learn the important action of the Jacobian from the history of residuals and updates. This explains why mixing is more than a numerical convenience: it is an approximate inverse-response problem. Preconditioners used in periodic metallic calculations are likewise designed to suppress the long-wavelength modes whose Coulomb response makes them particularly unstable.
+  </p>
+  <p>
+    The natural convergence object is the fixed-point residual, such as <em>n</em><sup>out</sup>−<em>n</em><sup>in</sup>, together with changes in energy and other target observables. A small residual says that the chosen Kohn–Sham equations have been solved self-consistently. It does not test whether the chosen basis, k-point sampling, pseudopotential, structure, magnetic branch, or exchange–correlation approximation is adequate for the scientific question.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-5-force-stress">
+  <h2 id="section-7-5-force-stress">7.5 Force and Stress</h2>
+  <p>
+    At a self-consistent variational solution, first-order changes of the energy caused only by the induced change of the electronic ground state vanish. The remaining explicit derivative with respect to a nuclear coordinate produces the Hellmann–Feynman or electrostatic force. For local external potentials,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Hellmann Feynman force in density functional theory">
+      <semantics>
+        <mrow>
+          <msub><mi>F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>∂</mi><mi>E</mi></mrow><mrow><mi>∂</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac>
+          <mo>=</mo><mo>−</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mfrac><mrow><mi>∂</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo></mrow><mrow><mi>∂</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac>
+          <mo>−</mo><mfrac><mrow><mi>∂</mi><msub><mi>E</mi><mi>II</mi></msub></mrow><mrow><mi>∂</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">F_I=-\frac&#123;\partial E&#125;&#123;\partial R_I&#125;=-\int d^3r\,n(r)\frac&#123;\partial v_&#123;\mathrm&#123;ext&#125;&#125;(r)&#125;&#123;\partial R_I&#125;-\frac&#123;\partial E_&#123;II&#125;&#125;&#123;\partial R_I&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Two practical corrections are central. First, a basis attached to moving atoms changes when the nuclei move. If the basis is incomplete, that basis dependence produces Pulay terms; plane waves avoid this particular contribution because the basis does not follow individual atoms. Second, imperfect self-consistency can enter forces at first order even though the corresponding total-energy error near the stationary point is second order. Tight energy convergence alone therefore does not guarantee equally accurate forces.
+  </p>
+  <p>
+    Nonlocal pseudopotentials add explicit operator-dependent force terms, so the simple local-potential expression is not the entire implementation formula. The physical principle remains stationarity of a consistently represented electronic problem. A force can therefore fail to match the numerical derivative of the total energy for at least three distinct reasons: an omitted operator contribution, a basis-set Pulay term, or incomplete electronic self-consistency. Those errors should not be conflated with the physical force itself.
+  </p>
+  <p>
+    The same variational idea extends from atomic displacements to homogeneous strain. The stress tensor generalizes pressure to independent dilations and shears of the cell. Structural equilibrium in a periodic solid requires two conditions simultaneously: each internal atomic force vanishes, and the calculated macroscopic stress equals the applied external stress. Relaxing atomic coordinates at a fixed incorrect cell therefore solves a different mechanical problem from a variable-cell relaxation. Relevant numerical representation issues are separated in <a href={href('theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-6-vxc">
+  <h2 id="section-7-6-vxc">7.6 Interpretation of the Exchange–Correlation Potential Vxc</h2>
+  <p>
+    The exchange–correlation potential is a functional derivative. It should not be pictured as an ordinary pair potential exerted by one electron on another. Its role is more constrained and more global: together with the known external and Hartree terms, it must make a noninteracting auxiliary system reproduce the exact interacting ground-state density.
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="exchange correlation potential as functional derivative">
+      <semantics>
+        <mrow>
+          <msubsup><mi>v</mi><mi>xc</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mrow><mi>δ</mi><msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mi>δ</mi><msup><mi>n</mi><mi>σ</mi></msup><mo>(</mo><mi>r</mi><mo>)</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">v_&#123;xc&#125;^\sigma(r)=\frac&#123;\delta E_&#123;xc&#125;[n]&#125;&#123;\delta n^\sigma(r)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    A functional derivative includes the response of the entire exchange–correlation functional when the density changes. This explains behavior that would look strange for a fixed one-body potential. At an integer particle number, the exact functional can have a derivative discontinuity: when one electron is added across a gap, the exact Kohn–Sham potential can change by a spatially constant shift. That constant leaves the density of a fixed-N system unchanged but changes the alignment of the eigenvalue spectrum relevant to electron addition and removal.
+  </p>
+  <p>
+    The discontinuity is connected to the same nonanalytic fermionic structure that Chapter 6 identified in the exact density functional. Kohn–Sham orbitals make much of the kinetic structure explicit, but the remaining functional still has to respond correctly when the occupied manifold changes. Local and semilocal approximations generally do not reproduce the exact discontinuous behavior, which becomes important when interpreting band gaps, molecular level alignment, charge transfer, and separated fragments.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-7-eigenvalues">
+  <h2 id="section-7-7-eigenvalues">7.7 Meaning of the Eigenvalues</h2>
+  <p>
+    Kohn–Sham eigenvalues are exact eigenvalues of the auxiliary one-particle Hamiltonian. They are not, by construction, the many-body energies required to add or remove an electron, and differences between them are not general neutral excitation energies. This distinction is one of the most important interpretation boundaries in practical electronic-structure work.
+  </p>
+  <p>
+    The eigenvalues nevertheless have precise mathematical roles. Janak’s relation connects an eigenvalue to the derivative of the total energy with respect to the occupation of that Kohn–Sham state:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Janak theorem for Kohn Sham eigenvalues">
+      <semantics>
+        <mrow>
+          <msub><mi>ε</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mi>∂</mi><mi>E</mi></mrow><mrow><mi>∂</mi><msub><mi>f</mi><mi>i</mi></msub></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\epsilon_i=\frac&#123;\partial E&#125;&#123;\partial f_i&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    For the exact functional in a finite bound system, the highest occupied Kohn–Sham eigenvalue has the special relation ε<sub>HOMO</sub>=−<em>I</em>, where <em>I</em> is the first ionization energy. The reason is tied to the asymptotic decay of the exact ground-state density: far from a finite system, that decay is controlled by the least-bound electron and therefore fixes the highest occupied auxiliary eigenvalue. No corresponding theorem makes every deeper occupied or unoccupied eigenvalue an exact removal or addition energy.
+  </p>
+  <p>
+    The fundamental charged gap makes the derivative-discontinuity issue explicit. In exact Kohn–Sham theory it can be written schematically as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="fundamental gap as Kohn Sham gap plus exchange correlation derivative discontinuity">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>g</mi></msub><mo>=</mo>
+          <mrow><mo>(</mo><msub><mi>ε</mi><mi>L</mi></msub><mo>−</mo><msub><mi>ε</mi><mi>H</mi></msub><mo>)</mo></mrow>
+          <mo>+</mo><msub><mi>Δ</mi><mi>xc</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_g=(\epsilon_L-\epsilon_H)+\Delta_&#123;xc&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first term is the ground-state Kohn–Sham eigenvalue gap; Δ<sub>xc</sub> is the discontinuous change in the exact exchange–correlation potential when the particle number crosses an integer. This shows why even an exact local Kohn–Sham potential need not have a band gap equal to the fundamental addition/removal gap. Approximate semilocal functionals usually miss much of this discontinuity, so their underestimated gaps combine an approximation error with a fundamental difference between the auxiliary gap and the charged excitation gap.
+  </p>
+  <p>
+    Optical excitations are a third object because the promoted electron and the hole it leaves behind form a neutral excitation and can attract one another. A numerical agreement between a Kohn–Sham gap and an optical or quasiparticle gap can therefore be useful but is not an identity supplied by the theory. Kohn–Sham orbitals and eigenvalues remain extremely useful as a basis for perturbation theory, GW, BSE, quantum Monte Carlo trial states, and other many-body methods, but those later theories add physics beyond the raw ground-state spectrum. The corresponding distinctions are mapped in <a href={href('theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-8-exact-ks">
+  <h2 id="section-7-8-exact-ks">7.8 Intricacies of Exact Kohn–Sham Theory</h2>
+  <p>
+    Exact Kohn–Sham theory inherits the representability questions of Chapter 6 and adds a new one. An N-representable density can come from some antisymmetric many-electron wavefunction; a v-representable density is the ground-state density of some local external potential. Kohn–Sham theory asks the stronger question of whether an interacting ground-state density can also be represented as the ground-state density of a <em>noninteracting</em> system with a local potential. Martin emphasizes that no general proof is known for all systems of interest.
+  </p>
+  <p>
+    The assumption is easy to verify in special cases such as the homogeneous gas and one- or two-electron systems, and it works extraordinarily well in practice. It should nevertheless remain conceptually visible because “exact Kohn–Sham theory” means exact under the assumption that the required auxiliary representation exists, with ensemble formulations supplying a broader mathematical setting when pure-state representability becomes delicate.
+  </p>
+  <p>
+    The properties guaranteed by the exact construction are the ground-state density and ground-state energy. Other quantities require separate reasoning. Spin-density theory can make the spin density basic and therefore exact within its domain. Static charge or spin susceptibilities can be obtained as derivatives of the exact ground-state energy with respect to static external fields, because the exact functional is assumed valid for the neighboring external potentials sampled by those derivatives. Finite-temperature thermodynamic quantities can likewise be exact within the Mermin formulation when the temperature-dependent functional is exact.
+  </p>
+  <p>
+    Other questions do not follow so directly. Martin notes that the exact Kohn–Sham Fermi surface is not generally established by the construction, and correlated insulating behavior should not be judged solely by asking whether one approximate Kohn–Sham band structure happens to be gapped. A broken-symmetry spin-density solution, a many-body Mott gap, and an auxiliary one-particle gap are different concepts. Macroscopic polarization in a periodic crystal is another example: its modern formulation involves the phases of occupied Bloch states and Berry-phase information, not merely the pointwise bulk density. The relevant distinction is developed in <a href={href('theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
+  </p>
+  <p>
+    Excitation spectra are not guaranteed by the ground-state Kohn–Sham eigenvalues. The exact density still determines the interacting Hamiltonian in principle through the Hohenberg–Kohn logic, so all excitations are encoded indirectly in the exact ground-state information. Extracting them requires an additional theory: dynamical response, many-body perturbation theory, configuration interaction, quantum Monte Carlo, or another formulation that goes beyond reading the static Kohn–Sham spectrum as though it were the interacting spectrum.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-9-tddft">
+  <h2 id="section-7-9-tddft">7.9 Time-Dependent Density Functional Theory</h2>
+  <p>
+    Time-dependent density functional theory addresses excitations by changing the observable being calculated. Instead of interpreting static Kohn–Sham eigenvalue differences as excitation energies, TDDFT follows the time-dependent density and its response to an external perturbation. In exact many-body linear response, poles of the frequency-dependent density-response function occur at true excitation energies. TDDFT constructs an auxiliary time-dependent Kohn–Sham system whose density response reproduces that interacting response when the exact time-dependent exchange–correlation functional is used.
+  </p>
+  <p>
+    The time-dependent auxiliary equation has the familiar one-particle form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="time dependent Kohn Sham equation">
+      <semantics>
+        <mrow>
+          <mi>i</mi><mfrac><mrow><mi>∂</mi><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>r</mi><mo>,</mo><mi>t</mi><mo>)</mo></mrow><mrow><mi>∂</mi><mi>t</mi></mrow></mfrac>
+          <mo>=</mo>
+          <mrow><mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi>∇</mi><mn>2</mn></msup><mo>+</mo><msub><mi>v</mi><mi>KS</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi>r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>]</mo></mrow>
+          <msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">i\frac&#123;\partial\psi_i(r,t)&#125;&#123;\partial t&#125;=\left[-\frac&#123;1&#125;&#123;2&#125;\nabla^2+v_&#123;KS&#125;[n](r,t)\right]\psi_i(r,t).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The formal simplicity hides a new difficulty: the exact time-dependent exchange–correlation potential can depend on the history of the density and on the initial state. Widely used adiabatic approximations replace that memory-dependent object by a ground-state functional evaluated at the instantaneous density. They are effective for many spectra but have known limitations for phenomena such as long-range charge transfer, double excitations, and strongly nonadiabatic dynamics. Ground-state DFT, static DFPT, TDDFT, GW, and BSE therefore remain distinct response or excitation frameworks even when they reuse the same Kohn–Sham starting orbitals. See <a href={href('theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-7-10-generalizations">
+  <h2 id="section-7-10-generalizations">7.10 Other Generalizations of the Kohn–Sham Approach</h2>
+  <p>
+    The deeper Kohn–Sham strategy is to replace a difficult many-body problem with a simpler auxiliary problem while requiring selected observables to agree. The ordinary construction chooses a noninteracting system with the same ground-state density. Other theories enlarge either the set of basic variables or the class of admissible auxiliary operators when one density is not sufficient for the target physics.
+  </p>
+  <p>
+    Spin-density theory is the simplest example: separate spin densities require spin-dependent effective potentials. Superconducting density-functional theory introduces an anomalous pair density so that broken-pair correlations can enter the functional formulation. Polarization theories incorporate the global information needed for periodic insulating matter. Each extension changes what must be reproduced by the auxiliary system rather than assuming that every property can be read from an ordinary scalar density.
+  </p>
+  <p>
+    Generalized Kohn–Sham theory makes a different change. It permits orbital-dependent, generally nonlocal effective operators instead of requiring the exchange–correlation contribution to be a purely local multiplicative potential. This provides the formal setting for hybrid and related functionals discussed in Chapter 9. The gain is practical flexibility: more of the difficult nonlocal physics can be represented explicitly in the auxiliary operator. The price is that the theory is no longer the same local-potential Kohn–Sham system, and its eigenvalues still require method-specific interpretation.
+  </p>
+  <p>
+    Chapter 7 therefore establishes a hierarchy that remains useful throughout electronic-structure research: exact density-functional foundations define what the ground-state density can determine; Kohn–Sham theory introduces a tractable auxiliary fermion problem; SCF algorithms solve that nonlinear auxiliary problem; exchange–correlation approximations determine the model error; and response or many-body theories are needed when the desired observable is not a ground-state density or energy. The next two chapters focus on the exchange–correlation functional itself.
+  </p>
+</section>
