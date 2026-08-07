@@ -14,6 +14,7 @@ export type MartinChapterLoader = () => Promise<MartinChapterModule>;
 
 const chapterLoaders: Record<string, MartinChapterLoader> = {
   'chapter-01': () => import('./content/chapter-01.astro'),
+  'chapter-02': () => import('./content/chapter-02.astro'),
 };
 
 export const martinChapterSlugs = Object.keys(chapterLoaders);

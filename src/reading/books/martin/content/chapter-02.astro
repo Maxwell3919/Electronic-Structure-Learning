@@ -1,0 +1,411 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-2-1-properties', label: '2.1 Electronic Structure and the Properties of Matter' },
+  { id: 'section-2-2-ground-state-bonding', label: '2.2 Electronic Ground State: Bonding and Characteristic Structures' },
+  { id: 'section-2-3-volume-pressure', label: '2.3 Volume or Pressure As the Most Fundamental Variable' },
+  { id: 'section-2-4-dft-structures', label: '2.4 How Good Is DFT for Calculation of Structures?' },
+  { id: 'section-2-5-pressure-transitions', label: '2.5 Phase Transitions under Pressure' },
+  { id: 'section-2-6-structure-prediction', label: '2.6 Structure Prediction: Nitrogen Solids and Hydrogen Sulfide Superconductors at High Pressure' },
+  { id: 'section-2-7-magnetism', label: '2.7 Magnetism and Electron–Electron Interactions' },
+  { id: 'section-2-8-elasticity', label: '2.8 Elasticity: Stress–Strain Relations' },
+  { id: 'section-2-9-phonons', label: '2.9 Phonons and Displacive Phase Transitions' },
+  { id: 'section-2-10-thermal', label: '2.10 Thermal Properties: Solids, Liquids, and Phase Diagrams' },
+  { id: 'section-2-11-surfaces', label: '2.11 Surfaces and Interfaces' },
+  { id: 'section-2-12-low-dimensional', label: '2.12 Low-Dimensional Materials and van der Waals Heterostructures' },
+  { id: 'section-2-13-nanomaterials', label: '2.13 Nanomaterials: Between Molecules and Condensed Matter' },
+  { id: 'section-2-14-bands-gaps', label: '2.14 Electronic Excitations: Bands and Bandgaps' },
+  { id: 'section-2-15-optical', label: '2.15 Electronic Excitations and Optical Spectra' },
+  { id: 'section-2-16-topological', label: '2.16 Topological Insulators' },
+  { id: 'section-2-17-correlation', label: '2.17 The Continuing Challenge: Electron Correlation' },
+];
+
+export const modernPerspective = [
+  'The chapter is best read as a map of observables rather than a catalogue of materials. In present research the same separation remains essential: ground-state energetics, finite-temperature free energies, response functions, charged excitations, neutral optical excitations, and topological invariants are different theoretical objects and require different validation.',
+  'Large-scale databases, automated structure searches, and machine-learning models have expanded dramatically since the examples surveyed here, but they do not remove the underlying physics. Their predictions still inherit the structural search space, Hamiltonian, exchange–correlation approximation, numerical representation, and target observable used to generate the data.',
+  'The most transferable lesson is the hierarchy of evidence. A converged electronic calculation can support a particular energy, force, stress, or spectrum within a stated model; stability, phase behavior, synthesis, transport, superconductivity, and experimental observability each require additional physical ingredients beyond that numerical result.',
+];
+
+export const synthesis =
+  'Chapter 2 defines the targets before the book develops the machinery. Ground-state electronic structure determines bonding and the energy landscape; derivatives of that landscape give pressure, stress, forces, elastic response, and phonons; thermal motion and chemical reservoirs enlarge the thermodynamic problem; and genuine electronic excitations require theories of addition, removal, and neutral response. Chapter 3 now turns this map of phenomena into the common quantum-mechanical language used throughout the rest of the book.';
+---
+
+<section aria-labelledby="section-2-1-properties">
+  <h2 id="section-2-1-properties">2.1 Electronic Structure and the Properties of Matter</h2>
+  <p>
+    Martin begins by separating the properties of matter into two broad classes: those fixed by the electronic ground state and those that require electronic excitations. This is more than an organizational convenience. It determines which theoretical object must be calculated and therefore which approximation can legitimately answer a given question.
+  </p>
+  <aside class="callout" aria-label="Ground-state and excitation branches of electronic structure">
+    <p><strong>Two branches of the problem</strong></p>
+    <p>Electronic ground state → bonding, equilibrium structure, phase energetics, charge density, magnetism, stress, forces, lattice dynamics in the adiabatic regime.</p>
+    <p>Electronic excitations → metallic low-energy states, electron addition and removal, band gaps, optical spectra, transport-related electronic states, and other response phenomena.</p>
+  </aside>
+  <p>
+    The separation rests on the large difference between electronic and nuclear energy scales. Nuclei are much heavier, so their low-energy motion is usually slow compared with electronic rearrangement. In the Born–Oppenheimer or adiabatic picture, electrons follow the instantaneous nuclear configuration and remain close to their electronic ground state while the nuclei move. The resulting electronic energy surface then governs equilibrium positions, forces, vibrations, and many structural transformations.
+  </p>
+  <p>
+    This explains why ground-state accuracy is so demanding. Diamond and graphite, competing crystal structures, different magnetic states, and distinct surface reconstructions can differ by small energies even though their bonding patterns are qualitatively different. A useful electronic-structure method must resolve those differences consistently, not merely produce plausible orbitals.
+  </p>
+  <p>
+    Excitations pose a different problem. Removing an electron, adding one, or promoting the system without changing particle number probes states above the ground state. Photoemission, inverse photoemission, tunneling, optical absorption, and metallic response therefore do not all measure the same quantity. Ordinary ground-state Kohn–Sham DFT is central to the first branch, while generalized Kohn–Sham, time-dependent DFT, Green-function methods, and other many-body approaches enter when the observable belongs to the second.
+  </p>
+  <p>
+    Nuclear and electronic excitations can also couple. Electron–phonon interaction broadens electronic states, changes transport, and in some materials drives collective phenomena such as conventional superconductivity. The practical lesson is to identify the target observable before choosing the theory. The relevant background is mapped in <a href={href('/theory/solid-state-physics/')}>Solid-State Physics</a>, <a href={href('/theory/thermodynamics/')}>Thermodynamics</a>, and <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-2-ground-state-bonding">
+  <h2 id="section-2-2-ground-state-bonding">2.2 Electronic Ground State: Bonding and Characteristic Structures</h2>
+  <p>
+    Stable structures are manifestations of the ground-state electron distribution. Martin therefore organizes characteristic solids by the dominant bonding physics rather than by crystal symmetry alone. Closed-shell systems retain much of the character of isolated atoms or molecules and bind weakly between units, making dispersion forces essential. Ionic solids are shaped by charge transfer and long-range Coulomb attraction. Metals have partially occupied electronic states and usually favor relatively dense structures. Covalent solids reorganize atomic states into directional bonding states and can therefore stabilize open structures that would be unfavorable for close-packed metallic bonding.
+  </p>
+  <p>
+    Hydrogen deserves separate attention because a proton has no electronic core. The absence of core-electron repulsion gives hydrogen bonding a character that cannot be reduced to a weak version of an ordinary heavy-atom bond. This distinction becomes important again in water, high-pressure hydrides, and proton transfer.
+  </p>
+  <p>
+    Real materials rarely belong to only one category. A polar semiconductor can combine covalent and ionic character; a molecular crystal contains strong intramolecular bonds and weak intermolecular forces; a layered heterostructure can have strong covalent or ionic bonding inside each sheet and much weaker binding between sheets. Bond labels are therefore useful limiting pictures that identify which energy scales and approximations are likely to matter.
+  </p>
+  <p>
+    The electron density provides a more direct ground-state quantity. Scattering experiments can probe it, and calculations can resolve how the density differs from a superposition of neutral atoms. In silicon, for example, density accumulation between neighboring atoms reveals the covalent bond. The total density is dominated by core electrons, however, so bonding information is often clearest in density differences, valence contributions, or carefully defined localized representations.
+  </p>
+  <p>
+    This is also an early warning about chemical interpretation. The ground-state density is a well-defined quantum observable, while assignments such as bond order, atomic charge, oxidation state, or orbital population depend on an interpretation scheme. Wannier functions can expose localized electronic structure that the density alone does not encode transparently, and later chapters use that freedom for polarization and topology. The corresponding Atlas background is <a href={href('/theory/chemical-bonding-and-molecular-structure/')}>Chemical Bonding and Molecular Structure</a> and <a href={href('/theory/solid-state-chemistry/')}>Solid-State Chemistry</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-3-volume-pressure">
+  <h2 id="section-2-3-volume-pressure">2.3 Volume or Pressure As the Most Fundamental Variable</h2>
+  <p>
+    Volume is a particularly useful control variable in electronic-structure calculations. At fixed composition one can calculate the energy at a sequence of volumes, obtain an equation of state, and infer equilibrium structure and mechanical response. At finite temperature the corresponding thermodynamic potentials make explicit which variables are controlled:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Helmholtz and Gibbs free energies">
+      <semantics>
+        <mtable>
+          <mtr><mtd><mi>F</mi><mo>(</mo><mi>Ω</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>=</mo><mi>E</mi><mo>(</mo><mi>Ω</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>−</mo><mi>T</mi><mi>S</mi><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>G</mi><mo>(</mo><mi>P</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>=</mo><mi>E</mi><mo>+</mo><mi>P</mi><mi>Ω</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">F(\Omega,T)=E(\Omega,T)-TS,\qquad G(P,T)=E+P\Omega-TS.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    For many solids the zero-temperature electronic energy is the dominant starting point. Its first and second derivatives with respect to volume give pressure and bulk modulus:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Pressure and bulk modulus from the energy volume curve">
+      <semantics>
+        <mtable>
+          <mtr><mtd><mi>P</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>B</mi><mo>=</mo><mo>−</mo><mi>Ω</mi><mfrac><mrow><mi>d</mi><mi>P</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac><mo>=</mo><mi>Ω</mi><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msup><mi>Ω</mi><mn>2</mn></msup></mrow></mfrac><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">P=-\frac&#123;dE&#125;&#123;d\Omega&#125;,\qquad B=-\Omega\frac&#123;dP&#125;&#123;d\Omega&#125;=\Omega\frac&#123;d^2E&#125;&#123;d\Omega^2&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <aside class="callout" aria-label="Energy derivative hierarchy">
+    <p><strong>Energy landscape hierarchy</strong></p>
+    <p>Total energy versus volume → equilibrium volume from the minimum → pressure from the slope → bulk modulus from the curvature.</p>
+  </aside>
+  <p>
+    This hierarchy is one of the most reusable ideas in the book. A calculated equilibrium lattice constant tests where the energy minimum lies, while the bulk modulus tests the curvature around that minimum and is therefore more sensitive. Agreement in one does not guarantee agreement in the other.
+  </p>
+  <p>
+    Equation-of-state calculations became an early quantitative test of DFT because equilibrium volumes and bulk moduli can be measured accurately. They also show why total-energy precision matters: the physically important information is often contained in small differences between large electronic energies. Later sections generalize the same derivative logic from isotropic volume to strain, atomic displacement, magnetic fields, and other perturbations.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-4-dft-structures">
+  <h2 id="section-2-4-dft-structures">2.4 How Good Is DFT for Calculation of Structures?</h2>
+  <p>
+    The useful question is not whether DFT is formally exact, but how well a chosen approximation performs for the class of materials and observables being studied. Martin compares representative local, semilocal, hybrid, and meta-GGA functionals for lattice constants, bulk moduli, and magnetism. The broad result is that structural properties can often be predicted with impressive accuracy, which is one reason DFT transformed materials research.
+  </p>
+  <p>
+    The same comparisons reveal why benchmark averages must be interpreted carefully. Lattice constants are typically easier than bulk moduli because the latter depend on a second derivative of the energy. Mean errors can be small while particular systems—especially alkali or transition metals—show substantially larger deviations. A functional that performs well for one bonding class is not guaranteed to retain the same accuracy for another.
+  </p>
+  <p>
+    Comparison with experiment also has a physical reference problem. A static electronic calculation is usually a zero-temperature result for ideal nuclei, whereas measured structures contain zero-point and thermal contributions and may have experimental extrapolation uncertainty. Once electronic-structure calculations become accurate at the percent level, those apparently small effects become part of a meaningful comparison rather than negligible detail.
+  </p>
+  <p>
+    This section sets a standard used throughout the book: numerical convergence tests the implementation of a chosen model; comparison across methods and experiments tests the physical approximation. The functional hierarchy and its limitations are developed in <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-5-pressure-transitions">
+  <h2 id="section-2-5-pressure-transitions">2.5 Phase Transitions under Pressure</h2>
+  <p>
+    Pressure is a stringent probe because it can force a material between phases with very different bonding. Open covalent structures often give way to denser metallic or more highly coordinated structures as atoms are compressed. A theory that predicts both phases and their crossing must describe two qualitatively different electronic environments on the same energy scale.
+  </p>
+  <p>
+    At zero temperature and fixed pressure, the stable phase minimizes enthalpy. In practice, one computes energy–volume curves for competing structures and finds the pressure at which their enthalpies are equal. Geometrically this is the common-tangent construction: the tangent slope is related to pressure, and the tangent touching two energy curves identifies coexistence.
+  </p>
+  <p>
+    Silicon is a clean example. Its low-pressure diamond structure is open and covalent, whereas high-pressure phases are denser and metallic. Calculations correctly reproduce the sequence and also identify metastable structures that can appear when pressure is released. Theory therefore does more than fit the observed transition: it maps nearby minima in the energy landscape and explains why metastable products can survive.
+  </p>
+  <p>
+    Pressure transitions also expose functional bias. Approximations that systematically favor high density can underestimate transition pressures or even stabilize the wrong structure at ambient conditions. Martin’s silica example is especially instructive because the low- and high-pressure phases differ strongly in coordination. A calculation that is locally well converged can still be qualitatively wrong if the exchange–correlation approximation favors the wrong bonding regime.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-6-structure-prediction">
+  <h2 id="section-2-6-structure-prediction">2.6 Structure Prediction: Nitrogen Solids and Hydrogen Sulfide Superconductors at High Pressure</h2>
+  <p>
+    Predicting a structure is harder than optimizing one. Geometry optimization finds a nearby minimum from a chosen starting configuration; structure prediction must search a rugged landscape containing many minima and, in compounds, possibly multiple stoichiometries. No search strategy is uniformly best. Useful methods therefore combine physical restrictions on plausible structures with repeated exploration and first-principles energy evaluation.
+  </p>
+  <p>
+    Martin surveys three broad search ideas. Random-search methods generate many reasonable starting structures and relax each one. Particle-swarm approaches mix stochastic exploration with attraction toward promising configurations. Evolutionary methods generate new structures through selection, mutation, and recombination. The named implementations in the chapter—AIRSS, CALYPSO, and USPEX—illustrate these strategies; the transferable point is that the electronic-structure calculation supplies the energetic ranking, while the search algorithm determines which part of configuration space is actually examined.
+  </p>
+  <p>
+    High-pressure nitrogen shows why prediction can reveal unexpected chemistry. Molecular nitrogen is extraordinarily stable at ordinary conditions, but compression can favor extended covalent networks. DFT calculations predicted the cubic-gauche phase before it was produced experimentally. The example demonstrates a genuine predictive role: theory identified a structure that was difficult to guess from known ambient-pressure materials and explained why high pressure changes molecular triple bonds into an extended single-bond network.
+  </p>
+  <p>
+    Hydrogen sulfides show a second, more complicated role. Structure searches under pressure predicted hydrogen-rich metallic phases and identified high-symmetry H–S networks with very high phonon frequencies. Experiments then found superconductivity near the predicted pressure and temperature scale, with later structural measurements supporting the predicted H<sub>3</sub>S-like phase. The scientific chain involves several separate calculations: stable composition and structure, metallic electronic states, phonons, electron–phonon coupling, and finally a superconducting transition estimate.
+  </p>
+  <p>
+    Composition cannot be treated by structure optimization alone. At fixed pressure, competing stoichiometries must be compared through enthalpy and convex-hull-like constructions; a nominal compound can be unstable against decomposition into other phases even if its own structure is locally relaxed. This distinction between a local structural minimum and thermodynamic stability is central to modern materials prediction.
+  </p>
+  <p>
+    The nitrogen and hydride examples therefore establish both the power and the boundary of search. A search can discover low-energy candidates inside the explored model and composition space. Experimental synthesis, kinetic accessibility, finite-temperature stability, anharmonicity, and the accuracy of the chosen functional remain additional questions.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-7-magnetism">
+  <h2 id="section-2-7-magnetism">2.7 Magnetism and Electron–Electron Interactions</h2>
+  <p>
+    Magnetism is a ground-state manifestation of electron interaction and broken symmetry. A ferromagnet has a net moment; an antiferromagnet can have large local moments whose spatial average vanishes. In both cases the magnetic state cannot be understood by treating spin merely as a passive label, because exchange and correlation make the energy depend on the spin arrangement.
+  </p>
+  <p>
+    Mean-field electronic structure replaces the full interacting problem by a spin-dependent effective potential that must be determined self-consistently. This is enough to capture much of the tendency toward itinerant ferromagnetism in transition metals, even though more strongly correlated magnetic behavior may require methods beyond ordinary DFT.
+  </p>
+  <p>
+    The Stoner picture makes the instability criterion transparent. For a simple uniform response,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Stoner magnetic susceptibility">
+      <semantics>
+        <mrow>
+          <mi>χ</mi><mo>=</mo><mfrac><mrow><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow><mrow><mn>1</mn><mo>−</mo><mi>I</mi><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\chi=\frac&#123;N(E_F)&#125;&#123;1-I N(E_F)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here the density of states at the Fermi energy measures how many low-energy electronic states are available to polarize, while the effective interaction parameter measures the energetic feedback favoring spin polarization. As their product approaches unity, the susceptibility is strongly enhanced; crossing that threshold signals an instability of the unpolarized reference in the mean-field model.
+  </p>
+  <p>
+    The formula is useful because it shows the same structure that appears in many response problems: an independent-particle susceptibility is renormalized by self-consistent interaction. It is not a universal proof of a magnetic ground state. Real calculations must still compare plausible magnetic configurations, include the relevant spin–orbit and noncollinear physics where necessary, and distinguish an itinerant mean-field instability from genuinely strong local correlation. See <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-8-elasticity">
+  <h2 id="section-2-8-elasticity">2.8 Elasticity: Stress–Strain Relations</h2>
+  <p>
+    Elasticity generalizes the equation-of-state idea from isotropic volume changes to directional deformation. If the crystal is strained, the electronic ground-state energy changes; stress is the generalized force conjugate to that strain:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Stress as derivative of total energy with respect to strain">
+      <semantics>
+        <mrow>
+          <msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>Ω</mi></mfrac><mfrac><mrow><mi>∂</mi><msub><mi>E</mi><mi>total</mi></msub></mrow><mrow><mi>∂</mi><msub><mi>u</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\sigma_&#123;\alpha\beta&#125;=-\frac&#123;1&#125;&#123;\Omega&#125;\frac&#123;\partial E_&#123;\mathrm&#123;total&#125;&#125;&#125;&#123;\partial u_&#123;\alpha\beta&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Linear slopes of stress versus strain give elastic constants; nonlinear curvature contains higher-order elastic response. Electronic-structure theory thus connects a macroscopic continuum quantity directly to microscopic electrons and nuclei. Because higher-order elastic constants are difficult to measure, calculations can provide predictions rather than merely reproduce experiment.
+  </p>
+  <p>
+    Large strain can also change the electronic problem qualitatively. Band gaps may close, bonding can reorganize, and phonon instabilities can appear before a simple elastic extrapolation fails. Mechanical response is therefore not isolated from electronic and vibrational structure; all are derivatives or consequences of the same energy landscape.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-9-phonons">
+  <h2 id="section-2-9-phonons">2.9 Phonons and Displacive Phase Transitions</h2>
+  <p>
+    In the adiabatic regime, lattice dynamics is obtained from how the electronic ground-state energy changes when nuclei are displaced. The first derivative gives a force and the second derivative gives the force-constant matrix:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Forces and force constants from total energy">
+      <semantics>
+        <mtable>
+          <mtr><mtd><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>C</mi><mrow><mi>I</mi><mi>J</mi></mrow></msub><mo>=</mo><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>J</mi></msub></mrow></mfrac><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\mathbf F_I=-\frac&#123;dE&#125;&#123;d\mathbf R_I&#125;,\qquad C_&#123;IJ&#125;=\frac&#123;d^2E&#125;&#123;d\mathbf R_I\,d\mathbf R_J&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Diagonalizing the mass-weighted force constants gives normal modes and phonon frequencies. Theory provides both frequencies and eigenvectors, which is important because experiments often constrain the spectrum more directly than the microscopic displacement pattern. Once the force constants are known, they can be used to understand bonding, thermal motion, electron–phonon coupling, and structural instabilities.
+  </p>
+  <p>
+    Martin emphasizes two computational routes. In frozen-phonon calculations, atoms are displaced explicitly and energies or forces are recomputed; the curvature of the resulting energy surface gives the harmonic response and higher-order terms reveal anharmonicity. In response-function approaches, the derivatives are calculated directly. The first route is conceptually transparent and broadly available; the second is usually more efficient for full dispersion curves and coupled responses.
+  </p>
+  <aside class="callout" aria-label="Stability from curvature of the energy surface">
+    <p><strong>Local structural stability</strong></p>
+    <p>Positive curvature along a displacement → restoring force → stable harmonic mode.</p>
+    <p>Negative curvature → energy decreases away from the reference structure → structural instability along that mode.</p>
+  </aside>
+  <p>
+    Ferroelectricity in BaTiO<sub>3</sub> illustrates the second case: the centrosymmetric configuration is unstable with respect to a polar displacement, so the energy develops lower minima away from the high-symmetry structure. Transition metals provide another example in which a particular finite-wavevector displacement can soften and lead to a new crystal structure. These examples connect phonon calculations directly to phase transitions rather than treating vibrations as an isolated spectroscopy problem.
+  </p>
+  <p>
+    The response-function view later expands to dielectric constants, effective charges, piezoelectricity, and electron–phonon matrix elements. The corresponding foundations are <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> and <a href={href('/theory/thermodynamics/')}>Thermodynamics</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-10-thermal">
+  <h2 id="section-2-10-thermal">2.10 Thermal Properties: Solids, Liquids, and Phase Diagrams</h2>
+  <p>
+    Zero-temperature energy surfaces are only the beginning when atomic motion becomes large, anharmonic, diffusive, or chemically reactive. Quantum molecular dynamics extends electronic-structure calculations into this regime by propagating the nuclei while recomputing electronic forces as the atomic configuration evolves. This makes liquids, melting, high-temperature phases, and reactions accessible without replacing the electronic interactions by a fixed empirical force field.
+  </p>
+  <p>
+    The nuclei are usually treated classically in these simulations, while the electrons remain quantum mechanical and close to their instantaneous ground state. This division is powerful but has a clear domain: nuclear quantum effects, long-time rare events, and thermodynamic sampling may require additional methods. A trajectory that remains stable for a finite simulation time is not by itself proof of equilibrium phase stability.
+  </p>
+  <p>
+    Geophysics shows why theory is indispensable. Conditions in the deep Earth combine pressures of hundreds of gigapascals with temperatures of thousands of kelvin, making direct laboratory access difficult. Electronic-structure calculations can first validate zero-temperature equations of state against high-pressure measurements and then add vibrational or molecular-dynamics information to compare candidate mantle and core phases. The predicted post-perovskite transition in magnesium silicate is an example where calculated phase boundaries became directly relevant to interpreting seismic structure.
+  </p>
+  <p>
+    Water demonstrates a different challenge: the functional must describe a delicate hydrogen-bond network while the liquid continuously reorganizes. Simulations can expose proton transfer and electronic rearrangement that are difficult to infer from averaged experimental data. They also make functional error visible in structural correlation functions: an approximation may produce a liquid that is too strongly structured even if isolated-molecule properties look reasonable.
+  </p>
+  <p>
+    Surface reactions add another layer because chemical rearrangement occurs in a heterogeneous environment. First-principles molecular dynamics can follow bond breaking and formation and, with constrained or enhanced sampling, estimate free-energy barriers. Martin’s catalytic polymerization example illustrates the role of local surface geometry in determining reaction pathways. The key distinction is between an electronic potential-energy surface, a sampled free-energy profile, and a kinetic rate; they are related but not interchangeable observables.
+  </p>
+  <p>
+    Finite-temperature research therefore requires both electronic structure and statistical mechanics. The relevant Atlas routes are <a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> and <a href={href('/theory/thermodynamics/')}>Thermodynamics</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-11-surfaces">
+  <h2 id="section-2-11-surfaces">2.11 Surfaces and Interfaces</h2>
+  <p>
+    A surface is not merely a truncated bulk crystal. Broken bonds, relaxation, reconstruction, adsorbates, and exchange with the surrounding environment can change both structure and stoichiometry. Semiconductor surfaces make this particularly clear: atoms may dimerize or buckle to remove energetically costly dangling-bond occupations, creating surface states inside the bulk gap.
+  </p>
+  <p>
+    When different surface terminations contain different numbers of atomic species, their energies cannot be compared using total energy alone. The appropriate thermodynamic potential includes reservoirs with chemical potentials:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Grand potential for variable composition">
+      <semantics>
+        <mrow>
+          <mi>Φ</mi><mo>=</mo><mi>E</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>−</mo><munder><mo>∑</mo><mi>I</mi></munder><msub><mi>μ</mi><mi>I</mi></msub><msub><mi>N</mi><mi>I</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Phi=E-TS-\sum_I \mu_I N_I.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The chemical potentials encode the experimental environment and are bounded by equilibrium with the bulk compound and competing elemental or compound phases. This is why a surface phase diagram depends on growth conditions: changing the reservoir changes which stoichiometry minimizes the relevant thermodynamic potential.
+  </p>
+  <p>
+    Surface electronic states can differ qualitatively from bulk states. Conventional dangling-bond and Shockley states arise from termination and reconstruction; later chapters show how spin–orbit coupling and topology can require robust boundary states for a different reason. Similar care is needed at interfaces, where band offsets combine intrinsic band positions with an electrostatic lineup produced by the interface dipole.
+  </p>
+  <p>
+    Oxide interfaces demonstrate how new phases can emerge between two insulating materials. Charge transfer, polarization, defects, orbital reconstruction, and confinement can create interfacial metallicity, magnetism, or superconductivity. The interface is therefore a new physical system, not simply a weighted average of its two bulk parents. See <a href={href('/theory/surface-and-interface-chemistry/')}>Surface and Interface Chemistry</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-12-low-dimensional">
+  <h2 id="section-2-12-low-dimensional">2.12 Low-Dimensional Materials and van der Waals Heterostructures</h2>
+  <p>
+    Reducing dimensionality can reorganize both electronic and vibrational structure. A monolayer may have a different band gap from its bulk parent because interlayer coupling and three-dimensional dispersion are removed. Graphene provides an extreme example of a truly two-dimensional electronic system, while transition-metal dichalcogenide monolayers show how an indirect bulk semiconductor can become a direct-gap optical material in a single layer.
+  </p>
+  <p>
+    Van der Waals heterostructures add a new design variable: layers with very different electronic, dielectric, magnetic, or vibrational properties can be stacked while retaining much of their internal bonding. Weak interlayer binding does not imply weak physical consequences. Band alignment, charge transfer, screening, hybridization, moiré structure, and phonon mismatch can all create behavior absent from the isolated layers.
+  </p>
+  <p>
+    The computational model must therefore represent dimensional boundary conditions and interlayer interactions explicitly. A bulk-style calculation with large vacuum is not automatically converged for electrostatics, screening, excitations, or long-range response. Martin’s examples serve mainly to show that low-dimensionality has become a central electronic-structure problem rather than a special correction to bulk theory.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-13-nanomaterials">
+  <h2 id="section-2-13-nanomaterials">2.13 Nanomaterials: Between Molecules and Condensed Matter</h2>
+  <p>
+    Nanomaterials occupy a regime where neither the infinite-crystal limit nor the small-molecule picture is sufficient. Finite-size quantization changes the electronic spectrum, while a large fraction of atoms reside at surfaces whose reconstruction and passivation can dominate the structure. As size changes, the system can evolve continuously from molecular levels toward bulk-like bands.
+  </p>
+  <p>
+    Semiconductor clusters illustrate the competition clearly. Confinement can increase gaps and alter optical selection rules, yet unsatisfied surface bonds may reconstruct so strongly that the cluster no longer resembles a small piece of the bulk. Passivation can reverse this situation by removing dangling-bond states and making confinement the dominant effect.
+  </p>
+  <p>
+    Carbon nanostructures reveal how geometry can be used as an electronic-structure control parameter. Fullerenes, nanotubes, graphene, and atomically patterned nanoribbons are built from the same element yet show molecular, metallic, semiconducting, and topological behavior. Their usefulness as model systems comes from the fact that simple symmetry and band arguments often explain the qualitative trends, while quantitative calculations determine how curvature, edges, substrates, and finite size modify the ideal picture.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-14-bands-gaps">
+  <h2 id="section-2-14-bands-gaps">2.14 Electronic Excitations: Bands and Bandgaps</h2>
+  <p>
+    Electronic excitations must first be separated by particle number. Photoemission removes an electron, inverse photoemission or tunneling can add one, and optical absorption usually leaves the total number of electrons unchanged. The fundamental gap is defined by the energy cost of the addition/removal process, not by an arbitrary difference between two one-electron eigenvalues:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Many-body fundamental gap">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>gap</mi></msub><mo>=</mo><mo>[</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo><mo>]</mo>
+          <mo>−</mo><mo>[</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;gap&#125;&#125;=[E(N+1)-E(N)]-[E(N)-E(N-1)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    In a periodic material the minimum may involve different crystal momenta, so the fundamental gap can be indirect. A metal has vanishing addition/removal gap with delocalized low-energy states, while an insulator has a finite charge gap or localization that prevents dc transport in the idealized zero-temperature limit.
+  </p>
+  <p>
+    Angle-resolved photoemission maps removal energies as a function of momentum near the surface. Sharp spectral peaks can often be interpreted as quasiparticle bands, but interactions shift and broaden them and can transfer weight into satellites. This is why an experimentally measured spectrum is richer than a set of independent-particle delta functions.
+  </p>
+  <p>
+    Martin uses germanium to expose the Kohn–Sham band-gap problem. Local and semilocal ground-state functionals can give a severe underestimate and may even predict the wrong metallic classification. Hartree–Fock moves in the opposite direction and often overestimates gaps because screening and correlation are missing. Hybrid and generalized Kohn–Sham approaches can improve addition/removal spectra because the auxiliary equations have a different theoretical role from ordinary Kohn–Sham eigenvalues.
+  </p>
+  <p>
+    The practical boundary is crucial: good ground-state energies and structures do not guarantee good charged excitation energies. The distinction between a Kohn–Sham gap, a quasiparticle/fundamental gap, and an optical gap is developed further in <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-15-optical">
+  <h2 id="section-2-15-optical">2.15 Electronic Excitations and Optical Spectra</h2>
+  <p>
+    Optical absorption is a neutral excitation: a photon promotes the electronic system without changing its total electron number. In an electron–hole language, the excited electron and the hole left behind can interact. In a density-response language, the same phenomenon is described through a time-dependent response of the electronic density. These are complementary descriptions of the same many-body physics.
+  </p>
+  <p>
+    An independent-particle optical spectrum is built from transitions between occupied and empty states and therefore inherits any error in the underlying gap. Time-dependent DFT adds a response kernel that redistributes spectral weight and can capture important collective effects, but it does not automatically repair a wrong ground-state addition/removal gap. The starting electronic structure and the time-dependent kernel have distinct responsibilities.
+  </p>
+  <p>
+    Wide-gap insulators make the limitation obvious because excitons can dominate the spectrum. A bound electron–hole pair can produce strong absorption below the fundamental gap, a feature that no simple convolution of independent-particle bands can generate. Short-range time-dependent functionals may fail even when the underlying static functional improves the gap, because the electron–hole attraction is intrinsically nonlocal over relevant length scales.
+  </p>
+  <p>
+    Long-range or range-separated kernels can recover part of this physics, but their success is system- and approximation-dependent. Martin’s central lesson is that “band gap” and “optical onset” are not synonyms. Charged addition/removal energies and neutral optical excitations probe different objects, and exciton binding is the difference between them in the appropriate limit. See <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-16-topological">
+  <h2 id="section-2-16-topological">2.16 Topological Insulators</h2>
+  <p>
+    Topological insulators add a global classification to the usual local description of bands and gaps. The relevant object is the occupied electronic subspace across the Brillouin zone, together with symmetry and spin–orbit structure. Two systems can both be insulating in the ordinary band-filling sense yet belong to distinct topological classes that cannot be connected without closing the relevant gap or changing the protecting conditions.
+  </p>
+  <p>
+    This viewpoint links several themes introduced earlier in the book: Shockley surface states, Berry phases, polarization, the quantum Hall effect, and spin–orbit coupling. The decisive experimental signature in Martin’s overview is the agreement between measured and calculated surface-state dispersion in materials such as Bi<sub>2</sub>Se<sub>3</sub>. Quantitative electronic structure identifies the actual material, while simpler band models explain why a protected boundary state must appear.
+  </p>
+  <p>
+    A band inversion or a visually suggestive surface crossing is not by itself a complete topological diagnosis. One must specify the gap, occupied subspace, symmetry, spin and spin–orbit model, and invariant appropriate to the dimension and symmetry class. The formal development is postponed to Parts V and VI and is mapped in <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-2-17-correlation">
+  <h2 id="section-2-17-correlation">2.17 The Continuing Challenge: Electron Correlation</h2>
+  <p>
+    The chapter closes where Chapter 1 left the deepest unresolved issue: electron correlation can change both quantitative predictions and the qualitative identity of a phase. Competition between kinetic delocalization and interaction produces Mott transitions, Kondo physics, heavy fermions, unconventional superconductivity, and other phenomena that cannot always be reduced to a weakly corrected one-electron band picture.
+  </p>
+  <p>
+    Spectroscopy makes the failure visible. Instead of infinitely sharp independent-particle bands, interacting systems can show renormalized quasiparticle peaks, strong broadening, incoherent satellites, or entirely different low-energy excitations. In one dimension, for example, the usual Fermi-liquid quasiparticle description can give way to collective spin and charge excitations.
+  </p>
+  <p>
+    DFT remains central because it incorporates interaction effects well enough to make ground-state calculations practical for an enormous range of materials and provides the starting electronic structure for many more advanced methods. Its success does not erase the many-body problem. Rather, the boundary between successful effective one-electron descriptions and genuinely correlation-driven physics is one of the main organizing questions of electronic-structure research.
+  </p>
+  <p>
+    This is why the Atlas keeps <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> distinct from <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a>: the first defines what interaction makes difficult, while the second develops the formal tools needed when effective ground-state descriptions are no longer sufficient.
+  </p>
+</section>
