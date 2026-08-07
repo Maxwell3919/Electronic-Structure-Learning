@@ -1,0 +1,349 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-12-1-plane-wave-basis', label: '12.1 The Independent-Particle Schrödinger Equation in a Plane Wave Basis' },
+  { id: 'section-12-2-bloch-bands', label: '12.2 Bloch Theorem and Electron Bands' },
+  { id: 'section-12-3-nearly-free-electron', label: '12.3 Nearly-Free-Electron Approximation' },
+  { id: 'section-12-4-form-structure-factors', label: '12.4 Form Factors and Structure Factors' },
+  { id: 'section-12-5-atomic-like-potentials', label: '12.5 Approximate Atomic-Like Potentials' },
+  { id: 'section-12-6-epm', label: '12.6 Empirical Pseudopotential Method (EPM)' },
+  { id: 'section-12-7-density-grids', label: '12.7 Calculation of Electron Density: Introduction of Grids' },
+  { id: 'section-12-8-real-space-fd-dg', label: '12.8 Real-Space Methods I: Finite Difference and Discontinuous Galerkin Methods' },
+  { id: 'section-12-9-multiresolution', label: '12.9 Real-Space Methods II: Multiresolution Methods' },
+];
+
+export const modernPerspective = [
+  'A plane-wave cutoff, a Brillouin-zone k-point mesh, and an FFT or charge-density grid are three different numerical resolutions. Increasing one does not automatically converge the others. A calculation can be tightly converged in its orbital basis and still be under-sampled in k space or under-resolved on a real-space grid.',
+  'Plane waves provide a systematic basis, but the cutoff required for a target accuracy depends strongly on the chosen pseudopotential or PAW dataset. Cutoff convergence establishes representation convergence for that dataset; it does not establish pseudopotential transferability or the accuracy of the exchange–correlation approximation.',
+  'Plane-wave and real-space methods are complementary discretizations of the same electronic equations. Modern implementations move repeatedly between reciprocal and real space because kinetic operators are simple in reciprocal space while local potentials, densities, and semilocal functionals are simple on real-space grids.',
+  'Adaptive finite-element, wavelet, multigrid, and related real-space methods are especially useful when resolution requirements are strongly nonuniform or boundary conditions are not naturally periodic. Their numerical flexibility does not change the Hamiltonian, core treatment, electrostatic boundary conditions, occupations, or target observable that must be defined independently.',
+];
+
+export const synthesis =
+  'Chapter 12 turns the independent-particle equations into finite numerical representations. Translational symmetry separates the plane-wave Hamiltonian into independent k blocks, and a kinetic-energy cutoff makes each block finite. Weak periodic Fourier components explain how free-electron parabolas become bands and acquire gaps, while form and structure factors separate atomic scattering information from the arrangement of atoms in the cell. Empirical pseudopotentials show how far this compact reciprocal-space picture can go before self-consistency is restored. The density calculation then reveals why practical plane-wave methods also require real-space grids and FFTs. Finite differences, discontinuous Galerkin bases, finite elements, wavelets, multigrid, and adaptive coordinates provide alternative discretizations with different locality, sparsity, boundary-condition, and resolution tradeoffs. Chapter 13 assembles these representation ideas with ab initio pseudopotentials, PAW, screening, and self-consistency into full calculations.';
+---
+
+<section aria-labelledby="section-12-1-plane-wave-basis">
+  <h2 id="section-12-1-plane-wave-basis">12.1 The Independent-Particle Schrödinger Equation in a Plane Wave Basis</h2>
+  <p>
+    Part IV begins after the physical Hamiltonian and its principal approximations have already been chosen. The new problem is numerical: how can an independent-particle equation be represented by finitely many numbers? For a periodic solid, plane waves are natural because they are orthogonal, independent of atomic positions, and eigenfunctions of the kinetic-energy operator. Chapter 11 supplied the complementary core treatment: without pseudopotentials or PAW, the rapid all-electron variation near nuclei would make a uniform plane-wave representation prohibitively large for many elements.
+  </p>
+  <p>
+    At fixed crystal momentum <em>k</em>, periodicity restricts the coupled plane waves to wavevectors <em>k</em> + <em>G</em>, with <em>G</em> a reciprocal-lattice vector. A Bloch orbital can therefore be expanded as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="plane wave expansion of a Bloch orbital">
+      <semantics>
+        <mrow>
+          <msub><mi>ψ</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mn>1</mn><msqrt><mi>Ω</mi></msqrt></mfrac>
+          <munder><mo>∑</mo><mi mathvariant="bold">G</mi></munder>
+          <msub><mi>c</mi><mrow><mi>i</mi><mi mathvariant="bold">G</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo>
+          <msup><mi>e</mi><mrow><mi>i</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)=&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;&#92;Omega&#125;&#125;&#92;sum_&#92;mathbf&#123;G&#125;c_&#123;i&#92;mathbf&#123;G&#125;&#125;(&#92;mathbf&#123;k&#125;)e^&#123;i(&#92;mathbf&#123;k&#125;+&#92;mathbf&#123;G&#125;)&#92;cdot&#92;mathbf&#123;r&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The differential equation becomes a matrix eigenproblem. Kinetic energy is diagonal, while a local periodic potential couples two plane waves through the Fourier component at their reciprocal-vector difference:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="plane wave Hamiltonian matrix">
+      <semantics>
+        <mrow>
+          <msub><mi>H</mi><mrow><mi mathvariant="bold">G</mi><msup><mi mathvariant="bold">G</mi><mo>′</mo></msup></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo>
+          <mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><msub><mi>m</mi><mi>e</mi></msub></mrow></mfrac>
+          <msup><mrow><mo>|</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup>
+          <msub><mi>δ</mi><mrow><mi mathvariant="bold">G</mi><msup><mi mathvariant="bold">G</mi><mo>′</mo></msup></mrow></msub>
+          <mo>+</mo><mi>V</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>−</mo><msup><mi mathvariant="bold">G</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">H_&#123;&#92;mathbf&#123;G&#125;&#92;mathbf&#123;G&#125;'&#125;(&#92;mathbf&#123;k&#125;)=&#92;frac&#123;&#92;hbar^2&#125;&#123;2m_e&#125;|&#92;mathbf&#123;k&#125;+&#92;mathbf&#123;G&#125;|^2&#92;delta_&#123;&#92;mathbf&#123;G&#125;&#92;mathbf&#123;G&#125;'&#125;+V(&#92;mathbf&#123;G&#125;-&#92;mathbf&#123;G&#125;').</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The exact expansion is infinite. A practical calculation retains plane waves inside a kinetic-energy sphere,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="plane wave kinetic energy cutoff">
+      <semantics>
+        <mrow>
+          <mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><msub><mi>m</mi><mi>e</mi></msub></mrow></mfrac>
+          <msup><mrow><mo>|</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup>
+          <mo>≤</mo><msub><mi>E</mi><mi>cut</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;frac&#123;&#92;hbar^2&#125;&#123;2m_e&#125;|&#92;mathbf&#123;k&#125;+&#92;mathbf&#123;G&#125;|^2&#92;le E_&#123;&#92;mathrm&#123;cut&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Increasing <em>E</em><sub>cut</sub> enlarges a nested basis without attaching basis functions to individual atoms. For a fixed Hermitian Hamiltonian this gives the usual Rayleigh–Ritz variational structure, but convergence remains observable dependent: a total energy, stress, force, response coefficient, and small phase-energy difference can require different cutoffs. The cutoff is also dataset dependent. A harder pseudopotential carries more high-frequency structure and needs a larger reciprocal-space sphere.
+  </p>
+  <p>
+    Moving an atom changes the potential and projector matrix elements but does not move the plane-wave basis, so ordinary atom-centered Pulay terms are absent. Cell strain is subtler because the reciprocal lattice and the plane waves selected by a fixed energy cutoff change with the cell; stress must still be evaluated with the finite representation treated consistently. Representation convergence is mapped in <a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> and <a href={href('/theory/plane-wave-and-real-space-methods/')}>Plane-Wave and Real-Space Methods</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-2-bloch-bands">
+  <h2 id="section-12-2-bloch-bands">12.2 Bloch Theorem and Electron Bands</h2>
+  <p>
+    Chapter 4 derived Bloch's theorem from translation symmetry. Fourier space now shows the same result constructively. A periodic potential couples a wavevector <em>q</em> only to <em>q</em> + <em>G</em>, so the infinite Hamiltonian separates into independent blocks labeled by <em>k</em> modulo reciprocal-lattice vectors. Every eigenstate in one block has the Bloch form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Bloch decomposition">
+      <semantics>
+        <mrow>
+          <msub><mi>ψ</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup>
+          <msub><mi>u</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo>
+          <mspace width="1em"/><msub><mi>u</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>+</mo><mi mathvariant="bold">T</mi><mo>)</mo><mo>=</mo><msub><mi>u</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)=e^&#123;i&#92;mathbf&#123;k&#125;&#92;cdot&#92;mathbf&#123;r&#125;&#125;u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;),&#92;quad u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;+&#92;mathbf&#123;T&#125;)=u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The band index <em>i</em> enumerates the discrete eigenvalues at one <em>k</em>. In the macroscopic limit the allowed <em>k</em> points become dense and those solutions trace continuous bands. The first Brillouin zone is the natural primitive cell for displaying them because its boundaries are Bragg planes. Crystal momentum is conserved modulo a reciprocal vector, so <em>k</em> and <em>k</em> + <em>G</em> represent the same translational character rather than independent ordinary momenta.
+  </p>
+  <p>
+    Quantities per primitive cell require an average over the Brillouin zone,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Brillouin zone average">
+      <semantics>
+        <mrow>
+          <mover><mi>f</mi><mo>¯</mo></mover><mo>=</mo>
+          <mfrac><mn>1</mn><msub><mi>N</mi><mi>k</mi></msub></mfrac><munder><mo>∑</mo><mi mathvariant="bold">k</mi></munder><mi>f</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo>
+          <mo>→</mo>
+          <mfrac><msub><mi>Ω</mi><mi>cell</mi></msub><msup><mrow><mo>(</mo><mn>2</mn><mi>π</mi><mo>)</mo></mrow><mi>d</mi></msup></mfrac>
+          <msub><mo>∫</mo><mi>BZ</mi></msub><msup><mi>d</mi><mi>d</mi></msup><mi>k</mi><mi>f</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;bar f=&#92;frac&#123;1&#125;&#123;N_k&#125;&#92;sum_&#92;mathbf&#123;k&#125;f(&#92;mathbf&#123;k&#125;)&#92;to&#92;frac&#123;&#92;Omega_&#123;&#92;mathrm&#123;cell&#125;&#125;&#125;&#123;(2&#92;pi)^d&#125;&#92;int_&#123;&#92;mathrm&#123;BZ&#125;&#125;d^dk f(&#92;mathbf&#123;k&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This sampling is distinct from the plane-wave basis. Reciprocal vectors <em>G</em> inside a cutoff represent an orbital at a selected <em>k</em>; a set of <em>k</em> points approximates an integral over different Bloch boundary conditions. A high-symmetry band path is therefore useful for visualizing dispersion but is not a Brillouin-zone integration mesh or a full-zone search. See <a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-3-nearly-free-electron">
+  <h2 id="section-12-3-nearly-free-electron">12.3 Nearly-Free-Electron Approximation</h2>
+  <p>
+    The nearly-free-electron approximation makes the effect of a lattice visible with minimal machinery. Start from the free dispersion <em>ε</em> = ℏ²|<em>q</em>|²/(2<em>m</em>) and fold it into the first Brillouin zone by writing <em>q</em> = <em>k</em> + <em>G</em>. The resulting branches initially are only copies of the same parabola. Crossings occur where two reciprocal-space plane waves have the same kinetic energy.
+  </p>
+  <p>
+    A weak periodic potential matters most at those degeneracies. Near a Bragg plane two nearly degenerate components are coupled by a Fourier coefficient <em>V</em>(<em>G</em>). In the simplest two-state model,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="two state nearly free electron Hamiltonian and gap">
+      <semantics>
+        <mrow>
+          <mi>H</mi><mo>≈</mo><mfenced><mtable>
+            <mtr><mtd><msub><mi>ε</mi><mn>0</mn></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mtd><mtd><mi>V</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo></mtd></mtr>
+            <mtr><mtd><msup><mi>V</mi><mo>*</mo></msup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo></mtd><mtd><msub><mi>ε</mi><mn>0</mn></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>−</mo><mi mathvariant="bold">G</mi><mo>)</mo></mtd></mtr>
+          </mtable></mfenced><mo>,</mo><mspace width="1em"/>
+          <mi>Δ</mi><msub><mi>E</mi><mi>gap</mi></msub><mo>≈</mo><mn>2</mn><mo>|</mo><mi>V</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>|</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">H&#92;approx(&#92;varepsilon_0,V_G;V_G^*,&#92;varepsilon_0'),&#92;qquad &#92;Delta E_&#123;&#92;mathrm&#123;gap&#125;&#125;&#92;approx2|V_G|.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Away from degeneracy the weak potential gives only a small perturbative shift; at the crossing it splits the states at first order and can reshape a Fermi surface. The two combinations place their density differently relative to the ionic potential, giving a real-space interpretation of the upper and lower branches. This explains how simple <em>sp</em> metals can remain nearly free-electron-like over much of the zone while showing decisive lattice effects near selected boundaries. It also connects to Chapter 11: low-energy valence scattering may be weak in the pseudopotential sense even though the all-electron state is strongly structured near the nucleus.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-4-form-structure-factors">
+  <h2 id="section-12-4-form-structure-factors">12.4 Form Factors and Structure Factors</h2>
+  <p>
+    Fourier space separates two ingredients that are entangled in real space: what each atom or ion scatters, and where those objects are placed in the unit cell. For atom-centered contributions of species κ, a crystal Fourier component can be written schematically as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="potential factorization into structure and form factors">
+      <semantics>
+        <mrow>
+          <mi>V</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo>
+          <munder><mo>∑</mo><mi>κ</mi></munder>
+          <msup><mi>S</mi><mi>κ</mi></msup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo>
+          <msup><mi>V</mi><mi>κ</mi></msup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V(&#92;mathbf&#123;G&#125;)=&#92;sum_&#92;kappa S^&#92;kappa(&#92;mathbf&#123;G&#125;)V^&#92;kappa(&#92;mathbf&#123;G&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The structure factor contains the basis geometry,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="species structure factor">
+      <semantics>
+        <mrow>
+          <msup><mi>S</mi><mi>κ</mi></msup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo>
+          <munder><mo>∑</mo><mi>j</mi></munder><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">G</mi><mo>·</mo><msub><mi mathvariant="bold">τ</mi><mrow><mi>κ</mi><mi>j</mi></mrow></msub></mrow></msup><mo>,</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">S^&#92;kappa(&#92;mathbf&#123;G&#125;)=&#92;sum_j e^&#123;i&#92;mathbf&#123;G&#125;&#92;cdot&#92;boldsymbol&#123;&#92;tau&#125;_&#123;&#92;kappa j&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    while the form factor contains the Fourier-space shape of one species' contribution. For a spherical local potential it depends only on |<em>G</em>| and reduces to a radial transform,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="spherical local potential form factor">
+      <semantics>
+        <mrow>
+          <msup><mi>V</mi><mi>κ</mi></msup><mo>(</mo><mi>G</mi><mo>)</mo><mo>=</mo>
+          <mn>4</mn><mi>π</mi><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><mi>d</mi><mi>r</mi><msup><mi>r</mi><mn>2</mn></msup>
+          <msub><mi>j</mi><mn>0</mn></msub><mo>(</mo><mi>G</mi><mi>r</mi><mo>)</mo><msup><mi>V</mi><mi>κ</mi></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V^&#92;kappa(G)=4&#92;pi&#92;int_0^&#92;infty dr r^2 j_0(Gr)V^&#92;kappa(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This is the reciprocal-space analogue of “lattice + basis.” Moving atoms changes phases in the structure factor; changing species or the effective ionic potential changes the form factor. The separation helps explain symmetry cancellations, diffraction, empirical-pseudopotential parameters, and parts of electron–phonon coupling. The <em>G</em> = 0 Coulomb component requires special care because electron–electron, electron–ion, and ion–ion pieces contain long-range terms whose finite physical meaning appears only after a neutral combination is defined.
+  </p>
+  <p>
+    Real pseudopotentials are generally nonlocal. Their matrix elements depend separately on <em>k</em> + <em>G</em> and <em>k</em> + <em>G</em>′, rather than only on their difference. Separable projector forms reduce this two-vector object to products of one-vector projector amplitudes without removing the underlying angular-momentum dependence. See <a href={href('/theory/fourier-analysis/')}>Fourier Analysis</a> and <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-5-atomic-like-potentials">
+  <h2 id="section-12-5-atomic-like-potentials">12.5 Approximate Atomic-Like Potentials</h2>
+  <p>
+    Before constructing a fully self-consistent crystal potential, Martin asks how much band physics can be understood from atom-like contributions. In a nearly-free-electron picture the electron gas screens a bare ionic perturbation. A simple Thomas–Fermi-like form is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Thomas Fermi like screened ionic potential">
+      <semantics>
+        <mrow>
+          <msub><mi>V</mi><mi>screened</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>≈</mo>
+          <msub><mi>V</mi><mi>bare</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo>
+          <mfrac><msup><mi>G</mi><mn>2</mn></msup><mrow><msup><mi>G</mi><mn>2</mn></msup><mo>+</mo><msubsup><mi>k</mi><mn>0</mn><mn>2</mn></msubsup></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_&#123;&#92;mathrm&#123;screened&#125;&#125;(G)&#92;approx V_&#123;&#92;mathrm&#123;bare&#125;&#125;(G)G^2/(G^2+k_0^2).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Long-wavelength components are suppressed most strongly, leaving a shorter-ranged effective perturbation around each ion. The construction explains why atom-like potentials can describe much of the band structure of simple metals. It also exposes the all-electron plane-wave problem: near a bare nucleus, the Coulomb potential and wavefunction contain extremely short length scales, so heavy atoms require an enormous uniform reciprocal cutoff. Smooth core treatments are therefore integral to the practical plane-wave method rather than optional decorations.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-6-epm">
+  <h2 id="section-12-6-epm">12.6 Empirical Pseudopotential Method (EPM)</h2>
+  <p>
+    The empirical pseudopotential method pushes the weak-scattering picture further. Instead of deriving every effective Fourier component self-consistently, it adjusts a small set of low-|<em>G</em>| form factors so that selected experimental gaps, effective masses, or optical data are reproduced. For <em>sp</em>-bonded semiconductors and simple metals, a surprisingly small parameter set can reproduce much of the observed band dispersion.
+  </p>
+  <p>
+    The success is physically informative: after core oscillations are removed, low-energy valence bands can be controlled mainly by a small number of scattering amplitudes combined with crystal geometry. EPM therefore helped establish the modern pseudopotential viewpoint and remains useful as a reduced model.
+  </p>
+  <p>
+    Its boundary is equally important. Fitting eigenvalue differences does not define a universal ground-state energy functional, and it does not make total energies, forces, charge transfer, or response variationally consistent. Transferability to new bonding environments, pressures, charge states, magnetic configurations, or observables is an extra assumption. Chapter 13 restores first-principles pseudopotentials, a density-dependent Kohn–Sham potential, and self-consistency.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-7-density-grids">
+  <h2 id="section-12-7-density-grids">12.7 Calculation of Electron Density: Introduction of Grids</h2>
+  <p>
+    Plane-wave coefficients are compact for smooth orbitals, but many operations are simpler point by point in real space. The electron density is the key example. For occupied Bloch states,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="electron density from occupied Bloch states">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mn>1</mn><msub><mi>N</mi><mi>k</mi></msub></mfrac>
+          <munder><mo>∑</mo><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></munder>
+          <msub><mi>f</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub>
+          <msup><mrow><mo>|</mo><msub><mi>ψ</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(&#92;mathbf&#123;r&#125;)=&#92;frac&#123;1&#125;&#123;N_k&#125;&#92;sum_&#123;i&#92;mathbf&#123;k&#125;&#125;f_&#123;i&#92;mathbf&#123;k&#125;&#125;|&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Evaluating the density directly as a reciprocal-space convolution scales quadratically with the number of Fourier components. FFTs use the cheaper route: transform each orbital to a regular real-space grid, form local products and accumulate the density there, then transform the density or potential back when reciprocal-space operations are convenient. The transform scales approximately as <em>N</em> log <em>N</em>, which is why practical plane-wave calculations are simultaneously reciprocal-space and real-space calculations.
+  </p>
+  <aside class="callout" aria-label="reciprocal and real space division of work">
+    <p><strong>Why plane-wave codes also need grids</strong></p>
+    <p>orbital coefficients in reciprocal space → FFT → real-space values → density and local/semilocal potentials → FFT back to reciprocal space.</p>
+  </aside>
+  <p>
+    Products contain higher Fourier components than the original orbitals. If the orbital expansion reaches a characteristic <em>G</em><sub>max</sub>, its density can require differences approaching twice that wavevector,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="density Fourier range compared with orbital range">
+      <semantics>
+        <mrow><msub><mi>G</mi><mrow><mi>ρ</mi><mo>,</mo><mi>max</mi></mrow></msub><mo>≈</mo><mn>2</mn><msub><mi>G</mi><mrow><mi>ψ</mi><mo>,</mo><mi>max</mi></mrow></msub><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">G_&#123;&#92;rho,&#92;max&#125;&#92;approx2G_&#123;&#92;psi,&#92;max&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The orbital cutoff is normally a sphere in reciprocal space, whereas an FFT grid corresponds to a transform-friendly parallelepiped. The grid must also resolve products without aliasing: Fourier content above the grid's Nyquist range folds into false lower-frequency content. Later ultrasoft and PAW calculations introduce augmentation densities with still shorter spatial scales, so wavefunction cutoff and charge-density/FFT resolution become even more visibly different controls.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-8-real-space-fd-dg">
+  <h2 id="section-12-8-real-space-fd-dg">12.8 Real-Space Methods I: Finite Difference and Discontinuous Galerkin Methods</h2>
+  <p>
+    Once a real-space grid is available, the differential equation can also be solved there directly. Real-space methods offer sparse operators, flexible boundary conditions, and the ability to concentrate numerical work where the solution changes rapidly. Smooth pseudopotentials and PAW-like treatments make this much more practical by reducing the extreme length-scale separation created by a bare nuclear Coulomb potential.
+  </p>
+  <p>
+    In finite differences the Laplacian is replaced by a stencil. Along one coordinate a high-order approximation has the generic form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="finite difference approximation to second derivative">
+      <semantics>
+        <mrow>
+          <msup><mi>ψ</mi><mo>″</mo></msup><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>≈</mo>
+          <munderover><mo>∑</mo><mrow><mi>p</mi><mo>=</mo><mo>−</mo><mi>m</mi></mrow><mi>m</mi></munderover>
+          <msub><mi>C</mi><mi>p</mi></msub><mi>ψ</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>p</mi><mi>h</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;psi''(x_i)&#92;approx&#92;sum_&#123;p=-m&#125;^m C_p&#92;psi(x_i+ph).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Grid spacing <em>h</em> and stencil order now replace the plane-wave cutoff as representation parameters. Smaller <em>h</em> resolves shorter wavelengths; a wider high-order stencil can improve accuracy while preserving locality. The resulting Hamiltonian is sparse because a local differential operator connects only neighboring points. There is, however, an important numerical distinction from a Rayleigh–Ritz plane-wave truncation: a finite-difference approximation to the operator does not automatically provide a variational upper bound. Grid refinement must therefore be established from actual convergence rather than assumed monotonicity.
+  </p>
+  <p>
+    Discontinuous Galerkin methods divide space into nonoverlapping regions and construct a compact local basis in each. Neighboring regions communicate through boundary and kinetic terms. This can replace a huge fine grid by a much smaller sparse basis and permits strong spatial parallelism. The method also anticipates Chapter 18: locality reduces work only when the chosen representation makes the neglected distant couplings genuinely small.
+  </p>
+</section>
+
+<section aria-labelledby="section-12-9-multiresolution">
+  <h2 id="section-12-9-multiresolution">12.9 Real-Space Methods II: Multiresolution Methods</h2>
+  <p>
+    A uniform grid spends the same resolution everywhere even when the wavefunction does not require it. Multiresolution methods place fine resolution in rapidly varying regions and coarser resolution elsewhere. This is valuable for isolated systems, heterogeneous geometries, defects, surfaces, or all-electron-like problems in which the length scale near a nucleus differs strongly from the interstitial scale.
+  </p>
+  <p>
+    Martin groups several related ideas here. <strong>Multigrid</strong> is primarily a solution strategy: long-wavelength iterative error is removed efficiently on coarse grids while fine grids resolve short-wavelength structure. <strong>Finite elements</strong> use local piecewise-polynomial basis functions and can be refined by reducing element size, raising polynomial order, or both. Their local support creates sparse matrices and lets refinement be concentrated where needed. With a nonorthogonal local basis the one-electron equation has the generalized form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="generalized eigenproblem in a local finite element basis">
+      <semantics>
+        <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;mathbf&#123;H&#125;&#92;mathbf&#123;c&#125;=&#92;varepsilon&#92;mathbf&#123;S&#125;&#92;mathbf&#123;c&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    <strong>Wavelets</strong> organize localized functions by scale: coarse functions represent smooth structure and additional wavelets add fine detail only where necessary. <strong>Adaptive coordinates</strong> instead warp a regular computational grid so that more physical-space resolution accumulates around difficult regions. These approaches differ in numerical architecture but pursue the same goal—avoid paying the finest-resolution cost everywhere.
+  </p>
+  <aside class="callout" aria-label="representation choices in chapter 12">
+    <p><strong>One equation, several discretizations</strong></p>
+    <p>plane waves → global spectral representation and simple periodic derivatives.</p>
+    <p>finite differences → sparse local stencil and direct real-space boundaries.</p>
+    <p>finite elements / wavelets / multigrid / adaptive coordinates → localized or scale-dependent resolution.</p>
+  </aside>
+  <p>
+    None of these representations changes the underlying Kohn–Sham approximation. Agreement among independently converged representations is a powerful numerical check, but all of them still inherit the same exchange–correlation functional, core treatment, electrostatic model, spin/relativistic Hamiltonian, and occupations. The relevant mathematical background is <a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a>.
+  </p>
+</section>
