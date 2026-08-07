@@ -98,8 +98,8 @@ export const synthesis =
     <math display="block" aria-label="Pressure and bulk modulus from the energy volume curve">
       <semantics>
         <mtable>
-          <mtr><mtd><mi>P</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow><mo>,</mo></mtd></mtr>
-          <mtr><mtd><mi>B</mi><mo>=</mo><mo>−</mo><mi>Ω</mi><mfrac><mrow><mi>d</mi><mi>P</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow><mo>=</mo><mi>Ω</mi><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msup><mi>Ω</mi><mn>2</mn></msup></mrow><mo>.</mo></mtd></mtr>
+          <mtr><mtd><mi>P</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>B</mi><mo>=</mo><mo>−</mo><mi>Ω</mi><mfrac><mrow><mi>d</mi><mi>P</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac><mo>=</mo><mi>Ω</mi><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msup><mi>Ω</mi><mn>2</mn></msup></mrow></mfrac><mo>.</mo></mtd></mtr>
         </mtable>
         <annotation encoding="application/x-tex">P=-\frac&#123;dE&#125;&#123;d\Omega&#125;,\qquad B=-\Omega\frac&#123;dP&#125;&#123;d\Omega&#125;=\Omega\frac&#123;d^2E&#125;&#123;d\Omega^2&#125;.</annotation>
       </semantics>
@@ -186,7 +186,7 @@ export const synthesis =
     <math display="block" aria-label="Stoner magnetic susceptibility">
       <semantics>
         <mrow>
-          <mi>χ</mi><mo>=</mo><mfrac><mrow><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow><mrow><mn>1</mn><mo>−</mo><mi>I</mi><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow><mo>.</mo>
+          <mi>χ</mi><mo>=</mo><mfrac><mrow><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow><mrow><mn>1</mn><mo>−</mo><mi>I</mi><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow></mfrac><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">\chi=\frac&#123;N(E_F)&#125;&#123;1-I N(E_F)&#125;.</annotation>
       </semantics>
@@ -209,7 +209,7 @@ export const synthesis =
     <math display="block" aria-label="Stress as derivative of total energy with respect to strain">
       <semantics>
         <mrow>
-          <msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>Ω</mi></mfrac><mfrac><mrow><mi>∂</mi><msub><mi>E</mi><mi>total</mi></msub></mrow><mrow><mi>∂</mi><msub><mi>u</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub></mrow><mo>.</mo>
+          <msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>Ω</mi></mfrac><mfrac><mrow><mi>∂</mi><msub><mi>E</mi><mi>total</mi></msub></mrow><mrow><mi>∂</mi><msub><mi>u</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo>
         </mrow>
         <annotation encoding="application/x-tex">\sigma_&#123;\alpha\beta&#125;=-\frac&#123;1&#125;&#123;\Omega&#125;\frac&#123;\partial E_&#123;\mathrm&#123;total&#125;&#125;&#125;&#123;\partial u_&#123;\alpha\beta&#125;&#125;.</annotation>
       </semantics>
@@ -232,8 +232,8 @@ export const synthesis =
     <math display="block" aria-label="Forces and force constants from total energy">
       <semantics>
         <mtable>
-          <mtr><mtd><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow><mo>,</mo></mtd></mtr>
-          <mtr><mtd><msub><mi>C</mi><mrow><mi>I</mi><mi>J</mi></mrow></msub><mo>=</mo><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>J</mi></msub></mrow><mo>.</mo></mtd></mtr>
+          <mtr><mtd><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>C</mi><mrow><mi>I</mi><mi>J</mi></mrow></msub><mo>=</mo><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>J</mi></msub></mrow></mfrac><mo>.</mo></mtd></mtr>
         </mtable>
         <annotation encoding="application/x-tex">\mathbf F_I=-\frac&#123;dE&#125;&#123;d\mathbf R_I&#125;,\qquad C_&#123;IJ&#125;=\frac&#123;d^2E&#125;&#123;d\mathbf R_I\,d\mathbf R_J&#125;.</annotation>
       </semantics>
