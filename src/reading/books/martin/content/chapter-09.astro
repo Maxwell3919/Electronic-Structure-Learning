@@ -1,0 +1,437 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-9-1-beyond-semilocal', label: '9.1 Beyond the Local Density and Generalized Gradient Approximations' },
+  { id: 'section-9-2-gks-bandgaps', label: '9.2 Generalized Kohn–Sham and Bandgaps' },
+  { id: 'section-9-3-hybrids-range-separation', label: '9.3 Hybrid Functionals and Range Separation' },
+  { id: 'section-9-4-meta-gga', label: '9.4 Functionals of the Kinetic Energy Density: Meta-GGAs' },
+  { id: 'section-9-5-oep', label: '9.5 Optimized Effective Potential' },
+  { id: 'section-9-6-localized-corrections', label: '9.6 Localized-Orbital Approaches: SIC and DFT+U' },
+  { id: 'section-9-7-response-functionals', label: '9.7 Functionals Derived from Response Functions' },
+  { id: 'section-9-8-vdw', label: '9.8 Nonlocal Functionals for van der Waals Dispersion Interactions' },
+  { id: 'section-9-9-mbj', label: '9.9 Modified Becke–Johnson Functional for Vxc' },
+  { id: 'section-9-10-comparison', label: '9.10 Comparison of Functionals' },
+];
+
+export const modernPerspective = [
+  'Moving upward in the functional hierarchy changes the model as well as the computational cost. A hybrid, meta-GGA, DFT+U, RPA-level correlation treatment, or nonlocal-dispersion functional is not automatically more accurate for every observable than a semilocal functional. The relevant question is which missing physics the added variable or operator is intended to restore, and whether that mechanism is important for the system being studied.',
+  'Generalized Kohn–Sham eigenvalues often provide substantially better band gaps and level alignments than semilocal Kohn–Sham eigenvalues, especially when nonlocal exchange reduces delocalization error. They remain eigenvalues of an auxiliary effective Hamiltonian rather than a general proof of the interacting quasiparticle spectrum. Comparison with charged addition/removal energies, optical excitations, and many-body spectra must keep those objects distinct.',
+  'DFT+U is defined only after a localized subspace, occupancy matrix, interaction parameters, and double-counting convention have been chosen. Different projector definitions or metastable occupation patterns can produce different self-consistent solutions. Reporting only a numerical U value without the subspace and construction does not uniquely define the calculation.',
+  'Dispersion corrections are particularly sensitive to dimensionality and environment. Pairwise C6/R6 models capture an important asymptotic mechanism, while extended, metallic, highly polarizable, low-dimensional, and heterogeneous systems can require collective screening or many-body dispersion beyond an independent-pair picture. Numerical convergence of a geometry does not establish the adequacy of the chosen long-range correlation model.',
+];
+
+export const synthesis =
+  'Part II closes by showing that the unknown exchange–correlation problem is not solved by one universally superior formula. Chapter 8 established why local and semilocal functionals can work surprisingly well; Chapter 9 adds information that those forms cannot carry efficiently. Generalized Kohn–Sham theory permits nonlocal orbital-dependent operators, hybrids mix semilocal and Fock-like exchange, meta-GGAs use kinetic-energy-density information, OEP asks how an orbital-dependent energy can still generate one local potential, SIC and DFT+U target localized-state errors, response theory builds correlation from electronic fluctuations, and nonlocal dispersion functionals restore interactions between separated density regions. The comparison among these methods is therefore a comparison of physical information, auxiliary Hamiltonians, computational cost, and transferability rather than a single ranking of acronyms. Chapter 10 then shifts from the functional hierarchy to atoms, where self-consistent radial solutions provide the reference states and radial information used throughout later core–valence and basis constructions.';
+---
+
+<section aria-labelledby="section-9-1-beyond-semilocal">
+  <h2 id="section-9-1-beyond-semilocal">9.1 Beyond the Local Density and Generalized Gradient Approximations</h2>
+  <p>
+    Chapter 8 ended with a basic limitation: a functional built only from the density and its nearby gradients cannot represent every form of electronic nonlocality. Chapter 9 therefore asks what additional information can be introduced while keeping the calculation practical. Martin organizes the possibilities as a hierarchy rather than as a catalogue of named functionals. Each higher level gives the exchange–correlation approximation access to information that was absent below it, at the price of a more complicated auxiliary problem and greater computational cost.
+  </p>
+  <aside class="callout" aria-label="Hierarchy of exchange correlation approximations">
+    <p><strong>Functional hierarchy</strong></p>
+    <p>LSDA: local density → GGA: density + gradients → meta-GGA: add kinetic-energy-density information → orbital-dependent/GKS methods: add occupied-orbital information → response-based methods: add unoccupied states and frequency-dependent response.</p>
+  </aside>
+  <p>
+    The hierarchy is sometimes called “Jacob’s ladder.” Its value is conceptual. A higher rung does not merely contain more fitting parameters; it can represent a qualitatively different physical object. Exact exchange requires occupied orbitals. Response-derived correlation requires virtual excitations and frequency dependence. Long-range dispersion requires correlations between separated regions. Localized-orbital corrections require a chosen subspace in which occupation itself becomes physically important.
+  </p>
+  <p>
+    Martin deliberately emphasizes representative constructions whose logic remains useful even as particular parameterizations change. That is the right way to read this chapter. PBE0 or HSE is useful here because it exposes how nonlocal exchange enters; SCAN illustrates why kinetic-energy density contains more local information than a gradient alone; DFT+U exposes the cost of introducing a localized subspace; RPA shows how response functions can generate correlation; and van der Waals functionals show why correlation can remain important even when densities barely overlap. The wider family tree is mapped in <a href={href('theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-2-gks-bandgaps">
+  <h2 id="section-9-2-gks-bandgaps">9.2 Generalized Kohn–Sham and Bandgaps</h2>
+  <p>
+    The ordinary Kohn–Sham construction gains much of its power by expressing the noninteracting kinetic energy explicitly in terms of orbitals. The density still determines the exact ground state, but the orbital representation carries shell structure and other highly nonlocal information that would be extremely difficult to encode in a simple density-only kinetic functional. Generalized Kohn–Sham (GKS) theory extends the same strategy to exchange and correlation: the auxiliary one-particle operator is allowed to contain orbital-dependent or nonlocal terms rather than being restricted to one local multiplicative potential.
+  </p>
+  <p>
+    This enlarges the space of useful auxiliary systems. Hartree–Fock-like exchange is the central example: its action on one orbital depends on all occupied orbitals over space, so it cannot be represented by a fixed local function without an additional construction. In GKS the nonlocal operator can be retained directly. The price is that the one-electron Hamiltonian is no longer the original local Kohn–Sham Hamiltonian whose potential is in one-to-one correspondence with the density.
+  </p>
+  <p>
+    Why accept the extra complication? Semilocal approximations smooth over much of the derivative structure that the exact functional must have when particle number crosses an integer. The same delocalization tendency contributes to underestimated molecular level separations and semiconductor gaps. An orbital-dependent GKS operator can move part of that missing nonlocal physics from an unknown density functional into the explicitly solved auxiliary Hamiltonian. This often gives more realistic occupied–unoccupied separations even before a separate quasiparticle calculation is performed.
+  </p>
+  <p>
+    The interpretation still requires care. Better agreement between a GKS eigenvalue gap and an experimental fundamental gap does not turn every GKS eigenvalue into an exact addition or removal energy. The exact ground-state density and total energy remain different theoretical guarantees from an interacting excitation spectrum. Chapter 7’s distinction among Kohn–Sham gaps, charged fundamental gaps, optical gaps, and quasiparticle energies therefore remains in force; GKS provides a more flexible starting Hamiltonian, not a collapse of those distinctions. See <a href={href('theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density Functional Theory</a> and <a href={href('theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-3-hybrids-range-separation">
+  <h2 id="section-9-3-hybrids-range-separation">9.3 Hybrid Functionals and Range Separation</h2>
+  <p>
+    Hybrid functionals combine a semilocal density functional with an explicitly orbital-dependent Fock-like exchange contribution. The motivation is visible in the failures on both sides. LDA and GGA frequently underestimate charged gaps and over-delocalize electrons; unscreened Hartree–Fock often gives gaps that are too large and behaves pathologically in metals because its long-range exchange is not screened. A hybrid uses only part of the Fock-like exchange and retains semilocal correlation.
+  </p>
+  <p>
+    PBE0 is the cleanest nonempirical example discussed by Martin. Coupling-constant reasoning motivates the fixed one-quarter exchange admixture,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="PBE0 hybrid exchange correlation energy">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>xc</mi><mi>PBE0</mi></msubsup><mo>=</mo>
+          <msubsup><mi>E</mi><mi>xc</mi><mi>PBE</mi></msubsup><mo>+</mo>
+          <mfrac><mn>1</mn><mn>4</mn></mfrac>
+          <mo>(</mo><msubsup><mi>E</mi><mi>x</mi><mi>HF</mi></msubsup><mo>−</mo><msubsup><mi>E</mi><mi>x</mi><mi>PBE</mi></msubsup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;^&#123;\mathrm&#123;PBE0&#125;&#125;=E_&#123;xc&#125;^&#123;\mathrm&#123;PBE&#125;&#125;+\frac&#123;1&#125;&#123;4&#125;(E_x^&#123;\mathrm&#123;HF&#125;&#125;-E_x^&#123;\mathrm&#123;PBE&#125;&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Parameterized hybrids such as B3LYP use related mixtures fitted to molecular data. Martin’s broader point is that the mixing coefficient has physical consequences. A fixed amount of long-range Fock exchange can be useful for finite systems and many insulators but is unsuitable for a metal, where screening eliminates the unscreened long-range singular behavior. This motivates making the exchange mixture depend on distance or screening.
+  </p>
+  <p>
+    Range separation divides the Coulomb kernel into short- and long-range pieces. A convenient Ewald-like split is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="short and long range separation of Coulomb interaction">
+      <semantics>
+        <mrow>
+          <mfrac><mn>1</mn><mi>r</mi></mfrac><mo>=</mo>
+          <mfrac><mrow><mn>1</mn><mo>−</mo><mi>erf</mi><mo>(</mo><mi>η</mi><mi>r</mi><mo>)</mo></mrow><mi>r</mi></mfrac>
+          <mo>+</mo>
+          <mfrac><mrow><mi>erf</mi><mo>(</mo><mi>η</mi><mi>r</mi><mo>)</mo></mrow><mi>r</mi></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac&#123;1&#125;&#123;r&#125;=\frac&#123;1-\operatorname&#123;erf&#125;(\eta r)&#125;&#123;r&#125;+\frac&#123;\operatorname&#123;erf&#125;(\eta r)&#125;&#123;r&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The range parameter η sets the crossover length. HSE keeps a PBE0-like fraction of Fock exchange only in the short-range part,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="HSE short range hybrid form">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>xc</mi></msub><mo>=</mo>
+          <msubsup><mi>E</mi><mi>xc</mi><mi>PBE</mi></msubsup><mo>+</mo>
+          <mfrac><mn>1</mn><mn>4</mn></mfrac>
+          <mo>(</mo><msubsup><mi>E</mi><mrow><mi>x</mi><mo>,</mo><mi>SR</mi></mrow><mi>HF</mi></msubsup><mo>−</mo><msubsup><mi>E</mi><mrow><mi>x</mi><mo>,</mo><mi>SR</mi></mrow><mi>PBE</mi></msubsup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;=E_&#123;xc&#125;^&#123;\mathrm&#123;PBE&#125;&#125;+\frac&#123;1&#125;&#123;4&#125;(E_&#123;x,\mathrm&#123;SR&#125;&#125;^&#123;\mathrm&#123;HF&#125;&#125;-E_&#123;x,\mathrm&#123;SR&#125;&#125;^&#123;\mathrm&#123;PBE&#125;&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Removing long-range Fock exchange reduces the cost and avoids the worst metallic pathology, while often improving semiconductor structures and gaps relative to a semilocal functional. The same truncation also has a physical limit: long-range electron–hole attraction is precisely what is needed for strongly bound excitons in wide-gap solids, so a purely short-range hybrid cannot represent every optical problem. Dielectric-dependent and other range-separated hybrids attempt to determine the amount or range of long-range exchange from screening rather than from one universal fixed number. Martin treats this as a general lesson: screening is material dependent, but a useful functional should determine that dependence from its internal variables rather than be manually refitted for each target system.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-4-meta-gga">
+  <h2 id="section-9-4-meta-gga">9.4 Functionals of the Kinetic Energy Density: Meta-GGAs</h2>
+  <p>
+    Meta-GGAs add a local quantity constructed from the Kohn–Sham orbitals: the kinetic-energy density. This is a subtler increase in information than a hybrid. The functional remains semilocal in real space, but two points with the same density and density gradient can be distinguished if their occupied orbitals have different local kinetic structure.
+  </p>
+  <p>
+    A representative spin-dependent form is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="meta GGA exchange correlation functional">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>xc</mi></msub><mo>=</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <msub><mi>ε</mi><mi>xc</mi></msub><mo>(</mo>
+          <msup><mi>n</mi><mo>↑</mo></msup><mo>,</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>,</mo>
+          <mo>|</mo><mo>∇</mo><msup><mi>n</mi><mo>↑</mo></msup><mo>|</mo><mo>,</mo>
+          <mo>|</mo><mo>∇</mo><msup><mi>n</mi><mo>↓</mo></msup><mo>|</mo><mo>,</mo>
+          <msup><mi>τ</mi><mo>↑</mo></msup><mo>,</mo><msup><mi>τ</mi><mo>↓</mo></msup>
+          <mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;xc&#125;=\int d^3r\,n(r)\epsilon_&#123;xc&#125;(n^\uparrow,n^\downarrow,|\nabla n^\uparrow|,|\nabla n^\downarrow|,\tau^\uparrow,\tau^\downarrow).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Martin distinguishes the kinetic-energy density itself from a per-particle quantity. In the positive form,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="positive kinetic energy density from occupied orbitals">
+      <semantics>
+        <mrow>
+          <msup><mi>t</mi><mi>σ</mi></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <munder><mo>∑</mo><mi>i</mi></munder>
+          <msup><mrow><mo>|</mo><mo>∇</mo><msubsup><mi>ψ</mi><mi>i</mi><mi>σ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">t^\sigma(r)=\frac&#123;1&#125;&#123;2&#125;\sum_i|\nabla\psi_i^\sigma(r)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Because this quantity depends on the orbitals, a meta-GGA is formally orbital dependent and naturally fits the generalized Kohn–Sham viewpoint. Its action is nevertheless differential rather than the fully nonlocal integral exchange operator of Hartree–Fock. This is one reason meta-GGAs can add significant physical discrimination without the full computational cost of a hybrid.
+  </p>
+  <p>
+    SCAN illustrates how that information is used. The dimensionless variable can be viewed schematically as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="SCAN iso orbital kinetic energy indicator">
+      <semantics>
+        <mrow>
+          <mi>α</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac>
+            <mrow><mi>τ</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>−</mo><msub><mi>τ</mi><mi>W</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo></mrow>
+            <mrow><msub><mi>τ</mi><mi>unif</mi></msub><mo>(</mo><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>)</mo></mrow>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\alpha(r)=\frac&#123;\tau(r)-\tau_W(r)&#125;&#123;\tau_&#123;\mathrm&#123;unif&#125;&#125;(n(r))&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The numerator measures kinetic structure beyond the one-orbital Weizsäcker limit, while the denominator supplies a homogeneous-electron-gas reference. The same local density and gradient can therefore be recognized as belonging to a one-orbital region, a metallic-like slowly varying region, or a more weakly overlapping regime. SCAN then imposes many exact constraints and norms across these regimes. Martin uses it to illustrate a broader design principle: adding a physically interpretable variable can be more transferable than merely adding empirical coefficients to the same lower-rung ingredients.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-5-oep">
+  <h2 id="section-9-5-oep">9.5 Optimized Effective Potential</h2>
+  <p>
+    Generalized Kohn–Sham theory keeps an orbital-dependent nonlocal operator explicitly. Optimized effective potential (OEP) asks a different question: can an orbital-dependent energy functional still be minimized using one local potential that acts on every orbital? The orbitals are regarded as functionals of that trial potential, so the energy itself becomes a functional of the potential,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="OEP energy as a functional of local potential">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>OEP</mi></msub><mo>[</mo><mi>V</mi><mo>]</mo><mo>=</mo>
+          <mi>E</mi><mo>[</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>[</mo><mi>V</mi><mo>]</mo><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;OEP&#125;&#125;[V]=E[\psi_i[V]].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The stationary potential is then the local functional derivative associated with the orbital-dependent exchange–correlation energy,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="optimized effective exchange correlation potential">
+      <semantics>
+        <mrow>
+          <msubsup><mi>V</mi><mi>xc</mi><mi>OEP</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mfrac><mrow><mi>δ</mi><msubsup><mi>E</mi><mi>xc</mi><mi>OEP</mi></msubsup></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_&#123;xc&#125;^&#123;\mathrm&#123;OEP&#125;&#125;(r)=\frac&#123;\delta E_&#123;xc&#125;^&#123;\mathrm&#123;OEP&#125;&#125;&#125;&#123;\delta n(r)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The difficulty lies in the chain of responses connecting the potential to the orbitals and the orbitals to the density. The exact OEP equation therefore involves the independent-particle Green function or response function and is considerably more expensive than a direct local or semilocal functional derivative. Approximate forms such as KLI and Slater-type local exchange replace parts of this response structure by simpler weighted averages.
+  </p>
+  <p>
+    OEP is conceptually important because it separates two issues that are otherwise easy to merge. An energy may depend explicitly on orbitals, while the auxiliary Hamiltonian can still be forced into the original Kohn–Sham form with one local multiplicative potential. That local potential is not simply the pointwise value of the nonlocal Fock operator; it is the potential whose induced orbitals make the total orbital-dependent energy stationary. The distinction mirrors Chapter 8’s warning that the quality of an energy functional and the properties of its functional derivative must be examined separately.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-6-localized-corrections">
+  <h2 id="section-9-6-localized-corrections">9.6 Localized-Orbital Approaches: SIC and DFT+U</h2>
+  <p>
+    Localized d and f states expose a different weakness of semilocal functionals. The Hartree term contains a self-interaction that exact exchange cancels for each occupied orbital, but approximate exchange–correlation functionals do not cancel it exactly. The resulting energy can favor fractional occupation and excessive delocalization. In transition-metal oxides and rare-earth compounds this can shift localized states relative to broad s/p bands, suppress local moments, or even produce a metal where experiment finds an insulating magnetic state.
+  </p>
+  <p>
+    Self-interaction-correction (SIC) methods subtract orbital self-terms. The correction tends to vanish for a state extended over an increasingly large crystal because its self-Coulomb energy scales down with delocalization, while it can remain substantial for an atomic-like state. This makes the method physically appealing for localized electrons and simultaneously introduces a new problem: in an extended system there is no unique set of localized orbitals. Different unitary mixtures of the same occupied subspace can carry different orbital-by-orbital corrections unless the localization is itself determined by a variational prescription.
+  </p>
+  <p>
+    DFT+U makes the localized subspace explicit and adds a Hubbard-like penalty or splitting associated with its occupations. Martin connects the interaction parameter to the same total-energy logic used later for atoms. A simple curvature or addition-energy measure is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="effective localized interaction from total energy differences">
+      <semantics>
+        <mrow>
+          <mi>U</mi><mo>=</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>+</mo><mn>1</mn><mo>)</mo>
+          <mo>+</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo>)</mo>
+          <mo>−</mo><mn>2</mn><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">U=E(N+1)+E(N-1)-2E(N).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    In a solid the corresponding interaction is screened by all the other electronic degrees of freedom and depends on how the localized subspace is defined. The correction then shifts energies according to occupation and can favor integer-like occupations and magnetic insulating solutions. The success of DFT+U for a transition-metal oxide should therefore be interpreted as a model of a chosen localized manifold embedded in the rest of the Kohn–Sham system, not as a universal replacement for semilocal DFT.
+  </p>
+  <p>
+    Martin also connects these ideas to generalized Koopmans or piecewise-linearity conditions. For an exact ensemble between two adjacent integer electron numbers,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="piecewise linear total energy between integer particle numbers">
+      <semantics>
+        <mrow>
+          <mi>E</mi><mo>(</mo><mi>N</mi><mo>+</mo><mi>η</mi><mo>)</mo><mo>=</mo>
+          <mo>(</mo><mn>1</mn><mo>−</mo><mi>η</mi><mo>)</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo>
+          <mo>+</mo><mi>η</mi><mi>E</mi><mo>(</mo><mi>N</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>,</mo>
+          <mspace width="0.5em"/><mn>0</mn><mo>≤</mo><mi>η</mi><mo>≤</mo><mn>1</mn><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E(N+\eta)=(1-\eta)E(N)+\eta E(N+1),\qquad 0\le\eta\le1.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Curvature with fractional occupation is one signature of self-interaction or delocalization error. SIC, DFT+U, and Koopmans-compliant constructions attack related symptoms with different choices of variables and constraints. Their common lesson is that “localized orbital” has become part of the theoretical definition, so the projector, occupation matrix, spin/orbital branch, and interaction parameters must be stated whenever the result depends on them.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-7-response-functionals">
+  <h2 id="section-9-7-response-functionals">9.7 Functionals Derived from Response Functions</h2>
+  <p>
+    Hybrid and exact-exchange constructions improve exchange by using occupied orbitals, while correlation is still commonly inherited from an LDA or GGA. Response-function methods take a more explicitly many-body route. The central idea is that correlation energy can be recovered from how the interacting electron system responds to fluctuations as the Coulomb interaction is turned on continuously.
+  </p>
+  <p>
+    The adiabatic-connection fluctuation–dissipation (ACFD) relation expresses the correlation energy in terms of the density response at imaginary frequency,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="adiabatic connection fluctuation dissipation correlation energy">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>c</mi></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac>
+          <msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>d</mi><mi>λ</mi>
+          <msubsup><mo>∫</mo><mn>0</mn><mo>∞</mo></msubsup><mi>d</mi><mi>u</mi>
+          <mi>Tr</mi><mo>[</mo><msub><mi>v</mi><mi>c</mi></msub>
+          <mo>(</mo><msub><mi>χ</mi><mi>λ</mi></msub><mo>(</mo><mi>i</mi><mi>u</mi><mo>)</mo><mo>−</mo><msub><mi>χ</mi><mn>0</mn></msub><mo>(</mo><mi>i</mi><mi>u</mi><mo>)</mo><mo>)</mo><mo>]</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_c=-\frac&#123;1&#125;&#123;2\pi&#125;\int_0^1d\lambda\int_0^\infty du\,\mathrm&#123;Tr&#125;[v_c(\chi_\lambda(iu)-\chi_0(iu))].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here χ<sub>0</sub> is the response of the chosen noninteracting reference, χ<sub>λ</sub> is the response of the system with interaction strength λ, and the trace includes spatial variables. The integral over frequency collects equal-time correlation from all virtual electronic fluctuations. The relation therefore connects Chapter 3’s coupling-constant idea, Chapter 7’s response of an auxiliary system, and the correlation functional in one expression.
+  </p>
+  <p>
+    The random phase approximation (RPA) replaces the exact interacting response by a ring-screening construction generated from χ<sub>0</sub> and the Coulomb interaction. It requires occupied and unoccupied states over a broad energy range, so the computational cost is much larger than for a semilocal functional. In return, it contains long-range screening and dispersion physics absent from LDA/GGA and provides a systematic connection to many-body perturbation theory.
+  </p>
+  <p>
+    RPA is not exact correlation. Short-range vertex corrections are missing, the result depends on the reference orbitals used to form χ<sub>0</sub>, and convergence with empty states, basis representation, frequency quadrature, and Brillouin-zone sampling can be demanding. Its conceptual importance is that correlation is being constructed from the spectrum of electronic fluctuations rather than inferred only from the local value of the density. The response framework is developed further in <a href={href('theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-8-vdw">
+  <h2 id="section-9-8-vdw">9.8 Nonlocal Functionals for van der Waals Dispersion Interactions</h2>
+  <p>
+    Dispersion is the clearest counterexample to a purely semilocal correlation picture. Two neutral atoms or molecules can attract even when their ground-state densities do not overlap appreciably. The interaction comes from correlated quantum fluctuations: an instantaneous dipole fluctuation in one fragment polarizes the other, producing a correlated response that lowers the energy. No functional depending only on the density and its derivatives at one point can generate the correct asymptotic interaction between two widely separated fragments.
+  </p>
+  <p>
+    For two nonoverlapping isotropic fragments, the Casimir–Polder relation connects the asymptotic coefficient to their frequency-dependent polarizabilities,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Casimir Polder C6 coefficient">
+      <semantics>
+        <mrow>
+          <msub><mi>C</mi><mrow><mn>6</mn><mi>A</mi><mi>B</mi></mrow></msub><mo>=</mo>
+          <mfrac><mn>3</mn><mi>π</mi></mfrac>
+          <msubsup><mo>∫</mo><mn>0</mn><mo>∞</mo></msubsup><mi>d</mi><mi>u</mi>
+          <msub><mi>α</mi><mi>A</mi></msub><mo>(</mo><mi>i</mi><mi>u</mi><mo>)</mo>
+          <msub><mi>α</mi><mi>B</mi></msub><mo>(</mo><mi>i</mi><mi>u</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">C_&#123;6AB&#125;=\frac&#123;3&#125;&#123;\pi&#125;\int_0^\infty du\,\alpha_A(iu)\alpha_B(iu).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    At large separation the leading energy varies as −C<sub>6</sub>/R<sup>6</sup>. Pairwise correction schemes attach this asymptotic physics to a semilocal DFT energy with a short-range damping function,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="damped pairwise dispersion correction">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>disp</mi></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <munder><mo>∑</mo><mrow><mi>A</mi><mi>B</mi></mrow></munder>
+          <mfrac><msub><mi>C</mi><mrow><mn>6</mn><mi>A</mi><mi>B</mi></mrow></msub><msubsup><mi>R</mi><mrow><mi>A</mi><mi>B</mi></mrow><mn>6</mn></msubsup></mfrac>
+          <mi>f</mi><mo>(</mo><msub><mi>R</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;disp&#125;&#125;=-\frac&#123;1&#125;&#123;2&#125;\sum_&#123;AB&#125;\frac&#123;C_&#123;6AB&#125;&#125;&#123;R_&#123;AB&#125;^6&#125;f(R_&#123;AB&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The damping is essential because the semilocal functional already contains short-range correlation when densities overlap; simply adding the asymptotic term at all distances would double count and diverge. Environment-dependent schemes make C<sub>6</sub> and polarizabilities respond to the local electronic density rather than assigning one immutable coefficient to each chemical element.
+  </p>
+  <p>
+    A second route builds nonlocal correlation directly as a density functional,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="nonlocal van der Waals correlation functional">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>c</mi><mi>nl</mi></msubsup><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mi>φ</mi><mo>(</mo><mi>r</mi><mo>,</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo>
+          <mi>n</mi><mo>(</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_c^&#123;\mathrm&#123;nl&#125;&#125;=\frac&#123;1&#125;&#123;2&#125;\int d^3r\,d^3r'\,n(r)\phi(r,r')n(r').</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The kernel φ carries the long-range coupling between density regions and is constructed from approximate response physics. This family can recover an R<sup>−6</sup>-like interaction without assigning the energy to explicit atom pairs. Martin emphasizes that many practical functionals combine a nonlocal long-range term with a separate exchange and short-range correlation functional. Their accuracy depends on that combination because the equilibrium geometry often occurs precisely in the crossover between chemical overlap and asymptotic dispersion.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-9-mbj">
+  <h2 id="section-9-9-mbj">9.9 Modified Becke–Johnson Functional for Vxc</h2>
+  <p>
+    The modified Becke–Johnson (mBJ) construction illustrates a different goal: improve the effective one-electron potential and band gaps without first defining a corresponding exchange–correlation energy functional. The potential is semilocal and uses both the density and positive kinetic-energy density, allowing it to imitate part of the shell structure of a more nonlocal exact-exchange potential at much lower computational cost.
+  </p>
+  <p>
+    In Martin’s notation the exchange part has the form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="modified Becke Johnson exchange potential">
+      <semantics>
+        <mrow>
+          <msubsup><mi>V</mi><mi>x</mi><mi>mBJ</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mi>c</mi><msubsup><mi>V</mi><mi>x</mi><mi>BR</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>+</mo><mo>(</mo><mn>3</mn><mi>c</mi><mo>−</mo><mn>2</mn><mo>)</mo>
+          <mfrac><mn>1</mn><mi>π</mi></mfrac><msqrt><mfrac><mn>5</mn><mn>12</mn></mfrac></msqrt>
+          <msqrt><mfrac><mrow><mn>2</mn><mi>t</mi><mo>(</mo><mi>r</mi><mo>)</mo></mrow><mrow><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo></mrow></mfrac></msqrt><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_x^&#123;\mathrm&#123;mBJ&#125;&#125;(r)=cV_x^&#123;\mathrm&#123;BR&#125;&#125;(r)+(3c-2)\frac&#123;1&#125;&#123;\pi&#125;\sqrt&#123;\frac&#123;5&#125;&#123;12&#125;&#125;\sqrt&#123;\frac&#123;2t(r)&#125;&#123;n(r)&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The important conceptual feature is not the fitted parameter c itself. mBJ supplies a potential, not an energy functional that can be minimized for structures, forces, or thermodynamic comparisons. A common workflow therefore obtains a self-consistent density with another functional and then evaluates the mBJ potential to calculate the band structure. Good agreement of its gaps with experiment does not imply that the same construction defines consistent total-energy differences or forces.
+  </p>
+  <p>
+    This section reinforces Chapter 8’s distinction between an exchange–correlation energy and an exchange–correlation potential. Some approximations are designed primarily for one observable. A band-gap-oriented potential can be useful for spectral interpretation while being unsuitable as the sole model for structural relaxation or phase energetics.
+  </p>
+</section>
+
+<section aria-labelledby="section-9-10-comparison">
+  <h2 id="section-9-10-comparison">9.10 Comparison of Functionals</h2>
+  <p>
+    Martin closes Part II by comparing approximations on systems simple enough that the source of an error can be identified. Hydrogen is the sharpest test because a one-electron problem has no true electron–electron correlation and exact exchange must cancel the Hartree self-interaction,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="one electron self interaction cancellation constraint">
+      <semantics>
+        <mtable>
+          <mtr><mtd><msub><mi>E</mi><mi>H</mi></msub><mo>+</mo><msub><mi>E</mi><mi>x</mi></msub><mo>=</mo><mn>0</mn><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>E</mi><mi>c</mi></msub><mo>=</mo><mn>0</mn><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">E_H+E_x=0,\qquad E_c=0\quad\text&#123;for one electron&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Hartree–Fock and exact exchange satisfy this limit, whereas LSDA and GGA leave fictitious self-interaction and correlation. More elaborate functionals can improve the total energy while still giving a potential or orbital energy with a different error. Hydrogen therefore separates energy accuracy from self-interaction cancellation and from the quality of the asymptotic potential.
+  </p>
+  <p>
+    Many-electron atoms then expose a broader compromise. Semilocal functionals often benefit from cancellation between exchange and correlation errors. Hybrids improve many ionization and excitation-related quantities by adding nonlocal exchange. Meta-GGAs can improve energies and structures without the full cost of Fock exchange. SIC and localized-orbital corrections can be decisive when atomic-like states are badly misplaced. Response-based and nonlocal functionals add screening and dispersion but require much more information and substantially more computation.
+  </p>
+  <p>
+    No one comparison creates a universal ranking because each family changes different physics. Structural energy differences, magnetic states, band gaps, localized d/f levels, molecular dissociation, long-range dispersion, dielectric response, and optical excitations test different parts of an approximation. A method selected because it fixes one failure should therefore be checked against the other observables that matter for the same scientific conclusion.
+  </p>
+  <aside class="callout" aria-label="How to interpret the exchange correlation hierarchy">
+    <p><strong>What an added ingredient is trying to repair</strong></p>
+    <p>nonlocal exchange → delocalization, level alignment, gaps</p>
+    <p>kinetic-energy density → local orbital environment and constraint recognition</p>
+    <p>localized subspace + interaction → d/f localization and occupation dependence</p>
+    <p>response functions → screening and fluctuation correlation</p>
+    <p>nonlocal density coupling → long-range dispersion</p>
+  </aside>
+  <p>
+    This is the durable conclusion of Chapters 8 and 9. Exchange–correlation approximation is a physical modeling decision. Numerical convergence can establish that a chosen functional has been solved consistently, but it cannot determine whether the functional contains the nonlocality, screening, localization, or response physics required by the target material and observable.
+  </p>
+</section>
