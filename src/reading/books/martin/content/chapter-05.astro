@@ -1,0 +1,321 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-5-1-electron-gas', label: '5.1 The Electron Gas' },
+  { id: 'section-5-2-noninteracting-hf', label: '5.2 Noninteracting and Hartree–Fock Approximations' },
+  { id: 'section-5-3-correlation', label: '5.3 Correlation Hole and Energy' },
+  { id: 'section-5-4-sp-metals', label: '5.4 Binding in sp-Bonded Metals' },
+  { id: 'section-5-5-lindhard', label: '5.5 Excitations and the Lindhard Dielectric Function' },
+];
+
+export const modernPerspective = [
+  'The uniform electron gas remains a reference system rather than a claim that real materials have uniform density. Its exchange and correlation energies, spin dependence, and hole constraints supply the uniform-density limit used by LSDA and remain exact constraints or calibration points for more elaborate density functionals.',
+  'The metallic failure of bare Hartree–Fock exchange should be interpreted as a failure of unscreened long-range exchange for a Fermi surface, not as a statement that every method containing exact exchange must fail in a metal. Screened exchange, generalized Kohn–Sham theories, many-body self-energies, and dielectric-dependent approaches change the effective interaction and therefore change the low-energy behavior.',
+  'The scalar Lindhard response is special to a homogeneous isotropic gas. In a crystal, screening becomes dependent on band structure, direction, local-field effects, dimensional boundary conditions, and interband transitions; reciprocal-space response is generally matrix-valued. The electron-gas result remains useful because it makes screening, plasmons, Friedel oscillations, and Fermi-surface anomalies analytically visible before those complications are added.',
+];
+
+export const synthesis =
+  'Chapter 5 removes the lattice introduced in Chapter 4 and asks what interacting electrons do when every point in space is equivalent. Density fixes the Fermi scale; exchange creates an exact same-spin hole but bare Hartree–Fock fails at a metallic Fermi surface; correlation screens the Coulomb interaction and reshapes the hole; simple sp-bonded metals emerge from competition among electron-gas, electrostatic, and core terms; and the Lindhard function exposes the elementary response of a Fermi sea. These results close the background part of the book and provide the physical reference system that Chapter 6 uses when density functional theory is developed as a theory of the interacting ground state.';
+---
+
+<section aria-labelledby="section-5-1-electron-gas">
+  <h2 id="section-5-1-electron-gas">5.1 The Electron Gas</h2>
+  <p>
+    The homogeneous electron gas strips condensed matter down to one controlled question: what do interacting electrons do when the ionic potential is replaced by a uniform positive background? The background makes the macroscopic system neutral, while translational invariance removes every structural length scale except the one set by the electron density. The model is therefore simple enough for analytic results but still contains Fermi statistics, long-range Coulomb repulsion, spin polarization, exchange, correlation, and screening. Those are precisely the ingredients that later have to be understood inside an inhomogeneous solid.
+  </p>
+  <p>
+    The density is conventionally expressed through the Wigner–Seitz radius <em>r</em><sub>s</sub>, the radius of a sphere that contains one electron on average:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="definition of the electron gas density parameter r s">
+      <semantics>
+        <mrow>
+          <mfrac><mrow><mn>4</mn><mi>π</mi></mrow><mn>3</mn></mfrac>
+          <msubsup><mi>r</mi><mi>s</mi><mn>3</mn></msubsup>
+          <mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac>
+          <mo>,</mo><mspace width="0.6em"></mspace>
+          <msub><mi>r</mi><mi>s</mi></msub><mo>=</mo>
+          <msup>
+            <mrow><mo>(</mo><mfrac><mn>3</mn><mrow><mn>4</mn><mi>π</mi><mi>n</mi></mrow></mfrac><mo>)</mo></mrow>
+            <mfrac><mn>1</mn><mn>3</mn></mfrac>
+          </msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac&#123;4\pi&#125;&#123;3&#125;r_s^3=\frac&#123;1&#125;&#123;n&#125;,\qquad r_s=\left(\frac&#123;3&#125;&#123;4\pi n&#125;\right)^&#123;1/3&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    In atomic units, <em>r</em><sub>s</sub> is usually quoted in Bohr radii. Small <em>r</em><sub>s</sub> means high density and small mean separation; large <em>r</em><sub>s</sub> means low density. Spin adds a second independent variable, conveniently written as the fractional polarization
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="fractional spin polarization">
+      <semantics>
+        <mrow>
+          <mi>ζ</mi><mo>=</mo>
+          <mfrac>
+            <mrow><msup><mi>n</mi><mo>↑</mo></msup><mo>−</mo><msup><mi>n</mi><mo>↓</mo></msup></mrow>
+            <mi>n</mi>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\zeta=\frac&#123;n^\uparrow-n^\downarrow&#125;&#123;n&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The most useful physical insight comes from scaling. If all coordinates are measured in units of <em>r</em><sub>s</sub>, kinetic energies scale as <em>r</em><sub>s</sub><sup>−2</sup>, whereas Coulomb energies scale as <em>r</em><sub>s</sub><sup>−1</sup>. Increasing density therefore makes kinetic energy grow faster than interaction energy; decreasing density lets Coulomb correlation become relatively more important. The same electron gas continuously connects a weak-coupling, high-density Fermi system to a strong-coupling low-density regime where localization can eventually win.
+  </p>
+  <aside class="callout" aria-label="Density and interaction hierarchy in the homogeneous electron gas">
+    <p><strong>Density controls the effective coupling</strong></p>
+    <p>density ↑ → <em>r</em><sub>s</sub> ↓ → kinetic scale ∝ <em>r</em><sub>s</sub><sup>−2</sup> dominates more strongly → weak relative correlation.</p>
+    <p>density ↓ → <em>r</em><sub>s</sub> ↑ → Coulomb scale ∝ <em>r</em><sub>s</sub><sup>−1</sup> becomes relatively stronger → enhanced correlation and possible localization.</p>
+  </aside>
+  <p>
+    This is why the model is more than a toy. It supplies a dimensionless axis along which the importance of interaction can be studied cleanly, and it becomes a benchmark for the <a href={href('theory/many-electron-problem/')}>many-electron problem</a>, metallic quasiparticles, and later density-functional approximations.
+  </p>
+</section>
+
+<section aria-labelledby="section-5-2-noninteracting-hf">
+  <h2 id="section-5-2-noninteracting-hf">5.2 Noninteracting and Hartree–Fock Approximations</h2>
+  <p>
+    With no electron–electron interaction, translational invariance makes plane waves exact one-electron states. At zero temperature the ground state fills all wavevectors inside a Fermi sphere. Counting the available reciprocal-space states fixes the Fermi wavevector; for an unpolarized three-dimensional gas,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Fermi wavevector of an unpolarized electron gas">
+      <semantics>
+        <mrow>
+          <msub><mi>k</mi><mi>F</mi></msub><mo>=</mo>
+          <msup><mrow><mo>(</mo><mn>3</mn><msup><mi>π</mi><mn>2</mn></msup><mi>n</mi><mo>)</mo></mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></msup>
+          <mo>=</mo>
+          <mfrac>
+            <msup><mrow><mo>(</mo><mfrac><mrow><mn>9</mn><mi>π</mi></mrow><mn>4</mn></mfrac><mo>)</mo></mrow><mfrac><mn>1</mn><mn>3</mn></mfrac></msup>
+            <msub><mi>r</mi><mi>s</mi></msub>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">k_F=(3\pi^2n)^&#123;1/3&#125;=\frac&#123;(9\pi/4)^&#123;1/3&#125;&#125;&#123;r_s&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This single scale sets the Fermi energy, velocity, wavelength, density matrix oscillations, and many response features. In atomic units the independent-particle Fermi energy and mean kinetic energy per electron are
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Fermi and mean kinetic energies of the noninteracting electron gas">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>F</mi></msub><mo>=</mo><mfrac><msubsup><mi>k</mi><mi>F</mi><mn>2</mn></msubsup><mn>2</mn></mfrac>
+          <mo>,</mo><mspace width="0.8em"></mspace>
+          <msub><mi>T</mi><mn>0</mn></msub><mo>=</mo><mfrac><mn>3</mn><mn>5</mn></mfrac><msub><mi>E</mi><mi>F</mi></msub>
+          <mo>=</mo><mfrac><mrow><mn>3</mn><msubsup><mi>k</mi><mi>F</mi><mn>2</mn></msubsup></mrow><mn>10</mn></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_F=\frac&#123;k_F^2&#125;&#123;2&#125;,\qquad T_0=\frac&#123;3&#125;&#123;5&#125;E_F=\frac&#123;3k_F^2&#125;&#123;10&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The noninteracting gas is not bound: its ground-state energy is positive kinetic energy. Its importance is instead structural. The Fermi surface organizes the low-energy states, and its enclosed volume remains a central reference even when interactions are turned on continuously without a phase transition.
+  </p>
+  <p>
+    Hartree–Fock now provides the first exact treatment of antisymmetry. In jellium, the direct Hartree field of the electrons is cancelled by the uniform positive background, while exchange remains. For an unpolarized gas the exchange energy per electron is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="exchange energy per electron in the unpolarized homogeneous gas">
+      <semantics>
+        <mrow>
+          <msub><mi>ε</mi><mi>x</mi></msub><mo>=</mo><mo>−</mo>
+          <mfrac><mrow><mn>3</mn><msub><mi>k</mi><mi>F</mi></msub></mrow><mrow><mn>4</mn><mi>π</mi></mrow></mfrac>
+          <mo>≈</mo><mo>−</mo><mfrac><mn>0.458</mn><msub><mi>r</mi><mi>s</mi></msub></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\epsilon_x=-\frac&#123;3k_F&#125;&#123;4\pi&#125;\approx-\frac&#123;0.458&#125;&#123;r_s&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Exchange lowers the total energy because antisymmetry keeps equal-spin electrons apart. The same nonlocal exchange operator also changes the one-electron dispersion. In the homogeneous gas it can be written schematically as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Hartree Fock dispersion in the homogeneous electron gas">
+      <semantics>
+        <mrow>
+          <msubsup><mi>ε</mi><mi>k</mi><mi>HF</mi></msubsup><mo>=</mo>
+          <mfrac><msup><mi>k</mi><mn>2</mn></msup><mn>2</mn></mfrac>
+          <mo>+</mo><msub><mi>Σ</mi><mi>x</mi></msub><mo>(</mo><mi>k</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\epsilon_k^&#123;\mathrm&#123;HF&#125;&#125;=\frac&#123;k^2&#125;&#123;2&#125;+\Sigma_x(k).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The analytic exchange self-energy has a logarithmic derivative singularity at <em>k</em> = <em>k</em><sub>F</sub>. Consequently Hartree–Fock predicts a divergent Fermi velocity and a vanishing density of states at the Fermi level for an ordinary metal, contrary to experiment. This failure is physically revealing: unscreened long-range exchange is incompatible with the observed low-energy metallic quasiparticles. Opening a gap removes the singular Fermi-surface condition, while screening makes the effective interaction shorter ranged. The latter idea leads naturally to Fermi-liquid theory and to the response arguments later in this chapter. The formal distinctions between Hartree–Fock, Kohn–Sham states, and many-body quasiparticles are developed further in <a href={href('theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> and <a href={href('theory/many-body-physics/')}>Many-Body Physics</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-5-3-correlation">
+  <h2 id="section-5-3-correlation">5.3 Correlation Hole and Energy</h2>
+  <p>
+    Exchange already creates a hole around an electron of a given spin: the probability of finding another electron with the same spin nearby is reduced by the Pauli principle. For the homogeneous gas this exchange-only pair distribution can be obtained analytically. With <em>y</em> = <em>k</em><sub>F</sub><sup>σ</sup><em>r</em>,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="same spin exchange pair distribution in the electron gas">
+      <semantics>
+        <mrow>
+          <msubsup><mi>g</mi><mi>x</mi><mrow><mi>σ</mi><mo>,</mo><mi>σ</mi></mrow></msubsup><mo>(</mo><mi>y</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>−</mo>
+          <msup>
+            <mrow><mo>[</mo><mn>3</mn><mfrac><mrow><mi>sin</mi><mo>(</mo><mi>y</mi><mo>)</mo><mo>−</mo><mi>y</mi><mi>cos</mi><mo>(</mo><mi>y</mi><mo>)</mo></mrow><msup><mi>y</mi><mn>3</mn></msup></mfrac><mo>]</mo></mrow>
+            <mn>2</mn>
+          </msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">g_x^&#123;\sigma,\sigma&#125;(y)=1-\left[3\frac&#123;\sin y-y\cos y&#125;&#123;y^3&#125;\right]^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The hole is deepest at short separation and carries oscillatory long-range structure set by the sharp Fermi surface. Correlation adds a second rearrangement. Electrons of either spin respond collectively to Coulomb repulsion, pushing probability away from unfavorable configurations and restoring it elsewhere. The correlation hole therefore integrates to zero: it redistributes the missing probability already counted by the full exchange–correlation hole rather than removing another electron.
+  </p>
+  <p>
+    Screening is the response-language version of the same physics. The simplest static model is Thomas–Fermi screening, which replaces the long-ranged Coulomb kernel by
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Thomas Fermi screening of the Coulomb kernel">
+      <semantics>
+        <mrow>
+          <mfrac><mn>1</mn><msup><mi>q</mi><mn>2</mn></msup></mfrac>
+          <mo>→</mo>
+          <mfrac><mn>1</mn><mrow><msup><mi>q</mi><mn>2</mn></msup><mo>+</mo><msubsup><mi>k</mi><mi>TF</mi><mn>2</mn></msubsup></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac&#123;1&#125;&#123;q^2&#125;\longrightarrow\frac&#123;1&#125;&#123;q^2+k_&#123;\mathrm&#123;TF&#125;&#125;^2&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The screening wavevector <em>k</em><sub>TF</sub> sets an inverse correlation length. This approximation misses the detailed Fermi-surface structure but makes the decisive point: the many-electron medium changes the interaction experienced by a test charge.
+  </p>
+  <p>
+    Correlation energy is harder than exchange because correlation changes both interaction and kinetic energies. The potential part can be interpreted through the exchange–correlation hole,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="potential exchange correlation energy per electron from the exchange correlation hole">
+      <semantics>
+        <mrow>
+          <msubsup><mi>ε</mi><mi>xc</mi><mi>pot</mi></msubsup><mo>=</mo>
+          <mfrac><msup><mi>e</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>n</mi></mrow></mfrac>
+          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi>
+          <mfrac><msub><mi>n</mi><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mi></mi></mfrac>
+          <mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\epsilon_&#123;xc&#125;^&#123;\mathrm&#123;pot&#125;&#125;=\frac&#123;e^2&#125;&#123;2n&#125;\int d^3r\,\frac&#123;n_&#123;xc&#125;(r)&#125;&#123;r&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The full exchange–correlation energy is obtained by turning the interaction on continuously while keeping the density fixed. In the homogeneous gas, scaling lets the coupling-constant average of the hole be written compactly as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="coupling constant averaged exchange correlation hole in the homogeneous gas">
+      <semantics>
+        <mrow>
+          <msubsup><mi>n</mi><mi>xc</mi><mi>av</mi></msubsup><mo>(</mo><mfrac><mi>r</mi><msub><mi>r</mi><mi>s</mi></msub></mfrac><mo>)</mo>
+          <mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mi>d</mi><mi>λ</mi>
+          <msubsup><mi>n</mi><mi>xc</mi><mi>λ</mi></msubsup>
+          <mo>(</mo><mfrac><mi>r</mi><mrow><mi>λ</mi><msub><mi>r</mi><mi>s</mi></msub></mrow></mfrac><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n_&#123;xc&#125;^&#123;\mathrm&#123;av&#125;&#125;\!\left(\frac&#123;r&#125;&#123;r_s&#125;\right)=\int_0^1d\lambda\,n_&#123;xc&#125;^\lambda\!\left(\frac&#123;r&#125;&#123;\lambda r_s&#125;\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This connects directly to the adiabatic-connection viewpoint used later in density functional theory. The important lesson is that an exchange–correlation energy cannot be inferred only from the instantaneous reduction in Coulomb energy; kinetic correlation is part of the same total.
+  </p>
+  <p>
+    No closed analytic expression covers the correlation energy at all densities. High-density many-body theory gives a nonanalytic logarithmic expansion; the low-density limit approaches an electron crystal; between them, quantum Monte Carlo calculations provide benchmark ground-state energies. Parameterizations of those data later become the homogeneous-gas input to local density approximations. That forward connection is why this model reappears in <a href={href('theory/density-functional-theory-foundations/')}>Density Functional Theory Foundations</a> and <a href={href('theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-5-4-sp-metals">
+  <h2 id="section-5-4-sp-metals">5.4 Binding in sp-Bonded Metals</h2>
+  <p>
+    The electron gas becomes a model of a real solid once the positive background is replaced conceptually by weakly scattering ionic cores. Alkali metals are the cleanest case: their valence electrons are relatively delocalized, while the core region mainly modifies the short-range electron–ion interaction. This is an early form of the physical reasoning behind pseudopotentials—strong atomic structure near a core can coexist with nearly free valence motion over most of the volume.
+  </p>
+  <p>
+    Martin organizes the energy per valence electron into a small number of competing scales. In atomic units, a representative form is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="model total energy per electron in a simple sp bonded metal">
+      <semantics>
+        <mrow>
+          <mfrac><msub><mi>E</mi><mi>total</mi></msub><mi>N</mi></mfrac>
+          <mo>=</mo><mfrac><mn>1.105</mn><msubsup><mi>r</mi><mi>s</mi><mn>2</mn></msubsup></mfrac>
+          <mo>−</mo><mfrac><mn>0.458</mn><msub><mi>r</mi><mi>s</mi></msub></mfrac>
+          <mo>+</mo><msub><mi>ε</mi><mi>c</mi></msub>
+          <mo>−</mo><mfrac><mi>α</mi><mrow><mn>2</mn><msub><mi>r</mi><mi>s</mi></msub></mrow></mfrac>
+          <mo>+</mo><msub><mi>ε</mi><mi>R</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac&#123;E_&#123;\mathrm&#123;total&#125;&#125;&#125;&#123;N&#125;=\frac&#123;1.105&#125;&#123;r_s^2&#125;-\frac&#123;0.458&#125;&#123;r_s&#125;+\epsilon_c-\frac&#123;\alpha&#125;&#123;2r_s&#125;+\epsilon_R.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first term is Fermi kinetic pressure; the second is exchange; <em>ε</em><sub>c</sub> is correlation; the Madelung term represents electrostatic attraction of electrons and ionic charge; and <em>ε</em><sub>R</sub> corrects the unphysical short-range behavior of point-like cores. The equilibrium density is where these different powers of <em>r</em><sub>s</sub> balance. Omitting the core repulsion drives the model toward a density that is too high, while a realistic finite-core correction shifts the minimum toward the scale observed in alkali metals.
+  </p>
+  <aside class="callout" aria-label="Energy balance controlling a simple metal">
+    <p><strong>Why a simple metal has an equilibrium volume</strong></p>
+    <p>compression → kinetic energy rises rapidly → resists further compression.</p>
+    <p>electrostatic and exchange terms favor lower energy at finite density.</p>
+    <p>short-range core repulsion prevents collapse into the point-ion limit.</p>
+    <p>the minimum of the total curve sets the equilibrium density and a scale for the bulk modulus.</p>
+  </aside>
+  <p>
+    The value of this model is not quantitative universality. It shows why an apparently free-electron metal can still bind and have a finite compressibility, and it separates the smooth valence-electron physics from the core physics that later motivates <a href={href('theory/pseudopotentials-paw-and-core-valence-treatments/')}>pseudopotential and core–valence treatments</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-5-5-lindhard">
+  <h2 id="section-5-5-lindhard">5.5 Excitations and the Lindhard Dielectric Function</h2>
+  <p>
+    Ground-state energies are only part of the electron-gas story. Excitations divide naturally into two classes. Adding or removing an electron creates a charged quasiparticle excitation; rearranging the existing electrons creates neutral density or spin fluctuations. The distinction already anticipates the later separation between quasiparticle theories and response theories.
+  </p>
+  <p>
+    The Hartree–Fock metal fails precisely where low-energy quasiparticles should be smooth. Experiments on simple metals instead show dispersions that remain much closer to a free-electron-like starting point, with interaction effects producing finite renormalizations rather than the Hartree–Fock singularity. This supports the use of effective one-particle states as a starting language for simple metals, while not turning those auxiliary states into exact excitation energies.
+  </p>
+  <p>
+    Neutral charge fluctuations are encoded in the dielectric function. For a homogeneous isotropic system the response depends only on wavevector magnitude and frequency, and one may write
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="dielectric function in terms of the proper density response">
+      <semantics>
+        <mrow>
+          <mi>ε</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>ω</mi><mo>)</mo><mo>=</mo>
+          <mn>1</mn><mo>−</mo><mi>v</mi><mo>(</mo><mi>q</mi><mo>)</mo>
+          <msubsup><mi>χ</mi><mi>n</mi><mo>*</mo></msubsup><mo>(</mo><mi>q</mi><mo>,</mo><mi>ω</mi><mo>)</mo>
+          <mo>,</mo><mspace width="0.6em"></mspace>
+          <mi>v</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>4</mn><mi>π</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msup><mi>q</mi><mn>2</mn></msup></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\epsilon(q,\omega)=1-v(q)\chi_n^*(q,\omega),\qquad v(q)=\frac&#123;4\pi e^2&#125;&#123;q^2&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here the proper response <em>χ</em><sub>n</sub><sup>*</sup> describes how the electrons respond to the internal field. In the random-phase approximation, it is replaced by the response <em>χ</em><sub>0</sub> of the noninteracting Fermi gas. Because the occupied states form a sphere and the dispersion is quadratic, the resulting integral can be evaluated analytically: this is the Lindhard dielectric function. RPA is therefore not “noninteracting physics”; the independent-particle polarization is repeatedly coupled by the Hartree Coulomb field, producing collective screening.
+  </p>
+  <p>
+    The analytic result displays several pieces of metal physics at once. The imaginary part identifies the continuum of allowed particle–hole excitations. Zeros of the real dielectric function can generate a collective plasma oscillation. In the long-wavelength limit its characteristic frequency is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="bulk plasma frequency of the homogeneous electron gas">
+      <semantics>
+        <mrow>
+          <msubsup><mi>ω</mi><mi>p</mi><mn>2</mn></msubsup><mo>=</mo>
+          <mfrac><mrow><mn>4</mn><mi>π</mi><msub><mi>n</mi><mi>e</mi></msub><msup><mi>e</mi><mn>2</mn></msup></mrow><msub><mi>m</mi><mi>e</mi></msub></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\omega_p^2=\frac&#123;4\pi n_e e^2&#125;&#123;m_e&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The static response also has special structure near momentum transfer 2<em>k</em><sub>F</sub>. Its Fourier transform produces Friedel oscillations around impurities, and the same Fermi-surface geometry can produce Kohn anomalies in phonons. These effects are a direct bridge from a simple spherical Fermi surface to experimentally visible real-space and lattice-dynamical signatures.
+  </p>
+  <p>
+    Real crystals complicate every piece of the result. Their Fermi surfaces are anisotropic, interband transitions add new absorption channels, local fields make dielectric response matrix-valued in reciprocal lattice vectors, and reduced dimensionality changes the Coulomb kernel itself. The homogeneous gas nevertheless provides the clean reference against which those complications can be understood. The general framework is developed later in <a href={href('theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> and <a href={href('theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
+  </p>
+</section>
