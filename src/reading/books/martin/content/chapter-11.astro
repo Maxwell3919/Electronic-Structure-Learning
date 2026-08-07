@@ -1,0 +1,467 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'section-11-1-scattering', label: '11.1 Scattering Amplitudes and Pseudopotentials' },
+  { id: 'section-11-2-opw', label: '11.2 Orthogonalized Plane Waves (OPWs) and Pseudopotentials' },
+  { id: 'section-11-3-model-potentials', label: '11.3 Model Ion Potentials' },
+  { id: 'section-11-4-ncpp', label: '11.4 Norm-Conserving Pseudopotentials (NCPPs)' },
+  { id: 'section-11-5-generation', label: '11.5 Generation of l-Dependent Norm-Conserving Pseudopotentials' },
+  { id: 'section-11-6-unscreening', label: '11.6 Unscreening and Core Corrections' },
+  { id: 'section-11-7-transferability', label: '11.7 Transferability and Hardness' },
+  { id: 'section-11-8-projectors', label: '11.8 Separable Pseudopotential Operators and Projectors' },
+  { id: 'section-11-9-extended-norm', label: '11.9 Extended Norm Conservation: Beyond the Linear Regime' },
+  { id: 'section-11-10-oncv', label: '11.10 Optimized Norm-Conserving Potentials' },
+  { id: 'section-11-11-ultrasoft', label: '11.11 Ultrasoft Pseudopotentials' },
+  { id: 'section-11-12-paw', label: '11.12 Projector Augmented Waves (PAWs): Keeping the Full Wavefunction' },
+  { id: 'section-11-13-additional', label: '11.13 Additional Topics' },
+];
+
+export const modernPerspective = [
+  'A pseudopotential or PAW dataset is a versioned scientific input. Its exchange–correlation functional, valence and semicore configuration, core radii, reference states, nonlinear-core treatment, scalar-relativistic or fully relativistic construction, projector channels, generator, and file version can materially change a calculation. A library label such as “recommended” does not replace validation for the target system and observable.',
+  'Plane-wave cutoff convergence tests the numerical representation for one chosen dataset. It does not prove that the dataset reproduces the corresponding all-electron atom, transfers to a different oxidation or spin state, contains the required semicore states, or is reliable for a core-sensitive observable. Representation convergence and pseudopotential transferability are separate questions.',
+  'Norm-conserving, ultrasoft, and PAW methods trade different quantities. Norm conservation simplifies normalization and operator algebra; ultrasoft constructions relax it to obtain smoother orbitals with augmentation and a generalized overlap; PAW uses a linear transformation to reconstruct all-electron-like wavefunctions from smooth auxiliary states. Treating these families as interchangeable file formats hides the physics that determines their accuracy and cost.',
+  'Relativistic content must match the intended Hamiltonian. A scalar-relativistic dataset is appropriate for scalar-relativistic calculations, whereas explicit spin–orbit calculations require compatible spinor/projector information. Mixing datasets generated with inconsistent relativistic or exchange–correlation assumptions can create errors that no k-point or cutoff convergence study can remove.',
+];
+
+export const synthesis =
+  'Chapter 11 replaces the difficult core region by an effective valence problem without discarding the low-energy scattering information that connects the atom to its chemical environment. Scattering phase shifts explain the nonuniqueness that makes pseudization possible; OPW theory shows why core orthogonality can be represented as an effective repulsion acting on smooth valence functions. Norm conservation then turns atomic matching into first-order scattering transferability, while unscreening and nonlinear core corrections isolate a reusable ionic operator. The practical problem becomes a controlled tradeoff between transferability and softness, implemented efficiently through localized nonlocal projectors and, when needed, multiple reference energies. Ultrasoft pseudopotentials relax norm conservation and restore the missing charge through augmentation and an overlap operator. PAW goes further conceptually by defining a transformation between a smooth auxiliary state and an all-electron state, so that core-region information can be reconstructed rather than merely removed. The result is the core–valence machinery that makes the plane-wave and augmented methods of Part IV computationally practical.';
+---
+
+<section aria-labelledby="section-11-1-scattering">
+  <h2 id="section-11-1-scattering">11.1 Scattering Amplitudes and Pseudopotentials</h2>
+  <p>
+    The basic pseudopotential idea is easier to understand as a scattering problem than as a recipe for deleting core electrons. Outside a localized atomic core, a valence or scattering state does not need to remember the detailed oscillations it had near the nucleus. For each angular momentum channel, the exterior solution is determined by its energy and a phase shift. A strong attractive potential with deeply bound core states can therefore have the same low-energy exterior scattering as a much smoother effective potential with no corresponding core bound states.
+  </p>
+  <p>
+    For a short-range spherical contribution, the radial solution outside the core can be written asymptotically as
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="asymptotic radial scattering wave with a phase shift">
+      <semantics>
+        <mrow>
+          <msub><mi>φ</mi><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>∝</mo>
+          <mi>sin</mi><mo>(</mo><mi>k</mi><mi>r</mi><mo>−</mo><mfrac><mrow><mi>l</mi><mi>π</mi></mrow><mn>2</mn></mfrac><mo>+</mo><msub><mi>η</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\phi_l(r)\propto\sin\left(kr-\frac&#123;l\pi&#125;&#123;2&#125;+\eta_l(\varepsilon)\right).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Matching η<sub>l</sub>(ε) over the valence energy range is the physical target. The wavefunction inside the core is allowed to change because that region is not being represented explicitly in the same way. This freedom is what makes a pseudopotential both possible and nonunique: many different interior potentials can generate essentially the same exterior scattering.
+  </p>
+  <p>
+    In electronic structure the replacement is more specific. The nucleus plus tightly bound core electrons are replaced by an effective ionic operator acting on explicitly retained valence electrons. The frozen-core assumption is useful because core orbitals usually change much less across chemical environments than valence orbitals do. It is still an approximation: shallow semicore states, high pressure, unusual oxidation states, core polarization, or core-sensitive spectroscopy can make the omitted core response important.
+  </p>
+  <aside class="callout" aria-label="pseudopotential scattering idea">
+    <p><strong>What must be preserved</strong></p>
+    <p>all-electron core + valence problem → preserve selected valence eigenvalues and exterior scattering → replace the rapidly varying core region by a smoother effective operator.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-11-2-opw">
+  <h2 id="section-11-2-opw">11.2 Orthogonalized Plane Waves (OPWs) and Pseudopotentials</h2>
+  <p>
+    Orthogonalized plane waves reveal why a valence electron can behave as though it moves in a weak effective potential even when the true nuclear potential is extremely strong. A plane wave is made orthogonal to a chosen set of localized core functions by subtracting its projections onto those functions. Schematically,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="orthogonalized plane wave">
+      <semantics>
+        <mrow>
+          <msubsup><mi>χ</mi><mi mathvariant="bold">q</mi><mi>OPW</mi></msubsup><mo>=</mo>
+          <mo>|</mo><mi mathvariant="bold">q</mi><mo>⟩</mo><mo>−</mo>
+          <munderover><mo>∑</mo><mi>c</mi><mtext>core</mtext></munderover>
+          <mo>|</mo><msub><mi>ψ</mi><mi>c</mi></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>ψ</mi><mi>c</mi></msub><mo>|</mo><mi mathvariant="bold">q</mi><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">|\chi_\mathbf&#123;q&#125;^&#123;OPW&#125;\rangle=|\mathbf&#123;q&#125;\rangle-\sum_&#123;c\in\mathrm&#123;core&#125;&#125;|\psi_c\rangle\langle\psi_c|\mathbf&#123;q&#125;\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The full valence wavefunction can then be viewed as a smooth component plus localized core-like corrections,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="smooth plus localized decomposition of a valence state">
+      <semantics>
+        <mrow>
+          <mo>|</mo><msup><mi>ψ</mi><mi>v</mi></msup><mo>⟩</mo><mo>=</mo>
+          <mo>|</mo><msup><mover><mi>ψ</mi><mo>~</mo></mover><mi>v</mi></msup><mo>⟩</mo><mo>+</mo>
+          <munderover><mo>∑</mo><mi>c</mi><mtext>core</mtext></munderover>
+          <msub><mi>B</mi><mi>c</mi></msub><mo>|</mo><msub><mi>ψ</mi><mi>c</mi></msub><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">|\psi^v\rangle=|\tilde\psi^v\rangle+\sum_&#123;c\in\mathrm&#123;core&#125;&#125;B_c|\psi_c\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Orthogonality forces the all-electron valence function to oscillate and develop nodes in the core region. Those oscillations do not imply equally complicated valence physics between atoms; they largely enforce exclusion from already occupied core states. Phillips–Kleinman and Antoncik showed that the same condition can be moved into the Hamiltonian as a nonlocal repulsive operator acting on the smooth part. The attractive nuclear potential and this orthogonality repulsion partially cancel, producing a much weaker effective valence problem.
+  </p>
+  <p>
+    This “cancellation theorem” is the conceptual ancestor of modern pseudopotentials. It also anticipates PAW: solve for a smooth auxiliary state because that is inexpensive, then recover the omitted localized structure through a transformation. The original OPW form is awkward because the smooth functions are not ordinarily normalized and the effective operator remains tied explicitly to core states, but the division into smooth global information plus localized one-center corrections survives in later methods.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-3-model-potentials">
+  <h2 id="section-11-3-model-potentials">11.3 Model Ion Potentials</h2>
+  <p>
+    Scattering equivalence allows the formal OPW operator to be replaced by simpler model ionic potentials. Because the core is spherical, each angular momentum channel can have its own radial potential. The resulting operator is semilocal: local in radius but nonlocal in angular variables,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="semilocal angular momentum dependent pseudopotential">
+      <semantics>
+        <mrow>
+          <msub><mover><mi>V</mi><mo>^</mo></mover><mi>SL</mi></msub><mo>=</mo>
+          <munderover><mo>∑</mo><mrow><mi>l</mi><mi>m</mi></mrow><mo>∞</mo></munderover>
+          <mo>|</mo><msub><mi>Y</mi><mrow><mi>l</mi><mi>m</mi></mrow></msub><mo>⟩</mo>
+          <msub><mi>V</mi><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>⟨</mo><msub><mi>Y</mi><mrow><mi>l</mi><mi>m</mi></mrow></msub><mo>|</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat V_&#123;SL&#125;=\sum_&#123;lm&#125;|Y_&#123;lm&#125;\rangle V_l(r)\langle Y_&#123;lm&#125;|.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The angular-momentum dependence is not a minor numerical convenience. Different valence channels penetrate the core by different amounts and experience different orthogonality constraints, so one common local potential generally cannot reproduce all of their scattering simultaneously. “Pseudopotential” should therefore be understood as an operator, often with explicitly nonlocal projectors, rather than as one radial curve.
+  </p>
+  <p>
+    Historically, some model potentials were fitted to atomic or solid-state data and were extremely useful for understanding bands. The ab initio route developed next is different: it uses an all-electron atomic calculation as the reference and imposes mathematical matching conditions on valence states. This distinction remains relevant when evaluating a dataset: a first-principles pseudopotential is generated from an electronic-structure approximation, but it is not thereby exact or automatically transferable.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-4-ncpp">
+  <h2 id="section-11-4-ncpp">11.4 Norm-Conserving Pseudopotentials (NCPPs)</h2>
+  <p>
+    Norm conservation turns scattering matching into a systematic ab initio construction. For each selected angular momentum channel and reference energy, the pseudo and all-electron problems are required to share the eigenvalue, to match the radial function outside a core radius R<sub>c</sub>, and to contain the same integrated norm inside that radius. The dimensionless logarithmic derivative at a radius R is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="logarithmic derivative of a radial orbital">
+      <semantics>
+        <mrow>
+          <msub><mi>D</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>R</mi><mo>)</mo><mo>=</mo>
+          <mi>R</mi><mfrac><mrow><msubsup><mi>ψ</mi><mi>l</mi><mo>′</mo></msubsup><mo>(</mo><mi>ε</mi><mo>,</mo><mi>R</mi><mo>)</mo></mrow><mrow><msub><mi>ψ</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>R</mi><mo>)</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">D_l(\varepsilon,R)=R\frac&#123;\psi_l'(\varepsilon,R)&#125;&#123;\psi_l(\varepsilon,R)&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    It compactly records how the interior solution connects to the exterior scattering wave. The norm inside the core is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="radial norm inside a pseudopotential core radius">
+      <semantics>
+        <mrow>
+          <msub><mi>Q</mi><mi>l</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>=</mo>
+          <msubsup><mo>∫</mo><mn>0</mn><mi>R</mi></msubsup><mi>d</mi><mi>r</mi>
+          <msubsup><mi>φ</mi><mi>l</mi><mn>2</mn></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">Q_l(R)=\int_0^Rdr\,\phi_l^2(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Hamann, Schlüter, Chiang, and related work showed why this condition is much more powerful than matching one eigenvalue. The energy derivative of the logarithmic derivative satisfies
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="energy derivative of logarithmic derivative determined by core norm">
+      <semantics>
+        <mrow>
+          <mfrac><mrow><mi>∂</mi><msub><mi>D</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>R</mi><mo>)</mo></mrow><mrow><mi>∂</mi><mi>ε</mi></mrow></mfrac><mo>=</mo>
+          <mo>−</mo><mfrac><mi>R</mi><msubsup><mi>φ</mi><mi>l</mi><mn>2</mn></msubsup><mo>(</mo><mi>R</mi><mo>)</mo></mfrac><msub><mi>Q</mi><mi>l</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\frac&#123;\partial D_l(\varepsilon,R)&#125;&#123;\partial\varepsilon&#125;=-\frac&#123;R&#125;&#123;\phi_l^2(R)&#125;Q_l(R).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    If pseudo and all-electron radial functions match at R<sub>c</sub> and have the same core norm, their logarithmic derivatives have the same first energy derivative there. The pseudo problem therefore reproduces the all-electron scattering phase shift to first order around the chosen reference energy. Norm conservation is thus a transferability statement, not merely a normalization convention.
+  </p>
+  <p>
+    The exterior charge is also correct because the normalized pseudo and all-electron functions coincide outside R<sub>c</sub>. In a molecule or solid, this puts the correct valence amplitude in the bonding region. The price is that preserving the norm can prevent the pseudo-orbital from being made arbitrarily smooth, especially for compact first members of an angular-momentum shell such as 2p or 3d states.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-5-generation">
+  <h2 id="section-11-5-generation">11.5 Generation of l-Dependent Norm-Conserving Pseudopotentials</h2>
+  <p>
+    Generation starts from the atomic problem of Chapter 10. An all-electron reference configuration and exchange–correlation approximation are chosen, then each retained valence channel is replaced inside R<sub>c</sub> by a smooth nodeless pseudo-orbital that matches the all-electron orbital outside the core and satisfies the norm condition. Inverting the radial Schrödinger equation yields a screened channel potential that reproduces that pseudo-orbital at the reference energy.
+  </p>
+  <p>
+    To obtain an ionic operator that can be reused in a new environment, the Hartree and exchange–correlation screening produced by the atomic valence electrons must be removed. In compact notation,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="unscreening a screened atomic pseudopotential">
+      <semantics>
+        <mrow>
+          <msub><mi>V</mi><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <msub><mi>V</mi><mrow><mi>l</mi><mo>,</mo><mi>total</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>−</mo>
+          <msubsup><mi>V</mi><mi>Hxc</mi><mi>PS</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_l(r)=V_&#123;l,\mathrm&#123;total&#125;&#125;(r)-V_&#123;Hxc&#125;^&#123;PS&#125;(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    It is useful to split the result into one long-range local part plus short-range angular-momentum corrections,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local plus angular momentum dependent pseudopotential decomposition">
+      <semantics>
+        <mrow>
+          <msub><mi>V</mi><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <msub><mi>V</mi><mi>local</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo><mi>δ</mi><msub><mi>V</mi><mi>l</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_l(r)=V_&#123;local&#125;(r)+\delta V_l(r).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Outside the core the nonlocal corrections vanish and the local tail approaches the Coulomb potential of the ionic charge. Inside the core there remains considerable freedom. A small R<sub>c</sub> normally follows the all-electron solution more faithfully over changing environments but creates a rapidly varying, “hard” pseudo-orbital. A larger R<sub>c</sub> can make a softer plane-wave problem but asks the atomic reference to stand in for a larger region of the chemical environment. There is therefore no element-only notion of one universally best pseudopotential.
+  </p>
+  <p>
+    Relativistic generation follows the same logic. Scalar-relativistic atomic reference calculations modify the channel averages, while fully relativistic generation retains the splitting between <em>j</em>=<em>l</em>±1/2 channels and converts it into short-range spin–orbit projectors. These choices belong to the dataset itself and must match the later calculation.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-6-unscreening">
+  <h2 id="section-11-6-unscreening">11.6 Unscreening and Core Corrections</h2>
+  <p>
+    Hartree screening is linear in charge density, so separating core and valence Hartree contributions is unambiguous. Exchange and correlation are nonlinear functionals of the density. If core and valence densities overlap appreciably, evaluating <em>E</em><sub>xc</sub> or <em>v</em><sub>xc</sub> from the valence pseudodensity alone does not reproduce the all-electron atom even when the ionic potential was generated perfectly at one reference configuration.
+  </p>
+  <p>
+    The nonlinear core correction addresses this by carrying a frozen core or smooth partial-core density into the exchange–correlation evaluation. Conceptually the valence calculation uses
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="exchange correlation potential including a nonlinear partial core correction">
+      <semantics>
+        <mrow>
+          <msub><mi>V</mi><mi>xc</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>→</mo>
+          <msub><mi>V</mi><mi>xc</mi></msub><mo>[</mo><msub><mi>n</mi><mi>v</mi></msub><mo>+</mo><msubsup><mi>n</mi><mi>core</mi><mi>partial</mi></msubsup><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V_&#123;xc&#125;(\mathbf&#123;r&#125;)\rightarrow V_&#123;xc&#125;[n_v+n_&#123;core&#125;^&#123;partial&#125;](\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The partial core is smoothed near the nucleus so that it does not reintroduce the full all-electron Fourier cost. The correction is especially important when nominal core states spatially overlap localized valence states, as in transition elements, and in spin-polarized situations where the valence spin polarization is large relative to the total core-plus-valence density.
+  </p>
+  <p>
+    This section also exposes a deeper limitation. For intrinsically nonlocal exchange–correlation operators, such as exact exchange, “subtract the atomic valence screening inside a core radius” is no longer a purely local operation. Nonlocal exchange extends beyond the core and depends on orbitals globally. Pseudopotentials intended for semilocal DFT therefore should not be assumed automatically equivalent when inserted into a different nonlocal functional without a construction or validation appropriate to that functional.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-7-transferability">
+  <h2 id="section-11-7-transferability">11.7 Transferability and Hardness</h2>
+  <p>
+    Martin uses “hardness” in two related senses that should be kept separate. Numerical hardness describes how many high-momentum components are required to represent the pseudo-orbital. Physical hardness describes how faithfully the pseudoatom responds when its environment, occupation, energy, or perturbing field changes. A potential can be easy to converge in a plane-wave basis yet transfer poorly outside its reference configuration.
+  </p>
+  <p>
+    Numerical hardness can be quantified by the Fourier tail of a radial pseudo-orbital. A residual kinetic-energy measure above a momentum cutoff q<sub>c</sub> is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="residual kinetic energy above a pseudowavefunction momentum cutoff">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>l</mi><mi>res</mi></msubsup><mo>(</mo><msub><mi>q</mi><mi>c</mi></msub><mo>)</mo><mo>=</mo>
+          <msubsup><mo>∫</mo><msub><mi>q</mi><mi>c</mi></msub><mo>∞</mo></msubsup>
+          <mi>d</mi><mi>q</mi><msup><mi>q</mi><mn>4</mn></msup><mo>|</mo><msub><mi>ψ</mi><mi>l</mi></msub><mo>(</mo><mi>q</mi><mo>)</mo><msup><mo>|</mo><mn>2</mn></msup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_l^&#123;res&#125;(q_c)=\int_&#123;q_c&#125;^\infty dq\,q^4|\psi_l(q)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Optimized pseudopotentials minimize this high-q content subject to matching and norm constraints. That is directly relevant to Chapter 12 because a lower Fourier tail reduces the plane-wave cutoff needed for a chosen representation error.
+  </p>
+  <p>
+    Transferability requires different tests. Change the atomic charge or reference configuration; move the scattering energy away from the generation energy; impose spherical boundary conditions that compress the valence state; or apply a nonspherical electric perturbation and compare polarizabilities. The aim is to test whether the pseudo and all-electron responses track one another. Norm conservation guarantees the first energy derivative of scattering at the reference point, but it does not guarantee arbitrary response far from that point.
+  </p>
+  <p>
+    Semicore states are a recurring warning. A shell that is chemically inert in one environment can hybridize or polarize in another, especially under compression or in early transition and heavier elements. Moving that shell from frozen core to explicit valence increases computational cost but may be essential for transferability. The choice is therefore part of the physical model, not merely a performance setting.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-8-projectors">
+  <h2 id="section-11-8-projectors">11.8 Separable Pseudopotential Operators and Projectors</h2>
+  <p>
+    The semilocal operator requires an angular decomposition for every application. Kleinman and Bylander showed that its channel corrections can instead be written as a sum of separable localized projectors. If |β<sub>lm</sub>⟩ is formed from the reference pseudo-orbital and the channel difference δV<sub>l</sub>, a one-projector form is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Kleinman Bylander separable nonlocal pseudopotential">
+      <semantics>
+        <mrow>
+          <mover><mi>V</mi><mo>^</mo></mover><mo>=</mo><msub><mi>V</mi><mi>local</mi></msub><mo>+</mo>
+          <munderover><mo>∑</mo><mrow><mi>l</mi><mi>m</mi></mrow><mo>∞</mo></munderover>
+          <mfrac>
+            <mrow><mo>|</mo><msub><mi>β</mi><mrow><mi>l</mi><mi>m</mi></mrow></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>β</mi><mrow><mi>l</mi><mi>m</mi></mrow></msub><mo>|</mo></mrow>
+            <msub><mi>B</mi><mi>l</mi></msub>
+          </mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat V=V_&#123;local&#125;+\sum_&#123;lm&#125;\frac&#123;|\beta_&#123;lm&#125;\rangle\langle\beta_&#123;lm&#125;|&#125;&#123;B_l&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Each projector is nonzero only in the core region, so applying the nonlocal operator reduces to a small set of overlap operations with localized functions. This is a major computational gain in plane-wave and real-space calculations and is one reason modern pseudopotentials are naturally expressed as “local potential + projectors.”
+  </p>
+  <p>
+    The separable transformation is exact for the chosen reference state but can change the operator away from it. A poor choice of the local channel can introduce artificial low-energy solutions called ghost states. Ghost testing is therefore a scientific validation step, not a code-debugging curiosity. The same projector idea extends to fully relativistic channels labeled by total angular momentum <em>j</em>, which is how short-range spin–orbit information enters many modern datasets.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-9-extended-norm">
+  <h2 id="section-11-9-extended-norm">11.9 Extended Norm Conservation: Beyond the Linear Regime</h2>
+  <p>
+    A single norm-conserving reference state reproduces scattering to first order around one energy. That may be insufficient when a valence channel samples a broad energy interval or when shallow semicore and valence states share the same angular momentum. The natural extension is to use several reference energies and several projectors per <em>l</em> channel.
+  </p>
+  <p>
+    With pseudo reference states indexed by <em>s</em>, the separable nonlocal operator can be written in a matrix form,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="multiple projector nonlocal pseudopotential">
+      <semantics>
+        <mrow>
+          <msub><mover><mi>V</mi><mo>^</mo></mover><mi>NL</mi></msub><mo>=</mo>
+          <munderover><mo>∑</mo><mrow><mi>l</mi><mi>m</mi></mrow><mo>∞</mo></munderover>
+          <munderover><mo>∑</mo><mrow><mi>s</mi><mo>,</mo><msup><mi>s</mi><mo>′</mo></msup></mrow><mo>∞</mo></munderover>
+          <msub><mi>B</mi><mrow><mi>s</mi><msup><mi>s</mi><mo>′</mo></msup></mrow></msub>
+          <mo>|</mo><msub><mi>β</mi><mi>s</mi></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>β</mi><msup><mi>s</mi><mo>′</mo></msup></msub><mo>|</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat V_&#123;NL&#125;=\sum_&#123;lm&#125;\sum_&#123;s,s'&#125;B_&#123;ss'&#125;|\beta_s\rangle\langle\beta_&#123;s'&#125;|.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The construction can be constrained so that every selected reference pseudo-state is an eigenstate at the corresponding all-electron energy. Multiple projectors therefore extend transferability over an energy window rather than only improving the fit at one point. This idea underlies both optimized norm-conserving Vanderbilt potentials and ultrasoft/PAW projector sets.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-10-oncv">
+  <h2 id="section-11-10-oncv">11.10 Optimized Norm-Conserving Potentials</h2>
+  <p>
+    Optimized norm-conserving Vanderbilt (ONCV) potentials combine two advances: several projectors per angular-momentum channel improve scattering over a finite energy range, and explicit optimization suppresses high-momentum content while retaining norm conservation and matching constraints. The method therefore attacks accuracy and softness simultaneously rather than treating them as completely opposed goals.
+  </p>
+  <p>
+    This is particularly valuable for elements with shallow semicore states, where a one-projector pseudopotential may require a small core radius and a very high cutoff to remain reliable. ONCV does not eliminate the need to choose a valence configuration or validate the result; it gives the generator more degrees of freedom to satisfy those choices efficiently.
+  </p>
+  <p>
+    The continued value of norm conservation is practical. Ordinary orthonormality is retained, the density does not require a mandatory ultrasoft augmentation term merely to restore normalization, and the resulting operator can be used in methods whose formalism assumes normalized many-electron trial states. These advantages explain why modern high-quality norm-conserving libraries remain competitive even when ultrasoft and PAW approaches can be softer for some elements.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-11-ultrasoft">
+  <h2 id="section-11-11-ultrasoft">11.11 Ultrasoft Pseudopotentials</h2>
+  <p>
+    Ultrasoft pseudopotentials choose a different tradeoff. They deliberately relax norm conservation so that the auxiliary valence functions inside the core can be made much smoother and matched at a larger radius. The missing norm is not ignored; it is carried by localized augmentation functions and an overlap operator. The one-particle equation therefore becomes a generalized eigenvalue problem,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="ultrasoft generalized eigenvalue problem">
+      <semantics>
+        <mrow>
+          <mrow><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>−</mo><msub><mi>ε</mi><mi>i</mi></msub><mover><mi>S</mi><mo>^</mo></mover><mo>)</mo></mrow>
+          <mo>|</mo><msub><mover><mi>ψ</mi><mo>~</mo></mover><mi>i</mi></msub><mo>⟩</mo><mo>=</mo><mn>0</mn><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">(\hat H-\varepsilon_i\hat S)|\tilde\psi_i\rangle=0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The overlap differs from the identity only through localized projector corrections,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="ultrasoft overlap operator">
+      <semantics>
+        <mrow>
+          <mover><mi>S</mi><mo>^</mo></mover><mo>=</mo><mn>1</mn><mo>+</mo>
+          <munderover><mo>∑</mo><mrow><mi>s</mi><mo>,</mo><msup><mi>s</mi><mo>′</mo></msup></mrow><mo>∞</mo></munderover>
+          <msub><mi>ΔQ</mi><mrow><mi>s</mi><msup><mi>s</mi><mo>′</mo></msup></mrow></msub>
+          <mo>|</mo><msub><mi>β</mi><mi>s</mi></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>β</mi><msup><mi>s</mi><mo>′</mo></msup></msub><mo>|</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat S=1+\sum_&#123;s,s'&#125;\Delta Q_&#123;ss'&#125;|\beta_s\rangle\langle\beta_&#123;s'&#125;|.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The density likewise contains a smooth orbital contribution plus localized augmentation charge that restores the difference between the reference and smooth products inside the core. Because the rapid core-region variation is shifted into compact augmentation data, the global auxiliary orbitals can require far fewer plane waves.
+  </p>
+  <p>
+    The price is formal and implementation complexity. Orthonormality uses S rather than the ordinary inner product; forces, stresses, charge density, and operator matrix elements must include augmentation terms consistently. Calling an ultrasoft dataset “soft” therefore means the smooth auxiliary representation is inexpensive, not that the underlying all-electron charge distribution has become physically smooth.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-12-paw">
+  <h2 id="section-11-12-paw">11.12 Projector Augmented Waves (PAWs): Keeping the Full Wavefunction</h2>
+  <p>
+    PAW makes the smooth-plus-localized decomposition explicit as a linear transformation rather than treating the smooth pseudowavefunction as the final physical wavefunction. A smooth auxiliary state |ψ̃⟩ is transformed into an all-electron state by adding, inside atom-centered augmentation regions, the difference between all-electron and smooth partial waves:
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="projector augmented wave transformation">
+      <semantics>
+        <mrow>
+          <mo>|</mo><mi>ψ</mi><mo>⟩</mo><mo>=</mo><mo>|</mo><mover><mi>ψ</mi><mo>~</mo></mover><mo>⟩</mo><mo>+</mo>
+          <munderover><mo>∑</mo><mi>a</mi><mo>∞</mo></munderover>
+          <mrow><mo>(</mo><mo>|</mo><msub><mi>φ</mi><mi>a</mi></msub><mo>⟩</mo><mo>−</mo><mo>|</mo><msub><mover><mi>φ</mi><mo>~</mo></mover><mi>a</mi></msub><mo>⟩</mo><mo>)</mo></mrow>
+          <mo>⟨</mo><msub><mover><mi>p</mi><mo>~</mo></mover><mi>a</mi></msub><mo>|</mo><mover><mi>ψ</mi><mo>~</mo></mover><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">|\psi\rangle=|\tilde\psi\rangle+\sum_a(|\phi_a\rangle-|\tilde\phi_a\rangle)\langle\tilde p_a|\tilde\psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The projectors measure how much of each atomic partial-wave channel is present in the auxiliary state. The difference φ<sub>a</sub>−φ̃<sub>a</sub> is localized because the all-electron and smooth partial waves are constructed to agree outside the augmentation region. The transformation therefore leaves the inexpensive smooth description between atoms while restoring nodal and cusp-like one-center structure where it matters.
+  </p>
+  <p>
+    Operators are transformed consistently with the same map. For local densities this produces the characteristic PAW decomposition
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="PAW density decomposition into smooth and one center parts">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <mover><mi>n</mi><mo>~</mo></mover><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo>
+          <munderover><mo>∑</mo><mi>A</mi><mo>∞</mo></munderover>
+          <mrow><mo>[</mo><msubsup><mi>n</mi><mi>A</mi><mn>1</mn></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>−</mo><msubsup><mover><mi>n</mi><mo>~</mo></mover><mi>A</mi><mn>1</mn></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\tilde n(\mathbf&#123;r&#125;)+\sum_A[n_A^1(\mathbf&#123;r&#125;)-\tilde n_A^1(\mathbf&#123;r&#125;)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This is why PAW should be distinguished conceptually from simply choosing a softer pseudopotential. The smooth auxiliary Hamiltonian can resemble a projector pseudopotential calculation, but the formalism retains an explicit route back to the all-electron valence wavefunction and one-center observables. In practice, PAW datasets can still freeze cores, truncate partial-wave sets, choose finite augmentation radii, and inherit the exchange–correlation and relativistic assumptions used in generation. “All-electron reconstruction” therefore means reconstruction within the specified PAW dataset, not removal of every approximation.
+  </p>
+  <p>
+    The approach is also the modern realization of the OPW transformation introduced in Section 11.2: solve an easy smooth problem globally, then use localized projectors to recover the difficult atomic structure. The same mathematical pattern reappears in augmented-plane-wave and localized-orbital methods later in the book.
+  </p>
+</section>
+
+<section aria-labelledby="section-11-13-additional">
+  <h2 id="section-11-13-additional">11.13 Additional Topics</h2>
+  <p>
+    Once the effective ionic operator is nonlocal, familiar operator identities must be revisited. For example, the velocity is not obtained from the canonical momentum alone. In atomic units,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="velocity operator with a nonlocal pseudopotential correction">
+      <semantics>
+        <mrow>
+          <mover><mi mathvariant="bold">v</mi><mo>^</mo></mover><mo>=</mo>
+          <mi mathvariant="bold">p</mi><mo>+</mo><mi>i</mi>
+          <mrow><mo>[</mo><msub><mover><mi>V</mi><mo>^</mo></mover><mi>NL</mi></msub><mo>,</mo><mi mathvariant="bold">r</mi><mo>]</mo></mrow><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat\mathbf&#123;v&#125;=\mathbf&#123;p&#125;+i[\hat V_&#123;NL&#125;,\mathbf&#123;r&#125;].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Optical matrix elements, response functions, and related observables can therefore require explicit nonlocal-operator corrections. A code producing a converged ground-state energy does not guarantee that every derived observable is correct if its operator implementation silently assumes a local Hamiltonian.
+  </p>
+  <p>
+    Core-sensitive observables pose a second issue. A pseudodensity is intentionally smooth near the nucleus, so it is not the physical all-electron density there. Hyperfine fields, NMR shifts, electric-field gradients, core-level spectroscopy, and other near-nucleus properties may require PAW reconstruction or another explicit all-electron treatment. The required reconstruction must be validated for the observable itself.
+  </p>
+  <p>
+    Finally, pseudopotentials can be generalized beyond the independent-particle frozen-core picture, but doing so raises the deeper many-body question of how to integrate out indistinguishable core electrons while preserving exchange and correlation with valence states. Martin leaves those extensions as a boundary rather than treating one practical Kohn–Sham pseudopotential as a universal many-body core replacement.
+  </p>
+  <p>
+    The practical context for dataset choice, plane-wave cutoffs, and core–valence validation is separated in <a href={href('theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a> and <a href={href('theory/plane-wave-and-real-space-methods/')}>Plane-Wave and Real-Space Methods</a>. Chapter 12 can now assume this core–valence machinery and focus on how smooth valence states are represented by plane waves and real-space grids.
+  </p>
+</section>
