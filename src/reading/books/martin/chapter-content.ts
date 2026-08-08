@@ -34,6 +34,7 @@ const chapterLoaders: Record<string, MartinChapterLoader> = {
   'chapter-19': () => import('./content/chapter-19.astro'),
   'chapter-20': () => import('./content/chapter-20.astro'),
   'chapter-21': () => import('./content/chapter-21.astro'),
+  'chapter-22': () => import('./content/chapter-22.astro'),
 };
 
 export const martinChapterSlugs = Object.keys(chapterLoaders);
