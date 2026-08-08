@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import urljoin, urlparse
@@ -13,6 +14,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 
+ROOT = Path(__file__).resolve().parents[1]
 BASE_URL = os.environ.get("PAGES_URL", "http://127.0.0.1:4321/Electronic-Structure-Learning/").rstrip("/") + "/"
 DEPLOYED_SHA = os.environ.get("DEPLOYED_SHA")
 ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/clean-slate-smoke"))
@@ -41,18 +43,33 @@ THEORY_ROUTES = [
 MARTIN_PART_ROUTES = [f"reading/books/martin/part-{roman}/" for roman in ["i", "ii", "iii", "iv", "v", "vi", "vii"]]
 MARTIN_CHAPTER_ROUTES = [f"reading/books/martin/chapter-{number:02d}/" for number in range(1, 29)]
 MARTIN_APPENDIX_ROUTES = [f"reading/books/martin/appendix-{letter}/" for letter in "abcdefghijklmnopqr"]
-MARTIN_UNIT_ROUTES = [*MARTIN_PART_ROUTES, *MARTIN_CHAPTER_ROUTES, *MARTIN_APPENDIX_ROUTES]
-CANONICAL_READING_ROUTES = ["reading/", "reading/books/", "reading/books/martin/", *MARTIN_UNIT_ROUTES]
+MARTIN_ALL_UNIT_ROUTES = [*MARTIN_CHAPTER_ROUTES, *MARTIN_APPENDIX_ROUTES]
+LOADER_TEXT = (ROOT / "src/reading/books/martin/chapter-content.ts").read_text()
+MARTIN_PUBLISHED_UNIT_SLUGS = re.findall(r"'((?:chapter-\d{2}|appendix-[a-r]))'\s*:", LOADER_TEXT)
+MARTIN_PUBLISHED_UNIT_ROUTES = [f"reading/books/martin/{slug}/" for slug in MARTIN_PUBLISHED_UNIT_SLUGS]
+MARTIN_UNPUBLISHED_UNIT_ROUTES = [route for route in MARTIN_ALL_UNIT_ROUTES if route not in MARTIN_PUBLISHED_UNIT_ROUTES]
+PUBLISHED_CHAPTER_ROUTES = [route for route in MARTIN_PUBLISHED_UNIT_ROUTES if "/chapter-" in route]
+PUBLISHED_APPENDIX_ROUTES = [route for route in MARTIN_PUBLISHED_UNIT_ROUTES if "/appendix-" in route]
+CANONICAL_READING_ROUTES = [
+    "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
+]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
     "", "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
     "methods/", "computational-tools/", "reference/",
 ]
+representative_units = []
+for route in [
+    "reading/books/martin/chapter-01/",
+    "reading/books/martin/chapter-07/",
+    PUBLISHED_CHAPTER_ROUTES[-1] if PUBLISHED_CHAPTER_ROUTES else None,
+    PUBLISHED_APPENDIX_ROUTES[0] if PUBLISHED_APPENDIX_ROUTES else None,
+    PUBLISHED_APPENDIX_ROUTES[-1] if PUBLISHED_APPENDIX_ROUTES else None,
+]:
+    if route and route in MARTIN_PUBLISHED_UNIT_ROUTES and route not in representative_units:
+        representative_units.append(route)
 BROWSER_READING_ROUTES = [
-    "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES,
-    "reading/books/martin/chapter-01/", "reading/books/martin/chapter-07/",
-    "reading/books/martin/chapter-28/", "reading/books/martin/appendix-a/",
-    "reading/books/martin/appendix-r/",
+    "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *representative_units,
 ]
 BROWSER_ROUTES = [
     "", "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
@@ -131,10 +148,8 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"Martin book page lacks Part links in {mode}")
         if route == "reading/books/martin/part-i/" and "Read Chapter 1" not in main_text:
             raise AssertionError(f"Part I lacks Chapter links in {mode}")
-        if route == "reading/books/martin/chapter-01/" and "Core Idea." not in main_text:
-            raise AssertionError(f"Chapter 1 lacks Core Idea in {mode}")
-        if route == "reading/books/martin/appendix-r/" and "Plane-wave codes" not in main_text:
-            raise AssertionError(f"Appendix R lacks source outline in {mode}")
+        if route in MARTIN_PUBLISHED_UNIT_ROUTES and "Core Idea." not in main_text:
+            raise AssertionError(f"published Martin unit lacks Core Idea in {mode}: {route}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             raw_href = anchor.get_dom_attribute("href") or ""
@@ -173,6 +188,11 @@ def main():
         report["http"][route or "/"] = status
     if http_status(urljoin(BASE_URL, "404.html")) != 200:
         raise AssertionError("direct 404 document is not HTTP 200")
+    for route in MARTIN_UNPUBLISHED_UNIT_ROUTES:
+        status = http_status(urljoin(BASE_URL, route))
+        if status != 404:
+            raise AssertionError(f"expected HTTP 404 for unpublished Martin unit {route}; observed {status}")
+        report["http"][route] = status
     for route in LEGACY_ROUTES:
         status = http_status(urljoin(BASE_URL, route))
         if status != 404:
@@ -205,7 +225,11 @@ def main():
         no_javascript.quit()
 
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print("Clean-slate browser smoke passed: 101 content routes, 39 MathML pages, the full Martin hierarchy, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript.")
+    print(
+        f"Clean-slate browser smoke passed: {len(CONTENT_ROUTES)} published content routes, "
+        f"{len(MARTIN_UNPUBLISHED_UNIT_ROUTES)} unpublished Martin units confirmed 404, "
+        "39 MathML Foundations pages, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript."
+    )
 
 
 if __name__ == "__main__":
