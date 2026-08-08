@@ -1,0 +1,191 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-22-1-overview', label: '22.1 Overview' },
+  { id: 'section-22-2-surface-interface-potential', label: '22.2 Potential at a Surface or Interface' },
+  { id: 'section-22-3-tamm-shockley', label: '22.3 Surface States: Tamm and Shockley' },
+  { id: 'section-22-4-gold', label: '22.4 Shockley States on Metals: Gold (111) Surface' },
+  { id: 'section-22-5-semiconductor-surfaces', label: '22.5 Surface States on Semiconductors' },
+  { id: 'section-22-6-semiconductor-interfaces', label: '22.6 Interfaces: Semiconductors' },
+  { id: 'section-22-7-oxide-interfaces', label: '22.7 Interfaces: Oxides' },
+  { id: 'section-22-8-layer-materials', label: '22.8 Layer Materials' },
+  { id: 'section-22-9-one-dimensional', label: '22.9 One-Dimensional Systems' },
+];
+
+export const modernPerspective = [
+  'A surface or interface is part of the physical system, not merely a bulk crystal with fewer atoms. Termination, stoichiometry, reconstruction, passivation, adsorbates, electrostatic boundary conditions, and the chemical reservoirs that stabilize them can all change the surface potential and the states that appear in a projected bulk gap.',
+  'Vacuum-level alignment of isolated two-dimensional layers is a useful zeroth-order guide, but an assembled heterostructure can develop interface dipoles, charge transfer, hybridization, strain, screening changes, and moiré-scale reconstruction. Type-I, Type-II, or broken-gap classifications therefore belong to the combined interface after those effects are specified, not automatically to two isolated band diagrams.',
+  'Shockley’s bulk–boundary connection is an important conceptual ancestor of topological band theory, but an ordinary Shockley or dangling-bond surface state is not automatically topologically protected. Later chapters will require a bulk invariant and its protecting symmetry; band inversion or the observation of one boundary band alone is insufficient.',
+];
+
+export const synthesis =
+  'Chapter 22 shows how electronic structure changes when translational symmetry is terminated, joined to another material, or reduced in dimensionality. A surface fixes the relation between bulk energies and vacuum through its dipole and work function; an interface fixes relative band alignment through charge redistribution and an electrostatic lineup. Local boundary potentials can create Tamm-like bound states, while Shockley’s analysis reveals a deeper connection between the evolution of bulk band character and states in a boundary gap. Gold, reconstructed semiconductor surfaces, semiconductor heterojunctions, oxide interfaces, van der Waals layers, and nanotubes then illustrate progressively different ways in which reduced dimensionality changes dispersion, orbital character, screening, and carrier confinement. Chapter 23 turns from physical localization at boundaries to a different problem: how a chosen Bloch subspace can itself be represented by localized Wannier functions without losing its band information.';
+---
+
+<section aria-labelledby="section-22-1-overview">
+  <h2 id="section-22-1-overview">22.1 Overview</h2>
+  <p>
+    The systems in this chapter look diverse—crystal surfaces, semiconductor and oxide interfaces, atomically thin layers, and nanotubes—but they share one structural fact: electronic motion is confined or modified in at least one spatial direction. A three-dimensional bulk crystal can therefore host states with two-dimensional character at a surface or interface, while a genuinely layered material may be intrinsically two-dimensional and a nanotube effectively one-dimensional.
+  </p>
+  <aside class="callout" aria-label="Dimensional reduction of electronic states">
+    <p><strong>Dimensional reduction</strong></p>
+    <p>3D bulk → terminate one direction → 2D surface bands.</p>
+    <p>3D + 3D → join two materials → 2D interface states and band offsets.</p>
+    <p>isolated layer → intrinsic 2D bands; tube or wire → effective 1D bands.</p>
+  </aside>
+  <p>
+    Translational symmetry is usually retained parallel to a flat surface or interface, so the corresponding in-plane crystal momentum remains a useful quantum label. Perpendicular to the boundary, however, the potential is no longer bulk periodic. A surface band can therefore disperse with the conserved parallel momentum while its wavefunction decays away from the boundary.
+  </p>
+  <p>
+    Martin uses this chapter for two connected purposes. The first is practical: surfaces and interfaces change energy references, bonding, strain, charge redistribution, and orbital overlap in ways that directly affect calculated bands. The second is conceptual: Shockley’s 1939 analysis already linked a change in bulk band character to the appearance of a boundary state, anticipating part of the bulk–boundary logic developed explicitly in Chapters 25–28.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-2-surface-interface-potential">
+  <h2 id="section-22-2-surface-interface-potential">22.2 Potential at a Surface or Interface</h2>
+  <p>
+    A bulk band structure has an arbitrary additive energy reference. The surface supplies a physically meaningful connection to vacuum because the self-consistent charge redistribution at the termination creates a surface dipole and fixes the asymptotic electrostatic potential outside the solid. For a metal, the work function is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ϕ</mi><mo>=</mo><msub><mi>E</mi><mi>vac</mi></msub><mo>−</mo><msub><mi>E</mi><mi>F</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">\phi=E_&#123;\mathrm&#123;vac&#125;&#125;-E_F.</annotation></semantics></math>
+  </div>
+  <p>
+    The vacuum level is therefore not determined by the bulk crystal alone. Changing the termination, reconstruction, adsorbates, or surface charge can change the dipole layer and shift the work function even when the interior bulk electronic structure is essentially unchanged. In a semiconductor, doping and space charge can additionally produce band bending, so the local electrostatic environment must be distinguished from the intrinsic bulk band edges.
+  </p>
+  <p>
+    At an interface the analogous problem is relative alignment. When two metallic regions reach equilibrium their electrochemical potentials must match, and charge transfer shifts the local potentials until a common Fermi level is established. For semiconductors and insulators, valence- and conduction-band offsets are defined by combining a bulk reference for each material with the electrostatic lineup generated by the actual interface.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Δ</mi><msub><mi>E</mi><mi>v</mi></msub><mo>=</mo><mo>[</mo><msub><mi>E</mi><mi>v</mi></msub><mo>−</mo><mover><mi>V</mi><mo>¯</mo></mover><mo>]</mo><msub><mspace width="0.2em"/><mi>B</mi></msub><mo>−</mo><mo>[</mo><msub><mi>E</mi><mi>v</mi></msub><mo>−</mo><mover><mi>V</mi><mo>¯</mo></mover><mo>]</mo><msub><mspace width="0.2em"/><mi>A</mi></msub><mo>+</mo><mo>(</mo><msub><mover><mi>V</mi><mo>¯</mo></mover><mi>B</mi></msub><mo>−</mo><msub><mover><mi>V</mi><mo>¯</mo></mover><mi>A</mi></msub><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\Delta E_v=[E_v-\bar V]_B-[E_v-\bar V]_A+(\bar V_B-\bar V_A).</annotation></semantics></math>
+  </div>
+  <p>
+    This decomposition separates two pieces with different origins: the band-edge positions relative to a bulk internal reference, and the interface dipole that aligns those references. It is a conceptual organization rather than a guarantee that one functional describes both pieces with equal accuracy. Related electrostatic issues are mapped in <a href={href('/theory/surface-and-interface-chemistry/')}>Surface and Interface Chemistry</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-3-tamm-shockley">
+  <h2 id="section-22-3-tamm-shockley">22.3 Surface States: Tamm and Shockley</h2>
+  <p>
+    Tamm’s construction begins with the boundary itself. Terminating a periodic potential changes the local Hamiltonian near the surface, and that change can pull a state out of a bulk band into a projected gap. A genuine surface state remains extended along the surface but decays into both the vacuum and the crystal. Its normal-direction envelope has the schematic form
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ψ</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>∼</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>κ</mi><mo>|</mo><mi>z</mi><mo>|</mo></mrow></msup><mo>,</mo><mspace width="0.7em"/><mi>κ</mi><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">\psi(z)\sim e^&#123;-\kappa |z|&#125;,\qquad \kappa&gt;0.</annotation></semantics></math>
+  </div>
+  <p>
+    In this picture the state is sensitive to the microscopic surface potential. Reconstruction, passivation, or adsorption can move it in energy or remove it from the gap because those operations directly change the boundary Hamiltonian.
+  </p>
+  <p>
+    Shockley identified a deeper possibility. In a one-dimensional inversion-symmetric crystal, the character of the two lowest bulk bands can exchange as a control parameter such as intersite overlap is varied. The two insulating regimes can be connected only through a point where the bulk gap closes. In the regime with exchanged band character, a finite crystal supports a midgap boundary state under the surface conditions considered by Shockley.
+  </p>
+  <aside class="callout" aria-label="Tamm and Shockley viewpoints">
+    <p><strong>Two viewpoints on boundary states</strong></p>
+    <p>Tamm: change the local boundary potential → a localized state can split from a bulk band.</p>
+    <p>Shockley: change the organization of the bulk bands → the finite system can acquire a boundary state in the gap.</p>
+  </aside>
+  <p>
+    Martin emphasizes Shockley because this bulk–boundary connection is a direct conceptual precursor to later topological band theory. The resemblance must still be handled carefully: ordinary Shockley and dangling-bond states can remain sensitive to surface chemistry, whereas a topological boundary state in Chapters 27–28 is tied to a stated bulk invariant and protecting symmetry.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-4-gold">
+  <h2 id="section-22-4-gold">22.4 Shockley States on Metals: Gold (111) Surface</h2>
+  <p>
+    Au(111) provides a clean metallic example. Although gold has bulk states at the Fermi energy, the projection of the three-dimensional bulk bands onto the surface Brillouin zone contains a local gap near its center. A two-dimensional Shockley surface band lives inside that projected gap and eventually merges back into the bulk continuum as the parallel wavevector increases.
+  </p>
+  <p>
+    The surface breaks inversion symmetry, and gold has strong spin–orbit coupling. The surface band therefore acquires a Rashba-like splitting. Near the surface-zone center its simplest effective form is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>E</mi><mo>±</mo></msub><mo>(</mo><mi>k</mi><mo>)</mo><mo>=</mo><msub><mi>E</mi><mn>0</mn></msub><mo>+</mo><mfrac><mrow><msup><mi>ℏ</mi><mn>2</mn></msup><msup><mi>k</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><msup><mi>m</mi><mo>*</mo></msup></mrow></mfrac><mo>±</mo><msub><mi>α</mi><mi>R</mi></msub><mi>k</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">E_\pm(k)=E_0+\frac&#123;\hbar^2k^2&#125;&#123;2m^*&#125;\pm\alpha_R k.</annotation></semantics></math>
+  </div>
+  <p>
+    The splitting illustrates how boundary symmetry and relativistic physics combine: the same spin–orbit Hamiltonian produces qualitatively new band structure once inversion symmetry is lost at a surface. The band remains a surface resonance only while it lies in a projected bulk gap; where it overlaps the continuum, localization and lifetime change.
+  </p>
+  <p>
+    This example foreshadows topological surface dispersions without making gold itself a bulk topological insulator in the physical situation considered here. The relevant spin and spin–orbit foundations are collected in <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-5-semiconductor-surfaces">
+  <h2 id="section-22-5-semiconductor-surfaces">22.5 Surface States on Semiconductors</h2>
+  <p>
+    Covalent semiconductor surfaces expose broken bonds. The unreconstructed termination is therefore usually not the lowest-energy geometry: atoms can dimerize, buckle, reconstruct over several surface cells, or bind passivating species. Each structural choice changes the local orbital hybridization and the electron count available to surface states.
+  </p>
+  <p>
+    The Si and Ge (100) surfaces illustrate the sequence. Breaking the bulk tetrahedral network leaves dangling-bond character; dimerization forms a new surface bond; buckling further lowers the symmetry and separates the energies of the two atoms in the dimer. The resulting occupied and empty surface bands can sit inside the projected bulk gap and are therefore directly sensitive to reconstruction and passivation.
+  </p>
+  <p>
+    Their absolute placement also depends on the quality of the bulk electronic structure. If a semilocal Kohn–Sham calculation severely underestimates the semiconductor gap, the projected bulk continuum and the apparent surface-state energies inherit that error. Quasiparticle corrections can improve the comparison with photoemission, but they answer a charged-excitation problem distinct from the ground-state reconstruction energy.
+  </p>
+  <p>
+    This is the clearest boundary between chemically generated surface states and the protected states introduced later: a dangling-bond or ordinary Shockley state can be shifted or removed by changing the termination, while a symmetry-protected topological crossing cannot simply disappear without the relevant bulk gap or protecting symmetry changing.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-6-semiconductor-interfaces">
+  <h2 id="section-22-6-semiconductor-interfaces">22.6 Interfaces: Semiconductors</h2>
+  <p>
+    Semiconductor heterojunctions are especially clean examples because high-quality interfaces can preserve the local coordination across the boundary. For a nonpolar interface, the central electronic question is then how the bands of the two strained materials line up after the self-consistent interface dipole is included.
+  </p>
+  <p>
+    Martin’s Si/Ge example separates the problem into three effects. Lattice matching imposes strain on at least one material; hydrostatic-like components shift band centers while anisotropic strain can split degeneracies. Independent bulk calculations determine the band edges relative to an internal average potential. The explicit interface calculation supplies the offset between the two internal potential references.
+  </p>
+  <aside class="callout" aria-label="Band-offset construction">
+    <p><strong>Band offset</strong></p>
+    <p>strained bulk A band edge + strained bulk B band edge + interface electrostatic lineup → heterojunction alignment.</p>
+  </aside>
+  <p>
+    This decomposition explains why valence-band offsets can be more robust than conduction-band offsets when a chosen approximation has a large band-gap error. The interface dipole may already be described reasonably, while the bulk conduction edge relative to the same reference is misplaced.
+  </p>
+  <p>
+    Polar interfaces add a different electrostatic problem. Formal charge counting can require compensating carriers or defects to avoid a potential that grows with thickness. The interface stoichiometry, orientation, defects, and reservoirs therefore become part of the physical model rather than small corrections to an otherwise unique band alignment.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-7-oxide-interfaces">
+  <h2 id="section-22-7-oxide-interfaces">22.7 Interfaces: Oxides</h2>
+  <p>
+    The LaAlO<sub>3</sub>/SrTiO<sub>3</sub> interface is Martin’s example of how two bulk insulators can host a conducting interface. In the ideal ionic-layer picture, alternating charged planes in LaAlO<sub>3</sub> meet neutral planes in SrTiO<sub>3</sub>. Without compensation, the electrostatic potential would increase with layer thickness. Charge redistribution provides one route to avoiding that divergence.
+  </p>
+  <p>
+    For an ideal, sufficiently thick polar interface, simple electrostatics motivates a compensating charge of order one-half electron per interface cell. That argument establishes a requirement for the idealized boundary condition; it does not uniquely identify the carrier source in a real sample. Oxygen vacancies, cation intermixing, surface charge transfer, finite thickness, and other defects can alter both the amount and spatial distribution of the mobile charge.
+  </p>
+  <p>
+    Once electrons occupy the SrTiO<sub>3</sub> side, their low-energy orbital structure follows from the Ti <em>t</em><sub>2g</sub> manifold. The <em>d</em><sub>xy</sub> orbital disperses strongly in both in-plane directions, while <em>d</em><sub>xz</sub> and <em>d</em><sub>yz</sub> produce more anisotropic bands. Confinement perpendicular to the interface shifts these orbital-derived subbands differently, giving multiple Fermi-surface sheets rather than one featureless two-dimensional electron gas.
+  </p>
+  <p>
+    Spin–orbit coupling and inversion asymmetry add avoided crossings and Rashba-like splittings, particularly where orbital characters are nearly degenerate. The oxide example therefore combines electrostatics, defects, orbital symmetry, confinement, and relativistic effects in one interface problem; isolating any one mechanism requires evidence that distinguishes it from the others.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-8-layer-materials">
+  <h2 id="section-22-8-layer-materials">22.8 Layer Materials</h2>
+  <p>
+    Atomically thin materials remove the need to create a surface state from a three-dimensional host: the entire electronic system is already confined to a layer. Weak interlayer bonding then makes it possible to stack chemically different sheets into van der Waals heterostructures while retaining much of the intralayer bonding network.
+  </p>
+  <p>
+    MoS<sub>2</sub> is Martin’s representative example because dimensional reduction changes its band-edge ordering. States with substantial chalcogen <em>p</em><sub>z</sub> character are sensitive to interlayer overlap and shift strongly between bulk and monolayer, whereas more strongly intralayer Mo <em>d</em>-derived states move much less. Removing the interlayer coupling can therefore convert the bulk indirect gap into a direct monolayer gap.
+  </p>
+  <p>
+    The example illustrates a general principle: dimensional reduction does not shift every band uniformly. The change depends on orbital orientation, spatial extent, layer separation, screening, and symmetry. A band-edge trend predicted by a semilocal functional can remain physically meaningful even when the absolute gap requires a hybrid-functional or quasiparticle correction.
+  </p>
+  <p>
+    An isolated neutral layer also has a well-defined vacuum region, so its band edges can be referenced to vacuum in a way that is useful for comparing candidate stacks. Once two layers are assembled, however, the combined system can develop a new electrostatic lineup and new hybridized states; isolated-layer alignment is therefore a starting estimate rather than the final heterostructure electronic structure.
+  </p>
+</section>
+
+<section aria-labelledby="section-22-9-one-dimensional">
+  <h2 id="section-22-9-one-dimensional">22.9 One-Dimensional Systems</h2>
+  <p>
+    Carbon nanotubes close the chapter by reducing the electronic problem to one extended direction. The simplest construction rolls graphene into a cylinder and quantizes the transverse crystal momentum, which gives a useful first classification of metallic and semiconducting tubes. Small-radius tubes expose the limit of that picture.
+  </p>
+  <p>
+    Curvature rotates neighboring <em>p</em> orbitals and mixes the nominal π and σ sectors. In sufficiently narrow tubes this rehybridization can move a band through the Fermi level even when a simple rolled-graphene tight-binding model predicts a gap. The wavefunction itself reveals the change: charge density need no longer be symmetric between the inside and outside of the tube.
+  </p>
+  <p>
+    Martin uses this example to make a methodological point rather than to rank basis sets. A compact model is powerful when its assumed orbital subspace remains valid; a more general representation can reveal states that the model excluded by construction. Chapter 14 provides the tight-binding viewpoint, while <a href={href('/theory/plane-wave-and-real-space-methods/')}>Plane-Wave and Real-Space Methods</a> maps the complementary representation.
+  </p>
+</section>
