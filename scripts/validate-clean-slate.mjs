@@ -32,8 +32,12 @@ const theorySlugs = [
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
-const martinSlugs = [...martinPartSlugs, ...martinChapterSlugs, ...martinAppendixSlugs];
-const martinRoutes = martinSlugs.map((slug) => `reading/books/martin/${slug}/`);
+const martinUnitSlugs = [...martinChapterSlugs, ...martinAppendixSlugs];
+const chapterLoaderSource = fs.readFileSync(path.join(root, 'src/reading/books/martin/chapter-content.ts'), 'utf8');
+const martinPublishedUnitSlugs = [...chapterLoaderSource.matchAll(/'((?:chapter-\d{2}|appendix-[a-r]))'\s*:/g)].map((match) => match[1]);
+const martinUnpublishedUnitSlugs = martinUnitSlugs.filter((slug) => !martinPublishedUnitSlugs.includes(slug));
+const martinPublishedSlugs = [...martinPartSlugs, ...martinPublishedUnitSlugs];
+const martinRoutes = martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/`);
 
 const expectedPages = [
   'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
@@ -45,7 +49,7 @@ const expectedPages = [
 const expectedHtml = [
   '404.html', 'computational-tools/index.html', 'index.html', 'methods/index.html',
   'reading/books/index.html', 'reading/books/martin/index.html',
-  ...martinSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
+  ...martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
@@ -104,6 +108,12 @@ const checkReadingManifest = () => {
   }
   assert(!text.includes('route: null'), `Martin data contains an unpublished unit route`);
   assert(!text.includes('sourceText'), `Martin data must not contain extracted textbook text`);
+  assert(martinPublishedUnitSlugs.length > 0, 'Martin detailed-content loader publishes no reviewed units');
+  assert(new Set(martinPublishedUnitSlugs).size === martinPublishedUnitSlugs.length, 'Martin detailed-content loader contains duplicate unit slugs');
+  for (const slug of martinPublishedUnitSlugs) {
+    assert(martinUnitSlugs.includes(slug), `Martin detailed-content loader contains an unknown unit slug: ${slug}`);
+    assert(fs.existsSync(path.join(root, `src/reading/books/martin/content/${slug}.astro`)), `Martin detailed content is missing for ${slug}`);
+  }
 };
 
 if (sourceMode) {
@@ -140,10 +150,11 @@ if (sourceMode) {
     assert(book.includes(marker), `Martin book page is missing ${marker}`);
   }
   const routePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/[slug].astro'), 'utf8');
-  for (const marker of ['getStaticPaths', 'Core Idea.', 'Chapter structure', 'Appendix structure', 'entry.contribution', 'href(entry.route)']) {
+  for (const marker of ['getStaticPaths', 'martinChapterSlugs', 'Core Idea.', 'Chapter structure', 'Appendix structure', 'entry.contribution', 'href(entry.route)']) {
     assert(routePage.includes(marker), `Martin route page is missing ${marker}`);
   }
   assert(routePage.includes('class="source-outline"'), 'Martin source outline lacks its marker-suppression class');
+  assert(!routePage.includes('Detailed section-by-section reading will be added'), 'Martin route page still renders unfinished-unit placeholder copy');
   assert(!routePage.includes('Read Section'), 'Martin route page creates section-level navigation');
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
   assert(styles.includes('.source-outline') && styles.includes('list-style: none'), 'Martin source outline does not suppress automatic list markers');
@@ -188,9 +199,8 @@ if (builtMode) {
     for (const marker of ['Core Idea.', 'Chapter overview', '1.1 Quantum Theory and the Origins of Electronic Structure', 'class="source-outline"']) {
       assert(chapter1.includes(marker), `built Chapter 1 is missing ${marker}`);
     }
-    const appendixR = fs.readFileSync(path.join(dist, 'reading/books/martin/appendix-r/index.html'), 'utf8');
-    for (const marker of ['Core Idea.', 'Appendix overview', 'Plane-wave codes']) {
-      assert(appendixR.includes(marker), `built Appendix R is missing ${marker}`);
+    for (const slug of martinUnpublishedUnitSlugs) {
+      assert(!fs.existsSync(path.join(dist, `reading/books/martin/${slug}/index.html`)), `unfinished Martin unit was published: ${slug}`);
     }
     const redirect = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
     assert(redirect.includes('reading/books/martin'), 'Martin compatibility redirect target is missing');
