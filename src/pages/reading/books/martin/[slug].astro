@@ -152,7 +152,7 @@ const chapterSynthesis = chapterContent?.synthesis;
 
       {chapterSynthesis && (
         <section aria-labelledby="unit-synthesis">
-          <h2 id="unit-synthesis">Chapter synthesis</h2>
+          <h2 id="unit-synthesis">{unit.kind === 'appendix' ? 'Appendix synthesis' : 'Chapter synthesis'}</h2>
           <p>{chapterSynthesis}</p>
         </section>
       )}
