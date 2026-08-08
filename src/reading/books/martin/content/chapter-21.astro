@@ -1,0 +1,229 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-21-1-overview', label: '21.1 Overview' },
+  { id: 'section-21-2-tddft', label: '21.2 Time-Dependent Density Functional Theory (TDDFT)' },
+  { id: 'section-21-3-noninteracting-response', label: '21.3 Dielectric Response for Noninteracting Particles' },
+  { id: 'section-21-4-linear-response', label: '21.4 Time-Dependent DFT and Linear Response' },
+  { id: 'section-21-5-td-dfpt', label: '21.5 Time-Dependent Density-Functional Perturbation Theory' },
+  { id: 'section-21-6-real-time', label: '21.6 Explicit Real-Time Calculations' },
+  { id: 'section-21-7-finite-optics', label: '21.7 Optical Properties of Molecules and Clusters' },
+  { id: 'section-21-8-crystal-optics', label: '21.8 Optical Properties of Crystals' },
+  { id: 'section-21-9-beyond-adiabatic', label: '21.9 Beyond the Adiabatic Approximation' },
+];
+
+export const modernPerspective = [
+  'Excitation energies belong to different physical sectors. A Kohn–Sham eigenvalue gap, a charged quasiparticle or fundamental gap, and the lowest neutral optical excitation need not coincide. For a bound exciton, the binding energy is defined relative to the interacting electron–hole continuum associated with the quasiparticle gap, not simply relative to the Kohn–Sham gap.',
+  'Adiabatic local and semilocal kernels omit important spatial and temporal nonlocality. Strongly bound excitons in solids, long-range charge-transfer excitations, and genuine double-excitation character can require long-range orbital-dependent kernels, explicit frequency dependence, or a different many-body framework such as GW plus the Bethe–Salpeter equation. These approaches solve related spectroscopy problems but do not make TDDFT, GW, and BSE interchangeable theories.',
+  'Transition-space linear response, Liouvillian or time-dependent DFPT, and real-time propagation are alternative representations of the same TDDFT response problem when the functional, Hamiltonian, perturbation regime, and numerical representation are held fixed. In the linear regime their spectra should agree within the accuracy of the respective numerical solution; real-time propagation additionally provides a natural route to nonlinear response when the perturbation is no longer small.',
+];
+
+export const synthesis =
+  'Chapter 21 turns the static response language of Chapter 20 into electronic spectroscopy. It first separates charged addition and removal spectra from neutral excitations, then introduces the time-dependent Kohn–Sham system and its exchange–correlation memory problem. Independent-particle transitions provide the reference spectrum; the Hartree and exchange–correlation kernel couples those transitions into the interacting density response. The same TDDFT problem can be solved in transition space, through a Liouvillian response equation, or by explicit propagation in time. Finite systems are naturally described by a frequency-dependent polarizability, whereas crystals require macroscopic current and dielectric response. The limitations of adiabatic local kernels—especially for long-range electron–hole attraction and memory—show why excitation theory cannot be reduced to ground-state band structures. Chapter 22 next changes the spatial setting itself, asking how electronic structure is reorganized when three-dimensional periodicity is terminated, joined, or reduced at surfaces, interfaces, and lower-dimensional systems.';
+---
+
+<section aria-labelledby="section-21-1-overview">
+  <h2 id="section-21-1-overview">21.1 Overview</h2>
+  <p>
+    Chapter 20 described small perturbations around a ground state mainly through static or low-frequency derivatives. Chapter 21 asks a different question: what information appears when an electronic system is driven in time and the response is resolved by frequency? The answer begins by separating two physically different kinds of excitation.
+  </p>
+  <aside class="callout" aria-label="Two sectors of electronic excitation">
+    <p><strong>Excitation sectors</strong></p>
+    <p><em>N</em> → <em>N</em> ± 1: electron addition or removal and one-particle spectra.</p>
+    <p><em>N</em> → <em>N</em>: neutral excitations, optical absorption, density response, and electron–hole motion.</p>
+  </aside>
+  <p>
+    The first sector changes particle number. Photoemission, inverse photoemission, and related probes are therefore tied to addition and removal energies and, in an interacting system, to quasiparticle peaks, lifetimes, broadening, and satellite structure. A ground-state Kohn–Sham band structure is useful but is not a complete one-particle excitation spectrum; the Kohn–Sham eigenvalues were introduced to reproduce the ground-state density rather than to encode all charged excitations.
+  </p>
+  <p>
+    The second sector keeps the number of electrons fixed. Light can promote electronic weight from occupied to unoccupied character while leaving an electron and a hole that interact with one another and with the surrounding screening medium. Optical spectra therefore contain collective and electron–hole physics that is absent from a simple list of independent Kohn–Sham transition energies. This neutral sector is the main subject of the chapter.
+  </p>
+  <p>
+    The central observables depend on geometry. For a molecule or small cluster, the natural quantity is the frequency-dependent polarizability α(ω). For a macroscopic crystal, the response is expressed through the dielectric tensor ε(ω), its inverse, or the optical conductivity. The common theoretical object underneath them is the time-dependent electronic response.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-2-tddft">
+  <h2 id="section-21-2-tddft">21.2 Time-Dependent Density Functional Theory (TDDFT)</h2>
+  <p>
+    Time-dependent density functional theory extends the density-based logic of Chapters 6 and 7, but its formal starting point is not a minimum of the ground-state energy. The time evolution is formulated through a stationary action: among physically admissible density histories generated from a fixed initial state, the exact density is associated with the stationary time-dependent action.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>δ</mi><mi>A</mi></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo></mrow></mfrac><mo>=</mo><mn>0</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;frac&#123;&#92;delta A&#125;&#123;&#92;delta n(&#92;mathbf r,t)&#125;=0.</annotation></semantics></math>
+  </div>
+  <p>
+    The Runge–Gross construction then permits the interacting density to be represented by an auxiliary system of time-dependent Kohn–Sham orbitals. Each occupied orbital obeys a Schrödinger-like evolution equation,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>i</mi><mi>ℏ</mi><mfrac><mrow><mo>∂</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>∂</mo><mi>t</mi></mrow></mfrac><mo>=</mo><msub><mover><mi>H</mi><mo>^</mo></mover><mi>KS</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">i&#92;hbar&#92;frac&#123;&#92;partial&#92;psi_i(t)&#125;&#123;&#92;partial t&#125;=&#92;hat H_&#123;&#92;mathrm&#123;KS&#125;&#125;(t)&#92;psi_i(t).</annotation></semantics></math>
+  </div>
+  <p>
+    The effective Hamiltonian has the familiar Kohn–Sham decomposition, but every term can now depend on the evolving density and on the external time-dependent perturbation:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>V</mi><mi>KS</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>=</mo><msub><mi>V</mi><mi>ext</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>+</mo><msub><mi>V</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>+</mo><msub><mi>V</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">V_&#123;&#92;mathrm&#123;KS&#125;&#125;(&#92;mathbf r,t)=V_&#123;&#92;mathrm&#123;ext&#125;&#125;(&#92;mathbf r,t)+V_H[n](&#92;mathbf r,t)+V_&#123;&#92;mathrm&#123;xc&#125;&#125;[n](&#92;mathbf r,t).</annotation></semantics></math>
+  </div>
+  <p>
+    The compact form hides the main approximation problem. In the exact theory, the exchange–correlation potential can depend on the history of the density, not only on its instantaneous value. The common adiabatic approximation instead evaluates a ground-state functional at the density of the current time. This removes explicit memory and makes calculations practical, but it also establishes one of the chapter's central limitations.
+  </p>
+  <p>
+    Finite systems can often be treated naturally in terms of the density and a scalar electric potential. In an extended periodic solid, a homogeneous position-dependent scalar potential is problematic, so current density and the vector potential provide a cleaner macroscopic formulation. This distinction will matter again when molecules and crystals are compared in Sections 21.7 and 21.8. Related foundations are collected in <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-3-noninteracting-response">
+  <h2 id="section-21-3-noninteracting-response">21.3 Dielectric Response for Noninteracting Particles</h2>
+  <p>
+    Before interactions between transitions are introduced, Martin establishes the independent-particle reference. For a finite system much smaller than the wavelength of the applied light, a nearly uniform electric field induces a dipole moment. In frequency space the linear relation is simply
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>d</mi><mi>α</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>β</mi></munder><msub><mi>α</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>(</mo><mi>ω</mi><mo>)</mo><msub><mi>E</mi><mi>β</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">d_&#92;alpha(&#92;omega)=&#92;sum_&#92;beta &#92;alpha_&#123;&#92;alpha&#92;beta&#125;(&#92;omega)E_&#92;beta(&#92;omega).</annotation></semantics></math>
+  </div>
+  <p>
+    In an independent-particle picture, the poles of α(ω) come from allowed transitions between occupied and empty one-particle states. Their strengths depend on dipole or velocity matrix elements as well as on the energy differences. A spectrum is therefore not a density of states plotted against photon energy; selection rules and transition matrix elements decide which electronic pairs actually couple to the field.
+  </p>
+  <p>
+    The same point is especially clear in a crystal. In the optical long-wavelength limit, the absorptive part of the dielectric response can be written schematically as a sum over vertical interband transitions,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Im</mi><mi>ε</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>∝</mo><munder><mo>∑</mo><mrow><mi mathvariant="bold">k</mi><mo>,</mo><mi>v</mi><mo>,</mo><mi>c</mi></mrow></munder><msup><mrow><mo>|</mo><mo>⟨</mo><msub><mi>ψ</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><mi mathvariant="bold">e</mi><mo>·</mo><mover><mi>v</mi><mo>^</mo></mover><mo>|</mo><msub><mi>ψ</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>|</mo></mrow><mn>2</mn></msup><mi>δ</mi><mo>(</mo><msub><mi>ε</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><msub><mi>ε</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><mi>ℏ</mi><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;operatorname&#123;Im&#125;&#92;varepsilon(&#92;omega)&#92;propto&#92;sum_&#123;&#92;mathbf k,v,c&#125;|&#92;langle&#92;psi_&#123;c&#92;mathbf k&#125;|&#92;mathbf e&#92;cdot&#92;hat&#123;&#92;mathbf v&#125;|&#92;psi_&#123;v&#92;mathbf k&#125;&#92;rangle|^2&#92;delta(&#92;varepsilon_&#123;c&#92;mathbf k&#125;-&#92;varepsilon_&#123;v&#92;mathbf k&#125;-&#92;hbar&#92;omega).</annotation></semantics></math>
+  </div>
+  <p>
+    Here <em>v</em> and <em>c</em> label occupied and empty bands, and <strong>e</strong> is the light polarization. The expression is a matrix-element-weighted joint density of states. It explains why optical measurements can reveal band-structure singularities while also showing why a band plot alone cannot predict intensities.
+  </p>
+  <p>
+    For an extended crystal, macroscopic current and a vector potential are better-defined variables than an absolute dipole built from the position operator. The current response determines the optical conductivity and dielectric tensor. Chapter 24 will return to the related difficulty of defining polarization in a periodic solid from a different, geometric viewpoint.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-4-linear-response">
+  <h2 id="section-21-4-linear-response">21.4 Time-Dependent DFT and Linear Response</h2>
+  <p>
+    The independent-particle response χ<sup>0</sup>(ω) allows each occupied–empty transition to respond to the applied field without coupling to the density change created by the other transitions. TDDFT restores self-consistency. The induced density changes both the Hartree potential and the exchange–correlation potential, and those changes act back on the response.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>χ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><msup><mi>χ</mi><mn>0</mn></msup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>+</mo><msup><mi>χ</mi><mn>0</mn></msup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>[</mo><msub><mi>v</mi><mi>C</mi></msub><mo>+</mo><msub><mi>f</mi><mi>xc</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>]</mo><mi>χ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;chi(&#92;omega)=&#92;chi^0(&#92;omega)+&#92;chi^0(&#92;omega)[v_C+f_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;omega)]&#92;chi(&#92;omega).</annotation></semantics></math>
+  </div>
+  <p>
+    The Coulomb kernel <em>v</em><sub>C</sub> describes classical density–density interaction, while <em>f</em><sub>xc</sub> is the functional derivative of the time-dependent exchange–correlation potential with respect to density. The poles of the full χ are the neutral collective and electron–hole excitation energies accessible to the chosen perturbation. They are not, in general, electron addition or removal energies.
+  </p>
+  <p>
+    Expanding the response in a basis of occupied-to-empty Kohn–Sham transitions converts this integral response problem into a transition-space matrix problem. In the commonly used Casida form its structure can be summarized as
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="bold">M</mi><msub><mi mathvariant="bold">F</mi><mi>S</mi></msub><mo>=</mo><msubsup><mi>Ω</mi><mi>S</mi><mn>2</mn></msubsup><msub><mi mathvariant="bold">F</mi><mi>S</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;mathbf M&#92;mathbf F_S=&#92;Omega_S^2&#92;mathbf F_S.</annotation></semantics></math>
+  </div>
+  <p>
+    The matrix <strong>M</strong> contains the independent transition energies and their coupling through the Hartree and exchange–correlation kernels. Its eigenvalues give neutral excitation frequencies and its eigenvectors determine how many Kohn–Sham transitions combine into each excitation. This makes the electron–hole mixing explicit, but it also creates matrices whose dimension grows with the number of occupied–empty pairs.
+  </p>
+  <p>
+    The similarity to the Bethe–Salpeter equation is useful for comparing implementations and physical ingredients, but the two frameworks are constructed from different starting objects. TDDFT closes a density-response equation with an exchange–correlation kernel; BSE describes correlated electron–hole propagation within a many-body Green-function framework. The latter is mapped separately in <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-5-td-dfpt">
+  <h2 id="section-21-5-td-dfpt">21.5 Time-Dependent Density-Functional Perturbation Theory</h2>
+  <p>
+    Transition-space linear response constructs a representation capable of describing many possible excitations at once. Martin then makes the same algorithmic move used in Chapter 20: if the desired quantity is the response to one specified perturbation, solve directly for that response rather than first constructing every occupied–empty transition explicitly.
+  </p>
+  <p>
+    In time-dependent density-functional perturbation theory, the linearized dynamics can be expressed through a Liouvillian superoperator acting on the first-order density matrix or an equivalent pair of response functions. Schematically,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>(</mo><mi>ω</mi><mo>−</mo><mi mathvariant="script">L</mi><mo>)</mo><mi>δ</mi><mi>ρ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mi>δ</mi><mi>S</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">(&#92;omega-&#92;mathcal L)&#92;delta&#92;rho(&#92;omega)=&#92;delta S(&#92;omega).</annotation></semantics></math>
+  </div>
+  <p>
+    The symbol 𝓛 denotes the linearized self-consistent time-dependent Kohn–Sham evolution, and δ<em>S</em> represents the chosen external driving term. The practical point is the same as in the static Sternheimer equation: iterative applications of the response operator can avoid an explicit enumeration of a large empty-state manifold.
+  </p>
+  <p>
+    Lanczos or related Krylov-space techniques can then build the relevant resolvent over a broad frequency interval. The method remains a TDDFT linear-response calculation; its advantage is computational representation, not a change in the underlying excitation physics.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-6-real-time">
+  <h2 id="section-21-6-real-time">21.6 Explicit Real-Time Calculations</h2>
+  <p>
+    The third route avoids solving directly for frequency-domain poles or response matrices. Starting from occupied ground-state orbitals, apply a time-dependent perturbation and propagate the time-dependent Kohn–Sham equations. The initially occupied orbitals cease to be stationary eigenstates and develop components of states that were empty in the unperturbed system.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>+</mo><mi>Δ</mi><mi>t</mi><mo>)</mo><mo>≈</mo><mi>exp</mi><mo>[</mo><mo>−</mo><mfrac><mrow><mi>i</mi><mi>Δ</mi><mi>t</mi></mrow><mi>ℏ</mi></mfrac><msub><mover><mi>H</mi><mo>^</mo></mover><mi>KS</mi></msub><mo>(</mo><mi>t</mi><mo>+</mo><mfrac><mrow><mi>Δ</mi><mi>t</mi></mrow><mn>2</mn></mfrac><mo>)</mo><mo>]</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;psi_i(t+&#92;Delta t)&#92;approx&#92;exp[-i&#92;Delta t&#92;hat H_&#123;&#92;mathrm&#123;KS&#125;&#125;(t+&#92;Delta t/2)/&#92;hbar]&#92;psi_i(t).</annotation></semantics></math>
+  </div>
+  <p>
+    A useful propagator should preserve the norm and, for the occupied manifold, orthonormality. Martin surveys several numerical realizations—operator splitting, polynomial or Taylor expansions, Crank–Nicolson forms, and Chebyshev expansions—but the conceptual requirement is more important than the catalogue: the propagator must resolve the fastest electronic time scales without introducing artificial loss or growth of probability.
+  </p>
+  <p>
+    Once an induced dipole or current has been recorded, the spectrum is obtained by Fourier transformation. A small damping factor is often introduced to make the finite-time transform well behaved,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>d</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mi>d</mi><mi>t</mi><msup><mi>e</mi><mrow><mi>i</mi><mi>ω</mi><mi>t</mi><mo>−</mo><mi>η</mi><mi>t</mi></mrow></msup><mi>d</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">d(&#92;omega)=&#92;int_0^T dt&#92;,e^&#123;i&#92;omega t-&#92;eta t&#125;d(t).</annotation></semantics></math>
+  </div>
+  <p>
+    The propagation time <em>T</em> and time step Δ<em>t</em> control different pieces of numerical information: the total duration limits frequency resolution, while the time step limits how accurately high-frequency dynamics can be followed. These are time-domain versions of representation limits rather than new physical broadening mechanisms.
+  </p>
+  <p>
+    In the weak-field regime, the Fourier-transformed real-time response should reproduce the linear-response TDDFT spectrum for the same functional and numerical model. Increasing the perturbation strength allows real-time propagation to move beyond linear response and follow genuinely nonlinear dynamics, including strong laser fields, without introducing a separate hierarchy of higher-order response matrices.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-7-finite-optics">
+  <h2 id="section-21-7-finite-optics">21.7 Optical Properties of Molecules and Clusters</h2>
+  <p>
+    For a finite object smaller than the optical wavelength, the induced dipole is the natural macroscopic observable. A short weak electric-field impulse contains a broad range of frequencies, so a single real-time propagation can generate α(ω) over a wide spectral window after Fourier transformation. The same spectrum can be obtained from frequency-domain linear response or time-dependent DFPT when the calculations use the same physical approximations.
+  </p>
+  <p>
+    Spectral intensity is often expressed through a dipole-strength or oscillator-strength distribution proportional to ω Im α(ω). Its integrated weight obeys an electron-number sum rule. With Martin's normalization,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ℏ</mi><msubsup><mo>∫</mo><mn>0</mn><mo>∞</mo></msubsup><mi>S</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mi>d</mi><mi>ω</mi><mo>=</mo><msub><mi>N</mi><mi>e</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;hbar&#92;int_0^&#92;infty S(&#92;omega)d&#92;omega=N_e.</annotation></semantics></math>
+  </div>
+  <p>
+    This is more than a formal identity: it expresses conservation of total oscillator strength and provides a physical check that spectral weight has not disappeared from the chosen frequency window or numerical representation.
+  </p>
+  <p>
+    Martin's examples move from simple metallic clusters to semiconductor nanostructures and large molecules. Their purpose is not to define a universal size trend, but to show how confinement, atomic structure, collective screening, and electron–hole interaction reshape spectra relative to an independent-particle or featureless jellium picture. As a finite system grows, the relevant excitations can evolve from discrete molecular transitions toward collective and solid-like response without any sharp boundary between the two descriptions.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-8-crystal-optics">
+  <h2 id="section-21-8-crystal-optics">21.8 Optical Properties of Crystals</h2>
+  <p>
+    A bulk crystal changes both the observable and the theoretical difficulty. The natural response is ε(ω) or σ(ω), obtained from the macroscopic current rather than from an absolute dipole. In a real-time formulation, a short electric-field impulse can be represented by a step in the vector potential; the induced current <strong>j</strong>(t) is propagated and Fourier transformed to recover the optical spectrum.
+  </p>
+  <p>
+    The harder issue is electronic interaction over long distances. In common adiabatic local or semilocal TDDFT implementations, the independent Kohn–Sham transition continuum provides the starting absorption onset. The kernel can redistribute spectral weight and mix transitions, but a short-ranged kernel generally lacks the spatial structure needed to repair a severely underestimated gap or to bind an electron and hole into a strong exciton below the continuum.
+  </p>
+  <aside class="callout" aria-label="Distinct energy scales in a crystal spectrum">
+    <p><strong>Three energy scales</strong></p>
+    <p>Kohn–Sham transition gap → auxiliary one-particle reference.</p>
+    <p>Quasiparticle gap → charged addition/removal continuum.</p>
+    <p>Optical excitation → neutral response, potentially lowered by electron–hole binding.</p>
+  </aside>
+  <p>
+    A bound exciton appears mathematically as a pole of the interacting response below the free electron–hole continuum. Generating that pole requires a sufficiently attractive electron–hole coupling. In solids this typically demands a strongly nonlocal exchange–correlation kernel; local and semilocal adiabatic kernels usually miss the required long-range behavior.
+  </p>
+  <p>
+    Martin uses long-range exchange and range-separated hybrid ideas to illustrate how a nonlocal kernel can create such bound states while also improving the underlying single-particle gap. The lesson is broader than any one functional: reproducing an optical peak may require both a credible charged excitation scale and a response kernel capable of describing electron–hole attraction. Improving only one of those layers does not guarantee the other.
+  </p>
+  <p>
+    The time-domain picture provides an intuitive complement. Long-lived oscillations in the induced current generate narrow spectral peaks, whereas rapidly decaying current produces broader spectral structure. That Fourier relationship should not be confused with a complete microscopic lifetime theory: physical linewidths can involve electron–electron, electron–phonon, disorder, radiative, and other decay channels beyond an ideal adiabatic TDDFT propagation.
+  </p>
+</section>
+
+<section aria-labelledby="section-21-9-beyond-adiabatic">
+  <h2 id="section-21-9-beyond-adiabatic">21.9 Beyond the Adiabatic Approximation</h2>
+  <p>
+    The adiabatic approximation replaces the unknown time-nonlocal exchange–correlation functional by a ground-state functional evaluated at the instantaneous density. It succeeds for many spectra, especially in finite systems, but it removes explicit memory. A genuinely time-dependent functional can depend on the density at earlier times, so its linear-response kernel is generally frequency dependent.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>f</mi><mi>xc</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>δ</mi><msub><mi>V</mi><mi>xc</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>ω</mi><mo>)</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">f_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;mathbf r,&#92;mathbf r',&#92;omega)=&#92;frac&#123;&#92;delta V_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;mathbf r,&#92;omega)&#125;&#123;&#92;delta n(&#92;mathbf r',&#92;omega)&#125;.</annotation></semantics></math>
+  </div>
+  <p>
+    Frequency dependence is the response-space signature of memory. It allows the effective interaction between transitions to change with excitation energy rather than being inherited unchanged from a static ground-state functional. Orbital-dependent and generalized Kohn–Sham constructions offer another route to nonlocal response, particularly through long-range exchange, but they remain approximations whose success depends on the excitation being studied.
+  </p>
+  <p>
+    The chapter therefore ends with a useful boundary. TDDFT is formally a density-based theory of time-dependent observables and neutral response; practical accuracy is controlled by the exchange–correlation approximation in both space and time. When charged quasiparticles, strong long-range electron–hole correlation, multiple-excitation character, or detailed spectral lifetimes become central, additional many-body theory may be required rather than simply increasing numerical convergence within an inadequate kernel.
+  </p>
+</section>
