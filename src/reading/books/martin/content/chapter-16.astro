@@ -1,0 +1,392 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-16-1-apw-muffin-tins', label: '16.1 Augmented Plane Waves (APWs) and “Muffin Tins”' },
+  { id: 'section-16-2-solving-apw', label: '16.2 Solving APW Equations: Examples' },
+  { id: 'section-16-3-kkr', label: '16.3 The KKR or Multiple-Scattering Theory (MST) Method' },
+  { id: 'section-16-4-cpa', label: '16.4 Alloys and the Coherent Potential Approximation (CPA)' },
+  { id: 'section-16-5-mto', label: '16.5 Muffin-Tin Orbitals (MTOs)' },
+  { id: 'section-16-6-canonical-bands', label: '16.6 Canonical Bands' },
+  { id: 'section-16-7-localized-kkr-mto', label: '16.7 Localized “Tight-Binding,” MTO, and KKR Formulations' },
+  { id: 'section-16-8-energy-force-pressure', label: '16.8 Total Energy, Force, and Pressure in Augmented Methods' },
+];
+
+export const modernPerspective = [
+  'Augmentation and the muffin-tin approximation are separate ideas. Augmentation means representing the rapidly varying near-nuclear solution with atom-centered partial waves and matching it to a simpler interstitial representation. A muffin-tin or atomic-sphere potential is an additional shape approximation. Modern full-potential augmented methods retain the spatial partition while allowing nonspherical potentials and densities.',
+  'The main numerical controls of an augmented all-electron calculation are therefore not captured by one cutoff. Interstitial basis size, angular-momentum cutoff, sphere radii, radial meshes, core/semicore partitioning, linearization choices introduced in Chapter 17, Brillouin-zone sampling, and SCF thresholds can affect different observables independently.',
+  'KKR and related Green-function methods remain conceptually distinctive because chemical scattering and lattice geometry enter as different mathematical objects. This is particularly natural for substitutional disorder, impurities, embedded clusters, spectral broadening, and local densities of states, where a Green function can target the required energy range without constructing every eigenstate.',
+  'Agreement between a converged augmented all-electron calculation and a converged pseudopotential or PAW calculation is a valuable cross-representation test, but neither representation is automatically the reference for every observable. Core-sensitive properties, semicore hybridization, relativistic effects, and the chosen exchange–correlation approximation still have to be treated consistently.',
+];
+
+export const synthesis =
+  'Chapter 16 organizes APW, KKR, and MTO around one physical fact: the electronic wavefunction has atomic-scale structure near nuclei and much smoother behavior between atoms. APW implements this by augmenting interstitial plane waves with energy-dependent radial solutions and enforcing boundary matching. KKR recasts the same information as single-site scattering embedded in propagation through the lattice, cleanly separating chemistry from geometry and making Green-function descriptions of disorder especially natural. MTOs then reorganize the scattering solution into a compact localized orbital language, from which canonical bands reveal a striking separation between lattice-dependent structure matrices and atom-dependent potential functions. The price of these elegant constructions is energy dependence and nonlinear secular equations. Chapter 17 addresses precisely that difficulty by linearizing the augmented functions to obtain LAPW, LMTO, and related reusable basis sets.';
+---
+
+<section aria-labelledby="section-16-1-apw-muffin-tins">
+  <h2 id="section-16-1-apw-muffin-tins">16.1 Augmented Plane Waves (APWs) and “Muffin Tins”</h2>
+  <p>
+    The central difficulty of an all-electron solid is strongly inhomogeneous spatial resolution. Near a nucleus, a wavefunction has rapid radial structure and is naturally described by atomic partial waves. Between atoms, the potential is smoother and a delocalized representation is efficient. The augmented-plane-wave idea uses both descriptions in the same basis function and joins them at atom-centered sphere boundaries. It is therefore a different answer to the core problem than the <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>pseudopotential route</a>: instead of smoothing away the near-core oscillations, it represents them explicitly where they occur.
+  </p>
+  <p>
+    Martin first introduces the especially transparent muffin-tin construction. Space is divided into nonoverlapping atomic spheres and an interstitial region. In the ideal muffin-tin potential, the potential is spherical inside each sphere and constant between spheres. The spatial partition is more general than this approximation: augmented bases can later be used with a nonspherical, full potential. The approximation and the representation must therefore be kept conceptually separate.
+  </p>
+  <p>
+    A Bloch state is expanded in augmented functions labelled by reciprocal vectors,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Bloch state expanded in augmented plane waves">
+      <semantics>
+        <mrow>
+          <msub><mi>ψ</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>=</mo><munder><mo>∑</mo><mi>G</mi></munder>
+          <msub><mi>c</mi><mrow><mi>i</mi><mi>G</mi></mrow></msub><mo>(</mo><mi>k</mi><mo>)</mo>
+          <msubsup><mi>χ</mi><mrow><mi>k</mi><mo>+</mo><mi>G</mi></mrow><mi>APW</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\psi_&#123;i\mathbf k&#125;(\mathbf r)=\sum_\mathbf G c_&#123;i\mathbf G&#125;(\mathbf k)\chi^&#123;\mathrm&#123;APW&#125;&#125;_&#123;\mathbf k+\mathbf G&#125;(\mathbf r)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Each basis function is a single plane wave in the interstitial, while inside sphere <em>s</em> it is replaced by a sum of spherical harmonics multiplied by radial solutions evaluated at the same trial energy. Schematically,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="piecewise definition of an augmented plane wave">
+      <semantics>
+        <mrow>
+          <msubsup><mi>χ</mi><mi>K</mi><mi>APW</mi></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mrow><mo>(</mo>
+            <mtable>
+              <mtr><mtd><msup><mi>e</mi><mrow><mi>i</mi><mi>K</mi><mo>·</mo><mi>r</mi></mrow></msup></mtd><mtd><mtext>interstitial</mtext></mtd></mtr>
+              <mtr><mtd><munder><mo>∑</mo><mrow><mi>L</mi><mi>s</mi></mrow></munder><msub><mi>C</mi><mrow><mi>L</mi><mi>s</mi></mrow></msub><mo>(</mo><mi>K</mi><mo>)</mo><msub><mi>ψ</mi><mrow><mi>L</mi><mi>s</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>r</mi><mo>)</mo></mtd><mtd><mtext>inside sphere s</mtext></mtd></mtr>
+            </mtable>
+          <mo>)</mo></mrow>
+        </mrow>
+        <annotation encoding="application/x-tex">\chi^&#123;\mathrm&#123;APW&#125;&#125;_\mathbf K(\mathbf r)=\begin&#123;cases&#125;e^&#123;i\mathbf K\cdot\mathbf r&#125;&amp;\text&#123;interstitial&#125;\\\sum_&#123;Ls&#125;C_&#123;Ls&#125;(\mathbf K)\psi_&#123;Ls&#125;(\varepsilon,\mathbf r)&amp;\text&#123;inside sphere s&#125;\end&#123;cases&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The radial functions solve the atomic-like Schrödinger equation at a variable energy ε. Their coefficients are chosen so that the value of the augmented function matches the plane wave at the sphere surface. The derivative of one individual APW is generally discontinuous there. That apparent defect is intentional: the final eigenstate is a linear combination whose coefficients are selected so that the residual boundary mismatch is minimized and the Schrödinger equation is satisfied globally.
+  </p>
+  <p>
+    This boundary viewpoint is the key to the chapter. A plane wave arriving at a sphere can be decomposed into angular-momentum channels; each channel experiences the atomic potential through its radial solution and phase shift. The full solid can therefore be understood as smooth propagation between sites plus scattering and matching at the sites. APW, KKR, and MTO will reorganize these same ingredients in different ways.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-2-solving-apw">
+  <h2 id="section-16-2-solving-apw">16.2 Solving APW Equations: Examples</h2>
+  <p>
+    The original APW basis is unusually powerful and unusually awkward because the basis itself depends on the unknown eigenvalue. The radial function inside every sphere must be generated at the trial energy ε, so the matrix whose determinant defines a band is energy dependent. One cannot construct one fixed Hamiltonian and obtain all bands from a single diagonalization as in an ordinary plane-wave or fixed localized basis.
+  </p>
+  <p>
+    The role of the atomic region can be summarized by the dimensionless logarithmic derivative at the sphere boundary,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="logarithmic derivative of an atomic radial solution at a sphere boundary">
+      <semantics>
+        <mrow>
+          <msub><mi>D</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo>
+          <msub><mi>S</mi><mi>s</mi></msub>
+          <mfrac>
+            <mrow><msub><msup><mi>ψ</mi><mo>′</mo></msup><mrow><mi>l</mi><mi>s</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>,</mo><msub><mi>S</mi><mi>s</mi></msub><mo>)</mo></mrow>
+            <mrow><msub><mi>ψ</mi><mrow><mi>l</mi><mi>s</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>,</mo><msub><mi>S</mi><mi>s</mi></msub><mo>)</mo></mrow>
+          </mfrac>
+        </mrow>
+        <annotation encoding="application/x-tex">D_l(\varepsilon)=S_s\frac&#123;\psi'_&#123;ls&#125;(\varepsilon,S_s)&#125;&#123;\psi_&#123;ls&#125;(\varepsilon,S_s)&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    What matters for scattering is its difference from the corresponding free-space partial wave. The APW secular problem can therefore be viewed as a plane-wave kinetic-energy matrix plus an effective matching operator whose matrix elements depend on these logarithmic-derivative differences. The resulting band condition is nonlinear in energy,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="nonlinear augmented plane wave secular condition">
+      <semantics>
+        <mrow>
+          <mi>det</mi><mo>[</mo><mi>H</mi><mo>(</mo><mi>ε</mi><mo>,</mo><mi>k</mi><mo>)</mo><mo>−</mo><mi>ε</mi><mi>S</mi><mo>(</mo><mi>ε</mi><mo>,</mo><mi>k</mi><mo>)</mo><mo>]</mo><mo>=</mo><mn>0</mn>
+        </mrow>
+        <annotation encoding="application/x-tex">\det[H(\varepsilon,\mathbf k)-\varepsilon S(\varepsilon,\mathbf k)]=0</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    In practice the original method therefore requires root tracing: choose ε and search for zeros of the determinant as k changes, or fix k and scan ε. This is the central computational weakness that motivates Chapter 17. Deep core states are a simplifying exception because they may be almost completely confined to their atomic sphere and nearly independent of k, leading naturally to a frozen-core treatment.
+  </p>
+  <p>
+    Martin uses two limiting cases to show what the logarithmic derivative means physically. If the potential inside a sphere is identical to the interstitial constant, the atomic radial solutions reduce to free spherical Bessel functions. Their boundary logarithmic derivatives exactly match the free values, the scattering correction disappears, and APW returns the free-electron bands despite the artificial spatial partition. The partition itself has not introduced physics.
+  </p>
+  <p>
+    The opposite case is a strong atomic resonance. When an angular-momentum channel has a logarithmic derivative that changes rapidly with energy, substantially different Bloch boundary conditions can be satisfied with only a small change in ε. The resulting band is narrow. This explains why Cu can simultaneously display wide, nearly-free-electron-like <em>s–p</em> bands and narrow <em>d</em> bands: the <em>d</em> channel is resonant while other partial waves scatter much more weakly. “Nearly free” thus refers to weak effective scattering and band dispersion, not to a weak bare nuclear potential or a wavefunction that resembles one plane wave everywhere.
+  </p>
+  <p>
+    The historical APW band calculations of transition metals are important mainly because they expose this physical decomposition. Modern interpretation should still separate the quality of a numerical eigenstate from the physical meaning assigned to its eigenvalue: an accurate solution of a Kohn–Sham equation does not by itself make every band energy an exact addition or removal excitation.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-3-kkr">
+  <h2 id="section-16-3-kkr">16.3 The KKR or Multiple-Scattering Theory (MST) Method</h2>
+  <p>
+    KKR reorganizes the same sphere/interstitial physics as a scattering problem. Each atomic sphere is represented by its single-site scattering response, while propagation from one site to another is described by a reference Green function. This creates one of the cleanest separations in electronic-structure theory: chemical identity enters through scattering amplitudes and phase shifts; crystal geometry enters through propagation and structure constants.
+  </p>
+  <p>
+    Repeated scattering is summed by a Dyson series. If <em>t</em> denotes a single-site scattering operator and <em>G</em><sub>0</sub> the reference propagator, then
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Dyson multiple scattering series for the Green function">
+      <semantics>
+        <mrow>
+          <mi>G</mi><mo>=</mo><msub><mi>G</mi><mn>0</mn></msub><mo>+</mo><msub><mi>G</mi><mn>0</mn></msub><mi>t</mi><mi>G</mi>
+          <mo>⇒</mo>
+          <mi>G</mi><mo>=</mo><msup><mrow><mo>(</mo><msubsup><mi>G</mi><mn>0</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>−</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup>
+        </mrow>
+        <annotation encoding="application/x-tex">G=G_0+G_0tG\;\Rightarrow\;G=(G_0^&#123;-1&#125;-t)^&#123;-1&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Equivalently, a full multiple-scattering matrix <em>T</em> sums paths that scatter from one site, propagate, scatter again, and so on. Stationary electronic states appear as poles of the Green function or scattering matrix, which gives the compact condition
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="multiple scattering determinant condition">
+      <semantics>
+        <mrow>
+          <mi>det</mi><mo>[</mo><msup><mi>t</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>ε</mi><mo>)</mo><mo>−</mo><msub><mi>G</mi><mn>0</mn></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>]</mo><mo>=</mo><mn>0</mn>
+        </mrow>
+        <annotation encoding="application/x-tex">\det[t^&#123;-1&#125;(\varepsilon)-G_0(\varepsilon)]=0</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    For a spherical muffin-tin scatterer, angular momentum is conserved at one site and the scattering amplitude in channel <em>l</em> is determined by the phase shift η<sub>l</sub>(ε). The exact normalization depends on convention; the essential dependence can be written
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="single site scattering amplitude expressed through a phase shift">
+      <semantics>
+        <mrow>
+          <msub><mi>t</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo>
+          <mo>−</mo><mfrac><mn>1</mn><mi>κ</mi></mfrac>
+          <msup><mi>e</mi><mrow><mi>i</mi><msub><mi>η</mi><mi>l</mi></msub></mrow></msup>
+          <mi>sin</mi><msub><mi>η</mi><mi>l</mi></msub>
+        </mrow>
+        <annotation encoding="application/x-tex">t_l(\varepsilon)=-\frac&#123;1&#125;&#123;\kappa&#125;e^&#123;i\eta_l&#125;\sin\eta_l</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This is why phase shifts are such compact carriers of atomic information. A small number of angular channels can encode the effect of a strong near-nuclear potential without representing its spatial oscillations with a huge global basis.
+  </p>
+  <p>
+    In a periodic crystal the intersite propagator can be Fourier transformed to k space. The KKR band condition then separates into an atom-dependent scattering term and a lattice-dependent structure matrix,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="KKR band determinant separating single site scattering and lattice structure constants">
+      <semantics>
+        <mrow>
+          <mi>det</mi><mo>[</mo>
+          <msubsup><mi>t</mi><mi>l</mi><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>(</mo><mi>ε</mi><mo>)</mo><msub><mi>δ</mi><mrow><mi>L</mi><mi>L</mi><mo>′</mo></mrow></msub>
+          <mo>−</mo><msub><mi>B</mi><mrow><mi>L</mi><mi>L</mi><mo>′</mo></mrow></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>k</mi><mo>)</mo>
+          <mo>]</mo><mo>=</mo><mn>0</mn>
+        </mrow>
+        <annotation encoding="application/x-tex">\det[t_l^&#123;-1&#125;(\varepsilon)\delta_&#123;LL'&#125;-B_&#123;LL'&#125;(\varepsilon,\mathbf k)]=0</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here <em>B</em> contains only the geometry and propagation between sites. This separation is the conceptual reason KKR adapts naturally to impurities and alloys: the local chemical scatterer can change while much of the host propagation remains organized in the same Green-function framework.
+  </p>
+  <p>
+    The Green function also avoids calculating information that is not needed. Its imaginary part yields spectral density. For example, an angular-momentum-resolved Bloch spectral function is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local angular momentum resolved spectral density from a Green function">
+      <semantics>
+        <mrow>
+          <msub><mi>n</mi><mi>L</mi></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>k</mi><mo>)</mo><mo>=</mo>
+          <mo>−</mo><mfrac><mn>1</mn><mi>π</mi></mfrac>
+          <mi>Im</mi><msub><mi>G</mi><mrow><mi>L</mi><mi>L</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>+</mo><mi>i</mi><mi>δ</mi><mo>,</mo><mi>k</mi><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n_L(\varepsilon,\mathbf k)=-\frac&#123;1&#125;&#123;\pi&#125;\operatorname&#123;Im&#125;G_&#123;LL&#125;(\varepsilon+i\delta,\mathbf k)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Integrating the corresponding local Green function up to the Fermi energy gives occupations and densities; energy-weighted integrals give occupied eigenvalue sums. Contour integration in the complex-energy plane is especially useful because the Green function is smooth away from poles. This is one reason the original nonlinear band equation is less troublesome in the Green-function formulation than in direct root-tracing APW calculations.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-4-cpa">
+  <h2 id="section-16-4-cpa">16.4 Alloys and the Coherent Potential Approximation (CPA)</h2>
+  <p>
+    A substitutional alloy destroys exact translational equivalence of the atomic sites even when all atoms occupy one underlying lattice. One strategy is explicit disorder: construct a large supercell and place the different species on selected sites. That route can describe local environments and short-range order, but the result is one finite realization of disorder. CPA instead asks for a translationally invariant effective medium whose average scattering reproduces the random alloy.
+  </p>
+  <p>
+    The important distinction from a virtual-crystal picture is that CPA averages the <em>scattering response</em>, not simply the bare atomic potential. An A atom and a B atom are each embedded into the same coherent medium; the medium is adjusted until replacing a coherent site by the actual species produces zero net scattering on average. Because scattering has both amplitude and phase, the resulting coherent potential is generally energy dependent and complex. A complex Green function is therefore the natural language rather than an inconvenience.
+  </p>
+  <p>
+    Disorder changes what “band structure” means. In a perfect periodic crystal the spectral weight at fixed k consists of infinitely sharp energies. In a random alloy, CPA produces broadened peaks in the Bloch spectral function. Their centers retain a band-like dispersion while their widths express disorder-induced finite lifetimes and mean free paths. A broadened spectral peak is thus physical information, not merely poor numerical resolution.
+  </p>
+  <p>
+    The approximation has a clear boundary. A single-site CPA describes the configurational average efficiently but does not retain a particular local arrangement, so explicit supercells or cluster extensions are required when short-range order, local relaxation, clustering, or specific defect complexes are central to the question. The choice between CPA and supercells is therefore a choice about the statistical model of disorder, not only computational cost.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-5-mto">
+  <h2 id="section-16-5-mto">16.5 Muffin-Tin Orbitals (MTOs)</h2>
+  <p>
+    MTOs translate the scattering picture back into a compact orbital language. The aim is stronger than merely obtaining eigenvalues: construct a small set of localized functions that are generated from the same self-consistent Hamiltonian and therefore retain the correct atomic behavior near each nucleus while carrying analytically controlled tails between sites. This creates a bridge from KKR to the intuitive orbital viewpoint of Chapters 14–15.
+  </p>
+  <p>
+    Start with one atomic sphere in a flat exterior potential. Inside, an MTO contains the regular radial solution for angular channel L. Outside, its envelope is chosen from free spherical solutions. Andersen's useful reformulation separates two energies: ε controls the radial solution inside the sphere, while κ controls the envelope in the interstitial. Schematically,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="schematic muffin tin orbital with an augmented head and free spherical tail">
+      <semantics>
+        <mrow>
+          <msub><mi>χ</mi><mi>L</mi></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>κ</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>=</mo>
+          <mrow><mo>(</mo>
+            <mtable>
+              <mtr><mtd><msub><mi>ψ</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>+</mo><mtext>regular correction</mtext></mtd><mtd><mtext>inside sphere</mtext></mtd></mtr>
+              <mtr><mtd><msub><mi>n</mi><mi>l</mi></msub><mo>(</mo><mi>κ</mi><mi>r</mi><mo>)</mo></mtd><mtd><mtext>interstitial envelope</mtext></mtd></mtr>
+            </mtable>
+          <mo>)</mo></mrow>
+        </mrow>
+        <annotation encoding="application/x-tex">\chi_L(\varepsilon,\kappa,\mathbf r)\sim\begin&#123;cases&#125;\psi_l(\varepsilon,r)+\text&#123;regular correction&#125;&amp;r&lt;S\\n_l(\kappa r)&amp;r&gt;S\end&#123;cases&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The correction inside the sphere is chosen so that the function and its derivative join smoothly to the envelope. The important conceptual freedom is that κ need not be tied immediately to ε. Choosing κ judiciously can produce a useful finite basis instead of recreating the fully nonlinear KKR equation for every trial energy.
+  </p>
+  <p>
+    The tail from an MTO centered on one site can be expanded into regular functions centered on a neighboring sphere. Consequently the influence of neighboring atoms enters as a tail-cancellation problem: a true eigenstate is a linear combination of MTOs for which the unwanted free-solution pieces cancel inside every sphere, leaving only the correct radial solutions. This is the scattering analogue of constructing a basis already adapted to the differential equation before diagonalization.
+  </p>
+  <p>
+    The reward is a minimal, physically interpretable basis. A fixed generic atomic-orbital basis needs enough flexibility to repair the incorrect behavior of one atom's tails when they penetrate another atom's core region. MTO augmentation builds much of that correction into the basis construction itself. The limitation is equally important: the simplest forms are most natural for close-packed, nearly spherical environments and become less convenient for very open or low-symmetry structures.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-6-canonical-bands">
+  <h2 id="section-16-6-canonical-bands">16.6 Canonical Bands</h2>
+  <p>
+    The MTO equations become especially revealing in the κ = 0 limit, widely associated with the atomic-sphere approximation for close-packed structures. In the interstitial, κ = 0 means the envelope satisfies Laplace's equation, so its tails behave like electrostatic multipoles. This makes the lattice dependence expressible through structure constants that depend only on geometry.
+  </p>
+  <p>
+    After tail cancellation the secular equation takes a remarkably separated form,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="MTO tail cancellation equation separating structure and potential functions">
+      <semantics>
+        <mrow>
+          <munder><mo>∑</mo><mi>L</mi></munder>
+          <mrow><mo>[</mo><msub><mi>S</mi><mrow><mi>L</mi><mi>L</mi><mo>′</mo></mrow></msub><mo>(</mo><mi>k</mi><mo>)</mo><mo>−</mo><msub><mi>P</mi><mi>l</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><msub><mi>δ</mi><mrow><mi>L</mi><mi>L</mi><mo>′</mo></mrow></msub><mo>]</mo></mrow>
+          <msub><mi>a</mi><mi>L</mi></msub><mo>(</mo><mi>k</mi><mo>)</mo><mo>=</mo><mn>0</mn>
+        </mrow>
+        <annotation encoding="application/x-tex">\sum_L[S_&#123;LL'&#125;(\mathbf k)-P_l(\varepsilon)\delta_&#123;LL'&#125;]a_L(\mathbf k)=0</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The structure matrix S(k) contains the lattice geometry. The potential function P<sub>l</sub>(ε) contains the atom-specific scattering information and is a smooth reparameterization of the logarithmic derivative. This separation is one of the most useful conceptual results in the chapter: much of a band shape can be understood as geometry dressed by only a few material-dependent radial parameters.
+  </p>
+  <p>
+    If hybridization between different angular-momentum sectors is temporarily suppressed, each l block of the structure matrix has 2l + 1 eigenvalues. These are the canonical bands. They are properties of a crystal structure alone; the same canonical fcc <em>d</em>-band shapes can be reused across different transition metals. The actual energy scale and distortion then enter through the potential function.
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="canonical unhybridized band energy from structure eigenvalue and atomic parameters">
+      <semantics>
+        <mrow>
+          <msub><mi>ε</mi><mrow><mi>l</mi><mi>i</mi></mrow></msub><mo>(</mo><mi>k</mi><mo>)</mo><mo>≈</mo>
+          <msub><mi>C</mi><mi>l</mi></msub><mo>+</mo>
+          <mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><msub><mi>μ</mi><mi>l</mi></msub><msup><mi>S</mi><mn>2</mn></msup></mrow></mfrac>
+          <mfrac>
+            <msub><mi>S</mi><mrow><mi>l</mi><mi>i</mi></mrow></msub><mo>(</mo><mi>k</mi><mo>)</mo>
+            <mrow><mn>1</mn><mo>−</mo><msub><mi>γ</mi><mi>l</mi></msub><msub><mi>S</mi><mrow><mi>l</mi><mi>i</mi></mrow></msub><mo>(</mo><mi>k</mi><mo>)</mo></mrow>
+          </mfrac>
+        </mrow>
+        <annotation encoding="application/x-tex">\varepsilon_&#123;li&#125;(\mathbf k)\approx C_l+\frac&#123;\hbar^2&#125;&#123;2\mu_lS^2&#125;\frac&#123;S_&#123;li&#125;(\mathbf k)&#125;&#123;1-\gamma_lS_&#123;li&#125;(\mathbf k)&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here C<sub>l</sub> sets a band center, μ<sub>l</sub> sets its characteristic width, and γ<sub>l</sub> distorts the simplest scaled canonical shape. Martin emphasizes that μ can be connected to the radial wavefunction at the sphere boundary: the band width is controlled by how strongly an atomic state leaks into neighboring regions. This connects the canonical-band picture directly back to the atomic-sphere intuition of Chapter 10 and the hopping language of Chapter 14.
+  </p>
+  <p>
+    Canonical bands are an interpretation tool rather than a complete calculation. Real materials mix angular channels, experience nonspherical potentials, and may require physics beyond one-electron Kohn–Sham bands. Their value is that they expose which features of a transition-metal band structure arise mainly from lattice geometry and which arise from atomic scattering parameters.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-7-localized-kkr-mto">
+  <h2 id="section-16-7-localized-kkr-mto">16.7 Localized “Tight-Binding,” MTO, and KKR Formulations</h2>
+  <p>
+    The original KKR propagator is long ranged at positive energies, so its matrix representation does not immediately resemble a short-range tight-binding Hamiltonian. MTOs improve the picture because their multipole-like tails decay algebraically. For orbitals with angular momenta l and l′, the characteristic structure-factor scale is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="distance decay of unscreened MTO structure factors">
+      <semantics>
+        <mrow>
+          <msub><mi>S</mi><mrow><mi>L</mi><mi>L</mi><mo>′</mo></mrow></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>∝</mo>
+          <msup>
+            <mrow><mo>(</mo><mfrac><mi>S</mi><mi>R</mi></mfrac><mo>)</mo></mrow>
+            <mrow><mi>l</mi><mo>+</mo><mi>l</mi><mo>′</mo><mo>+</mo><mn>1</mn></mrow>
+          </msup>
+        </mrow>
+        <annotation encoding="application/x-tex">S_&#123;LL'&#125;(R)\propto\left(\frac&#123;S&#125;&#123;R&#125;\right)^&#123;l+l'+1&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    High-angular-momentum couplings therefore become short ranged quickly, but the lowest multipoles retain troublesome long tails. Andersen's screening transformation uses linear combinations of neighboring MTOs to cancel these multipole fields, producing exponentially localized orbitals. The logic is closely related to Wannier localization: the same finite band subspace can be represented by many gauges or orbital choices, some far more local than others.
+  </p>
+  <p>
+    KKR can be localized by a parallel idea. The reference propagator G<sub>0</sub> in the Dyson equation need not be the free-particle Green function. Choosing a reference system with strongly repulsive site potentials makes G<sub>0</sub> decay rapidly over the energy range of interest. The multiple-scattering algebra is unchanged, but the matrices become spatially sparse enough to motivate local and linear-scaling strategies.
+  </p>
+  <p>
+    This section completes a conceptual loop. Chapter 14 introduced fitted tight-binding matrix elements; Chapter 15 generated localized matrix elements from explicit basis functions; Chapter 16 shows that even an apparently delocalized scattering theory can be transformed into a localized first-principles representation. “Localized” is therefore a property of representation and subspace choice, not proof that the underlying electron state is physically confined to one atom.
+  </p>
+  <p>
+    The same limitations that motivated the construction remain visible. Traditional KKR/MTO forms are most economical for close-packed systems and near-muffin-tin potentials. Open structures may require empty spheres or more elaborate full-potential machinery, and the resulting locality must be demonstrated rather than assumed from the method name.
+  </p>
+</section>
+
+<section aria-labelledby="section-16-8-energy-force-pressure">
+  <h2 id="section-16-8-energy-force-pressure">16.8 Total Energy, Force, and Pressure in Augmented Methods</h2>
+  <p>
+    Solving the one-electron equation is only part of a self-consistent electronic-structure calculation. Structural predictions require a variational total-energy expression, and augmented all-electron methods must handle very large near-nuclear kinetic and Coulomb contributions whose cancellation leaves the much smaller bonding energy. Numerically accurate eigenvalues are therefore not enough; energy expressions must be organized so that these large components cancel consistently.
+  </p>
+  <p>
+    Forces are especially delicate because they are derivatives rather than variational stationary values. The formal force remains
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="force as derivative of total energy with respect to a nuclear position">
+      <semantics>
+        <mrow>
+          <msub><mi>F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathbf F_I=-\frac&#123;dE&#125;&#123;d\mathbf R_I&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    but a direct all-electron Hellmann–Feynman evaluation demands extremely accurate wavefunctions in the core region. In a low-symmetry environment the core density polarizes slightly and transmits the external electric field to the nucleus. Treating the nucleus alone would produce a bare nuclear force; the physically relevant ionic response involves nucleus plus core and is screened accordingly. Alternative force formulations move the core rigidly with the nucleus and collect the remaining response into boundary and correction terms, which can be far more stable numerically.
+  </p>
+  <p>
+    APW-type force and stress formulas therefore involve more than an electrostatic field evaluated at a point. Sphere-boundary matching terms, basis response, Coulomb contributions, and the explicit dependence of the augmented functions on geometry must be differentiated consistently. This is the augmented-method analogue of the Pulay issue in Chapter 15: an accurate SCF solution does not remove derivative terms generated by a geometry-dependent representation.
+  </p>
+  <p>
+    Pressure is the volume derivative of the same total energy,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="pressure as negative volume derivative of the total energy">
+      <semantics>
+        <mrow><mi>P</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac></mrow>
+        <annotation encoding="application/x-tex">P=-\frac&#123;dE&#125;&#123;d\Omega&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    and in the atomic-sphere approximation Martin notes that it can be expressed particularly simply through values of the radial wavefunctions at sphere boundaries. The deeper lesson is broader: augmentation turns what looks like a difficult near-nuclear volume or force derivative into information transmitted through carefully defined boundaries. Those same boundaries are what made APW, KKR, and MTO one coherent family throughout the chapter.
+  </p>
+</section>
