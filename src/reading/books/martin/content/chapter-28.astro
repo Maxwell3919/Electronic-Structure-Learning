@@ -1,0 +1,138 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-28-1-weak-strong', label: '28.1 Weak and Strong Topological Insulators in Three Dimensions: Four Topological Invariants' },
+  { id: 'section-28-2-tight-binding', label: '28.2 Tight-Binding Example in 3D' },
+  { id: 'section-28-3-materials', label: '28.3 Normal and Topological Insulators in Three Dimensions: Sb₂Se₃ and Bi₂Se₃' },
+  { id: 'section-28-4-weyl-dirac', label: '28.4 Weyl and Dirac Semimetals' },
+  { id: 'section-28-5-fermi-arcs', label: '28.5 Fermi Arcs' },
+];
+
+export const modernPerspective = [
+  'The four Z₂ indices classify a specified gapped, time-reversal-symmetric occupied subspace. The strong/weak label therefore depends on the Hamiltonian, filling, spin–orbit treatment, magnetic state, and existence of a global bulk gap. Inversion parities are an efficient shortcut only when inversion symmetry is present; Wilson-loop or hybrid-Wannier evolution provides a more general occupied-subspace formulation.',
+  'A surface Dirac cone of a strong topological insulator and a bulk Dirac or Weyl node are different physical objects even though each may have locally linear dispersion. The strong topological insulator is bulk-gapped and its surface cone is protected only while the relevant surface preserves time-reversal symmetry. A Weyl semimetal is intrinsically bulk-gapless at isolated nodes carrying Berry flux.',
+  'For a material-level Weyl claim, locating a crossing on one sampled band path is insufficient. The nodes must be established in the full Brillouin zone, their chiral charges determined from Berry flux or an equivalent invariant, and the total charge over the Brillouin zone must sum to zero. Surface Fermi arcs are complementary boundary evidence whose detailed shape still depends on surface projection and termination.',
+];
+
+export const synthesis =
+  'Chapter 28 completes Martin’s main chapter sequence by showing what becomes possible when topology is extended from two to three dimensions. A time-reversal-invariant bulk insulator is characterized by four Z₂ indices: weak phases can be understood as stacks of two-dimensional topological layers, while a strong phase cannot be reduced to such layers without closing the bulk gap and carries an odd surface-state connectivity on a time-reversal-preserving boundary. The Bi₂Se₃ example connects this classification to a realistic spin–orbit-driven band inversion, while parity and hybrid Wannier flow provide bulk diagnostics. The chapter then changes physical class: Weyl and Dirac semimetals are bulk-gapless systems. In three momentum dimensions a two-band Hamiltonian can vanish at an isolated generic point, creating a Weyl node whose Chern number is the quantized Berry flux through a surrounding surface. Nodes of opposite total chirality must balance across the Brillouin zone, and the Chern character of the two-dimensional slices between them produces open surface Fermi arcs. This closes Part VI by linking Bloch-state geometry, symmetry, bulk invariants, boundary states, and topological band crossings within one continuous electronic-structure picture.';
+---
+
+<section aria-labelledby="section-28-1-weak-strong">
+  <h2 id="section-28-1-weak-strong">28.1 Weak and Strong Topological Insulators in Three Dimensions: Four Topological Invariants</h2>
+  <p>
+    Chapter 27 needed one Z₂ index to distinguish the two possible time-reversal topologies of a two-dimensional insulator. Three dimensions contain eight time-reversal-invariant momenta and permit four independent binary indices, conventionally written
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>(</mo><msub><mi>ν</mi><mn>0</mn></msub><mo>;</mo><msub><mi>ν</mi><mn>1</mn></msub><msub><mi>ν</mi><mn>2</mn></msub><msub><mi>ν</mi><mn>3</mn></msub><mo>)</mo><mo>,</mo><mspace width="0.8em"/><msub><mi>ν</mi><mi>i</mi></msub><mo>∈</mo><mo>{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>}</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">(\nu_0;\nu_1\nu_2\nu_3),\qquad \nu_i\in\&#123;0,1\&#125;.</annotation></semantics></math>
+  </div>
+  <p>
+    The first index separates the major classes. If ν<sub>0</sub> = 0 and at least one of the remaining indices is nonzero, the crystal is a weak topological insulator. Martin motivates these phases by starting from stacks of two-dimensional Z₂-odd layers. The three weak indices encode the reciprocal-space direction associated with that stacking picture.
+  </p>
+  <p>
+    Weak phases do not place equivalent protection on every surface. A surface perpendicular to the effective stacking direction can be insulating, while other surfaces can carry an even number of Dirac cones. Translation-breaking disorder can couple those cones and remove the simple protected surface-metal picture even while the bulk remains gapped and time-reversal symmetric.
+  </p>
+  <p>
+    If ν<sub>0</sub> = 1, the phase is strong. It cannot be adiabatically pulled apart into isolated two-dimensional layers while preserving time reversal and the bulk gap. A time-reversal-preserving surface has odd topological connectivity and, in the simplest case, one Dirac cone. The partner required by fermion doubling is supplied by the opposite surface of the full three-dimensional sample rather than by another cone on the same isolated surface.
+  </p>
+  <aside class="callout" aria-label="Three-dimensional topological classes">
+    <p><strong>Three-dimensional Z₂ picture</strong></p>
+    <p>(0;000) → ordinary gapped insulator.</p>
+    <p>(0;ν₁ν₂ν₃) with a nonzero weak index → stacked-layer topology; surface response depends strongly on orientation and translation symmetry.</p>
+    <p>(1;ν₁ν₂ν₃) → strong topology; odd surface connectivity on a time-reversal-preserving boundary.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-28-2-tight-binding">
+  <h2 id="section-28-2-tight-binding">28.2 Tight-Binding Example in 3D</h2>
+  <p>
+    Martin next makes the strong phase concrete with an s–p³ tight-binding model. All three p orbitals are retained because the atomic spin–orbit interaction acts in the full three-dimensional orbital space. The low-energy bands nevertheless reduce mainly to one even- and one odd-parity orbital sector, so the same two-band logic used throughout Part VI remains visible inside the larger Hamiltonian.
+  </p>
+  <p>
+    A slab calculation exposes the boundary consequence. Around a surface time-reversal-invariant momentum, the projected bulk gap contains a pair of states with opposite momentum and opposite spin character. Their dispersion forms a two-dimensional Dirac cone. At a fixed energy above or below the crossing, the surface Fermi contour surrounds the Dirac point and carries spin–momentum locking: time reversal maps the state at <strong>k</strong><sub>∥</sub> to its Kramers partner at −<strong>k</strong><sub>∥</sub>.
+  </p>
+  <p>
+    The diamond-lattice two-site model gives a complementary route. Just as graphene generalized the one-dimensional two-site chain to two dimensions, the diamond structure supplies a three-dimensional two-sublattice setting that can realize trivial, weak, or strong phases depending on hopping and spin–orbit coupling. The model demonstrates that the classification is a property of the occupied Bloch subspace, not of one particular crystal chemistry.
+  </p>
+</section>
+
+<section aria-labelledby="section-28-3-materials">
+  <h2 id="section-28-3-materials">28.3 Normal and Topological Insulators in Three Dimensions: Sb₂Se₃ and Bi₂Se₃</h2>
+  <p>
+    Martin uses Bi₂Se₃ as the prototypical strong topological insulator and contrasts it with Sb₂Se₃ in the material setting discussed in the source. Their layered crystal structures are closely related, so the decisive difference is electronic: near the zone center the relevant Bi- and Se-derived p states have opposite parity, and sufficiently strong spin–orbit coupling reverses their order in Bi₂Se₃ while leaving a bulk gap.
+  </p>
+  <p>
+    In the source calculation, the occupied bands are in the normal order through most of the Brillouin zone and inverted near Γ. Because the crystal has inversion symmetry, the parity products at the eight TRIM provide an efficient bulk diagnostic and identify the strong phase. The same result can be expressed without relying on isolated parity labels by following the flow of hybrid Wannier centers through the occupied subspace.
+  </p>
+  <p>
+    The physical consequence is a topologically required surface band crossing the projected bulk gap of Bi₂Se₃, whereas the corresponding normal-insulator comparison lacks that protected connectivity. The important inference is global: an observed or calculated band inversion is useful evidence only after the occupied manifold remains properly defined, the relevant bulk gap is established, and a bulk invariant confirms that the band ordering cannot be removed by a symmetry-preserving, gap-preserving deformation.
+  </p>
+  <p>
+    This is also why quantitative electronic-structure accuracy matters. Spin–orbit splittings, near-gap band order, crystal structure, and the chosen Hamiltonian approximation can change the low-energy manifold before any topological invariant is evaluated. The conceptual ingredients are reviewed in <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a> and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-28-4-weyl-dirac">
+  <h2 id="section-28-4-weyl-dirac">28.4 Weyl and Dirac Semimetals</h2>
+  <p>
+    The chapter now changes from topological insulators to topological semimetals. A strong topological insulator has a bulk gap and may have a Dirac cone only in its surface spectrum. A Weyl or Dirac semimetal instead has band-touching nodes in the three-dimensional bulk Brillouin zone itself.
+  </p>
+  <p>
+    The dimensional reason is visible in the generic two-band Hamiltonian used in Chapter 26,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>3</mn></munderover><msub><mi>h</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msub><mi>τ</mi><mi>i</mi></msub><mo>,</mo><mspace width="0.8em"/><msub><mi>E</mi><mi>gap</mi></msub><mo>=</mo><mn>2</mn><msqrt><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>3</mn></munderover><msubsup><mi>h</mi><mi>i</mi><mn>2</mn></msubsup></mrow></msqrt><mo>.</mo></mrow><annotation encoding="application/x-tex">H(\mathbf k)=\sum_&#123;i=1&#125;^3 h_i(\mathbf k)\tau_i,\qquad E_\mathrm&#123;gap&#125;=2\sqrt&#123;\sum_&#123;i=1&#125;^3 h_i^2&#125;.</annotation></semantics></math>
+  </div>
+  <p>
+    Closing the gap requires three independent conditions, h<sub>1</sub> = h<sub>2</sub> = h<sub>3</sub> = 0. Three momentum coordinates provide exactly enough freedom for those equations to have isolated solutions at generic points. Small perturbations can move such a point without necessarily removing it, which is the robustness Herring identified long before the modern topological interpretation.
+  </p>
+  <p>
+    Near an isolated two-band node the Hamiltonian is linear to leading order,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>H</mi><mi>W</mi></msub><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo><mo>=</mo><msub><mi>ε</mi><mn>0</mn></msub><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>3</mn></munderover><msub><mi>v</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>q</mi><mi>i</mi></msub><msub><mi>σ</mi><mi>j</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">H_W(\mathbf q)=\varepsilon_0+\sum_&#123;i,j=1&#125;^3 v_&#123;ij&#125;q_i\sigma_j.</annotation></semantics></math>
+  </div>
+  <p>
+    The Weyl node behaves as a monopole of Berry curvature. A closed surface surrounding one simple node carries an integer Chern number,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><mo>∮</mo><mi mathvariant="bold">Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi><mo>=</mo><mo>±</mo><mn>1</mn><mo>,</mo></mrow><annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\oint \mathbf\Omega(\mathbf k)\cdot d\mathbf S=\pm1.</annotation></semantics></math>
+  </div>
+  <p>
+    Its sign is the chirality of the node. A fourfold Dirac point can be viewed locally as two Weyl sectors of opposite chirality superposed at the same momentum when symmetry permits them to remain together. Martin illustrates how a mass term and a time-reversal-breaking Zeeman field can transform a gapped four-band model into a pair of Weyl nodes,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo>=</mo><mi>v</mi><msub><mi>τ</mi><mi>x</mi></msub><mo>(</mo><mi mathvariant="bold">σ</mi><mo>·</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>+</mo><mi>m</mi><msub><mi>τ</mi><mi>z</mi></msub><mo>+</mo><mi>b</mi><msub><mi>σ</mi><mi>z</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">H=v\tau_x(\boldsymbol\sigma\cdot\mathbf k)+m\tau_z+b\sigma_z.</annotation></semantics></math>
+  </div>
+  <p>
+    In this illustrative model the gapped regime occurs for |m| &gt; |b|, the gap closes at the transition, and for sufficiently large |b| two separated Weyl nodes appear. More general stable Dirac semimetals require additional symmetry protection or tuning; a fourfold crossing should therefore not be labeled “Dirac” solely from the appearance of a linear band plot.
+  </p>
+  <p>
+    Berry flux cannot have a net source in the periodic Brillouin zone. Weyl nodes therefore obey
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><munderover><mo>∑</mo><mi>a</mi><msub><mi>N</mi><mi>W</mi></msub></munderover><msub><mi>C</mi><mi>a</mi></msub><mo>=</mo><mn>0</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">\sum_&#123;a=1&#125;^&#123;N_W&#125; C_a=0.</annotation></semantics></math>
+  </div>
+  <p>
+    In the simplest inversion-symmetric magnetic example this produces two nodes of opposite chirality at ±<strong>k</strong>. Other symmetry settings can generate many nodes at inequivalent momenta and energies, but the zero-total-chirality constraint remains.
+  </p>
+</section>
+
+<section aria-labelledby="section-28-5-fermi-arcs">
+  <h2 id="section-28-5-fermi-arcs">28.5 Fermi Arcs</h2>
+  <p>
+    Fermi arcs are the boundary signature that makes the Weyl topology especially visible. Imagine slicing the three-dimensional Brillouin zone into two-dimensional momentum planes. Away from a Weyl node each slice can be gapped and assigned a Chern number. Crossing a Weyl node changes that slice Chern number by the chirality carried by the node.
+  </p>
+  <p>
+    Every intervening slice with nonzero Chern number has the chiral boundary state of a two-dimensional Chern insulator. As the slice momentum is varied, those boundary crossings trace a line in the surface Brillouin zone. At the Fermi energy the line begins and ends at the surface projections of bulk Weyl nodes of compensating chirality: the Fermi arc.
+  </p>
+  <p>
+    The arc is therefore not an ordinary isolated two-dimensional Fermi surface, which must close on itself. It is the exposed surface segment of a boundary structure tied to the three-dimensional bulk. In a finite slab, the complementary segment resides on the opposite surface so that the complete electronic structure remains consistent.
+  </p>
+  <p>
+    Surface termination can reshape the arc and multiple nodes can reconnect the arcs in different ways. If opposite-chirality nodes project onto the same surface momentum, the visible arc can also become difficult to distinguish. Those details do not change the underlying bulk statement: a surface whose projection separates nodes with nonzero enclosed Berry charge must reproduce the change of Chern number carried by the bulk slices.
+  </p>
+</section>
