@@ -1,0 +1,171 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-23-1-definition', label: '23.1 Definition and Properties' },
+  { id: 'section-23-2-projected', label: '23.2 Maximally Projected Wannier Functions' },
+  { id: 'section-23-3-localized', label: '23.3 Maximally Localized Wannier Functions' },
+  { id: 'section-23-4-nonorthogonal', label: '23.4 Nonorthogonal Localized Functions' },
+  { id: 'section-23-5-entangled', label: '23.5 Wannier Functions for Entangled Bands' },
+  { id: 'section-23-6-hybrid', label: '23.6 Hybrid Wannier Functions' },
+  { id: 'section-23-7-applications', label: '23.7 Applications' },
+];
+
+export const modernPerspective = [
+  'A Wannier orbital is a representation of a chosen band subspace, not a unique measurable atomic orbital. Its center, spread, symmetry character, and hopping amplitudes depend on the selected subspace and gauge; only appropriately gauge-invariant combinations or explicitly defined model quantities should be compared across constructions.',
+  'For entangled bands, the energy windows and the criterion used to select a smooth subspace are part of the model definition. A small interpolation error inside one target window does not prove that orbital character, Fermi-surface topology, matrix elements, or higher-energy states are equally faithful outside that window.',
+  'Topological obstruction must be stated precisely. A nonzero Chern number prevents a globally smooth periodic gauge for an isolated occupied subspace and therefore obstructs exponentially localized orthonormal Wannier functions for that subspace. Other symmetry-protected phases can instead exhibit a symmetry-respecting Wannier obstruction even when localized functions exist after the protecting symmetry constraint is relaxed.',
+];
+
+export const synthesis =
+  'Chapter 23 shows that localization in electronic structure can be a choice of representation rather than a physical boundary. Extended Bloch eigenstates possess k-dependent phase and unitary freedom inside a chosen band subspace; Fourier transformation of a smooth gauge converts that same subspace into localized Wannier functions. Projection chooses a chemically motivated gauge, maximally localized Wannier functions choose one by minimizing spatial spread, nonorthogonal functions trade orthogonality for shorter range, and disentanglement first chooses a smooth low-dimensional subspace from overlapping bands. Hybrid Wannier functions localize only selected directions and expose the evolution of Wannier centers across the Brillouin zone. These constructions make localized Hamiltonians, interpolation, chemical interpretation, linear-scaling methods, polarization, and topology possible without identifying the Wannier orbitals themselves as unique observables. Chapter 24 now uses the gauge structure already visible in Wannier centers to explain why bulk polarization is a Berry-phase quantity defined only modulo a polarization quantum.';
+---
+
+<section aria-labelledby="section-23-1-definition">
+  <h2 id="section-23-1-definition">23.1 Definition and Properties</h2>
+  <p>
+    Bloch eigenstates are adapted to translational symmetry: they are extended through the crystal and labeled by crystal momentum. Wannier functions use the same Hilbert subspace in a representation adapted to real-space locality. The change of representation is possible because Bloch eigenvectors are not uniquely fixed by the eigenvalue problem. Their phases can vary with <em>k</em>, and within a group of bands the states can be mixed by a <em>k</em>-dependent unitary transformation without changing the subspace projector.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>=</mo><munder><mo>∑</mo><mi>m</mi></munder><mo>|</mo><msubsup><mi>u</mi><mrow><mi>m</mi><mi mathvariant="bold">k</mi></mrow><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></msubsup><mo>⟩</mo><msub><mi>U</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>,</mo><mspace width="0.8em"/><msup><mi>U</mi><mo>†</mo></msup><mi>U</mi><mo>=</mo><mn>1</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">|u_&#123;n\mathbf k&#125;\rangle=\sum_m |u^&#123;(0)&#125;_&#123;m\mathbf k&#125;\rangle U_&#123;mn&#125;(\mathbf k),\qquad U^\dagger U=1.</annotation></semantics></math>
+  </div>
+  <p>
+    For a single isolated band this freedom reduces to a <em>k</em>-dependent phase. For a composite group of bands, the unitary matrix can rotate the basis inside the whole subspace. The eigenvalues are unchanged, as are expectation values that depend only on the projector onto the selected subspace. Real-space localization, however, depends strongly on how smoothly these phases and rotations vary across the Brillouin zone.
+  </p>
+  <p>
+    A Wannier function centered in lattice cell <strong>R</strong> is the Brillouin-zone Fourier transform of the chosen smooth Bloch gauge:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><mi mathvariant="bold">R</mi><mi>n</mi><mo>⟩</mo><mo>=</mo><mfrac><msub><mi>Ω</mi><mi>cell</mi></msub><msup><mrow><mo>(</mo><mn>2</mn><mi>π</mi><mo>)</mo></mrow><mn>3</mn></msup></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>d</mi><mi mathvariant="bold">k</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">|\mathbf R n\rangle=\frac&#123;\Omega_&#123;\mathrm&#123;cell&#125;&#125;&#125;&#123;(2\pi)^3&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;d\mathbf k\,e^&#123;-i\mathbf k\cdot\mathbf R&#125;|\psi_&#123;n\mathbf k&#125;\rangle.</annotation></semantics></math>
+  </div>
+  <p>
+    The inverse transformation reconstructs the Bloch functions exactly within the chosen subspace. Wannierization therefore does not replace the original band information with an approximate atomic model merely by changing basis. Approximation enters when the band subspace itself is truncated, disentangled, or used to build a reduced Hamiltonian over a restricted energy range.
+  </p>
+  <p>
+    The Fourier relation also explains why smoothness in reciprocal space controls decay in real space. Discontinuous phase choices create long-ranged oscillatory Wannier functions, whereas a globally smooth gauge can produce rapid, often exponential localization. The existence of such a smooth gauge becomes a topological question later in the book.
+  </p>
+  <p>
+    The first spatial moment defines a Wannier center. Written in terms of the cell-periodic Bloch functions, it already has the form of a Berry connection integrated over the Brillouin zone:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="bold">r</mi><mi>n</mi></msub><mo>=</mo><mo>⟨</mo><mn>0</mn><mi>n</mi><mo>|</mo><mover><mi mathvariant="bold">r</mi><mo>^</mo></mover><mo>|</mo><mn>0</mn><mi>n</mi><mo>⟩</mo><mo>=</mo><mi>i</mi><mfrac><msub><mi>Ω</mi><mi>cell</mi></msub><msup><mrow><mo>(</mo><mn>2</mn><mi>π</mi><mo>)</mo></mrow><mn>3</mn></msup></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>d</mi><mi mathvariant="bold">k</mi><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathbf r_n=\langle 0n|\hat&#123;\mathbf r&#125;|0n\rangle=i\frac&#123;\Omega_&#123;\mathrm&#123;cell&#125;&#125;&#125;&#123;(2\pi)^3&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;d\mathbf k\,\langle u_&#123;n\mathbf k&#125;|\nabla_\mathbf k|u_&#123;n\mathbf k&#125;\rangle.</annotation></semantics></math>
+  </div>
+  <p>
+    An individual center can shift under gauge choices or by a lattice vector, but gauge-invariant combinations of centers have direct physical meaning. Chapter 24 turns this observation into the modern theory of polarization. The relation to gauge and topology is mapped more broadly in <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-23-2-projected">
+  <h2 id="section-23-2-projected">23.2 Maximally Projected Wannier Functions</h2>
+  <p>
+    One way to remove the gauge freedom is to specify what the localized functions should resemble. Martin calls this the maximally projected construction. A trial function may be centered on an atom, a bond, or another chemically meaningful region; at each <em>k</em>, the phases or unitary rotations of the Bloch states are chosen to maximize overlap with that trial subspace.
+  </p>
+  <aside class="callout" aria-label="Projection construction">
+    <p><strong>Projection construction</strong></p>
+    <p>chosen local trial orbitals → project onto Bloch subspace → orthonormalize / smooth the projected states → Fourier transform → localized Wannier representation.</p>
+  </aside>
+  <p>
+    The construction is intuitive because the initial guess carries chemical information. An atom-centered <em>p</em> function can select a <em>p</em>-like representation; a bond-centered trial function can select bonding combinations from several occupied bands. In silicon, for example, the four occupied valence bands can be rotated into four equivalent bond-centered functions with an <em>sp</em><sup>3</sup>-like interpretation.
+  </p>
+  <p>
+    Projection also provides a route from first-principles bands to compact model spaces. If a localized set spans the target low-energy subspace accurately, matrix elements in that basis can be interpreted as onsite energies, hoppings, or ingredients of Hubbard-like models. Those parameters remain representation dependent: changing the trial orbitals or the retained subspace changes the localized basis and therefore the numerical model parameters even when the underlying first-principles band subspace is unchanged.
+  </p>
+</section>
+
+<section aria-labelledby="section-23-3-localized">
+  <h2 id="section-23-3-localized">23.3 Maximally Localized Wannier Functions</h2>
+  <p>
+    Projection chooses localization indirectly by choosing a target character. Marzari and Vanderbilt instead define a quantitative localization criterion. For a group of Wannier functions in one cell, the total quadratic spread is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Ω</mi><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><mo>[</mo><mo>⟨</mo><msup><mi>r</mi><mn>2</mn></msup><mo>⟩</mo><msub><mspace width="0.1em"/><mi>n</mi></msub><mo>−</mo><msup><mrow><mo>|</mo><mo>⟨</mo><mi mathvariant="bold">r</mi><mo>⟩</mo><msub><mspace width="0.1em"/><mi>n</mi></msub><mo>|</mo></mrow><mn>2</mn></msup><mo>]</mo><mo>=</mo><msub><mi>Ω</mi><mi>I</mi></msub><mo>+</mo><mover><mi>Ω</mi><mo>~</mo></mover><mo>.</mo></mrow><annotation encoding="application/x-tex">\Omega=\sum_n[\langle r^2\rangle_n-|\langle\mathbf r\rangle_n|^2]=\Omega_I+\widetilde&#123;\Omega&#125;.</annotation></semantics></math>
+  </div>
+  <p>
+    The decomposition is decisive. The gauge-invariant part Ω<sub>I</sub> is fixed once the band subspace itself is chosen; the gauge-dependent part can be reduced by changing the unitary matrices <em>U</em>(<strong>k</strong>). Maximally localized Wannier functions are obtained by minimizing the latter contribution while leaving the selected subspace unchanged.
+  </p>
+  <p>
+    The invariant part has a deeper interpretation than the width of any one orbital. With <em>P</em> the projector onto the chosen band manifold and <em>Q</em> = 1 − <em>P</em>, Ω<sub>I</sub> measures position fluctuations that connect the retained subspace to its complement. This is why it later becomes a rigorous measure of electronic localization rather than merely a visual measure of how compact one chosen orbital looks.
+  </p>
+  <p>
+    In practical reciprocal-space calculations the minimization is formulated using overlaps between neighboring cell-periodic states, ⟨<em>u</em><sub>m<strong>k</strong></sub>|<em>u</em><sub>n,<strong>k</strong>+<strong>b</strong></sub>⟩. This preserves the lattice-periodic nature of position information and anticipates the discretized Berry-phase formulas of Chapter 24. The minimization selects a smooth gauge; it does not alter the eigenvalue spectrum of the retained subspace.
+  </p>
+  <p>
+    The result is often chemically readable—bond-centered functions in covalent semiconductors are a classic example—but maximal spatial localization and a preferred chemical interpretation need not select the same gauge in every material. The localized-orbital viewpoint is developed more generally in <a href={href('/theory/localized-orbital-methods/')}>Localized-Orbital Methods</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-23-4-nonorthogonal">
+  <h2 id="section-23-4-nonorthogonal">23.4 Nonorthogonal Localized Functions</h2>
+  <p>
+    Orthonormality is useful algebraically, but it can force long tails into local orbitals because neighboring functions must cancel their overlaps exactly. If the application permits an overlap matrix, shorter-ranged nonorthogonal functions can be advantageous. Martin therefore considers nonsingular transformations of the orthonormal Wannier basis,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mover><mi>w</mi><mo>~</mo></mover><mi>i</mi></msub><mo>⟩</mo><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><msub><mi>A</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>|</mo><msub><mi>w</mi><mi>j</mi></msub><mo>⟩</mo><mo>,</mo><mspace width="0.8em"/><mi>det</mi><mi>A</mi><mo>≠</mo><mn>0</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">|\widetilde&#123;w&#125;_i\rangle=\sum_j A_&#123;ij&#125;|w_j\rangle,\qquad \det A\neq0.</annotation></semantics></math>
+  </div>
+  <p>
+    The nonsingularity condition preserves the dimension of the represented subspace, while abandoning unitarity allows the functions to overlap. Localization can then be optimized under normalization and full-rank constraints. In molecular examples the resulting bonding orbitals can be visibly shorter ranged and more transferable than their orthogonal counterparts.
+  </p>
+  <p>
+    This tradeoff is central to linear-scaling methods. Short range makes Hamiltonian, density-matrix, and overlap matrices sparse, but generalized eigenvalue problems and dual-basis concepts replace the simpler algebra of an orthonormal basis. Thus “more localized” is not automatically “better”; the useful representation depends on which operations the calculation must perform.
+  </p>
+</section>
+
+<section aria-labelledby="section-23-5-entangled">
+  <h2 id="section-23-5-entangled">23.5 Wannier Functions for Entangled Bands</h2>
+  <p>
+    The isolated-band construction assumes that a fixed group of bands can be followed across the entire Brillouin zone without mixing with unwanted states. Metals and many low-energy model problems violate that assumption. Bands of the desired orbital character cross and hybridize with other bands, so simply choosing band indices by energy produces a discontinuous subspace.
+  </p>
+  <p>
+    The solution is to choose the subspace before choosing its Wannier gauge. Within an energy range containing more Bloch eigenstates than the desired number of Wannier functions, one selects at each <em>k</em> a lower-dimensional subspace that varies as smoothly as possible and retains the targeted states. Only after this disentanglement step is the ordinary localization or projection procedure applied inside the selected subspace.
+  </p>
+  <aside class="callout" aria-label="Disentanglement and localization">
+    <p><strong>Entangled-band construction</strong></p>
+    <p>many Bloch states in an energy window → choose a smooth target subspace → choose a localized gauge inside that subspace → validate the reduced bands in the intended energy region.</p>
+  </aside>
+  <p>
+    This creates a reduced Hamiltonian with a definite dimension even though the original first-principles bands weave through one another. The reduced model is exact only to the extent that the chosen subspace reproduces the target states. Outside the selected energy region, omitted bands are genuinely absent from the model rather than hidden in the Wannier transformation.
+  </p>
+  <p>
+    The distinction matters for metals such as Cu and for low-energy correlated models: different energy windows, projections, and smoothness criteria can yield different localized orbitals while reproducing essentially the same target bands. The subspace definition therefore belongs in the scientific specification whenever Wannier-derived hopping, orbital weight, Fermi surface, or interaction parameters are interpreted.
+  </p>
+</section>
+
+<section aria-labelledby="section-23-6-hybrid">
+  <h2 id="section-23-6-hybrid">23.6 Hybrid Wannier Functions</h2>
+  <p>
+    In dimensions greater than one, localization need not be imposed in every direction. A hybrid Wannier function is Fourier transformed along one reciprocal-space direction while retaining Bloch momentum in the perpendicular directions. For localization along <em>x</em>, a representative definition is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mi>W</mi><mrow><mi>n</mi><msub><mi>R</mi><mi>x</mi></msub></mrow></msub><mo>(</mo><msub><mi mathvariant="bold">k</mi><mo>⊥</mo></msub><mo>)</mo><mo>⟩</mo><mo>=</mo><mfrac><msub><mi>a</mi><mi>x</mi></msub><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><mo>∫</mo><mi>d</mi><msub><mi>k</mi><mi>x</mi></msub><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><msub><mi>k</mi><mi>x</mi></msub><msub><mi>R</mi><mi>x</mi></msub></mrow></msup><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><msub><mi>k</mi><mi>x</mi></msub><msub><mi mathvariant="bold">k</mi><mo>⊥</mo></msub></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">|W_&#123;nR_x&#125;(\mathbf k_\perp)\rangle=\frac&#123;a_x&#125;&#123;2\pi&#125;\int dk_x\,e^&#123;-ik_xR_x&#125;|\psi_&#123;n k_x\mathbf k_\perp&#125;\rangle.</annotation></semantics></math>
+  </div>
+  <p>
+    The function is localized along <em>x</em> but remains an extended Bloch state in the perpendicular directions. Its center along the localized direction can therefore be followed as a function of <strong>k</strong><sub>⊥</sub>. This turns a multidimensional band problem into a family of one-dimensional localization problems parameterized by the remaining crystal momentum.
+  </p>
+  <p>
+    Hybrid functions are naturally suited to surfaces, interfaces, and edges because those geometries already distinguish directions parallel and perpendicular to a boundary. More importantly for the chapters ahead, the flow of hybrid Wannier centers across momentum space provides a geometric way to diagnose polarization pumping and topological band structure. The center flow is related to Wilson-loop eigenphases in the modern formulation, while Chapter 24 first develops the underlying Berry-phase connection.
+  </p>
+</section>
+
+<section aria-labelledby="section-23-7-applications">
+  <h2 id="section-23-7-applications">23.7 Applications</h2>
+  <p>
+    The utility of Wannier functions comes from combining exact subspace equivalence with real-space locality. If the Hamiltonian matrix elements between localized functions decay rapidly with cell separation, a dense band structure can be reconstructed from a comparatively small set of real-space hoppings:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>H</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi mathvariant="bold">R</mi></munder><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup><mo>⟨</mo><mn>0</mn><mi>m</mi><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><mi mathvariant="bold">R</mi><mi>n</mi><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">H_&#123;mn&#125;(\mathbf k)=\sum_\mathbf R e^&#123;i\mathbf k\cdot\mathbf R&#125;\langle 0m|\hat H|\mathbf R n\rangle.</annotation></semantics></math>
+  </div>
+  <p>
+    This is the basis of Wannier interpolation. Expensive first-principles information obtained on a manageable <em>k</em> mesh is transformed to short-ranged real-space matrix elements and then evaluated on much denser meshes. The efficiency is especially valuable for Fermi surfaces, tiny avoided crossings, transport integrals, electron–phonon matrix elements, and topological searches. Accuracy still depends on the original electronic calculation and on whether the Wannier subspace faithfully spans the states relevant to the observable.
+  </p>
+  <p>
+    A second use is interpretation. Localized centers and orbital shapes can expose bonding patterns, charge rearrangement, proton transfer, or the orbital content of a low-energy manifold. Such pictures are powerful precisely because the gauge has been chosen to make them simple; their nonuniqueness has to remain visible when chemical conclusions are drawn.
+  </p>
+  <p>
+    A third use is model construction. Wannier matrix elements connect first-principles electronic structure to tight-binding, Hubbard, DFT+<em>U</em>, DMFT, nanostructure, and transport Hamiltonians. The localization makes the model compact, but the transformation does not determine many-body interaction parameters uniquely: screening, correlated-subspace choice, double counting, and the definition of the local orbitals remain separate modeling decisions.
+  </p>
+  <p>
+    Finally, Wannier functions connect directly to the conceptual sequence that closes Part V. Smooth Bloch gauges and Wannier centers lead to the Berry-phase theory of polarization in Chapter 24; hybrid-center flow then becomes one of the cleanest languages for the topology developed in Part VI. The transformation from Bloch to Wannier representation therefore links local chemistry, numerical interpolation, and global band geometry without collapsing them into the same physical observable.
+  </p>
+</section>
