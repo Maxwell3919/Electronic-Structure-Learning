@@ -1,0 +1,327 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-18-1-problem', label: '18.1 What Is the Problem?' },
+  { id: 'section-18-2-locality', label: '18.2 Locality in Many-Body Quantum Systems' },
+  { id: 'section-18-3-hamiltonian', label: '18.3 Building the Hamiltonian' },
+  { id: 'section-18-4-nonvariational', label: '18.4 Solution of Equations: Nonvariational Methods' },
+  { id: 'section-18-5-density-matrix', label: '18.5 Variational Density Matrix Methods' },
+  { id: 'section-18-6-wannier', label: '18.6 Variational (Generalized) Wannier Function Methods' },
+  { id: 'section-18-7-self-consistent', label: '18.7 Linear-Scaling Self-Consistent Density Functional Calculations' },
+  { id: 'section-18-8-factorized', label: '18.8 Factorized Density Matrix for Large Basis Sets' },
+  { id: 'section-18-9-combining', label: '18.9 Combining the Methods' },
+];
+
+export const modernPerspective = [
+  'A credible linear-scaling claim has to hold at fixed target accuracy as the system grows. A calculation is not meaningfully O(N) if localization radii, sparse-matrix thresholds, basis quality, electrostatic tolerances, or SCF criteria are loosened with system size. Scaling and accuracy therefore have to be reported together.',
+  'Modern large-scale electronic-structure methods mix several kinds of locality: compact support of basis or support functions, spatial decay of the density matrix, sparsity of Hamiltonian and overlap matrices, hierarchical or domain-decomposed electrostatics, and spectral localization near selected energies. These are related tools, but none is implied automatically by another.',
+  'Metals at low electronic temperature remain the difficult limit because the density matrix is long ranged. Numerical smearing can shorten that range and improve algorithms, but the smearing then becomes an approximation that must be separated from the physical electronic temperature and converged for the target observable.',
+  'The practical crossover to linear scaling can occur only at large system sizes because sparse data structures, localization regions, communication, purification, and iterative minimization have substantial prefactors. For a research calculation, the relevant question is therefore not only the formal asymptotic exponent, but which algorithm is faster and more accurate for the actual system, observable, and size range.',
+];
+
+export const synthesis =
+  'Chapter 18 closes Part IV by changing the computational object rather than introducing one more basis family. Plane waves, localized orbitals, and augmented functions can all feed large-scale methods, but linear scaling appears only when the calculation is reorganized around local quantities whose distant influence decays and when every expensive matrix operation preserves that sparsity. Density matrices, Green functions, localized Wannier-like functions, purification, factorization, and spectral corrections are different realizations of this principle. The limitation is equally important: locality depends on the physical state, temperature, target accuracy, and observable, so O(N) is a controlled asymptotic strategy rather than a universal replacement for diagonalization. With the basic methods now assembled, Part V begins from the opposite direction: how the electronic ground state, energies, forces, and response are used to calculate properties and dynamics of matter.';
+---
+
+<section aria-labelledby="section-18-1-problem">
+  <h2 id="section-18-1-problem">18.1 What Is the Problem?</h2>
+  <p>
+    The preceding chapters solved electronic structure by choosing increasingly effective representations of the one-electron problem. A large system exposes a different bottleneck. If the number of occupied states and the number of basis functions both grow in proportion to the number of atoms <em>N</em>, then treating every extended eigenstate throughout the whole system generates at least quadratic work, while dense diagonalization of a matrix whose dimension grows with <em>N</em> has cubic asymptotic cost. The problem is especially visible for liquids, amorphous solids, defects, biomolecules, and other systems for which translational symmetry offers little reduction.
+  </p>
+  <p>
+    Martin therefore asks whether ground-state quantities really require all of the extended eigenvectors. The density, total energy, and nuclear forces are invariant under unitary rotations of the occupied subspace. They can often be reconstructed from local information even though individual eigenstates remain extended and depend on distant boundary conditions. Linear-scaling, or <em>O(N)</em>, methods reorganize the calculation so that the work and memory associated with each local region approach a constant as the total system becomes large.
+  </p>
+  <p>
+    This is an asymptotic statement, not a promise that an O(N) implementation is fastest for every calculation. Each local problem still has a finite cost, long-range Coulomb terms still need specialized summation, and the localization region required for a chosen accuracy can be large. The physical justification for discarding distant matrix elements comes next.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-2-locality">
+  <h2 id="section-18-2-locality">18.2 Locality in Many-Body Quantum Systems</h2>
+  <p>
+    Kohn called the relevant principle <em>nearsightedness</em>: an integrated local quantity can become insensitive to changes sufficiently far away even when individual quantum eigenstates are not local. In the independent-particle problem the object that makes this cancellation explicit is the one-particle density matrix. At finite electronic temperature it is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mover><mi>ρ</mi><mo>^</mo></mover><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>M</mi></munderover><mo>|</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>⟩</mo><msub><mi>f</mi><mi>i</mi></msub><mo>⟨</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>|</mo>
+          <mo>,</mo><mspace width="1em"/>
+          <mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>M</mi></munderover><msubsup><mi>ψ</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>f</mi><mi>i</mi></msub><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;hat&#123;&#92;rho&#125;=&#92;sum_i^M |&#92;psi_i&#92;rangle f_i&#92;langle&#92;psi_i|,&#92;qquad &#92;rho(&#92;mathbf r,&#92;mathbf r')=&#92;sum_i^M &#92;psi_i^*(&#92;mathbf r)f_i&#92;psi_i(&#92;mathbf r')</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    with the Fermi occupations <em>f</em><sub>i</sub>. At zero temperature in an insulator this becomes the projector onto the occupied subspace. The decisive fact is spatial decay: Martin emphasizes exponential decay of the density matrix for insulators at zero temperature and for metals at nonzero temperature, whereas a three-dimensional metal at zero temperature has a much slower power-law tail with Fermi-surface oscillations. The localization length is therefore a property of the electronic state and temperature, not a universal numerical constant.
+  </p>
+  <p>
+    Once the density matrix is known, many occupied-state sums become traces. In particular, the independent-particle band-energy contribution can be written without explicitly referring to every eigenvector:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><msub><mi>E</mi><mi>s</mi></msub><mo>=</mo><mi>Tr</mi><mo>&#123;</mo><mover><mi>ρ</mi><mo>^</mo></mover><mover><mi>H</mi><mo>^</mo></mover><mo>&#125;</mo></mrow>
+        <annotation encoding="application/x-tex">E_s=&#92;mathrm&#123;Tr&#125;&#92;&#123;&#92;hat&#123;&#92;rho&#125;&#92;hat&#123;H&#125;&#92;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    and the electron density is the diagonal element <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">n(&#92;mathbf r)=&#92;rho(&#92;mathbf r,&#92;mathbf r)</annotation></semantics></math></span>. In Kohn–Sham theory this supplies the density-dependent terms needed to reconstruct the total energy and potential.
+  </p>
+  <p>
+    At zero temperature the same occupied projector can be represented by localized Wannier-like functions,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mover><mi>ρ</mi><mo>^</mo></mover><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>N</mi></munderover><mo>|</mo><msub><mi>w</mi><mi>i</mi></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>w</mi><mi>i</mi></msub><mo>|</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;hat&#123;&#92;rho&#125;=&#92;sum_i^N |w_i&#92;rangle&#92;langle w_i|</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    even though the occupied eigenstates used to construct the projector may each be extended. This connection to <a href={href('/theory/localized-orbital-methods/')}>localized-orbital methods</a> is central: locality belongs to the occupied subspace and its density matrix, not necessarily to the particular eigenstate representation used first.
+  </p>
+  <p>
+    Martin divides the computational problem into two distinct tasks. First, construct a sparse Hamiltonian and overlap representation with work proportional to system size. Second, obtain the density matrix or equivalent localized occupied subspace without allowing the solution step to rebuild dense global objects. A sparse Hamiltonian alone is therefore necessary for many O(N) schemes, but it is not sufficient.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-3-hamiltonian">
+  <h2 id="section-18-3-hamiltonian">18.3 Building the Hamiltonian</h2>
+  <p>
+    A Hamiltonian is naturally sparse when basis functions have compact spatial support: atomic-like numerical orbitals, finite elements, wavelets, discontinuous local functions, and suitably localized augmented or multiple-scattering representations couple only nearby regions. Tight-binding makes this especially transparent because short-ranged Hamiltonian and overlap elements are part of the model itself. In a first-principles localized basis, strict sparsity requires actual confinement or a controlled truncation of exponentially decaying matrix elements.
+  </p>
+  <p>
+    The important point is broader than the original basis. Martin notes that plane-wave calculations can also be transformed to localized orbitals and then constrained to local regions without changing invariant quantities such as traces. Likewise, KKR and LMTO formulations can be reorganized into local interaction zones. Thus <em>basis localization</em>, <em>Hamiltonian sparsity</em>, and <em>density-matrix localization</em> are distinct ideas that can be combined in different ways.
+  </p>
+  <p>
+    Building the Hamiltonian can itself dominate calculations of hundreds of atoms even before the asymptotic eigensolver bottleneck is reached. Efficient O(N) methods therefore need local evaluation of matrix elements, density-dependent potentials, and electrostatics as well as a linear-scaling solution procedure. The relevant numerical background is mapped in <a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a> and <a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-4-nonvariational">
+  <h2 id="section-18-4-nonvariational">18.4 Solution of Equations: Nonvariational Methods</h2>
+  <p>
+    Martin first surveys methods that avoid full diagonalization by truncating exact spectral representations. They are called nonvariational because the truncation error is not constrained to approach the answer from one side. Their common advantage is that local or sparse matrix-vector operations can replace dense global diagonalization.
+  </p>
+  <p>
+    <strong>Green functions and recursion.</strong> A local density of states can be obtained from a diagonal Green function,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><msub><mi>n</mi><mi>m</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>π</mi></mfrac><mi>Im</mi><msub><mi>G</mi><mrow><mi>m</mi><mi>m</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>+</mo><mi>i</mi><mi>δ</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">n_m(&#92;varepsilon)=-&#92;frac&#123;1&#125;&#123;&#92;pi&#125;&#92;operatorname&#123;Im&#125;G_&#123;mm&#125;(&#92;varepsilon+i&#92;delta)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    and occupied-state energies follow from energy integrals of the same local spectral function. Recursion applies the sparse Hamiltonian repeatedly to a local starting vector and constructs a tridiagonal representation,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><msub><mi>ψ</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>C</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>[</mo><mover><mi>H</mi><mo>^</mo></mover><msub><mi>ψ</mi><mi>n</mi></msub><mo>−</mo><msub><mi>α</mi><mi>n</mi></msub><msub><mi>ψ</mi><mi>n</mi></msub><mo>−</mo><msub><mi>β</mi><mi>n</mi></msub><msub><mi>ψ</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>]</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;psi_&#123;n+1&#125;=C_&#123;n+1&#125;[&#92;hat H&#92;psi_n-&#92;alpha_n&#92;psi_n-&#92;beta_n&#92;psi_&#123;n-1&#125;]</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    so the desired diagonal Green function becomes a continued fraction. Only the local region reached by the finite recursion depth enters. Moments of the local spectrum provide a related route. The price is termination or moment-reconstruction error, and off-diagonal density-matrix elements required for bond order and forces are more difficult than local densities of states.
+  </p>
+  <p>
+    The force illustrates why off-diagonal information matters:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mi>Tr</mi><mo>&#123;</mo><mover><mi>ρ</mi><mo>^</mo></mover><mfrac><mrow><mo>∂</mo><mover><mi>H</mi><mo>^</mo></mover></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>&#125;</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;mathbf F_I=-&#92;mathrm&#123;Tr&#125;&#92;&#123;&#92;hat&#123;&#92;rho&#125;&#92;frac&#123;&#92;partial&#92;hat H&#125;&#123;&#92;partial&#92;mathbf R_I&#125;&#92;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    <strong>Divide and conquer.</strong> Another direct construction partitions the system into small interiors plus buffer regions. Each buffered subsystem can be solved with an ordinary cubic method, but only the converged interior density and energy are retained. If both interior and buffer sizes remain bounded as the full system grows, the number of local solves grows in proportion to N and the overall algorithm is asymptotically linear. The buffer size is therefore an accuracy parameter tied to the physical localization length.
+  </p>
+  <p>
+    <strong>Polynomial Fermi-operator expansion.</strong> Instead of diagonalizing H, one can approximate the Fermi occupation operator directly with Chebyshev polynomials after mapping a bounded spectrum into a fixed interval:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mi>F</mi><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>)</mo><mo>≈</mo><mfrac><msub><mi>c</mi><mn>0</mn></msub><mn>2</mn></mfrac><mi>I</mi><mo>+</mo><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>M</mi><mi>p</mi></msub></munderover><msub><mi>c</mi><mi>j</mi></msub><msub><mi>T</mi><mi>j</mi></msub><mo>(</mo><mover><mi>H</mi><mo>~</mo></mover><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">F(&#92;hat H)&#92;approx &#92;frac&#123;c_0&#125;&#123;2&#125;I+&#92;sum_&#123;j=1&#125;^&#123;M_p&#125;c_jT_j(&#92;tilde H)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Sparse Hamiltonian applications then keep the cost of each polynomial step local. The required polynomial order grows when the spectral width is large or the Fermi edge must be resolved sharply, which is why low-temperature metals and very large unbounded basis spectra are difficult.
+  </p>
+  <p>
+    <strong>Inverse and exponential representations.</strong> For broad spectra, the Fermi operator can instead be approximated by a sum of resolvents,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mi>F</mi><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>)</mo><mo>≈</mo><munderover><mo>∑</mo><mi>p</mi><msub><mi>M</mi><mi>pole</mi></msub></munderover><msub><mi>w</mi><mi>p</mi></msub><msup><mrow><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>−</mo><msub><mi>z</mi><mi>p</mi></msub><mo>)</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow>
+        <annotation encoding="application/x-tex">F(&#92;hat H)&#92;approx&#92;sum_p w_p(&#92;hat H-z_p)^&#123;-1&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    or the imaginary-time propagator can be built from short exponential steps. These forms express the same theme in different spectral languages: high-energy contributions are often more local, whereas accurate treatment near the real axis and Fermi level requires longer-ranged information. No single truncation is uniformly optimal across insulating and metallic regimes.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-5-density-matrix">
+  <h2 id="section-18-5-density-matrix">18.5 Variational Density Matrix Methods</h2>
+  <p>
+    At zero temperature the exact independent-particle density matrix has two defining properties. It is a projector,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><msup><mover><mi>ρ</mi><mo>^</mo></mover><mn>2</mn></msup><mo>=</mo><mover><mi>ρ</mi><mo>^</mo></mover></mrow>
+        <annotation encoding="application/x-tex">&#92;hat&#123;&#92;rho&#125;^2=&#92;hat&#123;&#92;rho&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    and its unit-eigenvalue subspace must be the lowest-energy occupied subspace of the Hamiltonian. Idempotency alone does not select the correct eigenvectors.
+  </p>
+  <p>
+    McWeeny purification provides a simple way to push trial density-matrix eigenvalues toward zero or one:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mi>P</mi><mo>(</mo><mover><mi>ρ</mi><mo>~</mo></mover><mo>)</mo><mo>=</mo><mn>3</mn><msup><mover><mi>ρ</mi><mo>~</mo></mover><mn>2</mn></msup><mo>−</mo><mn>2</mn><msup><mover><mi>ρ</mi><mo>~</mo></mover><mn>3</mn></msup></mrow>
+        <annotation encoding="application/x-tex">P(&#92;tilde&#123;&#92;rho&#125;)=3&#92;tilde&#123;&#92;rho&#125;^2-2&#92;tilde&#123;&#92;rho&#125;^3</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Combining purification with the Hamiltonian yields a variational grand-potential functional whose minimum selects both the projector character and the correct occupied subspace,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><msub><mi>Ω</mi><mi>s</mi></msub><mo>=</mo><mi>Tr</mi><mo>&#123;</mo><mo>(</mo><mn>3</mn><msup><mover><mi>ρ</mi><mo>~</mo></mover><mn>2</mn></msup><mo>−</mo><mn>2</mn><msup><mover><mi>ρ</mi><mo>~</mo></mover><mn>3</mn></msup><mo>)</mo><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>−</mo><mi>μ</mi><mi>I</mi><mo>)</mo><mo>&#125;</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;Omega_s=&#92;mathrm&#123;Tr&#125;&#92;&#123;(3&#92;tilde&#123;&#92;rho&#125;^2-2&#92;tilde&#123;&#92;rho&#125;^3)(&#92;hat H-&#92;mu I)&#92;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    If matrix products are truncated consistently in real space, the optimization can exploit sparsity. Unlike the expansions of Section 18.4, the functional supplies a variational direction of improvement. That advantage does not eliminate localization error: truncating the density matrix, choosing an insufficient range, or leaving its physical eigenvalue domain can still bias or destabilize the calculation. The matrix dimension also makes this approach most natural for compact bases; Section 18.8 addresses large underlying representations.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-6-wannier">
+  <h2 id="section-18-6-wannier">18.6 Variational (Generalized) Wannier Function Methods</h2>
+  <p>
+    Instead of optimizing the density matrix element by element, one may optimize a set of localized functions spanning the occupied subspace. Orthogonality is inconvenient because enforcing it is a global operation and orthogonal functions can be less compact than nonorthogonal ones. For a nonorthogonal set, the energy takes the familiar overlap-weighted form
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mi>E</mi><mo>=</mo><mi>Tr</mi><mo>(</mo><msup><mi>S</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mi>H</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">E=&#92;mathrm&#123;Tr&#125;(S^&#123;-1&#125;H)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    with Hamiltonian and overlap matrices built from the localized functions. Martin then introduces unconstrained functionals in which overlap-dependent terms drive the minimum toward the correct occupied subspace without performing explicit orthogonalization at every step. One representative form is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mover><mi>E</mi><mo>~</mo></mover><mo>=</mo><mi>Tr</mi><mo>[</mo><mo>(</mo><mn>2</mn><mi>I</mi><mo>−</mo><mi>S</mi><mo>)</mo><mi>H</mi><mo>]</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;tilde E=&#92;mathrm&#123;Tr&#125;[(2I-S)H]</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    whose minimum recovers normalized, mutually orthogonal occupied functions even though the trial functions need not satisfy those constraints during the search. Extensions allow additional trial orbitals and a chemical potential, reducing failures when occupied and empty levels cross during optimization.
+  </p>
+  <p>
+    Allowing genuinely nonorthogonal localized orbitals can shorten their range further, but then the inverse overlap or its generalized inverse becomes part of the algorithm. The gain is important conceptually: the useful local orbital is chosen to represent a subspace efficiently, not because it must resemble one isolated atomic eigenfunction. This anticipates the more systematic discussion of Wannier functions later in Martin.
+  </p>
+  <p>
+    Projection and minimization can also be combined. Projection efficiently repairs long tails and identifies the significant local coefficients, whereas variational minimization improves the energy within the resulting adaptive region. The resulting scaling still depends on how the localization-region size behaves as accuracy is tightened; compact orbitals alone do not prove O(N) performance.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-7-self-consistent">
+  <h2 id="section-18-7-self-consistent">18.7 Linear-Scaling Self-Consistent Density Functional Calculations</h2>
+  <p>
+    A complete Kohn–Sham calculation adds self-consistency to the locality problem. If the density matrix is obtained in O(N), its diagonal gives the charge density, from which the Hartree and exchange–correlation potentials and a new sparse Hamiltonian must be rebuilt. The electronic solution is therefore only one component of a linear-scaling DFT cycle:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mover><mi>ρ</mi><mo>^</mo></mover><mo>→</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>→</mo><msub><mi>V</mi><mi>eff</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>→</mo><mover><mi>H</mi><mo>^</mo></mover><mo>[</mo><mi>n</mi><mo>]</mo><mo>→</mo><mover><mi>ρ</mi><mo>^</mo></mover></mrow>
+        <annotation encoding="application/x-tex">&#92;hat&#123;&#92;rho&#125;&#92;to n(&#92;mathbf r)&#92;to V_&#123;eff&#125;[n]&#92;to&#92;hat H[n]&#92;to&#92;hat&#123;&#92;rho&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Every arrow must avoid a hidden superlinear bottleneck. Local basis construction, Poisson/electrostatic solution, sparse matrix operations, mixing, and convergence of the <a href={href('/theory/self-consistent-field-methods/')}>self-consistent field problem</a> are separate algorithmic responsibilities.
+  </p>
+  <p>
+    Martin's examples emphasize that large-system ground-state DFT can be performed this way even when selected eigenstates are later obtained by ordinary diagonalization or targeted spectral methods for interpretation. Computing a few HOMO/LUMO-like states after an O(N) ground-state calculation is a different task from constructing the ground-state density and energy; the post-processing cost should not be confused with the scaling of the self-consistent ground-state algorithm itself.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-8-factorized">
+  <h2 id="section-18-8-factorized">18.8 Factorized Density Matrix for Large Basis Sets</h2>
+  <p>
+    Direct density-matrix methods become awkward when the underlying representation is very large, as with fine grids or plane waves, because even a sparse matrix in the full basis can contain an enormous number of entries. Martin's solution is to separate two kinds of dimension: use many coefficients to describe the shape of each localized support orbital, but only a modest number of such orbitals to span the physically relevant occupied space.
+  </p>
+  <p>
+    The density matrix is then factorized as
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow></munder><msubsup><mi>Φ</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>K</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>Φ</mi><mi>j</mi></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;rho(&#92;mathbf r,&#92;mathbf r')=&#92;sum_&#123;ij&#125;&#92;Phi_i^*(&#92;mathbf r)K_&#123;ij&#125;&#92;Phi_j(&#92;mathbf r')</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    where each support function Φ may itself be expanded in a large systematic basis, while the kernel K lives only in the reduced support-function space. Purification can be carried out there; for nonorthogonal support functions Martin gives the form
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow><mi>K</mi><mo>=</mo><mn>3</mn><mi>L</mi><mi>O</mi><mi>L</mi><mo>−</mo><mn>2</mn><mi>L</mi><mi>O</mi><mi>L</mi><mi>O</mi><mi>L</mi></mrow>
+        <annotation encoding="application/x-tex">K=3LOL-2LOLOL</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    with O the support-function overlap matrix and L a trial kernel. This factorization is the key bridge between systematically improvable large representations and sparse occupied-subspace algebra. It does not remove basis convergence: the support functions still need enough degrees of freedom and spatial range to represent the target density and energy accurately.
+  </p>
+</section>
+
+<section aria-labelledby="section-18-9-combining">
+  <h2 id="section-18-9-combining">18.9 Combining the Methods</h2>
+  <p>
+    No single locality construction works equally well for every electronic state. Wide-gap insulators, strongly disordered systems, and sufficiently high-temperature metals can have short density-matrix localization lengths and are natural O(N) targets. A good metal at low temperature is the hard limit because the sharp Fermi surface produces long-ranged density-matrix tails.
+  </p>
+  <p>
+    Martin therefore ends with hybrid strategies that separate physics in both space and energy. A spatially local method can treat the broad background or a smoothed high-temperature reference, while spectral methods target the smaller set of states near the Fermi energy that require long-range resolution. Iterative eigensolvers, Green functions, polynomial or pole expansions, and localized real-space methods are complementary rather than mutually exclusive.
+  </p>
+  <p>
+    This conclusion also clarifies what “linear scaling” means scientifically. The spatial cutoff, density-matrix range, polynomial order, pole count, buffer size, or localization radius introduces a new convergence dimension in addition to basis quality, Brillouin-zone treatment, SCF convergence, and the exchange–correlation approximation. An O(N) calculation is reliable only when the target observable is converged with respect to those locality approximations.
+  </p>
+  <p>
+    Part IV has now reached its endpoint. Chapters 12–17 compared ways to represent and solve the Kohn–Sham-like equations; Chapter 18 shows how all of those representations can be reorganized when system size makes global eigenstate methods the dominant cost. Part V turns from solving the electronic problem itself to using the resulting energies, forces, and response to determine properties and dynamics of matter.
+  </p>
+</section>
