@@ -1,0 +1,152 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-26-1-general', label: '26.1 General Formulation for Two Bands' },
+  { id: 'section-26-2-one-dimensional', label: '26.2 Two-Band Models in One-Space Dimension' },
+  { id: 'section-26-3-shockley', label: '26.3 Shockley Transition in the Bulk Band Structure and Surface States' },
+  { id: 'section-26-4-winding-1d', label: '26.4 Winding of the Hamiltonian in One Dimension: Berry Phase and the Shockley Transition' },
+  { id: 'section-26-5-winding-2d', label: '26.5 Winding of the Berry Phase in Two Dimensions: Chern Numbers and Topological Transitions' },
+  { id: 'section-26-6-pump', label: '26.6 The Thouless Quantized Particle Pump' },
+  { id: 'section-26-7-graphene', label: '26.7 Graphene Nanoribbons and the Two-Site Model' },
+];
+
+export const modernPerspective = [
+  'A two-band Hamiltonian is a minimal geometric model, not a claim that every quantitative material problem contains only two physical bands. In realistic multiband calculations the relevant low-energy pair or block must remain separated from the rest of the Hilbert space, or the topology must be formulated for the complete selected subspace.',
+  'The one-dimensional winding used here is quantized because symmetry restricts the Hamiltonian vector to a plane. Once an allowed symmetry-breaking term lets the loop leave that plane, it can generally unwind without touching the origin, and the Zak/Berry phase need not remain pinned to 0 or π. A full adiabatic cycle in the two-dimensional parameter space (k, λ), however, can still carry an integer Chern number.',
+  'Boundary states depend on the boundary as well as the bulk. In SSH-like chains, which bond is cut determines whether an isolated end exposes a midgap state; a domain wall between bulks with different symmetry-protected winding is the cleaner bulk–boundary statement. In nanoribbons, edge chemistry, width, passivation, substrate effects, and finite-size coupling must therefore be distinguished from the effective one-dimensional topological model.',
+];
+
+export const synthesis =
+  'Chapter 26 makes the geometry introduced in Chapter 25 explicit. Any two-band Hamiltonian is a scalar energy shift plus a three-component vector multiplying Pauli matrices, so its eigenvalue gap is twice the distance of that vector from the origin while its eigenvectors are determined by the vector’s direction. The two-site and s–p chains become different orientations of the same geometry. With inversion symmetry the Hamiltonian vector is confined to a plane, and its loop can wind or not wind around the gap-closing origin; the two cases have Berry phases π and 0 and are separated by the Shockley gap closure. Breaking inversion lets an individual one-dimensional loop move out of the plane, but a cyclic evolution of the Hamiltonian creates a closed two-dimensional (k, λ) problem whose surface can enclose the singular origin. Its Chern number is the integer charge pumped in a Thouless cycle. Graphene nanoribbon junctions then show how the same two-site logic can emerge from a real extended material. Chapter 27 replaces the external pump parameter by a second crystal momentum and turns this construction into genuine two-dimensional Chern and time-reversal topological insulators.';
+---
+
+<section aria-labelledby="section-26-1-general">
+  <h2 id="section-26-1-general">26.1 General Formulation for Two Bands</h2>
+  <p>
+    Two bands are the smallest Hilbert space in which an occupied state and an empty state can exchange character while remaining separated by a gap. Every Hermitian 2 × 2 Hamiltonian can be decomposed into the identity and the three Pauli matrices,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi>λ</mi><mo>)</mo><mo>=</mo><msub><mi>h</mi><mn>0</mn></msub><msub><mi>τ</mi><mn>0</mn></msub><mo>+</mo><mi mathvariant="bold">h</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi>λ</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">τ</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">H(\mathbf k,\lambda)=h_0\tau_0+\mathbf h(\mathbf k,\lambda)\cdot\boldsymbol\tau.</annotation></semantics></math>
+  </div>
+  <p>
+    The scalar term <em>h</em><sub>0</sub> shifts both energies and does not change the eigenvectors. The remaining Hamiltonian is represented by the vector <strong>h</strong> = (<em>h</em><sub>1</sub>, <em>h</em><sub>2</sub>, <em>h</em><sub>3</sub>) in an abstract three-dimensional Pauli-matrix space. Its eigenvalues are
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>E</mi><mo>±</mo></msub><mo>=</mo><msub><mi>h</mi><mn>0</mn></msub><mo>±</mo><mo>|</mo><mi mathvariant="bold">h</mi><mo>|</mo><mo>,</mo><mspace width="0.8em"/><msub><mi>E</mi><mi>gap</mi></msub><mo>=</mo><mn>2</mn><mo>|</mo><mi mathvariant="bold">h</mi><mo>|</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">E_\pm=h_0\pm|\mathbf h|,\qquad E_\mathrm&#123;gap&#125;=2|\mathbf h|.</annotation></semantics></math>
+  </div>
+  <p>
+    This immediately identifies the singular point of the model: the gap closes only when all three components vanish, <strong>h</strong> = 0. The direction <strong>h</strong>/|<strong>h</strong>| determines how the occupied and empty eigenvectors are mixed. As momentum or another parameter changes, the electronic problem therefore becomes a geometric trajectory of <strong>h</strong> around a distinguished origin.
+  </p>
+  <aside class="callout" aria-label="Two-band geometry">
+    <p><strong>Two-band geometry</strong></p>
+    <p>distance from origin |h| → half the band gap.</p>
+    <p>direction of h → eigenvector character.</p>
+    <p>trajectory of h → Berry phase and winding.</p>
+    <p>touch the origin → possible topological transition.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-26-2-one-dimensional">
+  <h2 id="section-26-2-one-dimensional">26.2 Two-Band Models in One-Space Dimension</h2>
+  <p>
+    Martin develops two complementary one-dimensional realizations. The two-site model has inequivalent A and B sites in each cell with alternating hoppings; its symmetric limit is the model later associated with Su, Schrieffer, and Heeger. The s–p model instead uses even s and odd p orbitals on each site and makes the atomic-to-covalent Shockley transition particularly transparent.
+  </p>
+  <p>
+    Both can be written in the common form
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="bold">h</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>=</mo><mo>[</mo><mi>u</mi><mo>+</mo><mi>v</mi><mi>cos</mi><mi>k</mi><mo>,</mo><mspace width="0.4em"/><mi>w</mi><mi>sin</mi><mi>k</mi><mo>,</mo><mspace width="0.4em"/><mi>Δ</mi><mo>+</mo><mi>d</mi><mi>cos</mi><mi>k</mi><mo>]</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathbf h(k)=[u+v\cos k,\;w\sin k,\;\Delta+d\cos k].</annotation></semantics></math>
+  </div>
+  <p>
+    For the s–p model, symmetry removes the <em>v</em> term and <em>u</em> vanishes when inversion is centered on the atom. For the two-site model, <em>d</em> vanishes and the first two components encode the two hopping amplitudes while Δ is the A–B site-energy difference. A rotation in Pauli-matrix space maps one representation into the other, so their eigenvalues and topological transitions share the same geometry even though their chemical interpretations differ.
+  </p>
+  <p>
+    This mapping is the main reason for carrying both models. The two-site chain gives an especially simple picture of weak and strong bonds, end states, and the pump; the s–p chain connects naturally to the orbital and spin–orbit models used in Chapters 27–28.
+  </p>
+</section>
+
+<section aria-labelledby="section-26-3-shockley">
+  <h2 id="section-26-3-shockley">26.3 Shockley Transition in the Bulk Band Structure and Surface States</h2>
+  <p>
+    In the atomic-like s–p regime, the lower band remains predominantly s-like and the upper band p-like throughout the Brillouin zone. Increasing the hopping broadens the bands. With inversion symmetry, the states at the zone center and zone boundary have definite parity, so one can follow whether the occupied band keeps the same parity character or exchanges it between the two special momenta.
+  </p>
+  <p>
+    The exchange cannot occur continuously while the two bands stay separated. At the Shockley transition the gap closes at a high-symmetry momentum; after it reopens, the ordering of the even and odd states has changed. The event is therefore a bulk transition in the eigenvectors as well as a band-energy crossing.
+  </p>
+  <p>
+    A large finite chain reveals the boundary consequence. In the inverted/winding regime, a termination that cuts the weak bond exposes a state in the bulk gap, localized near the end. In the two-site representation the transition occurs at the symmetric point Δ = 0 and equal hoppings. The existence and energy of a state at one particular physical end still depend on termination, which is why the bulk classification and the boundary realization must be kept conceptually separate.
+  </p>
+</section>
+
+<section aria-labelledby="section-26-4-winding-1d">
+  <h2 id="section-26-4-winding-1d">26.4 Winding of the Hamiltonian in One Dimension: Berry Phase and the Shockley Transition</h2>
+  <p>
+    With inversion symmetry in the s–p model, the symmetry-breaking component <em>u</em> is zero and <strong>h</strong>(<em>k</em>) is confined to a plane through the origin. As <em>k</em> traverses the one-dimensional Brillouin zone, the Hamiltonian traces a closed loop in that plane. There are then two qualitatively distinct possibilities: the loop encloses the origin or it does not.
+  </p>
+  <p>
+    A planar winding number can be written as the change of the polar angle of the two nonzero components,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ν</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∮</mo><mi>BZ</mi></msub><mi>d</mi><mi>k</mi><mfrac><mi>d</mi><mrow><mi>d</mi><mi>k</mi></mrow></mfrac><mi>arg</mi><mo>[</mo><msub><mi>h</mi><mn>3</mn></msub><mo>+</mo><mi>i</mi><msub><mi>h</mi><mn>2</mn></msub><mo>]</mo><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">\nu=\frac&#123;1&#125;&#123;2\pi&#125;\oint_\mathrm&#123;BZ&#125;dk\,\frac&#123;d&#125;&#123;dk&#125;\arg[h_3+i h_2]\in\mathbb Z.</annotation></semantics></math>
+  </div>
+  <p>
+    In Martin’s inversion-symmetric examples the nonwinding and once-winding cases correspond to Berry phases 0 and π modulo 2π. Varying the model continuously from one case to the other forces the loop through the origin, where |<strong>h</strong>| = 0 and the band gap closes. This is the geometric form of the Shockley transition.
+  </p>
+  <p>
+    The symmetry condition is essential. If a permitted term moves the loop out of this plane, a loop that once enclosed the origin can generally be displaced around it and unwound without closing the gap. The 0/π Berry-phase distinction is therefore protected by the symmetry that restricts the Hamiltonian, rather than being an unconstrained invariant of every generic one-dimensional two-band system.
+  </p>
+</section>
+
+<section aria-labelledby="section-26-5-winding-2d">
+  <h2 id="section-26-5-winding-2d">26.5 Winding of the Berry Phase in Two Dimensions: Chern Numbers and Topological Transitions</h2>
+  <p>
+    Breaking inversion introduces the third component of <strong>h</strong>. At a fixed value of the new parameter λ, the one-dimensional loop can now move above or below the symmetry plane and interpolate between the two inversion-symmetric limits without touching the origin. Correspondingly, the polarization and Berry phase can vary continuously between the symmetry-quantized values.
+  </p>
+  <p>
+    A qualitatively new invariant appears when λ itself is varied through a complete cycle and the Hamiltonian returns to its starting point. The pair (<em>k</em>, λ) forms a closed two-dimensional parameter space. As those two parameters vary, the normalized vector <strong>h</strong>/|<strong>h</strong>| sweeps a surface on the Bloch sphere. For a two-band model its Chern number can be written
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>4</mn><mi>π</mi></mrow></mfrac><mo>∫</mo><mi>d</mi><mi>k</mi><mi>d</mi><mi>λ</mi><mspace width="0.3em"/><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>·</mo><mo>(</mo><msub><mo>∂</mo><mi>k</mi></msub><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>×</mo><msub><mo>∂</mo><mi>λ</mi></msub><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>)</mo><mo>,</mo><mspace width="0.5em"/><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>=</mo><mfrac><mi mathvariant="bold">h</mi><mrow><mo>|</mo><mi mathvariant="bold">h</mi><mo>|</mo></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;4\pi&#125;\int dk\,d\lambda\;\hat&#123;\mathbf h&#125;\cdot(\partial_k\hat&#123;\mathbf h&#125;\times\partial_\lambda\hat&#123;\mathbf h&#125;),\qquad \hat&#123;\mathbf h&#125;=\mathbf h/|\mathbf h|.</annotation></semantics></math>
+  </div>
+  <p>
+    Geometrically, <em>C</em> counts how the closed parameter-space surface wraps the singular origin or, equivalently, the unit sphere of Hamiltonian directions. A change of this integer is impossible unless the surface passes through <strong>h</strong> = 0 somewhere, so the relevant bulk gap must close. The same construction becomes an ordinary two-dimensional Chern insulator when λ is replaced by a second crystal momentum in Chapter 27.
+  </p>
+</section>
+
+<section aria-labelledby="section-26-6-pump">
+  <h2 id="section-26-6-pump">26.6 The Thouless Quantized Particle Pump</h2>
+  <p>
+    Thouless’s pump gives the two-dimensional Chern number a direct transport meaning. In the two-site/Rice–Mele model, the hopping imbalance and the A–B site-energy difference are varied cyclically so that the path encloses the isolated zero-gap point but never crosses it. Each instantaneous Hamiltonian remains insulating, and after λ advances by 2π the bulk Hamiltonian is identical to the one at the start.
+  </p>
+  <p>
+    The electronic state nevertheless has transported an integer charge through the crystal. In a periodic system the Berry phase advances by 2π per unit winding and the occupied Wannier center shifts by one lattice vector. The pumped charge per filled band is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>Q</mi><mi>pump</mi></msub><mo>=</mo><mo>−</mo><mi>e</mi><mi>C</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">Q_\mathrm&#123;pump&#125;=-eC.</annotation></semantics></math>
+  </div>
+  <p>
+    In a finite chain, boundary levels provide the complementary picture: over a nontrivial cycle a state connects the valence and conduction continua at one end while the opposite spectral flow occurs at the other, transferring charge across the sample. Changing the termination can move the boundary crossing to another part of the cycle, but it cannot remove the net spectral flow demanded by a nonzero pump Chern number.
+  </p>
+  <p>
+    Quantization assumes an adiabatic cycle and a bulk gap that remains open over the entire (<em>k</em>, λ) torus. Driving too rapidly or crossing a gap closing invalidates the simple filled-band adiabatic transport picture.
+  </p>
+</section>
+
+<section aria-labelledby="section-26-7-graphene">
+  <h2 id="section-26-7-graphene">26.7 Graphene Nanoribbons and the Two-Site Model</h2>
+  <p>
+    Martin closes by showing how an effective two-site chain can emerge inside a much larger material. Armchair graphene nanoribbons of different widths can be insulating yet carry different one-dimensional winding classifications. Joining segments with different widths creates localized junction states; a periodic sequence of such junctions produces an effective chain whose interface states play the role of the A and B orbitals of the two-site model.
+  </p>
+  <p>
+    The couplings between neighboring junction states depend on their separation and on the alternating ribbon segments. The resulting low-energy bands can therefore be understood with alternating hoppings, and the presence of an end or interface state follows the same weak-bond/domain-wall logic developed earlier in the chapter.
+  </p>
+  <p>
+    This example is useful because the “orbitals” of the effective model are themselves extended interface states produced by an underlying first-principles band structure. Topological model building is therefore hierarchical: a complicated material can yield a small, physically interpretable low-energy subspace, but the parameters and the validity of that subspace must still be checked against the full electronic structure.
+  </p>
+  <p>
+    The chapter has now completed the bridge from one-dimensional Shockley physics to a two-dimensional topological invariant. Chapter 27 makes the second coordinate a genuine crystal momentum and introduces Chern insulators, spin–orbit coupling, the Z₂ invariant, and two-dimensional topological-insulator models.
+  </p>
+</section>
