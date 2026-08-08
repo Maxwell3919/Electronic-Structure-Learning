@@ -1,0 +1,200 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-17-1-linearization', label: '17.1 Linearization of Equations and Linear Methods' },
+  { id: 'section-17-2-energy-derivative', label: '17.2 Energy Derivative of the Wavefunction: ψ and ψ̇' },
+  { id: 'section-17-3-general-linearized-equations', label: '17.3 General Form of Linearized Equations' },
+  { id: 'section-17-4-lapw', label: '17.4 Linearized Augmented Plane Waves (LAPWs)' },
+  { id: 'section-17-5-lapw-applications', label: '17.5 Applications of the LAPW Method' },
+  { id: 'section-17-6-lmto', label: '17.6 Linear Muffin-Tin Orbital (LMTO) Method' },
+  { id: 'section-17-7-tight-binding', label: '17.7 Tight-Binding Formulation' },
+  { id: 'section-17-8-lmto-applications', label: '17.8 Applications of the LMTO Method' },
+  { id: 'section-17-9-nmto', label: '17.9 Beyond Linear Methods: NMTO' },
+  { id: 'section-17-10-full-potential', label: '17.10 Full Potential in Augmented Methods' },
+];
+
+export const modernPerspective = [
+  'Modern augmented-wave implementations often add local orbitals or APW+lo-type functions to improve semicore states, high-lying conduction states, and channels whose chosen linearization energy is poorly placed. These additions do not remove the need to converge sphere radii, angular cutoffs, interstitial basis size, Brillouin-zone sampling, and the target observable separately.',
+  'The phrase “all electron” describes the represented core and valence degrees of freedom, not automatic exactness. Linearization error, finite angular and reciprocal cutoffs, core/semicore partitioning, relativistic treatment, exchange–correlation approximation, and self-consistency remain independent sources of approximation.',
+  'LAPW-family and PAW calculations can agree very closely when both are carefully converged, but they organize the near-nuclear problem differently. Cross-representation agreement is therefore useful evidence against implementation-specific error; it does not establish that the common exchange–correlation model or physical setup is correct.',
+  'Downfolded LMTO/NMTO orbitals anticipate a broader modern idea: an effective low-energy orbital is defined by the subspace it reproduces, not by visual similarity to an isolated atomic orbital. The resulting Hamiltonian is meaningful only together with its energy window, basis construction, and degrees of freedom that were integrated out.',
+];
+
+export const synthesis =
+  'Chapter 17 removes the computational bottleneck left by Chapter 16. The energy-dependent partial waves of APW, KKR, and MTO are expanded around selected reference energies so that ψ and its energy derivative ψ̇ span the local change of the solution with energy. The resulting fixed basis converts a nonlinear root-finding problem into the familiar generalized eigenvalue problem while preserving the atomic/interstitial division that makes augmentation accurate. LAPW uses this idea with plane-wave envelopes and a systematically extendable basis; LMTO compresses it into a minimal orbital language whose matrix elements expose chemical and structural trends. NMTO extends the interpolation beyond first order and makes targeted low-energy downfolding especially transparent. Full-potential formulations then show that augmentation itself does not require a muffin-tin shape approximation. Chapter 18 changes the question again: rather than improving one basis representation, it asks when physical locality can reduce the scaling of the electronic-structure problem itself.';
+---
+
+<section aria-labelledby="section-17-1-linearization">
+  <h2 id="section-17-1-linearization">17.1 Linearization of Equations and Linear Methods</h2>
+  <p>
+    Chapter 16 exposed a practical weakness of the original augmented methods. The Schrödinger equation is linear, but an APW or scattering basis is built from radial functions evaluated at the eigenenergy being sought. The basis therefore changes when the trial energy changes, and the secular condition must be searched as a nonlinear function of energy. A fixed basis such as plane waves or atom-centered orbitals avoids that extra loop because one matrix problem can deliver many eigenstates at once.
+  </p>
+  <p>
+    Linearization keeps the physically useful augmentation while replacing its continuous energy dependence by information at one or several selected reference energies. Near a reference energy <math><semantics><msub><mi>E</mi><mi>ν</mi></msub><annotation encoding="application/x-tex">E_&#123;\nu&#125;</annotation></semantics></math>, a radial solution can be represented to first order as
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><msub><mi>ψ</mi><mi>l</mi></msub><mo>(</mo><mi>E</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>≈</mo><msub><mi>ψ</mi><mi>l</mi></msub><mo>(</mo><msub><mi>E</mi><mi>ν</mi></msub><mo>,</mo><mi>r</mi><mo>)</mo><mo>+</mo><mo>(</mo><mi>E</mi><mo>−</mo><msub><mi>E</mi><mi>ν</mi></msub><mo>)</mo><msub><mover><mi>ψ</mi><mo>˙</mo></mover><mi>l</mi></msub><mo>(</mo><msub><mi>E</mi><mi>ν</mi></msub><mo>,</mo><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\psi_l(E,r) \approx \psi_l(E_&#123;\nu&#125;,r) + (E-E_&#123;\nu&#125;)\dot&#123;\psi&#125;_l(E_&#123;\nu&#125;,r)</annotation></semantics></math>
+  </div>
+  <p>
+    The extra function <math><semantics><mover><mi>ψ</mi><mo>˙</mo></mover><annotation encoding="application/x-tex">\dot&#123;\psi&#125;</annotation></semantics></math> supplies the local direction in function space generated by changing the energy. This is why the linearized basis can remain energy independent without throwing away the characteristic near-nuclear behavior. The wavefunction error begins beyond first order in the energy displacement, and the variational eigenvalue is correspondingly more accurate. The important numerical object is therefore an <em>energy window</em> around the chosen reference energies, not a claim that one linearized basis is uniformly exact at every energy.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-2-energy-derivative">
+  <h2 id="section-17-2-energy-derivative">17.2 Energy Derivative of the Wavefunction: ψ and ψ̇</h2>
+  <p>
+    Martin develops the linearization first for one spherical region. At a chosen reference energy, the radial function solves the ordinary single-site Schrödinger equation. Its energy derivative is defined directly by
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mover><mi>ψ</mi><mo>˙</mo></mover><mo>(</mo><mi>ε</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>≡</mo><msub><mrow><mfrac><mi>∂</mi><mrow><mi>∂</mi><mi>ε</mi></mrow></mfrac><mi>ψ</mi><mo>(</mo><mi>ε</mi><mo>,</mo><mi>r</mi><mo>)</mo></mrow><mrow><mi>ε</mi><mo>=</mo><msub><mi>E</mi><mi>ν</mi></msub></mrow></msub></mrow><annotation encoding="application/x-tex">\dot&#123;\psi&#125;(\varepsilon,r) \equiv \left.\frac&#123;\partial \psi(\varepsilon,r)&#125;&#123;\partial \varepsilon&#125;\right|_&#123;\varepsilon=E_&#123;\nu&#125;&#125;</annotation></semantics></math>
+  </div>
+  <p>
+    With a fixed normalization convention inside the sphere, <math><semantics><mi>ψ</mi><annotation encoding="application/x-tex">\psi</annotation></semantics></math> and <math><semantics><mover><mi>ψ</mi><mo>˙</mo></mover><annotation encoding="application/x-tex">\dot&#123;\psi&#125;</annotation></semantics></math> are orthogonal. Differentiating the radial Schrödinger equation with respect to energy gives the more revealing relation
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mo>(</mo><mover><mi>H</mi><mo>^</mo></mover><mo>−</mo><msub><mi>E</mi><mi>ν</mi></msub><mo>)</mo><mover><mi>ψ</mi><mo>˙</mo></mover><mo>=</mo><mi>ψ</mi></mrow><annotation encoding="application/x-tex">(\hat H-E_&#123;\nu&#125;)\dot&#123;\psi&#125;=\psi</annotation></semantics></math>
+  </div>
+  <p>
+    Thus the derivative is not an arbitrary auxiliary orbital. It is generated by the same Hamiltonian and measures how the local solution must deform as its energy moves away from the reference point. At the sphere boundary this deformation can be parameterized through the logarithmic derivative <math><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>. A boundary condition with a desired <math><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math> is represented by a combination
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mi>ψ</mi><mo>(</mo><mi>D</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>=</mo><mi>ψ</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo><mi>ω</mi><mo>(</mo><mi>D</mi><mo>)</mo><mover><mi>ψ</mi><mo>˙</mo></mover><mo>(</mo><mi>r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\psi(D,r)=\psi(r)+\omega(D)\dot&#123;\psi&#125;(r)</annotation></semantics></math>
+  </div>
+  <p>
+    This is the local mathematical mechanism behind LAPW and LMTO. Matching conditions that previously selected a new energy-dependent radial function for every state can now be satisfied by changing coefficients inside the fixed two-function space. The reference energy must still be chosen sensibly for the states of interest; states far outside that window expose linearization error rather than a failure of quantum mechanics or self-consistency.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-3-general-linearized-equations">
+  <h2 id="section-17-3-general-linearized-equations">17.3 General Form of Linearized Equations</h2>
+  <p>
+    The single-sphere construction extends to a crystal by combining an envelope in the interstitial with atom-centered partial waves inside every sphere. A generic energy-independent augmented basis function has the structure
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><msub><mi>χ</mi><mi>j</mi></msub><mo>=</mo><msubsup><mi>χ</mi><mi>j</mi><mi>e</mi></msubsup><mo>+</mo><munder><mo>∑</mo><mrow><mi>L</mi><mo>,</mo><mi>s</mi></mrow></munder><mo>[</mo><msub><mi>ψ</mi><mrow><mi>l</mi><mi>s</mi></mrow></msub><msub><mi>Π</mi><mrow><mi>L</mi><mi>s</mi><mi>j</mi></mrow></msub><mo>+</mo><msub><mover><mi>ψ</mi><mo>˙</mo></mover><mrow><mi>l</mi><mi>s</mi></mrow></msub><msub><mi>Ω</mi><mrow><mi>L</mi><mi>s</mi><mi>j</mi></mrow></msub><mo>]</mo><msub><mi>Y</mi><mi>L</mi></msub></mrow><annotation encoding="application/x-tex">\chi_j=\chi_j^e+\sum_&#123;L,s&#125;[\psi_&#123;ls&#125;\Pi_&#123;Lsj&#125;+\dot&#123;\psi&#125;_&#123;ls&#125;\Omega_&#123;Lsj&#125;]Y_L</annotation></semantics></math>
+  </div>
+  <p>
+    Here the coefficients multiplying <math><semantics><mi>ψ</mi><annotation encoding="application/x-tex">\psi</annotation></semantics></math> and <math><semantics><mover><mi>ψ</mi><mo>˙</mo></mover><annotation encoding="application/x-tex">\dot&#123;\psi&#125;</annotation></semantics></math> enforce the boundary conditions imposed by the chosen envelope. Bloch sums then produce a periodic basis for each crystal momentum. Once the basis is fixed, the problem returns to the familiar form
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mi>H</mi><mo>(</mo><mi>k</mi><mo>)</mo><mi>c</mi><mo>=</mo><mi>ε</mi><mi>S</mi><mo>(</mo><mi>k</mi><mo>)</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">H(\mathbf k)c=\varepsilon S(\mathbf k)c</annotation></semantics></math>
+  </div>
+  <p>
+    The overlap matrix matters because the linearized basis need not be orthogonal. The conceptual gain is large: energy dependence has been moved from the basis itself into fixed Hamiltonian and overlap matrices. Standard diagonalization, orthogonality, perturbation, and variational machinery can now be applied to a whole group of bands at once. This is the bridge between the scattering viewpoint of Chapter 16 and the matrix language already familiar from <a href={href('/theory/discretization-and-basis-representations/')}>finite basis representations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-4-lapw">
+  <h2 id="section-17-4-lapw">17.4 Linearized Augmented Plane Waves (LAPWs)</h2>
+  <p>
+    LAPW chooses a plane wave as the interstitial envelope. Outside each sphere the basis therefore remains simple and systematic; inside the sphere it becomes a linear combination of radial partial waves that matches both the value and the first derivative of that plane wave at the boundary. Schematically,
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><msub><mi>χ</mi><mrow><mi>k</mi><mo>+</mo><mi>G</mi></mrow></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo><mfenced open="&#123;" close=""><mtable><mtr><mtd><msup><mi>e</mi><mrow><mi>i</mi><mo>(</mo><mi>k</mi><mo>+</mo><mi>G</mi><mo>)</mo><mo>·</mo><mi>r</mi></mrow></msup></mtd><mtd><mtext>interstitial</mtext></mtd></mtr><mtr><mtd><munder><mo>∑</mo><mrow><mi>L</mi><mo>,</mo><mi>s</mi></mrow></munder><mo>[</mo><msub><mi>A</mi><mrow><mi>L</mi><mi>s</mi></mrow></msub><msub><mi>ψ</mi><mrow><mi>l</mi><mi>s</mi></mrow></msub><mo>+</mo><msub><mi>B</mi><mrow><mi>L</mi><mi>s</mi></mrow></msub><msub><mover><mi>ψ</mi><mo>˙</mo></mover><mrow><mi>l</mi><mi>s</mi></mrow></msub><mo>]</mo><msub><mi>Y</mi><mi>L</mi></msub></mtd><mtd><mtext>inside sphere</mtext></mtd></mtr></mtable></mfenced></mrow><annotation encoding="application/x-tex">\chi_&#123;\mathbf k+\mathbf G&#125;(\mathbf r)=\begin&#123;cases&#125;e^&#123;i(\mathbf k+\mathbf G)\cdot\mathbf r&#125; &amp; \text&#123;interstitial&#125;\\ \sum_&#123;L,s&#125;[A_&#123;Ls&#125;\psi_&#123;ls&#125;+B_&#123;Ls&#125;\dot&#123;\psi&#125;_&#123;ls&#125;]Y_L &amp; \text&#123;inside sphere&#125;\end&#123;cases&#125;</annotation></semantics></math>
+  </div>
+  <p>
+    Because the matching coefficients are determined from the fixed reference functions, the resulting Hamiltonian is no longer a nonlinear function of the unknown eigenvalue. LAPW preserves a major advantage of <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane-wave methods</a>: the interstitial basis can be enlarged systematically. It also preserves the all-electron radial resolution near the nuclei.
+  </p>
+  <p>
+    The method therefore has several independent representation controls. Increasing the plane-wave cutoff improves the interstitial resolution, while increasing the angular momentum cutoff improves the spherical-harmonic continuation inside the spheres. Their scales are connected approximately by
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><msub><mi>l</mi><mi>max</mi></msub><mo>∼</mo><mi>S</mi><msub><mi>G</mi><mi>max</mi></msub></mrow><annotation encoding="application/x-tex">l_&#123;\max&#125;\sim S G_&#123;\max&#125;</annotation></semantics></math>
+  </div>
+  <p>
+    where <math><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math> is a characteristic sphere radius. This relation is useful intuition, not a universal convergence rule. Sphere radii, angular cutoffs, reciprocal cutoffs, k-point sampling, and linearization energies remain distinct numerical choices.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-5-lapw-applications">
+  <h2 id="section-17-5-lapw-applications">17.5 Applications of the LAPW Method</h2>
+  <p>
+    Martin emphasizes LAPW as a highly accurate and general route for crystalline electronic structure, especially where transition-metal or rare-earth states make the near-nuclear region important and small energy differences matter. Its strength is not a special physical approximation: it is the ability to extend both interstitial plane waves and atom-centered angular components until representation error is small.
+  </p>
+  <p>
+    The cost follows directly from that generality. A large interstitial basis generates many angular components at sphere boundaries, and the density and potential must be represented at still finer spatial resolution than the wavefunctions. A total-energy difference can therefore be trustworthy only after basis, angular, and Brillouin-zone convergence have been demonstrated for that difference. An enormous absolute all-electron energy does not itself measure the accuracy of a structural energy difference.
+  </p>
+  <p>
+    The examples in the source illustrate why LAPW has often served as a cross-check for pseudopotential and localized-orbital calculations. Agreement between independently converged representations is useful because their numerical errors are organized differently. It does not make LAPW a universal oracle: the exchange–correlation functional, magnetic branch, relativistic treatment, structural model, and target observable remain separate layers of the calculation.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-6-lmto">
+  <h2 id="section-17-6-lmto">17.6 Linear Muffin-Tin Orbital (LMTO) Method</h2>
+  <p>
+    LMTO applies the same linearization idea to the muffin-tin-orbital construction of Chapter 16. The goal is different from LAPW. Instead of keeping a large systematic interstitial basis, LMTO seeks a compact set of orbitals adapted to the important atomic channels of the material. The energy dependence of an MTO is removed to first order by choosing the augmented functions so that the derivative of the basis with respect to energy vanishes at the reference energy,
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><msub><mrow><mfrac><mi>∂</mi><mrow><mi>∂</mi><mi>ε</mi></mrow></mfrac><msubsup><mi>χ</mi><mi>L</mi><mi>LMTO</mi></msubsup><mo>(</mo><mi>ε</mi><mo>)</mo></mrow><mrow><mi>ε</mi><mo>=</mo><msub><mi>E</mi><mi>ν</mi></msub></mrow></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\left.\frac&#123;\partial \chi_L^&#123;\mathrm&#123;LMTO&#125;&#125;(\varepsilon)&#125;&#123;\partial\varepsilon&#125;\right|_&#123;\varepsilon=E_&#123;\nu&#125;&#125;=0</annotation></semantics></math>
+  </div>
+  <p>
+    The resulting orbital is a particular combination of <math><semantics><mi>ψ</mi><annotation encoding="application/x-tex">\psi</annotation></semantics></math> and <math><semantics><mover><mi>ψ</mi><mo>˙</mo></mover><annotation encoding="application/x-tex">\dot&#123;\psi&#125;</annotation></semantics></math> in its own sphere, smoothly connected to tails that propagate through the interstitial and enter neighboring spheres. After this construction, the band problem is again a standard generalized eigenvalue equation,
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mi>det</mi><mo>[</mo><mi>H</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>−</mo><mi>ε</mi><mi>S</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>]</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det[H(\mathbf k)-\varepsilon S(\mathbf k)]=0</annotation></semantics></math>
+  </div>
+  <p>
+    This produces a minimal first-principles basis whose matrix elements derive from the same Kohn–Sham differential equation rather than from an empirical band fit. The compactness makes chemical interpretation unusually transparent, but it also makes the quality of the representation more dependent on the chosen channels, sphere construction, and energy window than a large systematically enlarged LAPW basis.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-7-tight-binding">
+  <h2 id="section-17-7-tight-binding">17.7 Tight-Binding Formulation</h2>
+  <p>
+    Screening transformations can make LMTOs short ranged, turning the first-principles problem into a matrix structure that resembles the tight-binding models of Chapter 14. The resemblance is useful because onsite terms and intersite couplings become explicit, and sparse real-space Hamiltonians can be exploited. The conceptual distinction from empirical tight binding remains essential: the LMTO matrix elements are generated from a self-consistent electronic-structure Hamiltonian and change when the environment changes.
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><msub><mi>H</mi><mrow><mi>R</mi><mi>L</mi><mo>,</mo><msup><mi>R</mi><mo>′</mo></msup><msup><mi>L</mi><mo>′</mo></msup></mrow></msub><mo>=</mo><mo>⟨</mo><mi>R</mi><mi>L</mi><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><msup><mi>R</mi><mo>′</mo></msup><msup><mi>L</mi><mo>′</mo></msup><mo>⟩</mo></mrow><annotation encoding="application/x-tex">H_&#123;RL,R'L'&#125;=\langle RL|\hat H|R'L'\rangle</annotation></semantics></math>
+  </div>
+  <p>
+    Short range therefore does not mean universality. Moving neighboring atoms changes the self-consistent potential, radial functions, screening transformation, and effective hopping. This is the same transferability issue encountered earlier in <a href={href('/theory/localized-orbital-methods/')}>localized-orbital methods</a>, now expressed in an augmented all-electron language. The reward is a compact Hamiltonian that can be combined naturally with recursion and other locality-based solvers.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-8-lmto-applications">
+  <h2 id="section-17-8-lmto-applications">17.8 Applications of the LMTO Method</h2>
+  <p>
+    The source uses transition metals, rare-earth systems, semiconductors, and complex structures to show why a minimal augmented basis can be both quantitative and explanatory. Canonical-band ideas from Chapter 16 can be turned on progressively—first the unhybridized geometry-driven picture, then hybridization, relativity, and other material-specific effects—so that complicated band structures can be decomposed rather than merely plotted.
+  </p>
+  <p>
+    The method is especially efficient when the atomic-sphere approximation is appropriate. Open structures require additional care; historically, empty spheres were introduced to fill interstitial volume and preserve a close-packed sphere picture. Such constructions are numerical devices, not atoms or charge-bearing chemical species. Their adequacy must be judged by the resulting observables and by comparison with less shape-constrained calculations.
+  </p>
+  <p>
+    Relativistic effects provide another instructive boundary. Scalar-relativistic corrections, core relaxation, and spin–orbit coupling can alter bands in different ways, and agreement of one reduced relativistic treatment with a pseudopotential calculation does not imply that explicit SOC is negligible. The representation and the relativistic Hamiltonian are separate choices.
+  </p>
+</section>
+
+<section aria-labelledby="section-17-9-nmto">
+  <h2 id="section-17-9-nmto">17.9 Beyond Linear Methods: NMTO</h2>
+  <p>
+    Linearization is accurate near a reference energy, but a broad or specially targeted band manifold may require more than first-order information. NMTO extends the interpolation by constructing muffin-tin orbitals from solutions evaluated at several selected energies <math><semantics><msub><mi>E</mi><mi>n</mi></msub><annotation encoding="application/x-tex">E_n</annotation></semantics></math>. The resulting energy-independent functions can be chosen so that the exact scattering problem is reproduced at those mesh energies.
+  </p>
+  <p>
+    The characteristic interpolation error has the schematic structure
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mi>δψ</mi><mo>(</mo><mi>ε</mi><mo>)</mo><mo>∝</mo><munder><mo>∏</mo><mrow><mi>n</mi><mo>=</mo><mn>0</mn></mrow></munder><msup><mrow><mo>(</mo><mi>ε</mi><mo>−</mo><msub><mi>E</mi><mi>n</mi></msub><mo>)</mo></mrow><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">\delta\psi(\varepsilon)\propto\prod_&#123;n=0&#125;^N(\varepsilon-E_n)</annotation></semantics></math>
+  </div>
+  <p>
+    so increasing the order and placing the mesh energies around the target manifold can widen the accurate window. A particularly important use is <em>downfolding</em>: channels outside the desired low-energy subspace are incorporated into effective orbitals rather than retained as explicit bands. An orbital labeled by a Cu <math><semantics><msub><mi>d</mi><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></msub><annotation encoding="application/x-tex">d_&#123;x^2-y^2&#125;</annotation></semantics></math> symmetry, for example, can contain substantial ligand and neighboring-site weight after downfolding. Its meaning is “a localized basis for the selected band subspace,” not “the isolated atomic d orbital survived unchanged in the solid.”
+  </p>
+</section>
+
+<section aria-labelledby="section-17-10-full-potential">
+  <h2 id="section-17-10-full-potential">17.10 Full Potential in Augmented Methods</h2>
+  <p>
+    Linearization finally separates the augmentation idea from the strongest shape approximations used in early implementations. Once the basis is fixed, matrix elements can be evaluated for a nonspherical potential inside each sphere and a spatially varying potential in the interstitial. Inside a sphere the potential can be expanded as
+  </p>
+  <div class="math-display">
+    <math display="block"><semantics><mrow><mi>V</mi><mo>(</mo><mi>r</mi><mo>,</mo><mi>θ</mi><mo>,</mo><mi>φ</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>L</mi></munder><msub><mi>V</mi><mi>L</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><msub><mi>Y</mi><mi>L</mi></msub><mo>(</mo><mi>θ</mi><mo>,</mo><mi>φ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">V(r,\theta,\phi)=\sum_L V_L(r)Y_L(\theta,\phi)</annotation></semantics></math>
+  </div>
+  <p>
+    while smooth interstitial components can be handled in reciprocal or real space. The same decomposition applies to the density and to the solution of Poisson's equation, with multipole information carrying the effect of sharply varying sphere charges into the smoother region outside.
+  </p>
+  <p>
+    The word <em>full potential</em> therefore means that the potential is not forced into a spherical muffin-tin shape plus a constant interstitial value. It does not mean there are no numerical truncations. Angular expansions, reciprocal cutoffs, radial meshes, sphere radii, linearization energies, core treatment, and k-point integration must still be converged. This distinction is central to understanding why modern augmented methods can treat low-symmetry structures without abandoning the sphere/interstitial representation that motivated APW in the first place.
+  </p>
+</section>
