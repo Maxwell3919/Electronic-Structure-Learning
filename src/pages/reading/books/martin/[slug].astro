@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
-import { martinParts, martinReadingSlugs, martinReadingUnits } from '../../../../reading/books/martin';
-import { getMartinChapterContent } from '../../../../reading/books/martin/chapter-content';
+import { martinParts, martinReadingUnits } from '../../../../reading/books/martin';
+import { getMartinChapterContent, martinChapterSlugs } from '../../../../reading/books/martin/chapter-content';
 
 export function getStaticPaths() {
-  return martinReadingSlugs.map((slug) => ({ params: { slug } }));
+  const publishedSlugs = [
+    ...martinParts.map((part) => part.slug),
+    ...martinChapterSlugs,
+  ];
+  return publishedSlugs.map((slug) => ({ params: { slug } }));
 }
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
@@ -13,14 +17,15 @@ const slug = Astro.params.slug ?? '';
 const part = martinParts.find((candidate) => candidate.slug === slug);
 const unit = martinReadingUnits.find((candidate) => candidate.slug === slug);
 const parentPart = unit ? martinParts.find((candidate) => candidate.units.some((entry) => entry.slug === unit.slug)) : undefined;
+const publishedUnits = martinReadingUnits.filter((candidate) => martinChapterSlugs.includes(candidate.slug));
 
 const partIndex = part ? martinParts.findIndex((candidate) => candidate.slug === part.slug) : -1;
 const previousPart = partIndex > 0 ? martinParts[partIndex - 1] : undefined;
 const nextPart = partIndex >= 0 && partIndex < martinParts.length - 1 ? martinParts[partIndex + 1] : undefined;
 
-const unitIndex = unit ? martinReadingUnits.findIndex((candidate) => candidate.slug === unit.slug) : -1;
-const previousUnit = unitIndex > 0 ? martinReadingUnits[unitIndex - 1] : undefined;
-const nextUnit = unitIndex >= 0 && unitIndex < martinReadingUnits.length - 1 ? martinReadingUnits[unitIndex + 1] : undefined;
+const unitIndex = unit ? publishedUnits.findIndex((candidate) => candidate.slug === unit.slug) : -1;
+const previousUnit = unitIndex > 0 ? publishedUnits[unitIndex - 1] : undefined;
+const nextUnit = unitIndex >= 0 && unitIndex < publishedUnits.length - 1 ? publishedUnits[unitIndex + 1] : undefined;
 
 const pageTitle = part
   ? `Part ${part.numeral} · ${part.title}`
@@ -36,7 +41,17 @@ const unitLabel = unit ? `${unit.kind === 'appendix' ? 'Appendix' : 'Chapter'} $
 const chapterContent = unit ? await getMartinChapterContent(unit.slug) : undefined;
 const ChapterComponent = chapterContent?.default as any;
 const chapterSectionLinks = chapterContent?.sectionLinks ?? [];
-const chapterModernPerspective = chapterContent?.modernPerspective ?? [];
+const rawModernPerspective = chapterContent?.modernPerspective ?? [];
+const perspectiveIndexesByChapter: Record<string, number[]> = {
+  'chapter-02': [0, 1],
+  'chapter-13': [1, 2],
+  'chapter-16': [0, 2],
+  'chapter-17': [0, 3],
+};
+const selectedPerspectiveIndexes = perspectiveIndexesByChapter[slug];
+const chapterModernPerspective = selectedPerspectiveIndexes
+  ? rawModernPerspective.filter((_, index) => selectedPerspectiveIndexes.includes(index))
+  : rawModernPerspective;
 const chapterSynthesis = chapterContent?.synthesis;
 ---
 
@@ -63,17 +78,22 @@ const chapterSynthesis = chapterContent?.synthesis;
 
       <section aria-labelledby="part-chapters">
         <h2 id="part-chapters">{part.numeral === 'VII' ? 'Appendices in this Part' : 'Chapters in this Part'}</h2>
-        {part.units.map((entry) => (
-          <section aria-labelledby={entry.id}>
-            <h3 id={entry.id}>{entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} · {entry.title}</h3>
-            <p>{entry.contribution}</p>
-            <p>
-              <a href={href(entry.route)}>
-                Read {entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} →
-              </a>
-            </p>
-          </section>
-        ))}
+        {part.units.map((entry) => {
+          const isPublished = martinChapterSlugs.includes(entry.slug);
+          return (
+            <section aria-labelledby={entry.id}>
+              <h3 id={entry.id}>{entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} · {entry.title}</h3>
+              <p>{entry.contribution}</p>
+              {isPublished && (
+                <p>
+                  <a href={href(entry.route)}>
+                    Read {entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} →
+                  </a>
+                </p>
+              )}
+            </section>
+          );
+        })}
       </section>
 
       {(previousPart || nextPart) && (
@@ -89,7 +109,7 @@ const chapterSynthesis = chapterContent?.synthesis;
     </>
   )}
 
-  {unit && parentPart && (
+  {unit && parentPart && chapterContent && (
     <>
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href={href('/reading/')}>Guided Reading</a>
@@ -112,42 +132,28 @@ const chapterSynthesis = chapterContent?.synthesis;
         <p>{unit.overview}</p>
       </section>
 
-      {chapterContent ? (
-        <>
-          <nav aria-labelledby="unit-structure">
-            <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
-            <ol class="source-outline">
-              {chapterSectionLinks.map((entry) => (
-                <li><a href={`#${entry.id}`}>{entry.label}</a></li>
-              ))}
-            </ol>
-          </nav>
+      <nav aria-labelledby="unit-structure">
+        <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
+        <ol class="source-outline">
+          {chapterSectionLinks.map((entry) => (
+            <li><a href={`#${entry.id}`}>{entry.label}</a></li>
+          ))}
+        </ol>
+      </nav>
 
-          {ChapterComponent && <ChapterComponent />}
+      {ChapterComponent && <ChapterComponent />}
 
-          {chapterModernPerspective.length > 0 && (
-            <section aria-labelledby="unit-modern-perspective">
-              <h2 id="unit-modern-perspective">Modern perspective</h2>
-              {chapterModernPerspective.map((item) => <p>{item}</p>)}
-            </section>
-          )}
+      {chapterModernPerspective.length > 0 && (
+        <section aria-labelledby="unit-modern-perspective">
+          <h2 id="unit-modern-perspective">Modern perspective</h2>
+          {chapterModernPerspective.map((item) => <p>{item}</p>)}
+        </section>
+      )}
 
-          {chapterSynthesis && (
-            <section aria-labelledby="unit-synthesis">
-              <h2 id="unit-synthesis">Chapter synthesis</h2>
-              <p>{chapterSynthesis}</p>
-            </section>
-          )}
-        </>
-      ) : (
-        <section aria-labelledby="unit-sequence">
-          <h2 id="unit-sequence">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
-          <p>
-            The outline below follows Martin’s internal sequence. Detailed section-by-section reading will be added within this page rather than split into separate routes.
-          </p>
-          <ol class="source-outline">
-            {unit.sections.map((section) => <li>{section}</li>)}
-          </ol>
+      {chapterSynthesis && (
+        <section aria-labelledby="unit-synthesis">
+          <h2 id="unit-synthesis">Chapter synthesis</h2>
+          <p>{chapterSynthesis}</p>
         </section>
       )}
 
