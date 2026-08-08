@@ -51,6 +51,13 @@ export const synthesis =
   <p>
     Quantization changes the allowed energies of each normal oscillator into phonon quanta ℏω without changing the harmonic eigenvectors obtained from the classical force-constant problem. This separation is useful: electronic structure supplies the energy surface and its derivatives, lattice dynamics organizes the resulting nuclear normal modes, and statistical mechanics determines how those modes are occupied.
   </p>
+  <p>
+    Martin also uses the same derivative viewpoint for homogeneous strain. Stress is the quantity conjugate to strain, while elastic constants measure how stress changes under an additional strain. Both the electronic state and the nuclei contribute: if atomic coordinates inside the strained cell are not fixed by symmetry, they must move until the internal forces vanish. The response with those internal coordinates frozen and the response after they relax are therefore different physical quantities—often described as clamped-ion and relaxed-ion response. This is why elastic and piezoelectric properties cannot, in general, be inferred from a strained lattice with the basis atoms artificially held fixed.
+  </p>
+  <aside class="callout" aria-label="Internal strain in a crystal response">
+    <p><strong>Strain response</strong></p>
+    <p>homogeneous strain → electronic relaxation + allowed internal atomic relaxation → stress and polarization response.</p>
+  </aside>
 </section>
 
 <section aria-labelledby="section-20-2-direct-approach">
@@ -62,10 +69,20 @@ export const synthesis =
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>C</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><mo>≈</mo><mo>−</mo><mfrac><mrow><mi>Δ</mi><msub><mi>F</mi><mrow><mi>I</mi><mi>α</mi></mrow></msub></mrow><mrow><mi>Δ</mi><msub><mi>R</mi><mrow><mi>J</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">C_&#123;I&#92;alpha,J&#92;beta&#125;&#92;approx-&#92;frac&#123;&#92;Delta F_&#123;I&#92;alpha&#125;&#125;&#123;&#92;Delta R_&#123;J&#92;beta&#125;&#125;.</annotation></semantics></math>
   </div>
   <p>
+    Martin deliberately makes this direct-response idea broader than phonons. A displacement can be paired with the resulting force or polarization; a homogeneous strain can be paired with stress or polarization; and a periodic external field can be paired with the induced density or potential. Finite differences of these conjugate quantities give force constants, Born effective charges, elastic and piezoelectric coefficients, or dielectric response without changing the underlying ground-state solver.
+  </p>
+  <aside class="callout" aria-label="Direct static response pairs">
+    <p><strong>Direct static response</strong></p>
+    <p>displacement → force / polarization; strain → stress / polarization; periodic field → induced density / screened potential.</p>
+  </aside>
+  <p>
     A frozen-phonon calculation is therefore a finite-difference measurement of the same energy curvature introduced in Section 20.1. Its main strength is generality. The displaced structure can be evaluated with the same total-energy and force machinery used for relaxation, and a finite displacement automatically samples the full energy surface rather than assuming that only the quadratic term exists. This makes direct calculations especially useful when a soft mode leads far away from a high-symmetry reference structure.
   </p>
   <p>
     The cost appears when the displacement pattern has a wavelength longer than the primitive cell. A periodic supercell must be commensurate with the desired <em>q</em>, or real-space force constants must be recovered from a sufficiently large supercell and Fourier interpolated. The supercell therefore controls which spatial range of interatomic force constants is represented, while the displacement amplitude controls the numerical derivative. These are different from ordinary electronic convergence parameters.
+  </p>
+  <p>
+    A periodic electrostatic perturbation provides the direct analogue of a frozen phonon for dielectric response: impose a small field modulation at a chosen wavevector, solve self-consistently, and infer screening from the induced density or potential. The construction is especially useful conceptually because it shows that phonon and dielectric calculations are instances of the same derivative problem even though the perturbing variables are different.
   </p>
   <p>
     Martin applies the same direct logic to spin excitations. A spin spiral can be viewed as a frozen collective rotation of the magnetization, and generalized Bloch symmetry can sometimes describe that rotation without constructing a large real-space supercell. The shared idea is broader than phonons: impose a controlled static perturbation, calculate the energy or conjugate force, and infer the response from its variation.
@@ -149,6 +166,9 @@ export const synthesis =
   </p>
   <p>
     Repeating the calculation over a symmetry-reduced q mesh gives dynamical matrices that can be Fourier transformed to real-space interatomic force constants and interpolated throughout the Brillouin zone. The electronic <em>k</em> mesh and phonon <em>q</em> mesh therefore have different roles: <em>k</em> resolves the electronic states that screen a perturbation, whereas <em>q</em> labels the spatial pattern of that perturbation. The distinction is parallel to, but not the same as, the reciprocal-space distinctions made in Chapters 4 and 12. Background is mapped in <a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a>.
+  </p>
+  <p>
+    In plane-wave implementations, the response equations reuse the same reciprocal-space / real-space division developed in Chapter 13. Kinetic operators and Bloch labels are natural in reciprocal space, while densities and local potentials are evaluated efficiently on real-space grids with FFTs. DFPT changes the object being solved for—from ψ to its first-order response Δψ—without discarding the numerical representation machinery already built for the ground-state problem.
   </p>
 </section>
 
