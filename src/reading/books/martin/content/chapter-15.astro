@@ -1,0 +1,316 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-15-1-ks-localized-bases', label: '15.1 Solution of Kohn–Sham Equations in Localized Bases' },
+  { id: 'section-15-2-gaussians', label: '15.2 Analytic Basis Functions: Gaussians' },
+  { id: 'section-15-3-gaussian-methods', label: '15.3 Gaussian Methods: Ground-State and Excitation Energies' },
+  { id: 'section-15-4-numerical-orbitals', label: '15.4 Numerical Orbitals' },
+  { id: 'section-15-5-energy-force-stress', label: '15.5 Localized Orbitals: Total Energy, Force, and Stress' },
+  { id: 'section-15-6-applications', label: '15.6 Applications of Numerical Local Orbitals' },
+  { id: 'section-15-7-green-functions', label: '15.7 Green’s Function and Recursion Methods' },
+  { id: 'section-15-8-mixed-basis', label: '15.8 Mixed Basis' },
+];
+
+export const modernPerspective = [
+  'Localized-basis convergence is multidimensional. Radial multiplicity, polarization channels, diffuse functions, confinement radii, angular cutoffs, integration grids, auxiliary bases, and the treatment of core states can affect different observables at different rates. A stable total energy therefore does not guarantee converged forces, eigenvalue splittings, response functions, or energy differences between unlike environments.',
+  'Finite atom-centered bases can also produce basis-set superposition error in binding and adsorption energies: two fragments gain variational flexibility when they share each other’s functions. Systematic basis families, counterpoise-style diagnostics where appropriate, and direct basis convergence are ways to expose this effect; the issue is distinct from exchange–correlation or finite-size error.',
+  'Pulay terms are a structural consequence of a geometry-dependent finite basis. They vanish in the ideal limit in which the variational space is complete or independent of nuclear coordinates, not merely because an SCF cycle is tightly converged. Force and stress validation must therefore test both electronic convergence and basis-response terms.',
+  'Modern localized-orbital implementations often combine the ideas in this chapter with sparse matrices, density fitting or resolution-of-identity approximations, hierarchical numerical atom-centered bases, selected Green-function techniques, and linear-scaling algorithms. These accelerations change the numerical route without changing the need to state the represented subspace and converge the target observable.',
+];
+
+export const synthesis =
+  'Chapter 15 turns the localized matrix language of tight binding into a self-consistent first-principles method. The Hamiltonian and overlap matrices are now generated from explicit basis functions and the Kohn–Sham potential rather than supplied as fitted parameters. That change makes basis design part of the numerical approximation: Gaussian functions trade atomic realism for analytic integral technology, numerical orbitals trade universal formulas for direct control over radial shape and spatial range, and both require explicit checks of completeness, nonorthogonality, integration, and basis motion. The density matrix provides a compact bridge from orbital coefficients to density, total energy, forces, and stress, while Pulay terms reveal the special responsibility created when basis functions move with the nuclei. Green-function and mixed-basis constructions show how locality can be exploited or combined with delocalized representations. Chapter 16 now approaches the same electronic-structure problem from a different direction, augmenting simple interstitial functions with atom-centered partial waves and scattering information near the nuclei.';
+---
+
+<section aria-labelledby="section-15-1-ks-localized-bases">
+  <h2 id="section-15-1-ks-localized-bases">15.1 Solution of Kohn–Sham Equations in Localized Bases</h2>
+  <p>
+    Chapter 14 used localized orbitals as a language for parameterized tight-binding Hamiltonians. Here the orbitals become an explicit finite basis for solving the <a href={href('/theory/kohn-sham-density-functional-theory/')}>Kohn–Sham equations</a>. The matrix structure is familiar, but the scientific responsibility changes: Hamiltonian and overlap elements must be evaluated from the chosen functions and the self-consistent potential. A localized basis is therefore both a representation and a numerical approximation whose quality depends on the chemical environment.
+  </p>
+  <p>
+    For a nonorthogonal set of atom-centered functions, the one-electron problem has the generalized form
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="generalized Kohn Sham eigenvalue problem in a localized basis">
+      <semantics>
+        <mrow>
+          <munder><mo>∑</mo><mi>n</mi></munder>
+          <msub><mi>H</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub>
+          <msub><mi>c</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub>
+          <mo>=</mo>
+          <msub><mi>ε</mi><mi>i</mi></msub>
+          <munder><mo>∑</mo><mi>n</mi></munder>
+          <msub><mi>S</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub>
+          <msub><mi>c</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub>
+        </mrow>
+        <annotation encoding="application/x-tex">\sum_n H_&#123;mn&#125;c_&#123;in&#125;=\varepsilon_i\sum_n S_&#123;mn&#125;c_&#123;in&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Plane waves approach completeness by a nearly system-independent kinetic-energy cutoff. Localized functions are deliberately tailored so that far fewer coefficients are needed, but no single cutoff plays the same universal role. Pushing an atom-centered set toward completeness can also create near-linear dependence, making the overlap matrix poorly conditioned. Efficiency and systematic improvability therefore pull in different directions.
+  </p>
+  <p>
+    Martin groups the practical basis choices around radial and angular flexibility. Multiple radial functions in the same angular channel are described as single-, double-, or triple-zeta (SZ, DZ, TZ); additional higher-angular-momentum functions provide polarization. Compact functions are efficient in condensed environments, while diffuse functions become important for vacuum tails, weakly bound states, anions, surfaces, and some excited-state problems. These labels are meaningful only together with the actual basis construction, because two nominal “DZP” sets need not span comparable spaces.
+  </p>
+  <p>
+    This is the central trade-off of <a href={href('/theory/localized-orbital-methods/')}>localized-orbital methods</a>: a chemically adapted basis can be extremely small and informative, but its completeness and conditioning must be demonstrated for the system and observable at hand.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-2-gaussians">
+  <h2 id="section-15-2-gaussians">15.2 Analytic Basis Functions: Gaussians</h2>
+  <p>
+    Gaussian functions became central to molecular electronic structure because products and derivatives remain analytically manageable. The decisive identity is the Gaussian product theorem: two functions centered on different atoms can be replaced, apart from a prefactor, by one Gaussian centered between them,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="Gaussian product theorem">
+      <semantics>
+        <mrow>
+          <msup><mi>e</mi><mrow><mo>−</mo><mi>α</mi><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
+          <msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>B</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
+          <mo>=</mo><msub><mi>K</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub>
+          <msup><mi>e</mi><mrow><mo>−</mo><mrow><mo>(</mo><mi>α</mi><mo>+</mo><mi>β</mi><mo>)</mo></mrow><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>C</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
+        </mrow>
+        <annotation encoding="application/x-tex">e^&#123;-\alpha|\mathbf r-\mathbf R_A|^2&#125;e^&#123;-\beta|\mathbf r-\mathbf R_B|^2&#125;=K_&#123;AB&#125;e^&#123;-(\alpha+\beta)|\mathbf r-\mathbf R_C|^2&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    with the new center
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="center of the product Gaussian">
+      <semantics>
+        <mrow>
+          <msub><mi mathvariant="bold">R</mi><mi>C</mi></msub><mo>=</mo>
+          <mfrac>
+            <mrow><mi>α</mi><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>+</mo><mi>β</mi><msub><mi mathvariant="bold">R</mi><mi>B</mi></msub></mrow>
+            <mrow><mi>α</mi><mo>+</mo><mi>β</mi></mrow>
+          </mfrac>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathbf R_C=\frac&#123;\alpha\mathbf R_A+\beta\mathbf R_B&#125;&#123;\alpha+\beta&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This algebra turns overlap, kinetic-energy, nuclear-attraction, and electron–electron integrals into reusable analytic machinery. It is especially advantageous for <a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree–Fock</a>, exact exchange, hybrid functionals, and other methods dominated by Coulomb-type integrals. The same strength creates a scaling problem: a direct four-orbital Coulomb representation contains a rapidly growing number of integrals, so large calculations rely on screening, factorization, auxiliary representations, locality, or real-space grids rather than evaluating every nominal integral equally.
+  </p>
+  <p>
+    A single Gaussian has the wrong cusp and asymptotic shape for an atomic orbital. Practical Gaussian basis sets compensate by combining several primitive Gaussians into contracted functions chosen to reproduce atomic-like behavior while preserving analytic integrability. The broader lesson is more important than the historical construction: a basis can be computationally excellent because its algebra is convenient even when its individual functions are not literal atomic states.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-3-gaussian-methods">
+  <h2 id="section-15-3-gaussian-methods">15.3 Gaussian Methods: Ground-State and Excitation Energies</h2>
+  <p>
+    The Gaussian machinery supports much more than semilocal ground-state DFT. Analytic Coulomb integrals made it a natural foundation for molecular Hartree–Fock, and the same infrastructure carries over to exact exchange, hybrid functionals, and correlated or quasiparticle methods that repeatedly evaluate two-electron matrix elements. This is why Gaussian methods became deeply developed in <a href={href('/theory/quantum-chemistry/')}>quantum chemistry</a> and can also be competitive for periodic solids.
+  </p>
+  <p>
+    Martin’s examples emphasize range rather than one preferred code: molecular calculations, periodic insulating and magnetic materials, surfaces, quasiparticle bands, and large-system methods can all use localized analytic bases. The methodological conclusion is that basis locality does not restrict a calculation to finite molecules. Periodicity changes the sums and boundary conditions, while the underlying basis and integral technology remain usable.
+  </p>
+  <p>
+    Excitation energies still require the appropriate theory. A localized basis can make exact-exchange or <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>GW</a> matrix elements efficient, but a Kohn–Sham eigenvalue difference does not become a general excitation energy merely because the orbitals are Gaussian. Representation choice and physical approximation remain separate layers.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-4-numerical-orbitals">
+  <h2 id="section-15-4-numerical-orbitals">15.4 Numerical Orbitals</h2>
+  <p>
+    Numerical atom-centered orbitals remove the requirement that the radial shape belong to an analytic family. They can therefore be generated directly from atomic or atomic-like equations and reshaped for the environment in which they will be used. The common strategy is to confine valence orbitals so that they decay or terminate at a chosen radius: shorter range makes matrices sparse and reduces the number of interatomic terms, while excessive confinement increases kinetic energy and removes physically important tails.
+  </p>
+  <p>
+    This trade-off is observable dependent. Compact orbitals are attractive for bulk bonding and large systems, whereas surfaces, vacuum states, weak binding, polarizability, or diffuse charge may require longer-ranged functions. A localization radius is therefore part of the basis definition and must be converged just like radial multiplicity and polarization channels.
+  </p>
+  <p>
+    Many matrix elements can be precomputed because they depend only on atom separations. Overlap and kinetic terms are two-center quantities; once their radial dependence has been tabulated as a function of distance, the angular dependence can be restored with the same rotational logic introduced in Chapter 14. Separable nonlocal pseudopotentials similarly factorize multicenter expressions into products of simpler atom-centered pieces. This is where locality becomes an algorithmic advantage: expensive geometry-independent radial work can be performed once, then reused while atoms move.
+  </p>
+  <p>
+    The self-consistent local potential is different because it depends on the current density. Its matrix element must be evaluated from the actual potential,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="local potential matrix element in a numerical atomic orbital basis">
+      <semantics>
+        <mrow>
+          <msubsup><mi>V</mi><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow><mi>local</mi></msubsup><mo>=</mo>
+          <mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <msubsup><mi>χ</mi><mi>m</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>m</mi></msub><mo>)</mo>
+          <msup><mi>V</mi><mi>local</mi></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <msub><mi>χ</mi><mrow><mi>m</mi><mo>′</mo></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mrow><mi>m</mi><mo>′</mo></mrow></msub><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">V^&#123;\mathrm&#123;local&#125;&#125;_&#123;mm'&#125;=\int d\mathbf r\,\chi_m^*(\mathbf r-\mathbf R_m)V^&#123;\mathrm&#123;local&#125;&#125;(\mathbf r)\chi_&#123;m'&#125;(\mathbf r-\mathbf R_&#123;m'&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Smooth pseudopotential wavefunctions allow this integral to be accumulated on a regular grid much like a plane-wave calculation. All-electron functions vary rapidly near nuclei, so a uniform grid becomes inefficient; atom-centered radial/angular grids or overlapping integration domains are then preferable. A partition of unity expresses the idea cleanly,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="partition of unity for atom centered integration">
+      <semantics>
+        <mrow>
+          <mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi><mi>f</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo>
+          <munder><mo>∑</mo><mi>I</mi></munder>
+          <mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <msub><mi>w</mi><mi>I</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>f</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>,</mo>
+          <mspace width="0.7em"/>
+          <munder><mo>∑</mo><mi>I</mi></munder><msub><mi>w</mi><mi>I</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mn>1</mn>
+        </mrow>
+        <annotation encoding="application/x-tex">\int d\mathbf r\,f(\mathbf r)=\sum_I\int d\mathbf r\,w_I(\mathbf r)f(\mathbf r),\qquad \sum_I w_I(\mathbf r)=1</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Each atom can then use a grid adapted to its own near-nuclear variation while the weighted domains together reproduce the full-space integral. Numerical orbitals therefore shift difficulty from analytic integral formulas to controlled quadrature and basis construction; neither route removes the need for convergence tests in <a href={href('/theory/numerical-analysis/')}>numerical integration</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-5-energy-force-stress">
+  <h2 id="section-15-5-energy-force-stress">15.5 Localized Orbitals: Total Energy, Force, and Stress</h2>
+  <p>
+    The density matrix is the natural compact object for writing observables in a localized basis. If the occupied Kohn–Sham orbitals are expanded as coefficients over basis functions, the one-particle density matrix is
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="density matrix in a localized orbital basis">
+      <semantics>
+        <mrow>
+          <msub><mi>ρ</mi><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow></msub><mo>=</mo>
+          <munder><mo>∑</mo><mi>i</mi></munder>
+          <msub><mi>f</mi><mi>i</mi></msub>
+          <msubsup><mi>c</mi><mrow><mi>i</mi><mi>m</mi></mrow><mo>*</mo></msubsup>
+          <msub><mi>c</mi><mrow><mi>i</mi><mi>m</mi><mo>′</mo></mrow></msub>
+        </mrow>
+        <annotation encoding="application/x-tex">\rho_&#123;mm'&#125;=\sum_i f_i c_&#123;im&#125;^*c_&#123;im'&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    and the real-space density follows directly,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="electron density from the localized basis density matrix">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <munder><mo>∑</mo><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow></munder>
+          <msub><mi>ρ</mi><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow></msub>
+          <msubsup><mi>χ</mi><mi>m</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>m</mi></msub><mo>)</mo>
+          <msub><mi>χ</mi><mrow><mi>m</mi><mo>′</mo></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mrow><mi>m</mi><mo>′</mo></mrow></msub><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(\mathbf r)=\sum_&#123;mm'&#125;\rho_&#123;mm'&#125;\chi_m^*(\mathbf r-\mathbf R_m)\chi_&#123;m'&#125;(\mathbf r-\mathbf R_&#123;m'&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The same density matrix also turns the occupied eigenvalue sum into a trace-like contraction with the Kohn–Sham matrix,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="occupied eigenvalue sum from the localized basis density matrix">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>s</mi></msub><mo>=</mo>
+          <munder><mo>∑</mo><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow></munder>
+          <msub><mi>ρ</mi><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow></msub>
+          <msub><mi>H</mi><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow></msub>
+        </mrow>
+        <annotation encoding="application/x-tex">E_s=\sum_&#123;mm'&#125;\rho_&#123;mm'&#125;H_&#123;mm'&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This compact form is useful, but it does not mean that the total energy equals a bare sum of Kohn–Sham eigenvalues. Hartree, exchange–correlation, ionic, and pseudopotential contributions still require the same double-counting logic established in Chapter 7. The localized basis changes how the ingredients are evaluated, not the underlying energy functional.
+  </p>
+  <p>
+    Martin emphasizes a particularly convenient Coulomb organization in which each ionic center is paired with a localized neutralizing reference density and the remaining charge is treated as a deformation,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="neutral atom reference decomposition of the density">
+      <semantics>
+        <mrow>
+          <mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
+          <munder><mo>∑</mo><mi>I</mi></munder>
+          <msub><mi>n</mi><mi>I</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>+</mo><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">n(\mathbf r)=\sum_I n_I(\mathbf r)+\delta n(\mathbf r)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Grouping neutral objects avoids manipulating individually divergent Coulomb pieces and makes energy derivatives convenient. It also illustrates a recurring principle from Chapter 13: algebraically equivalent total-energy expressions can have very different numerical usefulness.
+  </p>
+  <p>
+    Forces introduce the feature that most clearly distinguishes a finite atom-centered basis from plane waves. The basis functions move when nuclei move, so the variational space itself depends on geometry. For a density functional contribution, this explicit basis response enters through
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="functional derivative contribution to a Pulay force">
+      <semantics>
+        <mrow>
+          <mo>−</mo><mfrac><mrow><mo>∂</mo><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac>
+          <mo>=</mo>
+          <mo>−</mo><mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <mfrac><mrow><mi>δ</mi><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow></mfrac>
+          <mfrac><mrow><mo>∂</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac>
+        </mrow>
+        <annotation encoding="application/x-tex">-\frac&#123;\partial F[n]&#125;&#123;\partial\mathbf R_I&#125;=-\int d\mathbf r\,\frac&#123;\delta F[n]&#125;&#123;\delta n(\mathbf r)&#125;\frac&#123;\partial n(\mathbf r)&#125;&#123;\partial\mathbf R_I&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    These are Pulay-type contributions. Tight SCF convergence eliminates errors from an unfinished electronic minimization; it does not eliminate terms caused by a geometry-dependent incomplete basis. Consistent forces therefore require derivatives of the same basis, overlap, Hamiltonian, integration, and energy model used in the electronic calculation.
+  </p>
+  <p>
+    Stress contains the analogous response to cell deformation. A localized basis can change when the lattice vectors change because interatomic distances, orbital shapes, cutoff boundaries, tabulated matrix elements, and integration partitions all respond to strain. A numerically stable pressure or stress therefore requires more than converged orbital coefficients: the basis response must be included and the basis itself must be converged for the derivative quantity. This is one reason force and stress tests often expose localized-basis incompleteness earlier than total energies do.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-6-applications">
+  <h2 id="section-15-6-applications">15.6 Applications of Numerical Local Orbitals</h2>
+  <p>
+    Martin uses this short section to show where numerical local orbitals are especially useful. They support both all-electron and pseudopotential calculations, can treat core and valence states efficiently, and avoid spending basis functions on large empty regions. Systems with many atoms per cell, surfaces with vacuum, large molecules, and real-time propagation can therefore benefit strongly from locality.
+  </p>
+  <p>
+    The examples also foreshadow Chapter 18: finite spatial range creates sparse matrices, which is the starting point for linear-scaling algorithms. Locality is thus both a physical description and a computational resource, provided the imposed cutoff is compatible with the accuracy required by the target observable.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-7-green-functions">
+  <h2 id="section-15-7-green-functions">15.7 Green’s Function and Recursion Methods</h2>
+  <p>
+    A localized Hamiltonian is naturally suited to Green-function methods because a local perturbation need not force the entire infinite environment into one explicit supercell. Historically, embedding ideas were used for defects and surface adsorbates by describing the perturbation together with the response of an effectively infinite host. Recursion methods exploit the same sparse connectivity by building local spectral information through repeated action of the Hamiltonian.
+  </p>
+  <p>
+    Fully self-consistent DFT makes this harder than model tight binding because the Hamiltonian itself changes with the density. This explains why periodic supercells became dominant for many defect and interface calculations even though Green functions offer cleaner open-boundary physics. The locality developed here nevertheless becomes central again in the linear-scaling methods of Chapter 18 and in broader <a href={href('/theory/many-body-physics/')}>Green-function formulations</a>.
+  </p>
+</section>
+
+<section aria-labelledby="section-15-8-mixed-basis">
+  <h2 id="section-15-8-mixed-basis">15.8 Mixed Basis</h2>
+  <p>
+    No representation is optimal everywhere. Mixed-basis methods deliberately combine localized and delocalized functions in one variational space—for example, Gaussian functions near atoms with plane-wave-like components for smooth or extended regions. The resulting problem still uses ordinary Hamiltonian and overlap matrices; the benefit is that each basis family represents the spatial behavior it describes efficiently.
+  </p>
+  <p>
+    A related construction adapts the basis to anisotropic geometry. For a surface one can use Fourier components parallel to the plane and localized functions perpendicular to it,
+  </p>
+  <div class="math-display">
+    <math display="block" aria-label="mixed plane wave Gaussian basis for a surface">
+      <semantics>
+        <mrow>
+          <msub><mi>χ</mi><mrow><mi mathvariant="bold">k</mi><mo>,</mo><mi>m</mi><mo>,</mo><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>=</mo>
+          <msup><mi>e</mi><mrow><mi>i</mi><mrow><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><msub><mi mathvariant="bold">G</mi><mi>m</mi></msub><mo>)</mo></mrow><mo>·</mo><msub><mi mathvariant="bold">r</mi><mo>∥</mo></msub></mrow></msup>
+          <msup><mi>e</mi><mrow><mo>−</mo><mi>α</mi><msup><mrow><mo>(</mo><mi>z</mi><mo>−</mo><msub><mi>z</mi><mi>n</mi></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow></msup>
+        </mrow>
+        <annotation encoding="application/x-tex">\chi_&#123;\mathbf k,m,n&#125;(\mathbf r)=e^&#123;i(\mathbf k+\mathbf G_m)\cdot\mathbf r_\parallel&#125;e^&#123;-\alpha(z-z_n)^2&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This is conceptually different from PAW or ultrasoft pseudopotentials. Those methods also combine smooth and localized information, but the augmentation is built into a transformed operator formalism rather than retained as a second explicit variational basis. The comparison closes the chapter by showing that representation design is an engineering choice constrained by physics: efficiency comes from matching mathematical functions to where the wavefunction actually varies.
+  </p>
+</section>
