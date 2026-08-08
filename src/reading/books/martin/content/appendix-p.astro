@@ -1,0 +1,212 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-p-1-overview', label: 'P.1 Overview' },
+  { id: 'section-p-2-berry-phase-connection', label: 'P.2 Berry Phase and Berry Connection' },
+  { id: 'section-p-3-curvature', label: 'P.3 Berry Flux and Curvature' },
+  { id: 'section-p-4-chern', label: 'P.4 Chern Number and Topology' },
+  { id: 'section-p-5-adiabatic', label: 'P.5 Adiabatic Evolution' },
+  { id: 'section-p-6-aharonov-bohm', label: 'P.6 Aharonov–Bohm Effect' },
+  { id: 'section-p-7-monopole', label: 'P.7 Dirac Magnetic Monopoles and Chern Number' },
+];
+
+export const modernPerspective = [
+  'The single-state formulas in this appendix are the clearest route to the geometry, but a realistic crystal often contains several occupied bands that cross or mix among themselves. In that case the physical object is the occupied subspace: projectors, determinant overlaps, non-Abelian Berry connections, or Wilson loops replace arbitrary phases assigned to individual energy-ordered bands.',
+  'The discrete overlap formula is especially useful computationally because it does not require differentiating wavefunctions. Numerical reliability still requires a continuous physical subspace and convergence with respect to the discretization of the loop or surface. Apparent phase jumps can reflect the chosen branch or gauge and are not, by themselves, evidence for topology.',
+  'A material-level topological claim therefore requires more than a visually inverted pair of bands or one boundary crossing. The Hamiltonian, filling, relevant bulk gap or nodal structure, occupied subspace, spin–orbit and magnetic treatment, protecting symmetries, dimensional setting, and the invariant evaluated over the appropriate Brillouin-zone manifold are all part of the statement.',
+];
+
+export const synthesis =
+  'Appendix P explains why an arbitrary wavefunction phase at one parameter value can acquire invariant content after transport around a closed loop. Products of neighboring-state overlaps define the Berry phase without choosing a preferred gauge; the continuum limit introduces the Berry connection, whose curl is the gauge-invariant Berry curvature. Integrating that curvature gives Berry flux, and on a closed surface the flux can be quantized as an integer Chern number when no globally smooth gauge exists. Adiabatic evolution connects the geometry to changes of physical states, while the Aharonov–Bohm effect and the Dirac-monopole analogy make the relation between gauge-dependent potentials and gauge-invariant phase or flux concrete. These ideas are the mathematical bridge behind the polarization of Chapter 24 and the topological classifications of Chapters 25–28, and they prepare the quantum Hall example in Appendix Q.';
+---
+
+<section aria-labelledby="section-p-1-overview">
+  <h2 id="section-p-1-overview">P.1 Overview</h2>
+  <p>
+    Martin begins with the simplest quantum-mechanical fact needed for the whole appendix: the phase of one normalized wavefunction can be changed arbitrarily without changing the state, but relative phase is physically meaningful. If a Hamiltonian depends on parameters that are varied around a closed path and the state returns to the same physical state, the accumulated relative phase contains a geometric contribution. That contribution is the Berry phase, defined modulo a full turn of 2π.
+  </p>
+  <p>
+    The phase is therefore a property of a directed path through the space of Hamiltonians or eigenstates rather than an expectation value of an operator at one point. Reversing the path reverses its sign. The same structure appears in apparently different problems: electric polarization under a continuous deformation, the quantum Hall effect, and topological bands. For the applications emphasized by Martin, insulators are particularly clean because a gap separates the occupied state or occupied manifold from competing states during the evolution.
+  </p>
+  <aside class="callout" aria-label="Geometric progression in Appendix P">
+    <p><strong>Geometric progression</strong></p>
+    <p>closed path → relative overlap phases → Berry connection → Berry curvature → Berry flux → Chern integer.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-p-2-berry-phase-connection">
+  <h2 id="section-p-2-berry-phase-connection">P.2 Berry Phase and Berry Connection</h2>
+  <p>
+    For a discrete closed path, let the normalized states be |u<sub>0</sub>⟩, |u<sub>1</sub>⟩, …, |u<sub>N−1</sub>⟩, with the next point identified with the starting state. The relative phase between neighboring states is contained in their overlap. Multiplying every neighboring overlap around the loop removes the arbitrary phase of each individual state because every state appears once as a bra and once as a ket.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>φ</mi><mo>=</mo><mo>−</mo><mi>Im</mi><mspace width="0.2em"/><mi>ln</mi>
+          <mrow><mo>(</mo><munderover><mo>∏</mo><mrow><mi>j</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></munderover>
+          <mo>⟨</mo><msub><mi>u</mi><mi>j</mi></msub><mo>|</mo><msub><mi>u</mi><mrow><mi>j</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>⟩</mo><mo>)</mo></mrow>
+          <mo>,</mo><mspace width="0.6em"/><msub><mi>u</mi><mi>N</mi></msub><mo>=</mo><msub><mi>u</mi><mn>0</mn></msub><mo>,</mo>
+          <mspace width="0.6em"/><mi>φ</mi><mo>mod</mo><mn>2</mn><mi>π</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\phi=-\operatorname&#123;Im&#125;\ln\!\left(\prod_&#123;j=0&#125;^&#123;N-1&#125;\langle u_j|u_&#123;j+1&#125;\rangle\right),\qquad u_N=u_0,\quad \phi\;\mathrm&#123;mod&#125;\;2\pi.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This discrete expression is already gauge invariant modulo 2π and is the form most naturally adapted to numerical data. When the steps become infinitesimal and the state is differentiable along a parameter x, the same object becomes a line integral. Martin defines the Berry connection as the local quantity whose integral gives the geometric phase,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi mathvariant="script">A</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mo>⟨</mo><msub><mi>u</mi><mi>x</mi></msub><mo>|</mo><mi>i</mi><msub><mo>∂</mo><mi>x</mi></msub><mo>|</mo><msub><mi>u</mi><mi>x</mi></msub><mo>⟩</mo><mo>,</mo>
+          <mspace width="1em"/><mi>φ</mi><mo>=</mo><mo>∮</mo><mi mathvariant="script">A</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\mathcal A(x)=\langle u_x|i\partial_x|u_x\rangle,\qquad \phi=\oint \mathcal A(x)\,dx\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The connection itself depends on the phase convention. A smooth gauge transformation multiplies the state by a parameter-dependent phase and shifts the connection by a derivative of that phase. Around a closed loop the resulting change can only alter the accumulated phase by an integer multiple of 2π, so the Berry phase modulo 2π is unchanged. This distinction—gauge-dependent connection, gauge-invariant closed-loop phase—is fundamental to all later uses.
+  </p>
+</section>
+
+<section aria-labelledby="section-p-3-curvature">
+  <h2 id="section-p-3-curvature">P.3 Berry Flux and Curvature</h2>
+  <p>
+    The geometry becomes richer when the state depends on two parameters, for example (k, λ) or (k<sub>x</sub>, k<sub>y</sub>). The Berry connection then has two components. Taking its curl produces the Berry curvature, a local quantity that is unchanged by a smooth gauge transformation.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>Ω</mi><mo>(</mo><mi mathvariant="bold">x</mi><mo>)</mo><mo>=</mo><msub><mo>∂</mo><mn>1</mn></msub><msub><mi mathvariant="script">A</mi><mn>2</mn></msub><mo>−</mo><msub><mo>∂</mo><mn>2</mn></msub><msub><mi mathvariant="script">A</mi><mn>1</mn></msub>
+          <mo>=</mo><mo>−</mo><mn>2</mn><mi>Im</mi><mspace width="0.2em"/><mo>⟨</mo><msub><mo>∂</mo><mn>1</mn></msub><mi>u</mi><mo>|</mo><msub><mo>∂</mo><mn>2</mn></msub><mi>u</mi><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Omega(\mathbf x)=\partial_1\mathcal A_2-\partial_2\mathcal A_1=-2\operatorname&#123;Im&#125;\langle\partial_1u|\partial_2u\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Integrating the curvature over an oriented surface gives the Berry flux. Stokes’ theorem relates that surface integral to the Berry phase around the boundary. The line integral retains the usual modulo-2π ambiguity, while the curvature integral keeps track of any full 2π turns accumulated across the surface.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>Φ</mi><mo>=</mo><mo>∫</mo><msub><mrow><mi mathvariant="bold">S</mi></mrow><mrow></mrow></msub><mi mathvariant="bold">Ω</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi>
+          <mo>=</mo><mo>∮</mo><msub><mi mathvariant="script">A</mi><mrow></mrow></msub><mo>·</mo><mi>d</mi><mi mathvariant="bold">x</mi><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Phi=\int_S\boldsymbol\Omega\cdot d\mathbf S=\oint_&#123;\partial S&#125;\boldsymbol\mathcal A\cdot d\mathbf x\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This is the central analogy with electromagnetism: the Berry connection plays the role of a vector potential and the Berry curvature the role of a field. The analogy is mathematical rather than a claim that Berry curvature is an ordinary magnetic field.
+  </p>
+</section>
+
+<section aria-labelledby="section-p-4-chern">
+  <h2 id="section-p-4-chern">P.4 Chern Number and Topology</h2>
+  <p>
+    If the parameter surface is closed, it has no boundary on which to evaluate a single-valued line integral. The total Berry flux can nevertheless be nonzero. Its allowed values are quantized in units of 2π, defining the Chern number,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><mo>∫</mo><msub><mrow><mi mathvariant="bold">S</mi></mrow><mrow></mrow></msub><mi mathvariant="bold">Ω</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_S\boldsymbol\Omega\cdot d\mathbf S\in\mathbb Z.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    A useful way to understand a nonzero value is through gauge patches. If one smooth phase convention can be chosen over the entire closed surface, the curvature flux must integrate to zero. A nonzero Chern number means that no globally smooth gauge exists: different smooth patches must be joined by a phase transformation whose winding supplies the integer. The integer therefore classifies the global organization of the quantum state over parameter space, rather than the geometric shape of that parameter space itself.
+  </p>
+  <p>
+    In crystals the closed surface may be a Brillouin-zone torus or a closed surface surrounding a band node. This is the mathematical object used in <a href={href('/reading/books/martin/chapter-25/')}>Chapter 25</a> and the two-band models that follow.
+  </p>
+</section>
+
+<section aria-labelledby="section-p-5-adiabatic">
+  <h2 id="section-p-5-adiabatic">P.5 Adiabatic Evolution</h2>
+  <p>
+    Berry geometry acquires dynamical meaning when the parameters of the Hamiltonian change slowly enough that the system follows the corresponding instantaneous eigenstate. The relevant condition is separation from other states: the evolution must be slow compared with the excitation scale set by the gap. In the ideal adiabatic limit the rate can be taken toward zero while the path through parameter space remains fixed.
+  </p>
+  <p>
+    This is the bridge from geometry to measurable change. In <a href={href('/reading/books/martin/chapter-24/')}>Chapter 24</a>, an adiabatic deformation of an insulator turns the change in polarization into a Berry-curvature expression. In <a href={href('/reading/books/martin/chapter-26/')}>Chapter 26</a>, a cyclic adiabatic evolution becomes a quantized particle pump. If the relevant gap closes along the path, the isolated-state construction fails and the same topological branch cannot simply be continued through that point.
+  </p>
+</section>
+
+<section aria-labelledby="section-p-6-aharonov-bohm">
+  <h2 id="section-p-6-aharonov-bohm">P.6 Aharonov–Bohm Effect</h2>
+  <p>
+    The Aharonov–Bohm effect gives Martin’s first concrete physical analogy. A charged particle can travel around a region containing magnetic flux while remaining everywhere on a path where the magnetic field itself is zero. The vector potential on the path still has a nonzero circulation, and Stokes’ theorem relates it to the enclosed magnetic flux,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <msub><mi>Φ</mi><mi>B</mi></msub><mo>=</mo><mo>∫</mo><mi mathvariant="bold">B</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi><mo>=</mo><mo>∮</mo><mi mathvariant="bold">A</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">r</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Phi_B=\int_S\mathbf B\cdot d\mathbf S=\oint\mathbf A\cdot d\mathbf r.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Following Martin’s convention in this appendix, the speed of light c is kept explicitly in the electromagnetic coupling. The phase accumulated by a particle of charge magnitude e is therefore proportional to the enclosed flux,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <msub><mi>γ</mi><mi>AB</mi></msub><mo>=</mo><mfrac><mi>e</mi><mrow><mi>ℏ</mi><mi>c</mi></mrow></mfrac><mo>∮</mo><mi mathvariant="bold">A</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <mo>=</mo><mfrac><mi>e</mi><mrow><mi>ℏ</mi><mi>c</mi></mrow></mfrac><msub><mi>Φ</mi><mi>B</mi></msub><mo>,</mo>
+          <mspace width="1em"/><msub><mi>Φ</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mi>h</mi><mi>c</mi></mrow><mi>e</mi></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\gamma_&#123;\mathrm&#123;AB&#125;&#125;=\frac&#123;e&#125;&#123;\hbar c&#125;\oint\mathbf A\cdot d\mathbf r=\frac&#123;e&#125;&#123;\hbar c&#125;\Phi_B,\qquad \Phi_0=\frac&#123;hc&#125;&#123;e&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The example makes the gauge structure tangible: the vector potential can change with gauge even though the field and the closed-loop interference phase do not. Berry connection, Berry curvature, and Berry phase obey the same logical separation. The analogy also prepares the idea that singular structure enclosed by a path can force a nontrivial phase even when the local description looks smooth away from that region.
+  </p>
+</section>
+
+<section aria-labelledby="section-p-7-monopole">
+  <h2 id="section-p-7-monopole">P.7 Dirac Magnetic Monopoles and Chern Number</h2>
+  <p>
+    Martin’s second example uses Dirac’s magnetic-monopole construction as a geometric model. A real magnetic monopole has not been observed, but a two-level Hamiltonian can generate the same Berry-field structure in its parameter space. For a spin-1/2 state whose quantization axis follows a direction on a sphere, the Berry phase around a closed loop equals one half of the oriented solid angle enclosed by that loop, with the sign set by the chosen eigenstate and orientation.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>γ</mi><mo>=</mo><mo>±</mo><mfrac><msub><mi>Ω</mi><mi>solid</mi></msub><mn>2</mn></mfrac><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\gamma=\pm\frac&#123;\Omega_\mathrm&#123;solid&#125;&#125;&#123;2&#125;\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    No single phase convention is smooth over the entire sphere. One gauge can be regular near the north pole and another near the south pole, but they must be joined on their overlap. The phase mismatch between those patches carries the winding that prevents a global smooth gauge. Integrating the curvature over the whole sphere gives one flux quantum for a simple two-level branch,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>Φ</mi><mo>=</mo><mo>±</mo><mn>2</mn><mi>π</mi><mo>,</mo><mspace width="1em"/><mi>C</mi><mo>=</mo><mfrac><mi>Φ</mi><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><mo>=</mo><mo>±</mo><mn>1</mn><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Phi=\pm2\pi,\qquad C=\frac&#123;\Phi&#125;&#123;2\pi&#125;=\pm1.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The same geometry explains the winding models of Chapter 26 and the Berry-flux charge of a Weyl node in Chapter 28. The “monopole” in those problems is a degeneracy or singular point of the band Hamiltonian in parameter or momentum space, not a magnetic particle in real space. This distinction keeps the analogy useful without confusing Berry curvature with an ordinary magnetic field. A broader conceptual map is available in <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
+  </p>
+</section>
