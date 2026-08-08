@@ -1,0 +1,177 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-25-1-introduction', label: '25.1 Introduction' },
+  { id: 'section-25-2-topology-of-what', label: '25.2 Topology of What?' },
+  { id: 'section-25-3-bulk-boundary', label: '25.3 Bulk-Boundary Correspondence' },
+  { id: 'section-25-4-berry-phase', label: '25.4 Berry Phase and Topology for Bloch States in the Brillouin Zone' },
+  { id: 'section-25-5-chern', label: '25.5 Berry Flux and Chern Numbers: Winding of the Berry Phase' },
+  { id: 'section-25-6-time-reversal', label: '25.6 Time-Reversal Symmetry and Topology of the Electronic System' },
+  { id: 'section-25-7-surface-qhe', label: '25.7 Surface States and the Relation to the Quantum Hall Effect' },
+  { id: 'section-25-8-wannier', label: '25.8 Wannier Functions and Topology' },
+  { id: 'section-25-9-topological-chemistry', label: '25.9 Topological Quantum Chemistry' },
+  { id: 'section-25-10-majorana', label: '25.10 Majorana Modes' },
+];
+
+export const modernPerspective = [
+  'A topological claim is a statement about a specified occupied subspace of a specified Hamiltonian. The dimensionality, filling, bulk gap, spin treatment, spin–orbit coupling, magnetic state, and protecting symmetries are therefore part of the claim; band inversion or a visually unusual band plot is evidence only after it is connected to an invariant under those assumptions.',
+  'For several occupied bands, arbitrary energy-ordered band labels become unreliable at crossings and degeneracies. Modern calculations formulate Berry phases, curvature, Wilson loops, and Wannier-center flow through the occupied projector or a non-Abelian overlap matrix so that unitary rotations inside the occupied manifold do not change the physical classification.',
+  'Bulk and boundary calculations test different parts of the same statement. A bulk invariant can require boundary modes when the relevant symmetry and gap conditions are preserved, while a finite slab spectrum additionally depends on termination, thickness, surface hybridization, and electrostatics. One observed surface band is therefore not by itself a bulk topological invariant.',
+];
+
+export const synthesis =
+  'Chapter 25 turns the Berry-phase language of Chapter 24 into a classification of insulating band structures. The object being classified is the occupied Bloch subspace as it evolves across the Brillouin zone: phases connected by a continuous deformation that preserves the bulk gap and the required symmetries belong to the same class. Berry connection provides a gauge-dependent local description, Berry curvature a gauge-invariant local field, and the integral Berry flux over a closed two-dimensional parameter space gives the integer Chern number. Bulk–boundary correspondence explains why a mismatch of bulk topology can force boundary modes, while time-reversal symmetry changes the allowed classifications and prepares the Z₂ insulators of Chapter 27. Hybrid Wannier centers translate the same global structure into real space, and the discussion of atomic limits, topological quantum chemistry, and Majorana analogies shows that topology is ultimately an obstruction to a symmetry-preserving trivialization. Chapter 26 now makes these ideas calculable in two-band models, where gap closing, winding, Berry phase, and the Thouless pump can all be followed explicitly.';
+---
+
+<section aria-labelledby="section-25-1-introduction">
+  <h2 id="section-25-1-introduction">25.1 Introduction</h2>
+  <p>
+    The electronic Hamiltonian of a crystal may be completely familiar while its eigenstates possess a global structure that ordinary energy-band plots do not reveal. Martin introduces topological band theory as the study of this global structure: spin–orbit coupling, symmetry, and the way Bloch states evolve through momentum space can distinguish insulating phases even when their local band dispersions look similar.
+  </p>
+  <p>
+    Chapters 22–24 already supplied the ingredients. Surface states showed how boundaries can host electronic structure absent from the bulk; Wannier functions exposed the gauge freedom of Bloch states; polarization showed that a measurable bulk quantity can depend on Berry phase rather than on a local charge partition. Topology asks when this phase structure belongs to qualitatively different classes that cannot be continuously connected.
+  </p>
+  <aside class="callout" aria-label="Conceptual inheritance into topology">
+    <p><strong>Conceptual inheritance</strong></p>
+    <p>Bloch states → gauge freedom → Berry phase → Wannier centers → global band topology → protected boundary consequences.</p>
+  </aside>
+  <p>
+    The quantum Hall effect provides the historical precedent: an exactly quantized transport coefficient can be tied to an integer invariant of the electronic states. Topological insulators extend the same style of reasoning to crystalline band structures, including systems that preserve time-reversal symmetry.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-2-topology-of-what">
+  <h2 id="section-25-2-topology-of-what">25.2 Topology of What?</h2>
+  <p>
+    The object being classified is not the real-space shape of the crystal and not the shape of the Brillouin zone. It is the occupied electronic subspace of the momentum-dependent Hamiltonian <em>H</em>(<strong>k</strong>) as <strong>k</strong> ranges over the Brillouin zone. Equivalently, one can describe the topology through the cell-periodic Bloch functions, their projector, or a smoothly chosen basis for the occupied manifold.
+  </p>
+  <p>
+    Two insulating Hamiltonians are topologically equivalent when one can be deformed continuously into the other while the occupied and unoccupied subspaces remain separated by a bulk gap and any required protecting symmetry remains intact. A change of topological class therefore requires the conditions defining that class to fail. In the band-insulator problems developed here, the characteristic transition is a closing of the occupied–unoccupied gap, allowing their eigenvectors to reconnect differently across momentum space.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover><mi>P</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>n</mi><mo>∈</mo><mi>occ</mi></mrow></munder><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\hat P(\mathbf k)=\sum_&#123;n\in\mathrm&#123;occ&#125;&#125;|u_&#123;n\mathbf k&#125;\rangle\langle u_&#123;n\mathbf k&#125;|.</annotation></semantics></math>
+  </div>
+  <p>
+    The occupied projector makes the classification independent of arbitrary unitary rotations among occupied eigenvectors. This becomes essential whenever bands cross or form a composite manifold: the topology belongs to the subspace, not to an arbitrary energy-ordered label attached to one band.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-3-bulk-boundary">
+  <h2 id="section-25-3-bulk-boundary">25.3 Bulk-Boundary Correspondence</h2>
+  <p>
+    Topology is defined for an infinite periodic bulk, yet its most visible consequences often occur at a boundary. Suppose an interface connects two insulating regions with different topological invariants while preserving the conditions that define those invariants. If the interface were everywhere gapped, one could continuously pass from one bulk phase to the other without encountering the gap closing required for the invariant to change. The interface must therefore accommodate low-energy states.
+  </p>
+  <p>
+    This is the logic of bulk–boundary correspondence. It connects the Jackiw–Rebbi interface picture, quantum Hall edge channels, Shockley-like boundary states, and later topological-insulator surface bands through one recurring structure: a change of bulk class forces a nontrivial boundary spectrum under the appropriate symmetry and gap conditions.
+  </p>
+  <p>
+    The distinction from Chapter 22 is crucial. Ordinary Tamm or Shockley states can occur because of local termination chemistry alone. A topological boundary state is tied to a mismatch of bulk invariants. Its detailed dispersion and spatial localization may change with termination, but the protected connectivity cannot disappear without removing the relevant bulk gap, annihilating it with another allowed mode, or breaking the protecting symmetry.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-4-berry-phase">
+  <h2 id="section-25-4-berry-phase">25.4 Berry Phase and Topology for Bloch States in the Brillouin Zone</h2>
+  <p>
+    The Berry phase describes the phase accumulated when a quantum state is transported around a closed loop in parameter space. For a crystal, the parameter is commonly crystal momentum. The local Berry connection for one smooth Bloch state is
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="caligraphic">A</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>Im</mi><mo>⟨</mo><msub><mi>u</mi><mi mathvariant="bold">k</mi></msub><mo>|</mo><msub><mo>∂</mo><msub><mi>k</mi><mi>μ</mi></msub></msub><mo>|</mo><msub><mi>u</mi><mi mathvariant="bold">k</mi></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathcal A_\mu(\mathbf k)=-\operatorname&#123;Im&#125;\langle u_\mathbf k|\partial_&#123;k_\mu&#125;u_\mathbf k\rangle.</annotation></semantics></math>
+  </div>
+  <p>
+    A change of Bloch-state phase changes the connection, so <span aria-label="Berry connection">𝒜</span>(<strong>k</strong>) is not itself an observable. Its integral around a closed loop is gauge invariant modulo 2π. On a numerical <em>k</em>-mesh, the same quantity is obtained from products of neighboring-state overlaps; for several occupied bands the determinant or Wilson-loop form replaces single-band overlaps so that internal rotations of the occupied manifold cancel.
+  </p>
+  <p>
+    In two dimensions the curl of the connection defines Berry curvature,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><msub><mo>∂</mo><msub><mi>k</mi><mi>x</mi></msub></msub><msub><mi mathvariant="caligraphic">A</mi><mi>y</mi></msub><mo>−</mo><msub><mo>∂</mo><msub><mi>k</mi><mi>y</mi></msub></msub><msub><mi mathvariant="caligraphic">A</mi><mi>x</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">\Omega(\mathbf k)=\partial_&#123;k_x&#125;\mathcal A_y-\partial_&#123;k_y&#125;\mathcal A_x.</annotation></semantics></math>
+  </div>
+  <p>
+    Curvature is a local gauge-invariant measure of geometric twisting of the state. Integrating it over an area gives Berry flux; Stokes’s theorem relates that flux to the Berry phase around the boundary. This is the bridge from the continuous phase used for polarization to the integer invariants used for topology.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-5-chern">
+  <h2 id="section-25-5-chern">25.5 Berry Flux and Chern Numbers: Winding of the Berry Phase</h2>
+  <p>
+    The Brillouin zone of a two-dimensional crystal is a closed torus. The total Berry flux through that closed momentum-space surface can be an integer multiple of 2π. The integer is the first Chern number,
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>d</mi><mn>2</mn><mi mathvariant="bold">k</mi><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;d^2\mathbf k\,\Omega(\mathbf k)\in\mathbb Z.</annotation></semantics></math>
+  </div>
+  <p>
+    A nonzero integer signals that no globally smooth single-valued gauge can be chosen over the whole occupied bundle. Because an integer cannot change continuously, <em>C</em> is stable under smooth changes of the Hamiltonian until the defining gap closes.
+  </p>
+  <p>
+    Martin emphasizes a second, highly intuitive representation. Calculate a Berry phase along one momentum direction while sweeping the transverse momentum across the Brillouin zone. If the phase returns to itself without net winding, the Chern number is zero; if it advances by 2π, 4π, and so on, its winding gives <em>C</em>. Through Chapter 23, the same winding appears as the flow of hybrid Wannier centers from one cell to another.
+  </p>
+  <aside class="callout" aria-label="Equivalent views of a Chern number">
+    <p><strong>One invariant, three views</strong></p>
+    <p>integrated Berry curvature ↔ winding of Berry phase ↔ net flow of hybrid Wannier centers.</p>
+  </aside>
+</section>
+
+<section aria-labelledby="section-25-6-time-reversal">
+  <h2 id="section-25-6-time-reversal">25.6 Time-Reversal Symmetry and Topology of the Electronic System</h2>
+  <p>
+    Time-reversal symmetry constrains the Berry curvature. For a spinless or properly traced occupied manifold, time reversal maps <strong>k</strong> to −<strong>k</strong> and makes the curvature odd; inversion makes it even. Thus a time-reversal-symmetric two-dimensional insulator has zero net Chern number, and a system with both time-reversal and inversion symmetry has vanishing Abelian curvature point by point in the simplest formulation.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">S</mi><mo>:</mo><mspace width="0.5em"/><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>Ω</mi><mo>(</mo><mo>−</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>,</mo><mspace width="1em"/><mi mathvariant="normal">I</mi><mo>:</mo><mspace width="0.5em"/><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mi>Ω</mi><mo>(</mo><mo>−</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathrm&#123;TRS&#125;:\;\Omega(\mathbf k)=-\Omega(-\mathbf k),\qquad \mathrm&#123;I&#125;:\;\Omega(\mathbf k)=\Omega(-\mathbf k).</annotation></semantics></math>
+  </div>
+  <p>
+    Zero total Chern number does not make every time-reversal-symmetric insulator topologically equivalent. With spin–orbit coupling, Kramers-related states at <strong>k</strong> and −<strong>k</strong> can possess a nontrivial paired structure even though their net Chern response cancels. Chapter 27 develops the resulting Z₂ classification and helical edge states.
+  </p>
+  <p>
+    This section also clarifies the pump of Chapter 24. A cyclic parameter can supply an oriented second dimension even when the instantaneous Hamiltonians respect ordinary time reversal. Reversing the direction of the cycle reverses the transported charge; the topological invariant belongs to the full parameter-space evolution.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-7-surface-qhe">
+  <h2 id="section-25-7-surface-qhe">25.7 Surface States and the Relation to the Quantum Hall Effect</h2>
+  <p>
+    A nonzero Chern number requires chiral boundary bands that connect valence and conduction states. Their one-way propagation is the band-theory counterpart of quantum Hall edge transport: elastic disorder cannot produce ordinary backscattering when no counter-propagating state is available at the same boundary and energy, provided the bulk mobility gap and relevant assumptions remain intact.
+  </p>
+  <p>
+    Time-reversal topological insulators instead carry Kramers-related counter-propagating boundary modes. Their protection has a different symmetry basis and should not be described as two independent Chern insulators with separately conserved spin. Spin need not be an exact quantum number when spin–orbit coupling is strong; the robust object is the time-reversal-constrained pair structure developed in Chapter 27.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-8-wannier">
+  <h2 id="section-25-8-wannier">25.8 Wannier Functions and Topology</h2>
+  <p>
+    Wannier functions convert the momentum-space classification into a real-space question. Exponential localization requires sufficiently smooth Bloch functions over the Brillouin zone. For a Chern band, the nonzero Chern number is precisely an obstruction to choosing a globally smooth periodic gauge and therefore obstructs a complete set of exponentially localized orthonormal Wannier functions spanning that isolated occupied subspace.
+  </p>
+  <p>
+    Hybrid Wannier functions remain especially useful because they localize only one direction at a time. Their centers can be tracked as functions of transverse momentum even when a globally localized two-dimensional representation is obstructed. The winding of these centers is the same Chern topology described by Berry flux.
+  </p>
+  <p>
+    For symmetry-protected phases the statement needs additional care. Localized Wannier functions may exist only after relaxing the symmetry that protects the topological phase. The relevant obstruction can therefore be an obstruction to a <em>symmetry-respecting</em> atomic representation rather than to localization in every possible gauge.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-9-topological-chemistry">
+  <h2 id="section-25-9-topological-chemistry">25.9 Topological Quantum Chemistry</h2>
+  <p>
+    Martin presents topological quantum chemistry through the atomic-limit question. Imagine continuously separating the atoms of a crystal while preserving the relevant symmetries and keeping the occupied manifold gapped. If the occupied states can evolve into localized atomic-like orbitals throughout that deformation, the phase has an ordinary atomic description. If such a symmetry-preserving deformation necessarily closes the gap or encounters a Wannier obstruction, the occupied band representation is nontrivial.
+  </p>
+  <p>
+    This viewpoint connects local chemical intuition to global band topology without reducing one to the other. Orbital characters and symmetry labels can help identify how bands are connected, but a band inversion by itself is not the invariant. The classification depends on the full occupied representation, its filling, the relevant symmetries, and whether it can be deformed to an allowed atomic limit.
+  </p>
+  <p>
+    The Shockley transition provides a simple precursor: with an appropriate protecting symmetry, closing and reopening the gap changes how the bonding and antibonding states connect and can change the allowed boundary physics. Chapter 26 turns this qualitative picture into explicit two-band winding calculations.
+  </p>
+</section>
+
+<section aria-labelledby="section-25-10-majorana">
+  <h2 id="section-25-10-majorana">25.10 Majorana Modes</h2>
+  <p>
+    Martin closes with a short analogy to topological superconductivity, outside the main scope of the book. In a superconducting Bogoliubov–de Gennes description, particle–hole symmetry can pin certain boundary modes to zero energy. This makes the Shockley idea—gap closing and reopening leaving boundary states—useful as a conceptual ancestor of Majorana bound-state physics.
+  </p>
+  <p>
+    The analogy should not collapse the two problems into one. Ordinary Shockley states, Chern-insulator edge states, time-reversal topological-insulator states, and Majorana modes are protected by different Hamiltonian structures and symmetries. Chapter 25 uses the comparison only to emphasize the recurring bulk–boundary logic; superconducting topology requires its own particle–hole/Nambu formulation beyond this reading route.
+  </p>
+</section>
