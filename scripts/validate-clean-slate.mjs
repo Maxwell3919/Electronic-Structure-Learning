@@ -149,9 +149,11 @@ if (sourceMode) {
   checkTheoryPages(root, 'source');
 
   const book = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/index.astro'), 'utf8');
-  for (const marker of ['part.summary', 'part.progression', 'part.route', 'Read Part', 'martinReadingUnits.length']) {
+  for (const marker of ['part.summary', 'part.route', 'Read Part']) {
     assert(book.includes(marker), `Martin book page is missing ${marker}`);
   }
+  assert(!book.includes('part.progression'), 'Martin book page duplicates Part progression');
+  assert(!book.includes('martinReadingUnits.length'), 'Martin book page exposes unit-count metadata');
   const routePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/[slug].astro'), 'utf8');
   for (const marker of ['getStaticPaths', 'martinChapterSlugs', 'Core Idea.', 'Chapter structure', 'Appendix structure', 'entry.contribution', 'href(entry.route)']) {
     assert(routePage.includes(marker), `Martin route page is missing ${marker}`);

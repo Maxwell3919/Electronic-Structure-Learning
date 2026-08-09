@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
-import { martinParts, martinReadingUnits } from '../../../../reading/books/martin';
+import { martinParts } from '../../../../reading/books/martin';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -24,10 +24,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     A continuous guide to Richard M. Martin’s <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition. The route follows the book from the origins of electronic-structure theory through density-functional methods, practical representations, material properties, Berry phases, and topology.
   </p>
   <p>
-    This guide preserves Martin’s sequence while using original explanations and a layered reading structure. The book page shows what each Part contributes; Part pages explain how their chapters build the argument; detailed Chapter or Appendix pages are published only after source-aligned close reading has been completed.
+    The guide preserves Martin’s sequence in original prose. This page identifies each Part’s role; Part pages show the progression among chapters, and chapter pages carry the scientific argument.
   </p>
   <p>
-    Prerequisite courses and broader concept maps remain in <a href={href('/theory/')}>Foundations</a>. The source spine contains {martinParts.length} Parts and {martinReadingUnits.length} Chapter or Appendix units; reviewed reading pages are added sequentially rather than exposed as placeholders.
+    Use <a href={href('/theory/')}>Foundations</a> when a prerequisite interrupts the source sequence.
   </p>
 
   <section aria-labelledby="source-spine">
@@ -36,7 +36,6 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <section aria-labelledby={part.id}>
         <h3 id={part.id}>Part {part.numeral} · {part.title}</h3>
         <p>{part.summary}</p>
-        <p>{part.progression}</p>
         <ul>
           {part.units.map((unit) => (
             <li>{unit.kind === 'appendix' ? `Appendix ${unit.number}` : `Chapter ${unit.number}`}: {unit.title}</li>
@@ -47,10 +46,4 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     ))}
   </section>
 
-  <section aria-labelledby="reading-order">
-    <h2 id="reading-order">Reading order</h2>
-    <p>
-      The main route proceeds from Chapter 1 through Chapter 28 in source order. Appendices are introduced when the main sequence first needs their derivations, formulas, or numerical background. Section-level close reading remains inside each completed Chapter or Appendix page rather than becoming another route layer.
-    </p>
-  </section>
 </BaseLayout>
