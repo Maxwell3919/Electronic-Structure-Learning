@@ -1,100 +1,61 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations/';
 ---
 
 <BaseLayout
   title="Methods"
-  description="A conceptual map of the principal method families used in electronic-structure research."
+  description="A conceptual map from electronic-structure questions to calculated physical objects."
   current="methods"
 >
   <h1>Methods</h1>
   <p class="lede">
-    Electronic-structure methods are physical approximations, algorithms, and representations used to answer different scientific questions. They are not interchangeable accuracy settings, and a method name alone does not establish that a calculation is converged or that a scientific claim is supported.
-  </p>
-  <p>
-    Theory develops the mathematical and physical foundations behind these methods. This page explains what the main method families mean and which problems they address. Detailed guidance on composing, executing, converging, validating, interpreting, and preserving calculations belongs to DFT Research Workflow; software commands and file semantics belong to Computational Tools.
+    A method specifies which physical problem is reduced, which approximation is added, and which object is calculated. It is not an accuracy rank or a software choice.
   </p>
 
-  <h2>Ground-State Density-Functional Methods</h2>
+  <h2>Ground-state density methods and approximations</h2>
   <p>
-    <strong>Kohn–Sham density-functional theory</strong> replaces the interacting ground-state problem with an auxiliary one-electron construction that reproduces the density for a chosen exchange–correlation approximation. It provides total energies, densities, forces, stresses, and Kohn–Sham states used in many ground-state studies, but its eigenvalues are not generally quasiparticle excitation energies.
+    Ground-state DFT changes the basic variable to the density; <a href={href('/theory/kohn-sham-density-functional-theory/')}><strong>Kohn–Sham theory</strong></a> seeks an auxiliary noninteracting representation for a ground-state density that admits a suitable pure-state or ensemble noninteracting representation. Practical calculations then approximate exchange and correlation. LDA, GGA, and meta-GGA use progressively richer semilocal ingredients; hybrids use nonlocal exchange in a generalized Kohn–Sham operator. DFT+U adds a declared localized-subspace interaction, while dispersion corrections or nonlocal van der Waals functionals address long-range correlation. Each changes a different part of the model, and none is uniformly superior for every observable.
   </p>
   <p>
-    <strong>Spin-polarized DFT</strong> resolves collinear spin densities, while <strong>noncollinear DFT</strong> allows the magnetization direction to vary in space. These extensions support magnetic-state comparisons and spin-texture analysis, but a converged solution does not by itself identify the global magnetic ground state or demonstrate robustness against alternative initial states and models.
-  </p>
-  <p>
-    <strong>Further route:</strong> the official <a href="https://www.quantum-espresso.org/learn/">Quantum ESPRESSO Learn</a> page collects workshop lectures and hands-on material for plane-wave ground-state calculations. It is a code-specific entry point: adapt its examples to the chosen pseudopotential, structure, magnetic branches, and target observable, then establish convergence independently.
+    Spin-polarized and noncollinear formulations enlarge the density variables; spin–orbit coupling adds relativistic spin–orbital physics. They produce candidate magnetic states, spin textures, or anisotropy energies, not automatic proof of the global magnetic state or finite-temperature order. See <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>exchange–correlation approximations</a> and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>spin and relativity</a>.
   </p>
 
-  <h2>Relativistic, Correlation, and Functional Extensions</h2>
+  <h2>Representation and core treatment</h2>
   <p>
-    <strong>Spin–orbit coupling</strong> introduces relativistic coupling between orbital and spin degrees of freedom and is central to magnetic anisotropy, band splittings, and many topological questions. <strong>DFT+U</strong> adds a chosen localized-interaction correction, <strong>hybrid DFT</strong> mixes nonlocal exchange into the functional, and <strong>vdW-corrected DFT</strong> supplies a treatment of dispersion that semilocal functionals do not capture reliably.
-  </p>
-  <p>
-    These choices address different missing physics and are not interchangeable “higher-accuracy” switches. Their usefulness depends on the system, the target observable, the definition of localized subspaces or interaction parameters where applicable, and comparison against relevant evidence.
-  </p>
-  <p>
-    <strong>Further route:</strong> <a href="https://libxc.gitlab.io/">Libxc</a> documents a versioned catalogue and implementation interface for exchange–correlation functionals. Identifying an available functional is not a validation of its suitability; record the functional and version, then test the approximation for the system and observable at issue.
+    Plane waves and real-space grids offer systematic finite representations; localized orbitals trade that uniformity for compact, chemically adapted functions. All-electron methods treat core and valence explicitly. Pseudopotentials replace core states with an effective operator; PAW transforms smooth auxiliary orbitals and reconstructs all-electron-like quantities, usually within a frozen-core dataset. These choices control basis error, boundary conditions, transferability, accessible observables, and cost; they do not change the underlying approximation in the same way as choosing a functional. See <a href={href('/theory/discretization-and-basis-representations/')}>discretization</a>, <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane-wave and real-space methods</a>, <a href={href('/theory/localized-orbital-methods/')}>localized orbitals</a>, and <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>core treatment</a>.
   </p>
 
-  <h2>Response and Lattice-Dynamical Methods</h2>
+  <h2>Structures, forces, and paths</h2>
   <p>
-    <strong>Density-functional perturbation theory</strong> obtains linear responses to small perturbations without explicitly constructing every displaced configuration. <strong>Finite-difference methods</strong> infer derivatives from separately evaluated displaced or perturbed systems. Both can provide force constants, phonons, dielectric responses, effective charges, and related couplings, but they differ in numerical construction and implementation constraints.
-  </p>
-  <p>
-    Neither route automatically validates the harmonic or linear-response regime. Results still depend on the reference state, perturbation sampling, numerical representation, symmetry treatment, and convergence of the target response quantity.
-  </p>
-  <p>
-    <strong>Further route:</strong> the official <a href="https://docs.abinit.org/topics/DFPT/">ABINIT DFPT topic guide</a> links its concepts, input variables, and tutorials for linear-response calculations. Its examples are ABINIT-specific and do not remove the need to check q-point coverage, interpolation, and observable-level convergence.
+    Energy derivatives give forces and stress. Geometry optimization searches for a stationary structure under declared constraints; stress is conjugate to strain, and its linear derivative defines an elastic tensor under a stated clamped-ion or relaxed-ion convention. A stationary point, positive local curvature, or elastic stability condition does not establish the global or finite-temperature stable phase. The nudged elastic band method instead optimizes a proposed path between specified endpoints and yields a barrier for that path, not a rate or proof that no lower path exists.
   </p>
 
-  <h2>Localized Representations and Interpolation</h2>
+  <h2>Vibrations, response, and finite temperature</h2>
   <p>
-    <strong>Wannier methods</strong> transform selected extended electronic states into localized orbitals or an equivalent compact representation. They enable efficient interpolation on dense meshes, low-energy Hamiltonians, chemical interpretation, topology analysis, and some transport or coupling calculations.
-  </p>
-  <p>
-    The representation depends on band selection, energy windows, gauge choices, and localization quality. A visually localized orbital set does not by itself establish that the interpolated bands, matrix elements, or derived observables are accurate over the required domain.
-  </p>
-  <p>
-    <strong>Further route:</strong> <a href="https://www.materialscloud.org/learn/sections/kpbmzt/wannier90-schools">Materials Cloud’s Wannier90 schools</a> provide lecture and hands-on routes to localized representations and interpolation. Treat a school workflow as preparation, then document the selected subspace, windows, gauges, and interpolation checks for the new system.
+    Finite differences obtain derivatives from separately perturbed calculations; density-functional perturbation theory solves the corresponding linear-response problem. Atomic displacements give force constants and phonons; electric, strain, or other perturbations give their corresponding response tensors and coupling matrix elements. These results require a valid reference state, perturbation sector, harmonic or linear regime, and Brillouin-zone coverage. Ab initio molecular dynamics instead samples nuclear trajectories on an electronic energy surface; its output supports ensemble claims only after equilibration, correlation, finite-size, and sampling limits are addressed. See <a href={href('/theory/linear-response-and-excited-states/')}>linear response</a> and <a href={href('/theory/statistical-mechanics/')}>statistical mechanics</a>.
   </p>
 
-  <h2>Structural Paths and Finite-Temperature Sampling</h2>
+  <h2>Localized interpolation and topology</h2>
   <p>
-    <strong>The nudged elastic band method</strong> optimizes a chain of configurations to estimate a minimum-energy path and barrier between specified endpoints. It characterizes a proposed pathway, not every possible mechanism, and a barrier alone is not a kinetic rate without an appropriate statistical treatment.
-  </p>
-  <p>
-    <strong>Ab initio molecular dynamics</strong> propagates nuclei using forces evaluated from an electronic-structure method, producing finite-temperature trajectories and ensemble samples. Its conclusions are limited by the electronic approximation, timestep, ensemble control, equilibration, trajectory length, finite-size effects, and statistical independence of the sampled data.
+    Wannier methods construct a localized representation when the selected subspace permits it, enabling dense interpolation, low-energy Hamiltonians, polarization, Berry quantities, and topology analysis. Topology or a required symmetry can obstruct a globally smooth, exponentially localized representation. The calculated object depends on the selected subspace, gauge, windows, and interpolation fidelity. Localization or band inversion alone is not a topological invariant; the protecting symmetry, gap, filling, and invariant must be stated. See <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry phases and topology</a>.
   </p>
 
-  <h2>Excited-State and Beyond-DFT Methods</h2>
+  <h2>Excitations and spectra</h2>
   <p>
-    <strong>GW</strong> targets quasiparticle energies through an approximate electronic self-energy. The <strong>Bethe–Salpeter equation</strong> describes correlated electron–hole excitations and optical spectra built on an underlying one-particle description. <strong>Time-dependent DFT</strong> treats time-dependent densities or their response, while <strong>dynamical mean-field theory</strong> addresses local dynamical correlations through an embedded many-body problem.
-  </p>
-  <p>
-    These methods answer different questions and should not be grouped as a single ladder of “advanced accuracy.” Their conclusions depend on the starting point, interaction kernels or impurity construction, basis and frequency representations, convergence controls, and the observable being assessed.
-  </p>
-  <p>
-    <strong>Further routes:</strong> the official <a href="https://berkeleygw.org/documentation/tutorial/">BerkeleyGW tutorial</a> introduces GW and GW–BSE workflows, while <a href="https://octopus-code.org/main/tutorials/">Octopus tutorials</a> cover time-dependent and response calculations. Both are code-specific: converge the stated starting point, representation, screening or kernel, and boundary conditions before drawing spectral conclusions.
+    GW approximates the electronic self-energy to obtain charged addition and removal energies. The Bethe–Salpeter equation adds an electron–hole kernel to describe neutral excitations and optical spectra; time-dependent DFT obtains density response with an approximate time-dependent kernel. These methods calculate different objects: a quasiparticle gap, a neutral excitation, and a measured optical onset coincide only under additional conditions involving momentum, selection rules, matrix elements, and the experimental probe. See <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>many-body perturbation theory</a>.
   </p>
 
-  <h2>Coupling and Transport Methods</h2>
+  <h2>Coupling and transport</h2>
   <p>
-    <strong>Electron–phonon methods</strong> evaluate how electronic states couple to lattice vibrations, supporting analyses of linewidths, relaxation, mass renormalization, and conventional superconductivity within declared approximations. <strong>Boltzmann transport</strong> uses semiclassical distribution dynamics to derive electronic or thermal transport coefficients under specified scattering and relaxation models.
-  </p>
-  <p>
-    These are composite calculations rather than isolated labels. They commonly require converged electronic and vibrational states, dense Brillouin-zone integration or interpolation, and explicit tests of smearing, sampling, scattering assumptions, and the final transport or coupling observable.
-  </p>
-  <p>
-    <strong>Further route:</strong> the official <a href="https://docs.epw-code.org/">EPW documentation</a> provides tutorials, schools, and benchmarks for Wannier-interpolated electron–phonon calculations. It is an implementation route rather than evidence for a new material: validate dense-mesh, interpolation, Coulomb-treatment, and final-observable convergence in the stated physical model.
+    Electron–phonon methods combine electronic states, phonons, and coupling matrix elements to estimate linewidths, relaxation, mass renormalization, or conventional superconducting quantities. Semiclassical Boltzmann methods map band velocities and a declared scattering model to transport coefficients. Both are composite calculations: dense interpolation and numerical convergence are necessary, but their physical assumptions and the target observable require separate validation.
   </p>
 
-  <h2>From methods to a reliable workflow</h2>
+  <h2>Execution boundary</h2>
   <p>
-    This page provides a conceptual map of method families. Detailed guidance on composing operations, designing protocols, preparing calculations, managing execution, testing convergence, validating physical consistency, assessing scientific claims, recording provenance, and preserving reproducible research is maintained in DFT Research Workflow.
+    Atlas explains why a method is chosen, what it calculates, and where its interpretation fails. DFT Research Workflow covers <a href={`${workflow}choose-dft-method-and-computational-setup/`}>setup choice</a>, <a href={`${workflow}test-numerical-convergence/`}>observable convergence</a>, <a href={`${workflow}calculate-reference-ground-state/`}>reference states</a>, target calculations, and <a href={`${workflow}validate-results-and-scientific-conclusions/`}>supported conclusions</a>.
   </p>
-  <ul>
-    <li><a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow public site</a></li>
-    <li><a href="https://github.com/Maxwell3919/DFT-Research-Workflow">DFT Research Workflow GitHub repository</a></li>
-  </ul>
 </BaseLayout>
