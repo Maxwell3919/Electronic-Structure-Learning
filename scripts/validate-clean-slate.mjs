@@ -89,6 +89,7 @@ const checkTheoryPages = (baseDirectory, mode) => {
     const relative = mode === 'source' ? `src/pages/theory/${slug}/index.astro` : `theory/${slug}/index.html`;
     const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
     assert(text.length > 1200, `${relative} is unexpectedly short`);
+    assert(!/<(?:aside|div)[^>]*class="[^"]*\breview-note\b/.test(text), `${relative} contains public review metadata`);
     checkMathMl(text, relative, mode === 'source');
   }
 };
@@ -141,7 +142,9 @@ if (sourceMode) {
   assert(!tracked.some((file) => /(?:^|\/)(?:POTCAR|.*\.(?:pdf|zip|key|pem))$/i.test(file)), 'restricted or archive file remains tracked');
 
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
-  assert(theorySource.includes('<h1>How Much Theory Do You Need?</h1>'), 'Foundations title is missing');
+  assert(theorySource.includes('<h1>Foundations</h1>'), 'Foundations title is missing');
+  assert(theorySource.includes('id="research-chain"'), 'Foundations research chain is missing');
+  assert(theorySource.includes('DFT-Research-Workflow'), 'Foundations workflow handoff is missing');
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Foundations is missing ${slug}`);
   checkTheoryPages(root, 'source');
 
