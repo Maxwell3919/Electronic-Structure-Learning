@@ -53,7 +53,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Vertex corrections are omitted at this level. The notation hides choices about the starting Green function, polarizability, frequency treatment, self-consistency, spin, relativistic effects, and core–valence partition.</p>
 
   <h2>Quasiparticle energies solve an energy-dependent equation</h2>
-  <p>For a reference orbital <math class="math-inline" aria-label="phi n"><semantics><msub><mi>φ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\phi_n</annotation></semantics></math>, a real-energy diagonal linearization around the reference eigenvalue is often written</p>
+  <p>For a Kohn–Sham starting orbital <math class="math-inline" aria-label="phi n"><semantics><msub><mi>φ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\phi_n</annotation></semantics></math>, a real-energy diagonal linearization around the reference eigenvalue is often written</p>
   <div class="math-display">
     <math display="block" aria-label="quasiparticle energy correction equation">
       <semantics>
@@ -82,7 +82,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>This formula targets the real quasiparticle energy. A complex pole or spectral-function calculation retains the imaginary self-energy and lifetime information rather than discarding it. Linearization, diagonal approximations, and neglect of off-diagonal mixing can fail near degeneracies, band inversions, strong hybridization, or satellite structures.</p>
+  <p>The subtraction of <math class="math-inline" aria-label="v x c"><semantics><msub><mi>v</mi><mi>xc</mi></msub><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math> is specific to this starting point; another reference requires subtraction of its own mean-field operator. The formula targets the real quasiparticle energy. A complex pole or spectral-function calculation retains the imaginary self-energy and lifetime information rather than discarding it. Linearization, diagonal approximations, and neglect of off-diagonal mixing can fail near degeneracies, band inversions, strong hybridization, or satellite structures.</p>
 
   <h2>GW denotes a family, not one uniquely defined calculation</h2>
   <dl class="paired-definitions">
@@ -110,16 +110,16 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The basis labels occupied–empty transitions. The kernel includes direct screened attraction and exchange-like terms under the chosen approximation. Its eigenvalues describe neutral excitations; they are not quasiparticle addition/removal energies. The full BSE can couple resonant and antiresonant sectors, so the simple eigenproblem above must not be presented as formulation-independent.</p>
 
   <h2>Optical gaps, fundamental gaps, and exciton binding are distinct</h2>
-  <p>The fundamental gap is a charged excitation difference. The lowest bright optical excitation is a neutral transition with nonzero oscillator strength. A schematic exciton binding energy is</p>
+  <p>The fundamental gap is a charged excitation difference. For exciton <math class="math-inline" aria-label="S"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math> at total crystal momentum <math class="math-inline" aria-label="Q"><semantics><mi mathvariant="bold">Q</mi><annotation encoding="application/x-tex">\mathbf&#123;Q&#125;</annotation></semantics></math>, binding is defined relative to the free electron–hole continuum threshold in the same sector:</p>
   <div class="math-display">
-    <math display="block" aria-label="exciton binding equals quasiparticle gap minus optical excitation">
+    <math display="block" aria-label="exciton binding at Q equals continuum threshold at Q minus exciton energy at Q">
       <semantics>
-        <mrow><msub><mi>E</mi><mi>b</mi></msub><mo>=</mo><msub><mi>E</mi><mi>gap</mi></msub><mo>−</mo><msub><mi>Ω</mi><mi>opt</mi></msub><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">E_b=E_&#123;\mathrm&#123;gap&#125;&#125;-\Omega_&#123;\mathrm&#123;opt&#125;&#125;.</annotation>
+        <mrow><msub><mi>E</mi><mrow><mi>b</mi><mo>,</mo><mi>S</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">Q</mi><mo>)</mo><mo>=</mo><msub><mi>E</mi><mi>cont</mi></msub><mo>(</mo><mi mathvariant="bold">Q</mi><mo>)</mo><mo>−</mo><msub><mi>Ω</mi><mi>S</mi></msub><mo>(</mo><mi mathvariant="bold">Q</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">E_&#123;b,S&#125;(\mathbf&#123;Q&#125;)=E_&#123;\mathrm&#123;cont&#125;&#125;(\mathbf&#123;Q&#125;)-\Omega_S(\mathbf&#123;Q&#125;).</annotation>
       </semantics>
     </math>
   </div>
-  <p>Dark excitons, indirect gaps, spin selection, phonon assistance, finite temperature, and dielectric environments complicate this simple relation. The compared quantities must come from compatible geometries, screening models, spin/SOC settings, and numerical convergence levels.</p>
+  <p>Only in a matching direct sector may the continuum threshold be identified with the chosen quasiparticle gap. The lowest bright optical onset may differ because of dark or indirect states, spin selection, phonon assistance, finite temperature, or the dielectric environment. The compared quantities must come from compatible geometries, screening models, spin/SOC settings, and numerical convergence levels.</p>
 
   <h2>Production convergence is multi-dimensional</h2>
   <ul>

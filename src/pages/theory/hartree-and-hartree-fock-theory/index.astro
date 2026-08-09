@@ -106,8 +106,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Lowering the variational energy by breaking spatial or spin symmetry can reveal a limitation of the restricted ansatz. It does not by itself establish that the broken-symmetry determinant is the exact physical state.</p>
 
   <h2>Hartree–Fock includes exchange but misses correlation beyond one determinant</h2>
-  <p>Within a chosen one-electron basis, Hartree–Fock is the best variational single determinant. The remaining difference from the exact nonrelativistic ground-state energy is commonly called the correlation energy relative to the Hartree–Fock reference.</p>
-  <p>This definition is method- and basis-aware. Basis incompleteness, relativistic effects, nuclear motion, and model choices are separate error sources. Static correlation can also make the single-determinant reference qualitatively wrong, so a small perturbative correction is not guaranteed to repair it.</p>
+  <p>Hartree–Fock is the best variational single determinant. Conventionally, the correlation energy is the difference between the exact and Hartree–Fock energies in the complete one-electron basis for the same nonrelativistic, clamped-nuclei Hamiltonian.</p>
+  <p>At finite basis size, basis incompleteness remains a separate error. Relativistic effects, nuclear motion, and model choices are separate again. Static correlation can make the single-determinant reference qualitatively wrong, so a small perturbative correction is not guaranteed to repair it.</p>
 
   <h2>Orbital energies have limited interpretation</h2>
   <p>Koopmans' theorem relates a canonical occupied-orbital energy to a frozen-orbital ionization estimate. The approximation neglects orbital relaxation and correlation. Empty-orbital energies have still weaker general addition-energy meaning.</p>

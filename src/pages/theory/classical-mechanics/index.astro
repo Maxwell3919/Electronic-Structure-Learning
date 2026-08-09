@@ -83,7 +83,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       </semantics>
     </math>
   </div>
-  <p>Positive eigenvalues correspond to stable harmonic oscillations within the model. Zero modes reflect exact translations or rotations only when the boundary conditions and numerical representation preserve them. Negative eigenvalues identify directions of negative curvature, not real oscillation frequencies.</p>
+  <p>Positive eigenvalues correspond to stable harmonic oscillations within the model. Zero modes reflect exact translations or rotations only when the boundary conditions and numerical representation preserve them. A numerically resolved negative eigenvalue identifies negative curvature, not a real oscillation frequency; a near-zero sign can instead reflect residual forces, finite-difference error, broken symmetry, or an imperfect sum rule.</p>
   <p>A harmonic normal-mode calculation describes local curvature at one stationary structure. It does not establish global stability, anharmonic lifetime, finite-temperature phase behavior, or dynamical accessibility.</p>
 
   <h2>Time integration introduces a second approximation</h2>

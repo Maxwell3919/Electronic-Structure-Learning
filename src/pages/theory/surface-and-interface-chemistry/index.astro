@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>A surface model is defined by a termination and environment</h2>
   <p>A Miller index does not uniquely specify a surface calculation. Termination, stoichiometry, reconstruction, adsorbate coverage, charge state, solvent or gas environment, magnetic order, and lateral cell all affect the physical system.</p>
-  <p>A periodic slab introduces two-dimensional repetition and an artificial normal direction. Slab thickness, vacuum thickness, dipole correction, k-point mesh, relaxed layers, and symmetry are separate convergence controls.</p>
+  <p>A periodic slab introduces two-dimensional repetition and an artificial normal direction. The electrostatic treatment, relaxed degrees of freedom, and imposed symmetry help define the model; slab thickness, vacuum, lateral image separation, k sampling, basis, and numerical tolerances refine its finite representation.</p>
 
   <h2>Surface energy compares a slab with a declared bulk reservoir</h2>
   <p>For a symmetric stoichiometric slab with two equivalent faces, a common expression is</p>
@@ -70,14 +70,9 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Charge rearrangement creates potential steps, modifies work functions, and can shift band alignment. Screening normal to a two-dimensional layer differs from bulk three-dimensional screening, and periodic-image interactions can distort long-range fields.</p>
   <p>Heterostructure calculations must distinguish genuine interface states from folded bulk bands, finite-size hybridization, artificial electric fields, and k-point path omissions.</p>
 
-  <h2>Convergence follows the target observable</h2>
-  <ul>
-    <li><strong>Surface energy:</strong> slab thickness, surface area, k mesh, bulk reference, relaxation depth, and termination.</li>
-    <li><strong>Adsorption:</strong> coverage, site, cell size, adsorbate reference, spin, geometry, dispersion model, and competing products.</li>
-    <li><strong>Work function:</strong> vacuum plateau, slab dipole, electrostatic reference, Fermi level, and surface state.</li>
-    <li><strong>Band alignment:</strong> lineup method, strain, interface structure, quasiparticle corrections, and electrostatic convergence.</li>
-  </ul>
-  <p>Convergence of total energy per atom is not sufficient evidence for any of these observables.</p>
+  <h2>Model comparison and numerical convergence are distinct</h2>
+  <p>First fix the physical model and reference convention: termination, stoichiometry, coverage, adsorption site, reservoirs, magnetic branch, functional or dispersion model, and any band-lineup construction. Changing these choices compares different models or systems; it is not ordinary numerical convergence.</p>
+  <p>Within the fixed boundary convention and declared coverage, converge slab and vacuum size, k sampling, basis, relaxation depth, and solver tolerances for the target observable. If lateral-cell refinement changes coverage, or the electrostatic boundary, kernel, or correction changes, report a finite-size or model-sensitivity study rather than ordinary numerical convergence. A representation adequate for an adsorption energy may still be inadequate for a work function, surface band, phonon, or interface dipole.</p>
 
   <h2>Connections through the Atlas</h2>
   <p><a href={href('/theory/crystallography/')}>Crystallography</a> defines orientations and surface cells; <a href={href('/theory/electromagnetism/')}>Electromagnetism</a> supplies potential references and dielectric boundaries; <a href={href('/theory/thermodynamics/')}>Thermodynamics</a> supplies chemical potentials and surface stability; <a href={href('/theory/linear-response-and-excited-states/')}>Linear Response and Excited States</a> treats screening and optical response.</p>
