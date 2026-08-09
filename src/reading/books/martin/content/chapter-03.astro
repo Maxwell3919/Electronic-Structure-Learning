@@ -33,7 +33,7 @@ export const synthesis =
   <p>
     For fixed nuclear positions, the electronic Hamiltonian can be organized as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="decomposition of the electronic Hamiltonian">
       <semantics>
         <mrow>
@@ -53,7 +53,7 @@ export const synthesis =
   <p>
     The many-electron state is a wavefunction of all electron coordinates, including spin, and must be antisymmetric under exchange of identical electrons. Its dimensionality grows with particle number: even before choosing a numerical representation, the exact state lives in a configuration space built from all electron coordinates rather than ordinary three-dimensional space. This is the source of the many-electron difficulty that motivates reduced descriptions throughout the book. Stationary states satisfy
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="many-body time-independent Schrodinger equation">
       <semantics>
         <mrow><mover><mi>H</mi><mo>^</mo></mover><mi>Ψ</mi><mo>=</mo><mi>E</mi><mi>Ψ</mi><mo>.</mo></mrow>
@@ -64,7 +64,7 @@ export const synthesis =
   <p>
     Although solving this equation directly is impossible for ordinary condensed-matter electron counts, it remains the reference definition. The time-dependent equation is needed when the state itself evolves, while the stationary equation defines the energy eigenstates used for ground-state and spectral arguments. Observables are expectation values in the many-body state. The electron density, for example, is obtained from the density operator rather than introduced as an independent classical field:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="electron density as a many-body expectation value">
       <semantics>
         <mrow>
@@ -84,7 +84,7 @@ export const synthesis =
   <p>
     The ground state has a second special property: it is variational. For any admissible trial wavefunction with the correct particle symmetry, the Rayleigh quotient cannot lie below the exact ground-state energy,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Rayleigh Ritz variational bound">
       <semantics>
         <mrow>
@@ -117,7 +117,7 @@ export const synthesis =
   <p>
     The classical electron–electron contribution associated with a continuous density is the Hartree energy,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hartree energy of the electron density">
       <semantics>
         <mrow>
@@ -138,11 +138,11 @@ export const synthesis =
   <p>
     In an extended neutral solid, the electron–electron Hartree term, electron–ion attraction, and ion–ion repulsion must be evaluated with compatible boundary conditions and reference conventions. Their separate absolute values are not the physical observable. This is why Ewald summation, reciprocal-space Coulomb kernels, charged-cell corrections, and surface dipoles are not merely numerical implementation details: they define how the electrostatic model is made finite.
   </p>
-  <aside class="callout" aria-label="Coulomb energy organization">
+  <div class="callout" role="note" aria-label="Coulomb energy organization">
     <p><strong>Why the grouping matters</strong></p>
     <p>Long-range electron–electron + electron–ion + ion–ion terms → combine into a neutral classical Coulomb contribution.</p>
     <p>True interacting electron repulsion − Hartree repulsion → short-ranged exchange–correlation structure.</p>
-  </aside>
+  </div>
   <p>
     This cancellation is a central reason exchange–correlation approximations can focus on comparatively local changes around an electron even though the bare Coulomb interaction is long ranged. It also explains why charged periodic cells, surfaces, and low-dimensional systems require explicit electrostatic conventions rather than an unqualified use of bulk formulas. Appendix F develops the numerical treatment; the Atlas prerequisite is <a href={href('/theory/electromagnetism/')}>Electromagnetism</a>.
   </p>
@@ -156,7 +156,7 @@ export const synthesis =
   <p>
     For a nuclear coordinate this gives the Hellmann–Feynman form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hellmann Feynman force theorem">
       <semantics>
         <mrow>
@@ -179,7 +179,7 @@ export const synthesis =
   <p>
     Stress is the same generalized-force idea applied to strain. For a cell of volume Ω,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="stress as an energy derivative with respect to strain">
       <semantics>
         <mrow>
@@ -200,7 +200,7 @@ export const synthesis =
   <p>
     Nuclear position and strain are only two examples of parameters in a Hamiltonian. Martin generalizes the force theorem to any continuous parameter λ. If the system remains in the relevant stationary state as λ changes, the energy derivative is the expectation value of the Hamiltonian derivative, and a finite energy difference can be reconstructed by integration:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="generalized force theorem and coupling constant integration">
       <semantics>
         <mtable>
@@ -217,10 +217,10 @@ export const synthesis =
   <p>
     Martin uses the word “adiabatic” here in the sense of continuously following a ground state as the Hamiltonian changes. This should not be confused with the Born–Oppenheimer approximation, where slow nuclear motion justifies separating electronic and nuclear time scales. Both ideas involve continuous evolution, but the parameter being varied and the physical approximation are different.
   </p>
-  <aside class="callout" aria-label="Adiabatic connection in interaction strength">
+  <div class="callout" role="note" aria-label="Adiabatic connection in interaction strength">
     <p><strong>Adiabatic connection</strong></p>
     <p>λ = 0: chosen noninteracting reference → continuously increase interaction → λ = 1: full interacting system.</p>
-  </aside>
+  </div>
   <p>
     Later density-functional constructions use a refined version of this idea in which the density is held fixed while interaction strength changes. Coupling-constant integration is therefore not a computational curiosity: it is one of the bridges between many-body correlation physics and exchange–correlation functionals. The mathematical background is linked from <a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis and Variational Methods</a>.
   </p>
@@ -234,7 +234,7 @@ export const synthesis =
   <p>
     In the canonical ensemble with fixed particle number,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="canonical equilibrium density matrix and expectation value">
       <semantics>
         <mtable>
@@ -267,7 +267,7 @@ export const synthesis =
   <p>
     In a noninteracting or Hartree-like construction, each orbital satisfies a common one-electron equation,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="effective independent electron equation">
       <semantics>
         <mrow>
@@ -284,7 +284,7 @@ export const synthesis =
   <p>
     For occupied orbitals with probabilities <em>f</em><sub>i</sub><sup>σ</sup>, the spin density reduces to the familiar orbital sum
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="spin density from occupied independent particle orbitals">
       <semantics>
         <mrow>
@@ -305,11 +305,11 @@ export const synthesis =
   <p>
     The nonlocal exchange operator also changes the computational problem. Unlike a local multiplicative potential, its action on one orbital depends on overlaps with the other occupied orbitals. In a basis representation this generates four-index electron-repulsion integrals and a cost that can be much larger than for semilocal Kohn–Sham calculations. The formal distinction between a local effective potential and orbital-dependent nonlocal exchange therefore becomes a numerical distinction as well.
   </p>
-  <aside class="callout" aria-label="Independent electron and Hartree Fock distinction">
+  <div class="callout" role="note" aria-label="Independent electron and Hartree Fock distinction">
     <p><strong>Two one-electron languages</strong></p>
     <p>Effective noninteracting system → no explicit electron–electron operator in the auxiliary Hamiltonian → interaction effects represented through an effective potential.</p>
     <p>Hartree–Fock → interacting Hamiltonian + single-determinant trial space → explicit Hartree and exact-exchange terms, but no correlation beyond that determinant.</p>
-  </aside>
+  </div>
   <p>
     Koopmans’ theorem gives Hartree–Fock eigenvalues a specific frozen-orbital addition/removal interpretation: an occupied or empty orbital eigenvalue corresponds to the energy change when that orbital is removed or added while all other orbitals are held fixed. Allowing the orbitals to relax leads to ΔSCF energy differences and usually improves finite-system addition/removal energies. Hartree–Fock gaps nevertheless tend to be too large because relaxation and correlation are missing.
   </p>
@@ -326,7 +326,7 @@ export const synthesis =
   <p>
     A normalized pair distribution can be written schematically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="normalized pair distribution function">
       <semantics>
         <mrow>
@@ -352,7 +352,7 @@ export const synthesis =
   <p>
     Allowing correlated many-electron motion expands the variational space beyond one determinant and lowers the ground-state energy relative to Hartree–Fock. With the Hartree–Fock reference, the correlation energy is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="correlation energy relative to Hartree Fock">
       <semantics>
         <mrow><msub><mi>E</mi><mi>c</mi></msub><mo>=</mo><msub><mi>E</mi><mi>exact</mi></msub><mo>−</mo><msub><mi>E</mi><mi>HF</mi></msub><mo>≤</mo><mn>0</mn><mo>.</mo></mrow>
@@ -366,12 +366,12 @@ export const synthesis =
   <p>
     This pair-distribution viewpoint also anticipates the homogeneous electron gas of Chapter 5 and the exchange–correlation hole arguments of Chapters 8 and 9. Those later approximations are easier to understand when exchange and correlation are viewed as constraints on how the many-electron probability reorganizes around a reference electron, rather than as a single mysterious correction term.
   </p>
-  <aside class="callout" aria-label="Exchange and correlation hierarchy">
+  <div class="callout" role="note" aria-label="Exchange and correlation hierarchy">
     <p><strong>Hierarchy of electronic avoidance</strong></p>
     <p>Mean density → average Coulomb field.</p>
     <p>Fermionic antisymmetry → same-spin exchange hole.</p>
     <p>Explicit Coulomb response beyond one determinant → correlation hole and correlated motion.</p>
-  </aside>
+  </div>
   <p>
     This section closes the chapter by reconnecting every practical approximation to the central many-body difficulty introduced at the start. Hartree–Fock treats exchange exactly within a single determinant but omits correlation; Kohn–Sham DFT packages both into an exchange–correlation functional; explicit many-body methods seek the correlated state more directly. The next two chapters use periodic symmetry and the electron gas to make these abstract objects calculable and physically transparent. See <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> and <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> for the corresponding Atlas maps.
   </p>

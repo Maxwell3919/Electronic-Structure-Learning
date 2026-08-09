@@ -28,7 +28,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Existence and uniqueness statements are conditional: they depend on the equation class, coefficient regularity, domain, and supplied data. Numerical convergence cannot repair an ill-posed or physically mismatched continuous problem.</p>
 
   <h2>The stationary Schrödinger equation is a spectral differential equation</h2>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hamiltonian operator acting on psi n equals E n psi n">
       <semantics>
         <mrow><mover><mi>H</mi><mo>^</mo></mover><msub><mi>ψ</mi><mi>n</mi></msub><mo>=</mo><msub><mi>E</mi><mi>n</mi></msub><msub><mi>ψ</mi><mi>n</mi></msub><mo>.</mo></mrow>
@@ -40,7 +40,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Poisson's equation connects density to electrostatics</h2>
   <p>In atomic units, one common sign convention for the Hartree potential is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="laplacian of Hartree potential equals minus four pi times density">
       <semantics>
         <mrow><msup><mo>∇</mo><mn>2</mn></msup><msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mo>−</mo><mn>4</mn><mi>π</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow>
@@ -56,7 +56,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Sturm–Liouville structure organizes many one-dimensional spectra</h2>
   <p>A broad family of eigenvalue problems can be written schematically as</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="minus derivative of p derivative y plus q y equals lambda w y">
       <semantics>
         <mrow><mo>−</mo><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><mi>p</mi><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>)</mo><mo>+</mo><mi>q</mi><mi>y</mi><mo>=</mo><mi>λ</mi><mi>w</mi><mi>y</mi><mo>.</mo></mrow>
@@ -68,7 +68,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Green functions invert an operator subject to stated boundaries</h2>
   <p>For a linear operator <math class="math-inline" aria-label="L"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>, a Green function is defined schematically by</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="L acting on G of r r prime equals delta of r minus r prime">
       <semantics>
         <mrow><mi>L</mi><mi>G</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><mi>δ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo></mrow>
@@ -83,11 +83,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>A weak solution is not an imprecise solution. It is a different mathematical formulation with its own function spaces, existence theory, and convergence requirements. Rigorous Sobolev-space treatment belongs to the later Functional Analysis and Variational Methods page.</p>
 
   <h2>Continuous and discrete problems must remain distinguishable</h2>
-  <aside class="callout">
+  <div class="callout" role="note">
     <p><strong>Continuous model:</strong> differential operator, domain, coefficients, and boundary or initial data.</p>
     <p><strong>Discrete model:</strong> finite basis, grid, quadrature, matrix, and algebraic boundary treatment.</p>
     <p><strong>Solver result:</strong> approximate solution of that finite algebraic problem.</p>
-  </aside>
+  </div>
   <p>A small matrix residual establishes only the third item. It does not prove that the discrete representation approximates the intended continuous problem or that the physical model is appropriate.</p>
 
   <h2>Study routes</h2>

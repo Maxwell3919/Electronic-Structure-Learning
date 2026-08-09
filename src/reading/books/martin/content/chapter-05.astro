@@ -28,7 +28,7 @@ export const synthesis =
   <p>
     The density is conventionally expressed through the Wigner–Seitz radius <em>r</em><sub>s</sub>, the radius of a sphere that contains one electron on average:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="definition of the electron gas density parameter r s">
       <semantics>
         <mrow>
@@ -49,7 +49,7 @@ export const synthesis =
   <p>
     In atomic units, <em>r</em><sub>s</sub> is usually quoted in Bohr radii. Small <em>r</em><sub>s</sub> means high density and small mean separation; large <em>r</em><sub>s</sub> means low density. Spin adds a second independent variable, conveniently written as the fractional polarization
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="fractional spin polarization">
       <semantics>
         <mrow>
@@ -66,11 +66,11 @@ export const synthesis =
   <p>
     The most useful physical insight comes from scaling. If all coordinates are measured in units of <em>r</em><sub>s</sub>, kinetic energies scale as <em>r</em><sub>s</sub><sup>−2</sup>, whereas Coulomb energies scale as <em>r</em><sub>s</sub><sup>−1</sup>. Increasing density therefore makes kinetic energy grow faster than interaction energy; decreasing density lets Coulomb correlation become relatively more important. The same electron gas continuously connects a weak-coupling, high-density Fermi system to a strong-coupling low-density regime where localization can eventually win.
   </p>
-  <aside class="callout" aria-label="Density and interaction hierarchy in the homogeneous electron gas">
+  <div class="callout" role="note" aria-label="Density and interaction hierarchy in the homogeneous electron gas">
     <p><strong>Density controls the effective coupling</strong></p>
     <p>density ↑ → <em>r</em><sub>s</sub> ↓ → kinetic scale ∝ <em>r</em><sub>s</sub><sup>−2</sup> dominates more strongly → weak relative correlation.</p>
     <p>density ↓ → <em>r</em><sub>s</sub> ↑ → Coulomb scale ∝ <em>r</em><sub>s</sub><sup>−1</sup> becomes relatively stronger → enhanced correlation and possible localization.</p>
-  </aside>
+  </div>
   <p>
     This is why the model is more than a toy. It supplies a dimensionless axis along which the importance of interaction can be studied cleanly, and it becomes a benchmark for the <a href={href('theory/many-electron-problem/')}>many-electron problem</a>, metallic quasiparticles, and later density-functional approximations.
   </p>
@@ -81,7 +81,7 @@ export const synthesis =
   <p>
     With no electron–electron interaction, translational invariance makes plane waves exact one-electron states. At zero temperature the ground state fills all wavevectors inside a Fermi sphere. Counting the available reciprocal-space states fixes the Fermi wavevector; for an unpolarized three-dimensional gas,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fermi wavevector of an unpolarized electron gas">
       <semantics>
         <mrow>
@@ -100,7 +100,7 @@ export const synthesis =
   <p>
     This single scale sets the Fermi energy, velocity, wavelength, density matrix oscillations, and many response features. In atomic units the independent-particle Fermi energy and mean kinetic energy per electron are
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fermi and mean kinetic energies of the noninteracting electron gas">
       <semantics>
         <mrow>
@@ -119,7 +119,7 @@ export const synthesis =
   <p>
     Hartree–Fock now provides the first exact treatment of antisymmetry. In jellium, the direct Hartree field of the electrons is cancelled by the uniform positive background, while exchange remains. For an unpolarized gas the exchange energy per electron is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="exchange energy per electron in the unpolarized homogeneous gas">
       <semantics>
         <mrow>
@@ -134,7 +134,7 @@ export const synthesis =
   <p>
     Exchange lowers the total energy because antisymmetry keeps equal-spin electrons apart. The same nonlocal exchange operator also changes the one-electron dispersion. In the homogeneous gas it can be written schematically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hartree Fock dispersion in the homogeneous electron gas">
       <semantics>
         <mrow>
@@ -156,7 +156,7 @@ export const synthesis =
   <p>
     Exchange already creates a hole around an electron of a given spin: the probability of finding another electron with the same spin nearby is reduced by the Pauli principle. For the homogeneous gas this exchange-only pair distribution can be obtained analytically. With <em>y</em> = <em>k</em><sub>F</sub><sup>σ</sup><em>r</em>,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="same spin exchange pair distribution in the electron gas">
       <semantics>
         <mrow>
@@ -176,7 +176,7 @@ export const synthesis =
   <p>
     Screening is the response-language version of the same physics. The simplest static model is Thomas–Fermi screening, which replaces the long-ranged Coulomb kernel by
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Thomas Fermi screening of the Coulomb kernel">
       <semantics>
         <mrow>
@@ -194,7 +194,7 @@ export const synthesis =
   <p>
     Correlation energy is harder than exchange because correlation changes both interaction and kinetic energies. The potential part can be interpreted through the exchange–correlation hole,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="potential exchange correlation energy per electron from the exchange correlation hole">
       <semantics>
         <mrow>
@@ -211,7 +211,7 @@ export const synthesis =
   <p>
     The full exchange–correlation energy is obtained by turning the interaction on continuously while keeping the density fixed. In the homogeneous gas, scaling lets the coupling-constant average of the hole be written compactly as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="coupling constant averaged exchange correlation hole in the homogeneous gas">
       <semantics>
         <mrow>
@@ -240,7 +240,7 @@ export const synthesis =
   <p>
     Martin organizes the energy per valence electron into a small number of competing scales. In atomic units, a representative form is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="model total energy per electron in a simple sp bonded metal">
       <semantics>
         <mrow>
@@ -258,13 +258,13 @@ export const synthesis =
   <p>
     The first term is Fermi kinetic pressure; the second is exchange; <em>ε</em><sub>c</sub> is correlation; the Madelung term represents electrostatic attraction of electrons and ionic charge; and <em>ε</em><sub>R</sub> corrects the unphysical short-range behavior of point-like cores. The equilibrium density is where these different powers of <em>r</em><sub>s</sub> balance. Omitting the core repulsion drives the model toward a density that is too high, while a realistic finite-core correction shifts the minimum toward the scale observed in alkali metals.
   </p>
-  <aside class="callout" aria-label="Energy balance controlling a simple metal">
+  <div class="callout" role="note" aria-label="Energy balance controlling a simple metal">
     <p><strong>Why a simple metal has an equilibrium volume</strong></p>
     <p>compression → kinetic energy rises rapidly → resists further compression.</p>
     <p>electrostatic and exchange terms favor lower energy at finite density.</p>
     <p>short-range core repulsion prevents collapse into the point-ion limit.</p>
     <p>the minimum of the total curve sets the equilibrium density and a scale for the bulk modulus.</p>
-  </aside>
+  </div>
   <p>
     The value of this model is not quantitative universality. It shows why an apparently free-electron metal can still bind and have a finite compressibility, and it separates the smooth valence-electron physics from the core physics that later motivates <a href={href('theory/pseudopotentials-paw-and-core-valence-treatments/')}>pseudopotential and core–valence treatments</a>.
   </p>
@@ -281,7 +281,7 @@ export const synthesis =
   <p>
     Neutral charge fluctuations are encoded in the dielectric function. For a homogeneous isotropic system the response depends only on wavevector magnitude and frequency, and one may write
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="dielectric function in terms of the proper density response">
       <semantics>
         <mrow>
@@ -301,7 +301,7 @@ export const synthesis =
   <p>
     The analytic result displays several pieces of metal physics at once. The imaginary part identifies the continuum of allowed particle–hole excitations. Zeros of the real dielectric function can generate a collective plasma oscillation. In the long-wavelength limit its characteristic frequency is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="bulk plasma frequency of the homogeneous electron gas">
       <semantics>
         <mrow>

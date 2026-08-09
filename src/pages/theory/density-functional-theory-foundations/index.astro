@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The density is a reduced ground-state variable</h2>
   <p>For an <math class="math-inline" aria-label="N electron"><semantics><mrow><mi>N</mi><mtext>-electron</mtext></mrow><annotation encoding="application/x-tex">N\text&#123;-electron&#125;</annotation></semantics></math> state, the density satisfies</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="integral of n of r over space equals N">
       <semantics>
         <mrow><mo>∫</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>=</mo><mi>N</mi><mo>.</mo></mrow>
@@ -28,7 +28,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The external potential identifies the physical system</h2>
   <p>For a fixed particle number and fixed electron–electron interaction, the Hamiltonian may be separated into universal internal terms and a system-specific external potential:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="H of v equals T plus W plus integral v external times density operator">
       <semantics>
         <mrow>
@@ -43,15 +43,15 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The first Hohenberg–Kohn result is a uniqueness statement</h2>
   <p>For a nondegenerate ground state in the stated scalar-potential class, two external potentials that differ by more than an additive constant cannot have the same ground-state density. The density therefore determines the external potential up to a constant and, through the Hamiltonian, the ground-state properties. Degenerate and ensemble cases require their corresponding formulations.</p>
-  <aside class="callout">
+  <div class="callout" role="note">
     <p>This is an existence and uniqueness result, not a reconstruction algorithm.</p>
     <p>Degeneracy, spin variables, magnetic vector potentials, periodic electric fields, ensembles, and other extensions require their own precise formulations.</p>
-  </aside>
+  </div>
   <p>The theorem does not say that every imaginable nonnegative normalized function is the ground-state density of some physical external potential. That is a representability question.</p>
 
   <h2>The energy is variational in the density</h2>
   <p>The ground-state energy for a specified external potential can be expressed as</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="E v of n equals F of n plus integral v external n">
       <semantics>
         <mrow>
@@ -64,7 +64,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </div>
   <p>The internal functional <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> is universal within the chosen interaction and kinetic-energy theory: it does not depend on which external potential generated the density.</p>
   <p>The exact ground-state energy follows from a global minimization over admissible densities, with the correct particle number:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="E zero equals minimum over nonnegative densities integrating to N of E v of n">
       <semantics>
         <mrow>
@@ -87,7 +87,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Levy–Lieb constrained search defines the universal functional</h2>
   <p>A direct definition separates the internal many-electron problem from the external potential:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="F of n equals minimum over antisymmetric wavefunctions yielding n of expectation T plus W">
       <semantics>
         <mrow>

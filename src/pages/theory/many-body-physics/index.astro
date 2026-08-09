@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Fock space organizes particle-number sectors and mode occupations</h2>
   <p>Fock space allows particle occupations to vary across sectors and describes states through occupations of one-particle modes instead of storing a separate antisymmetric coordinate-space wavefunction for each particle number. A fixed-particle-number problem can still be solved inside one sector of Fock space; the formalism does not require the physical system to exchange particles with a reservoir. Fermionic creation and annihilation operators obey</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="fermionic anticommutation relations">
       <semantics>
         <mrow><mo>&#123;</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>&#125;</mo><mo>=</mo><msub><mi>δ</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>,</mo><mspace width="0.5em"/><mo>&#123;</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>,</mo><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>&#125;</mo><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
@@ -28,7 +28,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>An interacting Hamiltonian separates one-body and two-body structure</h2>
   <p>In an orthonormal one-particle basis, a generic electronic Hamiltonian is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="second quantized interacting Hamiltonian">
       <semantics>
         <mrow><mover><mi>H</mi><mo>^</mo></mover><mo>=</mo><munderover><mo>∑</mo><mrow><mi>p</mi><mi>q</mi></mrow><mo></mo></munderover><msub><mi>h</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi><mo>†</mo></msubsup><msub><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munderover><mo>∑</mo><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow><mo></mo></munderover><msub><mi>v</mi><mrow><mi>p</mi><mi>q</mi><mi>r</mi><mi>s</mi></mrow></msub><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi><mo>†</mo></msubsup><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><msub><mover><mi>c</mi><mo>^</mo></mover><mi>s</mi></msub><msub><mover><mi>c</mi><mo>^</mo></mover><mi>r</mi></msub><mo>.</mo></mrow>
@@ -41,7 +41,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Green functions connect propagation to addition and removal spectra</h2>
   <p>Using the common convention <math class="math-inline" aria-label="hbar equals one"><semantics><mrow><mi>ℏ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\hbar=1</annotation></semantics></math>, the time-ordered one-particle Green function is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="time ordered one particle Green function">
       <semantics>
         <mrow><msub><mi>G</mi><mrow><mi>p</mi><mi>q</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>−</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><mo>−</mo><mi>i</mi><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mi>T</mi><msub><mover><mi>c</mi><mo>^</mo></mover><mi>p</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><msubsup><mover><mi>c</mi><mo>^</mo></mover><mi>q</mi><mo>†</mo></msubsup><mo>(</mo><msup><mi>t</mi><mo>′</mo></msup><mo>)</mo><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo></mrow>
@@ -55,7 +55,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Quasiparticles are approximate poles with finite weight</h2>
   <p>Interactions can transform a bare particle into a long-lived excitation carrying the same quantum numbers but modified energy, velocity, mass, and residue. Near an isolated pole, a Green function can be approximated schematically by</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Green function near quasiparticle pole">
       <semantics>
         <mrow><mi>G</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>≈</mo><mfrac><mi>Z</mi><mrow><mi>ω</mi><mo>−</mo><msub><mi>ε</mi><mi>QP</mi></msub><mo>+</mo><mi>i</mi><mi>Γ</mi></mrow></mfrac><mo>+</mo><msub><mi>G</mi><mi>incoh</mi></msub><mo>.</mo></mrow>

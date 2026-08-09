@@ -32,7 +32,7 @@ export const synthesis =
   <p>
     In reciprocal space the local Kohn–Sham potential separates naturally into ionic, Hartree, and exchange–correlation pieces,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="local Kohn Sham potential in reciprocal space">
       <semantics>
         <mrow>
@@ -51,7 +51,7 @@ export const synthesis =
   <p>
     Long-range Coulomb terms require a neutral grouping. For a periodic electron density the reciprocal-space Hartree contribution excludes the average component,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="reciprocal space Hartree energy excluding G equals zero">
       <semantics>
         <mrow>
@@ -72,10 +72,10 @@ export const synthesis =
   <p>
     Once the orbitals are stationary, forces follow from derivatives of the ionic terms and the nonlocal projectors. Plane waves have a useful advantage here: translating an atom does not translate the basis itself, so the usual atom-centered Pulay force associated with a moving incomplete basis is absent. Cell strain is different because the reciprocal lattice and the set selected by a cutoff change with the cell; stress therefore still requires a consistent treatment of representation effects.
   </p>
-  <aside class="callout" aria-label="full plane wave Kohn Sham loop">
+  <div class="callout" role="note" aria-label="full plane wave Kohn Sham loop">
     <p><strong>The calculation is now a closed loop</strong></p>
     <p>input density → Kohn–Sham potential → solve the finite plane-wave eigenproblem → output density → mix or precondition → repeat → evaluate stationary energy, forces, stress, and target observables.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-13-2-self-consistency-screening">
@@ -83,7 +83,7 @@ export const synthesis =
   <p>
     The same electronic screening that makes matter respond to an external perturbation also controls how an SCF error propagates. Martin uses the plane-wave representation to make this connection explicit. The simplest iteration is linear mixing of input and output potentials,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="linear potential mixing">
       <semantics>
         <mrow>
@@ -98,7 +98,7 @@ export const synthesis =
   <p>
     Near the fixed point, the nonlinear map can be linearized. The dielectric matrix relates an error in the trial potential to the corresponding error after solving the electronic problem,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="dielectric matrix relation for SCF error">
       <semantics>
         <mrow>
@@ -114,7 +114,7 @@ export const synthesis =
   <p>
     Large dielectric eigenvalues amplify particular error modes. The dangerous modes are often the longest wavelengths, especially in large cells and metals. Charge can then move over large distances at little energetic cost, producing the familiar <em>charge-sloshing</em> instability. In a simple diagonal picture, stable linear mixing requires a step small enough to compensate the largest response; Martin summarizes the long-wavelength condition as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="linear mixing stability bound">
       <semantics>
         <mrow><mi>α</mi><mo>&lt;</mo><mfrac><mn>1</mn><mi>ε</mi><mo>(</mo><msub><mi>G</mi><mi>min</mi></msub><mo>)</mo></mfrac><mo>.</mo></mrow>
@@ -135,7 +135,7 @@ export const synthesis =
   <p>
     PAW retains the global smooth representation that makes plane-wave and grid calculations efficient, but supplements it with atom-centered information inside augmentation regions. The basic object is the smooth auxiliary orbital. A linear transformation reconstructs the corresponding all-electron-like valence state from smooth partial waves, all-electron partial waves, and local projectors. In the multi-atom form used here,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="PAW reconstruction of an all electron wavefunction">
       <semantics>
         <mrow>
@@ -164,7 +164,7 @@ export const synthesis =
   <p>
     Semilocal exchange–correlation potentials are convenient in plane-wave codes because they are local or differential functions of real-space quantities. Hartree–Fock exchange is qualitatively different: each occupied orbital couples nonlocally to every other occupied orbital of the same spin through the Coulomb kernel. A representative reciprocal-space denominator has the form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Coulomb denominator in plane wave exact exchange">
       <semantics>
         <mrow><mfrac><mrow><mn>4</mn><mi>π</mi><msup><mi>e</mi><mn>2</mn></msup></mrow><msup><mrow><mo>|</mo><mi mathvariant="bold">q</mi><mo>|</mo></mrow><mn>2</mn></msup></mfrac><mo>,</mo><mspace width="0.5em"/><mi mathvariant="bold">q</mi><mo>=</mo><mi mathvariant="bold">k</mi><mo>−</mo><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup><mo>−</mo><mi mathvariant="bold">G</mi><mo>.</mo></mrow>
@@ -197,12 +197,12 @@ export const synthesis =
   <p>
     Molecular dynamics uses the same electronic machinery at a sequence of nuclear configurations. Periodic boundaries are often advantageous because they suppress artificial container walls and mimic bulk matter. But an SCF solution at every time step does not by itself establish an equilibrated or statistically converged trajectory. Chapter 19 will add the nuclear integration, ensemble, time-step, and sampling questions that lie beyond this chapter's electronic-structure focus.
   </p>
-  <aside class="callout" aria-label="supercell error channels">
+  <div class="callout" role="note" aria-label="supercell error channels">
     <p><strong>Supercell size is an additional convergence axis</strong></p>
     <p>electronic SCF convergence → one periodic cell solved.</p>
     <p>supercell convergence → repeated-image interaction sufficiently small for the intended quantity.</p>
     <p>thermodynamic or dilute-limit claim → may require further extrapolation, reservoirs, configurational sampling, or finite-temperature physics.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-13-6-clusters-molecules">
@@ -229,10 +229,10 @@ export const synthesis =
   <p>
     A useful research-level decomposition is therefore
   </p>
-  <aside class="callout" aria-label="research interpretation hierarchy">
+  <div class="callout" role="note" aria-label="research interpretation hierarchy">
     <p><strong>Keep the evidence layers separate</strong></p>
     <p>physical model → Hamiltonian approximation → finite representation → SCF solution → observable → scientific claim.</p>
-  </aside>
+  </div>
   <p>
     Chapter 13 completes the plane-wave/grid pair of Part IV. The next two chapters deliberately change basis philosophy: Chapter 14 builds intuition from localized atomic orbitals and tight-binding matrix elements, and Chapter 15 asks how localized bases become full first-principles calculations.
   </p>

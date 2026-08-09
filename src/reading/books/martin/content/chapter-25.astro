@@ -35,10 +35,10 @@ export const synthesis =
     Chapters 22–24 already supplied the ingredients. Surface states showed how boundaries can host electronic structure absent from the bulk; Wannier functions exposed the gauge freedom of Bloch states; polarization showed that a measurable bulk quantity can depend on Berry phase rather than on a local charge partition. Topology asks when this phase structure belongs to qualitatively different classes that cannot be continuously connected.
   </p>
   <p>For the underlying gauge, projector, and invariant distinctions, see <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.</p>
-  <aside class="callout" aria-label="Conceptual inheritance into topology">
+  <div class="callout" role="note" aria-label="Conceptual inheritance into topology">
     <p><strong>Conceptual inheritance</strong></p>
     <p>Bloch states → gauge freedom → Berry phase → Wannier centers → global band topology → protected boundary consequences.</p>
-  </aside>
+  </div>
   <p>
     The quantum Hall effect provides the historical precedent: an exactly quantized transport coefficient can be tied to an integer invariant of the electronic states. Topological insulators extend the same style of reasoning to crystalline band structures, including systems that preserve time-reversal symmetry.
   </p>
@@ -52,7 +52,7 @@ export const synthesis =
   <p>
     Two insulating Hamiltonians are topologically equivalent when one can be deformed continuously into the other while the occupied and unoccupied subspaces remain separated by a bulk gap and any required protecting symmetry remains intact. A change of topological class therefore requires the conditions defining that class to fail. In the band-insulator problems developed here, the characteristic transition is a closing of the occupied–unoccupied gap, allowing their eigenvectors to reconnect differently across momentum space.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover><mi>P</mi><mo>^</mo></mover><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>n</mi><mo>∈</mo><mi>occ</mi></mrow></munder><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\hat P(\mathbf k)=\sum_&#123;n\in\mathrm&#123;occ&#125;&#125;|u_&#123;n\mathbf k&#125;\rangle\langle u_&#123;n\mathbf k&#125;|.</annotation></semantics></math>
   </div>
   <p>
@@ -78,7 +78,7 @@ export const synthesis =
   <p>
     The Berry phase describes the phase accumulated when a quantum state is transported around a closed loop in parameter space. For a crystal, the parameter is commonly crystal momentum. The local Berry connection for one smooth Bloch state is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="caligraphic">A</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>Im</mi><mo>⟨</mo><msub><mi>u</mi><mi mathvariant="bold">k</mi></msub><mo>|</mo><msub><mo>∂</mo><msub><mi>k</mi><mi>μ</mi></msub></msub><mo>|</mo><msub><mi>u</mi><mi mathvariant="bold">k</mi></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathcal A_\mu(\mathbf k)=-\operatorname&#123;Im&#125;\langle u_\mathbf k|\partial_&#123;k_\mu&#125;u_\mathbf k\rangle.</annotation></semantics></math>
   </div>
   <p>
@@ -87,7 +87,7 @@ export const synthesis =
   <p>
     In two dimensions the curl of the connection defines Berry curvature,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><msub><mo>∂</mo><msub><mi>k</mi><mi>x</mi></msub></msub><msub><mi mathvariant="caligraphic">A</mi><mi>y</mi></msub><mo>−</mo><msub><mo>∂</mo><msub><mi>k</mi><mi>y</mi></msub></msub><msub><mi mathvariant="caligraphic">A</mi><mi>x</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">\Omega(\mathbf k)=\partial_&#123;k_x&#125;\mathcal A_y-\partial_&#123;k_y&#125;\mathcal A_x.</annotation></semantics></math>
   </div>
   <p>
@@ -100,7 +100,7 @@ export const synthesis =
   <p>
     The Brillouin zone of a two-dimensional crystal is a closed torus. The total Berry flux through that closed momentum-space surface can be an integer multiple of 2π. The integer is the first Chern number,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>d</mi><mn>2</mn><mi mathvariant="bold">k</mi><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;d^2\mathbf k\,\Omega(\mathbf k)\in\mathbb Z.</annotation></semantics></math>
   </div>
   <p>
@@ -109,10 +109,10 @@ export const synthesis =
   <p>
     Martin emphasizes a second, highly intuitive representation. Calculate a Berry phase along one momentum direction while sweeping the transverse momentum across the Brillouin zone. If the phase returns to itself without net winding, the Chern number is zero; if it advances by 2π, 4π, and so on, its winding gives <em>C</em>. Through Chapter 23, the same winding appears as the flow of hybrid Wannier centers from one cell to another.
   </p>
-  <aside class="callout" aria-label="Equivalent views of a Chern number">
+  <div class="callout" role="note" aria-label="Equivalent views of a Chern number">
     <p><strong>One invariant, three views</strong></p>
     <p>integrated Berry curvature ↔ winding of Berry phase ↔ net flow of hybrid Wannier centers.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-25-6-time-reversal">
@@ -120,7 +120,7 @@ export const synthesis =
   <p>
     Time-reversal symmetry constrains the Berry curvature. For a spinless or properly traced occupied manifold, time reversal maps <strong>k</strong> to −<strong>k</strong> and makes the curvature odd; inversion makes it even. Thus a time-reversal-symmetric two-dimensional insulator has zero net Chern number, and a system with both time-reversal and inversion symmetry has vanishing Abelian curvature point by point in the simplest formulation.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">S</mi><mo>:</mo><mspace width="0.5em"/><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>Ω</mi><mo>(</mo><mo>−</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>,</mo><mspace width="1em"/><mi mathvariant="normal">I</mi><mo>:</mo><mspace width="0.5em"/><mi>Ω</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mi>Ω</mi><mo>(</mo><mo>−</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathrm&#123;TRS&#125;:\;\Omega(\mathbf k)=-\Omega(-\mathbf k),\qquad \mathrm&#123;I&#125;:\;\Omega(\mathbf k)=\Omega(-\mathbf k).</annotation></semantics></math>
   </div>
   <p>

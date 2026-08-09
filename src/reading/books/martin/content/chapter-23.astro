@@ -28,7 +28,7 @@ export const synthesis =
   <p>
     Bloch eigenstates are adapted to translational symmetry: they are extended through the crystal and labeled by crystal momentum. Wannier functions use the same Hilbert subspace in a representation adapted to real-space locality. The change of representation is possible because Bloch eigenvectors are not uniquely fixed by the eigenvalue problem. Their phases can vary with <em>k</em>, and within a group of bands the states can be mixed by a <em>k</em>-dependent unitary transformation without changing the subspace projector.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>=</mo><munder><mo>∑</mo><mi>m</mi></munder><mo>|</mo><msubsup><mi>u</mi><mrow><mi>m</mi><mi mathvariant="bold">k</mi></mrow><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></msubsup><mo>⟩</mo><msub><mi>U</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>,</mo><mspace width="0.8em"/><msup><mi>U</mi><mo>†</mo></msup><mi>U</mi><mo>=</mo><mn>1</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">|u_&#123;n\mathbf k&#125;\rangle=\sum_m |u^&#123;(0)&#125;_&#123;m\mathbf k&#125;\rangle U_&#123;mn&#125;(\mathbf k),\qquad U^\dagger U=1.</annotation></semantics></math>
   </div>
   <p>
@@ -37,7 +37,7 @@ export const synthesis =
   <p>
     A Wannier function centered in lattice cell <strong>R</strong> is the Brillouin-zone Fourier transform of the chosen smooth Bloch gauge:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><mi mathvariant="bold">R</mi><mi>n</mi><mo>⟩</mo><mo>=</mo><mfrac><msub><mi>Ω</mi><mi>cell</mi></msub><msup><mrow><mo>(</mo><mn>2</mn><mi>π</mi><mo>)</mo></mrow><mn>3</mn></msup></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>d</mi><mi mathvariant="bold">k</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">|\mathbf R n\rangle=\frac&#123;\Omega_&#123;\mathrm&#123;cell&#125;&#125;&#125;&#123;(2\pi)^3&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;d\mathbf k\,e^&#123;-i\mathbf k\cdot\mathbf R&#125;|\psi_&#123;n\mathbf k&#125;\rangle.</annotation></semantics></math>
   </div>
   <p>
@@ -49,7 +49,7 @@ export const synthesis =
   <p>
     The first spatial moment defines a Wannier center. Written in terms of the cell-periodic Bloch functions, it already has the form of a Berry connection integrated over the Brillouin zone:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="bold">r</mi><mi>n</mi></msub><mo>=</mo><mo>⟨</mo><mn>0</mn><mi>n</mi><mo>|</mo><mover><mi mathvariant="bold">r</mi><mo>^</mo></mover><mo>|</mo><mn>0</mn><mi>n</mi><mo>⟩</mo><mo>=</mo><mi>i</mi><mfrac><msub><mi>Ω</mi><mi>cell</mi></msub><msup><mrow><mo>(</mo><mn>2</mn><mi>π</mi><mo>)</mo></mrow><mn>3</mn></msup></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><mi>d</mi><mi mathvariant="bold">k</mi><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathbf r_n=\langle 0n|\hat&#123;\mathbf r&#125;|0n\rangle=i\frac&#123;\Omega_&#123;\mathrm&#123;cell&#125;&#125;&#125;&#123;(2\pi)^3&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;d\mathbf k\,\langle u_&#123;n\mathbf k&#125;|\nabla_\mathbf k|u_&#123;n\mathbf k&#125;\rangle.</annotation></semantics></math>
   </div>
   <p>
@@ -62,10 +62,10 @@ export const synthesis =
   <p>
     One way to remove the gauge freedom is to specify what the localized functions should resemble. Martin calls this the maximally projected construction. A trial function may be centered on an atom, a bond, or another chemically meaningful region; at each <em>k</em>, the phases or unitary rotations of the Bloch states are chosen to maximize overlap with that trial subspace.
   </p>
-  <aside class="callout" aria-label="Projection construction">
+  <div class="callout" role="note" aria-label="Projection construction">
     <p><strong>Projection construction</strong></p>
     <p>chosen local trial orbitals → project onto Bloch subspace → orthonormalize / smooth the projected states → Fourier transform → localized Wannier representation.</p>
-  </aside>
+  </div>
   <p>
     The construction is intuitive because the initial guess carries chemical information. An atom-centered <em>p</em> function can select a <em>p</em>-like representation; a bond-centered trial function can select bonding combinations from several occupied bands. In silicon, for example, the four occupied valence bands can be rotated into four equivalent bond-centered functions with an <em>sp</em><sup>3</sup>-like interpretation.
   </p>
@@ -79,7 +79,7 @@ export const synthesis =
   <p>
     Projection chooses localization indirectly by choosing a target character. Marzari and Vanderbilt instead define a quantitative localization criterion. For a group of Wannier functions in one cell, the total quadratic spread is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Ω</mi><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><mo>[</mo><mo>⟨</mo><msup><mi>r</mi><mn>2</mn></msup><mo>⟩</mo><msub><mspace width="0.1em"/><mi>n</mi></msub><mo>−</mo><msup><mrow><mo>|</mo><mo>⟨</mo><mi mathvariant="bold">r</mi><mo>⟩</mo><msub><mspace width="0.1em"/><mi>n</mi></msub><mo>|</mo></mrow><mn>2</mn></msup><mo>]</mo><mo>=</mo><msub><mi>Ω</mi><mi>I</mi></msub><mo>+</mo><mover><mi>Ω</mi><mo>~</mo></mover><mo>.</mo></mrow><annotation encoding="application/x-tex">\Omega=\sum_n[\langle r^2\rangle_n-|\langle\mathbf r\rangle_n|^2]=\Omega_I+\widetilde&#123;\Omega&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -101,7 +101,7 @@ export const synthesis =
   <p>
     Orthonormality is useful algebraically, but it can force long tails into local orbitals because neighboring functions must cancel their overlaps exactly. If the application permits an overlap matrix, shorter-ranged nonorthogonal functions can be advantageous. Martin therefore considers nonsingular transformations of the orthonormal Wannier basis,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mover><mi>w</mi><mo>~</mo></mover><mi>i</mi></msub><mo>⟩</mo><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><msub><mi>A</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>|</mo><msub><mi>w</mi><mi>j</mi></msub><mo>⟩</mo><mo>,</mo><mspace width="0.8em"/><mi>det</mi><mi>A</mi><mo>≠</mo><mn>0</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">|\widetilde&#123;w&#125;_i\rangle=\sum_j A_&#123;ij&#125;|w_j\rangle,\qquad \det A\neq0.</annotation></semantics></math>
   </div>
   <p>
@@ -120,10 +120,10 @@ export const synthesis =
   <p>
     The solution is to choose the subspace before choosing its Wannier gauge. Within an energy range containing more Bloch eigenstates than the desired number of Wannier functions, one selects at each <em>k</em> a lower-dimensional subspace that varies as smoothly as possible and retains the targeted states. Only after this disentanglement step is the ordinary localization or projection procedure applied inside the selected subspace.
   </p>
-  <aside class="callout" aria-label="Disentanglement and localization">
+  <div class="callout" role="note" aria-label="Disentanglement and localization">
     <p><strong>Entangled-band construction</strong></p>
     <p>many Bloch states in an energy window → choose a smooth target subspace → choose a localized gauge inside that subspace → validate the reduced bands in the intended energy region.</p>
-  </aside>
+  </div>
   <p>
     This creates a reduced Hamiltonian with a definite dimension even though the original first-principles bands weave through one another. The reduced model is exact only to the extent that the chosen subspace reproduces the target states. Outside the selected energy region, omitted bands are genuinely absent from the model rather than hidden in the Wannier transformation.
   </p>
@@ -137,7 +137,7 @@ export const synthesis =
   <p>
     In dimensions greater than one, localization need not be imposed in every direction. A hybrid Wannier function is Fourier transformed along one reciprocal-space direction while retaining Bloch momentum in the perpendicular directions. For localization along <em>x</em>, a representative definition is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mi>W</mi><mrow><mi>n</mi><msub><mi>R</mi><mi>x</mi></msub></mrow></msub><mo>(</mo><msub><mi mathvariant="bold">k</mi><mo>⊥</mo></msub><mo>)</mo><mo>⟩</mo><mo>=</mo><mfrac><msub><mi>a</mi><mi>x</mi></msub><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><mo>∫</mo><mi>d</mi><msub><mi>k</mi><mi>x</mi></msub><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><msub><mi>k</mi><mi>x</mi></msub><msub><mi>R</mi><mi>x</mi></msub></mrow></msup><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><msub><mi>k</mi><mi>x</mi></msub><msub><mi mathvariant="bold">k</mi><mo>⊥</mo></msub></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">|W_&#123;nR_x&#125;(\mathbf k_\perp)\rangle=\frac&#123;a_x&#125;&#123;2\pi&#125;\int dk_x\,e^&#123;-ik_xR_x&#125;|\psi_&#123;n k_x\mathbf k_\perp&#125;\rangle.</annotation></semantics></math>
   </div>
   <p>
@@ -153,7 +153,7 @@ export const synthesis =
   <p>
     The utility of Wannier functions comes from combining exact subspace equivalence with real-space locality. If the Hamiltonian matrix elements between localized functions decay rapidly with cell separation, a dense band structure can be reconstructed from a comparatively small set of real-space hoppings:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>H</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi mathvariant="bold">R</mi></munder><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup><mo>⟨</mo><mn>0</mn><mi>m</mi><mo>|</mo><mover><mi>H</mi><mo>^</mo></mover><mo>|</mo><mi mathvariant="bold">R</mi><mi>n</mi><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">H_&#123;mn&#125;(\mathbf k)=\sum_\mathbf R e^&#123;i\mathbf k\cdot\mathbf R&#125;\langle 0m|\hat H|\mathbf R n\rangle.</annotation></semantics></math>
   </div>
   <p>

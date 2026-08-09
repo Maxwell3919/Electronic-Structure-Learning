@@ -29,25 +29,25 @@ export const synthesis =
     Two bands are the smallest Hilbert space in which an occupied state and an empty state can exchange character while remaining separated by a gap. Every Hermitian 2 × 2 Hamiltonian can be decomposed into the identity and the three Pauli matrices,
   </p>
   <p>The geometric interpretation and its multiband boundary are developed in <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi>λ</mi><mo>)</mo><mo>=</mo><msub><mi>h</mi><mn>0</mn></msub><msub><mi>τ</mi><mn>0</mn></msub><mo>+</mo><mi mathvariant="bold">h</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi>λ</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">τ</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">H(\mathbf k,\lambda)=h_0\tau_0+\mathbf h(\mathbf k,\lambda)\cdot\boldsymbol\tau.</annotation></semantics></math>
   </div>
   <p>
     The scalar term <em>h</em><sub>0</sub> shifts both energies and does not change the eigenvectors. The remaining Hamiltonian is represented by the vector <strong>h</strong> = (<em>h</em><sub>1</sub>, <em>h</em><sub>2</sub>, <em>h</em><sub>3</sub>) in an abstract three-dimensional Pauli-matrix space. Its eigenvalues are
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>E</mi><mo>±</mo></msub><mo>=</mo><msub><mi>h</mi><mn>0</mn></msub><mo>±</mo><mo>|</mo><mi mathvariant="bold">h</mi><mo>|</mo><mo>,</mo><mspace width="0.8em"/><msub><mi>E</mi><mi>gap</mi></msub><mo>=</mo><mn>2</mn><mo>|</mo><mi mathvariant="bold">h</mi><mo>|</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">E_\pm=h_0\pm|\mathbf h|,\qquad E_\mathrm&#123;gap&#125;=2|\mathbf h|.</annotation></semantics></math>
   </div>
   <p>
     This immediately identifies the singular point of the model: the gap closes only when all three components vanish, <strong>h</strong> = 0. The direction <strong>h</strong>/|<strong>h</strong>| determines how the occupied and empty eigenvectors are mixed. As momentum or another parameter changes, the electronic problem therefore becomes a geometric trajectory of <strong>h</strong> around a distinguished origin.
   </p>
-  <aside class="callout" aria-label="Two-band geometry">
+  <div class="callout" role="note" aria-label="Two-band geometry">
     <p><strong>Two-band geometry</strong></p>
     <p>distance from origin |h| → half the band gap.</p>
     <p>direction of h → eigenvector character.</p>
     <p>trajectory of h → Berry phase and winding.</p>
     <p>touch the origin → possible topological transition.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-26-2-one-dimensional">
@@ -58,7 +58,7 @@ export const synthesis =
   <p>
     Both can be written in the common form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="bold">h</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>=</mo><mo>[</mo><mi>u</mi><mo>+</mo><mi>v</mi><mi>cos</mi><mi>k</mi><mo>,</mo><mspace width="0.4em"/><mi>w</mi><mi>sin</mi><mi>k</mi><mo>,</mo><mspace width="0.4em"/><mi>Δ</mi><mo>+</mo><mi>d</mi><mi>cos</mi><mi>k</mi><mo>]</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathbf h(k)=[u+v\cos k,\;w\sin k,\;\Delta+d\cos k].</annotation></semantics></math>
   </div>
   <p>
@@ -90,7 +90,7 @@ export const synthesis =
   <p>
     A planar winding number can be written as the change of the polar angle of the two nonzero components,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ν</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∮</mo><mi>BZ</mi></msub><mi>d</mi><mi>k</mi><mfrac><mi>d</mi><mrow><mi>d</mi><mi>k</mi></mrow></mfrac><mi>arg</mi><mo>[</mo><msub><mi>h</mi><mn>3</mn></msub><mo>+</mo><mi>i</mi><msub><mi>h</mi><mn>2</mn></msub><mo>]</mo><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">\nu=\frac&#123;1&#125;&#123;2\pi&#125;\oint_\mathrm&#123;BZ&#125;dk\,\frac&#123;d&#125;&#123;dk&#125;\arg[h_3+i h_2]\in\mathbb Z.</annotation></semantics></math>
   </div>
   <p>
@@ -109,7 +109,7 @@ export const synthesis =
   <p>
     A qualitatively new invariant appears when λ itself is varied through a complete cycle and the Hamiltonian returns to its starting point. The pair (<em>k</em>, λ) forms a closed two-dimensional parameter space. As those two parameters vary, the normalized vector <strong>h</strong>/|<strong>h</strong>| sweeps a surface on the Bloch sphere. For a two-band model its Chern number can be written
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>4</mn><mi>π</mi></mrow></mfrac><mo>∫</mo><mi>d</mi><mi>k</mi><mi>d</mi><mi>λ</mi><mspace width="0.3em"/><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>·</mo><mo>(</mo><msub><mo>∂</mo><mi>k</mi></msub><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>×</mo><msub><mo>∂</mo><mi>λ</mi></msub><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>)</mo><mo>,</mo><mspace width="0.5em"/><mover><mi mathvariant="bold">h</mi><mo>^</mo></mover><mo>=</mo><mfrac><mi mathvariant="bold">h</mi><mrow><mo>|</mo><mi mathvariant="bold">h</mi><mo>|</mo></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;4\pi&#125;\int dk\,d\lambda\;\hat&#123;\mathbf h&#125;\cdot(\partial_k\hat&#123;\mathbf h&#125;\times\partial_\lambda\hat&#123;\mathbf h&#125;),\qquad \hat&#123;\mathbf h&#125;=\mathbf h/|\mathbf h|.</annotation></semantics></math>
   </div>
   <p>
@@ -125,7 +125,7 @@ export const synthesis =
   <p>
     The electronic state nevertheless has transported an integer charge through the crystal. In a periodic system the Berry phase advances by 2π per unit winding and the occupied Wannier center shifts by one lattice vector. The pumped charge per filled band is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>Q</mi><mi>pump</mi></msub><mo>=</mo><mo>−</mo><mi>e</mi><mi>C</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">Q_\mathrm&#123;pump&#125;=-eC.</annotation></semantics></math>
   </div>
   <p>

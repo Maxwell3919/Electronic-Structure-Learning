@@ -27,15 +27,15 @@ export const synthesis =
   <p>
     Periodicity separates two pieces of structural information that are often mixed together in casual language. The <strong>Bravais lattice</strong> specifies which translations reproduce the crystal, while the <strong>basis</strong> specifies which atoms, species, and internal coordinates are attached to each lattice point. The infinite structure follows by translating that basis through every lattice vector. This distinction is the starting point for everything that follows because translational symmetry, not the visual shape of a conventional cell, determines reciprocal space and the Bloch classification.
   </p>
-  <aside class="callout" aria-label="Crystal structure hierarchy">
+  <div class="callout" role="note" aria-label="Crystal structure hierarchy">
     <p><strong>Structure hierarchy</strong></p>
     <p>primitive translation vectors → Bravais lattice → attach the atomic basis → periodic crystal.</p>
     <p>A conventional cell may be chosen for visual or symmetry convenience, but it need not be primitive.</p>
-  </aside>
+  </div>
   <p>
     Any lattice translation is an integer combination of primitive vectors:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="lattice translation as integer combination of primitive vectors">
       <semantics>
         <mrow>
@@ -51,7 +51,7 @@ export const synthesis =
   <p>
     The primitive vectors are not unique. Different sets can generate exactly the same lattice, and correspondingly there are many possible primitive parallelepipeds. What is invariant is the translation group and the volume associated with one lattice point. In matrix notation, with the primitive vectors collected into a lattice matrix, the primitive-cell volume is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="primitive cell volume">
       <semantics>
         <mrow>
@@ -84,7 +84,7 @@ export const synthesis =
   <p>
     The primitive reciprocal vectors are defined by their dual relation to the real-space primitive vectors,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="dual relation between reciprocal and real lattice vectors">
       <semantics>
         <mrow>
@@ -103,7 +103,7 @@ export const synthesis =
   <p>
     Every reciprocal-lattice vector is an integer combination of the primitive reciprocal vectors:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="reciprocal lattice vector">
       <semantics>
         <mrow>
@@ -122,7 +122,7 @@ export const synthesis =
   <p>
     The first Brillouin zone is the Wigner–Seitz cell of the reciprocal lattice. Just as one primitive real-space cell contains one representative of every lattice-equivalent position, one primitive reciprocal cell contains one representative of wavevectors modulo reciprocal-lattice translations. This is why <strong>k</strong> and <strong>k</strong> + <strong>G</strong> are equivalent labels for translational phase factors even though they may appear at different locations in an extended-zone picture.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="reciprocal cell and Brillouin zone volume">
       <semantics>
         <mrow>
@@ -136,12 +136,12 @@ export const synthesis =
       </semantics>
     </math>
   </div>
-  <aside class="callout" aria-label="Real and reciprocal space duality">
+  <div class="callout" role="note" aria-label="Real and reciprocal space duality">
     <p><strong>Real ↔ reciprocal duality</strong></p>
     <p>primitive real-space cell ↔ one reciprocal-lattice point per reciprocal cell</p>
     <p>large real-space cell ↔ small Brillouin zone</p>
     <p>real-space translation <strong>T</strong> ↔ phase factor exp(i<strong>k</strong>·<strong>T</strong>)</p>
-  </aside>
+  </div>
   <p>
     The reciprocal lattice of fcc is bcc and vice versa; a simple hexagonal lattice maps to another hexagonal reciprocal lattice with a different orientation and scale. These examples matter because the shape and labels of a Brillouin zone follow from the translation lattice, not merely from the conventional drawing of the crystal. In practical calculations, reciprocal coordinates are often stored as fractions of reciprocal primitive vectors. The same physical k point can therefore acquire different coordinate triples if a different but equivalent cell convention is chosen.
   </p>
@@ -155,7 +155,7 @@ export const synthesis =
   <p>
     This gives the Bloch condition:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Bloch translation condition">
       <semantics>
         <mrow>
@@ -175,7 +175,7 @@ export const synthesis =
   <p>
     The same statement can be written as a plane-wave phase multiplying a cell-periodic function:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Bloch wave as plane wave times periodic function">
       <semantics>
         <mrow>
@@ -198,7 +198,7 @@ export const synthesis =
   <p>
     This form is computationally decisive. For each k point one solves only for a function periodic in the primitive cell. The infinite-crystal problem is therefore reorganized into a family of cell-sized eigenvalue problems parameterized by <strong>k</strong>. For a one-electron Schrödinger equation the transformed Hamiltonian acts on the periodic part as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="k dependent Bloch Hamiltonian">
       <semantics>
         <mrow>
@@ -232,7 +232,7 @@ export const synthesis =
   <p>
     Translational symmetry labels states; time reversal and inversion relate states at different k points. For a spinless nonmagnetic Hamiltonian with time-reversal symmetry, complex conjugation maps a Bloch state at <strong>k</strong> to a state at −<strong>k</strong> with the same energy. Consequently,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="time reversal relation for band energies">
       <semantics>
         <mrow>
@@ -269,10 +269,10 @@ export const synthesis =
   <p>
     Second, one can choose a smallest region of reciprocal space from which all symmetry-related information can be generated: the <strong>irreducible Brillouin zone</strong> (IBZ). For high-symmetry crystals this can reduce the number of independent eigenproblems by a large factor. The reduction is exact only when the Hamiltonian respects the assumed symmetry.
   </p>
-  <aside class="callout" aria-label="Symmetry and Brillouin zone reduction">
+  <div class="callout" role="note" aria-label="Symmetry and Brillouin zone reduction">
     <p><strong>Symmetry reduction</strong></p>
     <p>full BZ k point → apply crystal symmetry → star of equivalent k points → keep one representative in the IBZ + its weight.</p>
-  </aside>
+  </div>
   <p>
     Symmetry is therefore both physical information and a computational acceleration. It classifies states and degeneracies, while simultaneously reducing redundant work in Brillouin-zone integrations. With spin–orbit coupling, the relevant representations become spinful or double-group representations; with broken magnetic or structural symmetry, the applicable group is smaller. The Atlas treatment of representations and little groups is kept in <a href={href('/theory/group-theory-and-symmetry/')}>Group Theory and Symmetry</a> so that this chapter can stay focused on their role in electronic-structure calculations.
   </p>
@@ -283,7 +283,7 @@ export const synthesis =
   <p>
     Solving the eigenproblem at a few interesting k points produces a band plot, but ground-state quantities usually require an average over all crystal momenta. For a macroscopic crystal, the discrete k sum becomes an integral over one Brillouin zone:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Brillouin zone average">
       <semantics>
         <mrow>
@@ -303,7 +303,7 @@ export const synthesis =
   <p>
     “Special-point” methods exploit the periodicity and smoothness of many insulating integrands. Baldereschi identified mean-value points that can reproduce a Brillouin-zone average surprisingly well in high-symmetry cases. Monkhorst and Pack generalized the idea to systematic uniform grids. In a common centered convention their construction can be expressed as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Monkhorst Pack reciprocal space grid">
       <semantics>
         <mrow>
@@ -326,7 +326,7 @@ export const synthesis =
   <p>
     Symmetry reduces the quadrature to the irreducible Brillouin zone. If each representative k point carries the normalized multiplicity of its star, the full-zone average becomes
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="weighted sum over irreducible Brillouin zone">
       <semantics>
         <mrow>
@@ -345,11 +345,11 @@ export const synthesis =
   <p>
     Metals add a second numerical problem: interpolation through the Fermi surface. Tetrahedron methods divide reciprocal space into small tetrahedra and interpolate band energies within each region, allowing the occupied volume and energy integrals to be treated more faithfully than a bare point sum. Smearing methods provide another route, but numerical smearing should not be confused with a physical electronic temperature unless the formalism and free-energy quantity actually warrant that interpretation.
   </p>
-  <aside class="callout" aria-label="Band path versus integration mesh">
+  <div class="callout" role="note" aria-label="Band path versus integration mesh">
     <p><strong>Band path ≠ integration mesh</strong></p>
     <p>High-symmetry path: selected one-dimensional lines for visualizing dispersion.</p>
     <p>BZ mesh: full-dimensional quadrature for density, energy, occupations, DOS, Fermi surfaces, and many response quantities.</p>
-  </aside>
+  </div>
   <p>
     This distinction is one of the most important practical consequences of Chapter 4. A band path may miss the true valence maximum, conduction minimum, Fermi pocket, or avoided crossing. Convergence of a total energy or DOS must therefore be tested with the mesh used for that quantity. The numerical layer is developed further in <a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a>.
   </p>
@@ -360,7 +360,7 @@ export const synthesis =
   <p>
     A band structure records energy as a function of k. The density of states asks a different question: how many states lie in a given energy interval after the entire Brillouin zone has been counted. For independent-particle bands the DOS can be written
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="density of states from Brillouin zone band energies">
       <semantics>
         <mrow>

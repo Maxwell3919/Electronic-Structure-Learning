@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Hartree begins with a product state</h2>
   <p>The Hartree ansatz assigns each electron a one-electron orbital and forms a simple product:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Psi Hartree equals product over electrons of phi sub i of x sub i">
       <semantics>
         <mrow>
@@ -32,7 +32,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>A determinant enforces antisymmetry</h2>
   <p>Hartree–Fock restricts the trial state to one normalized Slater determinant of spin orbitals:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Phi equals one over square root N factorial times determinant of spin orbitals">
       <semantics>
         <mrow>
@@ -48,7 +48,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The energy separates Coulomb and exchange contributions</h2>
   <p>For orthonormal occupied spin orbitals, the single-determinant energy has the form</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hartree Fock energy equals sum of one electron terms plus one half sum of Coulomb minus exchange integrals">
       <semantics>
         <mrow>
@@ -67,7 +67,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Variational minimization produces orbital equations</h2>
   <p>Minimizing the determinant energy while preserving orbital orthonormality yields the Hartree–Fock equations. In canonical form,</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fock operator acting on phi i equals epsilon i phi i">
       <semantics>
         <mrow><mover><mi>f</mi><mo>^</mo></mover><msub><mi>φ</mi><mi>i</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>φ</mi><mi>i</mi></msub><mo>,</mo></mrow>
@@ -76,7 +76,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>with</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fock operator equals one electron operator plus sum of Coulomb minus exchange operators">
       <semantics>
         <mrow>
@@ -111,10 +111,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Orbital energies have limited interpretation</h2>
   <p>Koopmans' theorem relates a canonical occupied-orbital energy to a frozen-orbital ionization estimate. The approximation neglects orbital relaxation and correlation. Empty-orbital energies have still weaker general addition-energy meaning.</p>
-  <aside class="callout">
+  <div class="callout" role="note">
     <p>A Hartree–Fock eigenvalue is not generally an exact electron-addition or electron-removal energy.</p>
     <p>A successful self-consistent iteration does not establish basis convergence, stability of the determinant, or accuracy for a target observable.</p>
-  </aside>
+  </div>
 
   <h2>Where this page connects</h2>
   <p><a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> defines the unrestricted interacting system. <a href={href('/theory/density-functional-theory-foundations/')}>Density Functional Theory: Foundations</a> changes the basic variational variable from a determinant to the density. <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange–Correlation Functionals and Approximations</a> distinguishes exact Hartree–Fock exchange from practical Kohn–Sham and generalized Kohn–Sham approximation families, while <a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a> separates nonlinear orbital-equation convergence from representation convergence and scientific support.</p>

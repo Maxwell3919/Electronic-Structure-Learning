@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The fixed-point problem</h2>
   <p>Let <math class="math-inline" aria-label="M of n"><semantics><mrow><mi mathvariant="script">M</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">\mathcal&#123;M&#125;[n]</annotation></semantics></math> denote the density produced after building a Hamiltonian from an input density and solving the orbital problem. This map is distinct from the universal DFT functional <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math>. Self-consistency requires</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="n star equals M of n star">
       <semantics>
         <mrow><msup><mi>n</mi><mo>*</mo></msup><mo>=</mo><mi mathvariant="script">M</mi><mo>[</mo><msup><mi>n</mi><mo>*</mo></msup><mo>]</mo><mo>.</mo></mrow>
@@ -25,7 +25,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>The residual at iteration <math class="math-inline" aria-label="k"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="R sub k equals n out sub k minus n in sub k">
       <semantics>
         <mrow>
@@ -54,7 +54,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Linear mixing exposes the central compromise</h2>
   <p>A simple damped update is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="n in k plus one equals n in k plus alpha times P times R k">
       <semantics>
         <mrow>
@@ -95,12 +95,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>A defensible stopping rule connects the monitored residual to the target observable and confirms that tightening the SCF tolerance no longer changes that observable materially.</p>
 
   <h2>Four separate conclusions</h2>
-  <aside class="callout">
+  <div class="callout" role="note">
     <p><strong>The program completed:</strong> the executable reached its normal termination path.</p>
     <p><strong>The SCF equations converged:</strong> declared residual criteria were satisfied for the current finite problem.</p>
     <p><strong>The target observable converged numerically:</strong> it is stable under basis, grid, cell, sampling, occupation, and tolerance refinement relevant to the claim.</p>
     <p><strong>The scientific interpretation is supported:</strong> the model, approximation, comparison, and alternative states are adequate for the conclusion.</p>
-  </aside>
+  </div>
 
   <h2>Study routes</h2>
   <p><a href="https://www.cambridge.org/core/books/electronic-structure/solving-kohnsham-equations/6D80A46A3C01F331484C7383A373CBE3">Richard M. Martin, <cite>Electronic Structure</cite>, “Solving Kohn–Sham equations”</a> provides the electronic-structure context for iterative solution and its relation to the Kohn–Sham problem.</p>

@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Periodic observables are Brillouin-zone integrals</h2>
   <p>For a k-dependent Brillouin-zone integrand or observable contribution <math class="math-inline" aria-label="A of k"><semantics><mrow><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(\mathbf&#123;k&#125;)</annotation></semantics></math>, a normalized average has the form</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="average A equals one over Brillouin zone volume integral over Brillouin zone A of k d cubed k approximately sum k w k A k">
       <semantics>
         <mrow>
@@ -39,7 +39,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Symmetry reduces work only when the symmetry is valid</h2>
   <p>If a space-group operation maps k to an equivalent point and leaves the Hamiltonian invariant, one representative can stand for an orbit of k points. The irreducible-zone weights then satisfy</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="sum over irreducible k point weights equals one">
       <semantics>
         <mrow><munderover><mo>∑</mo><mrow><mi mathvariant="bold">k</mi><mo>∈</mo><mi>IBZ</mi></mrow><mo></mo></munderover><msub><mi>w</mi><mi mathvariant="bold">k</mi></msub><mo>=</mo><mn>1</mn><mo>.</mo></mrow>
@@ -52,7 +52,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Insulators and metals present different integration problems</h2>
   <p>For a gapped insulator at zero temperature, occupied subspaces often vary smoothly with k. Metals contain a discontinuity at the Fermi surface, so energies and densities can converge more slowly and non-monotonically with mesh density.</p>
   <p>Smearing replaces the sharp occupation by a smooth function. A generic Fermi–Dirac occupation is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="f epsilon equals one divided by exponential epsilon minus mu over k B T plus one">
       <semantics>
         <mrow><mi>f</mi><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mi>e</mi><mfrac><mrow><mi>ε</mi><mo>−</mo><mi>μ</mi></mrow><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi></mrow></mfrac></msup><mo>+</mo><mn>1</mn></mrow></mfrac><mo>.</mo></mrow>
@@ -94,7 +94,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Study routes and references</h2>
   <p><a href="https://www.cambridge.org/core/books/abs/electronic-structure/contents/45985954A19E640C6C637C5EA2E174C0">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> supplies the theoretical connection among Bloch states, reciprocal cells, special points, occupations, and numerical integration. Full text may require institutional access.</p>
-  <p><a href="https://www.cryst.ehu.es/cryst/get_kvec.html">Bilbao Crystallographic Server Brillouin-zone database</a> provides conventional k-vector tables, figures, little groups, and metric-dependent Brillouin-zone data. It is a reference tool, not a convergence protocol.</p>
+  <p><a href="https://cryst.ehu.es/cryst/get_kvec.html">Bilbao Crystallographic Server Brillouin-zone database</a> provides conventional k-vector tables, figures, little groups, and metric-dependent Brillouin-zone data. It is a reference tool, not a convergence protocol.</p>
   <p><a href="https://docs.siesta-project.org/projects/siesta/en/stable/tutorials/basic/kpoint-convergence/index.html">SIESTA k-point tutorial</a> connects mesh refinement to a localized-orbital implementation. Its example values are not transferable defaults.</p>
   <p><a href="https://docs.dftk.org/stable/guide/periodic_problems/">DFTK, <cite>Periodic Problems and Plane-Wave Discretisations</cite></a> is a maintained open tutorial that derives periodicity, Bloch blocks, the Brillouin zone, plane-wave cutoffs, and finite k grids in a one-dimensional model before showing the corresponding code objects. It is especially useful for separating the finite k-point integration grid from the plane-wave basis cutoff and from a band-plot path. It assumes enough calculus, Fourier analysis, and programming to read Julia examples; its deliberately simple models and demonstration grids are not material-independent convergence settings.</p>
   <p><a href="https://www.nature.com/articles/s41524-026-02097-8">de Miranda Nascimento et al., <cite>Accurate and efficient protocols for high-throughput first-principles materials simulations</cite></a>, together with the authors’ <a href="https://archive.materialscloud.org/record/2025.62">Materials Cloud data archive</a>, provides a modern open evidence route for the coupled effects of k-point sampling and smearing on total energies, forces, and other solid-state quantities across broad material classes. The work is valuable for understanding error distributions and precision–efficiency tradeoffs, but its population-level protocols are not universal defaults and do not replace convergence of the actual observable, structure, magnetic state, dimensionality, and method used in a new calculation.</p>

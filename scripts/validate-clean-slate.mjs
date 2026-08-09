@@ -43,7 +43,8 @@ const expectedPages = [
   'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
   'src/pages/methods/index.astro', 'src/pages/reading/books/index.astro',
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
-  'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/theory/index.astro',
+  'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
+  'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro',
   ...theorySlugs.map((slug) => `src/pages/theory/${slug}/index.astro`),
 ].sort();
 const expectedHtml = [
@@ -77,6 +78,7 @@ const checkMathMl = (text, label, source = false) => {
   assert(math === semantics, `${label} must give every MathML expression one semantics element`);
   assert(math === annotations, `${label} must give every MathML expression one TeX annotation`);
   assert(text.includes('class="math-display"'), `${label} contains no display-math wrapper`);
+  assert(count(text, /class="math-display" tabindex="0"/g) === count(text, /class="math-display"/g), `${label} has non-focusable display mathematics`);
   if (source) {
     for (const match of text.matchAll(/<annotation\s+encoding="application\/x-tex">([\s\S]*?)<\/annotation>/g)) {
       assert(!/[{}]/.test(match[1]), `${label} has unescaped TeX grouping braces`);
@@ -140,6 +142,12 @@ if (sourceMode) {
     assert(!sources.toLowerCase().includes(term), `legacy or administrative term remains in public source: ${term}`);
   }
   assert(!tracked.some((file) => /(?:^|\/)(?:POTCAR|.*\.(?:pdf|zip|key|pem))$/i.test(file)), 'restricted or archive file remains tracked');
+  assert(!tracked.some((file) => /(?:^|\/)(?:mineru|ocr|source-cache|searchable-cache)(?:\/|$)/i.test(file)), 'source extraction or searchable cache remains tracked');
+  for (const file of tracked.filter((item) => item.endsWith('.astro'))) {
+    const text = fs.readFileSync(path.join(root, file), 'utf8');
+    assert(!/<aside class="callout"/.test(text), `${file} contains a nested complementary landmark callout`);
+    assert(count(text, /class="math-display" tabindex="0"/g) === count(text, /class="math-display"/g), `${file} has non-focusable display mathematics`);
+  }
 
   const theorySource = fs.readFileSync(path.join(root, 'src/pages/theory/index.astro'), 'utf8');
   assert(theorySource.includes('<h1>Foundations</h1>'), 'Foundations title is missing');
@@ -180,11 +188,30 @@ if (builtMode) {
     const builtFiles = walk(dist);
     assert(!builtFiles.some((file) => /\.(?:js|mjs|cjs)$/i.test(file)), 'built site contains client JavaScript');
     assert(!builtFiles.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
+    const sitemapPath = path.join(dist, 'sitemap.xml');
+    const robotsPath = path.join(dist, 'robots.txt');
+    assert(fs.existsSync(sitemapPath), 'built site has no sitemap.xml');
+    assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
+    if (fs.existsSync(sitemapPath)) {
+      const sitemap = fs.readFileSync(sitemapPath, 'utf8');
+      assert(count(sitemap, /<url>/g) === 85, 'sitemap must contain exactly 85 canonical public routes');
+      assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
+      assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
+    }
+    if (fs.existsSync(robotsPath)) assert(fs.readFileSync(robotsPath, 'utf8').includes('/sitemap.xml'), 'robots.txt lacks the sitemap pointer');
 
     for (const relative of expectedHtml) {
       const text = fs.readFileSync(path.join(dist, relative), 'utf8');
       assert(!/<script(?:\s|>)/i.test(text), `${relative} contains a script element`);
       assert(!text.includes('/Electronic-Structure-Learning//'), `${relative} contains a malformed base path`);
+      if (relative === '404.html') {
+        assert(text.includes('name="robots" content="noindex"'), '404 is not marked noindex');
+        assert(!text.includes('rel="canonical"'), '404 emits a canonical URL');
+      } else if (relative !== 'reading/martin/index.html') {
+        assert(count(text, /rel="canonical"/g) === 1, `${relative} must emit one canonical URL`);
+      }
+      assert(!/<aside class="callout"/.test(text), `${relative} contains a complementary landmark callout`);
+      assert(count(text, /class="math-display" tabindex="0"/g) === count(text, /class="math-display"/g), `${relative} has non-focusable display mathematics`);
       for (const match of text.matchAll(/href="([^"]+)"/g)) {
         const target = match[1];
         if (/^(?:https?:|mailto:|#)/.test(target)) continue;

@@ -30,11 +30,11 @@ export const synthesis =
   <p>
     Chapter 20 described small perturbations around a ground state mainly through static or low-frequency derivatives. Chapter 21 asks a different question: what information appears when an electronic system is driven in time and the response is resolved by frequency? The answer begins by separating two physically different kinds of excitation.
   </p>
-  <aside class="callout" aria-label="Two sectors of electronic excitation">
+  <div class="callout" role="note" aria-label="Two sectors of electronic excitation">
     <p><strong>Excitation sectors</strong></p>
     <p><em>N</em> → <em>N</em> ± 1: electron addition or removal and one-particle spectra.</p>
     <p><em>N</em> → <em>N</em>: neutral excitations, optical absorption, density response, and electron–hole motion.</p>
-  </aside>
+  </div>
   <p>
     The first sector changes particle number. Photoemission, inverse photoemission, and related probes are therefore tied to addition and removal energies and, in an interacting system, to quasiparticle peaks, lifetimes, broadening, and satellite structure. A ground-state Kohn–Sham band structure is useful but is not a complete one-particle excitation spectrum; the Kohn–Sham eigenvalues were introduced to reproduce the ground-state density rather than to encode all charged excitations.
   </p>
@@ -51,19 +51,19 @@ export const synthesis =
   <p>
     Time-dependent density functional theory extends the density-based logic of Chapters 6 and 7, but its formal starting point is not a minimum of the ground-state energy. The time evolution is formulated through a stationary action: among physically admissible density histories generated from a fixed initial state, the exact density is associated with the stationary time-dependent action.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>δ</mi><mi>A</mi></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo></mrow></mfrac><mo>=</mo><mn>0</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;frac&#123;&#92;delta A&#125;&#123;&#92;delta n(&#92;mathbf r,t)&#125;=0.</annotation></semantics></math>
   </div>
   <p>
     The Runge–Gross construction then permits the interacting density to be represented by an auxiliary system of time-dependent Kohn–Sham orbitals. Each occupied orbital obeys a Schrödinger-like evolution equation,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>i</mi><mi>ℏ</mi><mfrac><mrow><mo>∂</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo></mrow><mrow><mo>∂</mo><mi>t</mi></mrow></mfrac><mo>=</mo><msub><mover><mi>H</mi><mo>^</mo></mover><mi>KS</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">i&#92;hbar&#92;frac&#123;&#92;partial&#92;psi_i(t)&#125;&#123;&#92;partial t&#125;=&#92;hat H_&#123;&#92;mathrm&#123;KS&#125;&#125;(t)&#92;psi_i(t).</annotation></semantics></math>
   </div>
   <p>
     The effective Hamiltonian has the familiar Kohn–Sham decomposition, but every term can now depend on the evolving density and on the external time-dependent perturbation:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>V</mi><mi>KS</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>=</mo><msub><mi>V</mi><mi>ext</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>+</mo><msub><mi>V</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>+</mo><msub><mi>V</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">V_&#123;&#92;mathrm&#123;KS&#125;&#125;(&#92;mathbf r,t)=V_&#123;&#92;mathrm&#123;ext&#125;&#125;(&#92;mathbf r,t)+V_H[n](&#92;mathbf r,t)+V_&#123;&#92;mathrm&#123;xc&#125;&#125;[n](&#92;mathbf r,t).</annotation></semantics></math>
   </div>
   <p>
@@ -79,7 +79,7 @@ export const synthesis =
   <p>
     Before interactions between transitions are introduced, Martin establishes the independent-particle reference. For a finite system much smaller than the wavelength of the applied light, a nearly uniform electric field induces a dipole moment. In frequency space the linear relation is simply
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>d</mi><mi>α</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>β</mi></munder><msub><mi>α</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>(</mo><mi>ω</mi><mo>)</mo><msub><mi>E</mi><mi>β</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">d_&#92;alpha(&#92;omega)=&#92;sum_&#92;beta &#92;alpha_&#123;&#92;alpha&#92;beta&#125;(&#92;omega)E_&#92;beta(&#92;omega).</annotation></semantics></math>
   </div>
   <p>
@@ -88,7 +88,7 @@ export const synthesis =
   <p>
     The same point is especially clear in a crystal. In the optical long-wavelength limit, the absorptive part of the dielectric response can be written schematically as a sum over vertical interband transitions,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Im</mi><mi>ε</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>∝</mo><munder><mo>∑</mo><mrow><mi mathvariant="bold">k</mi><mo>,</mo><mi>v</mi><mo>,</mo><mi>c</mi></mrow></munder><msup><mrow><mo>|</mo><mo>⟨</mo><msub><mi>ψ</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><mi mathvariant="bold">e</mi><mo>·</mo><mover><mi>v</mi><mo>^</mo></mover><mo>|</mo><msub><mi>ψ</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>|</mo></mrow><mn>2</mn></msup><mi>δ</mi><mo>(</mo><msub><mi>ε</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><msub><mi>ε</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><mi>ℏ</mi><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;operatorname&#123;Im&#125;&#92;varepsilon(&#92;omega)&#92;propto&#92;sum_&#123;&#92;mathbf k,v,c&#125;|&#92;langle&#92;psi_&#123;c&#92;mathbf k&#125;|&#92;mathbf e&#92;cdot&#92;hat&#123;&#92;mathbf v&#125;|&#92;psi_&#123;v&#92;mathbf k&#125;&#92;rangle|^2&#92;delta(&#92;varepsilon_&#123;c&#92;mathbf k&#125;-&#92;varepsilon_&#123;v&#92;mathbf k&#125;-&#92;hbar&#92;omega).</annotation></semantics></math>
   </div>
   <p>
@@ -104,7 +104,7 @@ export const synthesis =
   <p>
     The independent-particle response χ<sup>0</sup>(ω) allows each occupied–empty transition to respond to the applied field without coupling to the density change created by the other transitions. TDDFT restores self-consistency. The induced density changes both the Hartree potential and the exchange–correlation potential, and those changes act back on the response.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>χ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><msup><mi>χ</mi><mn>0</mn></msup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>+</mo><msup><mi>χ</mi><mn>0</mn></msup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>[</mo><msub><mi>v</mi><mi>C</mi></msub><mo>+</mo><msub><mi>f</mi><mi>xc</mi></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>]</mo><mi>χ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;chi(&#92;omega)=&#92;chi^0(&#92;omega)+&#92;chi^0(&#92;omega)[v_C+f_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;omega)]&#92;chi(&#92;omega).</annotation></semantics></math>
   </div>
   <p>
@@ -113,7 +113,7 @@ export const synthesis =
   <p>
     Expanding the response in a basis of occupied-to-empty Kohn–Sham transitions converts this integral response problem into a transition-space matrix problem. In the commonly used Casida form its structure can be summarized as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="bold">M</mi><msub><mi mathvariant="bold">F</mi><mi>S</mi></msub><mo>=</mo><msubsup><mi>Ω</mi><mi>S</mi><mn>2</mn></msubsup><msub><mi mathvariant="bold">F</mi><mi>S</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;mathbf M&#92;mathbf F_S=&#92;Omega_S^2&#92;mathbf F_S.</annotation></semantics></math>
   </div>
   <p>
@@ -132,7 +132,7 @@ export const synthesis =
   <p>
     In time-dependent density-functional perturbation theory, the linearized dynamics can be expressed through a Liouvillian superoperator acting on the first-order density matrix or an equivalent pair of response functions. Schematically,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>(</mo><mi>ω</mi><mo>−</mo><mi mathvariant="script">L</mi><mo>)</mo><mi>δ</mi><mi>ρ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mi>δ</mi><mi>S</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">(&#92;omega-&#92;mathcal L)&#92;delta&#92;rho(&#92;omega)=&#92;delta S(&#92;omega).</annotation></semantics></math>
   </div>
   <p>
@@ -148,7 +148,7 @@ export const synthesis =
   <p>
     The third route avoids solving directly for frequency-domain poles or response matrices. Starting from occupied ground-state orbitals, apply a time-dependent perturbation and propagate the time-dependent Kohn–Sham equations. The initially occupied orbitals cease to be stationary eigenstates and develop components of states that were empty in the unperturbed system.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>+</mo><mi>Δ</mi><mi>t</mi><mo>)</mo><mo>≈</mo><mi>exp</mi><mo>[</mo><mo>−</mo><mfrac><mrow><mi>i</mi><mi>Δ</mi><mi>t</mi></mrow><mi>ℏ</mi></mfrac><msub><mover><mi>H</mi><mo>^</mo></mover><mi>KS</mi></msub><mo>(</mo><mi>t</mi><mo>+</mo><mfrac><mrow><mi>Δ</mi><mi>t</mi></mrow><mn>2</mn></mfrac><mo>)</mo><mo>]</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;psi_i(t+&#92;Delta t)&#92;approx&#92;exp[-i&#92;Delta t&#92;hat H_&#123;&#92;mathrm&#123;KS&#125;&#125;(t+&#92;Delta t/2)/&#92;hbar]&#92;psi_i(t).</annotation></semantics></math>
   </div>
   <p>
@@ -157,7 +157,7 @@ export const synthesis =
   <p>
     Once an induced dipole or current has been recorded, the spectrum is obtained by Fourier transformation. A small damping factor is often introduced to make the finite-time transform well behaved,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>d</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mi>T</mi></msubsup><mi>d</mi><mi>t</mi><msup><mi>e</mi><mrow><mi>i</mi><mi>ω</mi><mi>t</mi><mo>−</mo><mi>η</mi><mi>t</mi></mrow></msup><mi>d</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">d(&#92;omega)=&#92;int_0^T dt&#92;,e^&#123;i&#92;omega t-&#92;eta t&#125;d(t).</annotation></semantics></math>
   </div>
   <p>
@@ -176,7 +176,7 @@ export const synthesis =
   <p>
     Spectral intensity is often expressed through a dipole-strength or oscillator-strength distribution proportional to ω Im α(ω). Its integrated weight obeys an electron-number sum rule. With Martin's normalization,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>ℏ</mi><msubsup><mo>∫</mo><mn>0</mn><mo>∞</mo></msubsup><mi>S</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mi>d</mi><mi>ω</mi><mo>=</mo><msub><mi>N</mi><mi>e</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;hbar&#92;int_0^&#92;infty S(&#92;omega)d&#92;omega=N_e.</annotation></semantics></math>
   </div>
   <p>
@@ -195,12 +195,12 @@ export const synthesis =
   <p>
     The harder issue is electronic interaction over long distances. In common adiabatic local or semilocal TDDFT implementations, the independent Kohn–Sham transition continuum provides the starting absorption onset. The kernel can redistribute spectral weight and mix transitions, but a short-ranged kernel generally lacks the spatial structure needed to repair a severely underestimated gap or to bind an electron and hole into a strong exciton below the continuum.
   </p>
-  <aside class="callout" aria-label="Distinct energy scales in a crystal spectrum">
+  <div class="callout" role="note" aria-label="Distinct energy scales in a crystal spectrum">
     <p><strong>Three energy scales</strong></p>
     <p>Kohn–Sham transition gap → auxiliary one-particle reference.</p>
     <p>Quasiparticle gap → charged addition/removal continuum.</p>
     <p>Optical excitation → neutral response, potentially lowered by electron–hole binding.</p>
-  </aside>
+  </div>
   <p>
     A bound exciton appears mathematically as a pole of the interacting response below the free electron–hole continuum. Generating that pole requires a sufficiently attractive electron–hole coupling. In solids this typically demands a strongly nonlocal exchange–correlation kernel; local and semilocal adiabatic kernels usually miss the required long-range behavior.
   </p>
@@ -217,7 +217,7 @@ export const synthesis =
   <p>
     The adiabatic approximation replaces the unknown time-nonlocal exchange–correlation functional by a ground-state functional evaluated at the instantaneous density. It succeeds for many spectra, especially in finite systems, but it removes explicit memory. A genuinely time-dependent functional can depend on the density at earlier times, so its linear-response kernel is generally frequency dependent.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>f</mi><mi>xc</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>δ</mi><msub><mi>V</mi><mi>xc</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>ω</mi><mo>)</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">f_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;mathbf r,&#92;mathbf r',&#92;omega)=&#92;frac&#123;&#92;delta V_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;mathbf r,&#92;omega)&#125;&#123;&#92;delta n(&#92;mathbf r',&#92;omega)&#125;.</annotation></semantics></math>
   </div>
   <p>

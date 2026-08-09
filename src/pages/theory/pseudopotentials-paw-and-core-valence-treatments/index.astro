@@ -24,7 +24,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Norm-conserving pseudopotentials</h2>
   <p>A norm-conserving construction matches the integrated pseudo and all-electron radial probability within the core for each reference channel:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="integral zero to r c of pseudo radial function squared equals integral zero to r c of all electron radial function squared">
       <semantics>
         <mrow>
@@ -40,7 +40,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Nonlocal projectors distinguish angular channels</h2>
   <p>Modern pseudopotentials are generally nonlocal because different angular-momentum channels require different effective interactions. A schematic separable form is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="V nonlocal equals sum over i j of beta i D i j beta j bra ket">
       <semantics>
         <mrow><msub><mover><mi>V</mi><mo>^</mo></mover><mi>NL</mi></msub><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow><mo></mo></munderover><mo>|</mo><msub><mi>β</mi><mi>i</mi></msub><mo>⟩</mo><msub><mi>D</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>⟨</mo><msub><mi>β</mi><mi>j</mi></msub><mo>|</mo><mo>.</mo></mrow>
@@ -56,7 +56,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>PAW is a transformation between smooth and all-electron descriptions</h2>
   <p>The projector-augmented wave method relates a smooth auxiliary one-particle state to an all-electron one-particle state through a linear transformation:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="psi n equals T times pseudo psi n">
       <semantics>
         <mrow><mo>|</mo><msub><mi>ψ</mi><mi>n</mi></msub><mo>⟩</mo><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>|</mo><msub><mover><mi>ψ</mi><mo>~</mo></mover><mi>n</mi></msub><mo>⟩</mo><mo>.</mo></mrow>

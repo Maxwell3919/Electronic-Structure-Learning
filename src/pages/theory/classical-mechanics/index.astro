@@ -20,7 +20,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The Lagrangian converts forces and constraints into equations of motion</h2>
   <p>For a Lagrangian <math class="math-inline" aria-label="L equals T minus V"><semantics><mrow><mi>L</mi><mo>=</mo><mi>T</mi><mo>−</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">L=T-V</annotation></semantics></math>, Hamilton's principle makes the action stationary under variations whose endpoint configurations are fixed:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="delta action equals zero">
       <semantics>
         <mrow><mi>δ</mi><mi>S</mi><mo>=</mo><mi>δ</mi><msubsup><mo>∫</mo><msub><mi>t</mi><mn>0</mn></msub><msub><mi>t</mi><mn>1</mn></msub></msubsup><mi>L</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>,</mo><mover><mi mathvariant="bold">q</mi><mo>˙</mo></mover><mo>,</mo><mi>t</mi><mo>)</mo><mi>d</mi><mi>t</mi><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
@@ -29,7 +29,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>The resulting Euler–Lagrange equations are</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Euler Lagrange equation">
       <semantics>
         <mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>(</mo><mfrac><mrow><mi>∂</mi><mi>L</mi></mrow><mrow><mi>∂</mi><msub><mover><mi>q</mi><mo>˙</mo></mover><mi>i</mi></msub></mrow></mfrac><mo>)</mo><mo>−</mo><mfrac><mrow><mi>∂</mi><mi>L</mi></mrow><mrow><mi>∂</mi><msub><mi>q</mi><mi>i</mi></msub></mrow></mfrac><mo>=</mo><mn>0</mn><mo>.</mo></mrow>
@@ -41,7 +41,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The Hamiltonian formulation exposes phase-space structure</h2>
   <p>With conjugate momenta <math class="math-inline" aria-label="p i equals derivative L by q dot i"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mi>∂</mi><mi>L</mi><mo>/</mo><mi>∂</mi><msub><mover><mi>q</mi><mo>˙</mo></mover><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">p_i=\partial L/\partial\dot&#123;q&#125;_i</annotation></semantics></math>, the Hamiltonian is a Legendre transform of the Lagrangian. Hamilton's equations are</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hamilton equations">
       <semantics>
         <mrow><msub><mover><mi>q</mi><mo>˙</mo></mover><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mi>∂</mi><mi>H</mi></mrow><mrow><mi>∂</mi><msub><mi>p</mi><mi>i</mi></msub></mrow></mfrac><mo>,</mo><mspace width="1em"/><msub><mover><mi>p</mi><mo>˙</mo></mover><mi>i</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>∂</mi><mi>H</mi></mrow><mrow><mi>∂</mi><msub><mi>q</mi><mi>i</mi></msub></mrow></mfrac><mo>.</mo></mrow>
@@ -53,7 +53,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Born–Oppenheimer dynamics treats nuclei as classical particles on an electronic surface</h2>
   <p>For nuclei with masses <math class="math-inline" aria-label="M I"><semantics><msub><mi>M</mi><mi>I</mi></msub><annotation encoding="application/x-tex">M_I</annotation></semantics></math> and positions <math class="math-inline" aria-label="R I"><semantics><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><annotation encoding="application/x-tex">\mathbf&#123;R&#125;_I</annotation></semantics></math>, a common approximation is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="nuclear equation on Born Oppenheimer surface">
       <semantics>
         <mrow><msub><mi>M</mi><mi>I</mi></msub><msub><mover><mi mathvariant="bold">R</mi><mo>¨</mo></mover><mi>I</mi></msub><mo>=</mo><mo>−</mo><msub><mo>∇</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></msub><msub><mi>E</mi><mi>BO</mi></msub><mo>(</mo><mo>&#123;</mo><mi mathvariant="bold">R</mi><mo>&#125;</mo><mo>)</mo><mo>.</mo></mrow>
@@ -66,7 +66,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Small oscillations reduce coupled displacements to normal modes</h2>
   <p>Near a stable equilibrium, expand the potential energy in displacements <math class="math-inline" aria-label="u"><semantics><mi mathvariant="bold">u</mi><annotation encoding="application/x-tex">\mathbf&#123;u&#125;</annotation></semantics></math>:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="harmonic potential expansion">
       <semantics>
         <mrow><mi>V</mi><mo>(</mo><mi mathvariant="bold">u</mi><mo>)</mo><mo>≈</mo><msub><mi>V</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mi mathvariant="bold">u</mi><mi>T</mi></msup><mi mathvariant="bold">K</mi><mi mathvariant="bold">u</mi><mo>.</mo></mrow>
@@ -75,7 +75,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>With mass matrix <math class="math-inline" aria-label="M"><semantics><mi mathvariant="bold">M</mi><annotation encoding="application/x-tex">\mathbf&#123;M&#125;</annotation></semantics></math>, normal modes solve the generalized eigenproblem</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="normal mode generalized eigenproblem">
       <semantics>
         <mrow><mi mathvariant="bold">K</mi><msub><mi mathvariant="bold">e</mi><mi>ν</mi></msub><mo>=</mo><msubsup><mi>ω</mi><mi>ν</mi><mn>2</mn></msubsup><mi mathvariant="bold">M</mi><msub><mi mathvariant="bold">e</mi><mi>ν</mi></msub><mo>.</mo></mrow>

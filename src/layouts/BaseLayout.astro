@@ -5,11 +5,13 @@ interface Props {
   title: string;
   description: string;
   current?: 'home' | 'theory' | 'reading' | 'methods' | 'computational-tools' | 'reference';
+  noIndex?: boolean;
 }
 
-const { title, description, current } = Astro.props;
+const { title, description, current, noIndex = false } = Astro.props;
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 const navigation = [
   { id: 'theory', label: 'Foundations', route: '/theory/' },
   { id: 'reading', label: 'Guided Reading', route: '/reading/' },
@@ -23,8 +25,9 @@ const navigation = [
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noIndex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <title>{title} · Electronic Structure Atlas</title>
   </head>
   <body>

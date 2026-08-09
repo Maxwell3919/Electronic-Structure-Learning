@@ -33,12 +33,12 @@ export const synthesis =
   <p>
     The p orbitals can be reorganized into the complex combinations (p<sub>x</sub> ± i p<sub>y</sub>)/√2. These carry opposite orbital angular momentum around the out-of-plane axis. That change of basis is central: selecting one circulation breaks time-reversal symmetry and leads naturally to a Chern insulator, whereas retaining the time-reversed pair and coupling it to spin leads toward a time-reversal-invariant topological insulator.
   </p>
-  <aside class="callout" aria-label="From the one-dimensional model to a two-dimensional topological insulator">
+  <div class="callout" role="note" aria-label="From the one-dimensional model to a two-dimensional topological insulator">
     <p><strong>Model progression</strong></p>
     <p>1D s–p chain → gap closing and Shockley transition.</p>
     <p>2D s + p<sub>x</sub> + p<sub>y</sub> → orbital circulation and Chern blocks.</p>
     <p>add spin–orbit coupling + time reversal → Kramers pairs and Z₂ topology.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-27-2-chern">
@@ -46,13 +46,13 @@ export const synthesis =
   <p>
     The cleanest precursor is obtained by breaking time-reversal symmetry and isolating one spin channel together with one circulating p orbital. The low-energy problem then reduces to two bands, one s-like and one p-like. For Martin’s square-lattice example the Pauli-vector part of the Hamiltonian can be written
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="bold">h</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>=</mo><mo>[</mo><mi>v</mi><mi>sin</mi><msub><mi>k</mi><mi>y</mi></msub><mo>,</mo><mspace width="0.4em"/><mi>v</mi><mi>sin</mi><msub><mi>k</mi><mi>x</mi></msub><mo>,</mo><mspace width="0.4em"/><msub><mi>Δ</mi><mi>sp</mi></msub><mo>+</mo><mi>V</mi><mo>(</mo><mi>cos</mi><msub><mi>k</mi><mi>x</mi></msub><mo>+</mo><mi>cos</mi><msub><mi>k</mi><mi>y</mi></msub><mo>)</mo><mo>]</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">\mathbf h(\mathbf k)=[v\sin k_y,\,v\sin k_x,\,\Delta_&#123;sp&#125;+V(\cos k_x+\cos k_y)].</annotation></semantics></math>
   </div>
   <p>
     As (k<sub>x</sub>, k<sub>y</sub>) spans the Brillouin zone, the unit vector <strong>h</strong>/|<strong>h</strong>| covers a surface in Pauli-matrix space. If that mapping wraps the singular origin, the occupied band carries a nonzero Chern number. Equivalently, the Berry phase winds as the transverse momentum is varied, exactly as in Chapter 25.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∫</mo><mi>BZ</mi></msub><msub><mi>Ω</mi><mi>z</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msup><mi>d</mi><mn>2</mn></msup><mi>k</mi><mo>,</mo><mspace width="0.8em"/><msub><mi>σ</mi><mi>xy</mi></msub><mo>=</mo><mi>C</mi><mfrac><msup><mi>e</mi><mn>2</mn></msup><mi>h</mi></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;\Omega_z(\mathbf k)\,d^2k,\qquad \sigma_&#123;xy&#125;=C\frac&#123;e^2&#125;&#123;h&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -65,7 +65,7 @@ export const synthesis =
   <p>
     A time-reversal-invariant topological insulator needs the spin degree of freedom. Atomic spin–orbit coupling ties spin to orbital motion through
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>H</mi><mi>SO</mi></msub><mo>=</mo><mi>ζ</mi><mi mathvariant="bold">L</mi><mo>·</mo><mi mathvariant="bold">S</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">H_&#123;\mathrm&#123;SO&#125;&#125;=\zeta\,\mathbf L\cdot\mathbf S.</annotation></semantics></math>
   </div>
   <p>
@@ -81,7 +81,7 @@ export const synthesis =
   <p>
     For spin-1/2 electrons, time reversal is represented by an antiunitary operator Θ with Θ² = −1. A time-reversal-symmetric crystal therefore satisfies
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Θ</mi><mi>H</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msup><mi>Θ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>H</mi><mo>(</mo><mo>−</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>,</mo><mspace width="0.8em"/><msup><mi>Θ</mi><mn>2</mn></msup><mo>=</mo><mo>−</mo><mn>1</mn><mo>.</mo></mrow><annotation encoding="application/x-tex">\Theta H(\mathbf k)\Theta^&#123;-1&#125;=H(-\mathbf k),\qquad \Theta^2=-1.</annotation></semantics></math>
   </div>
   <p>
@@ -90,7 +90,7 @@ export const synthesis =
   <p>
     Those two patterns define the Z₂ index ν = 0 or 1. When inversion symmetry is also present, Fu and Kane showed that the index can be obtained from the inversion eigenvalues of occupied Kramers pairs at the four two-dimensional TRIM,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mrow><mo>(</mo><mo>−</mo><mn>1</mn><mo>)</mo></mrow><mi>ν</mi></msup><mo>=</mo><munderover><mo>∏</mo><mrow><mi>a</mi><mo>=</mo><mn>1</mn></mrow><mn>4</mn></munderover><munderover><mo>∏</mo><mrow><mi>m</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>N</mi><mi>occ</mi></msub><mo>/</mo><mn>2</mn></mrow></munderover><msub><mi>ξ</mi><mrow><mn>2</mn><mi>m</mi></mrow></msub><mo>(</mo><msub><mi mathvariant="bold">Λ</mi><mi>a</mi></msub><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">(-1)^\nu=\prod_&#123;a=1&#125;^4\prod_&#123;m=1&#125;^&#123;N_&#123;\mathrm&#123;occ&#125;&#125;/2&#125;\xi_&#123;2m&#125;(\mathbf\Lambda_a).</annotation></semantics></math>
   </div>
   <p>

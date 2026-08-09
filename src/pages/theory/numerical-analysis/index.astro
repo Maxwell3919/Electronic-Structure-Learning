@@ -26,7 +26,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Conditioning belongs to the problem</h2>
   <p>Conditioning measures how strongly the exact answer changes when the input changes slightly. A well-conditioned problem is insensitive to small perturbations; an ill-conditioned problem amplifies them.</p>
   <p>For a nonsingular linear system <math class="math-inline" aria-label="A x equals b"><semantics><mrow><mi mathvariant="bold">A</mi><mi mathvariant="bold">x</mi><mo>=</mo><mi mathvariant="bold">b</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;A&#125;\mathbf&#123;x&#125;=\mathbf&#123;b&#125;</annotation></semantics></math> with fixed <math class="math-inline" aria-label="A"><semantics><mi mathvariant="bold">A</mi><annotation encoding="application/x-tex">\mathbf&#123;A&#125;</annotation></semantics></math> and a small perturbation only in the right-hand side, the condition number <math class="math-inline" aria-label="kappa of A"><semantics><mrow><mi>κ</mi><mo>(</mo><mi mathvariant="bold">A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\kappa(\mathbf&#123;A&#125;)</annotation></semantics></math> gives the first-order bound</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="relative change in x is approximately bounded by kappa of A times relative change in b">
       <semantics>
         <mrow>
@@ -76,11 +76,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Increasing a cutoff or refining a grid usually changes both accuracy and cost. Variational behavior may provide one-sided convergence for some quantities and methods, but it must not be assumed universally. Different observables can converge at different rates.</p>
 
   <h2>Algorithmic convergence is not observable convergence</h2>
-  <aside class="callout">
+  <div class="callout" role="note">
     <p><strong>Solver convergence</strong> means that a stated residual or update criterion has become small for the current finite problem.</p>
     <p><strong>Numerical-parameter convergence</strong> means that the target observable is stable under systematic refinement of basis, grid, sampling, cell size, or other representation choices.</p>
     <p><strong>Scientific support</strong> additionally requires that the physical model, comparison, and interpretation are appropriate for the claim.</p>
-  </aside>
+  </div>
   <p>These are separate evidence gates. A calculation can pass the first and fail the second; it can pass both numerical gates and still be unsuitable for a stronger physical claim.</p>
 
   <h2>Residuals are necessary but incomplete</h2>
