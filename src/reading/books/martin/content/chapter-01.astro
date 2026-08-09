@@ -31,10 +31,10 @@ export const synthesis =
   <p>
     Quantization supplied the missing idea. Planck and Einstein established discrete energy exchange for radiation; Bohr used allowed electronic levels to explain atomic stability and spectra; de Broglie, Schrödinger, and Heisenberg then replaced the model orbit with a general quantum mechanics of states. Pauli’s exclusion principle and Fermi–Dirac statistics explained how many electrons can occupy those states and supplied the organizing principle behind the periodic table.
   </p>
-  <aside class="callout" aria-label="Development from classical instability to electronic structure">
+  <div class="callout" role="note" aria-label="Development from classical instability to electronic structure">
     <p><strong>Conceptual sequence</strong></p>
     <p>Classical instability → discrete quantum states → wave mechanics → exclusion and statistics → spin → relativistic spin–orbit coupling.</p>
-  </aside>
+  </div>
   <p>
     Spin and exchange symmetry made the theory genuinely many-electron, while Dirac’s relativistic formulation produced spin–orbit interaction as an intrinsic consequence. In many molecules and solids a nonrelativistic Hamiltonian with an added spin–orbit term is sufficient, but the effect can change the character of the states rather than merely shift their energies. This is why a foundational relativistic correction reappears later in the theory of topological materials.
   </p>
@@ -51,7 +51,7 @@ export const synthesis =
   <p>
     The basic construction replaces the full many-electron equation by orbitals moving in an effective potential that contains the nuclei and some averaged or effective representation of the other electrons:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="effective one-electron Schrödinger equation">
       <semantics>
         <mrow>
@@ -72,7 +72,7 @@ export const synthesis =
   <p>
     The spectrum becomes a many-electron state only after the levels are occupied. In thermal equilibrium electrons follow the Fermi–Dirac distribution,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fermi–Dirac occupation">
       <semantics>
         <mrow>
@@ -92,7 +92,7 @@ export const synthesis =
   <p>
     Combining Bloch states with Pauli filling gives the basic classification of solids. For each spin, a band contains one state per unit cell, so electron counting determines whether bands are filled or partially occupied:
   </p>
-  <aside class="callout" aria-label="Evolution from atomic levels to electronic bands">
+  <div class="callout" role="note" aria-label="Evolution from atomic levels to electronic bands">
     <p><strong>From atoms to a solid</strong></p>
     <p>Discrete atomic levels → splitting and reorganization as atoms interact → allowed bands → filling fixed by the electron count.</p>
     <ul>
@@ -100,7 +100,7 @@ export const synthesis =
       <li><strong>Insulator:</strong> occupied bands are filled and separated from empty bands by a finite gap.</li>
       <li><strong>Semiconductor:</strong> the filling pattern is insulating, but the gap is small enough that temperature or doping can create mobile carriers.</li>
     </ul>
-  </aside>
+  </div>
   <p>
     The passage from atomic levels to bands is not always a gentle broadening. In covalent solids the states can reorganize into bonding and antibonding bands that differ qualitatively from the isolated-atom spectrum. The independent-electron model can still capture this reconstruction when its crystal potential and symmetry are appropriate.
   </p>
@@ -150,11 +150,11 @@ export const synthesis =
   <p>
     In solids, Wigner, Mott, de Boer, Verwey, and Peierls framed the central competition as band formation versus atomic-like interaction. Delocalization lowers kinetic energy and broadens states into bands; localization keeps electrons closer to atomic configurations and makes their mutual repulsion more consequential. Narrow, partially filled <em>d</em> bands are therefore a natural trouble spot because the scale associated with local interaction can compete directly with the band width.
   </p>
-  <aside class="callout" aria-label="Competition between band formation and local interaction">
+  <div class="callout" role="note" aria-label="Competition between band formation and local interaction">
     <p><strong>Competing tendencies</strong></p>
     <p>Strong hopping and broad bands → delocalization → band-like behavior.</p>
     <p>Strong local interaction and narrow bands → localization → atomic-like correlated behavior.</p>
-  </aside>
+  </div>
   <p>
     NiO became the classic warning. A simple partially filled-band count suggests a metal, yet the material is insulating. The problem is qualitative rather than a small numerical error: interaction reorganizes the low-energy state so strongly that the phase is not continuously described by the naive band reference. This is the conceptual core of the Mott problem and of later work on strongly correlated <em>d</em>-electron systems.
   </p>
@@ -174,10 +174,10 @@ export const synthesis =
   <p>
     This theorem is a formal foundation, not yet a practical algorithm. It does not provide the usable exact energy functional or a direct procedure for constructing the density of a real material. Kohn and Sham supplied the computational breakthrough by introducing an auxiliary noninteracting system whose orbitals reproduce the interacting ground-state density. One-electron machinery is therefore restored for a precisely defined purpose without asserting that the physical electrons are independent.
   </p>
-  <aside class="callout" aria-label="From the interacting problem to Kohn-Sham density functional theory">
+  <div class="callout" role="note" aria-label="From the interacting problem to Kohn-Sham density functional theory">
     <p><strong>Change of formulation</strong></p>
     <p>Interacting ground state → density as the basic variable → auxiliary Kohn–Sham orbitals reproduce that density → practical density and total-energy calculations.</p>
-  </aside>
+  </div>
   <p>
     Kohn and Sham also made a deliberate choice about what the auxiliary system should reproduce. By targeting the ground-state density and total energy rather than the complete interacting excitation spectrum, they created a problem for which useful approximations could be built while retaining the efficiency of orbital methods. This limited target is not a weakness added after the fact; it is part of why the construction became practical.
   </p>
@@ -236,11 +236,11 @@ export const synthesis =
   <p>
     Martin also points backward to Shockley’s 1939 model, where a change in the character of the bulk bands is associated with a gap closing and a surface state. Modern theory places this type of transition in the language of Berry phases, invariants, and bulk–boundary correspondence. The important lesson is that a simple band model can contain information beyond energy dispersion and electron counting alone.
   </p>
-  <aside class="callout" aria-label="Continuity and topological change">
+  <div class="callout" role="note" aria-label="Continuity and topological change">
     <p><strong>Topological continuity</strong></p>
     <p>Gapped phase → continuous deformation with the relevant gap open → same topological class.</p>
     <p>Topological change → qualitative reconstruction, typically involving closure and reopening of the gap.</p>
-  </aside>
+  </div>
   <p>
     A real-material topological claim still depends on the Hamiltonian being studied—structure, filling, spin treatment, spin–orbit interaction, gap, and the relevant band subspace. Chapters 25–28 return to these ideas in detail. The prerequisite map is <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.
   </p>

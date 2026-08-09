@@ -34,7 +34,7 @@ export const synthesis =
   <p>
     At fixed crystal momentum <em>k</em>, periodicity restricts the coupled plane waves to wavevectors <em>k</em> + <em>G</em>, with <em>G</em> a reciprocal-lattice vector. A Bloch orbital can therefore be expanded as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="plane wave expansion of a Bloch orbital">
       <semantics>
         <mrow>
@@ -51,7 +51,7 @@ export const synthesis =
   <p>
     The differential equation becomes a matrix eigenproblem. Kinetic energy is diagonal, while a local periodic potential couples two plane waves through the Fourier component at their reciprocal-vector difference:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="plane wave Hamiltonian matrix">
       <semantics>
         <mrow>
@@ -68,7 +68,7 @@ export const synthesis =
   <p>
     The exact expansion is infinite. A practical calculation retains plane waves inside a kinetic-energy sphere,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="plane wave kinetic energy cutoff">
       <semantics>
         <mrow>
@@ -93,7 +93,7 @@ export const synthesis =
   <p>
     Chapter 4 derived Bloch's theorem from translation symmetry. Fourier space now shows the same result constructively. A periodic potential couples a wavevector <em>q</em> only to <em>q</em> + <em>G</em>, so the infinite Hamiltonian separates into independent blocks labeled by <em>k</em> modulo reciprocal-lattice vectors. Every eigenstate in one block has the Bloch form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Bloch decomposition">
       <semantics>
         <mrow>
@@ -112,7 +112,7 @@ export const synthesis =
   <p>
     Quantities per primitive cell require an average over the Brillouin zone,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Brillouin zone average">
       <semantics>
         <mrow>
@@ -139,7 +139,7 @@ export const synthesis =
   <p>
     A weak periodic potential matters most at those degeneracies. Near a Bragg plane two nearly degenerate components are coupled by a Fourier coefficient <em>V</em>(<em>G</em>). In the simplest two-state model,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="two state nearly free electron Hamiltonian and gap">
       <semantics>
         <mrow>
@@ -163,7 +163,7 @@ export const synthesis =
   <p>
     Fourier space separates two ingredients that are entangled in real space: what each atom or ion scatters, and where those objects are placed in the unit cell. For atom-centered contributions of species κ, a crystal Fourier component can be written schematically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="potential factorization into structure and form factors">
       <semantics>
         <mrow>
@@ -179,7 +179,7 @@ export const synthesis =
   <p>
     The structure factor contains the basis geometry,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="species structure factor">
       <semantics>
         <mrow>
@@ -193,7 +193,7 @@ export const synthesis =
   <p>
     while the form factor contains the Fourier-space shape of one species' contribution. For a spherical local potential it depends only on |<em>G</em>| and reduces to a radial transform,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="spherical local potential form factor">
       <semantics>
         <mrow>
@@ -218,7 +218,7 @@ export const synthesis =
   <p>
     Before constructing a fully self-consistent crystal potential, Martin asks how much band physics can be understood from atom-like contributions. In a nearly-free-electron picture the electron gas screens a bare ionic perturbation. A simple Thomas–Fermi-like form is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Thomas Fermi like screened ionic potential">
       <semantics>
         <mrow>
@@ -253,7 +253,7 @@ export const synthesis =
   <p>
     Plane-wave coefficients are compact for smooth orbitals, but many operations are simpler point by point in real space. The electron density is the key example. For occupied Bloch states,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="electron density from occupied Bloch states">
       <semantics>
         <mrow>
@@ -270,14 +270,14 @@ export const synthesis =
   <p>
     Evaluating the density directly as a reciprocal-space convolution scales quadratically with the number of Fourier components. FFTs use the cheaper route: transform each orbital to a regular real-space grid, form local products and accumulate the density there, then transform the density or potential back when reciprocal-space operations are convenient. The transform scales approximately as <em>N</em> log <em>N</em>, which is why practical plane-wave calculations are simultaneously reciprocal-space and real-space calculations.
   </p>
-  <aside class="callout" aria-label="reciprocal and real space division of work">
+  <div class="callout" role="note" aria-label="reciprocal and real space division of work">
     <p><strong>Why plane-wave codes also need grids</strong></p>
     <p>orbital coefficients in reciprocal space → FFT → real-space values → density and local/semilocal potentials → FFT back to reciprocal space.</p>
-  </aside>
+  </div>
   <p>
     Products contain higher Fourier components than the original orbitals. If the orbital expansion reaches a characteristic <em>G</em><sub>max</sub>, its density can require differences approaching twice that wavevector,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="density Fourier range compared with orbital range">
       <semantics>
         <mrow><msub><mi>G</mi><mrow><mi>ρ</mi><mo>,</mo><mi>max</mi></mrow></msub><mo>≈</mo><mn>2</mn><msub><mi>G</mi><mrow><mi>ψ</mi><mo>,</mo><mi>max</mi></mrow></msub><mo>.</mo></mrow>
@@ -298,7 +298,7 @@ export const synthesis =
   <p>
     In finite differences the Laplacian is replaced by a stencil. Along one coordinate a high-order approximation has the generic form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="finite difference approximation to second derivative">
       <semantics>
         <mrow>
@@ -326,7 +326,7 @@ export const synthesis =
   <p>
     Martin groups several related ideas here. <strong>Multigrid</strong> is primarily a solution strategy: long-wavelength iterative error is removed efficiently on coarse grids while fine grids resolve short-wavelength structure. <strong>Finite elements</strong> use local piecewise-polynomial basis functions and can be refined by reducing element size, raising polynomial order, or both. Their local support creates sparse matrices and lets refinement be concentrated where needed. With a nonorthogonal local basis the one-electron equation has the generalized form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="generalized eigenproblem in a local finite element basis">
       <semantics>
         <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
@@ -337,12 +337,12 @@ export const synthesis =
   <p>
     <strong>Wavelets</strong> organize localized functions by scale: coarse functions represent smooth structure and additional wavelets add fine detail only where necessary. <strong>Adaptive coordinates</strong> instead warp a regular computational grid so that more physical-space resolution accumulates around difficult regions. These approaches differ in numerical architecture but pursue the same goal—avoid paying the finest-resolution cost everywhere.
   </p>
-  <aside class="callout" aria-label="representation choices in chapter 12">
+  <div class="callout" role="note" aria-label="representation choices in chapter 12">
     <p><strong>One equation, several discretizations</strong></p>
     <p>plane waves → global spectral representation and simple periodic derivatives.</p>
     <p>finite differences → sparse local stencil and direct real-space boundaries.</p>
     <p>finite elements / wavelets / multigrid / adaptive coordinates → localized or scale-dependent resolution.</p>
-  </aside>
+  </div>
   <p>
     None of these representations changes the underlying Kohn–Sham approximation. Agreement among independently converged representations is a powerful numerical check, but all of them still inherit the same exchange–correlation functional, core treatment, electrostatic model, spin/relativistic Hamiltonian, and occupations. The relevant mathematical background is <a href={href('/theory/numerical-analysis/')}>Numerical Analysis</a>.
   </p>

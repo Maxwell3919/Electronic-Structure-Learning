@@ -37,11 +37,11 @@ export const synthesis =
   <p>
     Martin begins by separating the properties of matter into two broad classes: those fixed by the electronic ground state and those that require electronic excitations. This is more than an organizational convenience. It determines which theoretical object must be calculated and therefore which approximation can legitimately answer a given question.
   </p>
-  <aside class="callout" aria-label="Ground-state and excitation branches of electronic structure">
+  <div class="callout" role="note" aria-label="Ground-state and excitation branches of electronic structure">
     <p><strong>Two branches of the problem</strong></p>
     <p>Electronic ground state → bonding, equilibrium structure, phase energetics, charge density, magnetism, stress, forces, lattice dynamics in the adiabatic regime.</p>
     <p>Electronic excitations → metallic low-energy states, electron addition and removal, band gaps, optical spectra, transport-related electronic states, and other response phenomena.</p>
-  </aside>
+  </div>
   <p>
     The separation rests on the large difference between electronic and nuclear energy scales. Nuclei are much heavier, so their low-energy motion is usually slow compared with electronic rearrangement. In the Born–Oppenheimer or adiabatic picture, electrons follow the instantaneous nuclear configuration and remain close to their electronic ground state while the nuclei move. The resulting electronic energy surface then governs equilibrium positions, forces, vibrations, and many structural transformations.
   </p>
@@ -83,10 +83,10 @@ export const synthesis =
   <p>
     For many solids the zero-temperature electronic energy is the dominant starting point. Its slope with volume gives pressure and its curvature gives the bulk modulus.
   </p>
-  <aside class="callout" aria-label="Energy derivative hierarchy">
+  <div class="callout" role="note" aria-label="Energy derivative hierarchy">
     <p><strong>Energy landscape hierarchy</strong></p>
     <p>Total energy versus volume → equilibrium volume from the minimum → pressure from the slope → bulk modulus from the curvature.</p>
-  </aside>
+  </div>
   <p>
     This hierarchy is one of the most reusable ideas in the book. A calculated equilibrium lattice constant tests where the energy minimum lies, while the bulk modulus tests the curvature around that minimum and is therefore more sensitive. Agreement in one does not guarantee agreement in the other.
   </p>
@@ -180,11 +180,11 @@ export const synthesis =
   <p>
     Martin emphasizes two computational routes. In frozen-phonon calculations, atoms are displaced explicitly and energies or forces are recomputed; the curvature of the resulting energy surface gives the harmonic response and higher-order terms reveal anharmonicity. In response-function approaches, the derivatives are calculated directly. The first route is conceptually transparent and broadly available; the second is usually more efficient for full dispersion curves and coupled responses.
   </p>
-  <aside class="callout" aria-label="Stability from curvature of the energy surface">
+  <div class="callout" role="note" aria-label="Stability from curvature of the energy surface">
     <p><strong>Local structural stability</strong></p>
     <p>Positive curvature along a displacement → restoring force → stable harmonic mode.</p>
     <p>Negative curvature → energy decreases away from the reference structure → structural instability along that mode.</p>
-  </aside>
+  </div>
   <p>
     Ferroelectricity in BaTiO<sub>3</sub> illustrates the second case: the centrosymmetric configuration is unstable with respect to a polar displacement, so the energy develops lower minima away from the high-symmetry structure. Transition metals provide another example in which a particular finite-wavevector displacement can soften and lead to a new crystal structure. These examples connect phonon calculations directly to phase transitions rather than treating vibrations as an isolated spectroscopy problem.
   </p>

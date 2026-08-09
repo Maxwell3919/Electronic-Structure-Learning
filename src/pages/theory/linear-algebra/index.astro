@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Representing a state</h2>
   <p>A quantum state is not a column of numbers by itself. The numbers are coordinates relative to a chosen basis. In a finite representation, a state can be written as</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="psi ket equals the sum from i equals one to N of c sub i times phi sub i ket">
       <semantics>
         <mrow>
@@ -41,7 +41,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Inner products give geometry</h2>
   <p>Inner products define lengths, normalization, angles, and orthogonality. They allow statements such as “these two states are orthogonal” or “this trial state is normalized” to have a precise meaning.</p>
   <p>In an orthonormal basis, the coefficient-space inner product has the familiar form <math class="math-inline" aria-label="c dagger d"><semantics><mrow><msup><mi mathvariant="bold">c</mi><mo>†</mo></msup><mi mathvariant="bold">d</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;c&#125;^&#123;\dagger&#125;\mathbf&#123;d&#125;</annotation></semantics></math>. In a non-orthogonal basis, the overlap matrix enters:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="inner product of psi and chi equals c dagger S d, with S sub i j equal to inner product of phi sub i and phi sub j">
       <semantics>
         <mtable columnalign="right center left" rowspacing="0.65em">
@@ -65,7 +65,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Operators become spectral problems</h2>
   <p>A linear operator maps one state to another. Observables and Hamiltonians are represented by Hermitian operators, whose finite matrices have real eigenvalues and mutually orthogonal eigenspaces under the relevant inner product.</p>
   <p>For an orthonormal basis, the stationary equation becomes</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="H c equals epsilon c">
       <semantics>
         <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
@@ -74,7 +74,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>For a non-orthogonal basis, the same physical problem becomes a generalized eigenvalue problem:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="H c equals epsilon S c">
       <semantics>
         <mrow><mi mathvariant="bold">H</mi><mi mathvariant="bold">c</mi><mo>=</mo><mi>ε</mi><mi mathvariant="bold">S</mi><mi mathvariant="bold">c</mi><mo>.</mo></mrow>
@@ -83,7 +83,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>For linearly independent basis functions, <math class="math-inline" aria-label="S is Hermitian positive definite"><semantics><mrow><mi mathvariant="bold">S</mi><mtext> is Hermitian positive definite</mtext></mrow><annotation encoding="application/x-tex">\mathbf&#123;S&#125;\text&#123; is Hermitian positive definite&#125;</annotation></semantics></math>. The generalized eigenvectors can then be normalized in the overlap metric:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="c m dagger S c n equals delta m n">
       <semantics>
         <mrow><msubsup><mi mathvariant="bold">c</mi><mi>m</mi><mo>†</mo></msubsup><mi mathvariant="bold">S</mi><msub><mi mathvariant="bold">c</mi><mi>n</mi></msub><mo>=</mo><msub><mi>δ</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><mo>.</mo></mrow>
@@ -99,7 +99,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Variational reasoning in matrix form</h2>
   <p>The Rayleigh quotient connects eigenvalues to minimization:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="R of c equals c dagger H c divided by c dagger S c">
       <semantics>
         <mrow>

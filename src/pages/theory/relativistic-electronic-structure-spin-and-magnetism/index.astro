@@ -20,7 +20,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Spin density extends the ordinary particle density</h2>
   <p>In a collinear calculation, the particle density and a spin-channel number-density imbalance may be represented by</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="n equals n up plus n down and s z equals n up minus n down">
       <semantics>
         <mtable columnalign="right center left" rowspacing="0.55em">
@@ -36,7 +36,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Spin–orbit coupling links spin to spatial motion</h2>
   <p>In a central-potential approximation, the leading spin–orbit term has the schematic form</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="H S O proportional to one over r d V over d r times L dot S">
       <semantics>
         <mrow><msub><mover><mi>H</mi><mo>^</mo></mover><mi>SO</mi></msub><mo>∝</mo><mfrac><mn>1</mn><mi>r</mi></mfrac><mfrac><mrow><mi>d</mi><mi>V</mi></mrow><mrow><mi>d</mi><mi>r</mi></mrow></mfrac><mover><mi mathvariant="bold">L</mi><mo>^</mo></mover><mo>·</mo><mover><mi mathvariant="bold">S</mi><mo>^</mo></mover><mo>.</mo></mrow>
@@ -73,7 +73,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Magnetic anisotropy is a small energy difference</h2>
   <p>A magnetic anisotropy energy can be expressed schematically as</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Delta E M A E equals E of direction one minus E of direction two">
       <semantics>
         <mrow><mi>Δ</mi><msub><mi>E</mi><mi>MAE</mi></msub><mo>=</mo><mi>E</mi><mo>(</mo><msub><mover><mi mathvariant="bold">m</mi><mo>^</mo></mover><mn>1</mn></msub><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><msub><mover><mi mathvariant="bold">m</mi><mo>^</mo></mover><mn>2</mn></msub><mo>)</mo><mo>.</mo></mrow>
@@ -106,7 +106,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Boundary and review gap</h2>
   <p>This page establishes the minimum conceptual and computational boundaries needed to read relativistic and magnetic calculations. It does not provide a complete derivation of the Dirac equation, a comprehensive theory of magnetism, or a universal protocol for selecting magnetic ground states. The added school and Bilbao routes now provide an inspectable solid-state SOC workflow and magnetic-group tool sequence, but a source-clear Chinese course integrating relativistic solid-state implementation with magnetic-space-group reasoning remains unavailable.</p>
-  <aside class="callout">
+  <div class="callout" role="note">
     <p><strong>Resource-review boundary.</strong> The routes deliberately separate the Dirac/SOC and magnetism concepts, implementation bridges, magnetic-symmetry tools, and maintained course material. None removes the need to compare magnetic states, use compatible relativistic datasets, and converge the observable actually being claimed.</p>
-  </aside>
+  </div>
 </BaseLayout>

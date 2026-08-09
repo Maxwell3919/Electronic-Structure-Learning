@@ -31,10 +31,10 @@ export const synthesis =
   <p>
     Chapter 8 ended with a basic limitation: a functional built only from the density and its nearby gradients cannot represent every form of electronic nonlocality. Chapter 9 therefore asks what additional information can be introduced while keeping the calculation practical. Martin organizes the possibilities as a hierarchy rather than as a catalogue of named functionals. Each higher level gives the exchange–correlation approximation access to information that was absent below it, at the price of a more complicated auxiliary problem and greater computational cost.
   </p>
-  <aside class="callout" aria-label="Hierarchy of exchange correlation approximations">
+  <div class="callout" role="note" aria-label="Hierarchy of exchange correlation approximations">
     <p><strong>Functional hierarchy</strong></p>
     <p>LSDA: local density → GGA: density + gradients → meta-GGA: add kinetic-energy-density information → orbital-dependent/GKS methods: add occupied-orbital information → response-based methods: add unoccupied states and frequency-dependent response.</p>
-  </aside>
+  </div>
   <p>
     The hierarchy is sometimes called “Jacob’s ladder.” Its value is conceptual. A higher rung does not merely contain more fitting parameters; it can represent a qualitatively different physical object. Exact exchange requires occupied orbitals. Response-derived correlation requires virtual excitations and frequency dependence. Long-range dispersion requires correlations between separated regions. Localized-orbital corrections require a chosen subspace in which occupation itself becomes physically important.
   </p>
@@ -67,7 +67,7 @@ export const synthesis =
   <p>
     PBE0 is the cleanest nonempirical example discussed by Martin. Coupling-constant reasoning motivates the fixed one-quarter exchange admixture,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="PBE0 hybrid exchange correlation energy">
       <semantics>
         <mrow>
@@ -86,7 +86,7 @@ export const synthesis =
   <p>
     Range separation divides the Coulomb kernel into short- and long-range pieces. A convenient Ewald-like split is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="short and long range separation of Coulomb interaction">
       <semantics>
         <mrow>
@@ -102,7 +102,7 @@ export const synthesis =
   <p>
     The range parameter η sets the crossover length. HSE keeps a PBE0-like fraction of Fock exchange only in the short-range part,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="HSE short range hybrid form">
       <semantics>
         <mrow>
@@ -128,7 +128,7 @@ export const synthesis =
   <p>
     A representative spin-dependent form is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="meta GGA exchange correlation functional">
       <semantics>
         <mrow>
@@ -148,7 +148,7 @@ export const synthesis =
   <p>
     Martin distinguishes the kinetic-energy density itself from a per-particle quantity. In the positive form,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="positive kinetic energy density from occupied orbitals">
       <semantics>
         <mrow>
@@ -167,7 +167,7 @@ export const synthesis =
   <p>
     SCAN illustrates how that information is used. The dimensionless variable can be viewed schematically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="SCAN iso orbital kinetic energy indicator">
       <semantics>
         <mrow>
@@ -191,7 +191,7 @@ export const synthesis =
   <p>
     Generalized Kohn–Sham theory keeps an orbital-dependent nonlocal operator explicitly. Optimized effective potential (OEP) asks a different question: can an orbital-dependent energy functional still be minimized using one local potential that acts on every orbital? The orbitals are regarded as functionals of that trial potential, so the energy itself becomes a functional of the potential,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="OEP energy as a functional of local potential">
       <semantics>
         <mrow>
@@ -205,7 +205,7 @@ export const synthesis =
   <p>
     The stationary potential is then the local functional derivative associated with the orbital-dependent exchange–correlation energy,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="optimized effective exchange correlation potential">
       <semantics>
         <mrow>
@@ -235,7 +235,7 @@ export const synthesis =
   <p>
     DFT+U makes the localized subspace explicit and adds a Hubbard-like penalty or splitting associated with its occupations. Martin connects the interaction parameter to the same total-energy logic used later for atoms. A simple curvature or addition-energy measure is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="effective localized interaction from total energy differences">
       <semantics>
         <mrow>
@@ -253,7 +253,7 @@ export const synthesis =
   <p>
     Martin also connects these ideas to generalized Koopmans or piecewise-linearity conditions. For an exact ensemble between two adjacent integer electron numbers,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="piecewise linear total energy between integer particle numbers">
       <semantics>
         <mrow>
@@ -279,7 +279,7 @@ export const synthesis =
   <p>
     The adiabatic-connection fluctuation–dissipation (ACFD) relation expresses the correlation energy in terms of the density response at imaginary frequency,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="adiabatic connection fluctuation dissipation correlation energy">
       <semantics>
         <mrow>
@@ -312,7 +312,7 @@ export const synthesis =
   <p>
     For two nonoverlapping isotropic fragments, the Casimir–Polder relation connects the asymptotic coefficient to their frequency-dependent polarizabilities,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Casimir Polder C6 coefficient">
       <semantics>
         <mrow>
@@ -329,7 +329,7 @@ export const synthesis =
   <p>
     At large separation the leading energy varies as −C<sub>6</sub>/R<sup>6</sup>. Pairwise correction schemes attach this asymptotic physics to a semilocal DFT energy with a short-range damping function,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="damped pairwise dispersion correction">
       <semantics>
         <mrow>
@@ -348,7 +348,7 @@ export const synthesis =
   <p>
     A second route builds nonlocal correlation directly as a density functional,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="nonlocal van der Waals correlation functional">
       <semantics>
         <mrow>
@@ -376,7 +376,7 @@ export const synthesis =
   <p>
     In Martin’s notation the exchange part has the form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="modified Becke Johnson exchange potential">
       <semantics>
         <mrow>
@@ -403,7 +403,7 @@ export const synthesis =
   <p>
     Martin closes Part II by comparing approximations on systems simple enough that the source of an error can be identified. Hydrogen is the sharpest test because a one-electron problem has no true electron–electron correlation and exact exchange must cancel the Hartree self-interaction,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="one electron self interaction cancellation constraint">
       <semantics>
         <mtable>
@@ -423,14 +423,14 @@ export const synthesis =
   <p>
     No one comparison creates a universal ranking because each family changes different physics. Structural energy differences, magnetic states, band gaps, localized d/f levels, molecular dissociation, long-range dispersion, dielectric response, and optical excitations test different parts of an approximation. A method selected because it fixes one failure should therefore be checked against the other observables that matter for the same scientific conclusion.
   </p>
-  <aside class="callout" aria-label="How to interpret the exchange correlation hierarchy">
+  <div class="callout" role="note" aria-label="How to interpret the exchange correlation hierarchy">
     <p><strong>What an added ingredient is trying to repair</strong></p>
     <p>nonlocal exchange → delocalization, level alignment, gaps</p>
     <p>kinetic-energy density → local orbital environment and constraint recognition</p>
     <p>localized subspace + interaction → d/f localization and occupation dependence</p>
     <p>response functions → screening and fluctuation correlation</p>
     <p>nonlocal density coupling → long-range dispersion</p>
-  </aside>
+  </div>
   <p>
     This is the durable conclusion of Chapters 8 and 9. Exchange–correlation approximation is a physical modeling decision. Numerical convergence can establish that a chosen functional has been solved consistently, but it cannot determine whether the functional contains the nonlocality, screening, localization, or response physics required by the target material and observable.
   </p>

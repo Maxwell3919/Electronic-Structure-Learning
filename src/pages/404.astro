@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 
-<BaseLayout title="Not Found" description="The requested page is not part of the current Electronic Structure Atlas.">
+<BaseLayout title="Not Found" description="The requested page is not part of the current Electronic Structure Atlas." noIndex>
   <h1>Page not found</h1>
-  <p>The requested route is not part of the current Atlas. The previous course-oriented site is preserved only in Git history and the annotated legacy tag documented in the repository.</p>
+  <p>The requested route is not part of the current Atlas. Return to the <a href={base}>Home page</a> or use the navigation above.</p>
 </BaseLayout>

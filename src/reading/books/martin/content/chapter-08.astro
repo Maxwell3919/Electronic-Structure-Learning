@@ -42,7 +42,7 @@ export const synthesis =
   <p>
     The exchange–correlation energy can always be written as an integral of an energy per electron. This notation is useful because it separates the local position at which an electron is considered from the generally nonlocal density dependence of the exact functional:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="exchange correlation energy written as energy per electron">
       <semantics>
         <mrow>
@@ -58,7 +58,7 @@ export const synthesis =
   <p>
     The Hartree term treats the electron density as a classical continuous charge distribution and therefore contains the average Coulomb interaction, including an unphysical interaction of each element of the density with itself. Exchange and correlation describe how the actual conditional probability for another electron differs from that Hartree picture. Around an electron fixed at <em>r</em>, the exchange–correlation hole <em>n</em><sub>xc</sub>(<em>r</em>, <em>r</em>′) measures the corresponding deficit or redistribution of electronic probability. Its interaction contribution per electron is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="interaction energy from exchange correlation hole">
       <semantics>
         <mrow>
@@ -80,7 +80,7 @@ export const synthesis =
   <p>
     The interaction hole alone is not the complete correlation energy because correlation also changes the kinetic energy relative to the auxiliary Kohn–Sham system. The adiabatic-connection or coupling-constant construction incorporates both effects. Imagine scaling the electron–electron interaction continuously by a parameter λ while adjusting the external potential so that the density remains fixed. At λ=0 the state is the noninteracting Kohn–Sham reference; at λ=1 it is the physical interacting system. Averaging the hole along this path defines
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="coupling constant averaged exchange correlation hole">
       <semantics>
         <mrow>
@@ -95,7 +95,7 @@ export const synthesis =
   <p>
     With that averaged hole, the exact Kohn–Sham exchange–correlation functional takes a Coulomb-like form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="exact exchange correlation energy from coupling constant averaged hole">
       <semantics>
         <mrow>
@@ -122,7 +122,7 @@ export const synthesis =
   <p>
     The homogeneous electron gas supplies a reference hole whose density and spin-polarization dependence can be characterized accurately. Exchange is known analytically, while correlation has been determined to high precision by many-body calculations and parameterized for practical use. LSDA transfers this homogeneous-gas information point by point to an inhomogeneous system: the exchange–correlation energy density at <em>r</em> is approximated by that of a uniform gas having the same local spin densities.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="local spin density approximation exchange correlation energy">
       <semantics>
         <mrow>
@@ -139,7 +139,7 @@ export const synthesis =
   <p>
     The spin dependence can equivalently be expressed through the total density and the local fractional spin polarization
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="local spin polarization">
       <semantics>
         <mrow>
@@ -188,7 +188,7 @@ export const synthesis =
   <p>
     A general spin-dependent GGA can be written as a semilocal energy density or, equivalently, as an exchange reference multiplied by a dimensionless enhancement factor:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="generalized gradient approximation exchange correlation energy">
       <semantics>
         <mrow>
@@ -205,7 +205,7 @@ export const synthesis =
   <p>
     The raw gradient has dimensions and changes scale when the density is compressed. A more physical measure compares the density variation with the local Fermi wavelength. For an unpolarized density, the standard reduced gradient is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="reduced density gradient">
       <semantics>
         <mrow>
@@ -227,7 +227,7 @@ export const synthesis =
   <p>
     Exchange obeys an exact spin-scaling relation, allowing its spin dependence to be reduced to unpolarized exchange functionals:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="exchange spin scaling relation">
       <semantics>
         <mrow>
@@ -255,7 +255,7 @@ export const synthesis =
   <p>
     For LSDA the derivative remains purely local. For each spin channel,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="local spin density exchange correlation potential">
       <semantics>
         <mrow>
@@ -270,7 +270,7 @@ export const synthesis =
   <p>
     The familiar factor of four thirds in local exchange follows because the homogeneous-gas exchange energy per electron scales as the cube root of the spin density:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="local density exchange potential">
       <semantics>
         <mrow>
@@ -285,7 +285,7 @@ export const synthesis =
   <p>
     For a semilocal energy density that depends on <em>n</em><sup>σ</sup> and ∇<em>n</em><sup>σ</sup>, integration by parts converts the variation into a local multiplicative potential of Euler–Lagrange form:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="GGA exchange correlation potential from functional derivative">
       <semantics>
         <mrow>
@@ -304,7 +304,7 @@ export const synthesis =
   <p>
     Martin discusses alternative implementations that preserve the same variational derivative while avoiding an explicit unstable higher-derivative formula. One can work with an operator form inside matrix elements, or define the gradient by the same discrete finite-difference/Fourier operator used in the energy and apply the chain rule to that discrete representation. In the latter view the practical potential is simply the derivative of the discretized energy with respect to the discretized density,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="discrete exchange correlation potential as derivative of discrete energy">
       <semantics>
         <mrow>
@@ -328,7 +328,7 @@ export const synthesis =
   <p>
     A gradient is only one way to add information beyond the density at a point. Gunnarsson and collaborators instead proposed constructing a nonlocal reference density by averaging the surrounding density with a weight chosen to preserve important hole constraints. The average-density approximation then evaluates the homogeneous-gas exchange–correlation energy at that weighted density rather than at the strictly local value:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="average density approximation exchange correlation energy">
       <semantics>
         <mrow>
@@ -344,7 +344,7 @@ export const synthesis =
   <p>
     The averaged density is itself a nonlocal functional,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="weighted average density">
       <semantics>
         <mrow>

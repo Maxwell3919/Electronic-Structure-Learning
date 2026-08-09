@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Periodic functions become discrete reciprocal components</h2>
   <p>For a function periodic on a crystal lattice, a Fourier series has the form</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="f of r equals sum over reciprocal lattice vectors of f G times exponential i G dot r">
       <semantics>
         <mrow>
@@ -33,7 +33,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The continuous transform uses a convention that must be stated</h2>
   <p>One common three-dimensional convention is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="f tilde of k equals integral f of r exponential minus i k dot r d cubed r">
       <semantics>
         <mrow>
@@ -50,7 +50,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Differentiation becomes multiplication</h2>
   <p>For sufficiently regular functions and compatible boundary conditions, spatial differentiation maps to multiplication by the wavevector:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fourier transform of gradient f equals i k times f tilde">
       <semantics>
         <mrow><mi mathvariant="script">F</mi><mo>[</mo><mo>∇</mo><mi>f</mi><mo>]</mo><mo>=</mo><mi>i</mi><mi mathvariant="bold">k</mi><mover><mi>f</mi><mo>~</mo></mover><mo>.</mo></mrow>
@@ -62,7 +62,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Convolution becomes a product</h2>
   <p>With a consistent convention,</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Fourier transform of convolution f star g equals f tilde times g tilde">
       <semantics>
         <mrow><mi mathvariant="script">F</mi><mo>[</mo><mi>f</mi><mo>∗</mo><mi>g</mi><mo>]</mo><mo>=</mo><mover><mi>f</mi><mo>~</mo></mover><mover><mi>g</mi><mo>~</mo></mover><mo>.</mo></mrow>
@@ -78,7 +78,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>The DFT and FFT are finite numerical objects</h2>
   <p>The discrete Fourier transform maps a finite sampled sequence to a finite set of frequency coefficients:</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="F m equals sum n equals zero to N minus one f n exponential minus two pi i m n over N">
       <semantics>
         <mrow>
@@ -104,7 +104,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p><a href="https://see.stanford.edu/Course/EE261">Stanford Engineering Everywhere EE261, <cite>The Fourier Transform and Its Applications</cite></a> is the strongest open course route in the reviewed report. It covers Fourier series and transforms, distributions, convolution, sampling, the DFT/FFT, multidimensional transforms, and crystallographic applications.</p>
   <p><a href="https://ocw.nycu.edu.tw/?course_page=all-course%2Fcollege-of-science%2Fam%2F%E5%82%85%E7%AB%8B%E8%91%89%E5%88%86%E6%9E%90%E5%8F%8A%E6%87%89%E7%94%A8-fourier-analysis-and-applications-%E6%87%89%E7%94%A8%E6%95%B8%E5%AD%B8%E7%B3%BB-%E6%9E%97%E7%90%A6%E7%84%9C%E8%80%81%E5%B8%AB">National Yang Ming Chiao Tung University OCW, C. K. Lin, <cite>Fourier Analysis and Applications</cite></a> is an official Chinese-language graduate course covering Fourier series and their convergence, PDE applications, Fourier integrals and transforms, convolution, Poisson summation, and higher-dimensional transforms. It is useful when English-only signal-processing courses create a language barrier. The course assumes calculus, linear algebra, and ordinary differential equations, and it does not replace reciprocal-lattice, Bloch-state, or Brillouin-zone treatment.</p>
   <p><a href="https://www.iucr.org/education/pamphlets/4">IUCr Teaching Pamphlet 4, <cite>The Reciprocal Lattice</cite></a> is a concise bridge from direct and reciprocal lattices to diffraction. It assumes vector fluency and is not a complete Fourier-analysis course.</p>
-  <p><a href="https://www.cambridge.org/highereducation/books/electronic-structure/0F1D0525EC0BF4084A0F2D00637E5D0F">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> supplies the electronic-structure context for plane waves, periodicity, Coulomb terms, grids, and reciprocal-space methods. It is paid or institutionally accessed.</p>
+  <p><a href="https://www.cambridge.org/core/books/electronic-structure/ED0FF348536BFFE8899627C8F78FEE6A">Richard M. Martin, <cite>Electronic Structure</cite>, 2nd ed.</a> supplies the electronic-structure context for plane waves, periodicity, Coulomb terms, grids, and reciprocal-space methods. It is paid or institutionally accessed.</p>
   <p><a href="https://ccrma.stanford.edu/~jos/mdft/">Julius O. Smith III, <cite>Mathematics of the Discrete Fourier Transform</cite></a> is an author-hosted online text from CCRMA that develops the DFT from complex numbers, vectors, projections, roots of unity, convolution, sampling, and aliasing before discussing FFT algorithms. It is valuable when the finite DFT matrix must be distinguished from the continuous transform and from the FFT implementation. Its examples are drawn largely from audio and signal processing, so reciprocal lattices and Brillouin-zone integration still need the subject-specific routes on this page.</p>
 
   <h2>Boundary of this page</h2>

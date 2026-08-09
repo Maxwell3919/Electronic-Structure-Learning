@@ -37,7 +37,7 @@ export const synthesis =
   <p>
     For a short-range spherical contribution, the radial solution outside the core can be written asymptotically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="asymptotic radial scattering wave with a phase shift">
       <semantics>
         <mrow>
@@ -54,10 +54,10 @@ export const synthesis =
   <p>
     In electronic structure the replacement is more specific. The nucleus plus tightly bound core electrons are replaced by an effective ionic operator acting on explicitly retained valence electrons. The frozen-core assumption is useful because core orbitals usually change much less across chemical environments than valence orbitals do. It is still an approximation: shallow semicore states, high pressure, unusual oxidation states, core polarization, or core-sensitive spectroscopy can make the omitted core response important.
   </p>
-  <aside class="callout" aria-label="pseudopotential scattering idea">
+  <div class="callout" role="note" aria-label="pseudopotential scattering idea">
     <p><strong>What must be preserved</strong></p>
     <p>all-electron core + valence problem → preserve selected valence eigenvalues and exterior scattering → replace the rapidly varying core region by a smoother effective operator.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-11-2-opw">
@@ -65,7 +65,7 @@ export const synthesis =
   <p>
     Orthogonalized plane waves reveal why a valence electron can behave as though it moves in a weak effective potential even when the true nuclear potential is extremely strong. A plane wave is made orthogonal to a chosen set of localized core functions by subtracting its projections onto those functions. Schematically,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="orthogonalized plane wave">
       <semantics>
         <mrow>
@@ -81,7 +81,7 @@ export const synthesis =
   <p>
     The full valence wavefunction can then be viewed as a smooth component plus localized core-like corrections,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="smooth plus localized decomposition of a valence state">
       <semantics>
         <mrow>
@@ -107,7 +107,7 @@ export const synthesis =
   <p>
     Scattering equivalence allows the formal OPW operator to be replaced by simpler model ionic potentials. Because the core is spherical, each angular momentum channel can have its own radial potential. The resulting operator is semilocal: local in radius but nonlocal in angular variables,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="semilocal angular momentum dependent pseudopotential">
       <semantics>
         <mrow>
@@ -134,7 +134,7 @@ export const synthesis =
   <p>
     Norm conservation turns scattering matching into a systematic ab initio construction. For each selected angular momentum channel and reference energy, the pseudo and all-electron problems are required to share the eigenvalue, to match the radial function outside a core radius R<sub>c</sub>, and to contain the same integrated norm inside that radius. The dimensionless logarithmic derivative at a radius R is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="logarithmic derivative of a radial orbital">
       <semantics>
         <mrow>
@@ -148,7 +148,7 @@ export const synthesis =
   <p>
     It compactly records how the interior solution connects to the exterior scattering wave. The norm inside the core is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="radial norm inside a pseudopotential core radius">
       <semantics>
         <mrow>
@@ -163,7 +163,7 @@ export const synthesis =
   <p>
     Hamann, Schlüter, Chiang, and related work showed why this condition is much more powerful than matching one eigenvalue. The energy derivative of the logarithmic derivative satisfies
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="energy derivative of logarithmic derivative determined by core norm">
       <semantics>
         <mrow>
@@ -190,7 +190,7 @@ export const synthesis =
   <p>
     To obtain an ionic operator that can be reused in a new environment, the Hartree and exchange–correlation screening produced by the atomic valence electrons must be removed. In compact notation,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="unscreening a screened atomic pseudopotential">
       <semantics>
         <mrow>
@@ -205,7 +205,7 @@ export const synthesis =
   <p>
     It is useful to split the result into one long-range local part plus short-range angular-momentum corrections,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="local plus angular momentum dependent pseudopotential decomposition">
       <semantics>
         <mrow>
@@ -232,7 +232,7 @@ export const synthesis =
   <p>
     The nonlinear core correction addresses this by carrying a frozen core or smooth partial-core density into the exchange–correlation evaluation. Conceptually the valence calculation uses
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="exchange correlation potential including a nonlinear partial core correction">
       <semantics>
         <mrow>
@@ -259,7 +259,7 @@ export const synthesis =
   <p>
     Numerical hardness can be quantified by the Fourier tail of a radial pseudo-orbital. A residual kinetic-energy measure above a momentum cutoff q<sub>c</sub> is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="residual kinetic energy above a pseudowavefunction momentum cutoff">
       <semantics>
         <mrow>
@@ -287,7 +287,7 @@ export const synthesis =
   <p>
     The semilocal operator requires an angular decomposition for every application. Kleinman and Bylander showed that its channel corrections can instead be written as a sum of separable localized projectors. If |β<sub>lm</sub>⟩ is formed from the reference pseudo-orbital and the channel difference δV<sub>l</sub>, a one-projector form is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Kleinman Bylander separable nonlocal pseudopotential">
       <semantics>
         <mrow>
@@ -318,7 +318,7 @@ export const synthesis =
   <p>
     With pseudo reference states indexed by <em>s</em>, the separable nonlocal operator can be written in a matrix form,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="multiple projector nonlocal pseudopotential">
       <semantics>
         <mrow>
@@ -355,7 +355,7 @@ export const synthesis =
   <p>
     Ultrasoft pseudopotentials choose a different tradeoff. They deliberately relax norm conservation so that the auxiliary valence functions inside the core can be made much smoother and matched at a larger radius. The missing norm is not ignored; it is carried by localized augmentation functions and an overlap operator. The one-particle equation therefore becomes a generalized eigenvalue problem,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="ultrasoft generalized eigenvalue problem">
       <semantics>
         <mrow>
@@ -369,7 +369,7 @@ export const synthesis =
   <p>
     The overlap differs from the identity only through localized projector corrections,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="ultrasoft overlap operator">
       <semantics>
         <mrow>
@@ -395,7 +395,7 @@ export const synthesis =
   <p>
     PAW makes the smooth-plus-localized decomposition explicit as a linear transformation rather than treating the smooth pseudowavefunction as the final physical wavefunction. A smooth auxiliary state |ψ̃⟩ is transformed into an all-electron state by adding, inside atom-centered augmentation regions, the difference between all-electron and smooth partial waves:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="projector augmented wave transformation">
       <semantics>
         <mrow>
@@ -414,7 +414,7 @@ export const synthesis =
   <p>
     Operators are transformed consistently with the same map. For local densities this produces the characteristic PAW decomposition
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="PAW density decomposition into smooth and one center parts">
       <semantics>
         <mrow>
@@ -440,7 +440,7 @@ export const synthesis =
   <p>
     Once the effective ionic operator is nonlocal, familiar operator identities must be revisited. For example, the velocity is not obtained from the canonical momentum alone. In atomic units,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="velocity operator with a nonlocal pseudopotential correction">
       <semantics>
         <mrow>

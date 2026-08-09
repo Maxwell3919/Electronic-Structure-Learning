@@ -33,11 +33,11 @@ export const synthesis =
   <p>
     The reduction in variables is enormous: an N-electron wavefunction lives in a 3N-dimensional configuration space (before spin is counted), whereas the density is a function of ordinary three-dimensional space. The theorem therefore promises a much simpler description without asserting that the functional connecting density to energy is simple. Much of the difficulty of DFT lies precisely in this distinction between a low-dimensional basic variable and a highly nonlocal functional of that variable.
   </p>
-  <aside class="callout" aria-label="Logical layers of density functional theory">
+  <div class="callout" role="note" aria-label="Logical layers of density functional theory">
     <p><strong>The logical order matters</strong></p>
     <p>interacting many-body Hamiltonian → exact density-functional existence and variational principles → auxiliary Kohn–Sham construction → approximate exchange–correlation functional → numerical self-consistency.</p>
     <p>Chapter 6 covers only the first density-functional layer.</p>
-  </aside>
+  </div>
   <p>
     This chapter also asks how far the ground-state result can be extended. Spin, thermal ensembles, currents, time dependence, and macroscopic polarization each reveal why the density has a special role and where a different or enlarged set of basic variables is required. The corresponding prerequisite map is collected in <a href={href('theory/density-functional-theory-foundations/')}>Density Functional Theory Foundations</a> and <a href={href('theory/many-electron-problem/')}>The Many-Electron Problem</a>.
   </p>
@@ -48,7 +48,7 @@ export const synthesis =
   <p>
     Long before the exact theorems, Thomas and Fermi proposed the first electronic theory written directly in terms of the density. Their approximation treats each small region as though it were a homogeneous noninteracting electron gas at the local density. Dirac then supplied the corresponding local exchange term. In atomic units the resulting energy has the schematic structure
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Thomas Fermi Dirac density functional">
       <semantics>
         <mrow>
@@ -67,7 +67,7 @@ export const synthesis =
   <p>
     The four contributions are a local kinetic-energy approximation, coupling to the external potential, local exchange, and the classical Hartree repulsion. The functional is minimized subject to the fixed particle number. In variational language,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="density normalization and Euler condition for constrained minimization">
       <semantics>
         <mrow>
@@ -92,7 +92,7 @@ export const synthesis =
   <p>
     Hohenberg and Kohn replace the approximate Thomas–Fermi logic with an exact statement about the interacting ground state. For fixed nuclei and the usual electron–electron interaction, the electronic Hamiltonian can be written as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="interacting electronic Hamiltonian in an external scalar potential">
       <semantics>
         <mrow>
@@ -109,11 +109,11 @@ export const synthesis =
   <p>
     <strong>Theorem I</strong> states that the nondegenerate ground-state density determines the external potential uniquely up to an additive constant. Once the potential is fixed, the Hamiltonian is fixed, and therefore all of its eigenstates and observables are determined in principle. The theorem does not say that those quantities are simple local expressions of the density. It establishes uniqueness, not a constructive inversion algorithm.
   </p>
-  <aside class="callout" aria-label="Hohenberg Kohn uniqueness cycle">
+  <div class="callout" role="note" aria-label="Hohenberg Kohn uniqueness cycle">
     <p><strong>What the first theorem closes</strong></p>
     <p>external potential → Hamiltonian → interacting ground state → ground-state density</p>
     <p>Hohenberg–Kohn adds the reverse implication: ground-state density → external potential, up to a constant.</p>
-  </aside>
+  </div>
   <p>
     The proof is by contradiction. Assume two external potentials that differ by more than a constant produce the same ground-state density. The variational principle applied to each Hamiltonian with the other system's ground state produces two strict inequalities. Because both trial states have the same density, the potential-difference terms cancel when the inequalities are added, leaving the impossible statement that the sum of the two exact ground-state energies is smaller than itself. The assumed pair of potentials therefore cannot exist.
   </p>
@@ -123,7 +123,7 @@ export const synthesis =
   <p>
     The internal energy can consequently be written as a universal functional of the density,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="universal Hohenberg Kohn functional and total energy functional">
       <semantics>
         <mrow>
@@ -142,7 +142,7 @@ export const synthesis =
   <p>
     <strong>Theorem II</strong> supplies the variational principle: for the chosen external potential, the exact ground-state density globally minimizes the exact energy functional,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Hohenberg Kohn density variational principle">
       <semantics>
         <mrow>
@@ -169,7 +169,7 @@ export const synthesis =
   <p>
     Levy and Lieb make the universal functional more explicit by reversing the order in which the many-body problem is minimized. Instead of beginning only with densities known to be ground states of some local potential, choose an admissible density first and consider every antisymmetric many-electron wavefunction that yields that density. Among those wavefunctions, minimize the internal energy:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Levy Lieb constrained search universal functional">
       <semantics>
         <mrow>
@@ -184,7 +184,7 @@ export const synthesis =
   <p>
     The arrow Ψ → n means that the search is constrained to wavefunctions whose one-particle density is exactly the chosen n(r). Only after this inner search is complete is the density itself varied:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="outer Levy Lieb minimization over densities">
       <semantics>
         <mrow>
@@ -198,11 +198,11 @@ export const synthesis =
       </semantics>
     </math>
   </div>
-  <aside class="callout" aria-label="Two step constrained search">
+  <div class="callout" role="note" aria-label="Two step constrained search">
     <p><strong>Two nested searches</strong></p>
     <p>fixed density n → search all Ψ giving n → retain the lowest internal energy F[n]</p>
     <p>then vary n → find the density that minimizes F[n] + external-potential energy.</p>
-  </aside>
+  </div>
   <p>
     This formulation clarifies what the density functional actually contains: the best possible kinetic plus interaction energy compatible with a density. It also expands the domain from densities that are known to be generated as ground states of local potentials to densities that are generated by some acceptable N-electron wavefunction, the <em>N-representable</em> set. The constrained search naturally accommodates degenerate ground states as well.
   </p>
@@ -222,7 +222,7 @@ export const synthesis =
   <p>
     For a spin-dependent external field, the natural variables are the two spin densities or, equivalently, total density and spin density:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="total and spin densities for spin density functional theory">
       <semantics>
         <mrow>
@@ -242,7 +242,7 @@ export const synthesis =
   <p>
     Mermin replaces the zero-temperature wavefunction variational principle by an equilibrium variational principle for a density matrix. In the grand canonical ensemble the trial functional can be written
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Mermin grand potential functional of the density matrix">
       <semantics>
         <mrow>
@@ -262,7 +262,7 @@ export const synthesis =
   <p>
     A scalar density is no longer sufficient when the Hamiltonian contains a vector potential that couples to orbital motion. Current-density functional theories enlarge the basic variables accordingly. Time-dependent density functional theory follows a different uniqueness logic: given an initial state, the later evolution can be associated with the history of the time-dependent density under suitable conditions. The continuity relation
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="continuity equation relating time dependent density and current">
       <semantics>
         <mrow>
@@ -289,7 +289,7 @@ export const synthesis =
   <p>
     The first requirement is <em>N-representability</em>. For the class relevant here, the density must at least be nonnegative, integrate to the electron number, and have finite kinetic-energy regularity. Martin summarizes the conditions in the form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="basic N representability conditions for an electron density">
       <semantics>
         <mrow>
@@ -312,11 +312,11 @@ export const synthesis =
   <p>
     A second subtlety concerns what “all properties are functionals of the ground-state density” actually means. Because the exact density fixes the Hamiltonian, the excitation spectrum is determined <em>in principle</em>. But minimizing the ground-state Hohenberg–Kohn or Levy–Lieb functional gives the ground-state density and energy; the behavior of that functional near its minimum is not an excitation spectrum. Excitation energies require another construction. By contrast, static response coefficients can be obtained from derivatives of exact ground-state energies with respect to static external fields, so they are legitimate ground-state-functional properties.
   </p>
-  <aside class="callout" aria-label="Exact DFT property distinction">
+  <div class="callout" role="note" aria-label="Exact DFT property distinction">
     <p><strong>Two different senses of “determined by the density”</strong></p>
     <p>density → external potential → Hamiltonian: all states and properties are fixed in principle.</p>
     <p>density-functional minimization: directly yields the ground-state energy and minimizing density, not the excitation spectrum.</p>
-  </aside>
+  </div>
   <p>
     The same distinction explains several apparently surprising exact statements. If a metal has a well-defined many-body Fermi surface, exact ground-state DFT must encode the static response features that reveal it, such as long-range Friedel oscillations and Kohn anomalies. Likewise, an exact ground-state functional must distinguish a correlation-driven insulating ground state from a metal. None of this guarantees that a practical approximate functional or a particular set of auxiliary eigenvalues will do so.
   </p>

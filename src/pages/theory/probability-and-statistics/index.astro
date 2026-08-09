@@ -16,7 +16,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>A random variable is a function on possible outcomes</h2>
   <p>For a random variable <math class="math-inline" aria-label="X"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> with probability density <math class="math-inline" aria-label="p of x"><semantics><mrow><mi>p</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics></math>, the expectation and variance are</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="expectation and variance of X">
       <semantics>
         <mrow>
@@ -32,7 +32,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Conditional probability states what information has changed</h2>
   <p>For events <math class="math-inline" aria-label="A and B"><semantics><mrow><mi>A</mi><mtext> and </mtext><mi>B</mi></mrow><annotation encoding="application/x-tex">A\text&#123; and &#125;B</annotation></semantics></math>,</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="conditional probability of A given B">
       <semantics>
         <mrow><mi>P</mi><mo>(</mo><mi>A</mi><mo>|</mo><mi>B</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo>(</mo><mi>A</mi><mo>∩</mo><mi>B</mi><mo>)</mo></mrow><mrow><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo></mrow></mfrac><mo>,</mo><mspace width="0.5em"/><mi>P</mi><mo>(</mo><mi>B</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn><mo>.</mo></mrow>
@@ -44,7 +44,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Sample averages estimate ensemble averages</h2>
   <p>For independent samples <math class="math-inline" aria-label="X one through X N"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>X</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">X_1,\ldots,X_N</annotation></semantics></math>, the sample mean is</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="sample mean">
       <semantics>
         <mrow><mover><mi>X</mi><mo>¯</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>X</mi><mi>i</mi></msub><mo>.</mo></mrow>
@@ -56,7 +56,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Correlated trajectories contain fewer independent samples than frames</h2>
   <p>Molecular dynamics and Markov-chain Monte Carlo generate time-correlated data. For a normalized autocorrelation function <math class="math-inline" aria-label="rho of k"><semantics><mrow><mi>ρ</mi><mo>(</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\rho(k)</annotation></semantics></math>, one common convention defines the integrated autocorrelation time as</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="integrated autocorrelation time">
       <semantics>
         <mrow><msub><mi>τ</mi><mi>int</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>+</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mo>∞</mo></munderover><mi>ρ</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>.</mo></mrow>
@@ -65,7 +65,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>Under this convention, the effective sample size for estimating a mean is approximately</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="effective sample size approximately N over two tau int">
       <semantics>
         <mrow><msub><mi>N</mi><mi>eff</mi></msub><mo>≈</mo><mfrac><mi>N</mi><mrow><mn>2</mn><msub><mi>τ</mi><mi>int</mi></msub></mrow></mfrac><mo>.</mo></mrow>
@@ -78,7 +78,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>Monte Carlo replaces difficult integrals with stochastic estimators</h2>
   <p>For samples drawn from a density <math class="math-inline" aria-label="p"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>, an expectation can be estimated by</p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Monte Carlo estimator">
       <semantics>
         <mrow><mi mathvariant="double-struck">E</mi><mo>[</mo><mi>f</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>]</mo><mo>≈</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><mi>f</mi><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo>)</mo><mo>.</mo></mrow>

@@ -31,10 +31,10 @@ export const synthesis =
   <p>
     The phase is therefore a property of a directed path through the space of Hamiltonians or eigenstates rather than an expectation value of an operator at one point. Reversing the path reverses its sign. The same structure appears in apparently different problems: electric polarization under a continuous deformation, the quantum Hall effect, and topological bands. For the applications emphasized by Martin, insulators are particularly clean because a gap separates the occupied state or occupied manifold from competing states during the evolution.
   </p>
-  <aside class="callout" aria-label="Geometric progression in Appendix P">
+  <div class="callout" role="note" aria-label="Geometric progression in Appendix P">
     <p><strong>Geometric progression</strong></p>
     <p>closed path → relative overlap phases → Berry connection → Berry curvature → Berry flux → Chern integer.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-p-2-berry-phase-connection">
@@ -42,7 +42,7 @@ export const synthesis =
   <p>
     For a discrete closed path, let the normalized states be |u<sub>0</sub>⟩, |u<sub>1</sub>⟩, …, |u<sub>N−1</sub>⟩, with the next point identified with the starting state. The relative phase between neighboring states is contained in their overlap. Multiplying every neighboring overlap around the loop removes the arbitrary phase of each individual state because every state appears once as a bra and once as a ket.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -59,7 +59,7 @@ export const synthesis =
   <p>
     This discrete expression is already gauge invariant modulo 2π and is the form most naturally adapted to numerical data. When the steps become infinitesimal and the state is differentiable along a parameter x, the same object becomes a line integral. Martin defines the Berry connection as the local quantity whose integral gives the geometric phase,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -80,7 +80,7 @@ export const synthesis =
   <p>
     The geometry becomes richer when the state depends on two parameters, for example (k, λ) or (k<sub>x</sub>, k<sub>y</sub>). The Berry connection then has two components. Taking its curl produces the Berry curvature, a local quantity that is unchanged by a smooth gauge transformation.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -94,7 +94,7 @@ export const synthesis =
   <p>
     Integrating the curvature over an oriented surface gives the Berry flux. Stokes’ theorem relates that surface integral to the Berry phase around the boundary. The line integral retains the usual modulo-2π ambiguity, while the curvature integral keeps track of any full 2π turns accumulated across the surface.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -115,7 +115,7 @@ export const synthesis =
   <p>
     If the parameter surface is closed, it has no boundary on which to evaluate a single-valued line integral. The total Berry flux can nevertheless be nonzero. Its allowed values are quantized in units of 2π, defining the Chern number,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -148,7 +148,7 @@ export const synthesis =
   <p>
     The Aharonov–Bohm effect gives Martin’s first concrete physical analogy. A charged particle can travel around a region containing magnetic flux while remaining everywhere on a path where the magnetic field itself is zero. The vector potential on the path still has a nonzero circulation, and Stokes’ theorem relates it to the enclosed magnetic flux,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -161,7 +161,7 @@ export const synthesis =
   <p>
     Following Martin’s convention in this appendix, the speed of light c is kept explicitly in the electromagnetic coupling. The phase accumulated by a particle of charge magnitude e is therefore proportional to the enclosed flux,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -183,7 +183,7 @@ export const synthesis =
   <p>
     Martin’s second example uses Dirac’s magnetic-monopole construction as a geometric model. A real magnetic monopole has not been observed, but a two-level Hamiltonian can generate the same Berry-field structure in its parameter space. For a spin-1/2 state whose quantization axis follows a direction on a sphere, the Berry phase around a closed loop equals one half of the oriented solid angle enclosed by that loop, with the sign set by the chosen eigenstate and orientation.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -196,7 +196,7 @@ export const synthesis =
   <p>
     No single phase convention is smooth over the entire sphere. One gauge can be regular near the north pole and another near the south pole, but they must be joined on their overlap. The phase mismatch between those patches carries the winding that prevents a global smooth gauge. Integrating the curvature over the whole sphere gives one flux quantum for a simple two-level branch,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>

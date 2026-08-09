@@ -30,19 +30,19 @@ export const synthesis =
   <p>
     Chapter 19 followed nuclei through a sequence of finite displacements on the electronic Born–Oppenheimer energy surface. For a stable solid near one equilibrium structure, a more economical description is possible. Let the equilibrium coordinates be <em>R</em><sup>0</sup> and write the nuclear displacements as <em>u</em> = <em>R</em> − <em>R</em><sup>0</sup>. The equilibrium condition is zero force, and the leading restoring force is controlled by the curvature of the electronic total energy.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>C</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><mo>=</mo><mfrac><mrow><msup><mo>∂</mo><mn>2</mn></msup><mi>E</mi></mrow><mrow><mo>∂</mo><msub><mi>R</mi><mrow><mi>I</mi><mi>α</mi></mrow></msub><mo>∂</mo><msub><mi>R</mi><mrow><mi>J</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>,</mo><mspace width="0.8em"/><msub><mi>F</mi><mrow><mi>I</mi><mi>α</mi></mrow></msub><mo>≈</mo><mo>−</mo><munder><mo>∑</mo><mrow><mi>J</mi><mi>β</mi></mrow></munder><msub><mi>C</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><msub><mi>u</mi><mrow><mi>J</mi><mi>β</mi></mrow></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">C_&#123;I&#92;alpha,J&#92;beta&#125;=&#92;frac&#123;&#92;partial^2 E&#125;&#123;&#92;partial R_&#123;I&#92;alpha&#125;&#92;partial R_&#123;J&#92;beta&#125;&#125;,&#92;qquad F_&#123;I&#92;alpha&#125;&#92;approx-&#92;sum_&#123;J&#92;beta&#125;C_&#123;I&#92;alpha,J&#92;beta&#125;u_&#123;J&#92;beta&#125;.</annotation></semantics></math>
   </div>
   <p>
     The force-constant matrix is therefore the Hessian of the energy with respect to nuclear coordinates. The harmonic approximation truncates the expansion at this quadratic level. Its normal modes are not obtained from the Hessian alone, because the same force produces different accelerations for different nuclear masses. Mass weighting defines the dynamical matrix, whose eigenvalues are squared mode frequencies.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><munder><mo>∑</mo><mrow><mi>J</mi><mi>β</mi></mrow></munder><mfrac><msub><mi>C</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><msqrt><mrow><msub><mi>M</mi><mi>I</mi></msub><msub><mi>M</mi><mi>J</mi></msub></mrow></msqrt></mfrac><msub><mi>e</mi><mrow><mi>J</mi><mi>β</mi></mrow></msub><mo>=</mo><msup><mi>ω</mi><mn>2</mn></msup><msub><mi>e</mi><mrow><mi>I</mi><mi>α</mi></mrow></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;sum_&#123;J&#92;beta&#125;&#92;frac&#123;C_&#123;I&#92;alpha,J&#92;beta&#125;&#125;&#123;&#92;sqrt&#123;M_I M_J&#125;&#125;e_&#123;J&#92;beta&#125;=&#92;omega^2 e_&#123;I&#92;alpha&#125;.</annotation></semantics></math>
   </div>
   <p>
     In a crystal, translational symmetry classifies nuclear displacement patterns by a phonon wavevector <em>q</em>, just as Chapter 4 classified electronic states by crystal momentum. Real-space force constants between cells can therefore be Fourier transformed into an independent dynamical matrix for each <em>q</em>. If a primitive cell contains <em>S</em> atoms, each <em>q</em> has 3<em>S</em> branches.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>D</mi><mrow><mi>s</mi><mi>α</mi><mo>,</mo><msup><mi>s</mi><mo>′</mo></msup><mi>β</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mrow><msub><mi>M</mi><mi>s</mi></msub><msub><mi>M</mi><msup><mi>s</mi><mo>′</mo></msup></msub></mrow></msqrt></mfrac><munder><mo>∑</mo><mi mathvariant="bold">T</mi></munder><msub><mi>C</mi><mrow><mi>s</mi><mi>α</mi><mo>,</mo><msup><mi>s</mi><mo>′</mo></msup><mi>β</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">T</mi><mo>)</mo><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">q</mi><mo>·</mo><mi mathvariant="bold">T</mi></mrow></msup><mo>.</mo></mrow><annotation encoding="application/x-tex">D_&#123;s&#92;alpha,s'&#92;beta&#125;(&#92;mathbf q)=&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;M_sM_&#123;s'&#125;&#125;&#125;&#92;sum_&#123;&#92;mathbf T&#125;C_&#123;s&#92;alpha,s'&#92;beta&#125;(&#92;mathbf T)e^&#123;i&#92;mathbf q&#92;cdot&#92;mathbf T&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -54,10 +54,10 @@ export const synthesis =
   <p>
     Martin also uses the same derivative viewpoint for homogeneous strain. Stress is the quantity conjugate to strain, while elastic constants measure how stress changes under an additional strain. Both the electronic state and the nuclei contribute: if atomic coordinates inside the strained cell are not fixed by symmetry, they must move until the internal forces vanish. The response with those internal coordinates frozen and the response after they relax are therefore different physical quantities—often described as clamped-ion and relaxed-ion response. This is why elastic and piezoelectric properties cannot, in general, be inferred from a strained lattice with the basis atoms artificially held fixed.
   </p>
-  <aside class="callout" aria-label="Internal strain in a crystal response">
+  <div class="callout" role="note" aria-label="Internal strain in a crystal response">
     <p><strong>Strain response</strong></p>
     <p>homogeneous strain → electronic relaxation + allowed internal atomic relaxation → stress and polarization response.</p>
-  </aside>
+  </div>
 </section>
 
 <section aria-labelledby="section-20-2-direct-approach">
@@ -65,16 +65,16 @@ export const synthesis =
   <p>
     The direct route obtains response coefficients by repeating ordinary self-consistent calculations at slightly different external parameters. For lattice dynamics, displace one or more atoms, calculate the new forces, and take numerical derivatives. No dedicated perturbation solver is required.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>C</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><mo>≈</mo><mo>−</mo><mfrac><mrow><mi>Δ</mi><msub><mi>F</mi><mrow><mi>I</mi><mi>α</mi></mrow></msub></mrow><mrow><mi>Δ</mi><msub><mi>R</mi><mrow><mi>J</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">C_&#123;I&#92;alpha,J&#92;beta&#125;&#92;approx-&#92;frac&#123;&#92;Delta F_&#123;I&#92;alpha&#125;&#125;&#123;&#92;Delta R_&#123;J&#92;beta&#125;&#125;.</annotation></semantics></math>
   </div>
   <p>
     Martin deliberately makes this direct-response idea broader than phonons. A displacement can be paired with the resulting force or polarization; a homogeneous strain can be paired with stress or polarization; and a periodic external field can be paired with the induced density or potential. Finite differences of these conjugate quantities give force constants, Born effective charges, elastic and piezoelectric coefficients, or dielectric response without changing the underlying ground-state solver.
   </p>
-  <aside class="callout" aria-label="Direct static response pairs">
+  <div class="callout" role="note" aria-label="Direct static response pairs">
     <p><strong>Direct static response</strong></p>
     <p>displacement → force / polarization; strain → stress / polarization; periodic field → induced density / screened potential.</p>
-  </aside>
+  </div>
   <p>
     A frozen-phonon calculation is therefore a finite-difference measurement of the same energy curvature introduced in Section 20.1. Its main strength is generality. The displaced structure can be evaluated with the same total-energy and force machinery used for relaxation, and a finite displacement automatically samples the full energy surface rather than assuming that only the quadratic term exists. This makes direct calculations especially useful when a soft mode leads far away from a high-symmetry reference structure.
   </p>
@@ -97,13 +97,13 @@ export const synthesis =
   <p>
     For an external parameter λ, the induced density can be written through the static density-response function,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mo>∫</mo><mi>d</mi><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mi>χ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mi>Δ</mi><msub><mi>V</mi><mi>ext</mi></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;Delta n(&#92;mathbf r)=&#92;int d&#92;mathbf r'&#92;,&#92;chi(&#92;mathbf r,&#92;mathbf r')&#92;,&#92;Delta V_&#123;&#92;mathrm&#123;ext&#125;&#125;(&#92;mathbf r').</annotation></semantics></math>
   </div>
   <p>
     The response is screened because the induced density changes the Hartree and exchange–correlation potentials, which then act back on the electrons. In Kohn–Sham language the interacting static response can be organized schematically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>χ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><msup><mi>χ</mi><mn>0</mn></msup><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>−</mo><mi>K</mi><mo>,</mo><mspace width="0.8em"/><mi>K</mi><mo>=</mo><msub><mi>v</mi><mi>C</mi></msub><mo>+</mo><msub><mi>f</mi><mi>xc</mi></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;chi^&#123;-1&#125;=(&#92;chi^0)^&#123;-1&#125;-K,&#92;qquad K=v_C+f_&#123;&#92;mathrm&#123;xc&#125;&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -119,17 +119,17 @@ export const synthesis =
   <p>
     The first-order orbital correction is determined by a linear equation. Only the component outside the occupied manifold matters, because rotations entirely within the occupied subspace do not change the ground-state density. With <em>P</em><sub>c</sub> the projector onto the complementary subspace,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>(</mo><msub><mover><mi>H</mi><mo>^</mo></mover><mi>KS</mi></msub><mo>−</mo><msub><mi>ε</mi><mi>i</mi></msub><mo>)</mo><mo>|</mo><mi>Δ</mi><msub><mi>ψ</mi><mi>i</mi></msub><mo>⟩</mo><mo>=</mo><mo>−</mo><msub><mover><mi>P</mi><mo>^</mo></mover><mi>c</mi></msub><mi>Δ</mi><msub><mover><mi>V</mi><mo>^</mo></mover><mi>KS</mi></msub><mo>|</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">(&#92;hat H_&#123;&#92;mathrm&#123;KS&#125;&#125;-&#92;varepsilon_i)|&#92;Delta&#92;psi_i&#92;rangle=-&#92;hat P_c&#92;,&#92;Delta&#92;hat V_&#123;&#92;mathrm&#123;KS&#125;&#125;|&#92;psi_i&#92;rangle.</annotation></semantics></math>
   </div>
   <p>
     This equation is not solved once in isolation. The orbital changes create a density change, the density change modifies the Hartree and exchange–correlation potentials, and that modified Kohn–Sham perturbation changes the orbitals again:
   </p>
-  <aside class="callout" aria-label="Self-consistent density-functional perturbation cycle">
+  <div class="callout" role="note" aria-label="Self-consistent density-functional perturbation cycle">
     <p><strong>Linear-response self-consistency</strong></p>
     <p>ΔV<sub>ext</sub> → Δψ → Δn → ΔV<sub>Hxc</sub> → ΔV<sub>KS</sub> → Δψ.</p>
-  </aside>
-  <div class="math-display">
+  </div>
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mn>2</mn><mi>Re</mi><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mi>ψ</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>Δ</mi><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;Delta n(&#92;mathbf r)=2&#92;,&#92;mathrm&#123;Re&#125;&#92;sum_i&#92;psi_i^*(&#92;mathbf r)&#92;Delta&#92;psi_i(&#92;mathbf r).</annotation></semantics></math>
   </div>
   <p>
@@ -145,7 +145,7 @@ export const synthesis =
   <p>
     The analogy with the ground-state variational principle is useful but the object is different. Ground-state Kohn–Sham theory minimizes the full energy over admissible orbitals. Variational perturbation theory keeps the unperturbed ground state fixed and minimizes the coefficient of a specified order in the perturbation with respect to the corresponding orbital changes.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>δ</mi><msup><mi>E</mi><mrow><mo>(</mo><mn>2</mn><mo>)</mo></mrow></msup></mrow><mrow><mi>δ</mi><mo>⟨</mo><mi>Δ</mi><msub><mi>ψ</mi><mi>i</mi></msub><mo>|</mo></mrow></mfrac><mo>=</mo><mn>0</mn><mspace width="0.8em"/><mo>⇔</mo><mspace width="0.8em"/><mtext>Sternheimer response equation</mtext><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;frac&#123;&#92;delta E^&#123;(2)&#125;&#125;&#123;&#92;delta&#92;langle&#92;Delta&#92;psi_i|&#125;=0&#92;quad&#92;Longleftrightarrow&#92;quad&#92;text&#123;Sternheimer response equation&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -158,7 +158,7 @@ export const synthesis =
   <p>
     Crystal periodicity gives DFPT its decisive simplification for phonons. A displacement pattern with wavevector <em>q</em> is not periodic in the primitive cell by itself, but its perturbing potential has a Bloch-like form: a cell-periodic function multiplied by exp(i<em>q</em>·<em>r</em>). First-order response therefore preserves a precise momentum-selection rule.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mspace width="0.5em"/><mover><mo>→</mo><mrow><mi>Δ</mi><mi>V</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo></mrow></mover><mspace width="0.5em"/><mo>|</mo><mi>Δ</mi><msub><mi>ψ</mi><mrow><mi>n</mi><mo>,</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">q</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">|&#92;psi_&#123;n&#92;mathbf k&#125;&#92;rangle&#92;xrightarrow&#123;&#92;Delta V(&#92;mathbf q)&#125;|&#92;Delta&#92;psi_&#123;n,&#92;mathbf k+&#92;mathbf q&#125;&#92;rangle.</annotation></semantics></math>
   </div>
   <p>
@@ -180,7 +180,7 @@ export const synthesis =
   <p>
     A particularly important mixed response is the Born effective charge. It measures how macroscopic polarization changes when a sublattice is displaced at zero macroscopic electric field:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msubsup><mi>Z</mi><mrow><mi>I</mi><mo>,</mo><mi>α</mi><mi>β</mi></mrow><mo>*</mo></msubsup><mo>=</mo><mfrac><mi>Ω</mi><mi>e</mi></mfrac><msub><mrow><mfrac><mrow><mo>∂</mo><msub><mi>P</mi><mi>α</mi></msub></mrow><mrow><mo>∂</mo><msub><mi>R</mi><mrow><mi>I</mi><mi>β</mi></mrow></msub></mrow></mfrac></mrow><mrow><mi mathvariant="bold">E</mi><mo>=</mo><mn>0</mn></mrow></msub><mo>.</mo></mrow><annotation encoding="application/x-tex">Z^*_&#123;I,&#92;alpha&#92;beta&#125;=&#92;frac&#123;&#92;Omega&#125;&#123;e&#125;&#92;left.&#92;frac&#123;&#92;partial P_&#92;alpha&#125;&#123;&#92;partial R_&#123;I&#92;beta&#125;&#125;&#92;right|_&#123;&#92;mathbf E=0&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -189,7 +189,7 @@ export const synthesis =
   <p>
     The same long-range electrostatics produces the nonanalytic part of the dynamical matrix in a polar insulator. In the long-wavelength limit its characteristic structure is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>D</mi><mi>NA</mi></msup><mo>(</mo><mi mathvariant="bold">q</mi><mo>→</mo><mn>0</mn><mo>)</mo><mo>∝</mo><mfrac><mrow><mo>(</mo><mi mathvariant="bold">q</mi><mo>·</mo><msubsup><mi>Z</mi><mi>I</mi><mo>*</mo></msubsup><mo>)</mo><mo>(</mo><mi mathvariant="bold">q</mi><mo>·</mo><msubsup><mi>Z</mi><mi>J</mi><mo>*</mo></msubsup><mo>)</mo></mrow><mrow><mi mathvariant="bold">q</mi><mo>·</mo><msub><mi>ε</mi><mi>∞</mi></msub><mo>·</mo><mi mathvariant="bold">q</mi></mrow></mfrac><mo>.</mo></mrow><annotation encoding="application/x-tex">D^&#123;&#92;mathrm&#123;NA&#125;&#125;(&#92;mathbf q&#92;to0)&#92;propto&#92;frac&#123;(&#92;mathbf q&#92;cdot Z_I^*)(&#92;mathbf q&#92;cdot Z_J^*)&#125;&#123;&#92;mathbf q&#92;cdot&#92;varepsilon_&#92;infty&#92;cdot&#92;mathbf q&#125;.</annotation></semantics></math>
   </div>
   <p>
@@ -202,7 +202,7 @@ export const synthesis =
   <p>
     Once a phonon perturbation has been solved self-consistently, DFPT provides more than a frequency. It also gives the screened change of the electronic potential produced by that normal mode. The matrix element of this screened perturbation between Bloch states is the microscopic electron–phonon coupling.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msubsup><mi>g</mi><mrow><mi>m</mi><mi>n</mi><mi>ν</mi></mrow><mrow><mi mathvariant="bold">k</mi><mo>,</mo><mi mathvariant="bold">q</mi></mrow></msubsup><mo>=</mo><msqrt><mfrac><mi>ℏ</mi><mrow><mn>2</mn><msub><mi>ω</mi><mrow><mi>ν</mi><mi mathvariant="bold">q</mi></mrow></msub></mrow></mfrac></msqrt><mo>⟨</mo><msub><mi>ψ</mi><mrow><mi>m</mi><mo>,</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">q</mi></mrow></msub><mo>|</mo><mi>Δ</mi><msub><mi>V</mi><mrow><mi>ν</mi><mi mathvariant="bold">q</mi></mrow></msub><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">g_&#123;mn&#92;nu&#125;^&#123;&#92;mathbf k,&#92;mathbf q&#125;=&#92;sqrt&#123;&#92;frac&#123;&#92;hbar&#125;&#123;2&#92;omega_&#123;&#92;nu&#92;mathbf q&#125;&#125;&#125;&#92;langle&#92;psi_&#123;m,&#92;mathbf k+&#92;mathbf q&#125;|&#92;Delta V_&#123;&#92;nu&#92;mathbf q&#125;|&#92;psi_&#123;n&#92;mathbf k&#125;&#92;rangle.</annotation></semantics></math>
   </div>
   <p>
@@ -211,7 +211,7 @@ export const synthesis =
   <p>
     Transport and conventional superconductivity depend especially strongly on scattering near the Fermi surface. The Eliashberg spectral function α²F(ω) collects the phonon density of states weighted by the relevant squared electron–phonon matrix elements and Fermi-surface phase space. Its inverse-frequency moment defines the familiar dimensionless coupling
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn><msubsup><mo>∫</mo><mn>0</mn><mo>∞</mo></msubsup><mfrac><mrow><msup><mi>α</mi><mn>2</mn></msup><mi>F</mi><mo>(</mo><mi>ω</mi><mo>)</mo></mrow><mi>ω</mi></mfrac><mi>d</mi><mi>ω</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">&#92;lambda=2&#92;int_0^&#92;infty&#92;frac&#123;&#92;alpha^2F(&#92;omega)&#125;&#123;&#92;omega&#125;&#92;,d&#92;omega.</annotation></semantics></math>
   </div>
   <p>
@@ -230,7 +230,7 @@ export const synthesis =
   <p>
     A full dynamical description is carried by the spin susceptibility χ(<strong>q</strong>,ω). A well-defined magnon appears as a sharp pole or peak in its spectral response, while coupling to electron–hole excitations can broaden the peak and shorten the lifetime. Up to the usual thermal and normalization factors, the measured spin spectral weight is governed by the imaginary part of this response. The dispersion alone therefore does not contain all the information available in a spin-response calculation.
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>S</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>,</mo><mi>ω</mi><mo>)</mo><mo>∝</mo><mo>−</mo><mi>Im</mi><mi>χ</mi><mo>(</mo><mi mathvariant="bold">q</mi><mo>,</mo><mi>ω</mi><mo>)</mo><mo>.</mo></mrow><annotation encoding="application/x-tex">S(&#92;mathbf q,&#92;omega)&#92;propto-&#92;operatorname&#123;Im&#125;&#92;chi(&#92;mathbf q,&#92;omega).</annotation></semantics></math>
   </div>
   <p>

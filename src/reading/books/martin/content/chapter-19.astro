@@ -28,7 +28,7 @@ export const synthesis =
   <p>
     Quantum molecular dynamics begins with ordinary classical mechanics for the nuclei. The electronic problem enters through the potential-energy surface on which those nuclei move. If the nuclear coordinates are <em>R</em><sub>I</sub> and the electronic ground-state energy at those coordinates is <em>E</em>, Newton's equation is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><msub><mi>M</mi><mi>I</mi></msub><msub><mover><mi mathvariant="bold">R</mi><mo>¨</mo></mover><mi>I</mi></msub><mo>=</mo><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mo>∂</mo><mi>E</mi></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac></mrow>
@@ -42,7 +42,7 @@ export const synthesis =
   <p>
     A numerical trajectory replaces continuous time by finite steps. Martin uses the Verlet update to expose the basic structure:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -59,7 +59,7 @@ export const synthesis =
   <p>
     For Kohn–Sham QMD the energy depends on both the orbitals and nuclear coordinates. Martin writes it schematically as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><mi>E</mi><mo>[</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>,</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><mo>]</mo><mo>=</mo><mn>2</mn><munderover><mo>∑</mo><mi>i</mi><mi>N</mi></munderover><mo>⟨</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>|</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mo>∇</mo><mn>2</mn></msup><mo>|</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>⟩</mo><mo>+</mo><mi>U</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mrow><mi>I</mi><mi>I</mi></mrow></msub></mrow>
@@ -89,7 +89,7 @@ export const synthesis =
   <p>
     In compact form, Born–Oppenheimer MD is a nested loop:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><msub><mi mathvariant="bold">R</mi><mi>n</mi></msub><mo>→</mo><mi>SCF</mi><mo>/</mo><mi>min</mi><mo>→</mo><msub><mi>E</mi><mi>n</mi></msub><mo>,</mo><msub><mi mathvariant="bold">F</mi><mi>n</mi></msub><mo>→</mo><msub><mi mathvariant="bold">R</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow>
@@ -110,7 +110,7 @@ export const synthesis =
   <p>
     The construction starts from a fictitious Lagrangian. In addition to the physical ionic kinetic energy and the Kohn–Sham potential energy, it assigns the orbitals a fictitious mass <em>μ</em> and kinetic energy, while Lagrange multipliers preserve orbital orthonormality:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -123,7 +123,7 @@ export const synthesis =
   <p>
     The precise factor multiplying the electronic kinetic term is a convention; the essential new parameter is the fictitious electronic mass. Variation gives coupled second-order equations,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
@@ -136,7 +136,7 @@ export const synthesis =
   <p>
     When all fictitious velocities vanish, the electronic equation becomes
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><mover><mi>H</mi><mo>^</mo></mover><msub><mi>ψ</mi><mi>i</mi></msub><mo>=</mo><munderover><mo>∑</mo><mi>k</mi><mi></mi></munderover><msub><mi>Λ</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><msub><mi>ψ</mi><mi>k</mi></msub></mrow>
@@ -150,7 +150,7 @@ export const synthesis =
   <p>
     The fictitious dynamics is only an optimization device. It is not the physical time evolution of the electrons and cannot be interpreted as an electronic excitation spectrum. Its success depends on adiabatic separation: the fictitious electronic oscillations should remain much faster than nuclear motion. Martin's two-level discussion gives the scale
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><msubsup><mi>ω</mi><mi>e</mi><mn>2</mn></msubsup><mo>∼</mo><mfrac><mi>ΔE</mi><mi>μ</mi></mfrac><mo>,</mo><mspace width="1em"/><msub><mi>ω</mi><mi>e</mi></msub><mo>≫</mo><msub><mi>ω</mi><mrow><mi>ion</mi></mrow></msub></mrow>
@@ -168,7 +168,7 @@ export const synthesis =
   <p>
     Martin uses plane waves to show why the Car–Parrinello idea became computationally practical. At the Brillouin-zone center an orbital can be expanded as
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><msub><mi>u</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi mathvariant="bold">G</mi><mi></mi></munderover><msub><mi>c</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mfrac><mn>1</mn><msqrt><mi>Ω</mi></msqrt></mfrac><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">G</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup></mrow>
@@ -179,7 +179,7 @@ export const synthesis =
   <p>
     with orthonormal coefficient vectors,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><munderover><mo>∑</mo><mi mathvariant="bold">G</mi><mi></mi></munderover><msubsup><mi>c</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><msub><mi>c</mi><mi>j</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow>
@@ -222,7 +222,7 @@ export const synthesis =
   <p>
     The Clausius–Clapeyron relation summarizes why volume and entropy changes matter at coexistence:
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><mfrac><mrow><mi>dP</mi></mrow><mrow><mi>dT</mi></mrow></mfrac><mo>=</mo><mfrac><mi>ΔS</mi><mi>ΔV</mi></mfrac><mo>=</mo><mfrac><mi>ΔH</mi><mrow><mi>T</mi><mi>ΔV</mi></mrow></mfrac></mrow>
@@ -236,7 +236,7 @@ export const synthesis =
   <p>
     QMD also permits electronic observables to be evaluated for thermally disordered configurations. Martin's liquid-carbon example distinguishes a time-averaged density of states from a transport calculation: a DOS that looks free-electron-like does not by itself prove metallic conduction. Conductivity must be calculated from the relevant response expression for each configuration and then averaged over the sampled ensemble; the dc limit is
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow><msub><mi>σ</mi><mrow><mi>d</mi><mi>c</mi></mrow></msub><mo>=</mo><munder><mi>lim</mi><mrow><mi>ω</mi><mo>→</mo><mn>0</mn></mrow></munder><mi>σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo></mrow>

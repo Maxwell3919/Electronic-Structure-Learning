@@ -28,7 +28,7 @@ export const synthesis =
   <p>
     Part III begins with atoms because spherical geometry removes most spatial complexity without removing the central numerical ideas of electronic structure. For a one-electron atom in a spherical potential, angular momentum separates the wavefunction into a radial factor and a spherical harmonic. Writing the radial function in a form that absorbs the geometric factor gives
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="separation of an atomic orbital into radial and angular factors">
       <semantics>
         <mrow>
@@ -43,7 +43,7 @@ export const synthesis =
   <p>
     The three-dimensional Schrödinger equation then becomes a one-dimensional radial eigenproblem,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="radial Schrödinger equation in a spherical potential">
       <semantics>
         <mrow>
@@ -70,7 +70,7 @@ export const synthesis =
   <p>
     The radial equation becomes an electronic-structure method when the potential is determined by the electrons themselves. In a closed-shell atom, summing complete angular-momentum shells produces a spherical density. With Martin's radial convention,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="spherical density from occupied atomic shells">
       <semantics>
         <mrow>
@@ -86,7 +86,7 @@ export const synthesis =
   <p>
     In Kohn–Sham DFT, that density generates a spherical effective potential
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="spherical Kohn Sham effective potential for an atom">
       <semantics>
         <mrow>
@@ -105,10 +105,10 @@ export const synthesis =
   <p>
     The Hartree potential can be found from the spherical Poisson problem or from equivalent radial integrals. The important point is that the Coulomb field must be recomputed consistently from the current density at every iteration. Deeply bound closed shells are usually well behaved, but weakly bound states and near degeneracies can make the fixed point difficult. Transition-metal atoms are a classic case: 3d and 4s levels can exchange order as the potential changes, so blindly refilling the instantaneous lowest eigenvalues can make the SCF map jump between different occupations.
   </p>
-  <aside class="callout" aria-label="atomic self consistency loop">
+  <div class="callout" role="note" aria-label="atomic self consistency loop">
     <p><strong>Atomic self-consistency</strong></p>
     <p>choose occupations → solve radial equations → construct spherical density → rebuild Hartree and exchange–correlation terms → mix → repeat.</p>
-  </aside>
+  </div>
   <p>
     This is the atomic version of the nonlinear fixed-point problem introduced in Chapter 7. A small radial SCF residual confirms consistency for the chosen occupation and approximation; it does not prove that another occupation, spin state, or nonspherical branch is higher in energy. That distinction becomes unavoidable in open shells.
   </p>
@@ -119,7 +119,7 @@ export const synthesis =
   <p>
     Relativistic effects become strongest near a heavy nucleus, where electrons move rapidly in the steep nuclear potential. This locality is computationally useful: scalar-relativistic shifts and spin–orbit coupling can be determined accurately in an atomic-like core region and then carried into molecular or solid-state calculations. In the Pauli limit, the spin–orbit term has the schematic form
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="spin orbit interaction from momentum and potential gradient">
       <semantics>
         <mrow>
@@ -150,7 +150,7 @@ export const synthesis =
   <p>
     The electron–electron interaction reveals why the nonspherical problem is more expensive. The Coulomb kernel can be expanded into spherical multipoles,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="multipole expansion of the Coulomb interaction">
       <semantics>
         <mrow>
@@ -193,7 +193,7 @@ export const synthesis =
   <p>
     When the initial and final states can both be represented as self-consistent localized configurations, an excitation, addition, or removal energy can be obtained from their total-energy difference. This ΔSCF construction automatically includes relaxation of all other orbitals around the changed occupation. For removing an electron from state <em>i</em>,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="Delta SCF removal energy and transition state approximation">
       <semantics>
         <mrow>
@@ -210,7 +210,7 @@ export const synthesis =
   <p>
     A related second difference estimates an effective interaction for changing the occupation of a localized shell,
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="effective interaction from a second difference of total energies">
       <semantics>
         <mrow>
@@ -233,14 +233,14 @@ export const synthesis =
   <p>
     The final section uses an atomic radial problem to anticipate band formation. Near a nucleus, crystal wavefunctions retain strong atomic character. Wigner–Seitz reasoning therefore replaces the free-atom boundary condition at infinity by a boundary condition on a sphere representing the local cell. For a given angular momentum, a radial function with zero derivative at the sphere boundary represents a low-energy bonding-like extreme, whereas a node at the boundary represents a high-energy antibonding-like extreme. Their energy separation estimates the width of the corresponding band.
   </p>
-  <aside class="callout" aria-label="atomic sphere picture of a band">
+  <div class="callout" role="note" aria-label="atomic sphere picture of a band">
     <p><strong>Atomic radial state → band estimate</strong></p>
     <p>free atomic orbital → place it in an atomic sphere → compare bonding-like and antibonding-like boundary conditions → energy separation estimates band width.</p>
-  </aside>
+  </div>
   <p>
     For two nearby radial solutions, a Wronskian identity relates the energy difference to their amplitudes and slopes at the sphere boundary. Approximating both by an atomic-like radial function gives the useful estimate
   </p>
-  <div class="math-display">
+  <div class="math-display" tabindex="0">
     <math display="block" aria-label="atomic sphere estimate of an electronic band width">
       <semantics>
         <mrow>
