@@ -2,41 +2,33 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Reference" description="Reviewed collections, official tutorials, benchmarks, and data stewardship resources." current="reference">
+<BaseLayout title="Reference" description="A selective map of authoritative sources, benchmarks, and stewardship guidance." current="reference">
   <h1>Reference</h1>
-  <p class="lede">A small index of durable collections for finding a coherent next route. These links identify a collection and its boundary; they are not an unannotated bibliography or a substitute for page-local study guidance.</p>
+  <p class="lede">Use each source for its distinct role; its access route, version, and scientific boundary remain part of the citation.</p>
 
-  <h2>Open learning collections</h2>
+  <h2>Continuous sources</h2>
   <dl>
+    <dt><a href="https://www.cambridge.org/core/books/electronic-structure/ED0FF348536BFFE8899627C8F78FEE6A">Electronic Structure: Basic Theory and Practical Methods</a></dt>
+    <dd>Richard M. Martin, 2nd ed., Cambridge University Press, 2020, DOI 10.1017/9781108555586; publisher metadata and preview are public, while full access depends on purchase or institutional entitlement and no reuse licence is implied. Use it for a continuous theory-to-method argument, then separate later developments from the source.</dd>
     <dt><a href="https://www.materialscloud.org/learn">Materials Cloud Learn</a></dt>
-    <dd>Recorded computational-materials schools and educational material, including AiiDA, Quantum ESPRESSO, and Wannier90 routes. Individual schools, software environments, and exercises are date- and version-bound.</dd>
+    <dd>A rolling collection of recorded computational-materials schools. Use a dated school for a coherent implementation route; its software version, exercise files, access terms, and licence are item-specific.</dd>
     <dt><a href="https://education.molssi.org/">MolSSI Education</a></dt>
-    <dd>Open tutorials in programming, software-development practice, and molecular modelling for novice through intermediate learners. Its molecular-science examples do not replace a periodic electronic-structure validation protocol.</dd>
+    <dd>An openly accessible, rolling collection of molecular-science programming and modelling lessons. Use it for software and molecular-method foundations; each lesson states its own repository, licence, date, and scope.</dd>
   </dl>
 
-  <h2>Official code tutorial portals</h2>
-  <dl>
-    <dt><a href="https://www.quantum-espresso.org/learn/">Quantum ESPRESSO Learn</a></dt>
-    <dd>Foundation-maintained workshop lectures and tutorials for electronic-structure methods and Quantum ESPRESSO. School material is tied to its release, input conventions, and stated physical model; a completed exercise is not observable convergence.</dd>
-    <dt><a href="https://docs.abinit.org/tutorial/">ABINIT tutorials</a></dt>
-    <dd>Structured official tutorial sequence from basic calculations through DFPT, electron–phonon, many-body, and parallel topics. The documented prerequisite graph and code version matter; examples do not provide universal parameter defaults.</dd>
-  </dl>
-
-  <h2>Benchmarks and verification collections</h2>
+  <h2>Verification collections</h2>
   <dl>
     <dt><a href="https://sssp.materialscloud.org/">SSSP</a></dt>
-    <dd>Materials Cloud collection for pseudopotential precision and efficiency verification. It supports comparisons within its covered tests; library selection never replaces system- and observable-specific validation.</dd>
+    <dd>A versioned Materials Cloud verification collection for pseudopotential precision and efficiency. Cite the exact release and component; each pseudopotential retains its original licence, and covered benchmarks do not replace system- and observable-specific validation.</dd>
     <dt><a href="https://www.pseudo-dojo.org/">PseudoDojo</a></dt>
-    <dd>Pseudopotential generation and grading project with documented datasets and quality controls. Transferability, chosen functional, relativistic treatment, and the target observable remain separate scientific decisions.</dd>
+    <dd>A versioned pseudopotential generation and grading project with public downloads. Use a named dataset and its documented tests, and check that dataset’s reuse terms; functional, relativistic treatment, transferability, and target observable remain separate choices.</dd>
   </dl>
 
-  <h2>FAIR data, provenance, and preservation</h2>
+  <h2>Stewardship</h2>
   <dl>
     <dt><a href="https://www.go-fair.org/fair-principles/">FAIR Principles</a></dt>
-    <dd>Guidance for making digital assets findable, accessible, interoperable, and reusable, including identifiers, metadata, licences, provenance, and community standards. FAIR metadata does not itself establish data correctness or scientific acceptance.</dd>
+    <dd>Community guidance for making digital objects findable, accessible, interoperable, and reusable; the public text is available under CC BY 4.0. Use it to design metadata and access, not as evidence that data are correct.</dd>
     <dt><a href="https://archive.materialscloud.org/">Materials Cloud Archive</a></dt>
-    <dd>Materials-data record collection connected to computational tools and services. A record’s DOI or availability must still be checked for completeness, method, version, licence, and suitability for the intended claim.</dd>
+    <dd>A repository of dated, DOI-addressable materials-data records. Use the specific record’s version, files, metadata, and licence; platform presence does not establish completeness or suitability for a later claim.</dd>
   </dl>
-
-  <p class="review-note">Reviewed first public set: 2026-08-04. Access, maintenance, and scope were checked at the linked primary destinations. Additional candidates remain in the repository’s dated external-resource audit until their distinct role and current destination are rechecked.</p>
 </BaseLayout>
