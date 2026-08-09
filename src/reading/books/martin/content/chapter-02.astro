@@ -78,33 +78,11 @@ export const synthesis =
 <section aria-labelledby="section-2-3-volume-pressure">
   <h2 id="section-2-3-volume-pressure">2.3 Volume or Pressure As the Most Fundamental Variable</h2>
   <p>
-    Volume is a particularly useful control variable in electronic-structure calculations. At fixed composition one can calculate the energy at a sequence of volumes, obtain an equation of state, and infer equilibrium structure and mechanical response. At finite temperature the corresponding thermodynamic potentials make explicit which variables are controlled:
+    Volume is a particularly useful control variable in electronic-structure calculations. At fixed composition an energy–volume curve gives an equation of state, while finite-temperature Helmholtz or Gibbs free energies state whether volume or pressure is controlled.
   </p>
-  <div class="math-display">
-    <math display="block" aria-label="Helmholtz and Gibbs free energies">
-      <semantics>
-        <mtable>
-          <mtr><mtd><mi>F</mi><mo>(</mo><mi>Ω</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>=</mo><mi>E</mi><mo>(</mo><mi>Ω</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>−</mo><mi>T</mi><mi>S</mi><mo>,</mo></mtd></mtr>
-          <mtr><mtd><mi>G</mi><mo>(</mo><mi>P</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>=</mo><mi>E</mi><mo>+</mo><mi>P</mi><mi>Ω</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>.</mo></mtd></mtr>
-        </mtable>
-        <annotation encoding="application/x-tex">F(\Omega,T)=E(\Omega,T)-TS,\qquad G(P,T)=E+P\Omega-TS.</annotation>
-      </semantics>
-    </math>
-  </div>
   <p>
-    For many solids the zero-temperature electronic energy is the dominant starting point. Its first and second derivatives with respect to volume give pressure and bulk modulus:
+    For many solids the zero-temperature electronic energy is the dominant starting point. Its slope with volume gives pressure and its curvature gives the bulk modulus.
   </p>
-  <div class="math-display">
-    <math display="block" aria-label="Pressure and bulk modulus from the energy volume curve">
-      <semantics>
-        <mtable>
-          <mtr><mtd><mi>P</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac><mo>,</mo></mtd></mtr>
-          <mtr><mtd><mi>B</mi><mo>=</mo><mo>−</mo><mi>Ω</mi><mfrac><mrow><mi>d</mi><mi>P</mi></mrow><mrow><mi>d</mi><mi>Ω</mi></mrow></mfrac><mo>=</mo><mi>Ω</mi><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msup><mi>Ω</mi><mn>2</mn></msup></mrow></mfrac><mo>.</mo></mtd></mtr>
-        </mtable>
-        <annotation encoding="application/x-tex">P=-\frac&#123;dE&#125;&#123;d\Omega&#125;,\qquad B=-\Omega\frac&#123;dP&#125;&#123;d\Omega&#125;=\Omega\frac&#123;d^2E&#125;&#123;d\Omega^2&#125;.</annotation>
-      </semantics>
-    </math>
-  </div>
   <aside class="callout" aria-label="Energy derivative hierarchy">
     <p><strong>Energy landscape hierarchy</strong></p>
     <p>Total energy versus volume → equilibrium volume from the minimum → pressure from the slope → bulk modulus from the curvature.</p>
@@ -155,19 +133,10 @@ export const synthesis =
     Predicting a structure is harder than optimizing one. Geometry optimization finds a nearby minimum from a chosen starting configuration; structure prediction must search a rugged landscape containing many minima and, in compounds, possibly multiple stoichiometries. No search strategy is uniformly best. Useful methods therefore combine physical restrictions on plausible structures with repeated exploration and first-principles energy evaluation.
   </p>
   <p>
-    Martin surveys three broad search ideas. Random-search methods generate many reasonable starting structures and relax each one. Particle-swarm approaches mix stochastic exploration with attraction toward promising configurations. Evolutionary methods generate new structures through selection, mutation, and recombination. The named implementations in the chapter—AIRSS, CALYPSO, and USPEX—illustrate these strategies; the transferable point is that the electronic-structure calculation supplies the energetic ranking, while the search algorithm determines which part of configuration space is actually examined.
+    Martin compares random, particle-swarm, and evolutionary searches. The transferable distinction is that the search determines which configurations are examined, while electronic structure supplies their ranking. High-pressure nitrogen illustrates genuine prediction: compression replaces stable molecules with an extended covalent network that was identified computationally before synthesis.
   </p>
   <p>
-    High-pressure nitrogen shows why prediction can reveal unexpected chemistry. Molecular nitrogen is extraordinarily stable at ordinary conditions, but compression can favor extended covalent networks. DFT calculations predicted the cubic-gauche phase before it was produced experimentally. The example demonstrates a genuine predictive role: theory identified a structure that was difficult to guess from known ambient-pressure materials and explained why high pressure changes molecular triple bonds into an extended single-bond network.
-  </p>
-  <p>
-    Hydrogen sulfides show a second, more complicated role. Structure searches under pressure predicted hydrogen-rich metallic phases and identified high-symmetry H–S networks with very high phonon frequencies. Experiments then found superconductivity near the predicted pressure and temperature scale, with later structural measurements supporting the predicted H<sub>3</sub>S-like phase. The scientific chain involves several separate calculations: stable composition and structure, metallic electronic states, phonons, electron–phonon coupling, and finally a superconducting transition estimate.
-  </p>
-  <p>
-    Composition cannot be treated by structure optimization alone. At fixed pressure, competing stoichiometries must be compared through enthalpy and convex-hull-like constructions; a nominal compound can be unstable against decomposition into other phases even if its own structure is locally relaxed. This distinction between a local structural minimum and thermodynamic stability is central to modern materials prediction.
-  </p>
-  <p>
-    The nitrogen and hydride examples therefore establish both the power and the boundary of search. A search can discover low-energy candidates inside the explored model and composition space. Experimental synthesis, kinetic accessibility, finite-temperature stability, anharmonicity, and the accuracy of the chosen functional remain additional questions.
+    Hydrogen sulfides require a longer chain: composition and structure, metallic states, phonons, electron–phonon coupling, then a transition estimate. Competing stoichiometries must be compared at fixed pressure; a locally relaxed phase need not be thermodynamically stable. Search therefore finds candidates only within the explored model and composition space, while synthesis, kinetics, finite-temperature stability, anharmonicity, and functional error remain separate questions.
   </p>
 </section>
 
@@ -180,41 +149,18 @@ export const synthesis =
     Mean-field electronic structure replaces the full interacting problem by a spin-dependent effective potential that must be determined self-consistently. This is enough to capture much of the tendency toward itinerant ferromagnetism in transition metals, even though more strongly correlated magnetic behavior may require methods beyond ordinary DFT.
   </p>
   <p>
-    The Stoner picture makes the instability criterion transparent. For a simple uniform response,
-  </p>
-  <div class="math-display">
-    <math display="block" aria-label="Stoner magnetic susceptibility">
-      <semantics>
-        <mrow>
-          <mi>χ</mi><mo>=</mo><mfrac><mrow><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow><mrow><mn>1</mn><mo>−</mo><mi>I</mi><mi>N</mi><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow></mfrac><mo>.</mo>
-        </mrow>
-        <annotation encoding="application/x-tex">\chi=\frac&#123;N(E_F)&#125;&#123;1-I N(E_F)&#125;.</annotation>
-      </semantics>
-    </math>
-  </div>
-  <p>
-    Here the density of states at the Fermi energy measures how many low-energy electronic states are available to polarize, while the effective interaction parameter measures the energetic feedback favoring spin polarization. As their product approaches unity, the susceptibility is strongly enhanced; crossing that threshold signals an instability of the unpolarized reference in the mean-field model.
+    The Stoner picture makes the instability criterion transparent: the density of states at the Fermi energy measures how many low-energy states can polarize, while an effective interaction measures the feedback favoring spin polarization. As their product approaches unity, the susceptibility is enhanced; crossing that threshold signals a mean-field instability of the unpolarized reference.
   </p>
   <p>
-    The formula is useful because it shows the same structure that appears in many response problems: an independent-particle susceptibility is renormalized by self-consistent interaction. It is not a universal proof of a magnetic ground state. Real calculations must still compare plausible magnetic configurations, include the relevant spin–orbit and noncollinear physics where necessary, and distinguish an itinerant mean-field instability from genuinely strong local correlation. See <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
+    This shows the same structure that appears in many response problems: self-consistent interaction renormalizes an independent-particle susceptibility. It is not a universal proof of a magnetic ground state. Real calculations must still compare plausible magnetic configurations, include spin–orbit and noncollinear physics where necessary, and distinguish an itinerant mean-field instability from strong local correlation. See <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.
   </p>
 </section>
 
 <section aria-labelledby="section-2-8-elasticity">
   <h2 id="section-2-8-elasticity">2.8 Elasticity: Stress–Strain Relations</h2>
   <p>
-    Elasticity generalizes the equation-of-state idea from isotropic volume changes to directional deformation. If the crystal is strained, the electronic ground-state energy changes; stress is the generalized force conjugate to that strain:
+    Elasticity generalizes the equation-of-state idea from isotropic volume changes to directional deformation. Stress is the energy derivative conjugate to strain; its linear derivative gives elastic constants under a stated sign and relaxation convention.
   </p>
-  <div class="math-display">
-    <math display="block" aria-label="Stress as derivative of total energy with respect to strain">
-      <semantics>
-        <mrow>
-          <msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>Ω</mi></mfrac><mfrac><mrow><mi>∂</mi><msub><mi>E</mi><mi>total</mi></msub></mrow><mrow><mi>∂</mi><msub><mi>u</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo>
-        </mrow>
-        <annotation encoding="application/x-tex">\sigma_&#123;\alpha\beta&#125;=-\frac&#123;1&#125;&#123;\Omega&#125;\frac&#123;\partial E_&#123;\mathrm&#123;total&#125;&#125;&#125;&#123;\partial u_&#123;\alpha\beta&#125;&#125;.</annotation>
-      </semantics>
-    </math>
-  </div>
   <p>
     Linear slopes of stress versus strain give elastic constants; nonlinear curvature contains higher-order elastic response. Electronic-structure theory thus connects a macroscopic continuum quantity directly to microscopic electrons and nuclei. Because higher-order elastic constants are difficult to measure, calculations can provide predictions rather than merely reproduce experiment.
   </p>
@@ -226,19 +172,8 @@ export const synthesis =
 <section aria-labelledby="section-2-9-phonons">
   <h2 id="section-2-9-phonons">2.9 Phonons and Displacive Phase Transitions</h2>
   <p>
-    In the adiabatic regime, lattice dynamics is obtained from how the electronic ground-state energy changes when nuclei are displaced. The first derivative gives a force and the second derivative gives the force-constant matrix:
+    In the adiabatic regime, lattice dynamics follows from derivatives of the electronic ground-state energy: first derivatives give forces and second derivatives give the force-constant matrix.
   </p>
-  <div class="math-display">
-    <math display="block" aria-label="Forces and force constants from total energy">
-      <semantics>
-        <mtable>
-          <mtr><mtd><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>,</mo></mtd></mtr>
-          <mtr><mtd><msub><mi>C</mi><mrow><mi>I</mi><mi>J</mi></mrow></msub><mo>=</mo><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub><mi>d</mi><msub><mi mathvariant="bold">R</mi><mi>J</mi></msub></mrow></mfrac><mo>.</mo></mtd></mtr>
-        </mtable>
-        <annotation encoding="application/x-tex">\mathbf F_I=-\frac&#123;dE&#125;&#123;d\mathbf R_I&#125;,\qquad C_&#123;IJ&#125;=\frac&#123;d^2E&#125;&#123;d\mathbf R_I\,d\mathbf R_J&#125;.</annotation>
-      </semantics>
-    </math>
-  </div>
   <p>
     Diagonalizing the mass-weighted force constants gives normal modes and phonon frequencies. Theory provides both frequencies and eigenvectors, which is important because experiments often constrain the spectrum more directly than the microscopic displacement pattern. Once the force constants are known, they can be used to understand bonding, thermal motion, electron–phonon coupling, and structural instabilities.
   </p>
@@ -267,16 +202,7 @@ export const synthesis =
     The nuclei are usually treated classically in these simulations, while the electrons remain quantum mechanical and close to their instantaneous ground state. This division is powerful but has a clear domain: nuclear quantum effects, long-time rare events, and thermodynamic sampling may require additional methods. A trajectory that remains stable for a finite simulation time is not by itself proof of equilibrium phase stability.
   </p>
   <p>
-    Geophysics shows why theory is indispensable. Conditions in the deep Earth combine pressures of hundreds of gigapascals with temperatures of thousands of kelvin, making direct laboratory access difficult. Electronic-structure calculations can first validate zero-temperature equations of state against high-pressure measurements and then add vibrational or molecular-dynamics information to compare candidate mantle and core phases. The predicted post-perovskite transition in magnesium silicate is an example where calculated phase boundaries became directly relevant to interpreting seismic structure.
-  </p>
-  <p>
-    Water demonstrates a different challenge: the functional must describe a delicate hydrogen-bond network while the liquid continuously reorganizes. Simulations can expose proton transfer and electronic rearrangement that are difficult to infer from averaged experimental data. They also make functional error visible in structural correlation functions: an approximation may produce a liquid that is too strongly structured even if isolated-molecule properties look reasonable.
-  </p>
-  <p>
-    Surface reactions add another layer because chemical rearrangement occurs in a heterogeneous environment. First-principles molecular dynamics can follow bond breaking and formation and, with constrained or enhanced sampling, estimate free-energy barriers. Martin’s catalytic polymerization example illustrates the role of local surface geometry in determining reaction pathways. The key distinction is between an electronic potential-energy surface, a sampled free-energy profile, and a kinetic rate; they are related but not interchangeable observables.
-  </p>
-  <p>
-    Finite-temperature research therefore requires both electronic structure and statistical mechanics. The relevant Atlas routes are <a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> and <a href={href('/theory/thermodynamics/')}>Thermodynamics</a>.
+    Geophysics, water, and surface reactions illustrate different demands: phase free energies at extreme conditions, a changing hydrogen-bond network, and chemical pathways in heterogeneous environments. In each case the electronic energy surface, sampled free-energy profile, and kinetic rate are different objects. Finite-temperature claims therefore require <a href={href('/theory/statistical-mechanics/')}>statistical mechanics</a> and <a href={href('/theory/thermodynamics/')}>thermodynamics</a> in addition to electronic structure.
   </p>
 </section>
 
@@ -286,18 +212,8 @@ export const synthesis =
     A surface is not merely a truncated bulk crystal. Broken bonds, relaxation, reconstruction, adsorbates, and exchange with the surrounding environment can change both structure and stoichiometry. Semiconductor surfaces make this particularly clear: atoms may dimerize or buckle to remove energetically costly dangling-bond occupations, creating surface states inside the bulk gap.
   </p>
   <p>
-    When different surface terminations contain different numbers of atomic species, their energies cannot be compared using total energy alone. The appropriate thermodynamic potential includes reservoirs with chemical potentials:
+    When surface terminations contain different numbers of atomic species, total energies alone are not comparable. The relevant thermodynamic potential includes the chemical potentials of declared reservoirs.
   </p>
-  <div class="math-display">
-    <math display="block" aria-label="Grand potential for variable composition">
-      <semantics>
-        <mrow>
-          <mi>Φ</mi><mo>=</mo><mi>E</mi><mo>−</mo><mi>T</mi><mi>S</mi><mo>−</mo><munder><mo>∑</mo><mi>I</mi></munder><msub><mi>μ</mi><mi>I</mi></msub><msub><mi>N</mi><mi>I</mi></msub><mo>.</mo>
-        </mrow>
-        <annotation encoding="application/x-tex">\Phi=E-TS-\sum_I \mu_I N_I.</annotation>
-      </semantics>
-    </math>
-  </div>
   <p>
     The chemical potentials encode the experimental environment and are bounded by equilibrium with the bulk compound and competing elemental or compound phases. This is why a surface phase diagram depends on growth conditions: changing the reservoir changes which stoichiometry minimizes the relevant thermodynamic potential.
   </p>
@@ -338,19 +254,8 @@ export const synthesis =
 <section aria-labelledby="section-2-14-bands-gaps">
   <h2 id="section-2-14-bands-gaps">2.14 Electronic Excitations: Bands and Bandgaps</h2>
   <p>
-    Electronic excitations must first be separated by particle number. Photoemission removes an electron, inverse photoemission or tunneling can add one, and optical absorption usually leaves the total number of electrons unchanged. The fundamental gap is defined by the energy cost of the addition/removal process, not by an arbitrary difference between two one-electron eigenvalues:
+    Electronic excitations must first be separated by particle number. Photoemission removes an electron, inverse photoemission or tunneling can add one, and optical absorption usually leaves particle number unchanged. The fundamental gap is the difference between addition and removal energies, not an arbitrary difference between two one-electron eigenvalues.
   </p>
-  <div class="math-display">
-    <math display="block" aria-label="Many-body fundamental gap">
-      <semantics>
-        <mrow>
-          <msub><mi>E</mi><mi>gap</mi></msub><mo>=</mo><mo>[</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo><mo>]</mo>
-          <mo>−</mo><mo>[</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>)</mo><mo>−</mo><mi>E</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>]</mo><mo>.</mo>
-        </mrow>
-        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;gap&#125;&#125;=[E(N+1)-E(N)]-[E(N)-E(N-1)].</annotation>
-      </semantics>
-    </math>
-  </div>
   <p>
     In a periodic material the minimum may involve different crystal momenta, so the fundamental gap can be indirect. A metal has vanishing addition/removal gap with delocalized low-energy states, while an insulator has a finite charge gap or localization that prevents dc transport in the idealized zero-temperature limit.
   </p>

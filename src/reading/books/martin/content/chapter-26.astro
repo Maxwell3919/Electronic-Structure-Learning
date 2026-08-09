@@ -20,7 +20,7 @@ export const modernPerspective = [
 ];
 
 export const synthesis =
-  'Chapter 26 makes the geometry introduced in Chapter 25 explicit. Any two-band Hamiltonian is a scalar energy shift plus a three-component vector multiplying Pauli matrices, so its eigenvalue gap is twice the distance of that vector from the origin while its eigenvectors are determined by the vector’s direction. The two-site and s–p chains become different orientations of the same geometry. With inversion symmetry the Hamiltonian vector is confined to a plane, and its loop can wind or not wind around the gap-closing origin; the two cases have Berry phases π and 0 and are separated by the Shockley gap closure. Breaking inversion lets an individual one-dimensional loop move out of the plane, but a cyclic evolution of the Hamiltonian creates a closed two-dimensional (k, λ) problem whose surface can enclose the singular origin. Its Chern number is the integer charge pumped in a Thouless cycle. Graphene nanoribbon junctions then show how the same two-site logic can emerge from a real extended material. Chapter 27 replaces the external pump parameter by a second crystal momentum and turns this construction into genuine two-dimensional Chern and time-reversal topological insulators.';
+  'Chapter 26 reduces topological change to the winding of a two-band Hamiltonian around a gap-closing point. Chapter 27 replaces the pump parameter with a second crystal momentum to obtain two-dimensional Chern and time-reversal topological insulators.';
 ---
 
 <section aria-labelledby="section-26-1-general">
@@ -28,6 +28,7 @@ export const synthesis =
   <p>
     Two bands are the smallest Hilbert space in which an occupied state and an empty state can exchange character while remaining separated by a gap. Every Hermitian 2 × 2 Hamiltonian can be decomposed into the identity and the three Pauli matrices,
   </p>
+  <p>The geometric interpretation and its multiband boundary are developed in <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.</p>
   <div class="math-display">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi>λ</mi><mo>)</mo><mo>=</mo><msub><mi>h</mi><mn>0</mn></msub><msub><mi>τ</mi><mn>0</mn></msub><mo>+</mo><mi mathvariant="bold">h</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi>λ</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">τ</mi><mo>.</mo></mrow><annotation encoding="application/x-tex">H(\mathbf k,\lambda)=h_0\tau_0+\mathbf h(\mathbf k,\lambda)\cdot\boldsymbol\tau.</annotation></semantics></math>
   </div>
