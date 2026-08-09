@@ -1,0 +1,105 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const href = (route: string) => `${base}${route.startsWith('/') ? route.slice(1) : route}`;
+
+export const sectionLinks = [
+  { id: 'section-q-1-quantum-hall-topology', label: 'Q.1 Quantum Hall Effect and Topology' },
+  { id: 'section-q-2-surface-states', label: 'Q.2 Nature of the Surface States in the QHE' },
+];
+
+export const modernPerspective = [
+  'The integer quantum Hall effect and a Chern insulator share the same chiral bulk–boundary structure, but their symmetry settings differ: the ordinary QHE uses an external magnetic field, while a Chern insulator realizes a nonzero Chern number without that Landau-level construction. A time-reversal-invariant Z₂ topological insulator is different again because its boundary channels are helical rather than a single set of co-propagating chiral modes.',
+  'Topological protection fixes the net chiral channel count as long as the relevant bulk topological phase is maintained. It does not make every microscopic feature of an edge dispersion universal: termination, electrostatics, reconstruction, and additional trivial edge states can reshape the spectrum while leaving the invariant channel imbalance unchanged.',
+  'For electronic-structure calculations, one edge band on one chosen termination is therefore complementary evidence rather than the bulk invariant itself. The Chern number must be established for the specified occupied subspace, gap, filling, magnetic state, and Hamiltonian; a boundary calculation then tests the corresponding bulk–boundary connectivity.',
+];
+
+export const synthesis =
+  'Appendix Q turns the Chern number of Appendix P into a transport statement. Filled Landau levels produce an insulating bulk, while the boundary necessarily carries one-way states through the bulk gap. Laughlin’s gauge argument explains why Hall conductance is quantized, and the TKNN formulation identifies the integer as a Chern invariant of the bulk bands. The edge-band calculation then shows why the contribution of one chiral channel is independent of its detailed dispersion: the one-dimensional density of states and group velocity cancel, leaving the conductance quantum e²/h. Thus the quantum Hall effect supplies the clearest precedent for the bulk–boundary correspondence used throughout Chapters 25–28.';
+---
+
+<section aria-labelledby="section-q-1-quantum-hall-topology">
+  <h2 id="section-q-1-quantum-hall-topology">Q.1 Quantum Hall Effect and Topology</h2>
+  <p>
+    Martin introduces the quantum Hall effect as a two-dimensional electron system in a strong perpendicular magnetic field. The magnetic field reorganizes the orbital spectrum into Landau levels. When an integer number of these levels is filled and the Fermi energy lies in the gap to the next level, the interior is insulating: occupied bulk orbits carry circulating currents whose net transport current cancels.
+  </p>
+  <p>
+    The boundary changes this picture. Confinement raises the energies of orbits whose centers approach an edge, so states from a filled Landau level disperse through the bulk gap. At a Fermi energy inside that gap, the remaining partially occupied boundary band propagates only in one direction on a given edge. The opposite edge carries a channel in the opposite direction. This gives the intuitive origin of the chiral edge current.
+  </p>
+  <aside class="callout" aria-label="Bulk-boundary picture of the quantum Hall effect">
+    <p><strong>Bulk–boundary picture</strong></p>
+    <p>filled Landau levels → bulk gap → no longitudinal bulk conduction → chiral edge bands crossing the gap → quantized Hall transport.</p>
+  </aside>
+  <p>
+    The absence of a counterpropagating state on the same isolated edge explains why ordinary elastic backscattering is strongly constrained, but it does not by itself explain exact quantization. Martin points to Laughlin’s gauge-invariance argument for that step: inserting a quantum of flux changes the state in a way that transfers an integer number of electrons from one boundary to the other, forcing the conductance to occur in integer multiples of the fundamental conductance quantum.
+  </p>
+  <p>
+    The TKNN result then makes the bulk origin explicit. For electrons in a periodic potential, the occupied bands carry an integer Chern number. The net number of chiral edge bands is tied to that integer, so the classification is <strong>ℤ</strong>: different phases can carry any integer number of oriented edge channels. This is the quantum Hall example of the bulk–boundary correspondence developed abstractly in <a href={href('/reading/books/martin/chapter-25/')}>Chapter 25</a> and mathematically in <a href={href('/reading/books/martin/appendix-p/')}>Appendix P</a>.
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <msub><mi>σ</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub>
+          <mo>=</mo><mi>C</mi><mfrac><msup><mi>e</mi><mn>2</mn></msup><mi>h</mi></mfrac><mo>,</mo>
+          <mspace width="0.8em"/><mi>C</mi><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\sigma_&#123;xy&#125;=C\frac&#123;e^2&#125;&#123;h&#125;,\qquad C\in\mathbb Z.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This compact relation combines the two source ideas: each chiral channel contributes one conductance quantum in magnitude, and the oriented channel count is fixed by the bulk Chern number. The overall sign depends on the magnetic-field, charge, and coordinate conventions.
+  </p>
+</section>
+
+<section aria-labelledby="section-q-2-surface-states">
+  <h2 id="section-q-2-surface-states">Q.2 Nature of the Surface States in the QHE</h2>
+  <p>
+    Martin next contrasts this with the ordinary Hall effect in a metal. In a conventional metal, a transverse electric field balances the magnetic deflection of mobile carriers, and the Hall response depends on carrier density and, in realistic transport, scattering details. The quantum Hall plateau is conceptually different: the bulk can remain insulating while the current is carried by one-dimensional boundary bands.
+  </p>
+  <p>
+    Consider a long strip with opposite edges and a transverse voltage <em>V</em>. The electrochemical potentials of the two edges shift relative to one another. Because the two edges propagate in opposite directions, adding carriers to one edge and removing them from the other changes the transport current in the same macroscopic direction.
+  </p>
+  <p>
+    The decisive simplification is that the current of one chiral band depends only on the energy interval that is occupied, not on the detailed shape of the dispersion. For a one-dimensional band, the number of states in an interval <em>dk</em> is proportional to <em>dk</em>, while the group velocity is proportional to the slope of the band. Their product converts the momentum integral directly into an energy difference:
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>Δ</mi><mi>I</mi><mo>=</mo>
+          <mfrac><mi>e</mi><mrow><mn>2</mn><mi>π</mi></mrow></mfrac>
+          <msubsup><mo>∫</mo><mi>k</mi><mrow><mi>k</mi><mo>+</mo><mi>Δ</mi><mi>k</mi></mrow></msubsup>
+          <mi>d</mi><mi>k</mi><mspace width="0.2em"/><msub><mi>v</mi><mi>g</mi></msub>
+          <mo>=</mo>
+          <mfrac><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>ℏ</mi></mrow></mfrac>
+          <msubsup><mo>∫</mo><mi>k</mi><mrow><mi>k</mi><mo>+</mo><mi>Δ</mi><mi>k</mi></mrow></msubsup>
+          <mi>d</mi><mi>k</mi><mspace width="0.2em"/><mfrac><mrow><mi>d</mi><mi>ε</mi></mrow><mrow><mi>d</mi><mi>k</mi></mrow></mfrac>
+          <mo>=</mo><mfrac><mi>e</mi><mi>h</mi></mfrac><mi>Δ</mi><msub><mi>E</mi><mi>F</mi></msub><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Delta I=\frac&#123;e&#125;&#123;2\pi&#125;\int_k^&#123;k+\Delta k&#125;dk\,v_g=\frac&#123;e&#125;&#123;2\pi\hbar&#125;\int_k^&#123;k+\Delta k&#125;dk\,\frac&#123;d\varepsilon&#125;&#123;dk&#125;=\frac&#123;e&#125;&#123;h&#125;\Delta E_F.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here <em>e</em> denotes the magnitude of the electron charge; the direction of current is carried by the orientation of the edge mode. In equilibrium the electrochemical-potential difference is <em>eV</em>, and one channel therefore has the universal conductance magnitude
+  </p>
+  <div class="math-display">
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+      <semantics>
+        <mrow>
+          <mi>G</mi><mo>=</mo><mfrac><mrow><mi>Δ</mi><mi>I</mi></mrow><mi>V</mi></mfrac>
+          <mo>=</mo><mfrac><msup><mi>e</mi><mn>2</mn></msup><mi>h</mi></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">G=\frac&#123;\Delta I&#125;&#123;V&#125;=\frac&#123;e^2&#125;&#123;h&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The cancellation of the edge-band velocity against the one-dimensional density of states explains why this result does not depend on whether the edge dispersion is steep, shallow, or irregular. Martin emphasizes, however, that this calculation is an intuitive account of the channel conductance. Exact quantization is secured by the topological character of the bulk state.
+  </p>
+  <p>
+    The same chiral-edge logic reappears in the Chern-insulator model of <a href={href('/reading/books/martin/chapter-27/')}>Chapter 27</a>. What changes there is the microscopic origin of the broken time-reversal symmetry; the connection between a nonzero bulk Chern number and an oriented boundary channel remains the same.
+  </p>
+</section>
