@@ -32,7 +32,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The reciprocal-lattice vector <math class="math-inline" aria-label="G"><semantics><mi mathvariant="bold">G</mi><annotation encoding="application/x-tex">\mathbf&#123;G&#125;</annotation></semantics></math> labels periodic Fourier components, while <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> labels a Bloch sector. The distinction is essential: increasing the plane-wave basis at one k point is not the same operation as increasing Brillouin-zone sampling.</p>
 
   <h2>The kinetic-energy cutoff defines the finite spectral space</h2>
-  <p>A practical plane-wave calculation retains modes satisfying a kinetic-energy condition such as</p>
+  <p>In Hartree atomic units, a practical plane-wave calculation retains modes satisfying a kinetic-energy condition such as</p>
   <div class="math-display">
     <math display="block" aria-label="one half times magnitude k plus G squared less than or equal to E cutoff">
       <semantics>
@@ -66,7 +66,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Adding vacuum reduces some image interactions but does not mathematically convert a periodic solver into an isolated one. Charged cells, dipoles, long-range fields, and low-dimensional screening require explicit treatment of the electrostatic boundary condition and the zero-wavevector component.</p>
 
   <h2>Poisson solution exposes the reciprocal/real-space connection</h2>
-  <p>For a periodic charge density and nonzero reciprocal vector, the Hartree potential has the schematic reciprocal-space form</p>
+  <p>In Hartree atomic units, using cell-average Fourier coefficients, a periodic charge density gives the nonzero-wavevector Hartree potential</p>
   <div class="math-display">
     <math display="block" aria-label="V H of G equals four pi n of G divided by magnitude G squared for G not equal zero">
       <semantics>

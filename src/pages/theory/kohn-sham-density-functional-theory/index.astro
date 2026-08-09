@@ -11,11 +11,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </nav>
 
   <h1>Kohn–Sham Density Functional Theory</h1>
-  <p class="lede">Kohn–Sham theory replaces the interacting ground-state problem by an auxiliary system of noninteracting particles chosen to reproduce the same ground-state density.</p>
-  <p>The replacement is exact in principle if the exact exchange–correlation functional is known. In practice, the auxiliary equations become useful only after an approximation for that functional and a numerical self-consistent solution are supplied.</p>
+  <p class="lede">Kohn–Sham theory seeks an auxiliary system of noninteracting particles whose density represents the interacting ground state.</p>
+  <p>Where the target density is noninteracting v-representable, possibly in an ensemble formulation, the exact functional yields that density. An approximate functional instead yields its own self-consistent model density.</p>
 
   <h2>The auxiliary system preserves the density, not the interacting wavefunction</h2>
-  <p>The Kohn–Sham construction does not claim that real electrons cease to interact. It introduces orbitals whose occupied density equals the density of the interacting ground state:</p>
+  <p>The construction does not claim that real electrons cease to interact. In the exact representable case, it introduces orbitals whose occupied density equals the interacting ground-state density:</p>
   <div class="math-display">
     <math display="block" aria-label="density equals sum over states of occupation times orbital magnitude squared">
       <semantics>
@@ -51,7 +51,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p><math class="math-inline" aria-label="T s"><semantics><msub><mi>T</mi><mi>s</mi></msub><annotation encoding="application/x-tex">T_s</annotation></semantics></math> is the minimum kinetic energy of noninteracting orbitals yielding the density. The Hartree term is the classical Coulomb self-energy of the density. Everything not captured by those two pieces is assigned to <math class="math-inline" aria-label="E x c"><semantics><msub><mi>E</mi><mrow><mi>x</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math>.</p>
 
   <h2>The Kohn–Sham equations</h2>
-  <p>Stationarity of the energy with respect to orthonormal orbitals gives one-particle equations:</p>
+  <p>In Hartree atomic units, stationarity of the energy with respect to orthonormal orbitals gives one-particle equations:</p>
   <div class="math-display">
     <math display="block" aria-label="minus one half laplacian plus effective potential acting on phi i equals epsilon i phi i">
       <semantics>

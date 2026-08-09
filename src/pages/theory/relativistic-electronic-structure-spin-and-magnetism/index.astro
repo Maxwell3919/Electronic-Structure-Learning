@@ -19,18 +19,19 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Scalar-relativistic treatments include leading mass–velocity and Darwin effects while averaging over explicit spin–orbit splitting. They can significantly change orbital contraction, level ordering, bonding, and equilibrium structure for heavier elements even when no explicit SOC band splitting is calculated.</p>
 
   <h2>Spin density extends the ordinary particle density</h2>
-  <p>In a collinear calculation, separate spin-channel densities may be represented by</p>
+  <p>In a collinear calculation, the particle density and a spin-channel number-density imbalance may be represented by</p>
   <div class="math-display">
-    <math display="block" aria-label="n equals n up plus n down and m z equals mu B times n up minus n down">
+    <math display="block" aria-label="n equals n up plus n down and s z equals n up minus n down">
       <semantics>
         <mtable columnalign="right center left" rowspacing="0.55em">
           <mtr><mtd><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo></mtd></mtr>
-          <mtr><mtd><msub><mi>m</mi><mi>z</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>μ</mi><mi>B</mi></msub><mo>[</mo><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>−</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo><mo>.</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>s</mi><mi>z</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>−</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mtd></mtr>
         </mtable>
-        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=n_\uparrow(\mathbf&#123;r&#125;)+n_\downarrow(\mathbf&#123;r&#125;),\quad m_z(\mathbf&#123;r&#125;)=\mu_B[n_\uparrow(\mathbf&#123;r&#125;)-n_\downarrow(\mathbf&#123;r&#125;)].</annotation>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=n_\uparrow(\mathbf&#123;r&#125;)+n_\downarrow(\mathbf&#123;r&#125;),\quad s_z(\mathbf&#123;r&#125;)=n_\uparrow(\mathbf&#123;r&#125;)-n_\downarrow(\mathbf&#123;r&#125;).</annotation>
       </semantics>
     </math>
   </div>
+  <p>Here <math class="math-inline" aria-label="s z"><semantics><msub><mi>s</mi><mi>z</mi></msub><annotation encoding="application/x-tex">s_z</annotation></semantics></math> is a declared spin-channel imbalance, not a uniquely signed magnetic-moment density. Converting it to a moment requires a sign and unit convention; the electron magnetic moment and spin angular momentum point oppositely.</p>
   <p>This assumes one global quantization axis. In a noncollinear calculation, the magnetization becomes a vector field and the Kohn–Sham states are two-component spinors. Local “up” and “down” labels then depend on a chosen axis and cannot be assigned globally without loss of information.</p>
 
   <h2>Spin–orbit coupling links spin to spatial motion</h2>
@@ -59,11 +60,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h2>A magnetic calculation searches a nonlinear landscape</h2>
   <p>Different initial moments, cells, occupation patterns, symmetry constraints, and spin directions can converge to distinct self-consistent states. A single converged magnetic solution does not establish the global ground state.</p>
-  <p>Meaningful comparison requires consistent structures, basis/core settings, k meshes, smearing, functionals, and convergence thresholds. Competing ferro-, antiferro-, ferri-, nonmagnetic, and noncollinear candidates may require different cells or symmetry groups.</p>
+  <p>Use one common geometry for a vertical electronic comparison, or relax every branch consistently for a magnetostructural phase comparison; do not mix the two policies. Basis/core settings, k meshes, smearing, functionals, and convergence thresholds must remain comparable. Competing ferro-, antiferro-, ferri-, nonmagnetic, and noncollinear candidates may require different cells or symmetry groups.</p>
 
   <h2>Magnetic moments are representation-dependent quantities</h2>
   <p>The total spin magnetization is an integrated quantity, but atom-resolved moments depend on the partition: augmentation sphere, projection, Bader basin, Wannier subspace, or another real-space/orbital definition.</p>
   <p>Projected moments are useful diagnostics, not unique observables. Comparisons across codes or datasets require the same partition definition or a clearly stated mapping.</p>
+  <p>Spin density, partitioned local moments, total magnetization, susceptibility, and experimentally inferred moments are different objects. Comparison with measurement must match the operator, field, temperature, domain structure, and averaging.</p>
 
   <h2>SOC changes symmetry and Brillouin-zone reduction</h2>
   <p>Without SOC, global spin rotations may be independent of real-space crystal rotations. With SOC, spin and spatial operations are linked, and the magnetic direction can reduce the usable symmetry.</p>

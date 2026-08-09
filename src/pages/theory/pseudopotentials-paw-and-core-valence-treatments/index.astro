@@ -55,12 +55,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>This can reduce plane-wave cutoffs, especially for difficult elements, but introduces additional density grids, augmentation terms, and implementation details. Wavefunction and charge-density cutoffs may converge differently.</p>
 
   <h2>PAW is a transformation between smooth and all-electron descriptions</h2>
-  <p>The projector-augmented wave method relates a smooth auxiliary state to an all-electron state through a linear transformation:</p>
+  <p>The projector-augmented wave method relates a smooth auxiliary one-particle state to an all-electron one-particle state through a linear transformation:</p>
   <div class="math-display">
-    <math display="block" aria-label="Psi equals T times pseudo Psi">
+    <math display="block" aria-label="psi n equals T times pseudo psi n">
       <semantics>
-        <mrow><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>|</mo><mover><mi>Ψ</mi><mo>~</mo></mover><mo>⟩</mo><mo>.</mo></mrow>
-        <annotation encoding="application/x-tex">|\Psi\rangle=\hat T|\tilde\Psi\rangle.</annotation>
+        <mrow><mo>|</mo><msub><mi>ψ</mi><mi>n</mi></msub><mo>⟩</mo><mo>=</mo><mover><mi>T</mi><mo>^</mo></mover><mo>|</mo><msub><mover><mi>ψ</mi><mo>~</mo></mover><mi>n</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">|\psi_n\rangle=\hat T|\tilde\psi_n\rangle.</annotation>
       </semantics>
     </math>
   </div>
