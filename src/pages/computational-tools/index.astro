@@ -1,98 +1,60 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations/';
 ---
 
-<BaseLayout title="Computational Tools" description="Reviewed software, data, and infrastructure gateways for electronic-structure work." current="computational-tools">
+<BaseLayout title="Computational Tools" description="A selective map from computational implementations to their scientific objects." current="computational-tools">
   <h1>Computational Tools</h1>
-  <p class="lede">A small map of maintained tools, arranged by their scientific role rather than by popularity or alphabet. Follow each official route for current releases, access terms, and code-specific documentation.</p>
-
-  <aside class="callout" aria-label="Scientific boundary">
-    <p>Installation, normal termination, parser success, workflow completion, or provenance capture does not establish representation convergence, observable convergence, physical validity, or scientific support. Those questions remain specific to the physical model, method, and target observable.</p>
-  </aside>
+  <p class="lede">Tools implement methods, representations, data models, or provenance. Availability of a feature does not establish its suitability for a material or observable.</p>
 
   <h2>Electronic-structure engines</h2>
   <dl>
     <dt><a href="https://www.quantum-espresso.org/">Quantum ESPRESSO</a></dt>
-    <dd>Open plane-wave and pseudopotential suite for DFT and related materials calculations, with official documentation, learning material, and an ecosystem of companion modules. Registration is required for downloads; inputs and SCF convergence still require representation- and observable-specific checks.</dd>
+    <dd>An open plane-wave/pseudopotential suite for periodic DFT, perturbation theory, and related methods. Use it when that representation and its versioned datasets fit the model; connect <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane waves</a> to <a href={`${workflow}choose-dft-method-and-computational-setup/`}>setup choice</a>.</dd>
     <dt><a href="https://fhi-aims.org/">FHI-aims</a></dt>
-    <dd>All-electron electronic-structure code using numeric atom-centred orbitals, spanning molecules through solids and beyond-DFT methods. Code access and the appropriate basis tiers, grids, and release must be checked for the intended calculation.</dd>
-    <dt><a href="https://gpaw.readthedocs.io/">GPAW</a></dt>
-    <dd>Python-based PAW code with plane-wave, local-orbital, and real-space finite-difference representations. Its multiple modes are useful for learning comparisons, but agreement must be tested for the chosen observable.</dd>
-  </dl>
-
-  <h2>Molecular and many-electron methods</h2>
-  <dl>
+    <dd>An all-electron code based on numeric atom-centred orbitals for molecules and solids. It exposes localized-basis and core-explicit choices; basis tiers, grids, access terms, and release remain calculation inputs. See <a href={href('/theory/localized-orbital-methods/')}>localized orbitals</a> and <a href={`${workflow}test-numerical-convergence/`}>observable convergence</a>.</dd>
     <dt><a href="https://pyscf.org/">PySCF</a></dt>
-    <dd>Python framework for molecular and periodic Hartree–Fock, DFT, correlated wavefunction, response, and embedding work. Flexible scripting does not remove basis, stability, active-space, or method-convergence decisions.</dd>
-    <dt><a href="https://psicode.org/">Psi4</a></dt>
-    <dd>Open-source molecular quantum-chemistry package with C++/Python interfaces, tutorials, and education material. Its Gaussian-basis molecular focus is not a substitute for a periodic-solid workflow.</dd>
-    <dt><a href="https://qmcpack.readthedocs.io/">QMCPACK</a></dt>
-    <dd>Documented VMC, DMC, and auxiliary-field QMC routes for molecules and solids. Trial wavefunctions, fixed-node and finite-size effects, pseudopotentials, and statistical uncertainty remain part of the result.</dd>
+    <dd>An open Python framework for molecular and periodic Hartree–Fock, DFT, correlated wavefunction, response, and embedding methods. It is useful for explicit method construction, but basis, reference stability, active space, and boundary model remain scientific decisions. See <a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree–Fock</a> and <a href={`${workflow}calculate-reference-ground-state/`}>reference states</a>.</dd>
   </dl>
 
-  <h2>Structure, symmetry, cells, and reciprocal space</h2>
+  <h2>Structure, symmetry, and visualization</h2>
   <dl>
-    <dt><a href="https://ase-lib.org/">Atomic Simulation Environment (ASE)</a></dt>
-    <dd>Open Python environment for constructing, running, manipulating, and analysing atomistic simulations through calculators and interfaces. It is a convenience layer, not an independent validation of the attached calculator or physical model.</dd>
+    <dt><a href="https://ase-lib.org/">Atomic Simulation Environment</a></dt>
+    <dd>An open Python layer for constructing structures and connecting atomistic calculators. It is useful for model manipulation and automation, not independent validation of the attached calculator. See <a href={href('/theory/crystallography/')}>crystallography</a> and <a href={`${workflow}build-or-modify-computational-model/`}>model construction</a>.</dd>
     <dt><a href="https://spglib.readthedocs.io/">Spglib</a></dt>
-    <dd>Crystal-symmetry library with C and language interfaces, including experimental magnetic-symmetry support. Symmetry assignment depends on tolerances, structure, and the spin/SOC model; a conventional band path is not an integration mesh.</dd>
+    <dd>An open crystal-symmetry library. It identifies symmetry under declared structural and magnetic tolerances; it does not decide whether that symmetry should constrain the physical model. See <a href={href('/theory/group-theory-and-symmetry/')}>symmetry</a> and <a href={`${workflow}obtain-material-structure/`}>structure provenance</a>.</dd>
+    <dt><a href="https://jp-minerals.org/vesta/en/">VESTA</a></dt>
+    <dd>A desktop viewer for crystal structures and volumetric data, distributed under its official use and redistribution terms. It is useful for inspection; a rendering does not validate a structure, density partition, or bond. See <a href={href('/theory/chemical-bonding-and-molecular-structure/')}>bonding interpretations</a> and <a href={`${workflow}build-or-modify-computational-model/`}>model construction</a>.</dd>
   </dl>
 
-  <h2>Workflow and provenance systems</h2>
+  <h2>Materials databases</h2>
   <dl>
-    <dt><a href="https://www.aiida.net/">AiiDA</a></dt>
-    <dd>Workflow manager that tracks inputs, calculations, outputs, and plugin-defined processes in a provenance graph. It records lineage and automation choices; it does not certify that a protocol, convergence study, or scientific claim is adequate.</dd>
-  </dl>
-
-  <h2>Databases and interoperability</h2>
-  <dl>
-    <dt><a href="https://nomad-lab.eu/">NOMAD</a></dt>
-    <dd>Open materials-data service and research-data-management platform with parsers, APIs, metadata, and DOI publication paths. Parser coverage and recorded provenance do not guarantee that an uploaded calculation is physically adequate for a later claim.</dd>
     <dt><a href="https://www.crystallography.net/cod/">Crystallography Open Database</a></dt>
-    <dd>Open collection of organic, inorganic, metal-organic, and mineral crystal structures with a public-domain data policy. A deposited structure still needs its disorder, measurement context, and suitability for the target model reviewed.</dd>
+    <dd>An open collection of experimentally reported crystal structures with a public-domain data policy. Use it to locate candidate structures, then inspect measurement context, disorder, occupancy, and model suitability. Connect <a href={href('/theory/crystallography/')}>crystallographic identity</a> to <a href={`${workflow}obtain-material-structure/`}>structure acquisition</a>.</dd>
+    <dt><a href="https://nomad-lab.eu/">NOMAD</a></dt>
+    <dd>A materials-data platform with parsers, APIs, metadata, and publication services. Use it to discover calculations and provenance; parser success does not establish numerical or physical adequacy. Compare the declared <a href={href('/methods/')}>method object</a> before <a href={`${workflow}validate-results-and-scientific-conclusions/`}>validation</a>.</dd>
     <dt><a href="https://www.optimade.org/">OPTIMADE</a></dt>
-    <dd>Community specification for a common REST API across materials databases. Interoperable fields make retrieval easier but do not harmonize the source databases’ methods, corrections, releases, or uncertainties.</dd>
+    <dd>A specification for interoperable queries across materials databases. It normalizes access to fields, not the source databases’ methods, corrections, releases, or uncertainties. Treat returned <a href={href('/theory/crystallography/')}>structures</a> as sourced model candidates, then follow <a href={`${workflow}obtain-material-structure/`}>structure acquisition</a>.</dd>
   </dl>
 
-  <h2>Phonons, electron–phonon physics, and transport</h2>
+  <h2>Phonon, Wannier, and response ecosystem</h2>
   <dl>
     <dt><a href="https://phonopy.github.io/phonopy/">phonopy</a></dt>
-    <dd>Open harmonic and quasi-harmonic phonon package with calculator interfaces and explicit version-migration guidance. Force accuracy, supercell size, displacement, q sampling, and non-analytic corrections remain observable-specific controls.</dd>
+    <dd>An open finite-displacement implementation for harmonic and quasi-harmonic lattice dynamics. It turns forces into force constants and phonon objects; supercell, displacement, force, q-space, and non-analytic choices remain observable-specific. See <a href={href('/theory/classical-mechanics/')}>normal modes</a> and <a href={`${workflow}harmonic-phonons/`}>phonon execution</a>.</dd>
+    <dt><a href="https://wannier.org/">Wannier90</a></dt>
+    <dd>An open implementation of maximally localized Wannier functions and related interpolation. Use it for a declared band subspace; windows, gauge, localization, topology obstructions, and matrix-element fidelity must be checked. See <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry and topology</a> and <a href={`${workflow}wannier-function-construction/`}>Wannier construction</a>.</dd>
     <dt><a href="https://docs.epw-code.org/">EPW</a></dt>
-    <dd>Open electron–phonon project built around DFPT and Wannier–Fourier interpolation, with tutorials, schools, and benchmarks. Dense electronic and phonon meshes, interpolation, interfaces, and Coulomb assumptions must be converged for the stated quantity.</dd>
-    <dt><a href="https://perturbo-code.github.io/">Perturbo</a></dt>
-    <dd>Open first-principles route for carrier scattering with phonons, defects, and photons, including transport and ultrafast dynamics tutorials. Its QE interface and release compatibility are version-bound; interpolation and scattering approximations remain model assumptions.</dd>
+    <dd>An open DFPT and Wannier–Fourier implementation for electron–phonon quantities. It is useful for dense interpolation of coupling objects, but mesh, interpolation, screening, and final-observable convergence remain distinct. Connect <a href={href('/theory/linear-response-and-excited-states/')}>response objects</a> to <a href={`${workflow}electron-phonon-coupling/`}>electron–phonon calculations</a>.</dd>
+    <dt><a href="https://berkeleygw.org/documentation/">BerkeleyGW</a></dt>
+    <dd>An open GW and GW–BSE implementation for quasiparticle and neutral optical objects; official documentation identifies versioned manuals and examples. Starting point, screening, empty-state/frequency representation, Coulomb boundary, and kernel convergence remain model decisions. See <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>many-body perturbation theory</a> and <a href={`${workflow}quasiparticle-corrections/`}>quasiparticle calculations</a>.</dd>
   </dl>
 
-  <h2>Defects, surfaces, interfaces, and reaction paths</h2>
+  <h2>Workflow and provenance infrastructure</h2>
   <dl>
-    <dt><a href="https://doped.readthedocs.io/">doped</a></dt>
-    <dd>Open Python tooling for defect-supercell generation, calculation I/O, finite-size corrections, and thermodynamic analysis. Automation cannot replace finite-size, chemical-potential, charge-correction, structural-search, or approximation-stack validation.</dd>
-    <dt><a href="https://shakenbreak.readthedocs.io/">ShakeNBreak</a></dt>
-    <dd>Structure-search support for symmetry-broken point-defect candidates. Broader sampling improves the candidate set, but it does not prove a global ground state or a complete defect model.</dd>
+    <dt><a href="https://www.aiida.net/">AiiDA</a></dt>
+    <dd>An open workflow system that records process inputs, outputs, and lineage in a provenance graph. Use it to automate and preserve declared <a href={href('/methods/')}>method objects</a>; provenance does not certify convergence or scientific support. DFT Research Workflow defines the corresponding <a href={`${workflow}document-and-preserve-study/`}>study record</a>.</dd>
   </dl>
-
-  <h2>Bonding, charge, topology, and post-processing</h2>
-  <dl>
-    <dt><a href="https://z2pack.greschd.ch/">Z2Pack</a></dt>
-    <dd>Tool for topological invariants through hybrid-Wannier-centre evolution and Wilson loops, with first-principles, tight-binding, and k·p interfaces. The selected gap, subspace, symmetry, interface support, and discretization still need to be demonstrated.</dd>
-  </dl>
-
-  <h2>Visualization and inspection</h2>
-  <dl>
-    <dt><a href="https://jp-minerals.org/vesta/en/">VESTA</a></dt>
-    <dd>Desktop visualization for crystal structures, volumetric data, and crystal morphologies. It is free for non-commercial use; a rendering or derived geometric display does not validate a structure or density interpretation.</dd>
-    <dt><a href="https://www.ovito.org/">OVITO</a></dt>
-    <dd>Scientific data visualization and analysis environment for atomistic simulations. Analysis pipelines depend on their thresholds, neighbour definitions, and the underlying model and trajectory.</dd>
-  </dl>
-
-  <h2>HPC environments, testing, and preservation</h2>
-  <dl>
-    <dt><a href="https://slurm.schedmd.com/documentation.html">Slurm documentation</a></dt>
-    <dd>Official user and administrator documentation for workload scheduling, job state, resources, and exit-code interpretation. A scheduler state or successful job launch says nothing by itself about numerical correctness or scientific support.</dd>
-    <dt><a href="https://spack.readthedocs.io/">Spack</a></dt>
-    <dd>Package and environment manager designed for multiple software versions and configurations on HPC systems. Build recipes and dependency hashes improve environment traceability but do not establish numerical equivalence across compilers or hardware.</dd>
-  </dl>
-
-  <p class="review-note">Reviewed first public set: 2026-08-04. This is intentionally selective; additional candidates, access conditions, and deferred alternatives remain in the repository’s external-resource audit.</p>
 </BaseLayout>
