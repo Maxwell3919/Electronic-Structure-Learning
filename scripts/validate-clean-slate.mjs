@@ -29,8 +29,8 @@ const theorySlugs = [
   'self-consistent-field-methods', 'solid-state-chemistry', 'solid-state-physics',
   'statistical-mechanics', 'surface-and-interface-chemistry', 'thermodynamics',
 ];
-const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi'];
-const forbiddenCorePartSlugs = ['part-vii', 'part-viii'];
+const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
+const forbiddenCorePartSlugs = ['part-viii'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -140,7 +140,7 @@ const checkCorePages = (baseDirectory, mode) => {
       assert(!text.includes(`/core/${forbidden}/`), `${relative} links unpublished Core ${forbidden}`);
     }
   }
-  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi']) {
+  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii']) {
     const relative = `${prefix}/${slug}/${extension}`;
     checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
   }
@@ -193,6 +193,14 @@ const checkCorePages = (baseDirectory, mode) => {
     assert(partVI.includes(marker), `${prefix}/part-vi/${extension} lacks equation-pedagogy marker ${marker}`);
   }
   assert(count(partVI, /class="equation-source"/g) >= 5, `${prefix}/part-vi/${extension} lacks nearby canonical equation sources`);
+  const partVII = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-vii/${extension}`), 'utf8');
+  for (const marker of ['response-map', 'response-routes', 'phonon-chain', 'reciprocal-roles']) {
+    assert(partVII.includes(marker), `${prefix}/part-vii/${extension} lacks semantic teaching diagram ${marker}`);
+  }
+  for (const marker of ['cause–effect pair', 'different computational routes to the same harmonic derivative', 'interatomic force constant', 'not a trajectory assigned independently', 'not arbitrary atomic motion', 'large aggregate coupling parameter', 'Sources and further reading']) {
+    assert(partVII.includes(marker), `${prefix}/part-vii/${extension} lacks equation-pedagogy marker ${marker}`);
+  }
+  assert(count(partVII, /class="equation-source"/g) >= 6, `${prefix}/part-vii/${extension} lacks nearby canonical equation sources`);
 };
 
 const checkReadingManifest = () => {
@@ -297,7 +305,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 93, 'sitemap must contain exactly 93 canonical public routes');
+      assert(count(sitemap, /<url>/g) === 94, 'sitemap must contain exactly 94 canonical public routes');
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
       for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);
