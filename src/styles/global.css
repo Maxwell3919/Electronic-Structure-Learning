@@ -275,6 +275,54 @@ figcaption {
 .concept-check h3 { margin-top: 0.5rem; }
 .concept-check p:last-child { margin-bottom: 0.5rem; }
 
+.translation-views {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.7rem 0;
+  border-block: 1px solid #d7d7d7;
+}
+.translation-views section { padding: 0.2rem 1.1rem 0.25rem; }
+.translation-views section + section { border-inline-start: 1px solid #d7d7d7; }
+.translation-views h3 { margin-top: 0.85rem; }
+.translation-views p { margin-bottom: 0.85rem; color: #454545; }
+
+.core-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+.core-diagram svg text {
+  fill: #333333;
+  font-family: Georgia, "Times New Roman", "Songti SC", SimSun, serif;
+  font-size: 12px;
+}
+.core-diagram svg .diagram-heading { font-size: 13px; font-weight: 700; }
+.core-diagram .diagram-axis,
+.core-diagram .diagram-measure,
+.core-diagram .diagram-ticks line,
+.core-diagram .diagram-phasors circle,
+.core-diagram .diagram-phasors line,
+.core-diagram .diagram-cells rect {
+  fill: none;
+  stroke: #4b4b4b;
+  stroke-width: 1.4;
+}
+.core-diagram .diagram-sites circle { fill: #123f70; }
+.core-diagram .diagram-zone { fill: #edf3f8; stroke: #9bb0c3; stroke-width: 1.2; }
+.core-diagram .diagram-wave,
+.core-diagram .diagram-band,
+.core-diagram .diagram-dos {
+  fill: none;
+  stroke: #123f70;
+  stroke-width: 2.6;
+}
+.core-diagram .diagram-phasors line { stroke: #123f70; stroke-width: 2.2; }
+.core-diagram .diagram-level,
+.core-diagram .diagram-levels line { stroke: #123f70; stroke-width: 2.3; }
+.core-diagram .secondary-band { stroke: #607d99; }
+.core-diagram .diagram-fermi { stroke: #8a5a24; stroke-width: 1.5; stroke-dasharray: 6 5; }
+
 .repair-links { margin-top: 2.3rem; color: #454545; }
 .sequence-nav {
   display: flex;
@@ -300,13 +348,15 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .concept-branches > div,
   .core-map-branches,
   .state-comparison ol,
-  .energy-curve-visual { display: block; }
+  .energy-curve-visual,
+  .translation-views { display: block; }
   .concept-branches section + section,
   .core-map-branches section + section,
   .state-comparison li + li {
     border-inline-start: 0;
     border-top: 1px solid #d7d7d7;
   }
+  .translation-views section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .energy-curve-key { margin-top: 1.2rem; }
   .sequence-nav { display: grid; }
   .sequence-nav a:last-child { text-align: start; }
