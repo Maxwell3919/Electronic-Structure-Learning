@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Part II · Fermions, Mean Fields, and Correlation" description="Antisymmetry, determinants, Hartree and Hartree–Fock mean fields, exchange, and correlation beyond one determinant." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part II</span>
+  </nav>
+
+  <p class="secondary">Part II</p>
+  <h1>Fermions, Mean Fields, and Correlation</h1>
+  <p class="lede">Orbitals can organize an interacting many-electron problem without claiming that the electrons cease to interact. Antisymmetry fixes the fermionic state space; Hartree and Hartree–Fock impose different orbital restrictions, while correlation names what a declared reference cannot express.</p>
+
+  <h2>Identical electrons change the allowed states</h2>
+  <p>An electron is not distinguished from another electron by a permanent label. Exchanging two complete one-electron variables <math class="math-inline" aria-label="x sub i equals r sub i comma sigma sub i"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mo>(</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>,</mo><msub><mi>σ</mi><mi>i</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">x_i=(\mathbf&#123;r&#125;_i,\sigma_i)</annotation></semantics></math> cannot create a physically new labeling of the particles. For fermions, the many-electron wavefunction is antisymmetric:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Exchanging two complete electron variables changes the sign of the wavefunction">
+      <semantics>
+        <mrow>
+          <mi>Ψ</mi><mo>(</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>j</mi></msub><mo>,</mo><mo>…</mo><mo>)</mo>
+          <mo>=</mo><mo>−</mo><mi>Ψ</mi><mo>(</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>j</mi></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><mo>…</mo><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\Psi(\ldots,x_i,\ldots,x_j,\ldots)=-\Psi(\ldots,x_j,\ldots,x_i,\ldots).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>If the two complete variables coincide, antisymmetry makes the wavefunction vanish at that configuration. A related but distinct orbital statement follows when one antisymmetrizes one-particle states: using the same spin orbital twice makes the entire state zero. Thus each orthonormal spin orbital has occupation at most one, although opposite-spin electrons may share the same spatial orbital. The determinant below makes that distinction explicit.</p>
+  <p>This exact constraint produces Pauli exclusion and exchange structure before any approximation to Coulomb repulsion is chosen. Exchange is not an added classical force. It enters when the electron–electron interaction is evaluated in an antisymmetric state.</p>
+
+  <h2>A determinant turns orbitals into a fermionic reference</h2>
+  <p>A plain product of one-electron spin orbitals is easy to construct but does not change sign under exchange. Antisymmetrizing that product gives a Slater determinant. The two-electron case for distinct orthonormal spin orbitals shows the mechanism; the second line gives the normalized form for <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> orthonormal occupied spin orbitals:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Two electron antisymmetrized product and normalized N electron Slater determinant">
+      <semantics>
+        <mtable columnalign="left">
+          <mtr><mtd><mi>Φ</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mn>2</mn></msqrt></mfrac><mo>[</mo><msub><mi>χ</mi><mi>a</mi></msub><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>)</mo><msub><mi>χ</mi><mi>b</mi></msub><mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>)</mo><mo>−</mo><msub><mi>χ</mi><mi>a</mi></msub><mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>)</mo><msub><mi>χ</mi><mi>b</mi></msub><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>)</mo><mo>]</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>Φ</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>N</mi></msub><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mrow><mi>N</mi><mo>!</mo></mrow></msqrt></mfrac><mi>det</mi><mo>[</mo><msub><mi>χ</mi><mi>p</mi></msub><mo>(</mo><msub><mi>x</mi><mi>q</mi></msub><mo>)</mo><mo>]</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\Phi(x_1,x_2)=\frac&#123;1&#125;&#123;\sqrt&#123;2&#125;&#125;[\chi_a(x_1)\chi_b(x_2)-\chi_a(x_2)\chi_b(x_1)],\quad \Phi(x_1,\ldots,x_N)=\frac&#123;1&#125;&#123;\sqrt&#123;N!&#125;&#125;\det[\chi_p(x_q)].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Exchanging <math class="math-inline" aria-label="x one and x two"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mtext> and </mtext><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1\text&#123; and &#125;x_2</annotation></semantics></math> changes the sign of the first line. Formally setting <math class="math-inline" aria-label="chi a equals chi b"><semantics><mrow><msub><mi>χ</mi><mi>a</mi></msub><mo>=</mo><msub><mi>χ</mi><mi>b</mi></msub></mrow><annotation encoding="application/x-tex">\chi_a=\chi_b</annotation></semantics></math> makes its antisymmetrized numerator cancel everywhere, so no normalized determinant can occupy that spin orbital twice. The determinant builds antisymmetry exactly, but it is still a restricted trial form rather than the exact state of a general interacting system.</p>
+  <p>The individual occupied orbitals are also less absolute than a drawing may suggest. A unitary rotation among them changes their shapes but leaves the occupied subspace, one-particle density matrix, determinant up to phase, and single-determinant energy unchanged. Orbitals are powerful coordinates for a state, not generally unique observables.</p>
+
+  <h2>Hartree and Hartree–Fock impose different orbital restrictions</h2>
+  <p>The Hartree idea begins with a simple orbital product. Each orbital moves in the external nuclear potential and in an average electrostatic field generated by the electron density. Because the field depends on the orbitals being solved for, the equations are nonlinear and must be made self-consistent. A converged iteration solves that mean-field equation; it does not prove that the mean-field approximation is physically adequate.</p>
+  <p>A common total-density Hartree potential includes the density of the orbital on which it acts, producing formal self-interaction. Historical orbital-specific Hartree equations may remove that orbital’s own contribution. These conventions should not be conflated. In either form, a raw Hartree product is not a valid general antisymmetric electron state.</p>
+  <p>Hartree–Fock keeps the interacting Hamiltonian but varies the energy only over normalized single determinants. For orthonormal occupied spin orbitals, and with the nucleus–nucleus constant handled separately as in Part I, the electronic energy is</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Hartree Fock energy equals one electron terms plus direct Coulomb minus exchange terms">
+      <semantics>
+        <mrow>
+          <msub><mi>E</mi><mi>HF</mi></msub><mo>=</mo>
+          <munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>occ</mi></mrow></munder><mo>⟨</mo><mi>i</mi><mo>|</mo><mover><mi>h</mi><mo>^</mo></mover><mo>|</mo><mi>i</mi><mo>⟩</mo>
+          <mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mi>j</mi><mo>∈</mo><mi>occ</mi></mrow></munder><mo>(</mo><msub><mi>J</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>−</mo><msub><mi>K</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;HF&#125;&#125;=\sum_&#123;i\in\mathrm&#123;occ&#125;&#125;\langle i|\hat&#123;h&#125;|i\rangle+\frac&#123;1&#125;&#123;2&#125;\sum_&#123;ij\in\mathrm&#123;occ&#125;&#125;(J_&#123;ij&#125;-K_&#123;ij&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Here <math class="math-inline" aria-label="h hat"><semantics><mover><mi>h</mi><mo>^</mo></mover><annotation encoding="application/x-tex">\hat&#123;h&#125;</annotation></semantics></math> contains electronic kinetic energy and attraction to the fixed nuclei, while “occ” denotes the spin orbitals occupied in the determinant. The factor one half prevents counting each orbital pair twice. <math class="math-inline" aria-label="J sub i j"><semantics><msub><mi>J</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">J_&#123;ij&#125;</annotation></semantics></math> is the direct Coulomb interaction between orbital densities. <math class="math-inline" aria-label="K sub i j"><semantics><msub><mi>K</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">K_&#123;ij&#125;</annotation></semantics></math> is the exchange integral generated by permuting the orbital labels inside the antisymmetric state. In the usual collinear spin-orbital form, it connects equal spin components. Each occupied orbital’s self-Coulomb term is cancelled by its self-exchange term; that cancellation removes one specific self-interaction but does not remove all Hartree–Fock error.</p>
+
+  <p>Minimizing the determinant energy subject to orbital orthonormality produces effective one-particle equations. In a canonical orbital representation,</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Fock operator depending on occupied orbitals acts on orbital i to give epsilon i orbital i">
+      <semantics>
+        <mtable columnalign="left">
+          <mtr><mtd><mover><mi>f</mi><mo>^</mo></mover><mo>[</mo><mo>&#123;</mo><msub><mi>χ</mi><mi>j</mi></msub><mo>&#125;</mo><mo>]</mo><msub><mi>χ</mi><mi>i</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>χ</mi><mi>i</mi></msub><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mover><mi>f</mi><mo>^</mo></mover><mo>=</mo><mover><mi>h</mi><mo>^</mo></mover><mo>+</mo><munder><mo>∑</mo><mrow><mi>j</mi><mo>∈</mo><mi>occ</mi></mrow></munder><mo>(</mo><msub><mover><mi>J</mi><mo>^</mo></mover><mi>j</mi></msub><mo>−</mo><msub><mover><mi>K</mi><mo>^</mo></mover><mi>j</mi></msub><mo>)</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\hat&#123;f&#125;[\&#123;\chi_j\&#125;]\chi_i=\varepsilon_i\chi_i,\quad \hat&#123;f&#125;=\hat&#123;h&#125;+\sum_&#123;j\in\mathrm&#123;occ&#125;&#125;(\hat&#123;J&#125;_j-\hat&#123;K&#125;_j).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The hatted <math class="math-inline" aria-label="J sub j hat and K sub j hat"><semantics><mrow><msub><mover><mi>J</mi><mo>^</mo></mover><mi>j</mi></msub><mtext> and </mtext><msub><mover><mi>K</mi><mo>^</mo></mover><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\hat&#123;J&#125;_j\text&#123; and &#125;\hat&#123;K&#125;_j</annotation></semantics></math> are operators, unlike the scalar integrals in the energy expression. The values <math class="math-inline" aria-label="epsilon sub i"><semantics><msub><mi>ε</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\varepsilon_i</annotation></semantics></math> are canonical orbital eigenvalues that enforce the stationary equations; they are not automatically independently measurable electron energies. For a fixed Fock operator this is a linear eigenproblem. The complete Hartree–Fock problem is nonlinear because that operator is built from the occupied orbitals it is meant to determine. <strong>Self-consistency is the solution procedure; the single-determinant restriction is the physical approximation.</strong></p>
+  <p>The Hartree–Fock direct operator <math class="math-inline" aria-label="J sub j hat"><semantics><msub><mover><mi>J</mi><mo>^</mo></mover><mi>j</mi></msub><annotation encoding="application/x-tex">\hat&#123;J&#125;_j</annotation></semantics></math> is a local multiplicative potential in the usual coordinate representation. The exchange operator is nonlocal: its value at one point depends on the orbital over other points. Replacing it by an arbitrary local “exchange potential” would define a different theory.</p>
+  <p>Even within the determinant class, an SCF calculation may settle on a stationary branch rather than the lowest stable determinant allowed by the chosen basis and symmetry constraints. Convergence of the iteration is therefore distinct from stability of the reference, basis completeness, or accuracy of an observable.</p>
+
+  <div class="concept-check" role="note" aria-labelledby="part-ii-check-one">
+    <h3 id="part-ii-check-one">Check your understanding</h3>
+    <p><strong>Question.</strong> If Hartree–Fock includes electron–electron repulsion, why is it still described by one-particle equations?</p>
+    <p><strong>Answer.</strong> The interaction is replaced by orbital-dependent direct and exchange fields inside a restricted determinant. The resulting equations act on one orbital at a time, but they remain coupled through the orbitals used to build those fields.</p>
+  </div>
+
+  <h2>Correlation is the structure missing from the declared reference</h2>
+  <p>Antisymmetry and exchange do not exhaust the many-electron problem. In an exact state, the conditional distribution of one electron changes as the others move. A single optimized determinant captures the exchange structure imposed by fermionic statistics, but it cannot reproduce every correlated fluctuation of the interacting state.</p>
+  <p>For wavefunction theory in a finite one-particle basis <math class="math-inline" aria-label="script B"><semantics><mi mathvariant="script">B</mi><annotation encoding="application/x-tex">\mathcal&#123;B&#125;</annotation></semantics></math>, a precise ground-state convention is</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Correlation energy in basis B equals exact energy in B minus Hartree Fock energy in B and is nonpositive">
+      <semantics>
+        <mrow>
+          <msubsup><mi>E</mi><mi>c</mi><mi mathvariant="script">B</mi></msubsup><mo>=</mo><msubsup><mi>E</mi><mi>exact</mi><mi mathvariant="script">B</mi></msubsup><mo>−</mo><msubsup><mi>E</mi><mi>HF</mi><mi mathvariant="script">B</mi></msubsup><mo>≤</mo><mn>0</mn><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">E_c^&#123;\mathcal&#123;B&#125;&#125;=E_&#123;\mathrm&#123;exact&#125;&#125;^&#123;\mathcal&#123;B&#125;&#125;-E_&#123;\mathrm&#123;HF&#125;&#125;^&#123;\mathcal&#123;B&#125;&#125;\le 0.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>“Exact” here means exact within that finite basis—equivalently, the full configuration-interaction limit for the same nonrelativistic clamped-nuclei Hamiltonian, electron number, and declared state sector. The conventional complete-basis correlation energy takes the corresponding basis limit. Basis incompleteness, relativity, nuclear motion, and SCF error are separate. Density-functional theory later uses a different density-constrained reference, so its correlation functional is not numerically identical to this wavefunction definition.</p>
+  <p><strong>Dynamical correlation</strong> describes the short-range and other correlated adjustments around a qualitatively sound reference. <strong>Static</strong> or <strong>multireference correlation</strong> appears when several configurations are comparably important and one determinant is qualitatively insufficient. The terms mark regimes, not two uniquely separable substances.</p>
+  <p>H₂ makes the distinction concrete. Near its equilibrium bond length, a doubly occupied bonding orbital is a useful reference, while correlated motion still lowers the energy. At large separation, that same restricted determinant mixes neutral H· + ·H arrangements with ionic H⁺H⁻ and H⁻H⁺ contributions that are spuriously retained with the wrong weight. More than one determinant is required to cancel those pieces and recover the correct separated-atom singlet. Allowing different spin orbitals can lower the mean-field energy by breaking spin symmetry, but a broken-symmetry determinant is not automatically the exact spin state.</p>
+
+  <figure class="state-comparison" aria-labelledby="state-comparison-caption">
+    <ol>
+      <li>
+        <strong>Hartree product</strong>
+        <span>separate orbital factors</span>
+        <span class="secondary">mean Coulomb field; no fermionic antisymmetry</span>
+      </li>
+      <li>
+        <strong>One determinant</strong>
+        <span>antisymmetrized orbital product</span>
+        <span class="secondary">Pauli structure and exchange; still one reference</span>
+      </li>
+      <li>
+        <strong>Correlated antisymmetric state</strong>
+        <span>a more general fermionic joint amplitude</span>
+        <span class="secondary">retains antisymmetry while enlarging the state class</span>
+      </li>
+    </ol>
+    <figcaption id="state-comparison-caption">The sequence classifies trial-state information. Correlation does not replace antisymmetry, and “one-particle description” does not mean that the physical interaction was removed.</figcaption>
+  </figure>
+
+  <p>Hartree–Fock shows why orbital language survives an interacting problem: a carefully chosen reference compresses much of the state into a manageable occupied subspace while retaining the mean Coulomb field and exact determinant exchange. Later theories either enlarge the wavefunction beyond one determinant or change the basic variable. Neither route makes every orbital eigenvalue an observable. A frozen-orbital removal estimate such as Koopmans’ theorem omits relaxation and correlation; charged and neutral excitations require their own physical objects.</p>
+  <p>This is the conceptual bridge to the rest of electronic structure. The next theories will differ in what information they retain, what they approximate, and what they make computable—not merely in the software used to solve them.</p>
+
+  <p class="repair-links">For repair depth, see <a href={href('/theory/linear-algebra/')}>Linear Algebra</a> for determinants and subspaces, <a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree and Hartree–Fock Theory</a> for the formal orbital equations, or <a href={href('/theory/many-electron-problem/')}>The Many-Electron Problem</a> for reduced quantities and state-space growth. <a href={href('/reading/books/martin/chapter-03/')}>Martin · Chapter 3</a> follows the source’s own route from the interacting problem toward independent-electron and density descriptions. <a href={href('/methods/')}>Methods</a> locates Hartree–Fock among broader solution families without turning this page into an execution guide.</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/part-i/')}>← Part I · The Quantum Problem of Matter</a>
+    <a href={href('/core/')}>Core</a>
+  </nav>
+</BaseLayout>

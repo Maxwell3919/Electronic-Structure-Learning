@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Core" description="A continuous explanation of the physical objects and approximations that make electronic-structure theory possible." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><span aria-current="page">Core</span>
+  </nav>
+
+  <h1>Core</h1>
+  <p class="lede">Core is the Atlas’s continuous account of why electronic-structure problems exist, which quantum objects describe them, and how reformulations, declared approximations, finite representations, and solution procedures make them calculable.</p>
+  <p>It is readable on its own. <a href={href('/theory/')}>Foundations</a> supplies prerequisite repair when a mathematical or physical concept needs more depth; <a href={href('/reading/')}>Guided Reading</a> follows the logic of individual sources instead.</p>
+
+  <figure class="core-map" aria-labelledby="core-map-caption">
+    <ol class="core-map-spine">
+      <li><strong>Matter</strong><span>electrons and nuclei</span></li>
+      <li><strong>Quantum many-body problem</strong><span>states, interactions, and observables</span></li>
+      <li><strong>Fermionic state space and orbital references</strong><span>antisymmetry, determinants, mean fields, and missing correlation</span></li>
+    </ol>
+    <p class="core-map-specialization"><strong>For periodic systems:</strong> translation, Bloch states, bands, filling, and Brillouin-zone objects reshape each route below.</p>
+    <div class="core-map-branches">
+      <section>
+        <h3>A density-based ground-state route</h3>
+        <p>Density-functional theory → finite representation and solution → energy, density, force, and structure</p>
+      </section>
+      <section>
+        <h3>Response route</h3>
+        <p>Electronic or force response → force constants; with nuclear masses → harmonic lattice dynamics</p>
+      </section>
+      <section>
+        <h3>Excitation route</h3>
+        <p>Charged or neutral excitation energies and amplitudes + probe coupling and selection rules → spectra</p>
+      </section>
+    </div>
+    <figcaption id="core-map-caption">The first three steps supply shared foundations; periodicity is a specialization of the physical model. The three routes then ask different questions, and response or excitations are not ordinary outputs of a ground-state calculation.</figcaption>
+  </figure>
+
+  <h2>The opening sequence</h2>
+  <ol class="core-entries">
+    <li><a href={href('/core/orientation/')}><strong>Orientation · What Electronic Structure Explains</strong></a><span>Why electrons connect a quantum state to material behavior.</span></li>
+    <li><a href={href('/core/part-i/')}><strong>Part I · The Quantum Problem of Matter</strong></a><span>The electron–nuclear Hamiltonian and the fixed-nuclei electronic problem.</span></li>
+    <li><a href={href('/core/part-ii/')}><strong>Part II · Fermions, Mean Fields, and Correlation</strong></a><span>Why orbitals are useful, where exchange comes from, and what one determinant leaves out.</span></li>
+  </ol>
+
+  <p>When understanding becomes an actual calculation, <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> takes over execution, convergence, validation, and evidence.</p>
+</BaseLayout>

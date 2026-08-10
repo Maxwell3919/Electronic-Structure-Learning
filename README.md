@@ -1,12 +1,16 @@
 # Electronic Structure Atlas
 
-Electronic Structure Atlas is a small, public map of electronic-structure foundations, guided reading, research methods, computational tools, and reviewed references.
+Electronic Structure Atlas is a small, public map of electronic-structure foundations, continuous Core reading, guided reading, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It contains the Home page, five subject entrances, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site is a static Plain Astro build. It contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
 
 ## Public routes
 
 - `/`
+- `/core/`
+- `/core/orientation/`
+- `/core/part-i/`
+- `/core/part-ii/`
 - `/theory/` — publicly presented as **Foundations** while existing routes are retained
 - `/theory/linear-algebra/`
 - `/theory/calculus-and-analysis/`
@@ -56,7 +60,9 @@ The production site is a static Plain Astro build. It contains the Home page, fi
 - `/reference/`
 - `/404.html`
 
-## Foundations and Guided Reading
+## Core, Foundations, and Guided Reading
+
+Core is the Atlas's own continuous explanation of electronic structure. The opening sequence establishes why electronic structure matters, defines the coupled electron–nuclear problem, and develops fermionic mean-field and correlation language. It does not follow one source's chapter order and does not publish empty routes for later Parts.
 
 Foundations is the knowledge, prerequisite, relationship, and reviewed-resource map. The first implementation phase changes the public label and landing-page role without breaking the established `/theory/` routes.
 
@@ -93,4 +99,4 @@ The retired source-aligned course site, its practice cross-reference, interactiv
 
 ## Boundaries
 
-New scientific content is added individually after source and scope review. Foundations pages are shaped by the subject rather than forced into one public template. Mathematical notation uses static native MathML with TeX annotations. Guided Reading preserves a reviewed source sequence but links to Foundations instead of duplicating its concept explanations or course inventories. The Methods entrance is a concise conceptual map; execution, convergence, validation, and provenance workflows remain in DFT Research Workflow. This repository does not store textbook PDFs, extracted full texts, licensed software material, credentials, private research notes, or bulk calculation outputs. The current baseline does not implement the planned Talos home-page experience.
+New scientific content is added individually after source and scope review. Core uses multi-source synthesis and original prose; Foundations pages repair prerequisites without being forced into one public template. Mathematical notation uses static native MathML with TeX annotations. Guided Reading preserves a reviewed source sequence but links to Foundations instead of duplicating its concept explanations or course inventories. The Methods entrance is a concise conceptual map; execution, convergence, validation, and provenance workflows remain in DFT Research Workflow. This repository does not store textbook PDFs, extracted full texts, licensed software material, credentials, private research notes, or bulk calculation outputs.

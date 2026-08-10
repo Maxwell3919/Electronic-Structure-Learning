@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Part I · The Quantum Problem of Matter" description="The coupled electron–nuclear Hamiltonian, its many-particle state, and the Born–Oppenheimer fixed-nuclei problem." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part I</span>
+  </nav>
+
+  <p class="secondary">Part I</p>
+  <h1>The Quantum Problem of Matter</h1>
+  <p class="lede">Before choosing an electronic-structure method, the physical problem is a quantum system of interacting electrons and nuclei. Its compact Hamiltonian hides a state that depends on every particle at once.</p>
+
+  <h2>One Hamiltonian describes all particles</h2>
+  <p>Consider a system with nuclei at coordinates <math class="math-inline" aria-label="capital R sub A"><semantics><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><annotation encoding="application/x-tex">\mathbf&#123;R&#125;_A</annotation></semantics></math>, charges <math class="math-inline" aria-label="Z sub A"><semantics><msub><mi>Z</mi><mi>A</mi></msub><annotation encoding="application/x-tex">Z_A</annotation></semantics></math>, and masses <math class="math-inline" aria-label="M sub A"><semantics><msub><mi>M</mi><mi>A</mi></msub><annotation encoding="application/x-tex">M_A</annotation></semantics></math>, together with electrons at coordinates <math class="math-inline" aria-label="r sub i"><semantics><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mathbf&#123;r&#125;_i</annotation></semantics></math>. A wavefunction does not assign a separate classical path to each particle. It assigns a complex quantum amplitude to every allowed joint configuration of all nuclear and electronic coordinates, with electron spin included in the electronic variables.</p>
+  <p>That distinction is already consequential. An electron coordinate is not a permanent particle label that can be followed through space. Predictions come from the state and from operators representing physical quantities. The same formal state can encode probabilities, interference, entanglement, and correlations that cannot be reconstructed from a set of independent trajectories.</p>
+  <p>For the standard nonrelativistic Coulomb model, and using Hartree atomic units, the electron–nuclear Hamiltonian is</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Full nonrelativistic Coulomb Hamiltonian for electrons and nuclei">
+      <semantics>
+        <mrow>
+          <mover><mi>H</mi><mo>^</mo></mover><mo>=</mo>
+          <mo>−</mo><munder><mo>∑</mo><mi>A</mi></munder><mfrac><msubsup><mo>∇</mo><mi>A</mi><mn>2</mn></msubsup><mrow><mn>2</mn><msub><mi>M</mi><mi>A</mi></msub></mrow></mfrac>
+          <mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mo>∇</mo><mi>i</mi><mn>2</mn></msubsup>
+          <mo>+</mo><munder><mo>∑</mo><mrow><mi>A</mi><mo>&lt;</mo><mi>B</mi></mrow></munder><mfrac><mrow><msub><mi>Z</mi><mi>A</mi></msub><msub><mi>Z</mi><mi>B</mi></msub></mrow><msub><mi>R</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub></mfrac>
+          <mo>+</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow></munder><mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac>
+          <mo>−</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>,</mo><mi>A</mi></mrow></munder><mfrac><msub><mi>Z</mi><mi>A</mi></msub><mrow><mo>|</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>|</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;=-\sum_A\frac&#123;\nabla_A^2&#125;&#123;2M_A&#125;-\frac&#123;1&#125;&#123;2&#125;\sum_i\nabla_i^2+\sum_&#123;A&lt;B&#125;\frac&#123;Z_AZ_B&#125;&#123;R_&#123;AB&#125;&#125;+\sum_&#123;i&lt;j&#125;\frac&#123;1&#125;&#123;r_&#123;ij&#125;&#125;-\sum_&#123;i,A&#125;\frac&#123;Z_A&#125;&#123;|\mathbf&#123;r&#125;_i-\mathbf&#123;R&#125;_A|&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The Laplacians in the first two terms generate nuclear and electronic kinetic energy. The distances are <math class="math-inline" aria-label="R sub A B equals magnitude of bold R sub A minus bold R sub B"><semantics><mrow><msub><mi>R</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub><mo>=</mo><mo>|</mo><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>B</mi></msub><mo>|</mo></mrow><annotation encoding="application/x-tex">R_&#123;AB&#125;=|\mathbf&#123;R&#125;_A-\mathbf&#123;R&#125;_B|</annotation></semantics></math> and <math class="math-inline" aria-label="r sub i j equals magnitude of bold r sub i minus bold r sub j"><semantics><mrow><msub><mi>r</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><mo>|</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>−</mo><msub><mi mathvariant="bold">r</mi><mi>j</mi></msub><mo>|</mo></mrow><annotation encoding="application/x-tex">r_&#123;ij&#125;=|\mathbf&#123;r&#125;_i-\mathbf&#123;r&#125;_j|</annotation></semantics></math>. Hartree units absorb the constants <math class="math-inline" aria-label="h bar, e, m sub e, and four pi epsilon zero"><semantics><mrow><mi>ℏ</mi><mo>,</mo><mi>e</mi><mo>,</mo><msub><mi>m</mi><mi>e</mi></msub><mo>,</mo><mtext>and</mtext><mn>4</mn><mi>π</mi><msub><mi>ε</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\hbar,e,m_e,\text&#123; and &#125;4\pi\varepsilon_0</annotation></semantics></math> into the units. The next two terms are nucleus–nucleus and electron–electron repulsion, and the last is electron–nucleus attraction. The pair sums count each like-particle pair once. Compact notation does not mean a simple solution: electron–electron repulsion depends simultaneously on two electronic coordinates, while electron–nucleus attraction couples the electronic and nuclear coordinates.</p>
+  <p>This Hamiltonian is a model, not all of nature. External fields, relativistic corrections, spin–orbit coupling, and modified electrostatic boundary conditions add or alter terms. Stating the operator therefore also states what physics has not yet been included.</p>
+
+  <h2>An equation becomes physical through observables</h2>
+  <p>For a time-independent Hamiltonian, a stationary state satisfies <math class="math-inline" aria-label="H Psi equals E Psi"><semantics><mrow><mover><mi>H</mi><mo>^</mo></mover><mi>Ψ</mi><mo>=</mo><mi>E</mi><mi>Ψ</mi></mrow><annotation encoding="application/x-tex">\hat&#123;H&#125;\Psi=E\Psi</annotation></semantics></math>. The eigenvalue is the energy of that state. For a state in its domain, a general observable represented by a self-adjoint operator <math class="math-inline" aria-label="O hat"><semantics><mover><mi>O</mi><mo>^</mo></mover><annotation encoding="application/x-tex">\hat&#123;O&#125;</annotation></semantics></math> has expectation value</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Expectation value of O in Psi equals bra Psi O ket Psi divided by bra Psi ket Psi">
+      <semantics>
+        <mrow>
+          <msub><mrow><mo>⟨</mo><mover><mi>O</mi><mo>^</mo></mover><mo>⟩</mo></mrow><mi>Ψ</mi></msub><mo>=</mo>
+          <mfrac><mrow><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mover><mi>O</mi><mo>^</mo></mover><mo>|</mo><mi>Ψ</mi><mo>⟩</mo></mrow><mrow><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mi>Ψ</mi><mo>⟩</mo></mrow></mfrac><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\langle\hat&#123;O&#125;\rangle_\Psi=\frac&#123;\langle\Psi|\hat&#123;O&#125;|\Psi\rangle&#125;&#123;\langle\Psi|\Psi\rangle&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The brackets imply integration over all spatial coordinates and summation over spin; for a normalized state the denominator is one. An expectation value is the statistical average predicted for repeated preparations of the same state, not necessarily a possible result of one measurement and not a thermodynamic ensemble average. An energy eigenvalue is not interchangeable with the expectation value of an arbitrary operator. These distinctions matter later when densities, orbital energies, response functions, and spectra are compared.</p>
+  <p>The ground state is the admissible state with the lowest energy for the declared Hamiltonian and sector. Variational reasoning can place an upper bound on that energy using a restricted trial state, but it does not make every other observable converge monotonically or correctly. The form of the trial state will become the central question in Part II.</p>
+
+  <h2>Many-particle coupling prevents a simple separation</h2>
+  <p>If every term were a sum of independent one-particle operators, the problem could be reduced to one-particle orbitals assembled with the particle symmetry that the state requires. The electron–electron term generally prevents the interacting state from being compressed into one such antisymmetrized product. Moving one electron changes the interaction energy seen by all the others, so the exact amplitude in one region of configuration space depends on joint positions rather than on a list of unrelated orbitals.</p>
+  <p>The dimensionality makes this physical coupling computationally severe. Even after the nuclei are held fixed, an <math class="math-inline" aria-label="N electron"><semantics><mrow><mi>N</mi><mtext>-electron</mtext></mrow><annotation encoding="application/x-tex">N\text&#123;-electron&#125;</annotation></semantics></math> wavefunction depends on <math class="math-inline" aria-label="three N"><semantics><mrow><mn>3</mn><mi>N</mi></mrow><annotation encoding="application/x-tex">3N</annotation></semantics></math> spatial coordinates plus spin. A modest one-particle representation generates a rapidly growing many-particle state space. Electronic-structure theories do not remove the interaction; they reorganize which information must be represented explicitly.</p>
+
+  <h2>Born–Oppenheimer separation creates an electronic energy surface</h2>
+  <p>Nuclei are much heavier than electrons. When electronic states remain well separated as the nuclei move, their different time scales motivate an adiabatic separation: solve an electronic problem at each fixed nuclear geometry, then use its energy to describe nuclear motion. The nuclear coordinates remain parameters in the electronic Hamiltonian rather than dynamical variables in that particular eigenproblem.</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Fixed nuclei electronic eigenproblem, adiabatic energy surface, and force">
+      <semantics>
+        <mtable columnalign="left">
+          <mtr><mtd><msub><mover><mi>H</mi><mo>^</mo></mover><mi>e</mi></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><msub><mi>Ψ</mi><mi>k</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>;</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>=</mo><msubsup><mi>E</mi><mi>k</mi><mi>e</mi></msubsup><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><msub><mi>Ψ</mi><mi>k</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>;</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>U</mi><mi>k</mi></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>=</mo><msubsup><mi>E</mi><mi>k</mi><mi>e</mi></msubsup><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>+</mo><msub><mi>V</mi><mi>NN</mi></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi mathvariant="bold">F</mi><mi>A</mi></msub><mo>=</mo><mo>−</mo><msub><mo>∇</mo><mi>A</mi></msub><msub><mi>U</mi><mn>0</mn></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;_e(\mathbf&#123;R&#125;)\Psi_k(\mathbf&#123;r&#125;;\mathbf&#123;R&#125;)=E_k^e(\mathbf&#123;R&#125;)\Psi_k(\mathbf&#123;r&#125;;\mathbf&#123;R&#125;),\quad U_k(\mathbf&#123;R&#125;)=E_k^e(\mathbf&#123;R&#125;)+V_&#123;\mathrm&#123;NN&#125;&#125;(\mathbf&#123;R&#125;),\quad \mathbf&#123;F&#125;_A=-\nabla_AU_0(\mathbf&#123;R&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Here bold <math class="math-inline" aria-label="bold r and bold R"><semantics><mrow><mi mathvariant="bold">r</mi><mtext> and </mtext><mi mathvariant="bold">R</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;r&#125;\text&#123; and &#125;\mathbf&#123;R&#125;</annotation></semantics></math> denote the complete sets of electronic and nuclear coordinates. The label <math class="math-inline" aria-label="k"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> identifies an electronic state and its associated adiabatic surface; <math class="math-inline" aria-label="k equals zero"><semantics><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">k=0</annotation></semantics></math> denotes the ground-state surface. The operator <math class="math-inline" aria-label="H e of R"><semantics><mrow><msub><mover><mi>H</mi><mo>^</mo></mover><mi>e</mi></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\hat&#123;H&#125;_e(\mathbf&#123;R&#125;)</annotation></semantics></math> contains electronic kinetic energy, electron–electron repulsion, and attraction to fixed nuclei. In this convention its eigenvalue excludes nucleus–nucleus repulsion, so that term is added once to form <math class="math-inline" aria-label="U sub k"><semantics><msub><mi>U</mi><mi>k</mi></msub><annotation encoding="application/x-tex">U_k</annotation></semantics></math>. The gradient of the ground-state surface then defines a force even though the nuclei were fixed while the electronic equation was solved.</p>
+
+  <figure class="energy-curve" aria-labelledby="h2-curve-title h2-curve-description h2-curve-caption">
+    <div class="energy-curve-visual">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="h2-curve-title h2-curve-description">
+        <title id="h2-curve-title">Schematic ground-state energy surface of molecular hydrogen</title>
+        <desc id="h2-curve-description">From left to right, total energy is high at very short separation, falls to a minimum at the equilibrium separation, and approaches the separated-atom limit. The force is minus the slope of the curve.</desc>
+        <line class="axis" x1="62" y1="262" x2="612" y2="262"></line>
+        <line class="axis" x1="62" y1="262" x2="62" y2="28"></line>
+        <line class="guide" x1="62" y1="103" x2="612" y2="103"></line>
+        <path class="curve" d="M78 38 C112 58 139 180 202 220 C244 247 284 208 330 166 C386 116 468 106 600 104"></path>
+        <line class="guide" x1="230" y1="232" x2="230" y2="262"></line>
+        <circle class="minimum" cx="230" cy="232" r="6"></circle>
+      </svg>
+      <div>
+        <p class="energy-axis-labels"><strong>Axes.</strong> Vertical: ground-state adiabatic energy <math class="math-inline" aria-label="U zero of R"><semantics><mrow><msub><mi>U</mi><mn>0</mn></msub><mo>(</mo><mi>R</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">U_0(R)</annotation></semantics></math>. Horizontal: internuclear separation <math class="math-inline" aria-label="R"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>.</p>
+        <dl class="energy-curve-key">
+          <div><dt>Very short separation</dt><dd>The total energy rises sharply; nucleus–nucleus repulsion is a major contribution, while the electronic terms also change.</dd></div>
+          <div><dt>Equilibrium separation</dt><dd>At <math class="math-inline" aria-label="R zero"><semantics><msub><mi>R</mi><mn>0</mn></msub><annotation encoding="application/x-tex">R_0</annotation></semantics></math>, the minimum has zero slope, so the force vanishes locally.</dd></div>
+          <div><dt>Large separation</dt><dd>The curve approaches the energy of two separated hydrogen atoms.</dd></div>
+        </dl>
+      </div>
+    </div>
+    <figcaption id="h2-curve-caption">H₂ as the recurring model: fixing the internuclear distance <em>R</em> defines one electronic problem; solving it over many values of <em>R</em> constructs a potential-energy curve. This drawing is qualitative, not numerical data.</figcaption>
+  </figure>
+
+  <p>The boundary is as important as the reduction. Near degeneracies, conical intersections, or other regions of strong nonadiabatic coupling, one electronic surface may not remain isolated. Nuclear zero-point motion, tunnelling, thermal populations, and classical versus quantum nuclear dynamics require additional treatment. Relativity and spin-dependent terms are separate extensions of the Hamiltonian.</p>
+
+  <div class="concept-check" role="note" aria-labelledby="part-i-check">
+    <h3 id="part-i-check">Check your understanding</h3>
+    <p><strong>Question.</strong> If the nuclei are fixed in the electronic eigenproblem, how can that calculation yield a nuclear force?</p>
+    <p><strong>Answer.</strong> “Fixed” means that one geometry labels one electronic problem. Repeating the solution as the geometry changes defines an energy surface; its gradient supplies the force used by a later nuclear treatment.</p>
+  </div>
+
+  <p>The fixed-nuclei problem is still a many-electron problem, and its admissible state must respect the exchange symmetry of identical electrons. That unresolved constraint is the starting point of Part II.</p>
+
+  <p class="repair-links">For prerequisite depth, see <a href={href('/theory/quantum-mechanics/')}>Quantum Mechanics</a> for states and operators, <a href={href('/theory/classical-mechanics/')}>Classical Mechanics</a> for forces and energy surfaces, or <a href={href('/theory/quantum-chemistry/')}>Quantum Chemistry</a> for the molecular Hamiltonian. <a href={href('/reading/books/martin/chapter-03/')}>Martin · Chapter 3</a> provides a source-aligned route through the same starting problem.</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/orientation/')}>← Orientation · What Electronic Structure Explains</a>
+    <a href={href('/core/part-ii/')}>Part II · Fermions, Mean Fields, and Correlation →</a>
+  </nav>
+</BaseLayout>

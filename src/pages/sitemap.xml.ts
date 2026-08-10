@@ -4,6 +4,10 @@ import { martinChapterSlugs } from '../reading/books/martin/chapter-content';
 
 const fixedRoutes = [
   '/',
+  '/core/',
+  '/core/orientation/',
+  '/core/part-i/',
+  '/core/part-ii/',
   '/theory/',
   '/reading/',
   '/reading/books/',
