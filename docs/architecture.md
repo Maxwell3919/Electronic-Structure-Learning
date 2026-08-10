@@ -70,7 +70,7 @@ All mathematical expressions use static native MathML with TeX annotations. The 
 
 ## Guided Reading
 
-Guided Reading provides continuous explanations organized around a particular book, lecture series, or other coherent source. It is used when a branching knowledge map cannot supply the narrative needed to understand why one idea leads to the next.
+Guided Reading provides continuous explanations organized around a particular book or research paper. It is used when a branching knowledge map cannot supply the narrative needed to understand why one idea leads to the next.
 
 The root is organized by source type rather than by individual author:
 
@@ -78,8 +78,9 @@ The root is organized by source type rather than by individual author:
 Guided Reading
 ├── Books
 │   └── Martin · Electronic Structure
-└── Lectures
-    └── added only when a complete reviewed route exists
+└── Literature
+    ├── Hohenberg–Kohn 1964
+    └── Kohn–Sham 1965
 ```
 
 The current canonical routes are:
@@ -88,11 +89,14 @@ The current canonical routes are:
 /reading/
 /reading/books/
 /reading/books/martin/
+/reading/literature/
+/reading/literature/hohenberg-kohn-1964/
+/reading/literature/kohn-sham-1965/
 ```
 
 The former `/reading/martin/` route remains only as a compatibility redirect to `/reading/books/martin/`. It is not the canonical location of the Martin guide.
 
-A Lectures landing page is not published until at least one lecture route has enough reviewed content to justify it. Empty categories and empty chapter pages are not exposed merely to display a future plan.
+Books and Literature are peer source-type landings. Literature routes are flat siblings because a paper’s own argument, rather than a subject taxonomy, organizes each guide. Empty categories and empty source pages are not exposed merely to display a future plan.
 
 ### Books
 
@@ -166,11 +170,11 @@ Source-derived explanation and later additions must remain distinguishable. A mo
 
 The aim is not to claim that one guide reaches every frontier. A completed route should allow the reader to locate a modern paper within the field, recognize the assumptions behind its methods, and identify the additional theory needed for that particular research problem.
 
-### Lectures
+### Literature
 
-A lecture guide follows the same source-fidelity and modern-context principles, but its structure is based on the actual lecture sequence rather than being forced into book chapters. A lecture route may combine adjacent sessions when they form one argument and should link to the corresponding Foundations and book-guide pages instead of repeating them.
+A literature guide follows the paper’s own scientific question, argument, decisive equations, figures or tables, evidence, and limits. Foundational papers distinguish what the source proved from later reformulations. Method and application papers additionally reconstruct what the authors reported about the physical model, approximation, representation, sampling, calculated objects, and post-processing without inventing unreported settings or rerunning the calculation.
 
-Lecture routes are added only after the source, access, authorship, sequence, and technical scope have been reviewed.
+Literature routes remain flat below `/reading/literature/`. Source-role labels may appear on the page, but no public disciplinary directory tree is imposed.
 
 ## Martin · Electronic Structure
 

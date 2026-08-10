@@ -93,8 +93,10 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .section-list li + li { margin-top: 1rem; }
 .section-list a { font-size: 1.15rem; }
 .source-outline { padding-left: 0; list-style: none; }
+.source-list h3 { margin-top: 0; }
 .secondary, .item-summary { color: #666666; }
 .item-summary { font-size: 0.96em; }
+.paper-meta { color: #555555; font-size: 0.95rem; }
 
 .math-display {
   max-width: 100%;
@@ -158,6 +160,38 @@ math annotation { display: none; }
 }
 .callout p:last-child { margin-bottom: 0; }
 .reasoning-list li + li { margin-top: 0.8rem; }
+
+.paper-argument ol {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #d7d7d7;
+}
+.paper-argument li { position: relative; padding: 1rem; }
+.paper-argument li + li { margin-top: 0; border-inline-start: 1px solid #d7d7d7; }
+.paper-argument li + li::before {
+  position: absolute;
+  inset-inline-start: -0.55rem;
+  inset-block-start: 1.1rem;
+  padding-inline: 0.2rem;
+  background: #ffffff;
+  color: #607d99;
+  content: "→";
+}
+.paper-argument strong,
+.paper-argument span { display: block; }
+.paper-argument span { margin-top: 0.4rem; color: #555555; font-size: 0.92rem; }
+.paper-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 1.7rem 0;
+  border-block: 1px solid #d7d7d7;
+}
+.paper-comparison section { padding: 0.25rem 1rem 0.35rem; }
+.paper-comparison section + section { border-inline-start: 1px solid #d7d7d7; }
+.paper-comparison h3 { margin-top: 0.85rem; }
 
 figure { margin: 2rem 0; }
 figcaption {
@@ -811,6 +845,15 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   }
   .h2-reference .model-axis { display: block; padding-block: 0.6rem; }
   .h2-reference .model-axis::before { margin-bottom: -0.85rem; }
+  .paper-argument ol { grid-template-columns: 1fr; }
+  .paper-argument li + li { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
+  .paper-argument li + li::before {
+    inset-inline-start: 1rem;
+    inset-block-start: -0.85rem;
+    transform: rotate(90deg);
+  }
+  .paper-comparison { grid-template-columns: 1fr; }
+  .paper-comparison section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .translation-views section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .density-reduction .diagram-arrow,
   .ks-bridge .same-density {
