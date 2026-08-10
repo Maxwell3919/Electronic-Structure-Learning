@@ -34,7 +34,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <figcaption id="core-map-caption">The first three steps supply shared foundations; periodicity is a specialization of the physical model. The three routes then ask different questions, and response or excitations are not ordinary outputs of a ground-state calculation.</figcaption>
   </figure>
 
-  <h2>The opening sequence</h2>
+  <h2>The Core sequence</h2>
   <ol class="core-entries">
     <li><a href={href('/core/orientation/')}><strong>Orientation · What Electronic Structure Explains</strong></a><span>Why electrons connect a quantum state to material behavior.</span></li>
     <li><a href={href('/core/part-i/')}><strong>Part I · The Quantum Problem of Matter</strong></a><span>The electron–nuclear Hamiltonian and the fixed-nuclei electronic problem.</span></li>
@@ -46,6 +46,18 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <li><a href={href('/core/part-vii/')}><strong>Part VII · Response and Lattice Dynamics</strong></a><span>How declared perturbations produce response derivatives, force constants, phonon modes, and electron–phonon coupling objects.</span></li>
     <li><a href={href('/core/part-viii/')}><strong>Part VIII · Excitations and Spectra</strong></a><span>How charged quasiparticles, neutral electron–hole states, probe matrix elements, and spectra differ from ground-state Kohn–Sham bands.</span></li>
   </ol>
+
+  <h2>Where the spine branches</h2>
+  <p>The eight Parts establish a shared language, not the end of electronic-structure theory. The next route should be chosen by the physical object that the research question adds:</p>
+  <ul class="core-entries">
+    <li><strong>Spin, spin–orbit coupling, and magnetism.</strong><span>A spin-polarized calculation searches a different electronic-state branch; spin–orbit coupling changes the Hamiltonian and can change energies, wavefunctions, and selection rules. A small spin–orbit effect on one observable does not justify omitting it for every later observable. Continue with <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Relativistic Electronic Structure, Spin, and Magnetism</a>.</span></li>
+    <li><strong>Wannier functions, Berry phases, and topology.</strong><span>When phases, occupied subspaces, polarization, or invariants become the target, raw energy-ordered band labels are no longer enough. Continue with <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.</span></li>
+    <li><strong>Strong and local correlation.</strong><span>Some problems require an explicitly interacting low-energy subspace or a richer many-body state, even when a self-consistent determinant or density-functional approximation is stable. The model must declare its correlated subspace or Hamiltonian, interaction parameters, solver, and any double-counting convention; tighter numerical settings do not supply these choices. <a href={href('/theory/many-body-physics/')}>Many-Body Physics</a> is the formal starting point.</span></li>
+    <li><strong>Many-body correlation and spectroscopy beyond ground-state Kohn–Sham theory.</strong><span>Charged and neutral excitations require Green functions, self-energies, response kernels, or related many-body constructions whose outputs remain distinct from Kohn–Sham bands. Continue with <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Many-Body Perturbation Theory and Quasiparticles</a>.</span></li>
+    <li><strong>Defects, surfaces, and interfaces.</strong><span>Changing stoichiometry, dimensional boundary, charge state, or reservoir changes the physical system and its reference energies before it changes a computational parameter. <a href={href('/theory/solid-state-chemistry/')}>Solid-State Chemistry</a> supplies the bulk-defect and composition entrance; <a href={href('/theory/surface-and-interface-chemistry/')}>Surface and Interface Chemistry</a> supplies boundary, termination, adsorption, and interface depth.</span></li>
+    <li><strong>Electron–phonon coupling, transport, and superconductivity.</strong><span>Part VII defines the coupling object; mobilities, linewidths, pairing kernels, and transition temperatures require additional phase-space integrals and physical assumptions. Use <a href={href('/methods/')}>Methods</a> and source-specific Guided Reading for those branches.</span></li>
+    <li><strong>Finite temperature and coupled dynamics.</strong><span>Electronic smearing, electronic temperature, nuclear ensembles, vibrational free energy, and real-time dynamics are different model layers. Continue with <a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> before choosing a finite-temperature or dynamics method.</span></li>
+  </ul>
 
   <p>When understanding becomes an actual calculation, <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> takes over execution, convergence, validation, and evidence.</p>
 </BaseLayout>

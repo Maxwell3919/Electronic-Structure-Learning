@@ -56,9 +56,9 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
       <semantics>
         <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.62em">
           <mtr><mtd><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><munder><mo largeop="true">∑</mo><mrow><mi>i</mi><mo>∈</mo><mtext>occ</mtext></mrow></munder><munder><mo largeop="true">∑</mo><mi>σ</mi></munder><msup><mrow><mo>|</mo><msub><mi>χ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>σ</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>,</mo></mtd></mtr>
-          <mtr><mtd><msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><mo largeop="true">∫</mo><mfrac><mrow><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><mspace width="0.18em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>.</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>v</mi><mi mathvariant="normal">H</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><mo largeop="true">∫</mo><mfrac><mrow><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><mspace width="0.18em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>.</mo></mtd></mtr>
         </mtable>
-        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\sum_&#123;i\in\mathrm&#123;occ&#125;&#125;\sum_\sigma|\chi_i(\mathbf&#123;r&#125;,\sigma)|^2,\qquad v_H(\mathbf&#123;r&#125;)=\int\frac&#123;n(\mathbf&#123;r&#125;')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;\,d^3\mathbf&#123;r&#125;'.</annotation>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=\sum_&#123;i\in\mathrm&#123;occ&#125;&#125;\sum_\sigma|\chi_i(\mathbf&#123;r&#125;,\sigma)|^2,\qquad v_&#123;\mathrm&#123;H&#125;&#125;(\mathbf&#123;r&#125;)=\int\frac&#123;n(\mathbf&#123;r&#125;')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;\,\mathrm&#123;d&#125;^3\mathbf&#123;r&#125;'.</annotation>
       </semantics>
     </math>
   </div>
@@ -102,7 +102,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
             <mtd><mo largeop="true">∬</mo><mfrac><mrow><msubsup><mi>χ</mi><mi>i</mi><mo>∗</mo></msubsup><mo>(</mo><mi>x</mi><mo>)</mo><msub><mi>χ</mi><mi>j</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><msubsup><mi>χ</mi><mi>j</mi><mo>∗</mo></msubsup><mo>(</mo><msup><mi>x</mi><mo>′</mo></msup><mo>)</mo><msub><mi>χ</mi><mi>i</mi></msub><mo>(</mo><msup><mi>x</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><mspace width="0.18em"/><mi mathvariant="normal">d</mi><mi>x</mi><mspace width="0.18em"/><mi mathvariant="normal">d</mi><msup><mi>x</mi><mo>′</mo></msup><mo>.</mo></mtd>
           </mtr>
         </mtable>
-        <annotation encoding="application/x-tex">J_&#123;ij&#125;=\iint\frac&#123;|\chi_i(x)|^2|\chi_j(x')|^2&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;\,dx\,dx',\qquad K_&#123;ij&#125;=\iint\frac&#123;\chi_i^*(x)\chi_j(x)\chi_j^*(x')\chi_i(x')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;\,dx\,dx'.</annotation>
+        <annotation encoding="application/x-tex">J_&#123;ij&#125;=\iint\frac&#123;|\chi_i(x)|^2|\chi_j(x')|^2&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;\,\mathrm&#123;d&#125;x\,\mathrm&#123;d&#125;x',\qquad K_&#123;ij&#125;=\iint\frac&#123;\chi_i^*(x)\chi_j(x)\chi_j^*(x')\chi_i(x')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;\,\mathrm&#123;d&#125;x\,\mathrm&#123;d&#125;x'.</annotation>
       </semantics>
     </math>
   </div>
