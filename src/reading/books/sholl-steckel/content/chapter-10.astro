@@ -1,0 +1,92 @@
+---
+export const sectionLinks = [
+  { id: 'two-accuracy-axes', label: 'Numerical and physical accuracy answer different questions' },
+  { id: 'observable-specific', label: 'Physical accuracy is observable-specific' },
+  { id: 'functional-choice', label: 'Functional choice changes the physical approximation' },
+  { id: 'selected-extensions', label: 'Dispersion and local-correlation extensions' },
+  { id: 'larger-models', label: 'Larger models require another representation or theory' },
+  { id: 'modern-reproduction', label: 'What a modern reproduction must add' },
+];
+
+export const synthesis = 'The final chapter turns the book’s examples into an evidence discipline. Numerical convergence controls the finite solution of one declared model; physical validation asks whether that model supports one declared observable. Functional extensions, larger-system methods, and force fields change different layers. No single “more accurate DFT” label replaces system- and claim-specific evidence.';
+---
+
+<section aria-labelledby="two-accuracy-axes">
+  <h2 id="two-accuracy-axes">Numerical and physical accuracy answer different questions</h2>
+  <p>
+    The source’s closing distinction is the conceptual center of the practical book. Numerical accuracy asks how closely a finite calculation approaches the solution of the chosen equations with the chosen representation, sampling, and stopping criteria. Physical accuracy asks how closely that model predicts the target property of the intended system.
+  </p>
+  <div class="layer-ledger" aria-label="Accuracy layers">
+    <dt>Program execution</dt><dd>Did the code complete the requested operations without a detected runtime failure?</dd>
+    <dt>Self-consistent solution</dt><dd>Did the nonlinear electronic residual and occupied subspace meet declared criteria?</dd>
+    <dt>Representation and sampling</dt><dd>Are basis, grid, cell, k/q sampling, smearing, and derivative controls sufficient for the target quantity?</dd>
+    <dt>Observable convergence</dt><dd>Is the actual energy difference, force, frequency, barrier, spectrum, or response stable to the relevant numerical choices?</dd>
+    <dt>Physical support</dt><dd>Are structure, boundary conditions, spin/charge state, exchange–correlation, core model, reservoirs, and omitted physics adequate for the scientific claim?</dd>
+  </div>
+  <p>
+    Passing one row does not imply the next. A completed SCF run can be basis-incomplete; a cutoff-converged energy can describe the wrong magnetic branch; a well-reproduced GGA adsorption energy can retain systematic functional error. Conversely, physical validation against one observable does not prove transferability to a different property.
+  </p>
+</section>
+
+<section aria-labelledby="observable-specific">
+  <h2 id="observable-specific">Physical accuracy is observable-specific</h2>
+  <p>
+    The source surveys bond lengths, vibrational frequencies, cohesive energies, vacancies, and adsorption energies to show why “How accurate is DFT?” is ill posed. Error cancellation can make chemically similar energy differences more reliable than absolute energies or reactions joining unlike bonding environments. Geometry can be good while a band gap is poor. Trend ranking can be useful even when every absolute value is biased.
+  </p>
+  <p>
+    The needed tolerance also comes from the decision. Resolving a 0.5 eV separation between screening candidates demands different evidence from ranking structures separated by a few meV per atom. Numerical uncertainty, model discrepancy, and experimental uncertainty must remain distinct rather than collapsed into one unexplained error bar.
+  </p>
+  <p>
+    Structural optimization adds candidate completeness. A force-converged configuration is a stationary point inside one initialized branch; positive local curvature establishes local harmonic stability; neither proves the global phase, finite-temperature stability, synthesis accessibility, or lifetime.
+  </p>
+</section>
+
+<section aria-labelledby="functional-choice">
+  <h2 id="functional-choice">Functional choice changes the physical approximation</h2>
+  <p>
+    LDA, GGA, meta-GGA, and hybrid families differ in the information used to approximate exchange and correlation. They are not increasingly tight numerical tolerances on one equation. Two functionals can favor different structures, moments, adsorption sites, or reaction barriers even after each calculation is independently converged.
+  </p>
+  <p>
+    The source’s “Jacob’s ladder” picture is useful as a map of ingredients and cost, but height on the ladder is not a universal ranking for every material and observable. A functional’s construction, benchmark domain, known failure modes, and compatibility with the rest of the model matter more than its family label. PBE, PW91, RPBE, and revPBE are specific approximations, not interchangeable settings called “GGA.”
+  </p>
+  <p>
+    Since 2009, periodic hybrid functionals, nonlocal dispersion functionals, meta-GGAs, range-separated approaches, and broader benchmark sets have become routine branches. This expands the available model space; it does not remove the need for validation or justify choosing the most expensive option by default.
+  </p>
+</section>
+
+<section aria-labelledby="selected-extensions">
+  <h2 id="selected-extensions">Dispersion and local-correlation extensions</h2>
+  <p>
+    The DFT-D section adds a damped long-range pair term to a chosen density-functional energy. Its physical purpose is to recover missing asymptotic dispersion in a computationally economical way. The coefficients, damping function, and functional-specific scaling are part of the method definition. A “vdW correction” without its exact scheme and version is therefore incomplete provenance.
+  </p>
+  <p>
+    The DFT+U section addresses a different failure mode by adding an occupation-dependent correction in a selected localized subspace. The value of <em>U</em>, projector definition, double-counting convention, oxidation/spin branch, and method used to obtain or fit the parameter affect the result. DFT+U does not mean that a universal constant has been added to “make DFT exact,” and its correction is not the same physical object as the long-range dispersion term.
+  </p>
+  <div class="callout" role="note" aria-label="Modern method boundary">
+    <p><strong>Modern boundary.</strong> Self-interaction error, static correlation, delocalization error, and a “strongly correlated material” diagnosis overlap in some examples but are not synonyms. DFT+U, hybrids, self-interaction corrections, dynamical mean-field approaches, and wavefunction methods introduce different reference spaces and approximations.</p>
+  </div>
+</section>
+
+<section aria-labelledby="larger-models">
+  <h2 id="larger-models">Larger models require another representation or theory</h2>
+  <p>
+    Standard diagonalization-based calculations often grow cubically with system size in their asymptotic leading work. Linear-scaling electronic methods exploit locality to change that scaling beyond a crossover size, while classical force fields replace the electronic solve by a fitted energy model and can reach much larger cells and times.
+  </p>
+  <p>
+    These are not interchangeable speed settings. A linear-scaling method introduces locality thresholds and may target a restricted class such as gapped systems; a classical force field changes the represented physics and inherits its training domain. DFT data can help construct or validate a force field, but agreement on the training set does not prove transferability to new bonding, charge, phase, or reaction environments.
+  </p>
+</section>
+
+<section aria-labelledby="modern-reproduction">
+  <h2 id="modern-reproduction">What a modern reproduction must add</h2>
+  <p>
+    The book’s Appendix sections are unusually valuable because they name many cells, meshes, cutoffs, smearings, fixed atoms, and displacements. They also reveal what a 2009 teaching example commonly omitted. Across the book, the exact code version, dataset identity and valence/relativity, SCF residual, most optimization thresholds, symmetry settings, random seeds, and complete convergence evidence are often absent.
+  </p>
+  <p>
+    A present-day computational record should reconstruct each layer explicitly: physical structure and boundary conditions; charge, spin, and relativistic model; exchange–correlation and extensions; core dataset; finite representation; Brillouin-zone or perturbation sampling; occupation treatment; nonlinear solver; geometry or response algorithm; observable-specific convergence; and comparison evidence. “Not reported” is a valid conclusion. Guessing a software default is not source fidelity.
+  </p>
+  <p>
+    This Guide preserves the book’s reported realizations because they explain what each parameter does. It does not promote them into reusable inputs. Carry an actual project into the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>, where convergence, validation, provenance, and evidence are organized around the intended observable.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 10, especially §§10.1–10.6 and Fig. 10.1. No separate Appendix calculation ledger is provided for this synthesis chapter.</p>
+</section>

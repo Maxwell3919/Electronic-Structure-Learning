@@ -1,0 +1,110 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'slab-is-the-model', label: 'A periodic slab is the physical model' },
+  { id: 'which-surface', label: 'Orientation, termination, and relaxation' },
+  { id: 'surface-energy', label: 'Surface energy needs a bulk reference' },
+  { id: 'slab-symmetry', label: 'Slab symmetry controls a periodic electrostatic artifact' },
+  { id: 'adsorption', label: 'Adsorption needs a declared reaction and coverage' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'The surface chapter turns boundary conditions into scientific content. A slab does not merely make a surface calculable: its orientation, termination, thickness, vacuum, symmetry, reconstruction, coverage, and reference states define which surface is being studied. Every surface energy or adsorption energy is meaningful only inside that declared model.';
+---
+
+<section aria-labelledby="slab-is-the-model">
+  <h2 id="slab-is-the-model">A periodic slab is the physical model</h2>
+  <p>
+    The source begins with a geometric problem. A surface is infinite in two directions and finite in the third, while the plane-wave code repeats its cell in all three. The slab construction resolves that mismatch by placing a finite stack of atomic layers and a vacuum region in one repeated cell. Repetition then produces an array of slabs whose unwanted interaction should become negligible as the vacuum and slab thickness are increased.
+  </p>
+  <p>
+    This picture immediately creates two convergence questions with different physical meanings. More vacuum suppresses communication between periodic images across the empty region. More atomic layers allow the center of the slab to recover bulk-like behavior. Neither check can be replaced by inspecting whether the charge density “looks small” at one chosen vacuum width; the relevant surface energy, adsorption energy, work function, or force must be stable enough for the intended claim.
+  </p>
+  <p>
+    A long real-space repeat gives a short reciprocal vector along the surface normal, which is why a slab mesh usually contains one sampled point in that direction and a denser two-dimensional mesh in the surface plane. This is geometry-driven quadrature, not a universal <em>M</em>×<em>N</em>×1 recipe. The in-plane cell and metallic Fermi surface still control the required sampling.
+  </p>
+</section>
+
+<section aria-labelledby="which-surface">
+  <h2 id="which-surface">Orientation, termination, and relaxation</h2>
+  <p>
+    Miller indices identify an orientation, but they do not by themselves identify every surface model. A multicomponent crystal can expose different terminating layers at the same orientation. A polar termination can create a macroscopic electrostatic problem. Even a simple metal surface usually relaxes because atoms at the boundary have fewer neighbors than atoms in the bulk.
+  </p>
+  <p>
+    The Cu low-index examples make the orientation visible; the Si(001) example then supplies the decisive extension. Allowing a larger lateral cell permits the surface to lower its energy by reconstruction. A calculation constrained to a primitive unreconstructed cell cannot discover a pattern that its periodicity forbids. “Relaxed” therefore means relaxed within the declared cell, termination, symmetry, and fixed-layer constraints.
+  </p>
+  <div class="callout" role="note" aria-label="Surface model boundary">
+    <p><strong>Separate the surface from its finite realization.</strong> Orientation, termination, reconstruction, stoichiometry, coverage, reservoirs, and the electrostatic boundary define the physical surface question. Slab thickness and vacuum width control how a periodically repeated finite cell approaches that target. The lateral cell and fixed layers can play either role: they may deliberately constrain the model, and they must also be checked as finite-size choices for the observable of interest.</p>
+  </div>
+</section>
+
+<section aria-labelledby="surface-energy">
+  <h2 id="surface-energy">Surface energy needs a bulk reference</h2>
+  <p>
+    A slab total energy grows when more bulk-like layers are added, so it cannot be used directly to compare slabs with different atom counts. For a symmetric slab with two equivalent faces, the source isolates the excess energy per area as
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="surface excess energy per unit area for a symmetric slab">
+      <semantics>
+        <mrow><mi>γ</mi><mo>=</mo><mfrac><mrow><msub><mi>E</mi><mtext>slab</mtext></msub><mo>−</mo><mi>N</mi><msub><mi>E</mi><mtext>bulk</mtext></msub></mrow><mrow><mn>2</mn><mi>A</mi></mrow></mfrac></mrow>
+        <annotation encoding="application/x-tex">&#92;gamma=&#92;frac&#123;E_&#123;&#92;mathrm&#123;slab&#125;&#125;-N E_&#123;&#92;mathrm&#123;bulk&#125;&#125;&#125;&#123;2A&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the numerator as an energy difference at common composition: the slab energy minus the energy of the same number <em>N</em> of atoms in bulk material. The denominator contains the area <em>A</em> of one face and a factor of two because the symmetric slab exposes two equivalent surfaces. The expression therefore does not apply unchanged to inequivalent terminations or composition-changing surfaces; those require explicit chemical reservoirs and a correspondingly generalized surface free energy.
+  </p>
+  <p>
+    The cancellation only works when bulk and slab calculations share a compatible Hamiltonian and tightly controlled numerical representation. A small surface energy obtained by subtracting two large, inconsistently converged energies is not reliable merely because each SCF run ended normally.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 4, §4.6, rewriting source Eq. 4.2 with <em>A</em> denoting the area of one face rather than the combined top-and-bottom area. The reservoir generalization is developed in Chapter 7 of the source.</p>
+</section>
+
+<section aria-labelledby="slab-symmetry">
+  <h2 id="slab-symmetry">Slab symmetry controls a periodic electrostatic artifact</h2>
+  <p>
+    A symmetric slab places equivalent surfaces on opposite sides of a mirror-related cell. Their dipoles cancel, but reproducing the same relaxed depth on both faces usually requires more layers. An asymmetric slab can devote one side to the target surface and hold bulk-like layers on the other side, reducing the atom count for a given relaxed region.
+  </p>
+  <p>
+    That economy creates a new question. If the asymmetric cell has a net dipole normal to the surface, periodic repetition makes it interact with its images and produces an artificial electric field through the vacuum. A dipole correction modifies the periodic electrostatic potential to remove that leading field. It does not repair insufficient vacuum or slab thickness, change an incorrect termination, or remove genuine interactions between adsorbates repeated within the lateral cell.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 4, §4.7 and Fig. 4.12.</p>
+</section>
+
+<section aria-labelledby="adsorption">
+  <h2 id="adsorption">Adsorption needs a declared reaction and coverage</h2>
+  <p>
+    Adsorption adds a second reference problem. For atomic H supplied by gas-phase H₂, one natural energy is
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="hydrogen adsorption energy referenced to half a hydrogen molecule">
+      <semantics>
+        <mrow><msub><mi>E</mi><mtext>ads</mtext></msub><mo>=</mo><msub><mi>E</mi><mrow><mtext>slab</mtext><mo>+</mo><mi>H</mi></mrow></msub><mo>−</mo><msub><mi>E</mi><mtext>slab</mtext></msub><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>E</mi><msub><mi>H</mi><mn>2</mn></msub></msub></mrow>
+        <annotation encoding="application/x-tex">E_&#123;&#92;mathrm&#123;ads&#125;&#125;=E_&#123;&#92;mathrm&#123;slab&#125;+H&#125;-E_&#123;&#92;mathrm&#123;slab&#125;&#125;-&#92;frac&#123;1&#125;&#123;2&#125;E_&#123;H_2&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This equation is a reaction-energy ledger: adsorbed surface minus clean surface minus the chosen gas reservoir. With this sign convention, a negative value favors adsorption relative to that reservoir. Referencing an isolated H atom would answer a different chemical question and produce a different number.
+  </p>
+  <p>
+    The repeated cell also fixes an ordered overlayer. One adsorbate in a smaller lateral cell means a higher coverage and stronger interaction with periodic images; it is not the dilute limit. The source’s H/Cu(100) comparison shows the adsorption energy changing with coverage, while its site comparisons show that apparently simple adsorbates can have multiple local minima. Larger molecules add orientations and conformations. A single high-symmetry starting structure does not establish the preferred adsorption geometry.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 4, §§4.9–4.10, Eq. 4.4, and Tables 4.3–4.4. See <a href={href('/theory/surface-and-interface-chemistry/')}>Surface and Interface Chemistry</a> for deeper reservoir and termination context.</p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>Electronic model</dt><dd>PBE GGA; VASP is used in the book, but the version and exact PAW/pseudopotential dataset identifiers are not reported.</dd>
+    <dt>Cu slabs</dt><dd>380 eV cutoff, 0.1 eV Methfessel–Paxton smearing, Monkhorst–Pack sampling, asymmetric slabs with bottom layers fixed. The relaxation examples use five to eight layers, at least 23 Å vacuum, and 6×6×1 meshes.</dd>
+    <dt>Surface energy reference</dt><dd>A separate bulk fcc primitive-cell calculation with an 11×11×11 mesh is reported.</dd>
+    <dt>Si reconstruction</dt><dd>A four-layer c(4×4) asymmetric slab with two bottom layers fixed and 17 Å vacuum is reported. The Appendix’s printed 11×11×11 mesh for this slab is source-reported but unusually dense and should be checked against the canonical typeset source before reproduction.</dd>
+    <dt>Coverage series</dt><dd>Four-layer c(1×1), c(2×2), and c(4×4) H/Cu(100) slabs use 16×16×1, 12×12×1, and 6×6×1 meshes, respectively; gas-phase H₂ is placed in a 20 Å box.</dd>
+  </dl>
+  <p>
+    <strong>Not reported:</strong> code version, dataset release and valence configuration, SCF and ionic thresholds for each calculation, dipole-correction use in this chapter, and convergence evidence for slab thickness, vacuum, or the quoted adsorption energies. Reproduction must recover those choices rather than infer defaults. Parameter design belongs to the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+</section>

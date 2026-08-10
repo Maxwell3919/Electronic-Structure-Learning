@@ -12,7 +12,7 @@ const limits = {
   fontBytes: 0,
   assetCount: 125,
   largestAssetBytes: 210_000,
-  htmlPages: 102,
+  htmlPages: 113,
 };
 const minimumReductions = { bytes: 0.70, assets: 0.70 };
 const baseline = {

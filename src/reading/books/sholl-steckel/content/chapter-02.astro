@@ -1,0 +1,87 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'cell-defines-question', label: 'The periodic cell defines the question' },
+  { id: 'energy-curves', label: 'Reading energy curves and their curvature' },
+  { id: 'candidate-structures', label: 'Candidate ranking is not unrestricted prediction' },
+  { id: 'pressure', label: 'Pressure changes the quantity to minimize' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'The chapter’s apparently simple total-energy scans establish a durable research habit: state the candidate geometry, vary the intended degree of freedom, compare energies on a common numerical footing, and do not claim more than the sampled candidate set and thermodynamic model support. Chapter 3 now asks whether those energy differences are numerically resolved.';
+---
+
+<section aria-labelledby="cell-defines-question">
+  <h2 id="cell-defines-question">The periodic cell defines the question</h2>
+  <p>
+    The chapter starts from simple cubic metal because one lattice parameter makes the logic visible. A periodic calculation does not contain an isolated “piece” of a crystal; its lattice vectors and fractional coordinates define an infinite repeated structure. A conventional cell and a primitive cell may describe the same crystal with different numbers of explicitly represented atoms, but they generate different computational sizes and reciprocal cells.
+  </p>
+  <p>
+    The hcp example adds the second lattice parameter and therefore exposes a general point: a total energy is a function of all declared structural degrees of freedom. Holding one coordinate fixed while scanning another answers a constrained question. Allowing cell shape and internal positions to relax answers a different one.
+  </p>
+</section>
+
+<section aria-labelledby="energy-curves">
+  <h2 id="energy-curves">Reading energy curves and their curvature</h2>
+  <p>
+    For a fixed candidate structure, repeated calculations at different lattice parameters produce an energy curve. Near a minimum at the equilibrium parameter, the source uses a quadratic expansion,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="quadratic energy near the equilibrium lattice parameter">
+      <semantics>
+        <mrow><mi>E</mi><mo>(</mo><mi>a</mi><mo>)</mo><mo>≈</mo><msub><mi>E</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msub><mi>K</mi><mi>a</mi></msub><msup><mrow><mo>(</mo><mi>a</mi><mo>−</mo><msub><mi>a</mi><mn>0</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow>
+        <annotation encoding="application/x-tex">E(a)&#92;approx E_0+&#92;frac&#123;1&#125;&#123;2&#125;K_a(a-a_0)^2</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The minimum locates the preferred lattice parameter within that structural branch. The positive curvature measures the local energetic penalty for a small distortion and is related, after converting from lattice parameter to volume, to the bulk modulus. If the fitted range extends too far from the minimum, the quadratic approximation fails; an equation of state can represent a wider volume range but still fits calculated points rather than replacing them.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 2, Eqs. 2.1–2.3 and Figs. 2.1–2.4. The notation above isolates the local-curvature content of the source expansion.</p>
+</section>
+
+<section aria-labelledby="candidate-structures">
+  <h2 id="candidate-structures">Candidate ranking is not unrestricted prediction</h2>
+  <p>
+    Comparing the minima of simple cubic, fcc, and hcp Cu ranks those three candidates. It does not prove that no omitted structure lies lower. This is the chapter’s most important scientific boundary: local relaxation can find a minimum inside an initialized basin, and a finite catalog can identify the best member of that catalog, but neither operation enumerates all crystal structures.
+  </p>
+  <p>
+    The boundary generalizes immediately. Magnetic order, defect geometry, adsorbate site, reconstruction, and molecular conformation all require candidate generation in addition to local energy minimization. A converged branch is evidence for that branch, not a certificate of global optimality.
+  </p>
+</section>
+
+<section aria-labelledby="pressure">
+  <h2 id="pressure">Pressure changes the quantity to minimize</h2>
+  <p>
+    At zero temperature and fixed external pressure, the relevant comparison is not simply the minimum of each isolated energy curve. The volume can adjust, so each phase contributes the lowest enthalpy available at that pressure:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="enthalpy minimized over volume at fixed pressure">
+      <semantics>
+        <mrow><mi>H</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mi>min</mi><mi>V</mi></munder><mo>[</mo><mi>E</mi><mo>(</mo><mi>V</mi><mo>)</mo><mo>+</mo><mi>p</mi><mi>V</mi><mo>]</mo></mrow>
+        <annotation encoding="application/x-tex">H(p)=&#92;min_V&#92;left[E(V)+pV&#92;right]</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The common tangent in Fig. 2.5 is the geometric construction for equal enthalpy between two branches: its slope fixes the transition pressure, while its contact points give the volumes adopted by the two phases. At nonzero temperature, entropy must also enter a free energy. The source’s neglect of entropy is a stated low-temperature solid approximation, not a definition of phase stability at arbitrary temperature.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 2, Eqs. 2.8–2.11 and Fig. 2.5. See <a href={href('/core/part-vi/')}>Core Part VI</a> for the controlled-variable hierarchy among electronic energy, Helmholtz free energy, and Gibbs free energy.</p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>Code</dt><dd>VASP; version not reported.</dd>
+    <dt>XC approximation</dt><dd>PW91 GGA unless otherwise stated.</dd>
+    <dt>Representation/core</dt><dd>Plane waves with the code’s frozen-core datasets; the Appendix reports cutoffs but does not identify dataset release or valence configuration.</dd>
+    <dt>Sampling</dt><dd>Monkhorst–Pack by default. The cubic simple-cubic and fcc Cu examples use 12×12×12 meshes; hcp Cu uses a Γ-centered 12×12×8 mesh.</dd>
+    <dt>Cells</dt><dd>One-atom simple-cubic Cu, four-atom conventional fcc Cu, and two-atom primitive hcp Cu.</dd>
+    <dt>Cutoff</dt><dd>292 eV for the reported Cu examples.</dd>
+  </dl>
+  <p>
+    These values reconstruct the book’s examples. They are not reusable convergence settings: the pseudopotential/PAW dataset, target energy difference, cell, stress, and observable determine the needed cutoff and sampling. Parameter selection and convergence evidence belong to the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+</section>

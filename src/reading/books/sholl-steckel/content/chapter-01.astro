@@ -1,0 +1,93 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'why-start-with-applications', label: 'Why the book starts with applications' },
+  { id: 'from-wavefunction-to-density', label: 'From the many-electron problem to density' },
+  { id: 'what-kohn-sham-adds', label: 'What the Kohn–Sham construction adds' },
+  { id: 'two-representation-families', label: 'Localized and periodic representations' },
+  { id: 'limits-and-dated-scope', label: 'Limits and the book’s dated scope' },
+  { id: 'reported-calculation', label: 'What the comparison tables actually report' },
+];
+
+export const synthesis = 'Chapter 1 succeeds when it is read as a map rather than a derivation. The many-electron problem motivates the density; Kohn–Sham orbitals make the density and a large kinetic contribution tractable; the exchange–correlation approximation defines the practical model; and a basis represents that model numerically. The research vignettes then return as a warning: a useful calculation is one whose calculated object and physical question actually match.';
+---
+
+<section aria-labelledby="why-start-with-applications">
+  <h2 id="why-start-with-applications">Why the book starts with applications</h2>
+  <p>
+    Sholl and Steckel deliberately postpone formalism. Their ammonia-catalysis, grain-boundary embrittlement, and planetary-mineral examples first establish a common pattern: an atomistic model supplies energies and electronic information that experiments cannot isolate directly, and those calculated objects are embedded in a larger kinetic, mechanical, or thermodynamic argument. DFT is useful in each case, but the final scientific conclusion is not “the DFT output” alone.
+  </p>
+  <p>
+    This is also the right boundary for the rest of the Guide. The book teaches how a practical plane-wave calculation participates in a physical explanation. It does not make the calculation a substitute for the structural candidate set, thermodynamic model, kinetic network, or comparison evidence that the explanation needs.
+  </p>
+</section>
+
+<section aria-labelledby="from-wavefunction-to-density">
+  <h2 id="from-wavefunction-to-density">From the many-electron problem to density</h2>
+  <p>
+    The source next returns to the Schrödinger equation. For many electrons, the unknown wavefunction is a joint function of all electronic coordinates; the interaction couples those coordinates, so solving separate one-electron equations is not the original problem. The density is attractive because it is a three-dimensional ground-state object that can be integrated, visualized, and connected to energy without retaining every amplitude in the many-particle configuration space.
+  </p>
+  <p>
+    That reduction is not justified merely because density is convenient. The Hohenberg–Kohn result establishes the ground-state density as sufficient for the external-potential ground-state problem under its assumptions; it does not say that the density directly supplies every excited-state observable. Read the formal foundations in <a href={href('/core/part-iv/')}>Core Part IV</a> and the original-paper guides for <a href={href('/reading/literature/hohenberg-kohn-1964/')}>Hohenberg–Kohn</a> and <a href={href('/reading/literature/kohn-sham-1965/')}>Kohn–Sham</a>.
+  </p>
+</section>
+
+<section aria-labelledby="what-kohn-sham-adds">
+  <h2 id="what-kohn-sham-adds">What the Kohn–Sham construction adds</h2>
+  <p>
+    An existence theorem for a density functional is not yet a calculation. Kohn–Sham theory introduces auxiliary orbitals so that the density and an explicitly calculable noninteracting kinetic-energy contribution can be obtained from one-particle equations. In the notation used by the source, the central stationary equation has the structure
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Kohn Sham one electron equation">
+      <semantics>
+        <mrow>
+          <mo>[</mo><mo>−</mo><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><msup><mo>∇</mo><mn>2</mn></msup><mo>+</mo><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>v</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>v</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo>
+          <msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;left[-&#92;frac&#123;&#92;hbar^2&#125;&#123;2m&#125;&#92;nabla^2+v_&#123;&#92;mathrm&#123;ext&#125;&#125;(&#92;mathbf&#123;r&#125;)+v_H[n](&#92;mathbf&#123;r&#125;)+v_&#123;&#92;mathrm&#123;xc&#125;&#125;[n](&#92;mathbf&#123;r&#125;)&#92;right]&#92;phi_i(&#92;mathbf&#123;r&#125;)=&#92;varepsilon_i&#92;phi_i(&#92;mathbf&#123;r&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the operator from left to right: kinetic motion, attraction to the declared nuclei and external fields, classical density–density repulsion, and the exchange–correlation potential that closes the decomposition. Because the last two terms depend on the density built from the orbitals, the operator is not fixed in advance. The orbitals must reproduce the density that generated their own potential, which is why a practical solution is self-consistent.
+  </p>
+  <p>
+    The auxiliary electrons are noninteracting, but the target ground state is not. Interaction effects enter the density-dependent Hartree and exchange–correlation terms. Likewise, an orbital eigenvalue is first an eigenvalue of this auxiliary stationary equation; the chapter’s later discussion of band gaps should not be read as identifying every Kohn–Sham difference with a measured charged or optical excitation.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 1, Eqs. 1.5–1.8 and §§1.4–1.5. The displayed notation is normalized against the modern Kohn–Sham presentation in Core Part IV.</p>
+</section>
+
+<section aria-labelledby="two-representation-families">
+  <h2 id="two-representation-families">Localized and periodic representations</h2>
+  <p>
+    The “quantum chemistry tourist” section compares two representation families. Atom-centered functions can be compact and chemically interpretable for finite systems; plane waves naturally respect periodic boundary conditions and offer systematic cutoff control for extended systems. This is a numerical and computational choice, not a choice between two physical laws. DFT can be solved in localized bases, and wavefunction methods can use periodic representations.
+  </p>
+  <p>
+    The source then compares Hartree–Fock, post-Hartree–Fock, and DFT results. Its durable lesson is that “method level” and “basis completeness” are independent axes: a sophisticated many-body approximation in an inadequate basis is not automatically more reliable than a simpler approximation in a converged representation. The exact cost rankings and feasible system sizes in the 2009 examples are historical snapshots.
+  </p>
+  <p>
+    The labels in those comparisons change different parts of the approximation. Hartree–Fock restricts the many-electron state to one Slater determinant. MP2 adds a perturbative correlation correction around that reference, while CCSD builds a correlated wavefunction through coupled single and double excitations. B3LYP instead remains a density-functional approximation, but a hybrid one that mixes exact exchange with semilocal exchange and correlation. Names such as STO-3G, pVTZ, and the correlation-consistent families label finite atom-centered bases; changing them changes the representation, not the underlying physical theory. Accordingly, Table 1.1 holds the pVTZ basis fixed while changing the method, whereas Table 1.2 holds B3LYP fixed while changing the basis.
+  </p>
+</section>
+
+<section aria-labelledby="limits-and-dated-scope">
+  <h2 id="limits-and-dated-scope">Limits and the book’s dated scope</h2>
+  <p>
+    The source correctly emphasizes three limitations: approximate exchange–correlation functionals create model error; ordinary ground-state Kohn–Sham calculations do not generally return charged or optical excitation energies; and system size restricts the phenomena that can be represented explicitly. Its examples of band-gap error and long-range dispersion remain important, but the method landscape has changed substantially since publication.
+  </p>
+  <div class="callout" role="note" aria-label="Modern scope of Chapter 1">
+    <p><strong>Modern boundary.</strong> Periodic hybrid and exact-exchange calculations are now routine enough to be standard method branches, and dispersion-inclusive functionals and corrections are widely implemented. Their availability does not make them universally accurate. The Kohn–Sham gap, charged fundamental gap, quasiparticle gap, neutral excitation, and optical onset remain distinct objects, as developed in <a href={href('/core/part-viii/')}>Core Part VIII</a>.</p>
+  </div>
+</section>
+
+<section aria-labelledby="reported-calculation">
+  <h2 id="reported-calculation">What the comparison tables actually report</h2>
+  <p>
+    Tables 1.1–1.2 report CH₄ bond lengths, ionization energies, and relative timings for HF, B3LYP, MP2, and CCSD at a pVTZ basis, followed by B3LYP calculations across STO-3G and correlation-consistent basis families. This supports the chapter’s two-axis comparison of physical approximation and numerical representation.
+  </p>
+  <p>
+    <strong>Not reported in the chapter:</strong> program and version, integral and SCF thresholds, geometry-optimization details, hardware, and enough provenance to reproduce the timings exactly. The numbers are therefore a teaching comparison, not a reproducible benchmark specification or a present-day performance table.
+  </p>
+</section>

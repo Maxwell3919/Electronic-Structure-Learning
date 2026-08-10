@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { shollSteckelChapters } from '../../../../reading/books/sholl-steckel';
+import { shollSteckelCanonicalSource } from '../../../../reading/books/sholl-steckel/source-reading';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout
+  title="Sholl & Steckel · Density Functional Theory: A Practical Introduction"
+  description="A source-aligned guide to Sholl and Steckel's practical introduction to plane-wave density-functional calculations."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <a href={href('/reading/books/')}>Books</a>
+    <span aria-hidden="true">/</span>
+    <span>Sholl &amp; Steckel</span>
+  </nav>
+
+  <h1>Sholl &amp; Steckel · Density Functional Theory: A Practical Introduction</h1>
+  <p class="lede">
+    A source-aligned guide to the 2009 book by David S. Sholl and Janice A. Steckel. Its distinctive contribution is practical judgment: how a plane-wave DFT calculation becomes a model of a solid, surface, vibration, activated process, phase equilibrium, electronic structure, or trajectory—and where numerical precision stops short of physical validity.
+  </p>
+  <p>
+    The guide follows the book’s ten chapters in their original order. It preserves the reported examples and calculation details while marking statements whose scope has changed since 2009. Execution recipes, parameter selection, convergence campaigns, and reproducibility belong to the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+  <p class="paper-meta">
+    Source: David S. Sholl and Janice A. Steckel, <cite>Density Functional Theory: A Practical Introduction</cite> (Wiley, 2009). <a href={shollSteckelCanonicalSource.href}>{shollSteckelCanonicalSource.label}</a>.
+  </p>
+
+  <section aria-labelledby="how-to-read">
+    <h2 id="how-to-read">How to use this guide</h2>
+    <p>
+      Keep the source open beside the Atlas. Each chapter page reconstructs the argument, explains the decisive equations, identifies useful figures without copying the textbook artwork, and translates the Appendix calculation details into model, approximation, representation, sampling, and solver layers. “Reported” always means reported by this book; it does not turn a 2009 example into a recommended present-day input.
+    </p>
+  </section>
+
+  <section aria-labelledby="source-sequence">
+    <h2 id="source-sequence">Source sequence</h2>
+    <ol class="section-list source-list">
+      {shollSteckelChapters.map((chapter) => (
+        <li>
+          <h3>Chapter {chapter.number} · {chapter.title}</h3>
+          <p class="item-summary">{chapter.contribution}</p>
+          <a href={href(chapter.route)}>Read Chapter {chapter.number} →</a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section aria-labelledby="atlas-connections">
+    <h2 id="atlas-connections">Read the book and the Atlas together</h2>
+    <p>
+      <a href={href('/core/')}>Core</a> gives the Atlas’s modern theory-to-computation spine. This Guide instead preserves the practical sequence of one source. Use <a href={href('/theory/')}>Foundations</a> for prerequisite repair, and use the workflow handoff when you are ready to design or validate an actual calculation.
+    </p>
+  </section>
+</BaseLayout>

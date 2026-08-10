@@ -1,0 +1,86 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'dos-reorganizes-spectrum', label: 'DOS reorganizes the one-particle spectrum' },
+  { id: 'metals-and-gaps', label: 'Metals, gaps, and what Kohn–Sham energies mean' },
+  { id: 'local-and-projected', label: 'Local and projected information is framework-dependent' },
+  { id: 'magnetic-branches', label: 'Spin polarization creates competing branches' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'Chapter 8 teaches the reader to reorganize a converged one-particle solution without overpromoting the result. DOS counts Kohn–Sham levels by energy, projections partition that spectrum by a chosen representation, charge analyses partition density by a chosen rule, and spin-polarized calculations compare declared magnetic branches. Each object answers a useful but narrower question than a measured spectrum, unique atomic charge, or global magnetic ground state.';
+---
+
+<section aria-labelledby="dos-reorganizes-spectrum">
+  <h2 id="dos-reorganizes-spectrum">DOS reorganizes the one-particle spectrum</h2>
+  <p>
+    The chapter begins with the density of states because it compresses a large set of band eigenvalues into an energy distribution. For a periodic Kohn–Sham calculation the conceptual object is
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="density of states from band energies over the Brillouin zone">
+      <semantics>
+        <mrow><mi>D</mi><mo>(</mo><mi>E</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><msub><mo>∫</mo><mtext>BZ</mtext></msub><mfrac><msup><mi mathvariant="normal">d</mi><mi>d</mi></msup><mi mathvariant="bold">k</mi><msub><mi>Ω</mi><mtext>BZ</mtext></msub></mfrac><mi>δ</mi><mo>(</mo><mi>E</mi><mo>−</mo><msub><mi>ε</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">D(E)=&#92;sum_n&#92;int_&#123;&#92;mathrm&#123;BZ&#125;&#125;&#92;frac&#123;&#92;mathrm&#123;d&#125;^&#123;d&#125;&#92;mathbf&#123;k&#125;&#125;&#123;&#92;Omega_&#123;&#92;mathrm&#123;BZ&#125;&#125;&#125;&#92;,&#92;delta&#92;!&#92;left(E-&#92;varepsilon_&#123;n&#92;mathbf&#123;k&#125;&#125;&#92;right)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The band index <em>n</em> and crystal momentum <strong>k</strong> locate each auxiliary one-particle state. The Dirac delta places its weight at the corresponding eigenvalue, and integration forgets where in the Brillouin zone that state occurred. A band plot retains selected momentum dependence; a DOS retains energy counts. Neither is “the electron density in k space.”
+  </p>
+  <p>
+    A numerical DOS replaces the delta peaks by bins, tetrahedra, or a broadening function and samples the Brillouin zone on a finite mesh. Peak height and fine structure can therefore depend on mesh and broadening even after the ground-state SCF calculation is converged. A high-symmetry band path is not a suitable substitute for this full-zone integration.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 8, §8.1 and Figs. 8.1–8.6. The explicit band-eigenvalue form corrects the source’s informal phrase “integrating the electron density in k space” and follows <a href={href('/core/part-iii/')}>Core Part III</a>.</p>
+</section>
+
+<section aria-labelledby="metals-and-gaps">
+  <h2 id="metals-and-gaps">Metals, gaps, and what Kohn–Sham energies mean</h2>
+  <p>
+    In the one-particle filling picture, a finite DOS at the Fermi energy signals occupied and unoccupied states arbitrarily close in energy, while a zero-DOS interval separates occupied and empty bands in a band insulator. The Ag and Pt examples show how the overall DOS shape differs even among metals; Si and quartz show gaps of very different scales.
+  </p>
+  <p>
+    These are properties of the calculated Kohn–Sham spectrum. The exact density-functional ground-state theory does not identify a general Kohn–Sham conduction-band energy with the charged addition energy, and an optical onset also includes a neutral electron–hole problem. A semilocal Kohn–Sham gap can be useful for qualitative classification yet quantitatively poor as a fundamental or optical gap. Ag₂O in the source is a warning that even the metal/semiconductor classification can fail for a chosen approximation.
+  </p>
+  <p>
+    Smearing does not erase this distinction. It regularizes occupations and integration in a calculation; it should not be read as proof of metallicity, nor as a universal reason to avoid every occupation method in a semiconductor. The relevant question is whether the occupation scheme and its width bias the target energy, density, force, or spectral interpretation.
+  </p>
+  <p class="paper-meta">Modern boundary: charged, neutral, quasiparticle, and optical gaps are separated in <a href={href('/core/part-viii/')}>Core Part VIII</a>.</p>
+</section>
+
+<section aria-labelledby="local-and-projected">
+  <h2 id="local-and-projected">Local and projected information is framework-dependent</h2>
+  <p>
+    A local DOS resolves the spectral weight in a region of space; an orbital-projected DOS resolves it against chosen projectors. These objects help associate energy ranges with atoms, angular channels, or bonds, as in the source’s quartz example. They are not unique decompositions of the many-electron system: projector radius, basis, augmentation convention, energy window, and nonorthogonality can change the assigned weights while leaving the total state unchanged.
+  </p>
+  <p>
+    Charge analysis has the same responsibility boundary. Integrating density inside spheres, projecting onto atomic functions, or dividing space into Bader basins yields framework-specific numbers. Formal oxidation state is chemical bookkeeping; a Bader charge is a topological partition; a projected occupation is a representation-dependent expectation. Agreement or disagreement among them can be informative, but none becomes “the unique charge on an atom.”
+  </p>
+</section>
+
+<section aria-labelledby="magnetic-branches">
+  <h2 id="magnetic-branches">Spin polarization creates competing branches</h2>
+  <p>
+    A collinear spin-polarized calculation allows different densities for two chosen spin channels. Their difference gives a magnetization density and its cell integral gives the corresponding spin moment in that model. This can lower the energy relative to a constrained nonmagnetic solution, as the bcc Fe example illustrates.
+  </p>
+  <p>
+    The initial moments and magnetic cell also determine which branches the solver can reach. Ferromagnetic, antiferromagnetic, ferrimagnetic, noncollinear, and spin–orbit-coupled states are distinct model spaces. Converging one initialization shows a stationary self-consistent branch; establishing a magnetic ground state requires comparing chemically and symmetrically plausible branches on compatible numerical footing.
+  </p>
+  <div class="callout" role="note" aria-label="Magnetic model boundary">
+    <p><strong>Do not collapse the spin model.</strong> Scalar relativity, collinear spin polarization, noncollinear magnetism, and spin–orbit coupling change different parts of the Hamiltonian. A moment from one of these models cannot silently stand in for the others.</p>
+  </div>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>Common approximation</dt><dd>PW91 GGA and Monkhorst–Pack sampling.</dd>
+    <dt>Bulk DOS systems</dt><dd>Ag, Pt, Si, quartz, and Ag₂O use source-reported cutoffs of 396, 239, 151, 396, and 396 eV. Exact core datasets, code version, DOS broadening, and projection conventions are not reported in the Appendix.</dd>
+    <dt>Si</dt><dd>The primitive two-atom calculation uses a 12×12×12 mesh; the 54-atom Au-substituted Si cell uses a 181 eV cutoff. The source text gives the supercell-specific sampling near its examples rather than one complete reproduction ledger.</dd>
+    <dt>bcc Fe</dt><dd>Two-atom cubic cell, 5×5×5 mesh, 270 eV cutoff. Section 8.3 and Fig. 8.10 compare non-spin-polarized, ferromagnetic, and antiferromagnetic branches. Branch-specific initial moments, occupation settings, SCF tolerances, and a broader search over magnetic orderings are not reported.</dd>
+  </dl>
+  <p>
+    The reported numbers locate each figure inside the book’s calculation stack; they are not sufficient to reproduce the curves exactly. A modern paper should also state projector/broadening definitions, spin and relativistic treatment, dataset provenance, Fermi-level convention, and convergence of the plotted features.
+  </p>
+</section>

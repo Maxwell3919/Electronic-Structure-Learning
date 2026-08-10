@@ -53,12 +53,15 @@ MARTIN_PUBLISHED_UNIT_ROUTES = [f"reading/books/martin/{slug}/" for slug in MART
 MARTIN_UNPUBLISHED_UNIT_ROUTES = [route for route in MARTIN_ALL_UNIT_ROUTES if route not in MARTIN_PUBLISHED_UNIT_ROUTES]
 PUBLISHED_CHAPTER_ROUTES = [route for route in MARTIN_PUBLISHED_UNIT_ROUTES if "/chapter-" in route]
 PUBLISHED_APPENDIX_ROUTES = [route for route in MARTIN_PUBLISHED_UNIT_ROUTES if "/appendix-" in route]
+SHOLL_STECKEL_CHAPTER_ROUTES = [f"reading/books/sholl-steckel/chapter-{number:02d}/" for number in range(1, 11)]
+SHOLL_STECKEL_MATH_ROUTES = SHOLL_STECKEL_CHAPTER_ROUTES[:9]
 LITERATURE_ROUTES = [
     "reading/literature/hohenberg-kohn-1964/",
     "reading/literature/kohn-sham-1965/",
 ]
 CANONICAL_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
+    "reading/books/sholl-steckel/", *SHOLL_STECKEL_CHAPTER_ROUTES,
     "reading/literature/", *LITERATURE_ROUTES,
 ]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
@@ -78,6 +81,7 @@ for route in [
         representative_units.append(route)
 BROWSER_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *representative_units,
+    "reading/books/sholl-steckel/", *SHOLL_STECKEL_CHAPTER_ROUTES,
     "reading/literature/", *LITERATURE_ROUTES,
 ]
 BROWSER_ROUTES = [
@@ -140,7 +144,7 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
 
         math_count = 0
-        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in LITERATURE_ROUTES:
+        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in LITERATURE_ROUTES or route in SHOLL_STECKEL_MATH_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
                 "const box=node.getBoundingClientRect();return {width:box.width,height:box.height,"
@@ -363,6 +367,12 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"Part I lacks Chapter links in {mode}")
         if route in MARTIN_PUBLISHED_UNIT_ROUTES and "Core Idea." not in main_text:
             raise AssertionError(f"published Martin unit lacks Core Idea in {mode}: {route}")
+        if route == "reading/books/sholl-steckel/" and "Read Chapter 1" not in main_text:
+            raise AssertionError(f"Sholl & Steckel book page lacks Chapter links in {mode}")
+        if route in SHOLL_STECKEL_CHAPTER_ROUTES:
+            for marker in ["Core Idea.", "Chapter overview", "Read the source figures", "Source anchor"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Sholl & Steckel chapter lacks {marker} in {mode}: {route}")
         if route in LITERATURE_ROUTES:
             if "What the paper established" not in main_text or "DOI 10.1103" not in main_text:
                 raise AssertionError(f"literature guide lacks source result or canonical DOI in {mode}: {route}")

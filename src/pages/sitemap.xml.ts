@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { martinParts } from '../reading/books/martin';
 import { martinChapterSlugs } from '../reading/books/martin/chapter-content';
+import { shollSteckelChapterSlugs } from '../reading/books/sholl-steckel/chapter-content';
 
 const fixedRoutes = [
   '/',
@@ -18,6 +19,7 @@ const fixedRoutes = [
   '/reading/',
   '/reading/books/',
   '/reading/books/martin/',
+  '/reading/books/sholl-steckel/',
   '/reading/literature/',
   '/reading/literature/hohenberg-kohn-1964/',
   '/reading/literature/kohn-sham-1965/',
@@ -32,9 +34,10 @@ const martinRoutes = [
   ...martinParts.map((part) => part.route),
   ...martinChapterSlugs.map((slug) => `/reading/books/martin/${slug}/`),
 ];
+const shollSteckelRoutes = shollSteckelChapterSlugs.map((slug) => `/reading/books/sholl-steckel/${slug}/`);
 
 export const GET: APIRoute = ({ site }) => {
-  const routes = [...new Set([...fixedRoutes, ...theoryRoutes, ...martinRoutes])].sort();
+  const routes = [...new Set([...fixedRoutes, ...theoryRoutes, ...martinRoutes, ...shollSteckelRoutes])].sort();
   const base = `${import.meta.env.BASE_URL.replace(/^\/|\/$/g, '')}/`;
   const urls = routes.map((route) => `  <url><loc>${new URL(`${base}${route.replace(/^\//, '')}`, site)}</loc></url>`);
   return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`, {

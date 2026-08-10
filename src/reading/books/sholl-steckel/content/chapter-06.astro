@@ -1,0 +1,98 @@
+---
+export const sectionLinks = [
+  { id: 'from-minima-to-rates', label: 'An energy minimum does not give a rate' },
+  { id: 'harmonic-tst', label: 'What harmonic transition-state theory adds' },
+  { id: 'finding-the-path', label: 'Finding a path and its saddle point' },
+  { id: 'mechanism-network', label: 'A rate catalog defines the dynamical model' },
+  { id: 'quantum-boundaries', label: 'Barrierless motion, tunneling, and zero-point energy' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'Chapter 6 adds kinetics to the static energy surface. DFT supplies energies, forces, and local curvatures; transition-state theory converts a specified saddle and reactant basin into a rate under statistical assumptions; NEB searches for a path; and kinetic Monte Carlo propagates a declared event catalog. Omitting a mechanism is a model error, not a convergence error in the barrier that was calculated.';
+---
+
+<section aria-labelledby="from-minima-to-rates">
+  <h2 id="from-minima-to-rates">An energy minimum does not give a rate</h2>
+  <p>
+    Earlier chapters locate stable geometries and compare their energies. A rate asks a different question: how often does a trajectory leave one basin and enter another? Two states can have the same energy difference yet interconvert on radically different time scales because the path between them crosses a different barrier.
+  </p>
+  <p>
+    The one-dimensional picture uses a reactant minimum <em>A</em>, a saddle at the top of the dividing barrier, and an activation energy equal to their energy difference. The barrier is defined along a path on the multidimensional Born–Oppenheimer energy surface, not along an arbitrary straight coordinate. A lower final state does not imply a fast forward process.
+  </p>
+</section>
+
+<section aria-labelledby="harmonic-tst">
+  <h2 id="harmonic-tst">What harmonic transition-state theory adds</h2>
+  <p>
+    Transition-state theory assumes local equilibrium in the reactant basin and counts flux through a dividing surface near the saddle, with recrossing neglected in its simplest form. In the source’s classical harmonic approximation the rate has the structure
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="classical harmonic transition state theory rate">
+      <semantics>
+        <mrow>
+          <msub><mi>k</mi><mrow><mi>A</mi><mo>→</mo><mi>B</mi></mrow></msub><mo>=</mo>
+          <mfrac><mrow><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>ν</mi><mi>i</mi></msub></mrow><mrow><munderover><mo>∏</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></munderover><msubsup><mi>ν</mi><mi>j</mi><mo>‡</mo></msubsup></mrow></mfrac>
+          <msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mfrac><mrow><mi>Δ</mi><mi>E</mi></mrow><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi></mrow></mfrac></mrow></msup>
+        </mrow>
+        <annotation encoding="application/x-tex">k_&#123;A&#92;to B&#125;=&#92;frac&#123;&#92;prod_&#123;i=1&#125;^&#123;N&#125;&#92;nu_i&#125;&#123;&#92;prod_&#123;j=1&#125;^&#123;N-1&#125;&#92;nu_j^&#123;&#92;ddagger&#125;&#125;&#92;,&#92;mathrm&#123;e&#125;^&#123;-&#92;Delta E/(k_B T)&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The exponential contains the classical barrier <em>ΔE</em> divided by the thermal scale <em>k</em><sub>B</sub><em>T</em>, and gives the dominant temperature sensitivity. The ratio of vibrational products is the harmonic prefactor: the reactant basin has <em>N</em> stable modes, while the saddle has one unstable reaction coordinate and therefore only <em>N</em>−1 stable frequencies in the denominator. The imaginary saddle frequency diagnoses the downhill direction; it is not inserted as an ordinary positive vibration in this expression. Common rigid translations, rotations, and constrained coordinates must be removed or treated consistently in the two products rather than counted as ordinary vibrations.
+  </p>
+  <p>
+    This equation is already a model stack. Its energy and curvatures may come from DFT, but local harmonic motion, equilibrium occupation of the basin, a suitable dividing surface, and negligible recrossing are additional assumptions. A precisely converged barrier does not validate them.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 6, §§6.1–6.2 and Eqs. 6.8–6.15.</p>
+</section>
+
+<section aria-labelledby="finding-the-path">
+  <h2 id="finding-the-path">Finding a path and its saddle point</h2>
+  <p>
+    A direct local optimizer descends toward a minimum, so it is poorly suited to finding a saddle. The elastic-band idea places intermediate images between known endpoints and connects them with artificial springs. The nudged elastic band separates two roles: the real force is retained perpendicular to the path so images approach a minimum-energy path, while the spring force is retained mainly along the path so the images do not collapse into the endpoint basins.
+  </p>
+  <p>
+    The highest image of an ordinary NEB is an estimate of the saddle, not automatically a stationary point. Climbing-image refinement drives a selected image uphill along the path and downhill perpendicular to it. Even then, the result depends on endpoint correctness, image count and placement, path initialization, force tolerance, periodic-image conventions, and whether a different mechanism offers a lower barrier.
+  </p>
+  <div class="callout" role="note" aria-label="Path search boundary">
+    <p><strong>Read the path physically.</strong> An NEB band is a discretized search object, not a time trajectory. The image index is not time, the springs are not physical interactions, and a converged path between two chosen endpoints does not prove mechanism completeness.</p>
+  </div>
+</section>
+
+<section aria-labelledby="mechanism-network">
+  <h2 id="mechanism-network">A rate catalog defines the dynamical model</h2>
+  <p>
+    The Cu surface-diffusion example shows why one saddle is rarely the whole kinetics. Direct hopping and exchange can compete, and their barrier ordering can change with local chemical environment. Once individual rates are known, kinetic Monte Carlo can advance among discrete states with probabilities proportional to those rates and a stochastic time increment.
+  </p>
+  <p>
+    The method is exact only for the declared Markov event model. Missing cluster shapes, local compositions, adsorption events, three-dimensional motion, or correlated mechanisms remain impossible no matter how long the simulation runs. Multiple stochastic trajectories address sampling uncertainty inside the catalog; they do not reveal events that the catalog forbids.
+  </p>
+  <p>
+    This is the chapter’s strongest implementation lesson: DFT determines selected local ingredients, while the kinetic network determines which large-scale dynamics can exist. The two evidence layers must be audited separately.
+  </p>
+</section>
+
+<section aria-labelledby="quantum-boundaries">
+  <h2 id="quantum-boundaries">Barrierless motion, tunneling, and zero-point energy</h2>
+  <p>
+    The source closes by naming regimes where classical harmonic TST loses control. Barrierless sticking has no activated saddle of the assumed kind. Light nuclei can tunnel through a barrier, particularly at low temperature. Zero-point energies shift the reactant and saddle reference levels, and anharmonicity changes both populations and flux.
+  </p>
+  <p>
+    A zero-point-corrected activation energy subtracts the reactant’s harmonic ground-state energy from that of the saddle’s stable modes. In the source’s low-temperature harmonic limit the prefactor approaches <em>k</em><sub>B</sub><em>T</em>/<em>h</em>, while the corrected barrier remains in the exponential. This is a useful limiting case, not a universal tunneling theory. Hydrogen-transfer reactions often require a method that treats nuclear quantum effects more directly.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>Physical systems</dt><dd>Ag adatom hopping and Cu self-diffusion on Cu(100).</dd>
+    <dt>Slab model</dt><dd>Asymmetric four-layer c(4×4) Cu slab with eight atoms per layer, bottom two layers fixed, more than 28 Å vacuum, and a dipole correction normal to the surface.</dd>
+    <dt>Electronic setup</dt><dd>PBE GGA, 380 eV cutoff, 0.1 eV Methfessel–Paxton smearing; exact code version and core-dataset identity are not reported.</dd>
+    <dt>Ag hopping</dt><dd>4×4×1 mesh; finite-displacement frequencies use 0.04 Å steps; NEB uses eight intermediate images plus two endpoints.</dd>
+    <dt>Cu mechanisms</dt><dd>Seven-image NEB calculations with a 2×2×1 mesh.</dd>
+  </dl>
+  <p>
+    <strong>Not reported:</strong> exact force thresholds, spring constants, tangent/climbing-image settings, SCF controls, dataset provenance, or evidence that the mechanism catalog is complete. The source reports a conjugate-gradient relaxation but not enough detail to reproduce the path bit for bit. Modern execution and validation belong to the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+</section>
