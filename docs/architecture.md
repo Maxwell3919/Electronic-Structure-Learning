@@ -6,15 +6,15 @@ The public information architecture is:
 
 ```text
 Home
+Core
 Foundations
-└── Core
 Guided Reading
 Methods
 Computational Tools
 Reference
 ```
 
-Core is entered from Foundations and from a secondary link within Home's Foundations description rather than added to the primary header or presented as a peer Home entrance during its first public batch. This preserves the established navigation while the continuity, page length, mathematical density, and visual language of the new route are evaluated.
+Core and Foundations are peer learning entrances. Core is the primary continuous teaching route; Foundations repairs prerequisite gaps without becoming a parent container for Core. The established `/theory/` paths remain unchanged.
 
 The implementation uses Plain Astro pages, one shared layout, and one global stylesheet. It has no Starlight layer, general content registry, search index, client hydration, packaged fonts, interactive runtime, backend, account system, or database.
 

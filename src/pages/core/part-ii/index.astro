@@ -5,9 +5,9 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Part II · Fermions, Mean Fields, and Correlation" description="Antisymmetry, determinants, Hartree and Hartree–Fock mean fields, exchange, and correlation beyond one determinant." current="theory">
+<BaseLayout title="Part II · Fermions, Mean Fields, and Correlation" description="Antisymmetry, determinants, Hartree and Hartree–Fock mean fields, exchange, and correlation beyond one determinant." current="core">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part II</span>
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part II</span>
   </nav>
 
   <p class="secondary">Part II</p>

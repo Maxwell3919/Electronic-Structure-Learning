@@ -148,8 +148,8 @@ def inspect(driver, mode, expected_width=None):
 
         if route in CORE_ROUTES:
             current_links = driver.find_elements(By.CSS_SELECTOR, 'header a[aria-current="page"]')
-            if len(current_links) != 1 or current_links[0].text != "Foundations":
-                raise AssertionError(f"Core route does not retain the Foundations navigation context in {mode}: {url}")
+            if len(current_links) != 1 or current_links[0].text != "Core":
+                raise AssertionError(f"Core route does not use its independent navigation context in {mode}: {url}")
         if route == "core/":
             for label in [
                 "Orientation · What Electronic Structure Explains",

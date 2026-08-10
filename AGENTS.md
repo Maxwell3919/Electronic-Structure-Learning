@@ -4,7 +4,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 ## Scope
 
-This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently organized as Home, Foundations, Guided Reading, Methods, Computational Tools, Reference, thirty-nine individually reviewed Foundations pages, and source-aligned Guided Reading pages. The established Foundations routes remain under `/theory/` during the first migration phase.
+This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently organized as Home, Core, Foundations, Guided Reading, Methods, Computational Tools, Reference, thirty-nine individually reviewed Foundations pages, and source-aligned Guided Reading pages. Core is the continuous teaching route; Foundations is its peer prerequisite-repair map. The established Foundations routes remain under `/theory/` during the first migration phase.
 
 Guided Reading is grouped by source type. Book guides live below `/reading/books/`; Martin is the first book route at `/reading/books/martin/`. The former `/reading/martin/` path is compatibility-only and must not become the canonical content location. Lecture routes are added only after a real reviewed guide exists.
 

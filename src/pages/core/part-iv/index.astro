@@ -5,9 +5,9 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Part IV · Density Functional Theory" description="How the interacting ground-state problem becomes a density variational theory, why Kohn–Sham orbitals are auxiliary, and where exchange-correlation approximations and self-consistency enter." current="theory">
+<BaseLayout title="Part IV · Density Functional Theory" description="How the interacting ground-state problem becomes a density variational theory, why Kohn–Sham orbitals are auxiliary, and where exchange-correlation approximations and self-consistency enter." current="core">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part IV</span>
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part IV</span>
   </nav>
 
   <p class="secondary">Part IV</p>

@@ -5,9 +5,9 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="What Electronic Structure Explains" description="Why electronic states connect electrons and nuclei to energies, bonding, response, and excitation." current="theory">
+<BaseLayout title="What Electronic Structure Explains" description="Why electronic states connect electrons and nuclei to energies, bonding, response, and excitation." current="core">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Orientation</span>
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Orientation</span>
   </nav>
 
   <p class="secondary">Orientation</p>

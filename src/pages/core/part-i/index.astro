@@ -5,9 +5,9 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Part I · The Quantum Problem of Matter" description="The coupled electron–nuclear Hamiltonian, its many-particle state, and the Born–Oppenheimer fixed-nuclei problem." current="theory">
+<BaseLayout title="Part I · The Quantum Problem of Matter" description="The coupled electron–nuclear Hamiltonian, its many-particle state, and the Born–Oppenheimer fixed-nuclei problem." current="core">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part I</span>
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part I</span>
   </nav>
 
   <p class="secondary">Part I</p>

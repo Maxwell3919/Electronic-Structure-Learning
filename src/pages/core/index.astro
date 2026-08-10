@@ -5,11 +5,7 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Core" description="A continuous explanation of the physical objects and approximations that make electronic-structure theory possible." current="theory">
-  <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><span aria-current="page">Core</span>
-  </nav>
-
+<BaseLayout title="Core" description="A continuous explanation of the physical objects and approximations that make electronic-structure theory possible." current="core">
   <h1>Core</h1>
   <p class="lede">Core is the Atlas’s continuous account of why electronic-structure problems exist, which quantum objects describe them, and how reformulations, declared approximations, finite representations, and solution procedures make them calculable.</p>
   <p>It is readable on its own. <a href={href('/theory/')}>Foundations</a> supplies prerequisite repair when a mathematical or physical concept needs more depth; <a href={href('/reading/')}>Guided Reading</a> follows the logic of individual sources instead.</p>

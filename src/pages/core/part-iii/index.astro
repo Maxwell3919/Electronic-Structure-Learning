@@ -5,9 +5,9 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
-<BaseLayout title="Part III · Periodic Matter and Electronic States" description="How translation symmetry organizes one-particle states into Bloch sectors, reciprocal-space labels, bands, occupations, densities of states, and Fermi surfaces." current="theory">
+<BaseLayout title="Part III · Periodic Matter and Electronic States" description="How translation symmetry organizes one-particle states into Bloch sectors, reciprocal-space labels, bands, occupations, densities of states, and Fermi surfaces." current="core">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part III</span>
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part III</span>
   </nav>
 
   <p class="secondary">Part III</p>
