@@ -138,6 +138,10 @@ const checkCorePages = (baseDirectory, mode) => {
   for (const marker of ['lattice-duality', 'bloch-phase', 'band-formation', 'band-dos']) {
     assert(partIII.includes(`class="core-diagram ${marker}"`), `${prefix}/part-iii/${extension} lacks original diagram ${marker}`);
   }
+  assert(count(partIII, /class="equation-source"/g) === 1, `${prefix}/part-iii/${extension} must keep one nearby lattice source without a citation forest`);
+  for (const marker of ['Sources and further reading', 'class="source-map"', 'Sec. 4.3', 'Ch. 14', 'unitary', 't\\to 0', 'whole Brillouin zone']) {
+    assert(partIII.includes(marker), `${prefix}/part-iii/${extension} lacks equation-pedagogy marker ${marker}`);
+  }
 };
 
 const checkReadingManifest = () => {

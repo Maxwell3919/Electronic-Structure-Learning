@@ -205,6 +205,20 @@ def inspect(driver, mode, expected_width=None):
             )
             if not diagram_text or any(item["height"] < 9 or not item["text"] for item in diagram_text):
                 raise AssertionError(f"Part III diagram text is not legible in {mode}")
+            main_text = driver.find_element(By.TAG_NAME, "main").text
+            for marker in ["Sources and further reading", "Translation is unitary", "vanishes, different sites no longer communicate", "whole Brillouin zone"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Part III lacks equation-pedagogy marker {marker} in {mode}")
+            math_typography = driver.execute_script(
+                "const display=document.querySelector('.math-display math'),inline=document.querySelector('math.math-inline');"
+                "const ds=getComputedStyle(display),is=getComputedStyle(inline);"
+                "return {displayLineHeight:ds.lineHeight,displayFont:ds.fontFamily,inlineLineHeight:is.lineHeight,"
+                "inlineAlign:is.verticalAlign,sources:document.querySelectorAll('.equation-source, .source-map dt').length};"
+            )
+            if math_typography["displayLineHeight"] != "normal" or math_typography["inlineLineHeight"] != "normal":
+                raise AssertionError(f"Part III native MathML line height is not typography-safe in {mode}")
+            if "math" not in math_typography["displayFont"].lower() or math_typography["sources"] < 5:
+                raise AssertionError(f"Part III lacks math-font fallback or equation sources in {mode}")
 
         main_text = driver.find_element(By.TAG_NAME, "main").text
         if route == "reading/books/martin/" and "Read Part I" not in main_text:
