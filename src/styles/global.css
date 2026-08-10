@@ -563,6 +563,47 @@ figcaption {
   text-align: center;
 }
 
+.derivative-map ol,
+.structure-loop ol,
+.stability-ladder ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-block: 1px solid #d7d7d7;
+  background: #ffffff;
+  list-style: none;
+}
+.derivative-map ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.structure-loop ol,
+.stability-ladder ol { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.derivative-map li,
+.structure-loop li,
+.stability-ladder li {
+  margin: 0;
+  padding: 0.9rem 1rem;
+}
+.derivative-map li + li,
+.structure-loop li + li,
+.stability-ladder li + li { border-inline-start: 1px solid #d7d7d7; }
+.derivative-map li span,
+.structure-loop li span,
+.stability-ladder li span {
+  display: block;
+  margin-top: 0.3rem;
+  color: #555555;
+  font-size: 0.9rem;
+}
+.structure-energy-curve .slope-guide {
+  stroke: #8a5a24;
+  stroke-width: 2;
+}
+.structure-energy-curve .curvature-guide {
+  fill: none;
+  stroke: #607d99;
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
 .core-diagram svg {
   display: block;
   width: 100%;
@@ -645,6 +686,9 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .representation-views,
   .core-treatment-map > div,
   .nested-solve > div,
+  .derivative-map ol,
+  .structure-loop ol,
+  .stability-ladder ol,
   .hamiltonian-map > div,
   .scf-flow ol,
   .h2-reference ol { display: block; }
@@ -677,6 +721,12 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .representation-views section + section,
   .core-treatment-map section + section,
   .nested-solve section + section {
+    border-inline-start: 0;
+    border-top: 1px solid #d7d7d7;
+  }
+  .derivative-map li + li,
+  .structure-loop li + li,
+  .stability-ladder li + li {
     border-inline-start: 0;
     border-top: 1px solid #d7d7d7;
   }
