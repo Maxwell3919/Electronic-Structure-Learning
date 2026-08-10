@@ -27,6 +27,7 @@ What Electronic Structure Explains
 → The Quantum Problem of Matter
 → Fermions, Mean Fields, and Correlation
 → Periodic Matter and Electronic States
+→ Density Functional Theory
 ```
 
 Later conceptual directions may appear in a roadmap, but they do not receive routes until reviewed content exists. Core remains readable without leaving the sequence; links to Foundations supply optional prerequisite depth, links to Guided Reading offer a source-specific alternative, and DFT Research Workflow begins when the task becomes execution, convergence, validation, or evidence.

@@ -29,8 +29,8 @@ const theorySlugs = [
   'self-consistent-field-methods', 'solid-state-chemistry', 'solid-state-physics',
   'statistical-mechanics', 'surface-and-interface-chemistry', 'thermodynamics',
 ];
-const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii'];
-const forbiddenCorePartSlugs = ['part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
+const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv'];
+const forbiddenCorePartSlugs = ['part-v', 'part-vi', 'part-vii', 'part-viii'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -126,7 +126,7 @@ const checkCorePages = (baseDirectory, mode) => {
       assert(!text.includes(`/core/${forbidden}/`), `${relative} links unpublished Core ${forbidden}`);
     }
   }
-  for (const slug of ['part-i', 'part-ii', 'part-iii']) {
+  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv']) {
     const relative = `${prefix}/${slug}/${extension}`;
     checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
   }
@@ -155,6 +155,14 @@ const checkCorePages = (baseDirectory, mode) => {
   for (const marker of ['Sources and further reading', 'class="source-map"', 'Sec. 4.3', 'Ch. 14', 'unitary', 't\\to 0', 'whole Brillouin zone']) {
     assert(partIII.includes(marker), `${prefix}/part-iii/${extension} lacks equation-pedagogy marker ${marker}`);
   }
+  const partIV = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-iv/${extension}`), 'utf8');
+  for (const marker of ['class="density-reduction"', 'class="dft-logic"', 'class="ks-bridge"', 'class="ks-scf-loop"']) {
+    assert(partIV.includes(marker), `${prefix}/part-iv/${extension} lacks semantic teaching diagram ${marker}`);
+  }
+  for (const marker of ['marginalization', 'existence and uniqueness statement', 'not by itself a computational closure', 'not necessarily small', 'came from translation symmetry before DFT entered', 'solution requirement for the nonlinear Kohn–Sham equations', 'Sources and further reading']) {
+    assert(partIV.includes(marker), `${prefix}/part-iv/${extension} lacks equation-pedagogy marker ${marker}`);
+  }
+  assert(count(partIV, /class="equation-source"/g) >= 6, `${prefix}/part-iv/${extension} lacks nearby canonical equation sources`);
 };
 
 const checkReadingManifest = () => {
@@ -259,7 +267,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 90, 'sitemap must contain exactly 90 canonical public routes');
+      assert(count(sitemap, /<url>/g) === 91, 'sitemap must contain exactly 91 canonical public routes');
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
       for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);

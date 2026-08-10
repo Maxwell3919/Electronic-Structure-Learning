@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Part IV · Density Functional Theory" description="How the interacting ground-state problem becomes a density variational theory, why Kohn–Sham orbitals are auxiliary, and where exchange-correlation approximations and self-consistency enter." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part IV</span>
+  </nav>
+
+  <p class="secondary">Part IV</p>
+  <h1>Density Functional Theory</h1>
+  <p class="lede">The ground-state density can replace the full many-electron wavefunction as the basic variable of an exact variational theory. Kohn–Sham theory then introduces auxiliary orbitals to make most of the kinetic energy tractable, leaving one exchange-correlation functional as the unknown bridge to the interacting problem.</p>
+
+  <h2>From a joint wavefunction to one density</h2>
+  <p>Part I described the fixed-nuclei electronic state by a wavefunction <math class="math-inline" aria-label="Psi"><semantics><mi>Ψ</mi><annotation encoding="application/x-tex">\Psi</annotation></semantics></math> that depends on all electron coordinates at once. For <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> electrons, that is a function of <math class="math-inline" aria-label="three N"><semantics><mrow><mn>3</mn><mi>N</mi></mrow><annotation encoding="application/x-tex">3N</annotation></semantics></math> spatial variables, plus spin. Most ground-state questions do not ask for every joint amplitude. They ask for an energy, a charge distribution, or how that energy changes when the external potential or nuclear geometry changes.</p>
+  <p>The electron density is the simplest spatial object that retains the probability of finding an electron near one point while summing over everything else. For a normalized antisymmetric state,</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The density is obtained from the many-electron wavefunction by integrating over all but one spatial coordinate and summing over spin, and it integrates to the electron number">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.65em">
+          <mtr>
+            <mtd><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd>
+            <mtd><mi>N</mi><munder><mo largeop="true">∑</mo><mrow><msub><mi>σ</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>σ</mi><mi>N</mi></msub></mrow></munder><mo largeop="true">∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msub><mi mathvariant="bold">r</mi><mn>2</mn></msub><mo>⋯</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msub><mi mathvariant="bold">r</mi><mi>N</mi></msub><msup><mrow><mo>|</mo><mi>Ψ</mi><mo>(</mo><mi mathvariant="bold">r</mi><msub><mi>σ</mi><mn>1</mn></msub><mo>,</mo><msub><mi mathvariant="bold">r</mi><mn>2</mn></msub><msub><mi>σ</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi mathvariant="bold">r</mi><mi>N</mi></msub><msub><mi>σ</mi><mi>N</mi></msub><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mo largeop="true">∫</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi></mtd><mtd><mo>=</mo></mtd><mtd><mi>N</mi><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=N\sum_&#123;\sigma_1,\ldots,\sigma_N&#125;\int d^3\mathbf&#123;r&#125;_2\cdots d^3\mathbf&#123;r&#125;_N\,|\Psi(\mathbf&#123;r&#125;\sigma_1,\mathbf&#123;r&#125;_2\sigma_2,\ldots,\mathbf&#123;r&#125;_N\sigma_N)|^2,\qquad \int n(\mathbf&#123;r&#125;)d^3\mathbf&#123;r&#125;=N.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line as a marginalization. Hold one spatial position <math class="math-inline" aria-label="bold r"><semantics><mi mathvariant="bold">r</mi><annotation encoding="application/x-tex">\mathbf&#123;r&#125;</annotation></semantics></math> fixed, sum over every spin assignment, and integrate over the positions of the other <math class="math-inline" aria-label="N minus one"><semantics><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N-1</annotation></semantics></math> electrons. The prefactor <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> accounts for the fact that any identical electron may occupy that position. The second line says that counting the density over all space returns the electron number.</p>
+  <p>The reduction is drastic. The density does not retain the full phase, pair information, or excited-state content of <math class="math-inline" aria-label="Psi"><semantics><mi>Ψ</mi><annotation encoding="application/x-tex">\Psi</annotation></semantics></math>. The decisive question is therefore not whether the density is smaller, but whether it still determines the ground-state information we need.</p>
+  <p class="equation-source">Source: Martin, <cite>Electronic Structure</cite>, 2nd ed., Ch. 6.</p>
+
+  <figure class="density-reduction" aria-labelledby="density-reduction-caption">
+    <div>
+      <section>
+        <h3>Joint state</h3>
+        <p><math class="math-inline" aria-label="Psi of r one through r N"><semantics><mrow><mi>Ψ</mi><mo>(</mo><msub><mi mathvariant="bold">r</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi mathvariant="bold">r</mi><mi>N</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\Psi(\mathbf&#123;r&#125;_1,\ldots,\mathbf&#123;r&#125;_N)</annotation></semantics></math></p>
+        <p class="secondary">Joint amplitudes, phases, and correlations in many-particle configuration space</p>
+      </section>
+      <p class="diagram-arrow">integrate and sum</p>
+      <section>
+        <h3>Density</h3>
+        <p><math class="math-inline" aria-label="n of bold r"><semantics><mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)</annotation></semantics></math></p>
+        <p class="secondary">One spatial distribution; enough, under the theorem’s conditions, for ground-state energy and density information</p>
+      </section>
+    </div>
+    <figcaption id="density-reduction-caption">Forming the density discards joint information. Density-functional theory is powerful because the ground-state problem can nevertheless be formulated with this reduced variable; the reduction does not claim that the density reconstructs every excited-state wavefunction.</figcaption>
+  </figure>
+
+  <h2>The Hohenberg–Kohn result makes the density a ground-state variable</h2>
+  <p>Fix the electron number, the electron–electron interaction, and the allowed class of external scalar potentials. In the standard nondegenerate setting of the original Hohenberg–Kohn theorem, the ground-state density determines the external potential up to an additive constant. That constant shifts every total energy by the same amount without changing the state. Once the potential is known, the Hamiltonian and its ground-state properties are fixed.</p>
+  <p>This is an existence and uniqueness statement about the ground state. It does not provide the functional in closed form, turn the density into a general excited-state wavefunction, or introduce Kohn–Sham orbitals. Degenerate ground states require additional care because one potential may support a ground-state subspace rather than one distinguished wavefunction.</p>
+
+  <div class="formulation-views">
+    <section>
+      <h3>Original external-potential theorem</h3>
+      <p>Relates the ground-state density to the external potential, within the theorem’s stated ground-state setting.</p>
+    </section>
+    <section>
+      <h3>Later density-domain formulations</h3>
+      <p>Levy searches over antisymmetric wavefunctions yielding a trial density; Lieb supplies a convex, lower-semicontinuous formulation and sharper admissible-domain language.</p>
+    </section>
+  </div>
+
+  <p>The constrained-search formulation shows exactly where the density domain enters. For a density that can be produced by an admissible normalized antisymmetric <math class="math-inline" aria-label="N electron"><semantics><mrow><mi>N</mi><mtext>-electron</mtext></mrow><annotation encoding="application/x-tex">N\text&#123;-electron&#125;</annotation></semantics></math> state, define the universal functional</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="F of n is the minimum expectation value of kinetic plus electron-electron interaction over antisymmetric wavefunctions yielding n">
+      <semantics>
+        <mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><munder><mo movablelimits="true">min</mo><mrow><mi>Ψ</mi><mo>→</mo><mi>n</mi></mrow></munder><mspace width="0.25em"/><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><mo>(</mo><mover accent="true"><mi>T</mi><mo stretchy="false">^</mo></mover><mo>+</mo><msub><mover accent="true"><mi>V</mi><mo stretchy="false">^</mo></mover><mtext>ee</mtext></msub><mo>)</mo><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">F[n]=\min_&#123;\Psi\to n&#125;\langle\Psi|(\hat&#123;T&#125;+\hat&#123;V&#125;_&#123;\mathrm&#123;ee&#125;&#125;)|\Psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The arrow <math class="math-inline" aria-label="Psi maps to n"><semantics><mrow><mi>Ψ</mi><mo>→</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\Psi\to n</annotation></semantics></math> is a constraint: search only states whose marginal density is the chosen <math class="math-inline" aria-label="n"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>. The operator inside the expectation value contains the interacting kinetic and electron–electron terms but no external potential. That is why <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> is universal across external potentials for the fixed interaction and particle number.</p>
+  <p>The domain matters. Nonnegativity and <math class="math-inline" aria-label="integral n equals N"><semantics><mrow><mo largeop="true">∫</mo><mi>n</mi><mo>=</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">\int n=N</annotation></semantics></math> are necessary, but Core does not treat every function satisfying those two conditions as an automatically admissible density. Here <math class="math-inline" aria-label="D sub N"><semantics><msub><mi mathvariant="script">D</mi><mi>N</mi></msub><annotation encoding="application/x-tex">\mathcal&#123;D&#125;_N</annotation></semantics></math> denotes the declared set of densities generated by the admissible states or ensembles of the chosen formulation.</p>
+
+  <p>Adding the external potential turns the universal object into the energy functional for one physical system:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The energy functional equals F of n plus the external potential energy, and its minimum over admissible densities is the ground-state energy">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.65em">
+          <mtr><mtd><msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><mo largeop="true">∫</mo><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>E</mi><mn>0</mn></msub></mtd><mtd><mo>=</mo></mtd><mtd><munder><mo movablelimits="true">min</mo><mrow><mi>n</mi><mo>∈</mo><msub><mi mathvariant="script">D</mi><mi>N</mi></msub></mrow></munder><msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>≥</mo></mtd><mtd><msub><mi>E</mi><mn>0</mn></msub><mspace width="0.4em"/><mtext>for</mtext><mspace width="0.3em"/><mi>n</mi><mo>∈</mo><msub><mi mathvariant="script">D</mi><mi>N</mi></msub><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">E_v[n]=F[n]+\int v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;)d^3\mathbf&#123;r&#125;,\qquad E_0=\min_&#123;n\in\mathcal&#123;D&#125;_N&#125;E_v[n],\qquad E_v[n]\ge E_0\text&#123; for &#125;n\in\mathcal&#123;D&#125;_N.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line as a separation between what is common to the electron problem and what identifies the particular nuclei, fields, or other external environment. The second line selects the ground-state density by minimization. The inequality is the density analogue of the wavefunction variational principle from Part I: an admissible trial density cannot produce an energy below the exact ground-state minimum. A degenerate problem may have more than one minimizer, so the conclusion is a minimum energy and ground-state density set, not always one unique wavefunction.</p>
+  <p class="equation-source">Sources: Hohenberg and Kohn, <cite>Phys. Rev.</cite> 136, B864 (1964); Levy, <cite>PNAS</cite> 76, 6062 (1979); Lieb, <cite>Int. J. Quantum Chem.</cite> 24, 243 (1983); Martin, Ch. 6, Secs. 6.3–6.6.</p>
+
+  <figure class="dft-logic" aria-labelledby="dft-logic-caption">
+    <ol>
+      <li><strong>Choose an admissible trial density</strong><span><math class="math-inline" aria-label="n belongs to D N"><semantics><mrow><mi>n</mi><mo>∈</mo><msub><mi mathvariant="script">D</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">n\in\mathcal&#123;D&#125;_N</annotation></semantics></math></span></li>
+      <li><strong>Evaluate the specified energy functional</strong><span>Universal interacting part + external-potential energy</span></li>
+      <li><strong>Minimize</strong><span>The minimizing density yields the exact ground-state energy</span></li>
+    </ol>
+    <figcaption id="dft-logic-caption">Exact ground-state DFT states a density variational problem. The theorem guarantees the structure of the problem; it does not supply a closed expression for the universal functional.</figcaption>
+  </figure>
+
+  <h2>An exact framework is not yet a practical calculation</h2>
+  <p>The formal reduction has not made the hard part disappear. Evaluating <math class="math-inline" aria-label="F of n"><semantics><mrow><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F[n]</annotation></semantics></math> exactly would require the constrained many-electron search that density theory was meant to avoid. Hohenberg–Kohn tells us that the functional exists and that its minimum is decisive; it does not tell us its usable exact formula. Exact DFT is therefore a foundation, not by itself a computational closure.</p>
+  <p>Part II supplied the next idea: one-particle orbitals can be useful auxiliary coordinates even when the real electrons interact. Kohn–Sham theory applies that idea inside the density variational problem. It introduces an auxiliary noninteracting system constrained to yield the same ground-state density while representing a large, difficult part of the kinetic energy explicitly through orbitals.</p>
+
+  <figure class="ks-bridge" aria-labelledby="ks-bridge-caption">
+    <div>
+      <section>
+        <h3>Interacting system</h3>
+        <p>Many-electron state <math class="math-inline" aria-label="Psi zero"><semantics><msub><mi>Ψ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\Psi_0</annotation></semantics></math></p>
+        <p class="secondary">Real electron–electron interaction</p>
+      </section>
+      <p class="same-density"><strong>same ground-state density</strong><span><math class="math-inline" aria-label="n zero of r"><semantics><mrow><msub><mi>n</mi><mn>0</mn></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">n_0(\mathbf&#123;r&#125;)</annotation></semantics></math></span></p>
+      <section>
+        <h3>Auxiliary KS system</h3>
+        <p>Noninteracting orbitals <math class="math-inline" aria-label="phi sub i"><semantics><msub><mi>φ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\phi_i</annotation></semantics></math></p>
+        <p class="secondary">Chosen to reproduce the density, not the interacting wavefunction</p>
+      </section>
+    </div>
+    <figcaption id="ks-bridge-caption">The systems share one target object: the ground-state density. Their wavefunctions, interaction structure, and general excitation spectra are not asserted to be the same.</figcaption>
+  </figure>
+
+  <h2>Kohn–Sham theory isolates the unknown remainder</h2>
+  <p>Assume the target density can be represented by the ground state of an auxiliary noninteracting system, or by an appropriate ensemble of its orbitals. Define <math class="math-inline" aria-label="T sub s"><semantics><msub><mi>T</mi><mi>s</mi></msub><annotation encoding="application/x-tex">T_s</annotation></semantics></math> as the minimum noninteracting kinetic energy compatible with that density. The exact energy can then be reorganized as</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The Kohn-Sham energy decomposition, Hartree energy, and exchange-correlation remainder">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.7em">
+          <mtr><mtd><msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><mo largeop="true">∫</mo><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>∬</mo><mfrac><mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>E</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>−</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">E_v[n]=T_s[n]+E_H[n]+E_&#123;\mathrm&#123;xc&#125;&#125;[n]+\int v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;)d^3\mathbf&#123;r&#125;,\qquad E_H[n]=\frac&#123;1&#125;&#123;2&#125;\iint\frac&#123;n(\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;d^3\mathbf&#123;r&#125;d^3\mathbf&#123;r&#125;',\qquad E_&#123;\mathrm&#123;xc&#125;&#125;[n]=F[n]-T_s[n]-E_H[n].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Each term has a distinct job. <math class="math-inline" aria-label="T sub s"><semantics><msub><mi>T</mi><mi>s</mi></msub><annotation encoding="application/x-tex">T_s</annotation></semantics></math> is the kinetic energy of the auxiliary noninteracting system, not the kinetic energy of literal noninteracting physical electrons. <math class="math-inline" aria-label="E sub H"><semantics><msub><mi>E</mi><mi>H</mi></msub><annotation encoding="application/x-tex">E_H</annotation></semantics></math> is the classical Coulomb self-energy of the smooth density; the factor one half avoids double counting point pairs. The last line defines <math class="math-inline" aria-label="E x c"><semantics><msub><mi>E</mi><mtext>xc</mtext></msub><annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math> as whatever the exact interacting functional still needs after subtracting those two pieces.</p>
+  <p>That remainder is not merely the Hartree–Fock correlation energy from Part II and not necessarily small. It includes the difference between the interacting kinetic energy and <math class="math-inline" aria-label="T sub s"><semantics><msub><mi>T</mi><mi>s</mi></msub><annotation encoding="application/x-tex">T_s</annotation></semantics></math>, together with exchange and all nonclassical electron–electron effects beyond the Hartree density energy.</p>
+  <p>The one-electron limit is an instructive check. With one physical electron there is no electron–electron repulsion, yet <math class="math-inline" aria-label="E sub H"><semantics><msub><mi>E</mi><mi>H</mi></msub><annotation encoding="application/x-tex">E_H</annotation></semantics></math> computed from its density is nonzero. The exact exchange-correlation functional cancels that spurious Hartree self-repulsion, leaving the correct one-electron energy. A quantity capable of exact cancellation is not an optional decorative correction.</p>
+  <p class="equation-source">Sources: Kohn and Sham, <cite>Phys. Rev.</cite> 140, A1133 (1965); Martin, Ch. 7, Secs. 7.1–7.2, and Ch. 8.</p>
+
+  <h2>Auxiliary orbitals make the density problem calculable</h2>
+  <p>Minimizing the Kohn–Sham energy with respect to orthonormal auxiliary orbitals produces a one-particle stationary equation. Using atomic units, the ordinary local-potential Kohn–Sham form is</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Kohn-Sham eigenproblem, effective potential, and density closure">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.7em">
+          <mtr><mtd><mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mo>∇</mo><mn>2</mn></msup><mo>+</mo><msub><mi>v</mi><mtext>KS</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>v</mi><mtext>KS</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><mo largeop="true">∫</mo><mfrac><mrow><mi>n</mi><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>+</mo><mfrac><mrow><mi>δ</mi><msub><mi>E</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow></mfrac><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><munder><mo largeop="true">∑</mo><mi>i</mi></munder><msub><mi>f</mi><mi>i</mi></msub><msup><mrow><mo>|</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">[-\tfrac&#123;1&#125;&#123;2&#125;\nabla^2+v_&#123;\mathrm&#123;KS&#125;&#125;[n](\mathbf&#123;r&#125;)]\phi_i(\mathbf&#123;r&#125;)=\varepsilon_i\phi_i(\mathbf&#123;r&#125;),\qquad v_&#123;\mathrm&#123;KS&#125;&#125;[n](\mathbf&#123;r&#125;)=v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)+\int\frac&#123;n(\mathbf&#123;r&#125;')&#125;&#123;|\mathbf&#123;r&#125;-\mathbf&#123;r&#125;'|&#125;d^3\mathbf&#123;r&#125;'+\frac&#123;\delta E_&#123;\mathrm&#123;xc&#125;&#125;[n]&#125;&#123;\delta n(\mathbf&#123;r&#125;)&#125;,\qquad n(\mathbf&#123;r&#125;)=\sum_i f_i|\phi_i(\mathbf&#123;r&#125;)|^2.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line as an auxiliary eigenproblem. The kinetic operator acts on one orbital, while every effect of the chosen density enters through <math class="math-inline" aria-label="v K S"><semantics><msub><mi>v</mi><mtext>KS</mtext></msub><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;KS&#125;&#125;</annotation></semantics></math>. The second line separates the external potential, the Hartree potential generated by the density, and the exchange-correlation potential—the functional derivative that tells the energy how to change when the density changes locally.</p>
+  <p>The third line closes the construction. The occupations <math class="math-inline" aria-label="f sub i"><semantics><msub><mi>f</mi><mi>i</mi></msub><annotation encoding="application/x-tex">f_i</annotation></semantics></math> select which auxiliary orbitals contribute to the density for the declared state and spin treatment. Orbitals have reappeared because they make <math class="math-inline" aria-label="T sub s"><semantics><msub><mi>T</mi><mi>s</mi></msub><annotation encoding="application/x-tex">T_s</annotation></semantics></math> and <math class="math-inline" aria-label="n of r"><semantics><mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)</annotation></semantics></math> accessible; they do not replace the interacting many-electron wavefunction with literal independent physical electrons.</p>
+  <p>The multipliers <math class="math-inline" aria-label="epsilon sub i"><semantics><msub><mi>ε</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\varepsilon_i</annotation></semantics></math> are Kohn–Sham stationary-equation eigenvalues. They organize the auxiliary spectrum but are not, in general, exact electron addition, removal, or optical excitation energies. Part VIII will distinguish and develop those physical objects separately.</p>
+  <p class="equation-source">Sources: Kohn and Sham (1965); Martin, Ch. 7, especially Secs. 7.2–7.4 and 7.6.</p>
+
+  <p>Part III now applies without modification. If the external potential and self-consistent density are periodic, then the Kohn–Sham potential is periodic. The Kohn–Sham Hamiltonian is consequently a periodic one-particle Hamiltonian, so its orbitals can be chosen as Bloch states and its eigenvalues form Kohn–Sham bands. Bloch’s theorem and band structure came from translation symmetry before DFT entered; Kohn–Sham theory constructs one important periodic Hamiltonian to which that theorem applies.</p>
+
+  <h2>Approximation enters through exchange and correlation</h2>
+  <p>The exact <math class="math-inline" aria-label="E x c"><semantics><msub><mi>E</mi><mtext>xc</mtext></msub><annotation encoding="application/x-tex">E_&#123;\mathrm&#123;xc&#125;&#125;</annotation></semantics></math> is unknown, so practical Kohn–Sham calculations choose an approximation to it. This is the point where exact density-functional foundations become an approximate density-functional calculation. Changing that approximation can change energies, densities, forces, localization, magnetic ordering, and the auxiliary spectrum; it is a physical model choice, not a numerical accuracy setting.</p>
+  <p>The main hierarchy is about which ingredients the approximation can use. LDA uses the local density and takes the uniform electron gas as its reference. GGA also uses the density gradient. Meta-GGA introduces additional semilocal information such as kinetic-energy density or a density Laplacian. Hybrids mix an orbital-dependent exact-exchange ingredient and commonly lead to a generalized Kohn–Sham operator rather than only one multiplicative local potential; that ingredient does not make the total functional exact. Selected extensions such as dispersion corrections or DFT+<math class="math-inline" aria-label="U"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math> target additional missing physics under their own assumptions.</p>
+  <p>This list is not an accuracy ladder that every material climbs in the same order. An approximation should be judged against the observable, bonding regime, localization, spin state, dimensional boundary, and reference evidence relevant to the problem. A perfectly converged self-consistent solution can still be a poor physical approximation.</p>
+  <p class="equation-source">Source: Martin, <cite>Electronic Structure</cite>, 2nd ed., Chs. 8–9; Sholl and Steckel supply the practical functional-choice versus numerical-convergence boundary.</p>
+
+  <h2>The density makes the Kohn–Sham problem nonlinear</h2>
+  <p>There is one remaining logical loop. To find the orbitals we need <math class="math-inline" aria-label="v K S of n"><semantics><mrow><msub><mi>v</mi><mtext>KS</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;KS&#125;&#125;[n]</annotation></semantics></math>, but to build that potential we need the density obtained from those same orbitals. The required Hamiltonian therefore depends on the solution it is supposed to produce.</p>
+
+  <figure class="ks-scf-loop" aria-labelledby="ks-scf-loop-caption">
+    <ol>
+      <li><strong>Input density</strong><span><math class="math-inline" aria-label="n in"><semantics><msub><mi>n</mi><mtext>in</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;in&#125;&#125;</annotation></semantics></math></span></li>
+      <li><strong>Density-dependent potential</strong><span><math class="math-inline" aria-label="v K S of n in"><semantics><mrow><msub><mi>v</mi><mtext>KS</mtext></msub><mo>[</mo><msub><mi>n</mi><mtext>in</mtext></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;KS&#125;&#125;[n_&#123;\mathrm&#123;in&#125;&#125;]</annotation></semantics></math></span></li>
+      <li><strong>Auxiliary orbitals</strong><span><math class="math-inline" aria-label="set of phi i"><semantics><mrow><mo>&#123;</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>&#125;</mo></mrow><annotation encoding="application/x-tex">\left\&#123;\phi_i\right\&#125;</annotation></semantics></math></span></li>
+      <li><strong>Output density</strong><span><math class="math-inline" aria-label="n out"><semantics><msub><mi>n</mi><mtext>out</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;out&#125;&#125;</annotation></semantics></math></span></li>
+    </ol>
+    <figcaption id="ks-scf-loop-caption">Self-consistency asks whether the density used to build the Kohn–Sham potential equals the density returned by its orbitals. This is the conceptual closure, not a software workflow or a prescription for mixing and convergence parameters.</figcaption>
+  </figure>
+
+  <p>Writing the orbital-to-density procedure as a map <math class="math-inline" aria-label="M"><semantics><mi mathvariant="script">M</mi><annotation encoding="application/x-tex">\mathcal&#123;M&#125;</annotation></semantics></math>, a self-consistent density is a fixed point:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The self-consistent density is a fixed point of the Kohn-Sham density map">
+      <semantics>
+        <mrow><msup><mi>n</mi><mo>∗</mo></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mi mathvariant="script">M</mi><mo>[</mo><msup><mi>n</mi><mo>∗</mo></msup><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">n^*(\mathbf&#123;r&#125;)=\mathcal&#123;M&#125;[n^*](\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The equation says only that input and output densities agree. It does not say how to reach the fixed point, whether another fixed point exists, whether the finite representation is converged, or whether the chosen exchange-correlation approximation is physically adequate. Self-consistency is a solution requirement for the nonlinear Kohn–Sham equations; it is neither the definition of DFT nor evidence that the model is correct.</p>
+  <p class="equation-source">Source: Martin, Ch. 7, Secs. 7.3–7.4. Numerical fixed-point strategies are deferred to Part V and DFT Research Workflow.</p>
+
+  <div class="concept-check" role="note" aria-labelledby="part-iv-check">
+    <h3 id="part-iv-check">Check your understanding</h3>
+    <p><strong>Question.</strong> If the Kohn–Sham electrons are noninteracting, how can Kohn–Sham DFT describe an interacting electronic ground state?</p>
+    <p><strong>Answer.</strong> The Kohn–Sham system is auxiliary: it is chosen to reproduce the interacting ground-state density, not the interacting wavefunction. The Hartree term and the exact exchange-correlation remainder carry the interaction contribution into the energy and density-dependent potential; practical calculations approximate that remainder.</p>
+  </div>
+
+  <p class="repair-links">For more depth, see <a href={href('/theory/density-functional-theory-foundations/')}>Density-Functional Theory Foundations</a> for theorem scope and density domains, <a href={href('/theory/kohn-sham-density-functional-theory/')}>Kohn–Sham Density-Functional Theory</a> for the auxiliary construction, <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>Exchange-Correlation Functionals and Approximations</a> for functional families, or <a href={href('/theory/functional-analysis-and-variational-methods/')}>Functional Analysis and Variational Methods</a> for mathematical depth. Core carries the causal chain without requiring those detours.</p>
+
+  <h2>Sources and further reading</h2>
+  <dl class="source-map">
+    <dt>Original ground-state density theorem and variational statement</dt>
+    <dd>Hohenberg and Kohn, “Inhomogeneous Electron Gas,” <cite>Physical Review</cite> 136, B864–B871 (1964), DOI 10.1103/PhysRev.136.B864.</dd>
+    <dt>Constrained search and admissible-density formulation</dt>
+    <dd>Levy, <cite>PNAS</cite> 76, 6062–6065 (1979), DOI 10.1073/pnas.76.12.6062; Lieb, <cite>International Journal of Quantum Chemistry</cite> 24, 243–277 (1983), DOI 10.1002/qua.560240302.</dd>
+    <dt>Auxiliary noninteracting construction and self-consistent equations</dt>
+    <dd>Kohn and Sham, <cite>Physical Review</cite> 140, A1133–A1138 (1965), DOI 10.1103/PhysRev.140.A1133.</dd>
+    <dt>Continuous textbook treatment of DFT, KS, and XC</dt>
+    <dd>Martin, <cite>Electronic Structure</cite>, 2nd ed., Chs. 6–9.</dd>
+  </dl>
+  <ul class="further-reading">
+    <li>Giustino, <cite>Materials Modelling Using Density Functional Theory</cite>, connects the density-based framework to energies, forces, structures, and calculated material properties.</li>
+  </ul>
+
+  <p>We now have a continuum set of nonlinear auxiliary one-particle equations that produces the density predicted by a declared approximate exchange-correlation functional. But a computer cannot store continuous orbitals, potentials, or Brillouin-zone integrals exactly. Which finite objects represent them, and how can numerical solution error be kept separate from the physical approximation?</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/part-iii/')}>← Part III · Periodic Matter and Electronic States</a>
+    <a href={href('/core/')}>Core</a>
+  </nav>
+</BaseLayout>
