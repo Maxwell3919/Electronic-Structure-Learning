@@ -106,6 +106,12 @@ const checkCorePages = (baseDirectory, mode) => {
   const prefix = mode === 'source' ? 'src/pages/core' : 'core';
   const extension = mode === 'source' ? 'index.astro' : 'index.html';
   const landing = fs.readFileSync(path.join(baseDirectory, prefix, extension), 'utf8');
+  if (mode === 'source') {
+    assert(landing.includes('current="core"'), `${prefix}/${extension} lacks the independent Core navigation context`);
+  } else {
+    assert(landing.includes('aria-current="page">Core</a>'), `${prefix}/${extension} does not render Core as the current primary destination`);
+  }
+  assert(!landing.includes('class="breadcrumbs"'), `${prefix}/${extension} must not render a parent breadcrumb for the peer-level Core landing`);
   for (const slug of coreSlugs) {
     assert(landing.includes(`/core/${slug}/`), `${prefix}/${extension} is missing Core entry ${slug}`);
   }
@@ -120,6 +126,14 @@ const checkCorePages = (baseDirectory, mode) => {
     assert(text.length > 2400, `${relative} is unexpectedly short`);
     assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
     assert(text.includes('class="sequence-nav"'), `${relative} lacks sequence navigation`);
+    if (mode === 'source') {
+      assert(text.includes('current="core"'), `${relative} lacks the independent Core navigation context`);
+    } else {
+      assert(text.includes('aria-current="page">Core</a>'), `${relative} does not render Core as the current primary destination`);
+    }
+    const breadcrumb = text.match(/<nav class="breadcrumbs"[\s\S]*?<\/nav>/)?.[0] ?? '';
+    assert(breadcrumb.includes('Core'), `${relative} breadcrumb does not begin from Core`);
+    assert(!breadcrumb.includes('Foundations'), `${relative} breadcrumb incorrectly nests Core below Foundations`);
     assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
     assert(!/coming soon|placeholder/i.test(text), `${relative} contains placeholder wording`);
     for (const forbidden of forbiddenCorePartSlugs) {
