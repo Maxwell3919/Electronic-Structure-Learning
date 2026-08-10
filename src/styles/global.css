@@ -251,6 +251,91 @@ figcaption {
   border-inline-start: 1px solid #d7d7d7;
 }
 
+.hamiltonian-map > div {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  border-block: 1px solid #d7d7d7;
+  background: #ffffff;
+}
+.hamiltonian-map section { padding: 0.2rem 1.1rem 0.45rem; }
+.hamiltonian-map section + section { border-inline-start: 1px solid #d7d7d7; }
+.hamiltonian-map h3 { margin-top: 0.85rem; }
+.hamiltonian-map dl { margin-bottom: 0.55rem; }
+.hamiltonian-map dl > div + div { margin-top: 0.7rem; }
+.hamiltonian-map dt { font-size: 0.94rem; }
+.hamiltonian-map dd { margin: 0.12rem 0 0; color: #555555; font-size: 0.9rem; }
+
+.scf-flow ol,
+.h2-reference ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #ffffff;
+}
+.scf-flow ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid #d7d7d7;
+  counter-reset: scf-step;
+}
+.scf-flow li {
+  position: relative;
+  counter-increment: scf-step;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+}
+.scf-flow li + li { border-inline-start: 1px solid #d7d7d7; }
+.scf-flow li::before {
+  position: absolute;
+  inset: 0.82rem auto auto 0.75rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 1px solid #9bb0c3;
+  border-radius: 50%;
+  content: counter(scf-step);
+  color: #123f70;
+  font-size: 0.8rem;
+  line-height: 1.4rem;
+  text-align: center;
+}
+.scf-flow li span,
+.h2-reference li > span:last-child {
+  display: block;
+  margin-top: 0.2rem;
+  color: #555555;
+  font-size: 0.9rem;
+}
+
+.h2-reference ol {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.65fr) minmax(0, 1fr);
+  align-items: stretch;
+  border-block: 1px solid #d7d7d7;
+}
+.h2-reference li:not(.model-axis) { padding: 0.9rem 1rem; }
+.h2-reference .model-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #6a6a6a;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.h2-reference .model-axis {
+  display: grid;
+  place-items: center;
+  padding: 0.9rem 0.55rem;
+  color: #555555;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.h2-reference .model-axis::before {
+  display: block;
+  width: 100%;
+  border-top: 1px solid #607d99;
+  content: "";
+}
+.h2-reference .model-axis span { margin-top: -0.15rem; padding: 0.2rem 0.45rem; background: #ffffff; }
+
 .energy-curve-visual {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(12rem, 2fr);
@@ -364,13 +449,23 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .core-map-branches,
   .state-comparison ol,
   .energy-curve-visual,
-  .translation-views { display: block; }
+  .translation-views,
+  .hamiltonian-map > div,
+  .scf-flow ol,
+  .h2-reference ol { display: block; }
   .concept-branches section + section,
   .core-map-branches section + section,
   .state-comparison li + li {
     border-inline-start: 0;
     border-top: 1px solid #d7d7d7;
   }
+  .hamiltonian-map section + section,
+  .scf-flow li + li {
+    border-inline-start: 0;
+    border-top: 1px solid #d7d7d7;
+  }
+  .h2-reference .model-axis { display: block; padding-block: 0.6rem; }
+  .h2-reference .model-axis::before { margin-bottom: -0.85rem; }
   .translation-views section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .energy-curve-key { margin-top: 1.2rem; }
   .sequence-nav { display: grid; }
