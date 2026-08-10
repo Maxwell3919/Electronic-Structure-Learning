@@ -1,0 +1,96 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'trajectory-needs-forces', label: 'A trajectory needs forces and initial conditions' },
+  { id: 'ensemble-and-sampling', label: 'Time integration, ensemble, and sampling' },
+  { id: 'two-ab-initio-routes', label: 'Born–Oppenheimer and Car–Parrinello dynamics' },
+  { id: 'what-trajectories-support', label: 'What a finite trajectory can support' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'Chapter 9 replaces a static structure by a sampled trajectory. Electronic structure supplies forces, an integrator advances classical nuclei, and an ensemble prescription determines what distribution is intended. The trajectory is correlated and finite, so thermodynamic or kinetic claims require equilibration, time-scale, and statistical evidence in addition to stable numerical propagation.';
+---
+
+<section aria-labelledby="trajectory-needs-forces">
+  <h2 id="trajectory-needs-forces">A trajectory needs forces and initial conditions</h2>
+  <p>
+    Molecular dynamics begins from Newton’s equation for the nuclei,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="classical nuclear equation of motion on an energy surface">
+      <semantics>
+        <mrow><msub><mi>M</mi><mi>I</mi></msub><mfrac><mrow><msup><mi mathvariant="normal">d</mi><mn>2</mn></msup><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow><mrow><mi mathvariant="normal">d</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><msub><mo>∇</mo><mi>I</mi></msub><mi>U</mi><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">M_I&#92;frac&#123;&#92;mathrm&#123;d&#125;^2&#92;mathbf&#123;R&#125;_I&#125;&#123;&#92;mathrm&#123;d&#125;t^2&#125;=&#92;mathbf&#123;F&#125;_I=-&#92;nabla_I U(&#92;mathbf&#123;R&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The mass and acceleration are classical nuclear quantities. The force is the gradient of a declared potential-energy surface. In classical force-field MD that surface is an analytic fitted model; in Born–Oppenheimer ab initio MD it is reconstructed from an electronic ground-state calculation at each geometry. The nuclei remain classical in both cases unless an additional nuclear-quantum method is introduced.
+  </p>
+  <p>
+    Positions and velocities at one time do not define a continuous trajectory until an integrator and time step are chosen. Verlet-type updates exploit forces at discrete times while remaining time reversible under ideal conditions. A time step that is too large fails to resolve the fastest motion and produces energy drift or instability; a stable trajectory alone does not prove that the underlying energy surface is physically accurate.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 9, §9.1 and Eqs. 9.1–9.9.</p>
+</section>
+
+<section aria-labelledby="ensemble-and-sampling">
+  <h2 id="ensemble-and-sampling">Time integration, ensemble, and sampling</h2>
+  <p>
+    Unthermostatted Hamiltonian dynamics targets a microcanonical ensemble with fixed particle number, volume, and total energy. A thermostat adds auxiliary dynamics intended to sample a canonical distribution at a declared temperature. The instantaneous kinetic-energy temperature fluctuates; forcing it to equal the target at every step is not the definition of canonical sampling.
+  </p>
+  <p>
+    A finite trajectory contains an initial transient and a correlated production segment. A time average such as
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="finite trajectory time average of an observable">
+      <semantics>
+        <mrow><mover><mi>A</mi><mo>¯</mo></mover><mo>=</mo><mfrac><mn>1</mn><msub><mi>t</mi><mtext>obs</mtext></msub></mfrac><msubsup><mo>∫</mo><msub><mi>t</mi><mn>0</mn></msub><mrow><msub><mi>t</mi><mn>0</mn></msub><mo>+</mo><msub><mi>t</mi><mtext>obs</mtext></msub></mrow></msubsup><mi>A</mi><mo>(</mo><mi>t</mi><mo>)</mo><mi mathvariant="normal">d</mi><mi>t</mi></mrow>
+        <annotation encoding="application/x-tex">&#92;overline&#123;A&#125;=&#92;frac&#123;1&#125;&#123;t_&#123;&#92;mathrm&#123;obs&#125;&#125;&#125;&#92;int_&#123;t_0&#125;^&#123;t_0+t_&#123;&#92;mathrm&#123;obs&#125;&#125;&#125;A(t)&#92;,&#92;mathrm&#123;d&#125;t</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    begins only after an equilibration time <em>t</em><sub>0</sub>. The stored frames are not automatically independent samples; their effective number depends on the autocorrelation time of the observable. Different observables can equilibrate and decorrelate on different time scales, so one trajectory length does not certify them all.
+  </p>
+</section>
+
+<section aria-labelledby="two-ab-initio-routes">
+  <h2 id="two-ab-initio-routes">Born–Oppenheimer and Car–Parrinello dynamics</h2>
+  <p>
+    In Born–Oppenheimer MD, each ionic step seeks a sufficiently converged electronic ground state and uses its force to move the nuclei. Electronic error must be controlled tightly enough that it does not create systematic force noise or drift. The expense is a nested electronic solve at every time step.
+  </p>
+  <p>
+    Car–Parrinello MD introduces fictitious orbital dynamics and propagates electronic variables together with the nuclei. A fictitious mass and adiabatic separation are chosen so the orbitals remain near the instantaneous ground-state manifold. This can avoid a fully converged minimization at every step, but the fictitious electronic motion is a numerical device. It is not real-time electron dynamics and does not describe electronic excitations.
+  </p>
+  <div class="callout" role="note" aria-label="Ab initio molecular dynamics boundary">
+    <p><strong>Same physical target, different propagation.</strong> Born–Oppenheimer and Car–Parrinello schemes are algorithmic routes for coupling classical nuclei to an electronic energy surface. Exchange–correlation, core treatment, cell, spin, boundary conditions, and time-scale limitations remain physical or representation choices outside that algorithmic distinction.</p>
+  </div>
+</section>
+
+<section aria-labelledby="what-trajectories-support">
+  <h2 id="what-trajectories-support">What a finite trajectory can support</h2>
+  <p>
+    The InP melt–quench example shows a trajectory generating a disordered structural model. Its simulated cooling rate is many orders of magnitude faster than an experimental quench, and its periodic cell is small. Agreement in a pair-correlation feature can support local structural similarity without proving that the amorphous ensemble, long-range topology, or processing history has converged.
+  </p>
+  <p>
+    The Pt₁₃ example uses high-temperature trajectories to cross barriers and collect candidate cluster structures, followed by local minimization. This is a search heuristic: it can discover basins visited in finite time, but it does not enumerate all cluster isomers or furnish equilibrium populations unless the sampling and ensemble support that stronger claim.
+  </p>
+  <p>
+    The same boundary applies when electronic properties are averaged along a trajectory. Recomputing a DOS or optical response on thermal snapshots can incorporate structural disorder, but the estimator, snapshot spacing, electronic broadening, and effective sample size must be reported. A visibly stable time series is not a quantified uncertainty analysis.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>InP example</dt><dd>The chapter reports the published Lewis–De Vita–Car study: 64 atoms, Γ-point sampling, 0.25 fs time step, and a melt–quench history spanning 360,000 steps. These are source-reading details from the cited study, not a complete new calculation ledger in the book Appendix.</dd>
+    <dt>Pt₁₃ electronic setup</dt><dd>PW91 GGA, 191 eV cutoff, one cluster in a 20 Å cube, Γ-only sampling, 0.1 eV Methfessel–Paxton smearing; final geometry optimization stops when every atomic force is below 0.03 eV/Å.</dd>
+    <dt>Pt₁₃ trajectory reported in §9.3.2</dt><dd>A 3 ps trajectory at 2000 K starts from the <em>O</em><sub>h</sub>-symmetric cluster, uses 20 fs steps and a Nosé–Hoover thermostat, and sends configurations from steps 47, 95, and 147 to local minimization. The source explicitly uses the large step and high temperature to generate an approximate energy-landscape search trajectory, not trustworthy real-time dynamics or equilibrium sampling.</dd>
+    <dt>Missing dynamics provenance</dt><dd>VASP is identified globally, but the source does not report its version, the core dataset, thermostat mass or chain details, electronic convergence, randomization or seed, or a validation that would turn the approximate Pt₁₃ search trajectory into dynamical or equilibrium evidence.</dd>
+  </dl>
+  <p>
+    Those omissions prevent exact trajectory reproduction even though the final minimization setup is partly described. A reproducible study must preserve both the electronic model and the temporal/statistical realization. Use <a href={href('/theory/classical-mechanics/')}>Classical Mechanics</a> and <a href={href('/theory/statistical-mechanics/')}>Statistical Mechanics</a> for prerequisite repair, and use the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> for execution evidence.
+  </p>
+</section>

@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { shollSteckelChapters } from '../../../../reading/books/sholl-steckel';
+import { getShollSteckelChapterContent, shollSteckelChapterSlugs } from '../../../../reading/books/sholl-steckel/chapter-content';
+import { getShollSteckelSourceFigures, shollSteckelCanonicalSource } from '../../../../reading/books/sholl-steckel/source-reading';
+
+export function getStaticPaths() {
+  return shollSteckelChapterSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const slug = Astro.params.slug ?? '';
+const chapter = shollSteckelChapters.find((entry) => entry.slug === slug);
+const chapterContent = await getShollSteckelChapterContent(slug);
+const ChapterComponent = chapterContent?.default as any;
+const sectionLinks = chapterContent?.sectionLinks ?? [];
+const sourceFigureGuides = getShollSteckelSourceFigures(slug);
+const synthesis = chapterContent?.synthesis;
+const chapterIndex = chapter ? shollSteckelChapters.findIndex((entry) => entry.slug === chapter.slug) : -1;
+const previousChapter = chapterIndex > 0 ? shollSteckelChapters[chapterIndex - 1] : undefined;
+const nextChapter = chapterIndex >= 0 && chapterIndex < shollSteckelChapters.length - 1 ? shollSteckelChapters[chapterIndex + 1] : undefined;
+---
+
+{chapter && chapterContent && (
+  <BaseLayout title={chapter.title} description={chapter.coreIdea} current="reading">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href={href('/reading/')}>Guided Reading</a>
+      <span aria-hidden="true">/</span>
+      <a href={href('/reading/books/')}>Books</a>
+      <span aria-hidden="true">/</span>
+      <a href={href('/reading/books/sholl-steckel/')}>Sholl &amp; Steckel</a>
+      <span aria-hidden="true">/</span>
+      <span>Chapter {chapter.number}</span>
+    </nav>
+
+    <p class="secondary">Chapter {chapter.number}</p>
+    <h1>{chapter.title}</h1>
+    <p><strong>Core Idea.</strong> {chapter.coreIdea}</p>
+
+    <section aria-labelledby="chapter-overview">
+      <h2 id="chapter-overview">Chapter overview</h2>
+      <p>{chapter.overview}</p>
+    </section>
+
+    <p class="paper-meta">
+      Source anchor: David S. Sholl and Janice A. Steckel, <cite>Density Functional Theory: A Practical Introduction</cite>, Chapter {chapter.number}. <a href={shollSteckelCanonicalSource.href}>{shollSteckelCanonicalSource.label}</a>.
+    </p>
+
+    <nav aria-labelledby="chapter-structure">
+      <h2 id="chapter-structure">Chapter structure</h2>
+      <ol class="source-outline">
+        {sectionLinks.map((entry) => <li><a href={`#${entry.id}`}>{entry.label}</a></li>)}
+      </ol>
+    </nav>
+
+    {sourceFigureGuides.length > 0 && (
+      <section aria-labelledby="source-figures">
+        <h2 id="source-figures">Read the source figures</h2>
+        <p>
+          Keep these figures or tables open in the source. The Atlas does not reproduce the Wiley artwork; the notes identify where to look, what the visual contributes to the chapter’s argument, and where its evidence stops.
+        </p>
+        <dl class="source-figure-list">
+          {sourceFigureGuides.map((entry) => (
+            <>
+              <dt>{entry.locator} <span>· {entry.section}</span></dt>
+              <dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    {ChapterComponent && <ChapterComponent />}
+
+    {synthesis && (
+      <section aria-labelledby="chapter-synthesis">
+        <h2 id="chapter-synthesis">Chapter synthesis</h2>
+        <p>{synthesis}</p>
+      </section>
+    )}
+
+    <p>Return to the <a href={href('/reading/books/sholl-steckel/')}>Sholl &amp; Steckel source sequence</a>.</p>
+
+    {(previousChapter || nextChapter) && (
+      <nav aria-label="Chapter navigation">
+        <p>{previousChapter && <a href={href(previousChapter.route)}>← Chapter {previousChapter.number} · {previousChapter.title}</a>}</p>
+        <p>{nextChapter && <a href={href(nextChapter.route)}>Chapter {nextChapter.number} · {nextChapter.title} →</a>}</p>
+      </nav>
+    )}
+  </BaseLayout>
+)}

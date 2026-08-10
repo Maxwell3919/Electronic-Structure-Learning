@@ -41,11 +41,14 @@ const martinPublishedUnitSlugs = [...chapterLoaderSource.matchAll(/'((?:chapter-
 const martinUnpublishedUnitSlugs = martinUnitSlugs.filter((slug) => !martinPublishedUnitSlugs.includes(slug));
 const martinPublishedSlugs = [...martinPartSlugs, ...martinPublishedUnitSlugs];
 const martinRoutes = martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/`);
+const shollSteckelChapterSlugs = Array.from({ length: 10 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
+const shollSteckelRoutes = shollSteckelChapterSlugs.map((slug) => `reading/books/sholl-steckel/${slug}/`);
 
 const expectedPages = [
   'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
   'src/pages/methods/index.astro', 'src/pages/reading/books/index.astro',
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
+  'src/pages/reading/books/sholl-steckel/[slug].astro', 'src/pages/reading/books/sholl-steckel/index.astro',
   'src/pages/reading/literature/index.astro',
   ...literatureSlugs.map((slug) => `src/pages/reading/literature/${slug}/index.astro`),
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
@@ -59,6 +62,8 @@ const expectedHtml = [
   'index.html', 'methods/index.html',
   'reading/books/index.html', 'reading/books/martin/index.html',
   ...martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
+  'reading/books/sholl-steckel/index.html',
+  ...shollSteckelChapterSlugs.map((slug) => `reading/books/sholl-steckel/${slug}/index.html`),
   'reading/literature/index.html',
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
@@ -68,6 +73,7 @@ const internalRoutes = new Set([
   'core/', ...coreSlugs.map((slug) => `core/${slug}/`),
   '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
   'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/', ...martinRoutes,
+  'reading/books/sholl-steckel/', ...shollSteckelRoutes,
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   'methods/', 'computational-tools/', 'reference/',
 ]);
@@ -267,6 +273,16 @@ const checkReadingManifest = () => {
     assert(martinUnitSlugs.includes(slug), `Martin detailed-content loader contains an unknown unit slug: ${slug}`);
     assert(fs.existsSync(path.join(root, `src/reading/books/martin/content/${slug}.astro`)), `Martin detailed content is missing for ${slug}`);
   }
+
+  const shollMain = fs.readFileSync(path.join(root, 'src/reading/books/sholl-steckel.ts'), 'utf8');
+  const shollLoader = fs.readFileSync(path.join(root, 'src/reading/books/sholl-steckel/chapter-content.ts'), 'utf8');
+  assert(count(shollMain, /chapter\(\s*\d+,/g) === 10, 'Sholl & Steckel data must define ten chapters');
+  assert(count(shollLoader, /'chapter-\d{2}'\s*:/g) === 10, 'Sholl & Steckel loader must publish ten reviewed chapters');
+  assert(!shollMain.includes('sourceText'), 'Sholl & Steckel data must not contain extracted textbook text');
+  for (const slug of shollSteckelChapterSlugs) {
+    assert(shollLoader.includes(`'${slug}'`), `Sholl & Steckel loader is missing ${slug}`);
+    assert(fs.existsSync(path.join(root, `src/reading/books/sholl-steckel/content/${slug}.astro`)), `Sholl & Steckel detailed content is missing for ${slug}`);
+  }
 };
 
 if (sourceMode) {
@@ -324,6 +340,17 @@ if (sourceMode) {
   assert(routePage.includes('class="source-outline"'), 'Martin source outline lacks its marker-suppression class');
   assert(!routePage.includes('Detailed section-by-section reading will be added'), 'Martin route page still renders unfinished-unit placeholder copy');
   assert(!routePage.includes('Read Section'), 'Martin route page creates section-level navigation');
+  const shollBook = fs.readFileSync(path.join(root, 'src/pages/reading/books/sholl-steckel/index.astro'), 'utf8');
+  for (const marker of ['Source sequence', 'Reported', 'DFT Research Workflow', 'chapter.contribution']) {
+    assert(shollBook.includes(marker), `Sholl & Steckel book page is missing ${marker}`);
+  }
+  const shollRoutePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/sholl-steckel/[slug].astro'), 'utf8');
+  for (const marker of ['getStaticPaths', 'shollSteckelChapterSlugs', 'Core Idea.', 'Chapter structure', 'Read the source figures', 'Source anchor']) {
+    assert(shollRoutePage.includes(marker), `Sholl & Steckel route page is missing ${marker}`);
+  }
+  for (const slug of shollSteckelChapterSlugs.slice(0, 9)) {
+    checkMathMl(fs.readFileSync(path.join(root, `src/reading/books/sholl-steckel/content/${slug}.astro`), 'utf8'), `src/reading/books/sholl-steckel/content/${slug}.astro`, true);
+  }
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
   assert(styles.includes('.source-outline') && styles.includes('list-style: none'), 'Martin source outline does not suppress automatic list markers');
   checkReadingManifest();
@@ -349,7 +376,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length;
+      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
@@ -400,6 +427,15 @@ if (builtMode) {
     }
     for (const slug of martinUnpublishedUnitSlugs) {
       assert(!fs.existsSync(path.join(dist, `reading/books/martin/${slug}/index.html`)), `unfinished Martin unit was published: ${slug}`);
+    }
+    const shollBook = fs.readFileSync(path.join(dist, 'reading/books/sholl-steckel/index.html'), 'utf8');
+    assert(shollBook.includes('Read Chapter 1'), 'built Sholl & Steckel page does not link Chapter 1');
+    for (const slug of shollSteckelChapterSlugs) {
+      const relative = `reading/books/sholl-steckel/${slug}/index.html`;
+      const text = fs.readFileSync(path.join(dist, relative), 'utf8');
+      for (const marker of ['Core Idea.', 'Chapter overview', 'Read the source figures', 'Source anchor']) {
+        assert(text.includes(marker), `${relative} is missing ${marker}`);
+      }
     }
     const redirect = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
     assert(redirect.includes('reading/books/martin'), 'Martin compatibility redirect target is missing');

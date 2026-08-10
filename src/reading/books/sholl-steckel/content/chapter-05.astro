@@ -1,0 +1,106 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'curvature-becomes-frequency', label: 'Curvature becomes a frequency' },
+  { id: 'many-coordinate-problem', label: 'The many-coordinate normal-mode problem' },
+  { id: 'finite-difference-route', label: 'Finite differences measure the curvature' },
+  { id: 'zpe-and-phonons', label: 'Zero-point energy and the route to phonons' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'Chapter 5 converts the local shape of an energy surface into collective motion. The Hessian supplies curvature, mass weighting turns that curvature into a normal-mode eigenproblem, and finite differences make the derivatives computable. The result remains local and harmonic: it describes small oscillations around one stationary structure, not arbitrary finite-temperature motion or global stability.';
+---
+
+<section aria-labelledby="curvature-becomes-frequency">
+  <h2 id="curvature-becomes-frequency">Curvature becomes a frequency</h2>
+  <p>
+    The source starts with a diatomic molecule because one bond coordinate makes the logic visible. At the equilibrium separation the first derivative of energy vanishes. A small displacement then changes the energy mainly through the quadratic term, whose curvature is the effective spring constant. Combining that curvature with the reduced mass gives the harmonic frequency:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="harmonic vibrational angular frequency from curvature and reduced mass">
+      <semantics>
+        <mrow><mi>ω</mi><mo>=</mo><msqrt><mfrac><mi>k</mi><mi>μ</mi></mfrac></msqrt><mo>,</mo><mspace width="0.8em"/><mi>k</mi><mo>=</mo><mfrac><mrow><msup><mi mathvariant="normal">d</mi><mn>2</mn></msup><mi>E</mi></mrow><mrow><mi mathvariant="normal">d</mi><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><msub><mo stretchy="true">|</mo><mrow><mi>x</mi><mo>=</mo><mn>0</mn></mrow></msub></mrow>
+        <annotation encoding="application/x-tex">&#92;omega=&#92;sqrt&#123;&#92;frac&#123;k&#125;&#123;&#92;mu&#125;&#125;,&#92;qquad k=&#92;left.&#92;frac&#123;&#92;mathrm&#123;d&#125;^2E&#125;&#123;&#92;mathrm&#123;d&#125;x^2&#125;&#92;right|_&#123;x=0&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The energy curvature says how strongly the system resists displacement; the reduced mass says how much inertia participates. A stiff bond can therefore vibrate rapidly, while replacing an atom by a heavier isotope lowers the frequency even if the electronic energy surface is nearly unchanged. The equation describes a small-amplitude mode around one minimum, not the full anharmonic potential far from equilibrium.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 5, §5.1 and Eqs. 5.1–5.2.</p>
+</section>
+
+<section aria-labelledby="many-coordinate-problem">
+  <h2 id="many-coordinate-problem">The many-coordinate normal-mode problem</h2>
+  <p>
+    For many atoms, moving one Cartesian coordinate can change the force along another. The Hessian records every such local coupling,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="mass weighted Hessian normal mode eigenproblem">
+      <semantics>
+        <mrow>
+          <msub><mi>D</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><msqrt><mrow><msub><mi>M</mi><mi>I</mi></msub><msub><mi>M</mi><mi>J</mi></msub></mrow></msqrt></mfrac><mfrac><mrow><msup><mo>∂</mo><mn>2</mn></msup><mi>E</mi></mrow><mrow><mo>∂</mo><msub><mi>R</mi><mrow><mi>I</mi><mi>α</mi></mrow></msub><mo>∂</mo><msub><mi>R</mi><mrow><mi>J</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>,</mo><mspace width="0.8em"/>
+          <munder><mo>∑</mo><mrow><mi>J</mi><mi>β</mi></mrow></munder><msub><mi>D</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><msub><mi>e</mi><mrow><mi>J</mi><mi>β</mi><mo>,</mo><mi>ν</mi></mrow></msub><mo>=</mo><msubsup><mi>ω</mi><mi>ν</mi><mn>2</mn></msubsup><msub><mi>e</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>ν</mi></mrow></msub>
+        </mrow>
+        <annotation encoding="application/x-tex">D_&#123;I&#92;alpha,J&#92;beta&#125;=&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;M_I M_J&#125;&#125;&#92;frac&#123;&#92;partial^2E&#125;&#123;&#92;partial R_&#123;I&#92;alpha&#125;&#92;partial R_&#123;J&#92;beta&#125;&#125;,&#92;qquad &#92;sum_&#123;J&#92;beta&#125;D_&#123;I&#92;alpha,J&#92;beta&#125;e_&#123;J&#92;beta,&#92;nu&#125;=&#92;omega_&#92;nu^2 e_&#123;I&#92;alpha,&#92;nu&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Indices <em>I</em> and <em>J</em> identify atoms; <em>α</em> and <em>β</em> identify Cartesian directions. The eigenvector for mode <em>ν</em> is a collective polarization in mass-weighted coordinates, while its eigenvalue is the squared angular frequency. Physical displacement amplitudes therefore scale with the polarization divided by the square root of the atomic mass.
+  </p>
+  <p>
+    For an isolated nonlinear molecule, three translations and three rotations ideally have zero curvature; a linear molecule has two independent rotations. On a surface, those motions are no longer free: translation normal to the surface becomes an adsorbate–surface stretch, while rotations and lateral translations become hindered modes. Small residual “zero-mode” frequencies often measure numerical noise or incomplete relaxation rather than new physics.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 5, §§5.2–5.3 and Eqs. 5.3–5.9. The mass-weighted notation is aligned with <a href={href('/core/part-vii/')}>Core Part VII</a>.</p>
+</section>
+
+<section aria-labelledby="finite-difference-route">
+  <h2 id="finite-difference-route">Finite differences measure the curvature</h2>
+  <p>
+    The book constructs Hessian elements from energies or forces at small positive and negative displacements. A large step leaves the local quadratic regime; a very small step subtracts nearly equal, incompletely converged quantities and amplifies numerical noise. The useful displacement is therefore an observable-specific balance, demonstrated by stability of the frequencies rather than selected by a universal rule.
+  </p>
+  <p>
+    Every derivative also inherits the electronic, basis, sampling, and force accuracy of the underlying calculations. Translational zero modes, symmetry-related degeneracies, and agreement between positive and negative displacements provide diagnostics, but they do not replace a displacement-size study. Fixing substrate atoms changes the Hessian being diagonalized and must be interpreted as a constrained vibrational model.
+  </p>
+  <div class="callout" role="note" aria-label="Finite displacement and density functional perturbation theory">
+    <p><strong>Modern boundary.</strong> Finite displacement and density-functional perturbation theory are two routes to derivatives of the same declared ground-state model. They differ in computational realization and numerical controls, not in the underlying physical theory. The source’s statement that phonon calculations were not routine reflects 2009 software availability.</p>
+  </div>
+</section>
+
+<section aria-labelledby="zpe-and-phonons">
+  <h2 id="zpe-and-phonons">Zero-point energy and the route to phonons</h2>
+  <p>
+    Quantizing each harmonic normal mode adds energy even at zero temperature. For independent harmonic modes,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="harmonic zero point energy summed over normal modes">
+      <semantics>
+        <mrow><msub><mi>E</mi><mtext>ZP</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munder><mo>∑</mo><mi>ν</mi></munder><mi>ℏ</mi><msub><mi>ω</mi><mi>ν</mi></msub></mrow>
+        <annotation encoding="application/x-tex">E_&#123;&#92;mathrm&#123;ZP&#125;&#125;=&#92;frac&#123;1&#125;&#123;2&#125;&#92;sum_&#92;nu&#92;hbar&#92;omega_&#92;nu</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    This term can change an isotope-sensitive adsorption or reaction energy because two states need not have the same spectrum. It remains a harmonic correction around selected stationary structures. Finite-temperature vibrational free energies require the thermal occupation of the modes, while large-amplitude anharmonic motion requires physics beyond this local expansion.
+  </p>
+  <p>
+    In a crystal, equivalent displacements can carry a phase from cell to cell. The Hessian becomes a wavevector-dependent dynamical matrix, and its eigenvalues form phonon branches across the Brillouin zone. A Γ-point molecular-style calculation samples only one collective phase pattern; stability there does not establish stability at every phonon wavevector.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 5, §§5.4–5.5 and Eqs. 5.10–5.12.</p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>Common electronic setup</dt><dd>PBE GGA, plane waves to 380 eV. Code version and exact core-dataset identity are not reported.</dd>
+    <dt>Gas-phase CO</dt><dd>An approximately 10 Å, deliberately noncubic box; Γ-only sampling; 0.1 eV Gaussian smearing; positive and negative Cartesian displacements. The multi-coordinate example uses 0.04 Å steps.</dd>
+    <dt>CO/Cu(100)</dt><dd>Four-layer asymmetric c(2×2) slab, bottom two layers fixed, 6×6×1 mesh, second-order Methfessel–Paxton smearing of 0.1 eV, with the mobile region relaxed before the frequency calculation.</dd>
+    <dt>Interstitial H</dt><dd>A 64-Cu-atom cell plus H, fixed bulk cell vectors, all atoms relaxed; H frequencies use two 0.04 Å displacements per coordinate.</dd>
+  </dl>
+  <p>
+    <strong>Not reported:</strong> code/version, PAW or pseudopotential provenance, electronic and force thresholds, acoustic-sum-rule treatment, nonanalytic long-range corrections, or a full phonon <em>q</em>-mesh. The reported examples support the finite-difference teaching argument, not a complete reproducibility record for modern lattice dynamics.
+  </p>
+</section>

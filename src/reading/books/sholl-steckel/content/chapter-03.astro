@@ -1,0 +1,98 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'two-accuracy-questions', label: 'Two accuracy questions' },
+  { id: 'bz-quadrature', label: 'Brillouin-zone quadrature' },
+  { id: 'cutoff-and-core', label: 'Plane-wave cutoff and core treatment' },
+  { id: 'nested-iterations', label: 'Electronic and structural iterations' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'Chapter 3 gives the book its practical vocabulary. A k mesh approximates a Brillouin-zone integral; a cutoff truncates a basis; a pseudopotential or PAW dataset changes the core–valence model and representation; SCF closes a density-dependent Hamiltonian; and geometry optimization searches a structural energy surface. Converging one layer does not converge the others, and converging all of them still does not validate the exchange–correlation or physical model.';
+---
+
+<section aria-labelledby="two-accuracy-questions">
+  <h2 id="two-accuracy-questions">Two accuracy questions</h2>
+  <p>
+    The chapter opens with its governing distinction. Numerical convergence asks whether finite sampling, finite basis, and finite iteration reproduce the solution of the chosen Kohn–Sham model closely enough for a declared observable. Physical accuracy asks whether that model—including exchange–correlation approximation, core treatment, boundary conditions, structure, spin, and omitted physics—supports the claim of interest.
+  </p>
+  <p>
+    These questions require different evidence. A denser mesh can reduce quadrature error; it cannot repair a missing magnetic branch or a semilocal-functional gap error. Conversely, choosing a more suitable functional does not excuse an unconverged basis or an SCF cycle that stopped before reaching its own fixed point.
+  </p>
+</section>
+
+<section aria-labelledby="bz-quadrature">
+  <h2 id="bz-quadrature">Brillouin-zone quadrature</h2>
+  <p>
+    Periodicity organizes one-particle states by crystal momentum before DFT enters, as <a href={href('/core/part-iii/')}>Core Part III</a> established. A periodic Kohn–Sham calculation inherits that organization because its auxiliary Hamiltonian is periodic. Many ground-state quantities therefore contain a Brillouin-zone integral that a computer replaces by weighted samples:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Brillouin zone integral approximated by weighted k points">
+      <semantics>
+        <mrow>
+          <mfrac><mn>1</mn><msub><mi>Ω</mi><mtext>BZ</mtext></msub></mfrac><msub><mo>∫</mo><mtext>BZ</mtext></msub><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mspace width="0.2em"/><msup><mi mathvariant="normal">d</mi><mi>d</mi></msup><mi mathvariant="bold">k</mi><mo>≈</mo><munderover><mo>∑</mo><mrow><mi>p</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>N</mi><mi>k</mi></msub></munderover><msub><mi>w</mi><mi>p</mi></msub><mi>A</mi><mo>(</mo><msub><mi mathvariant="bold">k</mi><mi>p</mi></msub><mo>)</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">&#92;frac&#123;1&#125;&#123;&#92;Omega_&#123;&#92;mathrm&#123;BZ&#125;&#125;&#125;&#92;int_&#123;&#92;mathrm&#123;BZ&#125;&#125;A(&#92;mathbf&#123;k&#125;)&#92;,&#92;mathrm&#123;d&#125;^&#123;d&#125;&#92;mathbf&#123;k&#125;&#92;approx&#92;sum_&#123;p=1&#125;^&#123;N_k&#125;w_pA(&#92;mathbf&#123;k&#125;_p)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here the Brillouin-zone volume normalizes the integral, the exponent <em>d</em> is the reciprocal-space dimension, and the mesh contains <em>N</em><sub>k</sub> points with weights <em>w</em><sub>p</sub>. Symmetry can reduce the number of distinct points evaluated without changing the full-zone quadrature. Increasing mesh density changes this integration approximation; a selected high-symmetry band path serves visualization and is not a replacement for it.
+  </p>
+  <p>
+    Metals add a sharp occupied/unoccupied boundary at the Fermi surface. Tetrahedron and smearing schemes treat that integration difficulty in different ways. A numerical smearing width regularizes occupations and may define a free-energy-like auxiliary quantity; it is not automatically the physical electronic temperature of the material. Results must be interpreted or extrapolated according to the chosen occupation method.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 3, §§3.1.2–3.1.4 and Eqs. 3.6–3.10. The normalized quadrature notation follows Core Part V.</p>
+</section>
+
+<section aria-labelledby="cutoff-and-core">
+  <h2 id="cutoff-and-core">Plane-wave cutoff and core treatment</h2>
+  <p>
+    The cell-periodic part of a Bloch orbital can be expanded in reciprocal-lattice vectors. A plane-wave calculation becomes finite by retaining only components whose kinetic energy lies below a cutoff:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="plane waves retained below a kinetic energy cutoff">
+      <semantics>
+        <mrow><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><msup><mrow><mo>|</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup><mo>≤</mo><msub><mi>E</mi><mtext>cut</mtext></msub></mrow>
+        <annotation encoding="application/x-tex">&#92;frac&#123;&#92;hbar^2&#125;&#123;2m&#125;&#92;left|&#92;mathbf&#123;k&#125;+&#92;mathbf&#123;G&#125;&#92;right|^2&#92;le E_&#123;&#92;mathrm&#123;cut&#125;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Raising the cutoff enlarges this finite basis. It does not make the underlying core treatment exact. Norm-conserving, ultrasoft, PAW, and all-electron approaches define different representations and approximations near nuclei, with dataset-specific valence choices, augmentation rules, relativistic content, and recommended cutoffs. “Soft” means fewer plane waves for a stated dataset construction; it does not mean less physical responsibility.
+  </p>
+  <p>
+    The source’s advice to use a common cutoff in energy differences is a consistency safeguard. A stronger modern reading is to use compatible datasets and demonstrate convergence of the target difference. Equal numerical parameters do not guarantee equal errors when compositions or hard elements differ.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 3, Eqs. 3.11–3.14 and §3.2.1. Core Part V separates the reciprocal vectors, basis bound, and core treatment explicitly.</p>
+</section>
+
+<section aria-labelledby="nested-iterations">
+  <h2 id="nested-iterations">Electronic and structural iterations</h2>
+  <p>
+    The chapter next places two iterative problems beside one another. The inner problem seeks a density that reproduces itself through the density-dependent Kohn–Sham operator. The outer problem updates atomic positions or cell variables using forces and stress. A small change in electronic energy between SCF iterations is a stopping diagnostic for the inner solve; a small free force or stress component is a stopping diagnostic for the outer solve. Neither proves a global structural minimum.
+  </p>
+  <div class="callout" role="note" aria-label="Nested electronic and structural iteration">
+    <p><strong>Electronic loop:</strong> trial density → Kohn–Sham potential → orbitals and occupations → output density → residual.</p>
+    <p><strong>Structural loop:</strong> current geometry → converged electronic state → forces and stress → updated geometry.</p>
+  </div>
+  <p>
+    The source’s N₂ and CO₂ examples expose two local-optimization failures. A chemically implausible starting geometry can send an optimizer into a poor region, and exact symmetry can force a gradient component to zero even when a symmetry-breaking displacement lowers the energy. Solver success is therefore not an independent test of candidate completeness or stability.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>XC approximation</dt><dd>PW91 GGA throughout the chapter.</dd>
+    <dt>Bulk Cu test</dt><dd>Four-atom conventional fcc cell, 292 eV cutoff, Methfessel–Paxton smearing width 0.1 eV; mesh size is varied for the convergence study.</dd>
+    <dt>Molecules</dt><dd>N₂ and CO₂ in a 10 Å cubic periodic box, 3×3×3 Monkhorst–Pack mesh, 358 eV cutoff.</dd>
+    <dt>SCF details</dt><dd>The chapter explains an energy-difference stopping idea but does not report code version, density mixing, eigensolver, residual norm, or the actual SCF threshold for each example.</dd>
+    <dt>Core datasets</dt><dd>Pseudopotential/PAW concepts are discussed; exact dataset identities, generation versions, and valence configurations are not reported in the Appendix.</dd>
+  </dl>
+  <p>
+    The unusually dense molecular mesh reflects the authors’ chosen setup, not a present-day default for an isolated molecule. Reproduction would also require the missing dataset, code-version, occupation, and convergence provenance. Use the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> for an observable-specific convergence design rather than copying these values.
+  </p>
+</section>

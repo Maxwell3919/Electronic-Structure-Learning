@@ -1,0 +1,112 @@
+---
+export const sectionLinks = [
+  { id: 'change-the-question', label: 'Changing composition changes the thermodynamic question' },
+  { id: 'grand-potential', label: 'A reservoir enters through chemical potential' },
+  { id: 'temperature-and-pressure', label: 'From chemical potential to temperature and pressure' },
+  { id: 'disorder-and-defects', label: 'Configurational entropy and defect populations' },
+  { id: 'surface-phases', label: 'Surface phases and candidate completeness' },
+  { id: 'reported-realization', label: 'Reported computational realization' },
+];
+
+export const synthesis = 'Chapter 7 shows how ground-state energies become inputs to an equilibrium model. Chemical potentials account for exchanged species, entropy gives temperature dependence, and minimization selects among a declared set of candidate phases. The resulting diagram describes equilibrium within that model; it neither supplies reaction rates nor guarantees that an omitted bulk, defect, or surface structure is irrelevant.';
+---
+
+<section aria-labelledby="change-the-question">
+  <h2 id="change-the-question">Changing composition changes the thermodynamic question</h2>
+  <p>
+    Chapter 2 compared crystal structures with the same composition. Oxidation cannot be reduced to “which total energy is smaller” because a metal and its oxide contain different numbers of oxygen atoms and exchange oxygen with the environment. Dividing by total atom count hides rather than solves that mismatch.
+  </p>
+  <p>
+    The correct comparison starts by declaring controlled variables and reservoirs. A sample in contact with O₂ gas can gain or lose oxygen; the oxygen chemical potential assigns the energetic cost of that exchange. Temperature and pressure enter through the reservoir model, while DFT provides state-specific electronic energies for the condensed candidates and, in the book’s approximation, an O₂ molecular reference.
+  </p>
+</section>
+
+<section aria-labelledby="grand-potential">
+  <h2 id="grand-potential">A reservoir enters through chemical potential</h2>
+  <p>
+    For candidate <em>i</em> with a fixed number of metal atoms and a variable number of oxygen atoms, the source compares a reservoir-adjusted potential of the form
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="grand potential for an oxygen exchanging candidate phase">
+      <semantics>
+        <mrow><msub><mi>Ω</mi><mi>i</mi></msub><mo>(</mo><mi>T</mi><mo>,</mo><msub><mi>μ</mi><mi>O</mi></msub><mo>)</mo><mo>=</mo><msub><mi>G</mi><mi>i</mi></msub><mo>(</mo><mi>T</mi><mo>)</mo><mo>−</mo><msub><mi>N</mi><mrow><mi>O</mi><mo>,</mo><mi>i</mi></mrow></msub><msub><mi>μ</mi><mi>O</mi></msub></mrow>
+        <annotation encoding="application/x-tex">&#92;Omega_i(T,&#92;mu_O)=G_i(T)-N_&#123;O,i&#125;&#92;mu_O</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The free energy <em>G</em><sub>i</sub> belongs to one candidate state; <em>N</em><sub>O,i</sub> counts how much oxygen it contains; <em>μ</em><sub>O</sub> prices that oxygen against the reservoir. At fixed temperature and chemical potential, the lowest potential among the candidates is the equilibrium member of that set. Each candidate traces a line or surface whose slope is controlled by composition, so crossing points mark a change in the preferred phase.
+  </p>
+  <p>
+    The book often replaces solid free energies by DFT total energies and assumes omitted vibrational terms are similar. That is an approximation to the thermodynamics, not part of the definition of DFT. Surface candidates additionally require division by area and a consistent slab/bulk reference.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 7, §7.1 and Eqs. 7.1–7.5. The compact expression above makes the controlled oxygen reservoir explicit.</p>
+</section>
+
+<section aria-labelledby="temperature-and-pressure">
+  <h2 id="temperature-and-pressure">From chemical potential to temperature and pressure</h2>
+  <p>
+    A chemical-potential axis becomes experimentally legible only after a gas model connects it to pressure and temperature. For ideal O₂ the source writes
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="ideal gas oxygen chemical potential">
+      <semantics>
+        <mrow><msub><mi>μ</mi><msub><mi>O</mi><mn>2</mn></msub></msub><mo>(</mo><mi>T</mi><mo>,</mo><mi>p</mi><mo>)</mo><mo>=</mo><msubsup><mi>E</mi><msub><mi>O</mi><mn>2</mn></msub><mtext>DFT</mtext></msubsup><mo>+</mo><mi>Δ</mi><msub><mi>μ</mi><msub><mi>O</mi><mn>2</mn></msub></msub><mo>(</mo><mi>T</mi><mo>,</mo><msup><mi>p</mi><mo>°</mo></msup><mo>)</mo><mo>+</mo><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi><mi mathvariant="normal">ln</mi><mo>(</mo><mfrac><mi>p</mi><msup><mi>p</mi><mo>°</mo></msup></mfrac><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;mu_&#123;O_2&#125;(T,p)=E_&#123;O_2&#125;^&#123;&#92;mathrm&#123;DFT&#125;&#125;+&#92;Delta&#92;mu_&#123;O_2&#125;(T,p^&#92;circ)+k_BT&#92;ln&#92;!&#92;left(&#92;frac&#123;p&#125;&#123;p^&#92;circ&#125;&#92;right)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first term is the chosen electronic reference, the second supplies finite-temperature thermochemistry at a reference pressure, and the logarithm changes the reservoir chemical potential with pressure. An atomic oxygen chemical potential is one half of the molecular value for equilibrium with O₂. Errors in the molecular reference, omitted solid free energies, nonideal gas behavior, and the exchange–correlation approximation propagate into the phase boundary.
+  </p>
+  <p>
+    The calculated Cu/Ag oxidation example illustrates both value and limitation: it captures the qualitative pressure–temperature trend, while its quantitative Ag boundary misses experiment substantially. Agreement in trend is not numerical validation of a specific transition temperature.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 7, Eq. 7.6 and Fig. 7.3.</p>
+</section>
+
+<section aria-labelledby="disorder-and-defects">
+  <h2 id="disorder-and-defects">Configurational entropy and defect populations</h2>
+  <p>
+    A defective crystal is not one ordered structure. If <em>k</em> vacancies can be distributed over <em>n</em> equivalent sites, the number of arrangements generates a configurational entropy. In the dilute, noninteracting approximation, minimizing the reservoir-adjusted free energy leads to an exponentially small equilibrium concentration:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="dilute oxygen vacancy concentration in equilibrium">
+      <semantics>
+        <mrow><mi>c</mi><mo>≈</mo><mi mathvariant="normal">exp</mi><mo>[</mo><mo>−</mo><mi>β</mi><mo>(</mo><msub><mi>E</mi><mtext>vac</mtext></msub><mo>−</mo><msub><mi>E</mi><mtext>crystal</mtext></msub><mo>+</mo><msub><mi>μ</mi><mi>O</mi></msub><mo>)</mo><mo>]</mo></mrow>
+        <annotation encoding="application/x-tex">c&#92;approx&#92;mathrm&#123;exp&#125;&#92;!&#92;left[-&#92;beta&#92;left(E_&#123;&#92;mathrm&#123;vac&#125;&#125;-E_&#123;&#92;mathrm&#123;crystal&#125;&#125;+&#92;mu_O&#92;right)&#92;right]</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here <em>β</em>=1/(<em>k</em><sub>B</sub><em>T</em>). The expression makes the assumptions visible: isolated defects, dilute concentration, one defect type, a declared reservoir, and a supercell large enough to approximate the isolated-defect energy. Charged defects require electron reservoirs, electrostatic finite-size treatment, charge-state thermodynamics, and competing defects that this elementary example does not include.
+  </p>
+  <p class="paper-meta">Source locator: Sholl &amp; Steckel, Chapter 7, §7.1.1 and Eqs. 7.7–7.11.</p>
+</section>
+
+<section aria-labelledby="surface-phases">
+  <h2 id="surface-phases">Surface phases and candidate completeness</h2>
+  <p>
+    The Ag/O example applies the same logic to surfaces. Clean Ag, adsorbate overlayers, subsurface oxygen, surface oxides, and bulk oxide become distinct candidates with different oxygen contents. The lower envelope of their surface free energies predicts which candidate is favored as the oxygen reservoir changes.
+  </p>
+  <p>
+    Figure 7.5 is valuable because a surface oxide becomes stable over a substantial range even though neither a clean surface nor bulk oxide captures it. Figure 7.6 is equally important: later structural evidence changed the candidate model. A phase diagram cannot promote a structure that was never included, and close competitors can move when the structural catalog or free-energy terms improve.
+  </p>
+  <p>
+    Equilibrium also does not supply kinetics. Copper can remain apparently metallic under conditions where oxide is thermodynamically favored because barriers slow conversion. Catalytic steady states can be sustained by coupled reactions and fluxes rather than described by an equilibrium diagram alone. The rate models from Chapter 6 are a separate layer.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">Reported computational realization</h2>
+  <dl class="layer-ledger">
+    <dt>Bulk electronic model</dt><dd>PW91 GGA, 396 eV cutoff, Monkhorst–Pack sampling.</dd>
+    <dt>Metal and oxide cells</dt><dd>Four-atom cubic Ag/Cu cells and six-atom cubic Ag₂O/Cu₂O cells, each sampled with 10×10×10 meshes.</dd>
+    <dt>O₂ reservoir reference</dt><dd>One spin-polarized O₂ molecule in a 10 Å cube with a 3×3×3 mesh. Code version, dataset identity, and molecular finite-size evidence are not reported.</dd>
+    <dt>Vacancy example</dt><dd>A Cu₂O supercell containing 16 formula units with a 5×5×5 mesh; lattice vectors remain those of the stoichiometric crystal while internal coordinates are relaxed.</dd>
+    <dt>Surface phase diagram</dt><dd>The chapter reads published Ag/O phase-diagram work rather than reporting a complete Appendix setup for every surface candidate.</dd>
+  </dl>
+  <p>
+    <strong>Not reported:</strong> full vibrational/free-energy model for solids, uncertainty propagation, exact datasets and code version, or a systematic structure-search procedure. The thermochemical table and DFT molecular reference are separate provenance layers and must both be identified in a reproduction.
+  </p>
+</section>
