@@ -12,6 +12,7 @@ The production site is a static Plain Astro build. It contains the Home page, a 
 - `/core/part-i/`
 - `/core/part-ii/`
 - `/core/part-iii/`
+- `/core/part-iv/`
 - `/theory/` — publicly presented as **Foundations** while existing routes are retained
 - `/theory/linear-algebra/`
 - `/theory/calculus-and-analysis/`
@@ -63,7 +64,7 @@ The production site is a static Plain Astro build. It contains the Home page, a 
 
 ## Core, Foundations, and Guided Reading
 
-Core is the Atlas's own continuous explanation of electronic structure. The published sequence establishes why electronic structure matters, defines the coupled electron–nuclear problem, develops fermionic mean-field and correlation language, and shows how periodicity organizes one-particle states before density-functional theory enters. It does not follow one source's chapter order and does not publish empty routes for later Parts.
+Core is the Atlas's own continuous explanation of electronic structure. The published sequence establishes why electronic structure matters, defines the coupled electron–nuclear problem, develops fermionic mean-field and correlation language, shows how periodicity organizes one-particle states, and then explains the density-functional reformulation and Kohn–Sham bridge. It does not follow one source's chapter order and does not publish empty routes for later Parts.
 
 Foundations is the knowledge, prerequisite, relationship, and reviewed-resource map. The first implementation phase changes the public label and landing-page role without breaking the established `/theory/` routes.
 

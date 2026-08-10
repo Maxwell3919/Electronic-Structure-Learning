@@ -377,6 +377,70 @@ figcaption {
 .translation-views h3 { margin-top: 0.85rem; }
 .translation-views p { margin-bottom: 0.85rem; color: #454545; }
 
+.density-reduction > div,
+.ks-bridge > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8.5rem, 0.48fr) minmax(0, 1fr);
+  align-items: stretch;
+  border-block: 1px solid #d7d7d7;
+  background: #ffffff;
+}
+.density-reduction section,
+.ks-bridge section { padding: 0.25rem 1rem 0.35rem; }
+.density-reduction h3,
+.ks-bridge h3 { margin-top: 0.85rem; }
+.density-reduction section > p,
+.ks-bridge section > p { margin-bottom: 0.75rem; }
+.diagram-arrow,
+.same-density {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0.9rem 0.65rem;
+  border-inline: 1px solid #d7d7d7;
+  color: #555555;
+  font-size: 0.88rem;
+  text-align: center;
+}
+.same-density span { display: block; margin-top: 0.35rem; }
+
+.formulation-views {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.7rem 0;
+  border-block: 1px solid #d7d7d7;
+}
+.formulation-views section { padding: 0.2rem 1.1rem 0.25rem; }
+.formulation-views section + section { border-inline-start: 1px solid #d7d7d7; }
+.formulation-views h3 { margin-top: 0.85rem; }
+.formulation-views p { margin-bottom: 0.85rem; color: #454545; }
+
+.dft-logic ol,
+.ks-scf-loop ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-block: 1px solid #d7d7d7;
+  background: #ffffff;
+  list-style: none;
+}
+.dft-logic ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ks-scf-loop ol { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.dft-logic li,
+.ks-scf-loop li { padding: 0.9rem 1rem; }
+.dft-logic li + li,
+.ks-scf-loop li + li {
+  margin-top: 0;
+  border-inline-start: 1px solid #d7d7d7;
+}
+.dft-logic li span,
+.ks-scf-loop li span {
+  display: block;
+  margin-top: 0.3rem;
+  color: #555555;
+  font-size: 0.9rem;
+}
+
 .core-diagram svg {
   display: block;
   width: 100%;
@@ -450,6 +514,11 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .state-comparison ol,
   .energy-curve-visual,
   .translation-views,
+  .density-reduction > div,
+  .ks-bridge > div,
+  .formulation-views,
+  .dft-logic ol,
+  .ks-scf-loop ol,
   .hamiltonian-map > div,
   .scf-flow ol,
   .h2-reference ol { display: block; }
@@ -467,6 +536,17 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .h2-reference .model-axis { display: block; padding-block: 0.6rem; }
   .h2-reference .model-axis::before { margin-bottom: -0.85rem; }
   .translation-views section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
+  .density-reduction .diagram-arrow,
+  .ks-bridge .same-density {
+    border-inline: 0;
+    border-block: 1px solid #d7d7d7;
+  }
+  .formulation-views section + section,
+  .dft-logic li + li,
+  .ks-scf-loop li + li {
+    border-inline-start: 0;
+    border-top: 1px solid #d7d7d7;
+  }
   .energy-curve-key { margin-top: 1.2rem; }
   .sequence-nav { display: grid; }
   .sequence-nav a:last-child { text-align: start; }
