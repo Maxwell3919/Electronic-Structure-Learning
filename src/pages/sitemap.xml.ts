@@ -10,6 +10,7 @@ const fixedRoutes = [
   '/core/part-ii/',
   '/core/part-iii/',
   '/core/part-iv/',
+  '/core/part-v/',
   '/theory/',
   '/reading/',
   '/reading/books/',
