@@ -28,9 +28,13 @@ What Electronic Structure Explains
 → Fermions, Mean Fields, and Correlation
 → Periodic Matter and Electronic States
 → Density Functional Theory
+→ From Equations to Computation
+→ Ground-State Properties and Structure
+→ Response and Lattice Dynamics
+→ Excitations and Spectra
 ```
 
-Later conceptual directions may appear in a roadmap, but they do not receive routes until reviewed content exists. Core remains readable without leaving the sequence; links to Foundations supply optional prerequisite depth, links to Guided Reading offer a source-specific alternative, and DFT Research Workflow begins when the task becomes execution, convergence, validation, or evidence.
+The Core landing page also names advanced exits for spin and spin–orbit physics, Wannier/Berry/topological objects, stronger correlation, defects and interfaces, electron–phonon downstream theories, and finite-temperature or coupled dynamics. These are concise responsibility boundaries, not empty course routes. A branch receives a new route only when reviewed content exists. Core remains readable without leaving the sequence; links to Foundations supply optional prerequisite depth, links to Guided Reading offer a source-specific alternative, and DFT Research Workflow begins when the task becomes execution, convergence, validation, or evidence.
 
 Core uses ordinary Astro pages, native MathML, semantic HTML figures, and small inline SVGs only when a spatial relationship cannot be explained as clearly in prose. It has no client-side quiz, progress, course registry, or copied source figure.
 
