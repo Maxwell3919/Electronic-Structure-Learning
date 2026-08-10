@@ -565,7 +565,9 @@ figcaption {
 
 .derivative-map ol,
 .structure-loop ol,
-.stability-ladder ol {
+.stability-ladder ol,
+.response-map ol,
+.reciprocal-roles ol {
   display: grid;
   margin: 0;
   padding: 0;
@@ -576,23 +578,60 @@ figcaption {
 .derivative-map ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .structure-loop ol,
 .stability-ladder ol { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.response-map ol,
+.reciprocal-roles ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .derivative-map li,
 .structure-loop li,
-.stability-ladder li {
+.stability-ladder li,
+.response-map li,
+.reciprocal-roles li {
   margin: 0;
   padding: 0.9rem 1rem;
 }
 .derivative-map li + li,
 .structure-loop li + li,
-.stability-ladder li + li { border-inline-start: 1px solid #d7d7d7; }
+.stability-ladder li + li,
+.response-map li + li,
+.reciprocal-roles li + li { border-inline-start: 1px solid #d7d7d7; }
 .derivative-map li span,
 .structure-loop li span,
-.stability-ladder li span {
+.stability-ladder li span,
+.response-map li span,
+.reciprocal-roles li span {
   display: block;
   margin-top: 0.3rem;
   color: #555555;
   font-size: 0.9rem;
 }
+.reciprocal-roles li small { display: block; margin-top: 0.3rem; color: #666666; font-size: 0.82rem; }
+
+.response-routes > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.55fr) minmax(0, 1fr);
+  align-items: stretch;
+  border-block: 1px solid #d7d7d7;
+}
+.response-routes section { padding: 0.2rem 1rem 0.25rem; }
+.response-routes h3 { margin-top: 0.85rem; }
+.response-routes section p { margin-bottom: 0.85rem; color: #454545; }
+.same-response {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0.9rem 0.65rem;
+  border-inline: 1px solid #d7d7d7;
+  color: #555555;
+  font-size: 0.88rem;
+  text-align: center;
+}
+.same-response span { display: block; margin-top: 0.35rem; }
+.phonon-chain .phonon-arrows line,
+.phonon-chain .phonon-arrows polyline {
+  fill: none;
+  stroke: #8a5a24;
+  stroke-width: 2;
+}
+.phonon-chain .diagram-scroll { max-width: 100%; overflow-x: auto; }
 .structure-energy-curve .slope-guide {
   stroke: #8a5a24;
   stroke-width: 2;
@@ -689,6 +728,9 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .derivative-map ol,
   .structure-loop ol,
   .stability-ladder ol,
+  .response-map ol,
+  .reciprocal-roles ol,
+  .response-routes > div,
   .hamiltonian-map > div,
   .scf-flow ol,
   .h2-reference ol { display: block; }
@@ -726,10 +768,15 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   }
   .derivative-map li + li,
   .structure-loop li + li,
-  .stability-ladder li + li {
+  .stability-ladder li + li,
+  .response-map li + li,
+  .reciprocal-roles li + li {
     border-inline-start: 0;
     border-top: 1px solid #d7d7d7;
   }
+  .response-routes .same-response { border-inline: 0; border-block: 1px solid #d7d7d7; }
+  .phonon-chain .diagram-scroll { padding-bottom: 0.35rem; }
+  .phonon-chain svg { width: 44rem; max-width: none; }
   .layer-ledger { display: block; }
   .layer-ledger dt { padding-bottom: 0.15rem; }
   .layer-ledger dd { padding-top: 0.15rem; border-top: 0; }
