@@ -40,9 +40,9 @@ THEORY_ROUTES = [
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/berry-phases-and-electronic-topology/",
 ]
-CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/"]
-CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/"]
-CORE_UNPUBLISHED_ROUTES = [f"core/part-{roman}/" for roman in ["v", "vi", "vii", "viii"]]
+CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/", "core/part-v/"]
+CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/", "core/part-v/"]
+CORE_UNPUBLISHED_ROUTES = [f"core/part-{roman}/" for roman in ["vi", "vii", "viii"]]
 MARTIN_PART_ROUTES = [f"reading/books/martin/part-{roman}/" for roman in ["i", "ii", "iii", "iv", "v", "vi", "vii"]]
 MARTIN_CHAPTER_ROUTES = [f"reading/books/martin/chapter-{number:02d}/" for number in range(1, 29)]
 MARTIN_APPENDIX_ROUTES = [f"reading/books/martin/appendix-{letter}/" for letter in "abcdefghijklmnopqr"]
@@ -157,6 +157,7 @@ def inspect(driver, mode, expected_width=None):
                 "Part II · Fermions, Mean Fields, and Correlation",
                 "Part III · Periodic Matter and Electronic States",
                 "Part IV · Density Functional Theory",
+                "Part V · From Equations to Computation",
             ]:
                 if label not in driver.find_element(By.TAG_NAME, "main").text:
                     raise AssertionError(f"Core landing lacks {label} in {mode}")
@@ -294,6 +295,33 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"Part IV native MathML line height is not typography-safe in {mode}")
             if "math" not in math_typography["displayFont"].lower() or math_typography["sources"] < 6:
                 raise AssertionError(f"Part IV lacks math-font fallback or equation sources in {mode}")
+        if route == "core/part-v/":
+            diagram_metrics = driver.execute_script(
+                "const figures=Array.from(document.querySelectorAll('figure.finite-representation, figure.core-treatment-map, figure.bz-quadrature, figure.nested-solve, figure.calculation-stack')),main=document.querySelector('main');"
+                "const m=main.getBoundingClientRect();return {count:figures.length,items:figures.map((node)=>{const n=node.getBoundingClientRect();"
+                "return {height:n.height,left:n.left,right:n.right,caption:node.querySelectorAll('figcaption').length,text:(node.textContent||'').trim()};}),mainLeft:m.left,mainRight:m.right};"
+            )
+            if diagram_metrics["count"] != 5:
+                raise AssertionError(f"Part V must contain five semantic teaching diagrams in {mode}")
+            if any(item["height"] < 40 or item["caption"] != 1 or not item["text"] for item in diagram_metrics["items"]):
+                raise AssertionError(f"Part V semantic teaching diagram is incomplete in {mode}")
+            if any(item["left"] < diagram_metrics["mainLeft"] - 1 or item["right"] > diagram_metrics["mainRight"] + 1 for item in diagram_metrics["items"]):
+                raise AssertionError(f"Part V semantic teaching diagram overflows main in {mode}")
+            main_text = driver.find_element(By.TAG_NAME, "main").text
+            for marker in ["finite coordinates", "does not select crystal momenta", "versioned scientific datasets", "represent integration volume", "Inner eigensolver convergence", "What a ground-state DFT calculation actually solves", "Sources and further reading"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Part V lacks teaching-depth marker {marker} in {mode}")
+            math_typography = driver.execute_script(
+                "const displays=Array.from(document.querySelectorAll('.math-display math')),inline=document.querySelector('math.math-inline');"
+                "const ds=getComputedStyle(displays[0]),is=getComputedStyle(inline);return {displayCount:displays.length,displayLineHeight:ds.lineHeight,"
+                "displayFont:ds.fontFamily,inlineLineHeight:is.lineHeight,inlineAlign:is.verticalAlign,sources:document.querySelectorAll('.equation-source').length};"
+            )
+            if math_typography["displayCount"] != 4:
+                raise AssertionError(f"Part V must contain four core display-equation blocks in {mode}")
+            if math_typography["displayLineHeight"] != "normal" or math_typography["inlineLineHeight"] != "normal":
+                raise AssertionError(f"Part V native MathML line height is not typography-safe in {mode}")
+            if "math" not in math_typography["displayFont"].lower() or math_typography["sources"] < 5:
+                raise AssertionError(f"Part V lacks math-font fallback or equation sources in {mode}")
 
         main_text = driver.find_element(By.TAG_NAME, "main").text
         if route == "reading/books/martin/" and "Read Part I" not in main_text:
@@ -410,7 +438,8 @@ def main():
         f"Clean-slate browser smoke passed: {len(CONTENT_ROUTES)} published content routes, "
         f"{len(CORE_UNPUBLISHED_ROUTES)} unpublished Core routes confirmed 404, "
         f"{len(MARTIN_UNPUBLISHED_UNIT_ROUTES)} unpublished Martin units confirmed 404, "
-        "39 MathML Foundations pages, 4 MathML Core pages, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript."
+        f"39 MathML Foundations pages, {len(CORE_MATH_ROUTES)} MathML Core pages, compatibility redirect, "
+        "desktop, true 390px, keyboard, and no-JavaScript."
     )
 
 

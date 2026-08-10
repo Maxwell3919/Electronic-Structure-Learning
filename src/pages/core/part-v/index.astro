@@ -1,0 +1,265 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Part V · From Equations to Computation" description="How continuous Kohn–Sham equations become finite matrix and grid problems, how core treatment and Brillouin-zone quadrature enter, and what self-consistency and convergence do—and do not—establish." current="core">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part V</span>
+  </nav>
+
+  <p class="secondary">Part V</p>
+  <h1>From Equations to Computation</h1>
+  <p class="lede">A calculation does not solve the continuum Kohn–Sham equations exactly. It chooses finite coordinates for functions, a declared treatment of core electrons, a finite quadrature for reciprocal-space integrals, and a solver for the remaining nonlinear problem. These choices approximate different objects and must not be collapsed into one vague idea of “DFT settings.”</p>
+
+  <h2>A computer needs finite coordinates</h2>
+  <p>Part IV ended with continuous orbitals, densities, and potentials. An orbital assigns a value at every point in space; even one unit cell contains infinitely many points. A computer can store only finitely many numbers, so the first numerical question is not which button solves the equation. It is which finite set of numbers will stand in for each continuous function.</p>
+  <p>One common answer is to choose <math class="math-inline" aria-label="M"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> known functions and vary their coefficients. For the ordinary density-dependent Kohn–Sham case shown here, fixing an input density fixes the one-particle operator. Projecting that operator into the finite space then produces a matrix problem:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="A continuous orbital is approximated by M basis functions, and projection of the density-dependent Hamiltonian gives a generalized matrix eigenproblem">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><msubsup><mi>ψ</mi><mi>i</mi><mrow><mo>(</mo><mi>M</mi><mo>)</mo></mrow></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd>
+            <mtd><munderover><mo largeop="true">∑</mo><mrow><mi>μ</mi><mo>=</mo><mn>1</mn></mrow><mi>M</mi></munderover><msub><mi>c</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub><msub><mi>φ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mi mathvariant="bold">H</mi><mo>[</mo><msub><mi>n</mi><mtext>in</mtext></msub><mo>]</mo><msub><mi mathvariant="bold">c</mi><mi>i</mi></msub></mtd><mtd><mo>=</mo></mtd>
+            <mtd><msub><mi>ε</mi><mi>i</mi></msub><mi mathvariant="bold">S</mi><msub><mi mathvariant="bold">c</mi><mi>i</mi></msub><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\psi_i^&#123;(M)&#125;(\mathbf&#123;r&#125;)=\sum_&#123;\mu=1&#125;^M c_&#123;\mu i&#125;\phi_\mu(\mathbf&#123;r&#125;),\qquad \mathbf&#123;H&#125;[n_&#123;\mathrm&#123;in&#125;&#125;]\mathbf&#123;c&#125;_i=\varepsilon_i\mathbf&#123;S&#125;\mathbf&#123;c&#125;_i.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line as an approximation statement, not an identity about nature. The functions <math class="math-inline" aria-label="phi mu"><semantics><msub><mi>φ</mi><mi>μ</mi></msub><annotation encoding="application/x-tex">\phi_\mu</annotation></semantics></math> define the chosen representation; the coefficients <math class="math-inline" aria-label="c mu i"><semantics><msub><mi>c</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub><annotation encoding="application/x-tex">c_&#123;\mu i&#125;</annotation></semantics></math> are the finite coordinates of orbital <math class="math-inline" aria-label="i"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>. Basis functions may resemble atomic orbitals, but they are not automatically physical electron states. Along a nested, systematically enriched basis sequence, increasing <math class="math-inline" aria-label="M"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> enlarges the trial space and tests this representation.</p>
+  <p>To obtain the matrix equation, substitute the finite expansion into the continuum eigenproblem, test the result against each basis function in turn, and integrate over space. Each test supplies one matrix row. The resulting elements <math class="math-inline" aria-label="H nu mu"><semantics><msub><mi>H</mi><mrow><mi>ν</mi><mi>μ</mi></mrow></msub><annotation encoding="application/x-tex">H_&#123;\nu\mu&#125;</annotation></semantics></math> are Hamiltonian integrals between basis functions, while <math class="math-inline" aria-label="S nu mu"><semantics><msub><mi>S</mi><mrow><mi>ν</mi><mi>μ</mi></mrow></msub><annotation encoding="application/x-tex">S_&#123;\nu\mu&#125;</annotation></semantics></math> are their overlaps. Projection is therefore the operation that converts the differential equation into a finite set of coupled algebraic equations for the coefficients.</p>
+  <p>The second line is what the projected continuum equation becomes. The matrix elements of <math class="math-inline" aria-label="bold H"><semantics><mi mathvariant="bold">H</mi><annotation encoding="application/x-tex">\mathbf&#123;H&#125;</annotation></semantics></math> contain the Hamiltonian built from the current input density. The overlap matrix <math class="math-inline" aria-label="S"><semantics><mi mathvariant="bold">S</mi><annotation encoding="application/x-tex">\mathbf&#123;S&#125;</annotation></semantics></math> records that the representation functions need not be orthogonal; if they are orthonormal, <math class="math-inline" aria-label="S equals I"><semantics><mrow><mi mathvariant="bold">S</mi><mo>=</mo><mi mathvariant="bold">I</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;S&#125;=\mathbf&#123;I&#125;</annotation></semantics></math>. For this ordinary KS case, the fixed-density step is an inner, finite eigenproblem. It is not yet the outer self-consistency problem.</p>
+  <p>Here <em>generalized eigenproblem</em> refers only to the overlap metric <math class="math-inline" aria-label="S"><semantics><mi mathvariant="bold">S</mi><annotation encoding="application/x-tex">\mathbf&#123;S&#125;</annotation></semantics></math>; it is unrelated to the generalized Kohn–Sham construction introduced in Part IV. An orbital-dependent generalized-Kohn–Sham approximation may require the current occupied orbitals or one-particle density matrix, not the density alone, to fix its effective nonlocal operator. The projection logic is unchanged once every variable defining that current operator is held fixed.</p>
+  <p>The superscript <math class="math-inline" aria-label="M"><semantics><mrow><mo>(</mo><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(M)</annotation></semantics></math> makes the lost information visible. A finite expansion generally differs from the exact continuum solution. Making the basis larger can reduce that representation error, but it cannot turn an approximate exchange-correlation functional into the exact one.</p>
+  <p class="equation-source">Source: Martin, <cite>Electronic Structure</cite>, 2nd ed., Chs. 12–17, especially the plane-wave projection in Sec. 12.1 and the nonorthogonal formulations in Chs. 14–17.</p>
+
+  <figure class="finite-representation" aria-labelledby="finite-representation-caption">
+    <ol>
+      <li><strong>Continuum object</strong><span>An orbital or potential defined throughout space</span></li>
+      <li><strong>Finite coordinates</strong><span>Basis coefficients, grid values, or augmented components</span></li>
+      <li><strong>Finite algebra</strong><span>Matrix actions, linear solves, and discrete transforms</span></li>
+    </ol>
+    <figcaption id="finite-representation-caption">Discretization changes how the continuum equation is represented, not which physical theory originally defined it. Different representations can approach the same continuum target through different finite objects.</figcaption>
+  </figure>
+
+  <h2>Representation families store different finite objects</h2>
+  <p>A basis expansion is a useful general picture, but it is not the only way to discretize a differential equation. Plane waves store Fourier coefficients. Localized representations store coefficients of atom-centred or otherwise confined functions and often require a nontrivial overlap matrix. Real-space methods store values or local polynomial information on a grid or mesh. After discretization all lead to finite algebraic operations, yet their approximation controls and efficiencies are not interchangeable.</p>
+
+  <div class="representation-views">
+    <section>
+      <h3>Plane waves</h3>
+      <p>Systematic reciprocal-space set; naturally periodic and orthogonal. Completeness is controlled by a kinetic-energy cutoff.</p>
+    </section>
+    <section>
+      <h3>Localized functions</h3>
+      <p>Compact spatial support or atomic character. Basis size, radial range, angular content, and overlap control the finite space.</p>
+    </section>
+    <section>
+      <h3>Real-space grids</h3>
+      <p>Values or local functions on spatial points. Grid spacing, refinement, domain, and boundary treatment control the discretization.</p>
+    </section>
+  </div>
+
+  <p>No family is “the DFT basis.” Kohn–Sham theory defines a continuum auxiliary problem; the representation is a later computational choice. A cell or boundary change also deserves special care: refining a grid in one fixed cell is a numerical convergence study, while changing vacuum thickness, electrostatic boundary conditions, or supercell contents may change the physical model being represented.</p>
+
+  <h2>Plane waves make a cutoff concrete</h2>
+  <p>The periodic setting from Part III gives one especially transparent finite representation. A Bloch orbital at fixed <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> can be expanded in plane waves whose wavevectors are <math class="math-inline" aria-label="k plus G"><semantics><mrow><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;k&#125;+\mathbf&#123;G&#125;</annotation></semantics></math>. Each plane wave is an eigenfunction of the kinetic operator <math class="math-inline" aria-label="minus one half nabla squared"><semantics><mrow><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mo>∇</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-\tfrac&#123;1&#125;&#123;2&#125;\nabla^2</annotation></semantics></math>, with kinetic energy <math class="math-inline" aria-label="one half absolute k plus G squared"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mrow><mo>|</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\tfrac&#123;1&#125;&#123;2&#125;|\mathbf&#123;k&#125;+\mathbf&#123;G&#125;|^2</annotation></semantics></math> in atomic units. Larger wavevector magnitude means shorter wavelength and more rapidly varying spatial structure. The complete set is infinite, so a cutoff retains only the members below a chosen kinetic-energy bound:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The plane-wave cutoff selects reciprocal lattice vectors by kinetic energy, and a Bloch orbital is expanded in that finite selected set">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><msub><mi mathvariant="script">G</mi><mtext>cut</mtext></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd>
+            <mtd><mo>&#123;</mo><mi mathvariant="bold">G</mi><mo>:</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mrow><mo>|</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>|</mo></mrow><mn>2</mn></msup><mo>≤</mo><msub><mi>E</mi><mtext>cut</mtext></msub><mo>&#125;</mo><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd>
+            <mtd><munder><mo largeop="true">∑</mo><mrow><mi mathvariant="bold">G</mi><mo>∈</mo><msub><mi mathvariant="script">G</mi><mtext>cut</mtext></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow></munder><msub><mi>c</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\mathcal&#123;G&#125;_&#123;\mathrm&#123;cut&#125;&#125;(\mathbf&#123;k&#125;)=\left\&#123;\mathbf&#123;G&#125;:\tfrac&#123;1&#125;&#123;2&#125;|\mathbf&#123;k&#125;+\mathbf&#123;G&#125;|^2\le E_&#123;\mathrm&#123;cut&#125;&#125;\right\&#125;,\qquad \psi_&#123;n\mathbf&#123;k&#125;&#125;(\mathbf&#123;r&#125;)=\sum_&#123;\mathbf&#123;G&#125;\in\mathcal&#123;G&#125;_&#123;\mathrm&#123;cut&#125;&#125;(\mathbf&#123;k&#125;)&#125;c_&#123;n\mathbf&#123;k&#125;&#125;(\mathbf&#123;G&#125;)\mathrm&#123;e&#125;^&#123;\mathrm&#123;i&#125;(\mathbf&#123;k&#125;+\mathbf&#123;G&#125;)\cdot\mathbf&#123;r&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The first line is the truncation rule. It does not select crystal momenta. The label <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> still chooses the Bloch symmetry sector; <math class="math-inline" aria-label="G"><semantics><mi mathvariant="bold">G</mi><annotation encoding="application/x-tex">\mathbf&#123;G&#125;</annotation></semantics></math> runs over reciprocal-lattice vectors inside that sector; and <math class="math-inline" aria-label="k plus G"><semantics><mrow><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;k&#125;+\mathbf&#123;G&#125;</annotation></semantics></math> is the wavevector of one plane wave. The cutoff limits the kinetic energy—and therefore the shortest spatial variation—retained in the orbital representation.</p>
+  <p>The second line says that the finite eigenproblem determines one coefficient for every retained plane wave. Raising <math class="math-inline" aria-label="E cut"><semantics><msub><mi>E</mi><mtext>cut</mtext></msub><annotation encoding="application/x-tex">E_&#123;\mathrm&#123;cut&#125;&#125;</annotation></semantics></math> admits more <math class="math-inline" aria-label="G"><semantics><mi mathvariant="bold">G</mi><annotation encoding="application/x-tex">\mathbf&#123;G&#125;</annotation></semantics></math> vectors and a finer set of spatial variations. This can improve plane-wave completeness. It does not refine a <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math>-point mesh, validate a pseudopotential, or test the exchange-correlation approximation. The FFT grid used to transform functions is another finite object again; it must be adequate for the products and densities being transformed.</p>
+  <p class="equation-source">Source: Martin, 2nd ed., Ch. 12, especially Secs. 12.1 and 12.7. The cutoff is shown here in atomic units; outside those units the kinetic prefactor is retained.</p>
+
+  <h2>The nuclear core creates a separate representation problem</h2>
+  <p>Near a nucleus, the Coulomb potential is strong and all-electron orbitals vary rapidly. A uniform smooth representation must work much harder there than in the bonding region between atoms. This difficulty motivates a second choice that is related to, but not identical with, the basis: which electrons and near-nucleus variations are represented explicitly in the calculation.</p>
+
+  <figure class="core-treatment-map" aria-labelledby="core-treatment-caption">
+    <div>
+      <section>
+        <h3>All-electron</h3>
+        <p>Core and valence states are explicit. The representation must resolve rapid near-nucleus structure, often through atom-adapted augmentation.</p>
+      </section>
+      <section>
+        <h3>Pseudopotential</h3>
+        <p>Frozen core effects and the singular nuclear potential are replaced by a smoother, dataset-defined valence problem.</p>
+      </section>
+      <section>
+        <h3>PAW</h3>
+        <p>A smooth auxiliary problem is combined with localized augmentation information that reconstructs declared all-electron quantities.</p>
+      </section>
+    </div>
+    <figcaption id="core-treatment-caption">Core treatment decides which near-nucleus information belongs to the solved finite problem and which enters through a versioned atomic dataset or augmentation construction. It is not the same decision as choosing plane waves, localized functions, or a grid.</figcaption>
+  </figure>
+
+  <p>A pseudopotential calculation does not merely “ignore core electrons.” It removes explicit core degrees of freedom and incorporates their frozen-core effects into a smoother effective valence problem. This is a declared approximation and transferability model, not a claim that the physical core would have no response. PAW likewise does not mean “plane waves with a better cutoff”: its auxiliary smooth functions, projectors, partial waves, and augmentation data define an additional transformation and reconstruction boundary. Both choices use versioned scientific datasets whose generation assumptions and valence partition matter.</p>
+  <p>The separation has a practical consequence. Two calculations can share the same exchange-correlation approximation and plane-wave cutoff yet solve different finite Hamiltonians because their core datasets differ. Conversely, an all-electron method and a PAW calculation can use very different representations while targeting the same declared physical observable. Raising a cutoff can test basis completeness for one dataset; it cannot prove that the dataset transfers accurately to a new oxidation, pressure, spin, or bonding environment.</p>
+  <p class="equation-source">Sources: Martin, 2nd ed., Ch. 11, Sec. 11.12, and Ch. 13, Sec. 13.3; Blöchl, “Projector augmented-wave method,” <cite>Phys. Rev. B</cite> 50, 17953 (1994), DOI 10.1103/PhysRevB.50.17953. No PAW transformation formula is required for the present responsibility boundary.</p>
+
+  <h2>The Brillouin-zone integral needs its own finite approximation</h2>
+  <p>Even after every orbital at one <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> has a finite representation, a periodic observable may still require an integral over the whole Brillouin zone. Part III kept this continuum object distinct from a plotted band path. Part V now replaces the integral by weighted samples. For a named BZ-averaged quantity <math class="math-inline" aria-label="A bar"><semantics><mover><mi>A</mi><mo>¯</mo></mover><annotation encoding="application/x-tex">\bar A</annotation></semantics></math>,</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="A Brillouin-zone average is approximated by a weighted finite sum over k points whose normalized weights add to one">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><mover><mi>A</mi><mo>¯</mo></mover></mtd><mtd><mo>=</mo></mtd>
+            <mtd><mfrac><mn>1</mn><msub><mi>Ω</mi><mtext>BZ</mtext></msub></mfrac><msub><mo largeop="true">∫</mo><mtext>BZ</mtext></msub><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mspace width="0.2em"/><msup><mi mathvariant="normal">d</mi><mi>d</mi></msup><mi mathvariant="bold">k</mi><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mover><mi>A</mi><mo>¯</mo></mover></mtd><mtd><mo>≈</mo></mtd>
+            <mtd><munderover><mo largeop="true">∑</mo><mrow><mi>p</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>N</mi><mi>k</mi></msub></munderover><msub><mi>w</mi><mi>p</mi></msub><mi>A</mi><mo>(</mo><msub><mi mathvariant="bold">k</mi><mi>p</mi></msub><mo>)</mo><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><munderover><mo largeop="true">∑</mo><mrow><mi>p</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>N</mi><mi>k</mi></msub></munderover><msub><mi>w</mi><mi>p</mi></msub></mtd><mtd><mo>=</mo></mtd><mtd><mn>1</mn><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\bar A=\frac&#123;1&#125;&#123;\Omega_&#123;\mathrm&#123;BZ&#125;&#125;&#125;\int_&#123;\mathrm&#123;BZ&#125;&#125;A(\mathbf&#123;k&#125;)\,\mathrm&#123;d&#125;^d\mathbf&#123;k&#125;\approx\sum_&#123;p=1&#125;^&#123;N_k&#125;w_pA(\mathbf&#123;k&#125;_p),\qquad\sum_&#123;p=1&#125;^&#123;N_k&#125;w_p=1.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read from top to bottom. The target is a continuum average of a specified integrand <math class="math-inline" aria-label="A of k"><semantics><mrow><mi>A</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(\mathbf&#123;k&#125;)</annotation></semantics></math>, not a generic promise that every property uses the same sampling difficulty. Here <math class="math-inline" aria-label="d"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math> is the periodic dimension, so <math class="math-inline" aria-label="Omega B Z"><semantics><msub><mi>Ω</mi><mtext>BZ</mtext></msub><annotation encoding="application/x-tex">\Omega_&#123;\mathrm&#123;BZ&#125;&#125;</annotation></semantics></math> is the BZ length, area, or volume. The approximation evaluates the integrand at <math class="math-inline" aria-label="N k"><semantics><msub><mi>N</mi><mi>k</mi></msub><annotation encoding="application/x-tex">N_k</annotation></semantics></math> finite points <math class="math-inline" aria-label="k p"><semantics><msub><mi mathvariant="bold">k</mi><mi>p</mi></msub><annotation encoding="application/x-tex">\mathbf&#123;k&#125;_p</annotation></semantics></math>. The weights <math class="math-inline" aria-label="w p"><semantics><msub><mi>w</mi><mi>p</mi></msub><annotation encoding="application/x-tex">w_p</annotation></semantics></math> represent integration volume in reciprocal space; if symmetry-equivalent points are combined, their shares of a scalar integral are combined in the weight. They are not electronic occupations. In an actual occupied-state sum, a separate factor <math class="math-inline" aria-label="f n k p"><semantics><msub><mi>f</mi><mrow><mi>n</mi><msub><mi mathvariant="bold">k</mi><mi>p</mi></msub></mrow></msub><annotation encoding="application/x-tex">f_&#123;n\mathbf&#123;k&#125;_p&#125;</annotation></semantics></math> states how much of band <math class="math-inline" aria-label="n"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> is filled at that point.</p>
+  <p>The 1D chain makes the approximation tangible. Its first BZ is the interval from <math class="math-inline" aria-label="minus pi over a"><semantics><mrow><mo>−</mo><mi>π</mi><mo>/</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">-\pi/a</annotation></semantics></math> to <math class="math-inline" aria-label="pi over a"><semantics><mrow><mi>π</mi><mo>/</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">\pi/a</annotation></semantics></math>. A mesh replaces the area under a periodic <math class="math-inline" aria-label="A of k"><semantics><mrow><mi>A</mi><mo>(</mo><mi>k</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(k)</annotation></semantics></math> curve by weighted values distributed across that interval. Adding points asks whether this integral is stable. Drawing a few connected energy values along a selected high-symmetry path asks a different visualization question.</p>
+
+  <figure class="bz-quadrature" aria-labelledby="bz-quadrature-caption">
+    <div class="bz-continuum"><span>−π/a</span><span class="bz-axis" aria-hidden="true"></span><span>π/a</span></div>
+    <p class="diagram-arrow">finite weighted quadrature</p>
+    <ol aria-label="Example k points with weights across a one-dimensional Brillouin zone">
+      <li><span aria-hidden="true">●</span><strong>k₁</strong><small>w₁</small></li>
+      <li><span aria-hidden="true">●</span><strong>k₂</strong><small>w₂</small></li>
+      <li><span aria-hidden="true">●</span><strong>k₃</strong><small>w₃</small></li>
+      <li><span aria-hidden="true">●</span><strong>k₄</strong><small>w₄</small></li>
+    </ol>
+    <figcaption id="bz-quadrature-caption">The mesh stands in for a full-zone integral. Symmetry can reduce the number of inequivalent points without turning a high-symmetry plotting path into an integration rule.</figcaption>
+  </figure>
+
+  <p>Metals are often harder because occupations change across a Fermi surface, so the integrand can vary sharply. A smearing or integration method may help represent that change, but a numerical broadening is not automatically a physical electronic temperature. Whatever rule is used, convergence belongs to the named quantity: a mesh adequate for total energy need not be adequate for a force, stress, density of states, Fermi surface, response function, or later electron–phonon integral.</p>
+  <p class="equation-source">Sources: Martin, 2nd ed., Sec. 4.6; Monkhorst and Pack, “Special points for Brillouin-zone integrations,” <cite>Phys. Rev. B</cite> 13, 5188 (1976), DOI 10.1103/PhysRevB.13.5188. Numerical mesh selection and convergence are deferred to DFT Research Workflow.</p>
+
+  <h2>Self-consistency is the outer nonlinear solve</h2>
+  <p>Part IV defined self-consistency as a fixed-point problem. The finite representation now lets us see the nested calculation. In the ordinary density-dependent KS case, hold an input density fixed, build its finite Hamiltonian, solve the inner eigenproblems at the required <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> points, occupy the resulting states, and assemble an output density. Usually the output differs from the input, so one must decide how to update the next input. Generalized-Kohn–Sham calculations can iterate a richer orbital or density-matrix object, but the same outer consistency problem remains.</p>
+  <p>For the ordinary KS illustration, the disagreement itself is the central solver object. With iteration number <math class="math-inline" aria-label="m"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>, define a density residual and the simplest linear-mixing update:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The SCF residual is output density minus input density, and linear mixing uses a fraction alpha of that residual to form the next input">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><msup><mi>R</mi><mrow><mo>(</mo><mi>m</mi><mo>)</mo></mrow></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd>
+            <mtd><msubsup><mi>n</mi><mtext>out</mtext><mrow><mo>(</mo><mi>m</mi><mo>)</mo></mrow></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>−</mo><msubsup><mi>n</mi><mtext>in</mtext><mrow><mo>(</mo><mi>m</mi><mo>)</mo></mrow></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><msubsup><mi>n</mi><mtext>in</mtext><mrow><mo>(</mo><mi>m</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd>
+            <mtd><msubsup><mi>n</mi><mtext>in</mtext><mrow><mo>(</mo><mi>m</mi><mo>)</mo></mrow></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><mi>α</mi><msup><mi>R</mi><mrow><mo>(</mo><mi>m</mi><mo>)</mo></mrow></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">R^&#123;(m)&#125;(\mathbf&#123;r&#125;)=n_&#123;\mathrm&#123;out&#125;&#125;^&#123;(m)&#125;(\mathbf&#123;r&#125;)-n_&#123;\mathrm&#123;in&#125;&#125;^&#123;(m)&#125;(\mathbf&#123;r&#125;),\qquad n_&#123;\mathrm&#123;in&#125;&#125;^&#123;(m+1)&#125;(\mathbf&#123;r&#125;)=n_&#123;\mathrm&#123;in&#125;&#125;^&#123;(m)&#125;(\mathbf&#123;r&#125;)+\alpha R^&#123;(m)&#125;(\mathbf&#123;r&#125;).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The first line measures failure of density closure at one iteration. The label <math class="math-inline" aria-label="m"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math> is an iteration counter, not a band or quantum number. The second line moves only a fraction <math class="math-inline" aria-label="alpha"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> of the way from input toward output. More capable solvers transform or precondition a suitable residual and use iteration history, but they are still trying to make the variables that define the effective operator consistent with the states returned by that operator.</p>
+  <p>Why not simply replace the input by the full output every time? The electronic response can amplify or reverse some errors, especially in soft or metallic systems, so a full update may overshoot or oscillate instead of approaching the fixed point. Mixing controls that numerical step; it does not change the Kohn–Sham theory being solved.</p>
+  <p>If the residual vanishes, input and output densities agree for the finite, declared problem. That conclusion is important and limited. It does not prove that the basis, grid, cutoff, or BZ quadrature is converged; that the selected solution is the lowest-energy spin, occupation, or symmetry branch; that the core dataset is transferable; or that the exchange-correlation approximation describes the target physics. Inner eigensolver convergence, outer SCF convergence, numerical convergence, and physical validation are separate claims.</p>
+  <p class="equation-source">Source: Martin, 2nd ed., Secs. 7.3–7.4 and 13.2. The displayed update is the simplest linear-mixing illustration, not a recommended universal solver.</p>
+
+  <figure class="nested-solve" aria-labelledby="nested-solve-caption">
+    <div>
+      <section>
+        <h3>Outer nonlinear loop</h3>
+        <p><math class="math-inline" aria-label="n in"><semantics><msub><mi>n</mi><mtext>in</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;in&#125;&#125;</annotation></semantics></math> → Hamiltonian → <math class="math-inline" aria-label="n out"><semantics><msub><mi>n</mi><mtext>out</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;out&#125;&#125;</annotation></semantics></math> → residual → update</p>
+      </section>
+      <section>
+        <h3>Inner fixed-operator work</h3>
+        <p>At each required <math class="math-inline" aria-label="k p"><semantics><msub><mi mathvariant="bold">k</mi><mi>p</mi></msub><annotation encoding="application/x-tex">\mathbf&#123;k&#125;_p</annotation></semantics></math>: build and solve the finite eigenproblem, then form occupied-state contributions.</p>
+      </section>
+    </div>
+    <figcaption id="nested-solve-caption">The inner step is a finite eigenproblem once all variables defining the current effective operator are fixed. Rebuilding the operator from the returned density—or, in a generalized-Kohn–Sham case, the required occupied-state information—makes the complete calculation nonlinear.</figcaption>
+  </figure>
+
+  <h2>Convergence must name the layer and the quantity</h2>
+  <p>The word <em>converged</em> is incomplete without an object and a comparison. A small SCF residual concerns the solver. Stability under a higher plane-wave cutoff concerns one representation for one dataset. Stability under a denser <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> mesh concerns one reciprocal-space quadrature. Agreement between different functionals, core treatments, spin branches, boundary models, or experiment addresses different physical questions.</p>
+
+  <dl class="layer-ledger">
+    <dt>Theory</dt><dd>Which continuum quantum problem and target object are defined?</dd>
+    <dt>Physical approximation</dt><dd>Which unknown physics is modelled, such as an exchange-correlation functional or frozen-core assumption?</dd>
+    <dt>Representation</dt><dd>Which finite coefficients, grid values, and boundaries stand in for continuous functions?</dd>
+    <dt>Core treatment</dt><dd>Which core and near-nucleus information is explicit, transformed, or supplied by a dataset?</dd>
+    <dt>Quadrature</dt><dd>Which finite weighted samples approximate a continuum integral?</dd>
+    <dt>Solver</dt><dd>How are the inner algebraic problem and outer nonlinear closure reached?</dd>
+    <dt>Convergence and validation</dt><dd>Is a named observable stable to relevant numerical controls, and is the declared model adequate for the scientific claim?</dd>
+  </dl>
+
+  <p>These layers can interact, so their errors should not be advertised as a simple additive budget. A harder core dataset may require a larger plane-wave space; a metal may require both careful occupations and dense BZ sampling; a noisy finite representation may make SCF harder. The conceptual separation still matters because each test changes a different part of the calculation and supports a different conclusion.</p>
+
+  <div class="concept-check" role="note" aria-labelledby="part-v-check">
+    <h3 id="part-v-check">Check your understanding</h3>
+    <p><strong>Question.</strong> A calculation reaches a tiny SCF residual, but its energy difference changes when the plane-wave cutoff is raised. What has converged, and what has not?</p>
+    <p><strong>Answer.</strong> The density map has reached a fixed point in the original finite plane-wave space. The target energy difference has not yet been shown stable with respect to that representation. Neither result, by itself, validates the exchange-correlation approximation, core dataset, physical branch, or comparison to experiment.</p>
+  </div>
+
+  <h2>What a ground-state DFT calculation actually solves</h2>
+  <p>The phrase “a DFT calculation” hides a stack of decisions. The calculation begins with a physical system and a fixed-nuclei electronic problem from Part I. It uses the Kohn–Sham construction and a declared exchange-correlation approximation from Part IV. Only then do core treatment, finite representation, BZ quadrature, and nonlinear solution turn that continuum model into computable objects.</p>
+
+  <figure class="calculation-stack" aria-labelledby="calculation-stack-caption">
+    <ol>
+      <li><strong>Physical system and boundary</strong><span>Nuclei, electrons, charge, spin, cell, fields, and environmental model</span></li>
+      <li><strong>Fixed-nuclei electronic problem</strong><span>The Born–Oppenheimer electronic Hamiltonian at a declared geometry</span></li>
+      <li><strong>Kohn–Sham density theory</strong><span>An auxiliary one-particle construction for the interacting ground-state density</span></li>
+      <li><strong>Exchange-correlation approximation</strong><span>The physical approximation used for the unknown functional contribution</span></li>
+      <li><strong>Core treatment</strong><span>All-electron, pseudopotential, PAW, or another explicit core–valence construction</span></li>
+      <li><strong>Finite representation</strong><span>Basis functions, grids, augmentation data, cutoffs, and domain resolution</span></li>
+      <li><strong>Reciprocal-space quadrature</strong><span>Weighted <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> points and an occupation/integration rule for named BZ quantities</span></li>
+      <li><strong>Inner and outer solution</strong><span>Finite eigenproblems inside the self-consistent density loop</span></li>
+      <li><strong>Ground-state outputs</strong><span>A self-consistent finite-model density, total energy, auxiliary orbitals and eigenvalues, plus consistently derived quantities</span></li>
+    </ol>
+    <figcaption id="calculation-stack-caption">Replacing one layer changes a specific responsibility. PBE changes the XC approximation; PAW changes the core/augmentation construction; a cutoff changes a finite representation; a <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> mesh changes a quadrature; SCF changes how the nonlinear closure is reached.</figcaption>
+  </figure>
+
+  <p>This stack makes a typical Methods sentence legible. “PBE, PAW, plane waves, a 500 eV cutoff, a <math class="math-inline" aria-label="twelve by twelve by twelve"><semantics><mrow><mn>12</mn><mo>×</mo><mn>12</mn><mo>×</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">12\times12\times12</annotation></semantics></math> <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> mesh, and SCF convergence” names, respectively, a named GGA exchange-correlation approximation, a core/augmentation treatment, a representation family, a representation-size control, a BZ quadrature, and a nonlinear solution requirement. It does not yet tell us whether any of those choices are adequate for the target observable—or even which residual and tolerance the phrase “SCF convergence” denotes.</p>
+  <p>The Atlas explains what each layer means. <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> takes over when the task becomes choosing parameters, preserving inputs, testing convergence, comparing branches, validating observables, and supporting a reproducible scientific claim.</p>
+
+  <p class="repair-links">For deeper prerequisite repair, see <a href={href('/theory/discretization-and-basis-representations/')}>Discretization and Basis Representations</a>, <a href={href('/theory/plane-wave-and-real-space-methods/')}>Plane-Wave and Real-Space Methods</a>, <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>Pseudopotentials, PAW, and Core–Valence Treatments</a>, <a href={href('/theory/brillouin-zone-sampling/')}>Brillouin-Zone Sampling</a>, and <a href={href('/theory/self-consistent-field-methods/')}>Self-Consistent Field Methods</a>. Core supplies the causal chain without requiring those detours.</p>
+
+  <h2>Sources and further reading</h2>
+  <dl class="source-map">
+    <dt>Representation, plane waves, grids, localized and augmented methods</dt>
+    <dd>Martin, <cite>Electronic Structure</cite>, 2nd ed., Chs. 11–17, especially Ch. 12 for the plane-wave and grid construction.</dd>
+    <dt>Brillouin-zone quadrature</dt>
+    <dd>Martin, Sec. 4.6; Monkhorst and Pack, <cite>Physical Review B</cite> 13, 5188–5192 (1976), DOI 10.1103/PhysRevB.13.5188.</dd>
+    <dt>Self-consistent solution</dt>
+    <dd>Martin, Secs. 7.3–7.4 and 13.2.</dd>
+    <dt>Projector augmented-wave boundary</dt>
+    <dd>Blöchl, <cite>Physical Review B</cite> 50, 17953–17979 (1994), DOI 10.1103/PhysRevB.50.17953.</dd>
+  </dl>
+  <ul class="further-reading">
+    <li>Sholl and Steckel, <cite>Density Functional Theory: A Practical Introduction</cite>, 1st ed., Ch. 3, connects cutoffs, <math class="math-inline" aria-label="k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> points, and numerical convergence to practical ground-state calculations while keeping them distinct from functional choice.</li>
+  </ul>
+
+  <p>A finite, self-consistent ground-state calculation can now return a density and total energy and can supply derivatives when they are evaluated consistently. What physical information may legitimately be extracted from those objects, and why do energy differences, forces, stress, and curvature answer different structural questions?</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/part-iv/')}>← Part IV · Density Functional Theory</a>
+    <a href={href('/core/')}>Core</a>
+  </nav>
+</BaseLayout>
