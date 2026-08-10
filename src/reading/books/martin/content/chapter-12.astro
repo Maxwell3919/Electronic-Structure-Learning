@@ -42,9 +42,9 @@ export const synthesis =
           <mfrac><mn>1</mn><msqrt><mi>Ω</mi></msqrt></mfrac>
           <munder><mo>∑</mo><mi mathvariant="bold">G</mi></munder>
           <msub><mi>c</mi><mrow><mi>i</mi><mi mathvariant="bold">G</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo>
-          <msup><mi>e</mi><mrow><mi>i</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><mo>.</mo>
+          <msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)=&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;&#92;Omega&#125;&#125;&#92;sum_&#92;mathbf&#123;G&#125;c_&#123;i&#92;mathbf&#123;G&#125;&#125;(&#92;mathbf&#123;k&#125;)e^&#123;i(&#92;mathbf&#123;k&#125;+&#92;mathbf&#123;G&#125;)&#92;cdot&#92;mathbf&#123;r&#125;&#125;.</annotation>
+        <annotation encoding="application/x-tex">&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)=&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;&#92;Omega&#125;&#125;&#92;sum_&#92;mathbf&#123;G&#125;c_&#123;i&#92;mathbf&#123;G&#125;&#125;(&#92;mathbf&#123;k&#125;)&#92;mathrm&#123;e&#125;^&#123;&#92;mathrm&#123;i&#125;(&#92;mathbf&#123;k&#125;+&#92;mathbf&#123;G&#125;)&#92;cdot&#92;mathbf&#123;r&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -98,11 +98,11 @@ export const synthesis =
       <semantics>
         <mrow>
           <msub><mi>ψ</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo>
-          <msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup>
+          <msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup>
           <msub><mi>u</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo>
           <mspace width="1em"/><msub><mi>u</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>+</mo><mi mathvariant="bold">T</mi><mo>)</mo><mo>=</mo><msub><mi>u</mi><mrow><mi>i</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)=e^&#123;i&#92;mathbf&#123;k&#125;&#92;cdot&#92;mathbf&#123;r&#125;&#125;u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;),&#92;quad u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;+&#92;mathbf&#123;T&#125;)=u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;).</annotation>
+        <annotation encoding="application/x-tex">&#92;psi_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;)=&#92;mathrm&#123;e&#125;^&#123;&#92;mathrm&#123;i&#125;&#92;mathbf&#123;k&#125;&#92;cdot&#92;mathbf&#123;r&#125;&#125;u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;),&#92;quad u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;+&#92;mathbf&#123;T&#125;)=u_&#123;i&#92;mathbf&#123;k&#125;&#125;(&#92;mathbf&#123;r&#125;).</annotation>
       </semantics>
     </math>
   </div>
@@ -120,9 +120,9 @@ export const synthesis =
           <mfrac><mn>1</mn><msub><mi>N</mi><mi>k</mi></msub></mfrac><munder><mo>∑</mo><mi mathvariant="bold">k</mi></munder><mi>f</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo>
           <mo>→</mo>
           <mfrac><msub><mi>Ω</mi><mi>cell</mi></msub><msup><mrow><mo>(</mo><mn>2</mn><mi>π</mi><mo>)</mo></mrow><mi>d</mi></msup></mfrac>
-          <msub><mo>∫</mo><mi>BZ</mi></msub><msup><mi>d</mi><mi>d</mi></msup><mi>k</mi><mi>f</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo>
+          <msub><mo>∫</mo><mi>BZ</mi></msub><msup><mi mathvariant="normal">d</mi><mi>d</mi></msup><mi>k</mi><mi>f</mi><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">&#92;bar f=&#92;frac&#123;1&#125;&#123;N_k&#125;&#92;sum_&#92;mathbf&#123;k&#125;f(&#92;mathbf&#123;k&#125;)&#92;to&#92;frac&#123;&#92;Omega_&#123;&#92;mathrm&#123;cell&#125;&#125;&#125;&#123;(2&#92;pi)^d&#125;&#92;int_&#123;&#92;mathrm&#123;BZ&#125;&#125;d^dk f(&#92;mathbf&#123;k&#125;).</annotation>
+        <annotation encoding="application/x-tex">&#92;bar f=&#92;frac&#123;1&#125;&#123;N_k&#125;&#92;sum_&#92;mathbf&#123;k&#125;f(&#92;mathbf&#123;k&#125;)&#92;to&#92;frac&#123;&#92;Omega_&#123;&#92;mathrm&#123;cell&#125;&#125;&#125;&#123;(2&#92;pi)^d&#125;&#92;int_&#123;&#92;mathrm&#123;BZ&#125;&#125;&#92;mathrm&#123;d&#125;^d&#92;mathbf&#123;k&#125;&#92;,f(&#92;mathbf&#123;k&#125;).</annotation>
       </semantics>
     </math>
   </div>
@@ -184,9 +184,9 @@ export const synthesis =
       <semantics>
         <mrow>
           <msup><mi>S</mi><mi>κ</mi></msup><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mo>=</mo>
-          <munder><mo>∑</mo><mi>j</mi></munder><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">G</mi><mo>·</mo><msub><mi mathvariant="bold">τ</mi><mrow><mi>κ</mi><mi>j</mi></mrow></msub></mrow></msup><mo>,</mo>
+          <munder><mo>∑</mo><mi>j</mi></munder><msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="bold">G</mi><mo>·</mo><msub><mi mathvariant="bold">τ</mi><mrow><mi>κ</mi><mi>j</mi></mrow></msub></mrow></msup><mo>,</mo>
         </mrow>
-        <annotation encoding="application/x-tex">S^&#92;kappa(&#92;mathbf&#123;G&#125;)=&#92;sum_j e^&#123;i&#92;mathbf&#123;G&#125;&#92;cdot&#92;boldsymbol&#123;&#92;tau&#125;_&#123;&#92;kappa j&#125;&#125;.</annotation>
+        <annotation encoding="application/x-tex">S^&#92;kappa(&#92;mathbf&#123;G&#125;)=&#92;sum_j &#92;mathrm&#123;e&#125;^&#123;&#92;mathrm&#123;i&#125;&#92;mathbf&#123;G&#125;&#92;cdot&#92;boldsymbol&#123;&#92;tau&#125;_&#123;&#92;kappa j&#125;&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -198,10 +198,10 @@ export const synthesis =
       <semantics>
         <mrow>
           <msup><mi>V</mi><mi>κ</mi></msup><mo>(</mo><mi>G</mi><mo>)</mo><mo>=</mo>
-          <mn>4</mn><mi>π</mi><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><mi>d</mi><mi>r</mi><msup><mi>r</mi><mn>2</mn></msup>
+          <mn>4</mn><mi>π</mi><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><mi mathvariant="normal">d</mi><mi>r</mi><msup><mi>r</mi><mn>2</mn></msup>
           <msub><mi>j</mi><mn>0</mn></msub><mo>(</mo><mi>G</mi><mi>r</mi><mo>)</mo><msup><mi>V</mi><mi>κ</mi></msup><mo>(</mo><mi>r</mi><mo>)</mo><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">V^&#92;kappa(G)=4&#92;pi&#92;int_0^&#92;infty dr r^2 j_0(Gr)V^&#92;kappa(r).</annotation>
+        <annotation encoding="application/x-tex">V^&#92;kappa(G)=4&#92;pi&#92;int_0^&#92;infty \mathrm&#123;d&#125;r r^2 j_0(Gr)V^&#92;kappa(r).</annotation>
       </semantics>
     </math>
   </div>

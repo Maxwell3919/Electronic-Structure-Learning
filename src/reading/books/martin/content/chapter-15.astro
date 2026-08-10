@@ -70,12 +70,12 @@ export const synthesis =
     <math display="block" aria-label="Gaussian product theorem">
       <semantics>
         <mrow>
-          <msup><mi>e</mi><mrow><mo>−</mo><mi>α</mi><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
-          <msup><mi>e</mi><mrow><mo>−</mo><mi>β</mi><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>B</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
+          <msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mi>α</mi><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
+          <msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mi>β</mi><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>B</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
           <mo>=</mo><msub><mi>K</mi><mrow><mi>A</mi><mi>B</mi></mrow></msub>
-          <msup><mi>e</mi><mrow><mo>−</mo><mrow><mo>(</mo><mi>α</mi><mo>+</mo><mi>β</mi><mo>)</mo></mrow><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>C</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
+          <msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mrow><mo>(</mo><mi>α</mi><mo>+</mo><mi>β</mi><mo>)</mo></mrow><msup><mrow><mo>|</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>C</mi></msub><mo>|</mo></mrow><mn>2</mn></msup></mrow></msup>
         </mrow>
-        <annotation encoding="application/x-tex">e^&#123;-\alpha|\mathbf r-\mathbf R_A|^2&#125;e^&#123;-\beta|\mathbf r-\mathbf R_B|^2&#125;=K_&#123;AB&#125;e^&#123;-(\alpha+\beta)|\mathbf r-\mathbf R_C|^2&#125;</annotation>
+        <annotation encoding="application/x-tex">\mathrm&#123;e&#125;^&#123;-\alpha|\mathbf r-\mathbf R_A|^2&#125;\mathrm&#123;e&#125;^&#123;-\beta|\mathbf r-\mathbf R_B|^2&#125;=K_&#123;AB&#125;\mathrm&#123;e&#125;^&#123;-(\alpha+\beta)|\mathbf r-\mathbf R_C|^2&#125;</annotation>
       </semantics>
     </math>
   </div>
@@ -136,12 +136,12 @@ export const synthesis =
       <semantics>
         <mrow>
           <msubsup><mi>V</mi><mrow><mi>m</mi><mi>m</mi><mo>′</mo></mrow><mi>local</mi></msubsup><mo>=</mo>
-          <mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <mo>∫</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi>
           <msubsup><mi>χ</mi><mi>m</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mi>m</mi></msub><mo>)</mo>
           <msup><mi>V</mi><mi>local</mi></msup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
           <msub><mi>χ</mi><mrow><mi>m</mi><mo>′</mo></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>−</mo><msub><mi mathvariant="bold">R</mi><mrow><mi>m</mi><mo>′</mo></mrow></msub><mo>)</mo>
         </mrow>
-        <annotation encoding="application/x-tex">V^&#123;\mathrm&#123;local&#125;&#125;_&#123;mm'&#125;=\int d\mathbf r\,\chi_m^*(\mathbf r-\mathbf R_m)V^&#123;\mathrm&#123;local&#125;&#125;(\mathbf r)\chi_&#123;m'&#125;(\mathbf r-\mathbf R_&#123;m'&#125;)</annotation>
+        <annotation encoding="application/x-tex">V^&#123;\mathrm&#123;local&#125;&#125;_&#123;mm'&#125;=\int\!\mathrm&#123;d&#125;\mathbf r\,\chi_m^*(\mathbf r-\mathbf R_m)V^&#123;\mathrm&#123;local&#125;&#125;(\mathbf r)\chi_&#123;m'&#125;(\mathbf r-\mathbf R_&#123;m'&#125;)</annotation>
       </semantics>
     </math>
   </div>
@@ -152,16 +152,16 @@ export const synthesis =
     <math display="block" aria-label="partition of unity for atom centered integration">
       <semantics>
         <mrow>
-          <mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi><mi>f</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
+          <mo>∫</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi><mi>f</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
           <mo>=</mo>
           <munder><mo>∑</mo><mi>I</mi></munder>
-          <mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <mo>∫</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi>
           <msub><mi>w</mi><mi>I</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>f</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
           <mo>,</mo>
           <mspace width="0.7em"/>
           <munder><mo>∑</mo><mi>I</mi></munder><msub><mi>w</mi><mi>I</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mn>1</mn>
         </mrow>
-        <annotation encoding="application/x-tex">\int d\mathbf r\,f(\mathbf r)=\sum_I\int d\mathbf r\,w_I(\mathbf r)f(\mathbf r),\qquad \sum_I w_I(\mathbf r)=1</annotation>
+        <annotation encoding="application/x-tex">\int\!\mathrm&#123;d&#125;\mathbf r\,f(\mathbf r)=\sum_I\int\!\mathrm&#123;d&#125;\mathbf r\,w_I(\mathbf r)f(\mathbf r),\qquad \sum_I w_I(\mathbf r)=1</annotation>
       </semantics>
     </math>
   </div>
@@ -253,11 +253,11 @@ export const synthesis =
         <mrow>
           <mo>−</mo><mfrac><mrow><mo>∂</mo><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac>
           <mo>=</mo>
-          <mo>−</mo><mo>∫</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <mo>−</mo><mo>∫</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi>
           <mfrac><mrow><mi>δ</mi><mi>F</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow></mfrac>
           <mfrac><mrow><mo>∂</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac>
         </mrow>
-        <annotation encoding="application/x-tex">-\frac&#123;\partial F[n]&#125;&#123;\partial\mathbf R_I&#125;=-\int d\mathbf r\,\frac&#123;\delta F[n]&#125;&#123;\delta n(\mathbf r)&#125;\frac&#123;\partial n(\mathbf r)&#125;&#123;\partial\mathbf R_I&#125;</annotation>
+        <annotation encoding="application/x-tex">-\frac&#123;\partial F[n]&#125;&#123;\partial\mathbf R_I&#125;=-\int\!\mathrm&#123;d&#125;\mathbf r\,\frac&#123;\delta F[n]&#125;&#123;\delta n(\mathbf r)&#125;\frac&#123;\partial n(\mathbf r)&#125;&#123;\partial\mathbf R_I&#125;</annotation>
       </semantics>
     </math>
   </div>
@@ -303,10 +303,10 @@ export const synthesis =
         <mrow>
           <msub><mi>χ</mi><mrow><mi mathvariant="bold">k</mi><mo>,</mo><mi>m</mi><mo>,</mo><mi>n</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo>
           <mo>=</mo>
-          <msup><mi>e</mi><mrow><mi>i</mi><mrow><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><msub><mi mathvariant="bold">G</mi><mi>m</mi></msub><mo>)</mo></mrow><mo>·</mo><msub><mi mathvariant="bold">r</mi><mo>∥</mo></msub></mrow></msup>
-          <msup><mi>e</mi><mrow><mo>−</mo><mi>α</mi><msup><mrow><mo>(</mo><mi>z</mi><mo>−</mo><msub><mi>z</mi><mi>n</mi></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow></msup>
+          <msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mrow><mo>(</mo><mi mathvariant="bold">k</mi><mo>+</mo><msub><mi mathvariant="bold">G</mi><mi>m</mi></msub><mo>)</mo></mrow><mo>·</mo><msub><mi mathvariant="bold">r</mi><mo>∥</mo></msub></mrow></msup>
+          <msup><mi mathvariant="normal">e</mi><mrow><mo>−</mo><mi>α</mi><msup><mrow><mo>(</mo><mi>z</mi><mo>−</mo><msub><mi>z</mi><mi>n</mi></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow></msup>
         </mrow>
-        <annotation encoding="application/x-tex">\chi_&#123;\mathbf k,m,n&#125;(\mathbf r)=e^&#123;i(\mathbf k+\mathbf G_m)\cdot\mathbf r_\parallel&#125;e^&#123;-\alpha(z-z_n)^2&#125;</annotation>
+        <annotation encoding="application/x-tex">\chi_&#123;\mathbf k,m,n&#125;(\mathbf r)=\mathrm&#123;e&#125;^&#123;\mathrm&#123;i&#125;(\mathbf k+\mathbf G_m)\cdot\mathbf r_\parallel&#125;\mathrm&#123;e&#125;^&#123;-\alpha(z-z_n)^2&#125;</annotation>
       </semantics>
     </math>
   </div>

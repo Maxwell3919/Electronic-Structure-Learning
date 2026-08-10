@@ -49,17 +49,17 @@ export const synthesis =
     The nonlocal projector part of the pseudopotential is added separately. This decomposition matters computationally because the kinetic operator and Coulomb kernels are simple in reciprocal space, while the density and semilocal exchange–correlation terms are efficiently evaluated on a real-space FFT grid. A practical plane-wave code therefore moves repeatedly between the two representations rather than choosing one and staying there.
   </p>
   <p>
-    Long-range Coulomb terms require a neutral grouping. For a periodic electron density the reciprocal-space Hartree contribution excludes the average component,
+    Long-range Coulomb terms require a neutral grouping. Define the cell-normalized Fourier coefficient as <em>n</em><sub>G</sub> = Ω<sup>−1</sup>∫<sub>Ω</sub><em>n</em>(<strong>r</strong>) exp(−i<strong>G</strong>·<strong>r</strong>) d<strong>r</strong>. For that convention, the reciprocal-space Hartree energy per cell excludes the average component and is
   </p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="reciprocal space Hartree energy excluding G equals zero">
       <semantics>
         <mrow>
-          <msub><mi>E</mi><mi>H</mi></msub><mo>=</mo><mn>2</mn><mi>π</mi><msup><mi>e</mi><mn>2</mn></msup>
+          <msub><mi>E</mi><mi>H</mi></msub><mo>=</mo><mn>2</mn><mi>π</mi><mi>Ω</mi><msup><mi>e</mi><mn>2</mn></msup>
           <munder><mo>∑</mo><mrow><mi mathvariant="bold">G</mi><mo>≠</mo><mn>0</mn></mrow></munder>
-          <mfrac><mrow><mo>|</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><msup><mo>|</mo><mn>2</mn></msup></mrow><msup><mi>G</mi><mn>2</mn></msup></mfrac><mo>,</mo>
+          <mfrac><mrow><mo>|</mo><msub><mi>n</mi><mi mathvariant="bold">G</mi></msub><msup><mo>|</mo><mn>2</mn></msup></mrow><msup><mi>G</mi><mn>2</mn></msup></mfrac><mo>,</mo>
         </mrow>
-        <annotation encoding="application/x-tex">E_H=2&#92;pi e^2&#92;sum_&#123;&#92;mathbf&#123;G&#125;&#92;ne 0&#125;&#92;frac&#123;|n(&#92;mathbf&#123;G&#125;)|^2&#125;&#123;G^2&#125;.</annotation>
+        <annotation encoding="application/x-tex">E_H=2&#92;pi&#92;Omega&#92;,e^2&#92;sum_&#123;&#92;mathbf G&#92;ne 0&#125;&#92;frac&#123;|n_&#123;&#92;mathbf G&#125;|^2&#125;&#123;G^2&#125;.</annotation>
       </semantics>
     </math>
   </div>

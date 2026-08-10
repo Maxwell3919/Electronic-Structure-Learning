@@ -2,6 +2,7 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { martinParts, martinReadingUnits } from '../../../../reading/books/martin';
 import { getMartinChapterContent, martinChapterSlugs } from '../../../../reading/books/martin/chapter-content';
+import { getMartinSourceFigures, martinCanonicalSource } from '../../../../reading/books/martin/source-reading';
 
 export function getStaticPaths() {
   const publishedSlugs = [
@@ -18,6 +19,7 @@ const part = martinParts.find((candidate) => candidate.slug === slug);
 const unit = martinReadingUnits.find((candidate) => candidate.slug === slug);
 const parentPart = unit ? martinParts.find((candidate) => candidate.units.some((entry) => entry.slug === unit.slug)) : undefined;
 const publishedUnits = martinReadingUnits.filter((candidate) => martinChapterSlugs.includes(candidate.slug));
+const visiblePartUnits = part ? part.units.filter((candidate) => martinChapterSlugs.includes(candidate.slug)) : [];
 
 const partIndex = part ? martinParts.findIndex((candidate) => candidate.slug === part.slug) : -1;
 const previousPart = partIndex > 0 ? martinParts[partIndex - 1] : undefined;
@@ -53,6 +55,7 @@ const chapterModernPerspective = selectedPerspectiveIndexes
   ? rawModernPerspective.filter((_, index) => selectedPerspectiveIndexes.includes(index))
   : rawModernPerspective;
 const chapterSynthesis = chapterContent?.synthesis;
+const sourceFigureGuides = getMartinSourceFigures(slug);
 ---
 
 <BaseLayout title={pageTitle} description={description} current="reading">
@@ -78,22 +81,17 @@ const chapterSynthesis = chapterContent?.synthesis;
 
       <section aria-labelledby="part-chapters">
         <h2 id="part-chapters">{part.numeral === 'VII' ? 'Appendices in this Part' : 'Chapters in this Part'}</h2>
-        {part.units.map((entry) => {
-          const isPublished = martinChapterSlugs.includes(entry.slug);
-          return (
+        {visiblePartUnits.map((entry) => (
             <section aria-labelledby={entry.id}>
               <h3 id={entry.id}>{entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} · {entry.title}</h3>
               <p>{entry.contribution}</p>
-              {isPublished && (
-                <p>
-                  <a href={href(entry.route)}>
-                    Read {entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} →
-                  </a>
-                </p>
-              )}
+              <p>
+                <a href={href(entry.route)}>
+                  Read {entry.kind === 'appendix' ? `Appendix ${entry.number}` : `Chapter ${entry.number}`} →
+                </a>
+              </p>
             </section>
-          );
-        })}
+          ))}
       </section>
 
       {(previousPart || nextPart) && (
@@ -132,6 +130,10 @@ const chapterSynthesis = chapterContent?.synthesis;
         <p>{unit.overview}</p>
       </section>
 
+      <p class="paper-meta">
+        Source anchor: Richard M. Martin, <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition, {unitLabel}. <a href={martinCanonicalSource.href}>{martinCanonicalSource.label}</a>.
+      </p>
+
       <nav aria-labelledby="unit-structure">
         <h2 id="unit-structure">{unit.kind === 'appendix' ? 'Appendix structure' : 'Chapter structure'}</h2>
         <ol class="source-outline">
@@ -140,6 +142,23 @@ const chapterSynthesis = chapterContent?.synthesis;
           ))}
         </ol>
       </nav>
+
+      {sourceFigureGuides.length > 0 && (
+        <section aria-labelledby="unit-source-figures">
+          <h2 id="unit-source-figures">Read the source figures</h2>
+          <p>
+            Keep these figures open beside the chapter. The Atlas does not reproduce the textbook artwork; each note tells you where to look, what the visual contributes to Martin’s argument, and where its evidence stops.
+          </p>
+          <dl class="source-figure-list">
+            {sourceFigureGuides.map((entry) => (
+              <>
+                <dt>{entry.locator} <span>· {entry.section}</span></dt>
+                <dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+              </>
+            ))}
+          </dl>
+        </section>
+      )}
 
       {ChapterComponent && <ChapterComponent />}
 

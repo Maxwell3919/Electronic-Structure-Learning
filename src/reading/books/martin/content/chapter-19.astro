@@ -171,8 +171,8 @@ export const synthesis =
   <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
-        <mrow><msub><mi>u</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi mathvariant="bold">G</mi><mi></mi></munderover><msub><mi>c</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mfrac><mn>1</mn><msqrt><mi>Ω</mi></msqrt></mfrac><msup><mi>e</mi><mrow><mi>i</mi><mi mathvariant="bold">G</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup></mrow>
-        <annotation encoding="application/x-tex">u_i(&#92;mathbf r)=&#92;sum_&#123;&#92;mathbf G&#125;c_i(&#92;mathbf G)&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;&#92;Omega&#125;&#125;e^&#123;i&#92;mathbf G&#92;cdot&#92;mathbf r&#125;</annotation>
+        <mrow><msub><mi>u</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi mathvariant="bold">G</mi><mi></mi></munderover><msub><mi>c</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">G</mi><mo>)</mo><mfrac><mn>1</mn><msqrt><mi>Ω</mi></msqrt></mfrac><msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="bold">G</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup></mrow>
+        <annotation encoding="application/x-tex">u_i(&#92;mathbf r)=&#92;sum_&#123;&#92;mathbf G&#125;c_i(&#92;mathbf G)&#92;frac&#123;1&#125;&#123;&#92;sqrt&#123;&#92;Omega&#125;&#125;&#92;mathrm&#123;e&#125;^&#123;&#92;mathrm&#123;i&#125;&#92;mathbf G&#92;cdot&#92;mathbf r&#125;</annotation>
       </semantics>
     </math>
   </div>
@@ -188,7 +188,7 @@ export const synthesis =
     </math>
   </div>
   <p>
-    A literal dense multiplication by the plane-wave Hamiltonian would waste the simplicity of this representation. The crucial computational observation is the same one developed in Chapters 12–13: kinetic energy is diagonal in reciprocal space, while multiplication by a local potential is diagonal in real space. Fast Fourier transforms shuttle the orbital between the two representations, so applying <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>H</mi><mo>^</mo></mover><mi>ψ</mi></mrow><annotation encoding="application/x-tex">&#92;hat H&#92;psi</annotation></semantics></math></span> scales roughly as <em>N</em><sub>PW</sub> log <em>N</em><sub>PW</sub> instead of a dense <em>N</em><sub>PW</sub><sup>2</sup> matrix operation.
+    A literal dense multiplication by the plane-wave Hamiltonian would waste the simplicity of this representation. The crucial computational observation is the same one developed in Chapters 12–13: kinetic energy is diagonal in reciprocal space, while multiplication by a local potential is diagonal in real space. Fast Fourier transforms shuttle the orbital between the two representations, so applying <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" class="math-inline"><semantics><mrow><mover><mi>H</mi><mo>^</mo></mover><mi>ψ</mi></mrow><annotation encoding="application/x-tex">&#92;hat H&#92;psi</annotation></semantics></math></span> scales roughly as <em>N</em><sub>PW</sub> log <em>N</em><sub>PW</sub> instead of a dense <em>N</em><sub>PW</sub><sup>2</sup> matrix operation.
   </p>
   <p>
     This is one of the central algorithmic lessons of the chapter: Car–Parrinello did not become transformative merely because it introduced another equation of motion. It combined orbital optimization, nuclear dynamics, occupied-subspace operations, and the FFT structure of <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane-wave calculations</a> so that the expensive operation was repeatedly applying the Hamiltonian rather than constructing and diagonalizing a dense matrix.
@@ -239,8 +239,8 @@ export const synthesis =
   <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
-        <mrow><msub><mi>σ</mi><mrow><mi>d</mi><mi>c</mi></mrow></msub><mo>=</mo><munder><mi>lim</mi><mrow><mi>ω</mi><mo>→</mo><mn>0</mn></mrow></munder><mi>σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo></mrow>
-        <annotation encoding="application/x-tex">&#92;sigma_&#123;dc&#125;=&#92;lim_&#123;&#92;omega&#92;to0&#125;&#92;sigma(&#92;omega)</annotation>
+        <mrow><msub><mi>σ</mi><mtext>dc</mtext></msub><mo>=</mo><munder><mi>lim</mi><mrow><mi>ω</mi><mo>→</mo><mn>0</mn></mrow></munder><mi>σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;sigma_&#123;&#92;mathrm&#123;dc&#125;&#125;=&#92;lim_&#123;&#92;omega&#92;to0&#125;&#92;sigma(&#92;omega)</annotation>
       </semantics>
     </math>
   </div>
