@@ -29,8 +29,8 @@ const theorySlugs = [
   'self-consistent-field-methods', 'solid-state-chemistry', 'solid-state-physics',
   'statistical-mechanics', 'surface-and-interface-chemistry', 'thermodynamics',
 ];
-const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v'];
-const forbiddenCorePartSlugs = ['part-vi', 'part-vii', 'part-viii'];
+const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi'];
+const forbiddenCorePartSlugs = ['part-vii', 'part-viii'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -140,7 +140,7 @@ const checkCorePages = (baseDirectory, mode) => {
       assert(!text.includes(`/core/${forbidden}/`), `${relative} links unpublished Core ${forbidden}`);
     }
   }
-  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v']) {
+  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi']) {
     const relative = `${prefix}/${slug}/${extension}`;
     checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
   }
@@ -185,6 +185,14 @@ const checkCorePages = (baseDirectory, mode) => {
     assert(partV.includes(marker), `${prefix}/part-v/${extension} lacks equation-pedagogy marker ${marker}`);
   }
   assert(count(partV, /class="equation-source"/g) >= 5, `${prefix}/part-v/${extension} lacks nearby canonical equation sources`);
+  const partVI = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-vi/${extension}`), 'utf8');
+  for (const marker of ['derivative-map', 'structure-loop', 'structure-energy-curve', 'stability-ladder']) {
+    assert(partVI.includes(marker), `${prefix}/part-vi/${extension} lacks semantic teaching diagram ${marker}`);
+  }
+  for (const marker of ['direction of the comparison', 'Force and stress are not additional ground-state energies', 'first-order contribution', 'outer search on the Born–Oppenheimer surface', 'positive local Hessian', 'not automatically a physical temperature', 'Sources and further reading']) {
+    assert(partVI.includes(marker), `${prefix}/part-vi/${extension} lacks equation-pedagogy marker ${marker}`);
+  }
+  assert(count(partVI, /class="equation-source"/g) >= 5, `${prefix}/part-vi/${extension} lacks nearby canonical equation sources`);
 };
 
 const checkReadingManifest = () => {
@@ -289,7 +297,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 92, 'sitemap must contain exactly 92 canonical public routes');
+      assert(count(sitemap, /<url>/g) === 93, 'sitemap must contain exactly 93 canonical public routes');
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
       for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);

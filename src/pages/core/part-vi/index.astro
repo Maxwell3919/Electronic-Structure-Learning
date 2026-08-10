@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Part VI · Ground-State Properties and Structure" description="How total-energy differences, forces, stress, structural optimization, curvature, and thermodynamic potentials support distinct claims about ground-state structure." current="core">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part VI</span>
+  </nav>
+
+  <p class="secondary">Part VI</p>
+  <h1>Ground-State Properties and Structure</h1>
+  <p class="lede">A converged ground-state calculation supplies an energy for one declared physical and numerical model. Structure emerges only when that energy is compared across states or differentiated with respect to geometry. Energy differences, forces, stress, curvature, and free energies therefore support different claims; none is a universal certificate that a material is “stable.”</p>
+
+  <h2>An energy becomes useful through a declared comparison</h2>
+  <p>Part V ended with a self-consistent density and total energy at fixed nuclei. The absolute numerical value of that energy depends on the Hamiltonian, electron number, core treatment, boundary conditions, and energy convention. Most structural questions do not ask for that isolated number. They ask whether one consistently defined state lies above or below another.</p>
+  <p>Suppose states <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> and <math class="math-inline" aria-label="B"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> contain the same particles and are evaluated with the same approximation stack. The comparison is then:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The energy change from state A to state B is the total energy of B minus the total energy of A">
+      <semantics>
+        <mrow><msub><mi>Δ</mi><mrow><mi>B</mi><mo>←</mo><mi>A</mi></mrow></msub><mi>E</mi><mo>=</mo><msub><mi>E</mi><mtext>tot</mtext></msub><mo>(</mo><mi>B</mi><mo>)</mo><mo>−</mo><msub><mi>E</mi><mtext>tot</mtext></msub><mo>(</mo><mi>A</mi><mo>)</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Delta_&#123;B\leftarrow A&#125;E=E_&#123;\mathrm&#123;tot&#125;&#125;(B)-E_&#123;\mathrm&#123;tot&#125;&#125;(A).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the subscript as the direction of the comparison: final state <math class="math-inline" aria-label="B"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> relative to reference state <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>. A negative result means that <math class="math-inline" aria-label="B"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is lower within this declared comparison. It does not yet prove that <math class="math-inline" aria-label="B"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the global ground state: an untested structure, spin state, composition, or symmetry branch may lie lower.</p>
+  <p>If the two states exchange atoms, electrons, or charge with reservoirs, a raw total-energy subtraction is generally not the complete thermodynamic comparison. Chemical potentials and the appropriate ensemble must be added explicitly. Formation energies, defect energies, adsorption energies, and phase diagrams are branches of this same reference-state logic, not interchangeable formulas to memorize here.</p>
+  <p class="equation-source">Sources: Giustino, <cite>Materials Modelling using Density Functional Theory</cite>, Chs. 4–5; Martin, <cite>Electronic Structure</cite>, 2nd ed., Ch. 3, especially Sec. 3.3.</p>
+
+  <h2>Forces and stress are slopes of the same energy surface</h2>
+  <p>A comparison between two completed calculations says which endpoint is lower. To decide how a present structure wants to change, we need local directional information: the derivative of its Born–Oppenheimer energy surface. Let the nuclear positions be <math class="math-inline" aria-label="bold R"><semantics><mi mathvariant="bold">R</mi><annotation encoding="application/x-tex">\mathbf&#123;R&#125;</annotation></semantics></math>, the small strain tensor be <math class="math-inline" aria-label="bold epsilon"><semantics><mi mathvariant="bold">ε</mi><annotation encoding="application/x-tex">\boldsymbol&#123;\varepsilon&#125;</annotation></semantics></math>, and the cell volume be <math class="math-inline" aria-label="Omega"><semantics><mi>Ω</mi><annotation encoding="application/x-tex">\Omega</annotation></semantics></math>. Strain is an infinitesimal fractional deformation of the cell vectors: its diagonal components stretch or compress Cartesian axes, while its off-diagonal components shear the cell. The indices <math class="math-inline" aria-label="alpha and beta"><semantics><mrow><mi>α</mi><mo>,</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">\alpha,\beta</annotation></semantics></math> name those Cartesian directions, using the tensor-shear convention. With tensile stress taken as positive, the first-order energy change can be read in two equivalent ways:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Atomic force is the negative derivative of the Born Oppenheimer energy with respect to position, and tensile positive stress is the volume normalized derivative with respect to strain">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><mi mathvariant="normal">d</mi><mi>U</mi></mtd><mtd><mo>=</mo></mtd>
+            <mtd><mo>−</mo><munder><mo largeop="true">∑</mo><mi>A</mi></munder><msub><mi mathvariant="bold">F</mi><mi>A</mi></msub><mo>·</mo><mi mathvariant="normal">d</mi><msub><mi mathvariant="bold">R</mi><mi>A</mi></msub><mo>+</mo><mi>Ω</mi><munder><mo largeop="true">∑</mo><mrow><mi>α</mi><mi>β</mi></mrow></munder><msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mi mathvariant="normal">d</mi><msub><mi>ε</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><msub><mi mathvariant="bold">F</mi><mi>A</mi></msub></mtd><mtd><mo>=</mo></mtd>
+            <mtd><mo>−</mo><msub><mo>∇</mo><mi>A</mi></msub><mi>U</mi><mo>,</mo><mspace width="2em"/><msub><mi>σ</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mi>Ω</mi></mfrac><mfrac><mrow><mo>∂</mo><mi>U</mi></mrow><mrow><mo>∂</mo><msub><mi>ε</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub></mrow></mfrac><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\mathrm&#123;d&#125;U=-\sum_A\mathbf&#123;F&#125;_A\cdot\mathrm&#123;d&#125;\mathbf&#123;R&#125;_A+\Omega\sum_&#123;\alpha\beta&#125;\sigma_&#123;\alpha\beta&#125;\mathrm&#123;d&#125;\varepsilon_&#123;\alpha\beta&#125;,qquad \mathbf&#123;F&#125;_A=-\nabla_AU,\quad \sigma_&#123;\alpha\beta&#125;=\frac&#123;1&#125;&#123;\Omega&#125;\frac&#123;\partial U&#125;&#123;\partial\varepsilon_&#123;\alpha\beta&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line as a local accounting rule. If nucleus <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> moves a small distance along its force, the nuclear contribution lowers the energy. If the cell is strained, stress is the coefficient that converts that infinitesimal strain into an energy change per volume. Force and stress are not additional ground-state energies; they are first derivatives of the same consistently evaluated surface with respect to different coordinates.</p>
+  <p>The minus sign in the force definition makes force point downhill. The stress sign is conventional: this page uses tensile-positive stress, so hydrostatic pressure is minus one third of the stress trace. Some electronic-structure outputs instead report pressure or use the opposite stress sign. A number without its convention is therefore incomplete.</p>
+  <p>Only allowed degrees of freedom enter a structural claim. The stress derivative must also state whether internal atomic coordinates are held fixed or relaxed as the cell changes. A constrained atom can have a nonzero derivative in a frozen direction while every free coordinate is stationary. Likewise, fixed-cell relaxation cannot establish zero cell stress, and fixed-volume relaxation cannot decide the equilibrium volume.</p>
+  <p class="equation-source">Sources: Giustino, Chs. 5–6; Martin, 2nd ed., Sec. 3.3 and Sec. 7.5. For the stress formulation, see Nielsen and Martin, <cite>Physical Review Letters</cite> 50, 697 (1983), DOI 10.1103/PhysRevLett.50.697.</p>
+
+  <figure class="derivative-map" aria-labelledby="derivative-map-caption">
+    <ol>
+      <li><strong>Energy value</strong><span>One point on <math class="math-inline" aria-label="U of R and epsilon"><semantics><mrow><mi>U</mi><mo>(</mo><mi mathvariant="bold">R</mi><mo>,</mo><mi mathvariant="bold">ε</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">U(\mathbf&#123;R&#125;,\boldsymbol&#123;\varepsilon&#125;)</annotation></semantics></math></span></li>
+      <li><strong>Atomic derivative</strong><span>Force: downhill direction in nuclear-coordinate space</span></li>
+      <li><strong>Strain derivative</strong><span>Stress: energy response to changing the cell</span></li>
+    </ol>
+    <figcaption id="derivative-map-caption">Energy, force, and stress reorganize one Born–Oppenheimer surface. They answer value, atomic-slope, and cell-slope questions respectively.</figcaption>
+  </figure>
+
+  <h2>Stationarity makes first derivatives tractable—but conditions matter</h2>
+  <p>At first sight, differentiating an electronic energy seems to require knowing how every orbital changes under every nuclear displacement. Variational stationarity removes that explicit first-order state-response term in the ideal eigenstate case. For a normalized eigenstate of a parameter-dependent Hamiltonian, the Hellmann–Feynman relation is:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="For a normalized stationary eigenstate, the derivative of its eigenvalue equals the expectation value of the derivative of the Hamiltonian">
+      <semantics>
+        <mrow><mfrac><mrow><mi mathvariant="normal">d</mi><mi>E</mi><mo>(</mo><mi>λ</mi><mo>)</mo></mrow><mrow><mi mathvariant="normal">d</mi><mi>λ</mi></mrow></mfrac><mo>=</mo><mo>⟨</mo><msub><mi>Ψ</mi><mi>λ</mi></msub><mo>|</mo><mfrac><mrow><mo>∂</mo><mover><mi>H</mi><mo>^</mo></mover><mo>(</mo><mi>λ</mi><mo>)</mo></mrow><mrow><mo>∂</mo><mi>λ</mi></mrow></mfrac><mo>|</mo><msub><mi>Ψ</mi><mi>λ</mi></msub><mo>⟩</mo><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\frac&#123;\mathrm&#123;d&#125;E(\lambda)&#125;&#123;\mathrm&#123;d&#125;\lambda&#125;=\left\langle\Psi_\lambda\left|\frac&#123;\partial\hat&#123;H&#125;(\lambda)&#125;&#123;\partial\lambda&#125;\right|\Psi_\lambda\right\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The parameter <math class="math-inline" aria-label="lambda"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> can represent one nuclear coordinate or strain component. For each nearby value of <math class="math-inline" aria-label="lambda"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>, the displayed form assumes that <math class="math-inline" aria-label="Psi lambda"><semantics><msub><mi>Ψ</mi><mi>λ</mi></msub><annotation encoding="application/x-tex">\Psi_\lambda</annotation></semantics></math> is a normalized stationary eigenstate of the corresponding differentiable Hamiltonian and that one differentiable eigenstate branch is followed consistently. At a degeneracy, the appropriate subspace and branch must be handled before applying this scalar form. The right-hand side then differentiates the operator explicitly while holding the stationary state in the expectation value. The important conclusion is not that the wavefunction fails to respond; it does respond. Rather, its first-order contribution to the derivative of a stationary eigenvalue cancels under these conditions.</p>
+  <p>Real finite calculations add boundaries to that compact statement. If atom-centred basis functions move with the atoms, the finite variational space itself changes and Pulay terms can appear. If the electronic state is not converged tightly enough, stationarity is incomplete and force noise or bias can remain. Constraints, nonlocal core constructions, occupations, and generalized-Kohn–Sham terms must also be differentiated consistently with the energy actually minimized. “Analytic force” therefore means a derivative of the declared finite energy expression—not automatically the bare Hellmann–Feynman expectation value alone.</p>
+  <p>A useful check follows directly: a small printed force supports a stationary-geometry claim only when the relevant free Cartesian components are small, the electronic solution is sufficiently stationary, and all terms implied by the representation and constraints are included. An aggregate norm or one “total force” line cannot replace that component-level statement.</p>
+  <p class="equation-source">Sources: Feynman, “Forces in molecules,” <cite>Physical Review</cite> 56, 340 (1939), DOI 10.1103/PhysRev.56.340; Pulay, <cite>Molecular Physics</cite> 17, 197 (1969), DOI 10.1080/00268976900100941; Martin, 2nd ed., Sec. 7.5 and method-specific force sections in Chs. 14–17.</p>
+
+  <h2>Geometry optimization is an outer physical loop</h2>
+  <p>The SCF loop from Part V closes the electronic variables at one fixed geometry. Structural optimization surrounds that electronic solve with a second loop. After obtaining a consistent energy, forces, and—when the cell may change—stress, an optimizer proposes a new structure and the electronic problem must be solved again because changing the nuclei changes the Hamiltonian.</p>
+
+  <figure class="structure-loop" aria-labelledby="structure-loop-caption">
+    <ol>
+      <li><strong>Declare geometry and constraints</strong><span>Atomic positions, cell, fixed coordinates, spin/occupation branch</span></li>
+      <li><strong>Solve the electronic problem</strong><span>Reach the required electronic stationarity at this geometry</span></li>
+      <li><strong>Evaluate energy derivatives</strong><span>Forces on free atoms and stress for allowed cell changes</span></li>
+      <li><strong>Update the structure</strong><span>Move within the allowed coordinate space, then solve the changed electronic problem again</span></li>
+    </ol>
+    <figcaption id="structure-loop-caption">Electronic self-consistency is the inner fixed-geometry loop; structural optimization is an outer search on the Born–Oppenheimer surface. The optimizer is a solution procedure, not a new electronic theory.</figcaption>
+  </figure>
+
+  <p>The endpoint is a stationary point in the coordinates that were allowed to move. A force threshold is a numerical stopping condition for that search. It does not identify which stationary point was found, whether a lower basin exists, or whether the approximation stack describes the relative energies accurately enough for the scientific claim.</p>
+
+  <h2>The H₂ curve turns energy into force and curvature</h2>
+  <p>The recurring H₂ model makes the derivative hierarchy concrete. In Part I, each internuclear distance <math class="math-inline" aria-label="R"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> defined a fixed-nuclei electronic problem and one point on <math class="math-inline" aria-label="U of R"><semantics><mrow><mi>U</mi><mo>(</mo><mi>R</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">U(R)</annotation></semantics></math>. Now the slope at that point gives the bond force. Left of the minimum, short-range repulsion drives the nuclei apart; right of it, the energy initially falls when the nuclei move together. At the minimum the first derivative vanishes, while the curvature measures how rapidly the energy rises for a small displacement.</p>
+
+  <figure class="energy-curve structure-energy-curve" aria-labelledby="part-vi-h2-title part-vi-h2-description part-vi-h2-caption">
+    <div class="energy-curve-visual">
+      <svg viewBox="0 0 560 310" role="img" aria-labelledby="part-vi-h2-title part-vi-h2-description">
+        <title id="part-vi-h2-title">H₂ energy curve with force and curvature</title>
+        <desc id="part-vi-h2-description">A steeply repulsive short-distance branch descends to an equilibrium minimum and then approaches the separated-atom limit. Tangent markers show that force is minus the slope, and a local parabola marks positive curvature near equilibrium.</desc>
+        <line class="axis" x1="62" y1="260" x2="525" y2="260" />
+        <line class="axis" x1="62" y1="260" x2="62" y2="28" />
+        <path class="curve" d="M82,46 C110,105 142,224 188,224 C234,224 278,184 335,170 C392,156 450,156 516,158" />
+        <path class="curvature-guide" d="M142,210 Q188,238 234,210" />
+        <line class="slope-guide" x1="116" y1="151" x2="172" y2="220" />
+        <line class="guide" x1="188" y1="224" x2="188" y2="260" />
+        <circle class="minimum" cx="188" cy="224" r="6" />
+        <text x="205" y="246">R₀: dU/dR = 0</text>
+        <text x="80" y="129">−slope → force</text>
+        <text x="246" y="218">positive local curvature</text>
+        <text x="501" y="282">R</text>
+        <text x="25" y="40">U</text>
+      </svg>
+      <dl class="energy-curve-key">
+        <div><dt>Value</dt><dd><math class="math-inline" aria-label="U of R"><semantics><mrow><mi>U</mi><mo>(</mo><mi>R</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">U(R)</annotation></semantics></math> compares geometries on one surface.</dd></div>
+        <div><dt>Slope</dt><dd><math class="math-inline" aria-label="F equals minus d U d R"><semantics><mrow><mi>F</mi><mo>=</mo><mo>−</mo><mfrac><mrow><mi mathvariant="normal">d</mi><mi>U</mi></mrow><mrow><mi mathvariant="normal">d</mi><mi>R</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">F=-\mathrm&#123;d&#125;U/\mathrm&#123;d&#125;R</annotation></semantics></math> gives the local downhill direction.</dd></div>
+        <div><dt>Curvature</dt><dd>A positive second derivative at <math class="math-inline" aria-label="R zero"><semantics><msub><mi>R</mi><mn>0</mn></msub><annotation encoding="application/x-tex">R_0</annotation></semantics></math> means a small bond stretch costs energy.</dd></div>
+      </dl>
+    </div>
+    <figcaption id="part-vi-h2-caption">The same H₂ coordinate that defined the fixed-nuclei problem now organizes three distinct objects: energy, force, and local curvature. The one-dimensional picture does not establish finite-temperature molecular stability or exhaust all dissociation channels.</figcaption>
+  </figure>
+
+  <h2>Zero force is only the first stability question</h2>
+  <p>A stationary point has zero first derivative in the allowed subspace, but both a valley bottom and a mountain pass can have zero slope. The next local question is therefore how the energy changes to second order. Collect the allowed small displacements into coordinates <math class="math-inline" aria-label="q i"><semantics><msub><mi>q</mi><mi>i</mi></msub><annotation encoding="application/x-tex">q_i</annotation></semantics></math>. Near a stationary geometry <math class="math-inline" aria-label="q star"><semantics><msup><mi mathvariant="bold">q</mi><mo>∗</mo></msup><annotation encoding="application/x-tex">\mathbf&#123;q&#125;^*</annotation></semantics></math>:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Near a stationary structure the quadratic energy change is determined by the Hessian matrix of second derivatives">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><mi>U</mi><mo>(</mo><msup><mi mathvariant="bold">q</mi><mo>∗</mo></msup><mo>+</mo><mi>δ</mi><mi mathvariant="bold">q</mi><mo>)</mo></mtd><mtd><mo>≈</mo></mtd>
+            <mtd><mi>U</mi><mo>(</mo><msup><mi mathvariant="bold">q</mi><mo>∗</mo></msup><mo>)</mo><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>δ</mi><msup><mi mathvariant="bold">q</mi><mi mathvariant="normal">T</mi></msup><mi mathvariant="bold">K</mi><mi>δ</mi><mi mathvariant="bold">q</mi><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><msub><mi>K</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mtd><mtd><mo>=</mo></mtd>
+            <mtd><mfrac><mrow><msup><mo>∂</mo><mn>2</mn></msup><mi>U</mi></mrow><mrow><mo>∂</mo><msub><mi>q</mi><mi>i</mi></msub><mo>∂</mo><msub><mi>q</mi><mi>j</mi></msub></mrow></mfrac><msub><mo>|</mo><mrow><mi mathvariant="bold">q</mi><mo>=</mo><msup><mi mathvariant="bold">q</mi><mo>∗</mo></msup></mrow></msub><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">U(\mathbf&#123;q&#125;^*+\delta\mathbf&#123;q&#125;)\simeq U(\mathbf&#123;q&#125;^*)+\tfrac&#123;1&#125;&#123;2&#125;\delta\mathbf&#123;q&#125;^\mathrm&#123;T&#125;\mathbf&#123;K&#125;\delta\mathbf&#123;q&#125;,qquad K_&#123;ij&#125;=\left.\frac&#123;\partial^2U&#125;&#123;\partial q_i\partial q_j&#125;\right|_&#123;\mathbf&#123;q&#125;=\mathbf&#123;q&#125;^*&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The vector <math class="math-inline" aria-label="delta q"><semantics><mrow><mi>δ</mi><mi mathvariant="bold">q</mi></mrow><annotation encoding="application/x-tex">\delta\mathbf&#123;q&#125;</annotation></semantics></math> is one small allowed displacement from the stationary geometry. The linear term is absent because the gradient vanishes there. The quadratic form combines every displacement component and its couplings into one second-order energy change; diagonalizing <math class="math-inline" aria-label="bold K"><semantics><mi mathvariant="bold">K</mi><annotation encoding="application/x-tex">\mathbf&#123;K&#125;</annotation></semantics></math> finds directions in which that change is one curvature times a squared amplitude.</p>
+  <p>The Hessian <math class="math-inline" aria-label="bold K"><semantics><mi mathvariant="bold">K</mi><annotation encoding="application/x-tex">\mathbf&#123;K&#125;</annotation></semantics></math> therefore records how displacement directions couple. Its eigenvectors identify collective directions; its eigenvalues give their local curvatures. Positive curvature in every nontrivial allowed direction identifies a local minimum. A negative eigenvalue identifies a downhill direction and therefore a saddle or maximum. Exact zero curvatures can arise from translations, rotations, or other symmetries and must be separated from a genuine soft direction; an unresolved nontrivial zero-curvature direction makes the quadratic test inconclusive and requires higher-order analysis.</p>
+  <p>This is still a local statement. For a periodic solid, masses and the spatial organization of force constants turn this curvature information into phonon modes across wavevector <math class="math-inline" aria-label="q"><semantics><mi mathvariant="bold">q</mi><annotation encoding="application/x-tex">\mathbf&#123;q&#125;</annotation></semantics></math>. Part VII will build that construction. Checking only the zone centre or one displayed reciprocal-space path cannot establish full-zone dynamical stability.</p>
+  <p class="equation-source">Sources: Giustino, Chs. 7–8; Sholl and Steckel, <cite>Density Functional Theory: A Practical Introduction</cite>, 1st ed., structure-optimization and vibrational-analysis sections. The harmonic lattice construction is deferred to Part VII.</p>
+
+  <h2>Local stability, global preference, and thermodynamic stability are different claims</h2>
+  <p>Even a positive local Hessian says only that sufficiently small allowed displacements raise the energy. A second, distant basin can still be lower. Establishing the preferred zero-temperature structure therefore requires comparing all scientifically plausible competitors: distinct atomic arrangements, volumes, compositions, magnetic orders, orbital occupations, and symmetry-broken branches as appropriate to the question. One successful relaxation explores one basin; it does not enumerate the landscape.</p>
+
+  <figure class="stability-ladder" aria-labelledby="stability-ladder-caption">
+    <ol>
+      <li><strong>Stationary</strong><span>Allowed first derivatives are sufficiently small.</span></li>
+      <li><strong>Locally stable</strong><span>Every remaining nontrivial allowed direction has positive curvature; an unresolved zero-curvature direction needs higher-order analysis.</span></li>
+      <li><strong>Lowest among candidates</strong><span>Consistently evaluated competing branches have been compared.</span></li>
+      <li><strong>Thermodynamically preferred</strong><span>The correct potential, temperature, pressure, reservoirs, phases, and entropy terms are included.</span></li>
+    </ol>
+    <figcaption id="stability-ladder-caption">Each rung requires new evidence. A result on one rung cannot be silently promoted to a stronger claim above it.</figcaption>
+  </figure>
+
+  <p>Temperature adds another layer. The zero-temperature Born–Oppenheimer electronic energy is generally one contribution to a thermodynamic potential, not that potential itself. At fixed particle number, the standard relations are:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Helmholtz free energy is internal energy minus temperature times entropy, and at fixed pressure Gibbs free energy minimizes Helmholtz free energy plus pressure times volume over volume">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr><mtd><mi>A</mi><mo>(</mo><mi>T</mi><mo>,</mo><mi>V</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>U</mi><mtext>therm</mtext></msub><mo>−</mo><mi>T</mi><mi>S</mi><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>G</mi><mo>(</mo><mi>T</mi><mo>,</mo><mi>p</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><munder><mo largeop="true">min</mo><mi>V</mi></munder><mo>[</mo><mi>A</mi><mo>(</mo><mi>T</mi><mo>,</mo><mi>V</mi><mo>)</mo><mo>+</mo><mi>p</mi><mi>V</mi><mo>]</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">A(T,V)=U_&#123;\mathrm&#123;therm&#125;&#125;-TS,\qquad G(T,p)=\min_V\left[A(T,V)+pV\right].</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Here <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> is the Helmholtz free energy, often denoted <math class="math-inline" aria-label="F"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>; the letter <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> avoids confusing it with force. The internal energy <math class="math-inline" aria-label="U therm"><semantics><msub><mi>U</mi><mtext>therm</mtext></msub><annotation encoding="application/x-tex">U_&#123;\mathrm&#123;therm&#125;&#125;</annotation></semantics></math> is not automatically the single electronic-surface value used earlier. Depending on the regime and claim, electronic, vibrational, configurational, magnetic, and other contributions may enter, while <math class="math-inline" aria-label="S"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math> represents the corresponding entropy.</p>
+  <p>The controlled variables select the comparison. At fixed particle number, temperature, and volume, compare Helmholtz <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> across allowed phases. At fixed particle number, temperature, and pressure, the system may exchange mechanical work with the pressure reservoir and choose its volume, so compare the minimized Gibbs <math class="math-inline" aria-label="G"><semantics><mi>G</mi><annotation encoding="application/x-tex">G</annotation></semantics></math>; at its compatible equilibrium volume this is <math class="math-inline" aria-label="A plus p V"><semantics><mrow><mi>A</mi><mo>+</mo><mi>p</mi><mi>V</mi></mrow><annotation encoding="application/x-tex">A+pV</annotation></semantics></math>. The lower appropriate potential among the allowed phases is thermodynamically preferred under those stated controls.</p>
+  <p>Numerical smearing of electronic occupations is not automatically a physical temperature or a complete free-energy model. Likewise, a stable finite trajectory is not by itself an equilibrium free-energy comparison. Every stability statement must name the controlled variables, allowed phases, reservoirs, and omitted contributions.</p>
+  <p class="equation-source">Sources: Martin, 2nd ed., Secs. 2.10 and 3.5; Giustino, thermodynamics and phase-stability chapters. The symbols here state equilibrium thermodynamic identities, not a recipe for computing every contribution.</p>
+
+  <div class="concept-check" role="note" aria-labelledby="part-vi-check">
+    <h3 id="part-vi-check">Check your understanding</h3>
+    <p><strong>Question.</strong> A relaxed candidate has negligible allowed force components and positive local curvature. What has been established, and what has not?</p>
+    <p><strong>Answer.</strong> Within the declared Hamiltonian, approximation stack, finite representation, constraints, and electronic branch, the candidate is locally stable against the tested small displacements. This does not establish that it is lower than every competing structure or branch, thermodynamically preferred at finite temperature or pressure, synthesizable, or described accurately by the chosen physical approximations.</p>
+  </div>
+
+  <h2>Sources and further reading</h2>
+  <dl class="source-map">
+    <dt>Energy surfaces, equilibrium structures, forces, stress, and thermodynamics</dt>
+    <dd>Giustino, <cite>Materials Modelling using Density Functional Theory</cite>, 1st ed., Chs. 4–8.</dd>
+    <dt>Energy derivatives and structural properties</dt>
+    <dd>Martin, <cite>Electronic Structure</cite>, 2nd ed., Secs. 3.3, 3.5, and 7.5, with method-specific force and stress discussions in Chs. 14–17.</dd>
+    <dt>Stress and force boundaries</dt>
+    <dd>Nielsen and Martin, <cite>Physical Review B</cite> 32, 3780 (1985), DOI 10.1103/PhysRevB.32.3780; Pulay, <cite>Molecular Physics</cite> 17, 197 (1969).</dd>
+  </dl>
+  <ul class="further-reading">
+    <li>Sholl and Steckel, <cite>Density Functional Theory: A Practical Introduction</cite>, 1st ed., gives a practical bridge from force-based relaxation to local vibrational analysis while retaining the distinction between numerical convergence and physical stability.</li>
+  </ul>
+
+  <p class="repair-links">Need more background on derivatives or thermodynamic potentials? Use <a href={href('/theory/calculus-and-analysis/')}>Foundations · Calculus and Analysis</a> or <a href={href('/theory/thermodynamics/')}>Foundations · Thermodynamics</a>, then return here.</p>
+
+  <p>We can now ask whether one structure is stationary, locally stable, lower than declared competitors, or thermodynamically preferred under a stated ensemble. The next question is more detailed: when a ground state is perturbed, how does its electronic density and force field respond, and how do those coupled derivatives become collective lattice vibrations?</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/part-v/')}>← Part V · From Equations to Computation</a>
+    <a href={href('/core/')}>Core</a>
+  </nav>
+</BaseLayout>
