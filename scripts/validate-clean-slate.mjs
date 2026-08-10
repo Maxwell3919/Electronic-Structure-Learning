@@ -130,10 +130,23 @@ const checkCorePages = (baseDirectory, mode) => {
     const relative = `${prefix}/${slug}/${extension}`;
     checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
   }
+  const orientation = fs.readFileSync(path.join(baseDirectory, `${prefix}/orientation/${extension}`), 'utf8');
+  for (const marker of ['Electronic structure is a hierarchy of quantum information', 'calculated object is therefore an ingredient', 'Sources and further reading', 'class="source-map"']) {
+    assert(orientation.includes(marker), `${prefix}/orientation/${extension} lacks teaching-depth marker ${marker}`);
+  }
   const partI = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-i/${extension}`), 'utf8');
-  for (const marker of ['<figure class="energy-curve"', '<svg viewBox=', 'role="img"', '<title id=', '<desc id=', '<figcaption']) {
+  for (const marker of ['<figure class="energy-curve"', '<figure class="hamiltonian-map"', '<svg viewBox=', 'role="img"', '<title id=', '<desc id=', '<figcaption']) {
     assert(partI.includes(marker), `${prefix}/part-i/${extension} lacks accessible original diagram marker ${marker}`);
   }
+  for (const marker of ['joint function of both electrons', 'genuine many-body coupling', 'Read the numerator from right to left', 'restricting the allowed trial states', 'This is a change of problem, not the deletion of nuclear physics', 'Sources and further reading']) {
+    assert(partI.includes(marker), `${prefix}/part-i/${extension} lacks equation-pedagogy marker ${marker}`);
+  }
+  assert(count(partI, /class="equation-source"/g) >= 4, `${prefix}/part-i/${extension} lacks nearby canonical equation sources`);
+  const partII = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-ii/${extension}`), 'utf8');
+  for (const marker of ['<figure class="scf-flow"', '<figure class="h2-reference"', 'instantaneous positions of the other electrons', 'restricts the allowed many-electron state', 'crosses the orbital labels', 'not a universal substance', 'Sources and further reading']) {
+    assert(partII.includes(marker), `${prefix}/part-ii/${extension} lacks teaching-depth marker ${marker}`);
+  }
+  assert(count(partII, /class="equation-source"/g) >= 5, `${prefix}/part-ii/${extension} lacks nearby canonical equation sources`);
   const partIII = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-iii/${extension}`), 'utf8');
   for (const marker of ['lattice-duality', 'bloch-phase', 'band-formation', 'band-dos']) {
     assert(partIII.includes(`class="core-diagram ${marker}"`), `${prefix}/part-iii/${extension} lacks original diagram ${marker}`);

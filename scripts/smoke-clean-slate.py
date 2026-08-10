@@ -159,6 +159,11 @@ def inspect(driver, mode, expected_width=None):
             ]:
                 if label not in driver.find_element(By.TAG_NAME, "main").text:
                     raise AssertionError(f"Core landing lacks {label} in {mode}")
+        if route == "core/orientation/":
+            main_text = driver.find_element(By.TAG_NAME, "main").text
+            for marker in ["hierarchy of quantum information", "ingredient in an interpretation", "Sources and further reading"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Orientation lacks teaching-depth marker {marker} in {mode}")
         if route == "core/part-i/":
             diagram = driver.find_element(By.CSS_SELECTOR, "figure.energy-curve svg")
             diagram_metrics = driver.execute_script(
@@ -181,6 +186,49 @@ def inspect(driver, mode, expected_width=None):
             )
             if len(key_metrics) != 6 or any(item["height"] < 12 or item["fontSize"] < 14 or not item["text"] for item in key_metrics):
                 raise AssertionError(f"Core energy diagram key is not legible in {mode}")
+            hamiltonian_map = driver.find_element(By.CSS_SELECTOR, "figure.hamiltonian-map")
+            map_metrics = driver.execute_script(
+                "const node=arguments[0],main=document.querySelector('main');"
+                "const n=node.getBoundingClientRect(),m=main.getBoundingClientRect();"
+                "return {height:n.height,left:n.left,right:n.right,mainLeft:m.left,mainRight:m.right,"
+                "sections:node.querySelectorAll('section').length,text:(node.textContent||'').trim()};",
+                hamiltonian_map,
+            )
+            if map_metrics["height"] < 40 or map_metrics["sections"] != 2 or not map_metrics["text"]:
+                raise AssertionError(f"Part I Hamiltonian map is not legible in {mode}")
+            if map_metrics["left"] < map_metrics["mainLeft"] - 1 or map_metrics["right"] > map_metrics["mainRight"] + 1:
+                raise AssertionError(f"Part I Hamiltonian map overflows main in {mode}")
+            main_text = driver.find_element(By.TAG_NAME, "main").text
+            for marker in ["joint function of both electrons", "genuine many-body coupling", "Read the numerator from right to left", "not the deletion of nuclear physics"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Part I lacks equation-pedagogy marker {marker} in {mode}")
+        if route == "core/part-ii/":
+            flow_metrics = driver.execute_script(
+                "const flow=document.querySelector('figure.scf-flow'),h2=document.querySelector('figure.h2-reference'),main=document.querySelector('main');"
+                "const f=flow.getBoundingClientRect(),h=h2.getBoundingClientRect(),m=main.getBoundingClientRect();"
+                "return {flowItems:flow.querySelectorAll('ol > li').length,h2Items:h2.querySelectorAll('ol > li').length,"
+                "flowHeight:f.height,h2Height:h.height,left:Math.min(f.left,h.left),right:Math.max(f.right,h.right),mainLeft:m.left,mainRight:m.right};"
+            )
+            if flow_metrics["flowItems"] != 4 or flow_metrics["h2Items"] != 3 or flow_metrics["flowHeight"] < 40 or flow_metrics["h2Height"] < 40:
+                raise AssertionError(f"Part II semantic teaching diagrams are incomplete in {mode}")
+            if flow_metrics["left"] < flow_metrics["mainLeft"] - 1 or flow_metrics["right"] > flow_metrics["mainRight"] + 1:
+                raise AssertionError(f"Part II semantic teaching diagrams overflow main in {mode}")
+            main_text = driver.find_element(By.TAG_NAME, "main").text
+            for marker in ["instantaneous positions of the other electrons", "crosses the orbital labels", "not a universal substance", "Sources and further reading"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Part II lacks teaching-depth marker {marker} in {mode}")
+        if route in ["core/part-i/", "core/part-ii/"]:
+            math_typography = driver.execute_script(
+                "const display=document.querySelector('.math-display math'),inline=document.querySelector('math.math-inline');"
+                "const ds=getComputedStyle(display),is=getComputedStyle(inline);"
+                "return {displayLineHeight:ds.lineHeight,displayFont:ds.fontFamily,inlineLineHeight:is.lineHeight,"
+                "inlineAlign:is.verticalAlign,sources:document.querySelectorAll('.equation-source').length};"
+            )
+            expected_sources = 4 if route == "core/part-i/" else 5
+            if math_typography["displayLineHeight"] != "normal" or math_typography["inlineLineHeight"] != "normal":
+                raise AssertionError(f"Core native MathML line height is not typography-safe in {mode}: {route}")
+            if "math" not in math_typography["displayFont"].lower() or math_typography["sources"] < expected_sources:
+                raise AssertionError(f"Core page lacks math-font fallback or equation sources in {mode}: {route}")
         if route == "core/part-iii/":
             diagrams = driver.find_elements(By.CSS_SELECTOR, "figure.core-diagram svg")
             if len(diagrams) != 4:
