@@ -1,0 +1,63 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'projected-band', label: 'A band as an effective Hamiltonian' },
+  { id: 'bloch-wannier', label: 'Bloch and Wannier views' },
+  { id: 'semiclassical-motion', label: 'Slow fields and semiclassical motion' },
+  { id: 'berry-geometry', label: 'Berry geometry and its gauge boundary' },
+];
+export const synthesis = 'The chapter shows how a full crystal problem can be projected into a band or subspace without confusing the reduced model with the original Hamiltonian. Wannier localization, effective mass, and Berry geometry are different consequences of how that subspace varies across k space.';
+---
+
+<section aria-labelledby="projected-band">
+  <h2 id="projected-band">A band as an effective Hamiltonian</h2>
+  <p>
+    Once a periodic one-particle spectrum is known, a slowly varying perturbation often acts mainly within one isolated band. A state near a chosen band edge can then be assembled from Bloch states with nearby k labels. Their rapid cell-scale pattern is retained, while their slowly varying superposition amplitude becomes an envelope over many cells.
+  </p>
+  <p>
+    The source replaces the free-particle kinetic energy by the band dispersion E<sub>n</sub>(k). “Promoting k to an operator” means letting that dispersion act as spatial derivatives on the envelope, so the crystal band—not a free-electron parabola—controls how the slow amplitude bends and spreads. Near a parabolic band edge this reduces to the familiar kinetic form with an effective mass; the construction explains a shallow impurity state without resolving every atomic oscillation again.
+  </p>
+  <p>
+    The reduction is conditional. The perturbation must vary slowly on the scale of a cell, and interband transitions must remain negligible. If bands touch, if fields are strong, or if several bands are entangled, the effective object must be a multiband subspace rather than one scalar dispersion.
+  </p>
+</section>
+
+<section aria-labelledby="bloch-wannier">
+  <h2 id="bloch-wannier">Bloch and Wannier views</h2>
+  <p>
+    A Wannier function is built by Fourier transforming Bloch states across the Brillouin zone. The transformation trades a sharp k label for real-space localization while spanning the same chosen band subspace. This makes local hopping, impurity envelopes, and chemical bonding easier to discuss without changing the underlying Hilbert subspace.
+  </p>
+  <p>
+    Localization depends on the phase—or, for several bands, the unitary mixing—chosen across k. A numerical Wannier representation is therefore not unique. Observable claims should be based on gauge-invariant quantities or on a declared localization convention.
+  </p>
+</section>
+
+<section aria-labelledby="semiclassical-motion">
+  <h2 id="semiclassical-motion">Slow fields and semiclassical motion</h2>
+  <p>
+    A wave packet in one band moves with velocity ∇<sub>k</sub>E/ℏ, while an external force changes its crystal momentum according to ℏk̇=F. These relations explain Bloch oscillation, Zener breakdown, and the effective-mass response near an extremum. They do not turn k into mechanical momentum; k is still the translation label whose rate of change organizes band dynamics.
+  </p>
+  <p>
+    Effective mass is the inverse curvature tensor of the selected band. It describes how the packet accelerates locally, and it can be anisotropic or even have curvature of either sign. It is not a fixed intrinsic mass attached to the electron in all states.
+  </p>
+</section>
+
+<section aria-labelledby="berry-geometry">
+  <h2 id="berry-geometry">Berry geometry and its gauge boundary</h2>
+  <p>
+    The source then asks what is missed when a Bloch basis itself changes across k. For an isolated band, the Berry connection records that change, and integration around a closed loop gives a geometric phase:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Berry phase around a closed loop">
+      <semantics>
+        <mrow><msub><mi>γ</mi><mi>n</mi></msub><mo>=</mo><munder><mo>∮</mo><mi>C</mi></munder><msub><mi mathvariant="bold">A</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">k</mi><mo>,</mo><mspace width="1em"/><msub><mi mathvariant="bold">A</mi><mi>n</mi></msub><mo>=</mo><mi mathvariant="normal">i</mi><mo>⟨</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>|</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><mo>|</mo><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;gamma_n=&#92;oint_C&#92;mathbf A_n(&#92;mathbf k)&#92;cdot&#92;mathrm d&#92;mathbf k,&#92;qquad &#92;mathbf A_n=&#92;mathrm i&#92;langle u_&#123;n&#92;mathbf k&#125;|&#92;nabla_&#123;&#92;mathbf k&#125;|u_&#123;n&#92;mathbf k&#125;&#92;rangle</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The connection A<sub>n</sub> depends on the phase convention for u<sub>nk</sub>; the closed-loop phase is gauge invariant modulo 2π when the band remains isolated and the loop is well defined. Its curl gives Berry curvature, which adds an anomalous transverse velocity. At degeneracies or in a composite occupied manifold, the correct object is a projector or non-Abelian connection rather than arbitrary energy-ordered labels.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 5, §5.6, especially Eqs. 5.50–5.64. For the modern gauge and subspace boundary, see <a href={href('/theory/localized-orbital-methods/')}>Foundations · Localized-Orbital Methods</a> and <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry Phases and Electronic Topology</a>.</p>
+</section>

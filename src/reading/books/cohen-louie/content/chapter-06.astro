@@ -1,0 +1,74 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'why-jellium', label: 'Why strip the crystal down to jellium' },
+  { id: 'hf-boundary', label: 'What Hartree–Fock reveals and misses' },
+  { id: 'pair-correlation', label: 'Joint avoidance in real space' },
+  { id: 'xc-hole', label: 'The exchange–correlation hole' },
+  { id: 'dft-boundary', label: 'Where the hole picture meets DFT' },
+];
+export const synthesis = 'Jellium removes ionic chemistry so that fermionic exchange, Coulomb avoidance, screening, and density scaling can be seen cleanly. Pair correlation and the exchange–correlation hole then make the difference between one-determinant exchange and additional many-body correlation spatially explicit.';
+---
+
+<section aria-labelledby="why-jellium">
+  <h2 id="why-jellium">Why strip the crystal down to jellium</h2>
+  <p>
+    The homogeneous electron gas replaces the discrete positive ions by a uniform neutralizing background. This is not intended as a literal model of every crystal. It removes lattice chemistry so that one dimensionless density parameter r<sub>s</sub> controls the competition between kinetic delocalization and Coulomb interaction.
+  </p>
+  <p>
+    At high density, kinetic energy dominates and perturbative reasoning becomes more plausible. At low density, interaction energy grows in relative importance and eventually favors strongly correlated spatial organization. The model therefore supplies both a reference and a warning about density regimes.
+  </p>
+</section>
+
+<section aria-labelledby="hf-boundary">
+  <h2 id="hf-boundary">What Hartree–Fock reveals and misses</h2>
+  <p>
+    Hartree–Fock minimizes the interacting Hamiltonian over one Slater determinant. Its exchange term is exact within that restricted class and cancels each occupied spin orbital’s self-Coulomb term. Yet the electron-gas dispersion near the Fermi surface exposes the absence of dynamical screening and correlation: exact exchange alone can make qualitative spectral behavior worse even while improving one part of the energy.
+  </p>
+  <p>
+    This is why “includes electron–electron repulsion” and “solves the many-electron problem” are not equivalent. The Hamiltonian keeps the interaction; the state class remains restricted.
+  </p>
+</section>
+
+<section aria-labelledby="pair-correlation">
+  <h2 id="pair-correlation">Joint avoidance in real space</h2>
+  <p>
+    The pair-correlation function asks for the conditional probability of finding an electron near r′ when another is fixed at r. Same-spin electrons avoid one another even without Coulomb repulsion because antisymmetry creates an exchange hole. Coulomb interaction adds further avoidance for both spin channels. This joint information cannot be reconstructed from the total density alone without an additional functional relation.
+  </p>
+  <p>
+    The function is reference- and state-dependent. “Correlation” here means what remains beyond the chosen independent-particle or Hartree–Fock reference, not a material substance that can be uniquely isolated from every description.
+  </p>
+</section>
+
+<section aria-labelledby="xc-hole">
+  <h2 id="xc-hole">The exchange–correlation hole</h2>
+  <p>
+    Fixing one electron reduces the conditional electronic charge around it. The deficit integrates to exactly one missing electron under the stated normalization:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Exchange correlation hole sum rule">
+      <semantics>
+        <mrow><mo>∫</mo><msub><mi>n</mi><mtext>xc</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mspace width="0.25em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>=</mo><mo>−</mo><mn>1</mn></mrow>
+        <annotation encoding="application/x-tex">&#92;int n_&#123;&#92;mathrm&#123;xc&#125;&#125;(&#92;mathbf r,&#92;mathbf r')&#92;,&#92;mathrm d^3&#92;mathbf r'=-1</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The variable r is the position of the reference electron and r′ scans the surrounding conditional density. The integral constrains the total missing charge, while the shape of the hole determines how strongly nearby Coulomb repulsion is reduced. Exchange fixes the same-spin part for a determinant; correlation redistributes the remainder.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 6, §§6.4–6.7, especially the hole sum rule near Eq. 6.77.</p>
+</section>
+
+<section aria-labelledby="dft-boundary">
+  <h2 id="dft-boundary">Where the hole picture meets DFT</h2>
+  <p>
+    The electrostatic interaction between an electron and an appropriately averaged exchange–correlation hole provides a powerful energy picture. To define that average, imagine multiplying the electron–electron interaction by a coupling parameter that runs continuously from zero to its physical strength while the density is held fixed. The exact hole-energy relation averages the conditional hole along this entire path, not just at the physical endpoint.
+  </p>
+  <p>
+    The endpoint hole must therefore not be identified with the entire exact Kohn–Sham exchange–correlation functional. E<sub>xc</sub> also contains the difference between interacting and auxiliary noninteracting kinetic energies. The coupling path explains why one physical-strength hole picture, although informative, is not by itself the full functional.
+  </p>
+  <p>
+    That distinction matters in the next chapter and in <a href={href('/core/part-iv/')}>Core Part IV</a>: an exchange–correlation approximation closes a formal decomposition, not merely an electrostatic correction to Hartree energy.
+  </p>
+</section>

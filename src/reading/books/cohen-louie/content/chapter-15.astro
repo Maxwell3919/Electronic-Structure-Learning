@@ -1,0 +1,79 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'responses', label: 'Orbital and spin responses' },
+  { id: 'localized-order', label: 'Localized moments and exchange models' },
+  { id: 'spin-waves', label: 'Collective motion of an ordered state' },
+  { id: 'itinerant', label: 'Itinerant magnetism is a different limit' },
+  { id: 'impurity', label: 'Magnetic impurities and the Kondo boundary' },
+  { id: 'calculation-claims', label: 'What a spin-polarized calculation can establish' },
+];
+export const synthesis = 'The chapter is a map of magnetic regimes rather than one universal model. Diamagnetic currents, independent spins, localized exchange, itinerant band polarization, collective spin waves, and Kondo screening involve different degrees of freedom. Scientific claims must identify which regime and magnetic branch are being modeled.';
+---
+
+<section aria-labelledby="responses">
+  <h2 id="responses">Orbital and spin responses</h2>
+  <p>
+    Diamagnetism arises from field-induced orbital motion and is present even without permanent moments. Paramagnetism aligns pre-existing or itinerant spin/orbital moments against thermal disorder. The source develops Langevin, Curie, and Pauli limits to show why localized moments and a degenerate electron gas produce different temperature dependence.
+  </p>
+  <p>
+    These susceptibilities are response coefficients. A positive susceptibility does not by itself establish spontaneous magnetic order, and a fitted moment does not uniquely identify an atomic oxidation or spin state.
+  </p>
+</section>
+
+<section aria-labelledby="localized-order">
+  <h2 id="localized-order">Localized moments and exchange models</h2>
+  <p>
+    When moments remain well defined on sites, a Heisenberg model compresses their low-energy interaction into pair couplings:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Heisenberg spin Hamiltonian">
+      <semantics>
+        <mrow><mover><mi>H</mi><mo>^</mo></mover><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>≠</mo><mi>j</mi></mrow></munder><msub><mi>J</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mover><mi mathvariant="bold">S</mi><mo>^</mo></mover><mi>i</mi></msub><mo>·</mo><msub><mover><mi mathvariant="bold">S</mi><mo>^</mo></mover><mi>j</mi></msub></mrow>
+        <annotation encoding="application/x-tex">&#92;hat H=-&#92;frac12&#92;sum_&#123;i&#92;ne j&#125;J_&#123;ij&#125;&#92;hat&#123;&#92;mathbf S&#125;_i&#92;cdot&#92;hat&#123;&#92;mathbf S&#125;_j</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The sign convention shown makes positive J favor parallel alignment; other texts reverse the sign, so the Hamiltonian must accompany any quoted J. The model presumes a stable moment magnitude and places dynamics mainly in orientation. Exchange couplings can be direct, superexchange, or mediated by itinerant electrons, and their range matters.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 15, §15.4. The displayed sign convention is declared explicitly because conventions vary.</p>
+</section>
+
+<section aria-labelledby="spin-waves">
+  <h2 id="spin-waves">Collective motion of an ordered state</h2>
+  <p>
+    A spin wave is a coherent spatial twist of magnetic order. Quantization gives magnons, just as quantizing lattice normal modes gives phonons. The analogy is useful but not identity: the displaced object is the order parameter or spin configuration, and spin–orbit coupling can gap or mix modes that would otherwise be symmetry-protected.
+  </p>
+  <p>
+    A calculated Γ-point mode does not prove stability for every magnon wavevector, just as a Γ phonon does not establish full-q lattice stability.
+  </p>
+</section>
+
+<section aria-labelledby="itinerant">
+  <h2 id="itinerant">Itinerant magnetism is a different limit</h2>
+  <p>
+    In an itinerant metal, spin polarization reorganizes extended electronic occupations rather than merely orienting rigid local spins. The Stoner criterion balances band-energy cost against an exchange gain and helps explain why a high DOS at the Fermi level can favor polarization. It remains a mean-field instability test, not a complete theory of fluctuating or strongly correlated magnetism.
+  </p>
+  <p>
+    Mapping an itinerant calculation onto localized J<sub>ij</sub> parameters is an additional model reduction whose validity must be tested.
+  </p>
+</section>
+
+<section aria-labelledby="impurity">
+  <h2 id="impurity">Magnetic impurities and the Kondo boundary</h2>
+  <p>
+    A localized impurity moment coupled antiferromagnetically to conduction electrons can be screened below a Kondo scale. The logarithmic resistivity trend and susceptibility crossover expose many-body physics that static mean field cannot reproduce. The screened ground state is not simply “the moment disappeared”; it is an entangled state of impurity and bath.
+  </p>
+</section>
+
+<section aria-labelledby="calculation-claims">
+  <h2 id="calculation-claims">What a spin-polarized calculation can establish</h2>
+  <p>
+    A converged collinear calculation establishes a stationary solution within its functional, structure, cell, spin constraint, and initialization. It does not prove the global magnetic ground state. Competing ferro-, antiferro-, ferri-, noncollinear, and orbital branches may need separate tests; scalar relativity, spin polarization, noncollinearity, and spin–orbit coupling are distinct model choices.
+  </p>
+  <p>
+    Use <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Foundations · Relativistic Electronic Structure, Spin, and Magnetism</a> for deeper repair and the workflow layer for branch searches and evidence.
+  </p>
+</section>

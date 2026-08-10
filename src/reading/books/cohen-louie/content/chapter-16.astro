@@ -1,0 +1,85 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'dimension-change', label: 'What changes when dimension is reduced' },
+  { id: 'ballistic-landauer', label: 'Channels, reservoirs, and Landauer conductance' },
+  { id: 'charging', label: 'Weak coupling and Coulomb blockade' },
+  { id: 'graphene-dirac', label: 'Graphene’s Dirac sector' },
+  { id: 'boundary-quantization', label: 'Nanotubes and ribbons quantize allowed k' },
+  { id: 'screening-excitons', label: 'Reduced screening reshapes excitons' },
+];
+export const synthesis = 'Reduced dimension changes phase space, boundary quantization, screening, and contact physics together. The chapter connects discrete spectra to transmission and charging, then uses graphene-family systems to show how symmetry and allowed k lines control bands while many-body electron–hole interaction controls optical spectra.';
+---
+
+<section aria-labelledby="dimension-change">
+  <h2 id="dimension-change">What changes when dimension is reduced</h2>
+  <p>
+    Confinement discretizes motion in one or more directions and changes the density of states. At the same time, surfaces and contacts become a larger part of the physical system, and Coulomb fields are screened differently by the material and its environment. A nanostructure is therefore not defined by size alone: shape, termination, dielectric surroundings, reservoirs, and coupling strengths enter the Hamiltonian and observable.
+  </p>
+</section>
+
+<section aria-labelledby="ballistic-landauer">
+  <h2 id="ballistic-landauer">Channels, reservoirs, and Landauer conductance</h2>
+  <p>
+    In a coherent conductor shorter than the relevant scattering length, current can be organized by transmitting channels between reservoirs. At small bias and low temperature,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Landauer conductance formula">
+      <semantics>
+        <mrow><mi>G</mi><mo>=</mo><mfrac><mrow><mn>2</mn><msup><mi>e</mi><mn>2</mn></msup></mrow><mi>h</mi></mfrac><munder><mo>∑</mo><mi>n</mi></munder><msub><mi>T</mi><mi>n</mi></msub><mo>(</mo><msub><mi>E</mi><mi>F</mi></msub><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">G=&#92;frac&#123;2e^2&#125;&#123;h&#125;&#92;sum_n T_n(E_F)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    T<sub>n</sub> is the transmission probability of channel n at the Fermi energy; 2e²/h includes a twofold spin degeneracy only when that assumption applies. Perfect channels quantize conductance in units of 2e²/h. The contact reservoirs and scattering region are part of the definition—the formula is not a bulk conductivity divided by a length.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 16, §§16.2–16.3.</p>
+</section>
+
+<section aria-labelledby="charging">
+  <h2 id="charging">Weak coupling and Coulomb blockade</h2>
+  <p>
+    When a small island is weakly coupled to leads, changing its electron number costs electrostatic charging energy as well as any single-particle level spacing. If that cost exceeds thermal and lifetime broadening, current is blocked except where a gate or bias aligns charge states. This is an interacting, open-system effect; an isolated Kohn–Sham gap does not establish a Coulomb-blockade threshold.
+  </p>
+</section>
+
+<section aria-labelledby="graphene-dirac">
+  <h2 id="graphene-dirac">Graphene’s Dirac sector</h2>
+  <p>
+    Two sublattices and honeycomb symmetry produce bands that meet at inequivalent K and K′ valleys. Near either point, the low-energy Hamiltonian is linear in displacement from the valley and acts on a sublattice pseudospin:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Low energy graphene Dirac Hamiltonian">
+      <semantics>
+        <mrow><mover><mi>H</mi><mo>^</mo></mover><mo>≈</mo><mi>ℏ</mi><msub><mi>v</mi><mi>F</mi></msub><mo>(</mo><msub><mi>σ</mi><mi>x</mi></msub><msub><mi>κ</mi><mi>x</mi></msub><mo>+</mo><msub><mi>σ</mi><mi>y</mi></msub><msub><mi>κ</mi><mi>y</mi></msub><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;hat H&#92;approx&#92;hbar v_F(&#92;sigma_x&#92;kappa_x+&#92;sigma_y&#92;kappa_y)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The wavevector offset κ is k−K (or k−K′), has inverse-length units, and is not ordinary mechanical momentum. The factor ℏ converts that wavevector scale to momentum inside the energy. The velocity v<sub>F</sub> is the band velocity, and the Pauli matrices act on sublattice amplitudes rather than real spin. At charge neutrality the linear cone has a point-like Fermi surface; doping moves the chemical potential away from the Dirac point and produces a finite contour. Suppressed backscattering follows only in suitable smooth-potential limits. Spin, spin–orbit coupling, intervalley scattering, substrate effects, and interactions add separate structure.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 16, §§16.5.1–16.5.2, especially the low-energy construction around Eqs. 16.46–16.62.</p>
+</section>
+
+<section aria-labelledby="boundary-quantization">
+  <h2 id="boundary-quantization">Nanotubes and ribbons quantize allowed k</h2>
+  <p>
+    Rolling graphene into a nanotube imposes periodicity around the circumference, allowing only k lines compatible with the chiral vector. A tube is metallic in the simplest zone-folding picture when an allowed line crosses a valley; otherwise it is semiconducting. Curvature can open small gaps, so the geometric rule has a stated large-radius and one-particle limit.
+  </p>
+  <p>
+    A nanoribbon replaces circumferential periodicity by edges. Width and edge termination then affect quantization, reconstruction, and magnetic edge states. “Confinement opens a gap” is therefore incomplete until the boundary is specified.
+  </p>
+</section>
+
+<section aria-labelledby="screening-excitons">
+  <h2 id="screening-excitons">Reduced screening reshapes excitons</h2>
+  <p>
+    In nanotubes and atomically thin semiconductors, field lines extend into the environment and screening becomes strongly distance dependent. Quasiparticle gaps and electron–hole attraction can both grow, while partially canceling in an optical transition energy. Exciton series can deviate sharply from a two-dimensional hydrogen model and include bright and dark states with different angular and valley character.
+  </p>
+  <p>
+    This is why substrate and encapsulation can change charged gaps, binding energies, and optical peaks differently. The source’s GW–BSE examples belong to interacting charged and neutral excitation theory, not to ground-state DFT alone; see <a href={href('/core/part-viii/')}>Core Part VIII</a>.
+  </p>
+</section>

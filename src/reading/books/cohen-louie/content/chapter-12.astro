@@ -1,0 +1,69 @@
+---
+export const sectionLinks = [
+  { id: 'hall-models', label: 'What elementary Hall models isolate' },
+  { id: 'quantum-hall', label: 'The integer quantum Hall limit' },
+  { id: 'distribution-function', label: 'Transport needs a nonequilibrium distribution' },
+  { id: 'relaxation-time', label: 'What relaxation time approximates' },
+  { id: 'electrical-thermal', label: 'Electrical and thermal currents' },
+];
+export const synthesis = 'The chapter separates the ingredients hidden in a transport coefficient: band velocity, carrier occupation, field-driven drift, collision physics, magnetic geometry, and measurement boundary conditions. The Boltzmann equation is the organizing relation; the relaxation time is one model of its collision term, not a property supplied by the band structure alone.';
+---
+
+<section aria-labelledby="hall-models">
+  <h2 id="hall-models">What elementary Hall models isolate</h2>
+  <p>
+    A one-carrier Drude model makes the Hall sign and the balance of electric and magnetic forces transparent. Adding a second carrier type immediately shows why a measured Hall coefficient is not generally 1/(ne): electron and hole densities, mobilities, and field strength combine nonlinearly. Open Fermi-surface orbits can further prevent magnetoresistance saturation in selected directions.
+  </p>
+  <p>
+    These models interpret trends; they do not invert arbitrary multiband data uniquely. A carrier density claim requires a model whose band, scattering, and field regime match the sample.
+  </p>
+</section>
+
+<section aria-labelledby="quantum-hall">
+  <h2 id="quantum-hall">The integer quantum Hall limit</h2>
+  <p>
+    In a clean two-dimensional system at high field and low temperature, Landau quantization, disorder-localized states, and edge transport produce plateaus in Hall conductivity while longitudinal response vanishes. The quantized value is not obtained by inserting a special relaxation time into the classical Hall formula.
+  </p>
+  <p>
+    The source’s gauge argument connects filled Landau levels to robust transverse transport. Modern topological language sharpens that connection, but the experimental phenomenon still depends on dimensionality, a mobility gap, contacts, and an appropriate filling regime.
+  </p>
+</section>
+
+<section aria-labelledby="distribution-function">
+  <h2 id="distribution-function">Transport needs a nonequilibrium distribution</h2>
+  <p>
+    Equilibrium occupation carries no net current in a time-reversal-symmetric band. A field or temperature gradient distorts the distribution f(k,r,t), while collisions drive it back toward local equilibrium. The Boltzmann equation balances these two tendencies:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Semiclassical Boltzmann transport equation">
+      <semantics>
+        <mrow><mfrac><mrow><mo>∂</mo><mi>f</mi></mrow><mrow><mo>∂</mo><mi>t</mi></mrow></mfrac><mo>+</mo><mover><mi mathvariant="bold">r</mi><mo>˙</mo></mover><mo>·</mo><msub><mo>∇</mo><mi mathvariant="bold">r</mi></msub><mi>f</mi><mo>+</mo><mover><mi mathvariant="bold">k</mi><mo>˙</mo></mover><mo>·</mo><msub><mo>∇</mo><mi mathvariant="bold">k</mi></msub><mi>f</mi><mo>=</mo><msub><mrow><mo>(</mo><mfrac><mrow><mo>∂</mo><mi>f</mi></mrow><mrow><mo>∂</mo><mi>t</mi></mrow></mfrac><mo>)</mo></mrow><mtext>coll</mtext></msub></mrow>
+        <annotation encoding="application/x-tex">&#92;frac&#123;&#92;partial f&#125;&#123;&#92;partial t&#125;+&#92;dot&#123;&#92;mathbf r&#125;&#92;cdot&#92;nabla_&#123;&#92;mathbf r&#125;f+&#92;dot&#123;&#92;mathbf k&#125;&#92;cdot&#92;nabla_&#123;&#92;mathbf k&#125;f=&#92;left(&#92;frac&#123;&#92;partial f&#125;&#123;&#92;partial t&#125;&#92;right)_&#123;&#92;mathrm&#123;coll&#125;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first term is explicit time change; the next two advect the distribution through real and reciprocal space; the right side redistributes occupation through scattering. Solving this equation produces the part of f that is odd in velocity and therefore carries current.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 12, §12.3, especially Eqs. 12.59–12.83.</p>
+</section>
+
+<section aria-labelledby="relaxation-time">
+  <h2 id="relaxation-time">What relaxation time approximates</h2>
+  <p>
+    The relaxation-time approximation replaces the full collision integral by −(f−f⁰)/τ<sub>k</sub>. It says that each displaced occupation relaxes toward a local equilibrium on a characteristic timescale. Interaction has not disappeared; electron–phonon, impurity, and electron–electron processes are compressed into τ and its state and temperature dependence.
+  </p>
+  <p>
+    A constant τ is a further model that makes the Fermi surface look rigidly shifted. It is useful for intuition but cannot describe every angular, inelastic, multiband, or hydrodynamic scattering regime.
+  </p>
+</section>
+
+<section aria-labelledby="electrical-thermal">
+  <h2 id="electrical-thermal">Electrical and thermal currents</h2>
+  <p>
+    Electrical conductivity weights states near the chemical potential by squared velocity and lifetime. Heat current adds the energy carried relative to the chemical potential. A temperature gradient and an electric field can therefore drive both currents, producing Seebeck and Peltier effects under different boundary conditions.
+  </p>
+  <p>
+    The Wiedemann–Franz relation follows only in a low-temperature quasiparticle limit with suitable elastic scattering. Lattice heat flow, inelastic scattering, energy-dependent lifetimes, and strong interactions can violate its simple form. Transport calculations and their convergence/validation belong to dedicated Methods and the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>, not to a band plot alone.
+  </p>
+</section>

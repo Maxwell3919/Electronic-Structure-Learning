@@ -1,0 +1,61 @@
+---
+export const sectionLinks = [
+  { id: 'landau-levels', label: 'A field quantizes transverse motion' },
+  { id: 'crystal-orbits', label: 'Crystal bands reshape the orbit' },
+  { id: 'effective-mass', label: 'Cyclotron mass and real-space motion' },
+  { id: 'oscillations', label: 'Quantum oscillations read extremal areas' },
+];
+export const synthesis = 'Magnetic dynamics joins two pictures: quantum Landau levels explain discrete degeneracy, while semiclassical motion on a band explains orbit geometry. Their meeting in quantum oscillations converts periodic level crossings at the Fermi energy into a measurement of extremal Fermi-surface cross sections.';
+---
+
+<section aria-labelledby="landau-levels">
+  <h2 id="landau-levels">A field quantizes transverse motion</h2>
+  <p>
+    For a free electron in a uniform magnetic field, motion parallel to the field remains continuous while transverse cyclotron motion becomes a harmonic oscillator. The resulting levels are
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Landau level energy">
+      <semantics>
+        <mrow><msub><mi>ε</mi><mi>ℓ</mi></msub><mo>(</mo><msub><mi>k</mi><mi>z</mi></msub><mo>)</mo><mo>=</mo><mo>(</mo><mi>ℓ</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo><mi>ℏ</mi><msub><mi>ω</mi><mi>c</mi></msub><mo>+</mo><mfrac><mrow><msup><mi>ℏ</mi><mn>2</mn></msup><msubsup><mi>k</mi><mi>z</mi><mn>2</mn></msubsup></mrow><mrow><mn>2</mn><mi>m</mi></mrow></mfrac></mrow>
+        <annotation encoding="application/x-tex">&#92;varepsilon_&#92;ell(k_z)=&#92;left(&#92;ell+&#92;frac12&#92;right)&#92;hbar&#92;omega_c+&#92;frac&#123;&#92;hbar^2k_z^2&#125;&#123;2m&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The integer ℓ counts transverse oscillator quanta, ω<sub>c</sub> is the cyclotron frequency, and k<sub>z</sub> labels free motion along the field. Each level is highly degenerate because many orbit centers enclose the same energy. Increasing field increases both level spacing and degeneracy per area.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 11, §11.1, Eqs. 11.1–11.9.</p>
+</section>
+
+<section aria-labelledby="crystal-orbits">
+  <h2 id="crystal-orbits">Crystal bands reshape the orbit</h2>
+  <p>
+    In a crystal and at fields where many Landau levels remain occupied, semiclassical band dynamics is often adequate. The Lorentz force moves k along the intersection of a constant-energy surface with a plane perpendicular to B. The orbit is therefore determined by the actual band E<sub>n</sub>(k), not a free-electron sphere.
+  </p>
+  <p>
+    Closed and open Fermi-surface orbits have different transport consequences. Which orbit appears depends on field orientation, so one magnetic-field direction probes only selected slices of a three-dimensional surface.
+  </p>
+</section>
+
+<section aria-labelledby="effective-mass">
+  <h2 id="effective-mass">Cyclotron mass and real-space motion</h2>
+  <p>
+    The cyclotron period is controlled by how rapidly the k-space orbit area changes with energy. This cyclotron mass need not equal a curvature mass along a single axis. The source’s geometric construction shows why real-space and momentum-space orbits are rotated and scaled images related by the magnetic field.
+  </p>
+  <p>
+    Scattering must remain weak enough for an electron to complete the relevant orbit. Otherwise level broadening washes out quantization and oscillatory signals even if the band geometry is unchanged.
+  </p>
+</section>
+
+<section aria-labelledby="oscillations">
+  <h2 id="oscillations">Quantum oscillations read extremal areas</h2>
+  <p>
+    A closed k-space orbit is allowed only when its enclosed area satisfies a quantization condition whose spacing grows with B. The Fermi-surface cross section itself is fixed for a chosen field direction, so successive quantized areas cross the Fermi energy at equal intervals of 1/B. This is why the oscillation frequency is proportional to a Fermi-surface cross-sectional area perpendicular to B.
+  </p>
+  <p>
+    A three-dimensional surface supplies many neighboring slices, but their oscillations generally acquire different phases and cancel. Slices whose area is stationary with respect to motion along the field remain in phase most effectively. “Extremal” therefore names the cross sections that survive this dephasing, not an arbitrary choice of a visually large orbit.
+  </p>
+  <p>
+    Rotating the field maps a family of extremal areas and can constrain a Fermi surface. It does not remove the need to identify the relevant band, spin splitting, magnetic breakdown, dimensionality, and many-body mass renormalization.
+  </p>
+</section>

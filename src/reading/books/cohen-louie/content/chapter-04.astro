@@ -1,0 +1,68 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'harmonic-problem', label: 'Small displacements become an eigenproblem' },
+  { id: 'chain-models', label: 'What the chain models explain' },
+  { id: 'quantization', label: 'From normal modes to phonons' },
+  { id: 'thermodynamics-dos', label: 'Occupation, heat capacity, and DOS' },
+  { id: 'modern-calculation', label: 'From model force constants to calculations' },
+];
+export const synthesis = 'The chapter makes lattice vibration a sequence of reductions: choose an equilibrium, keep the quadratic energy curvature, diagonalize a mass-weighted force-constant matrix, and quantize each independent mode. Thermodynamics and spectroscopy then depend on both the mode frequencies and how the relevant probe weights them.';
+---
+
+<section aria-labelledby="harmonic-problem">
+  <h2 id="harmonic-problem">Small displacements become an eigenproblem</h2>
+  <p>
+    Around a stationary structure, the first energy derivative vanishes. The leading restoring information is therefore the second derivative with respect to atomic displacements. Translational symmetry lets those force constants be Fourier transformed at a phonon wavevector q, producing a dynamical matrix whose eigenproblem is
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Phonon dynamical matrix eigenproblem">
+      <semantics>
+        <mrow><munder><mo>∑</mo><mrow><mi>B</mi><mi>β</mi></mrow></munder><msub><mi>D</mi><mrow><mi>A</mi><mi>α</mi><mo>,</mo><mi>B</mi><mi>β</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo><msub><mi>e</mi><mrow><mi>B</mi><mi>β</mi><mo>,</mo><mi>ν</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo><mo>=</mo><msubsup><mi>ω</mi><mi>ν</mi><mn>2</mn></msubsup><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo><msub><mi>e</mi><mrow><mi>A</mi><mi>α</mi><mo>,</mo><mi>ν</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">q</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;sum_&#123;B&#92;beta&#125;D_&#123;A&#92;alpha,B&#92;beta&#125;(&#92;mathbf q)e_&#123;B&#92;beta,&#92;nu&#125;(&#92;mathbf q)=&#92;omega_&#92;nu^2(&#92;mathbf q)e_&#123;A&#92;alpha,&#92;nu&#125;(&#92;mathbf q)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The atom labels A and B and Cartesian directions α and β enumerate displacement coordinates; ν labels the branch. Each eigenvalue gives a squared frequency and each eigenvector gives a polarization in mass-weighted coordinates. The physical displacement of atom A is proportional to e<sub>Aα,ν</sub>/√M<sub>A</sub>, so the plotted eigenvector components are not directly equal to relative atomic amplitudes when masses differ.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 4, §4.1, especially Eqs. 4.7–4.16. Compare the modern force-constant and dynamical-matrix conventions in <a href={href('/core/part-vii/')}>Core Part VII</a>.</p>
+</section>
+
+<section aria-labelledby="chain-models">
+  <h2 id="chain-models">What the chain models explain</h2>
+  <p>
+    A monatomic chain has an acoustic branch whose long-wavelength frequency tends to zero because translating the whole crystal costs no restoring energy. A diatomic chain adds an optical branch: neighboring basis atoms can move against one another even at q≈0. The models show why the number of branches equals three times the number of atoms in a three-dimensional primitive cell and why polarization matters.
+  </p>
+  <p>
+    They do not supply real force constants. Long-range electrostatics can split longitudinal and transverse optical modes, and anisotropy mixes polarization labels away from special directions.
+  </p>
+</section>
+
+<section aria-labelledby="quantization">
+  <h2 id="quantization">From normal modes to phonons</h2>
+  <p>
+    Harmonic normal coordinates decouple the nuclear Hamiltonian into independent oscillators. Quantization assigns each mode an occupation number and energy ℏω(q,ν)(n+½). A phonon is one quantum added to one such collective mode. The zero-point term remains even at zero temperature; the Bose occupation controls the additional thermal population.
+  </p>
+  <p>
+    The quasiparticle language is useful while a mode has a reasonably well-defined frequency and lifetime. Anharmonic decay broadens the mode and ultimately limits the independent-phonon picture.
+  </p>
+</section>
+
+<section aria-labelledby="thermodynamics-dos">
+  <h2 id="thermodynamics-dos">Occupation, heat capacity, and DOS</h2>
+  <p>
+    Heat capacity sums the temperature derivative of the energy stored in all occupied modes. The Debye model captures low-frequency acoustic phase space and the T³ limit in three dimensions; the Einstein model captures a single characteristic frequency and exponential freeze-out. Neither is a universal phonon spectrum.
+  </p>
+  <p>
+    The vibrational DOS counts modes near a frequency after integrating over q. Its critical-point features arise where the dispersion is locally flat, but it forgets where those modes occur. A phonon path and a phonon DOS therefore reorganize the same spectrum in different ways.
+  </p>
+</section>
+
+<section aria-labelledby="modern-calculation">
+  <h2 id="modern-calculation">From model force constants to calculations</h2>
+  <p>
+    The chapter’s analytic chains make the eigenproblem intelligible. A real calculation obtains force constants from finite displacements or self-consistent linear response, samples q throughout the vibrational Brillouin zone, and checks the observable-specific convergence of the resulting frequencies. Finite displacement and DFPT are two routes to derivatives within the chosen electronic theory, not different physical theories.
+  </p>
+</section>

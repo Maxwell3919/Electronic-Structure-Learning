@@ -1,0 +1,71 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'displacement-perturbation', label: 'A phonon perturbs the electronic Hamiltonian' },
+  { id: 'matrix-element', label: 'The coupling object and momentum labels' },
+  { id: 'three-limits', label: 'Metallic, polar, and deformation-potential limits' },
+  { id: 'polaron', label: 'From scattering to a dressed quasiparticle' },
+  { id: 'what-it-does-not-prove', label: 'What large coupling does not prove' },
+];
+export const synthesis = 'The chapter’s durable move is to define electron–phonon coupling as a matrix element of the first derivative of the electronic Hamiltonian along a phonon normal coordinate. Scattering, band renormalization, phonon softening, polarons, and pairing then arise from different combinations and orders of that same coupling object.';
+---
+
+<section aria-labelledby="displacement-perturbation">
+  <h2 id="displacement-perturbation">A phonon perturbs the electronic Hamiltonian</h2>
+  <p>
+    A static lattice gives a periodic electronic potential. A normal-mode displacement changes that potential, so an electron initially in one Bloch state can scatter into another. Expanding the potential to first order in a small displacement isolates the linear electron–phonon interaction. The approximation is harmonic in the nuclear coordinate and first order in the electronic perturbation, even though later observables may use it more than once.
+  </p>
+  <p>
+    The source’s rigid-ion model assigns a translated atomic potential to each ion. It makes the derivative tangible but is not the general modern definition: self-consistent electronic screening and non-rigid charge redistribution can contribute to the perturbing potential.
+  </p>
+</section>
+
+<section aria-labelledby="matrix-element">
+  <h2 id="matrix-element">The coupling object and momentum labels</h2>
+  <p>
+    In modern notation, the state-resolved coupling can be read as
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Electron phonon matrix element">
+      <semantics>
+        <mrow><msub><mi>g</mi><mrow><mi>m</mi><mi>n</mi><mi>ν</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>,</mo><mi mathvariant="bold">q</mi><mo>)</mo><mo>=</mo><mo>⟨</mo><msub><mi>ψ</mi><mrow><mi>m</mi><mo>,</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">q</mi></mrow></msub><mo>|</mo><msub><mo>∂</mo><mrow><mi mathvariant="bold">q</mi><mi>ν</mi></mrow></msub><mover><mi>V</mi><mo>^</mo></mover><mo>|</mo><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>⟩</mo></mrow>
+        <annotation encoding="application/x-tex">g_&#123;mn&#92;nu&#125;(&#92;mathbf k,&#92;mathbf q)=&#92;langle&#92;psi_&#123;m,&#92;mathbf k+&#92;mathbf q&#125;|&#92;partial_&#123;&#92;mathbf q&#92;nu&#125;&#92;hat V|&#92;psi_&#123;n&#92;mathbf k&#125;&#92;rangle</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The derivative ∂<sub>qν</sub>V̂ is the change of the effective electronic potential along phonon branch ν at wavevector q; n,k and m,k+q label the initial and final electronic states. The phonon coordinate must be normalized by a stated convention: its mode polarization, atomic-mass factors, and displacement amplitude determine the numerical scale and units of the derivative. Changing that convention rescales the coordinate and derivative together.
+  </p>
+  <p>
+    Crystal momentum is conserved modulo a reciprocal-lattice vector G, so normal and Umklapp channels differ by how that G enters. The matrix element is not a scalar “material EPC” until it has been combined with specified states, occupations, frequencies, phase-space weights, and the same mode normalization.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 10, §§10.1–10.2, especially Eqs. 10.6–10.32. The displayed notation is normalized to the state- and mode-resolved form used in <a href={href('/core/part-vii/')}>Core Part VII</a>.</p>
+</section>
+
+<section aria-labelledby="three-limits">
+  <h2 id="three-limits">Metallic, polar, and deformation-potential limits</h2>
+  <p>
+    In a simple metal, smooth pseudopotential form factors and momentum selection illuminate normal and Umklapp scattering. In a polar insulator, a long-wavelength longitudinal optical mode generates a macroscopic electric field and a long-range Fröhlich coupling. Near a semiconductor band edge, a deformation potential describes how strain shifts the extremum.
+  </p>
+  <p>
+    These limits are physically distinct. Transverse-mode coupling that vanishes in an oversimplified normal-process model can reappear through Umklapp, nonlocal potentials, and realistic electronic structure. Likewise, LO–TO splitting and polar coupling require charges, dielectric response, and dimensional boundary conditions appropriate to the material.
+  </p>
+</section>
+
+<section aria-labelledby="polaron">
+  <h2 id="polaron">From scattering to a dressed quasiparticle</h2>
+  <p>
+    Using the coupling twice lets an electron emit and reabsorb a virtual phonon. Its energy shifts, its dispersion changes, and its spectral state carries a lattice-polarization cloud: a polaron. In the weak-coupling Fröhlich limit, the source obtains a downward energy shift and an increased effective mass. Letting the coupling tend to zero removes both changes and recovers the bare band electron.
+  </p>
+  <p>
+    Large and small polarons refer to the spatial extent and coupling regime of the dressing. The perturbative result is not reliable once the electron self-traps or the phonon cloud becomes strongly nonperturbative.
+  </p>
+</section>
+
+<section aria-labelledby="what-it-does-not-prove">
+  <h2 id="what-it-does-not-prove">What large coupling does not prove</h2>
+  <p>
+    The same matrix elements can contribute to resistivity, phonon linewidths, band renormalization, structural softening, and an effective pairing interaction. Each observable weights modes and electronic states differently. A large averaged coupling λ is therefore not proof of superconductivity, a transition temperature, or even a stable structure. Those conclusions require the appropriate many-body, thermodynamic, and stability evidence.
+  </p>
+</section>

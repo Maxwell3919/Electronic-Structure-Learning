@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { cohenLouieChapters, cohenLouieParts, cohenLouieReadingSlugs } from '../../../../reading/books/cohen-louie';
+import { getCohenLouieChapterContent } from '../../../../reading/books/cohen-louie/chapter-content';
+import { cohenLouieCanonicalSource, getCohenLouieSourceFigures } from '../../../../reading/books/cohen-louie/source-reading';
+
+export function getStaticPaths() {
+  return cohenLouieReadingSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const slug = Astro.params.slug ?? '';
+const part = cohenLouieParts.find((entry) => entry.slug === slug);
+const chapter = cohenLouieChapters.find((entry) => entry.slug === slug);
+const chapterContent = chapter ? await getCohenLouieChapterContent(slug) : undefined;
+const ChapterComponent = chapterContent?.default as any;
+const sectionLinks = chapterContent?.sectionLinks ?? [];
+const synthesis = chapterContent?.synthesis;
+const sourceFigureGuides = getCohenLouieSourceFigures(slug);
+const currentPart = chapter ? cohenLouieParts.find((entry) => entry.slug === chapter.partSlug) : part;
+const partChapters = currentPart ? cohenLouieChapters.filter((entry) => currentPart.chapterSlugs.includes(entry.slug)) : [];
+const chapterIndex = chapter ? cohenLouieChapters.findIndex((entry) => entry.slug === chapter.slug) : -1;
+const previousChapter = chapterIndex > 0 ? cohenLouieChapters[chapterIndex - 1] : undefined;
+const nextChapter = chapterIndex >= 0 && chapterIndex < cohenLouieChapters.length - 1 ? cohenLouieChapters[chapterIndex + 1] : undefined;
+const pageTitle = chapter?.title ?? (part ? `Part ${part.number} · ${part.title}` : 'Cohen & Louie');
+const description = chapter?.coreIdea ?? part?.question ?? '';
+---
+
+{(part || (chapter && chapterContent)) && (
+  <BaseLayout title={pageTitle} description={description} current="reading">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href={href('/reading/')}>Guided Reading</a><span aria-hidden="true">/</span>
+      <a href={href('/reading/books/')}>Books</a><span aria-hidden="true">/</span>
+      <a href={href('/reading/books/cohen-louie/')}>Cohen &amp; Louie</a><span aria-hidden="true">/</span>
+      <span>{part ? `Part ${part.number}` : `Chapter ${chapter?.number}`}</span>
+    </nav>
+
+    {part ? (
+      <>
+        <p class="secondary">Part {part.number}</p>
+        <h1>{part.title}</h1>
+        <p class="lede">{part.question}</p>
+        <p>{part.overview}</p>
+        <p class="paper-meta">
+          Source anchor: Cohen &amp; Louie, <cite>Fundamentals of Condensed Matter Physics</cite>, Part {part.number}. <a href={cohenLouieCanonicalSource.href}>{cohenLouieCanonicalSource.label}</a>.
+        </p>
+        <section aria-labelledby="part-argument">
+          <h2 id="part-argument">How this Part moves</h2>
+          <ol class="section-list source-list">
+            {partChapters.map((entry) => (
+              <li><h3>Chapter {entry.number} · {entry.title}</h3><p>{entry.contribution}</p><a href={href(entry.route)}>Read Chapter {entry.number} →</a></li>
+            ))}
+          </ol>
+        </section>
+        <section aria-labelledby="part-synthesis"><h2 id="part-synthesis">Part synthesis</h2><p>{part.synthesis}</p></section>
+        <p>Return to the <a href={href('/reading/books/cohen-louie/')}>Cohen &amp; Louie source sequence</a>.</p>
+      </>
+    ) : chapter && chapterContent ? (
+      <>
+        <p class="secondary">Part {currentPart?.number} · Chapter {chapter.number}</p>
+        <h1>{chapter.title}</h1>
+        <p><strong>Core Idea.</strong> {chapter.coreIdea}</p>
+        <section aria-labelledby="chapter-overview"><h2 id="chapter-overview">Chapter overview</h2><p>{chapter.overview}</p></section>
+        <p class="paper-meta">
+          Source anchor: Cohen &amp; Louie, <cite>Fundamentals of Condensed Matter Physics</cite>, Chapter {chapter.number}. <a href={cohenLouieCanonicalSource.href}>{cohenLouieCanonicalSource.label}</a>.
+        </p>
+        <nav aria-labelledby="chapter-structure">
+          <h2 id="chapter-structure">Chapter structure</h2>
+          <ol class="source-outline">{sectionLinks.map((entry) => <li><a href={`#${entry.id}`}>{entry.label}</a></li>)}</ol>
+        </nav>
+        {sourceFigureGuides.length > 0 && (
+          <section aria-labelledby="source-figures">
+            <h2 id="source-figures">Read the source figures</h2>
+            <p>Keep these figures or tables open in the book. The Atlas does not reproduce Cambridge artwork; each note identifies where to look, what the visual contributes, and where its evidence stops.</p>
+            <dl class="source-figure-list">
+              {sourceFigureGuides.map((entry) => (<><dt>{entry.locator} <span>· {entry.section}</span></dt><dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd></>))}
+            </dl>
+          </section>
+        )}
+        {ChapterComponent && <ChapterComponent />}
+        {synthesis && <section aria-labelledby="chapter-synthesis"><h2 id="chapter-synthesis">Chapter synthesis</h2><p>{synthesis}</p></section>}
+        <p>Return to <a href={href(currentPart?.route ?? '/reading/books/cohen-louie/')}>Part {currentPart?.number}</a> or the <a href={href('/reading/books/cohen-louie/')}>full source sequence</a>.</p>
+        {(previousChapter || nextChapter) && (
+          <nav aria-label="Chapter navigation">
+            <p>{previousChapter && <a href={href(previousChapter.route)}>← Chapter {previousChapter.number} · {previousChapter.title}</a>}</p>
+            <p>{nextChapter && <a href={href(nextChapter.route)}>Chapter {nextChapter.number} · {nextChapter.title} →</a>}</p>
+          </nav>
+        )}
+      </>
+    ) : null}
+  </BaseLayout>
+)}

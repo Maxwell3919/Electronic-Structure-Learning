@@ -1,0 +1,60 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'approximation-ladder', label: 'From the full problem to a periodic one-particle Hamiltonian' },
+  { id: 'lattice-not-crystal', label: 'Translation before crystallographic detail' },
+  { id: 'bloch-character', label: 'Bloch character labels translation symmetry' },
+  { id: 'reciprocal-redundancy', label: 'Why k repeats modulo G' },
+];
+export const synthesis = 'The chapter earns Bloch’s theorem through a chain of approximations and symmetries. Born–Oppenheimer fixes a geometry; mean field produces a one-particle operator; crystal periodicity makes translations commute with that operator; and the translation eigenvalue supplies k. Bands enter only in the next chapter, after this labeling structure exists.';
+---
+
+<section aria-labelledby="approximation-ladder">
+  <h2 id="approximation-ladder">From the full problem to a periodic one-particle Hamiltonian</h2>
+  <p>
+    The chapter does not begin by assuming bands. It begins with interacting nuclei and electrons. The Born–Oppenheimer step treats nuclear coordinates as parameters of an electronic problem; a mean-field step then replaces the coupled many-electron state by an effective one-particle Hamiltonian. Neither step says the physical electrons are intrinsically independent. Each changes the problem being solved and must be named before translation symmetry can organize its eigenstates.
+  </p>
+  <p>
+    For an ideal crystal, the resulting potential repeats under every Bravais-lattice vector. This is the precise point at which the finite molecule and the extended solid part company: infinitely many translated environments are equivalent, so eigenstates can be classified by how they transform between them.
+  </p>
+</section>
+
+<section aria-labelledby="lattice-not-crystal">
+  <h2 id="lattice-not-crystal">Translation before crystallographic detail</h2>
+  <p>
+    A Bravais lattice is the set of translation vectors. The basis or motif is the collection of atoms attached to each lattice point; lattice plus basis gives the crystal structure. The chapter develops primitive cells, reciprocal vectors, and Wigner–Seitz constructions because they are needed to remove repeated descriptions—not because every later electronic argument needs a full space-group course.
+  </p>
+  <p>
+    Use <a href={href('/theory/crystallography/')}>Foundations · Crystallography</a> for conventional cells, space groups, and deeper geometric repair. The electronic argument here needs only the translation group and one nonredundant cell in real and reciprocal space.
+  </p>
+</section>
+
+<section aria-labelledby="bloch-character">
+  <h2 id="bloch-character">Bloch character labels translation symmetry</h2>
+  <p>
+    When the Hamiltonian commutes with every lattice translation, its eigenstates can be chosen as translation eigenstates. Because translation is unitary, its eigenvalue is a phase rather than a change in norm:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Bloch translation condition">
+      <semantics>
+        <mrow><msub><mover><mi>T</mi><mo>^</mo></mover><mi mathvariant="bold">R</mi></msub><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>=</mo><msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">R</mi></mrow></msup><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub></mrow>
+        <annotation encoding="application/x-tex">&#92;hat T_&#123;&#92;mathbf R&#125;&#92;psi_&#123;n&#92;mathbf k&#125;=&#92;mathrm e^&#123;&#92;mathrm i&#92;mathbf k&#92;cdot&#92;mathbf R&#125;&#92;psi_&#123;n&#92;mathbf k&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the right side as a symmetry character. <strong>R</strong> chooses a real-space lattice translation; <strong>k</strong> labels the phase pattern assigned to all such translations; <em>n</em> distinguishes different eigenstates within the same translation sector. The state generally changes phase from cell to cell, so it is not itself periodic. Only the cell-periodic factor in its Bloch decomposition repeats exactly.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 2, §§2.5.4–2.5.5, especially Eqs. 2.23–2.45. See also <a href={href('/core/part-iii/')}>Core Part III</a>.</p>
+</section>
+
+<section aria-labelledby="reciprocal-redundancy">
+  <h2 id="reciprocal-redundancy">Why k repeats modulo G</h2>
+  <p>
+    If a reciprocal-lattice vector <strong>G</strong> satisfies <strong>G</strong>·<strong>R</strong> = 2πm for every lattice translation, shifting <strong>k</strong> by <strong>G</strong> leaves every translation phase unchanged. Thus <strong>k</strong> and <strong>k</strong> + <strong>G</strong> label the same translation character, and one primitive reciprocal cell is sufficient. The first Brillouin zone is a geometrically convenient choice of that cell.
+  </p>
+  <p>
+    This also fixes a common confusion: <strong>G</strong> is a reciprocal-lattice vector, while <strong>k</strong> labels a Bloch sector. Both inhabit reciprocal space, but they play different roles. Crystal momentum is likewise not identical to ordinary mechanical momentum.
+  </p>
+</section>

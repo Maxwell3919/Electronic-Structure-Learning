@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { cohenLouieChapters, cohenLouieParts } from '../../../../reading/books/cohen-louie';
+import { cohenLouieCanonicalSource } from '../../../../reading/books/cohen-louie/source-reading';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout
+  title="Cohen & Louie · Fundamentals of Condensed Matter Physics"
+  description="A source-aligned guide to Cohen and Louie's four-part route through electronic states, response, many-body effects, and reduced-dimensional systems."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a><span aria-hidden="true">/</span>
+    <a href={href('/reading/books/')}>Books</a><span aria-hidden="true">/</span>
+    <span>Cohen &amp; Louie</span>
+  </nav>
+
+  <h1>Cohen &amp; Louie · Fundamentals of Condensed Matter Physics</h1>
+  <p class="lede">
+    A source-aligned guide to Marvin L. Cohen and Steven G. Louie’s 2016 book. The source’s distinctive strength is its continuous motion between microscopic models, elementary excitations, response functions, experimental signatures, and calculations for real materials.
+  </p>
+  <p>
+    This Guide preserves the book’s four Parts and sixteen chapters. It explains decisive equations, points to figures without copying Cambridge artwork, and marks where a model, historical formulation, or calculated object needs a modern boundary. It is a companion to the source, not a substitute for it.
+  </p>
+  <p class="paper-meta">
+    Source: Marvin L. Cohen and Steven G. Louie, <cite>Fundamentals of Condensed Matter Physics</cite> (Cambridge University Press, 2016). <a href={cohenLouieCanonicalSource.href}>{cohenLouieCanonicalSource.label}</a>.
+  </p>
+
+  <section aria-labelledby="how-to-read">
+    <h2 id="how-to-read">How to use this guide</h2>
+    <p>
+      Begin with a Part page to see why four neighboring chapters belong together, then keep the source open while reading the Chapter Guide. Figure notes identify the exact visual argument and its evidential limit. Formula notes retain only expressions that change the chapter’s reasoning; detailed derivations remain in the book.
+    </p>
+  </section>
+
+  <section aria-labelledby="source-sequence">
+    <h2 id="source-sequence">Source sequence</h2>
+    {cohenLouieParts.map((part) => {
+      const chapters = cohenLouieChapters.filter((entry) => entry.partSlug === part.slug);
+      return (
+        <section class="source-part" aria-labelledby={part.id}>
+          <h3 id={part.id}>Part {part.number} · {part.title}</h3>
+          <p>{part.overview}</p>
+          <p><a href={href(part.route)}>Read the Part {part.number} guide →</a></p>
+          <ol class="source-outline">
+            {chapters.map((chapter) => <li><a href={href(chapter.route)}>Chapter {chapter.number} · {chapter.title}</a></li>)}
+          </ol>
+        </section>
+      );
+    })}
+  </section>
+
+  <section aria-labelledby="atlas-connections">
+    <h2 id="atlas-connections">Read the source and the Atlas together</h2>
+    <p>
+      <a href={href('/core/')}>Core</a> supplies the Atlas’s modern theory-to-computation spine. This Guide follows Cohen and Louie’s broader condensed-matter argument, including response, transport, superconductivity, magnetism, and reduced dimensions. Use <a href={href('/theory/')}>Foundations</a> for prerequisite repair and the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> only when a source idea becomes an actual calculation to design, converge, and validate.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,71 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'measured-optics', label: 'Start from what an optical experiment measures' },
+  { id: 'drude-interband', label: 'Intraband and interband response' },
+  { id: 'matrix-elements', label: 'Why state counting is not intensity' },
+  { id: 'electron-hole', label: 'Electron–hole attraction reorganizes the spectrum' },
+  { id: 'charged-neutral', label: 'Keep charged and neutral gaps separate' },
+];
+export const synthesis = 'The chapter builds optical response in layers: electromagnetic boundary conditions connect a complex dielectric function to measured reflection and absorption; electronic transitions supply neutral excitation energies; matrix elements decide optical weight; and electron–hole interaction reorganizes independent transitions into excitons.';
+---
+
+<section aria-labelledby="measured-optics">
+  <h2 id="measured-optics">Start from what an optical experiment measures</h2>
+  <p>
+    Light incident on a solid produces reflected, transmitted, and absorbed fields. The complex dielectric response—or equivalently the complex refractive index—connects those measured intensities and phases to material polarization. This first step matters because a calculated transition spectrum is not yet a reflectivity curve; Maxwell boundary conditions and geometry intervene.
+  </p>
+  <p>
+    Optical wavelengths usually imply photon momenta small compared with a Brillouin zone, so vertical transitions in k are a useful starting point. “Small photon momentum” does not remove selection rules or electron–hole interaction.
+  </p>
+</section>
+
+<section aria-labelledby="drude-interband">
+  <h2 id="drude-interband">Intraband and interband response</h2>
+  <p>
+    The Drude model follows mobile carriers accelerated within a band and relaxed by a phenomenological scattering time. It captures the low-frequency free-carrier response of a metal. Interband absorption instead moves occupation between different bands and begins only where an occupied-to-empty transition satisfies energy and symmetry constraints.
+  </p>
+  <p>
+    These contributions can coexist. Fitting a Drude tail does not determine the interband spectrum, and an interband Kohn–Sham plot does not supply the scattering time or electrodynamic response of a metal.
+  </p>
+</section>
+
+<section aria-labelledby="matrix-elements">
+  <h2 id="matrix-elements">Why state counting is not intensity</h2>
+  <p>
+    In an independent-particle starting point, the absorptive response has the schematic structure
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Independent-particle optical absorption structure">
+      <semantics>
+        <mrow><msub><mi>ε</mi><mn>2</mn></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>∝</mo><munder><mo>∑</mo><mrow><mi>v</mi><mi>c</mi></mrow></munder><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">k</mi><mspace width="0.25em"/><msup><mrow><mo>|</mo><msub><mi>M</mi><mrow><mi>c</mi><mi>v</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><mo>|</mo></mrow><mn>2</mn></msup><mi>δ</mi><mo>(</mo><msub><mi>E</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><msub><mi>E</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><mi>ℏ</mi><mi>ω</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;varepsilon_2(&#92;omega)&#92;propto&#92;sum_&#123;vc&#125;&#92;int&#92;mathrm d^3&#92;mathbf k&#92;,|M_&#123;cv&#125;(&#92;mathbf k)|^2&#92;delta(E_&#123;c&#92;mathbf k&#125;-E_&#123;v&#92;mathbf k&#125;-&#92;hbar&#92;omega)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The Dirac delta selects transitions whose energy difference matches the photon energy. The matrix element M<sub>cv</sub> measures coupling to the field and can suppress a transition even when the energy difference exists. The joint density of states is recovered only if this weight is simplified; it counts available differences but cannot determine bright and dark structure on its own.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 9, §§9.3–9.4. The equation is a normalized schematic of the source’s interband-response expressions; conventions and prefactors depend on gauge and polarization.</p>
+</section>
+
+<section aria-labelledby="electron-hole">
+  <h2 id="electron-hole">Electron–hole attraction reorganizes the spectrum</h2>
+  <p>
+    Promoting an electron leaves a hole in the occupied manifold. Their screened Coulomb attraction mixes many independent transitions into correlated neutral eigenstates. A bound exciton lies below the independent charged-particle continuum; resonant excitons reshape spectral weight within it. In the effective-mass and slowly varying limit, a hydrogen-like equation explains a Rydberg series, but real screening and band structure can make the series non-hydrogenic.
+  </p>
+  <p>
+    Brightness remains a matrix-element question. Spin, spatial symmetry, polarization, and destructive interference can make a well-defined exciton optically dark.
+  </p>
+</section>
+
+<section aria-labelledby="charged-neutral">
+  <h2 id="charged-neutral">Keep charged and neutral gaps separate</h2>
+  <p>
+    The fundamental gap compares electron addition and removal energies in N±1 sectors at fixed external potential and nuclear geometry. An optical excitation stays in the N-electron sector. Their difference may be interpreted as an exciton binding energy only when the compared states, geometry, and continuum edge are consistently defined.
+  </p>
+  <p>
+    A Kohn–Sham gap is a third object. It belongs to an auxiliary ground-state equation and generally lacks the full derivative discontinuity and electron–hole interaction. <a href={href('/core/part-viii/')}>Core Part VIII</a> keeps this gap ledger explicit.
+  </p>
+</section>
