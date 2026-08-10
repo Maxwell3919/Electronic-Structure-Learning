@@ -1,19 +1,36 @@
 # Electronic Structure Atlas architecture
 
-Electronic Structure Atlas is a small, static, content-first website for understanding electronic structure and entering practical research. It separates the knowledge a reader may need, continuous reading routes through important sources, conceptual method families, software context, and reviewed references.
+Electronic Structure Atlas is a small, static, content-first website for understanding electronic structure and entering practical research. It separates the Atlas's own continuous Core argument, prerequisite repair, source-aligned reading, conceptual method families, software context, and reviewed references.
 
 The public information architecture is:
 
 ```text
 Home
 Foundations
+└── Core
 Guided Reading
 Methods
 Computational Tools
 Reference
 ```
 
+Core is entered from Foundations and from a secondary link within Home's Foundations description rather than added to the primary header or presented as a peer Home entrance during its first public batch. This preserves the established navigation while the continuity, page length, mathematical density, and visual language of the new route are evaluated.
+
 The implementation uses Plain Astro pages, one shared layout, and one global stylesheet. It has no Starlight layer, general content registry, search index, client hydration, packaged fonts, interactive runtime, backend, account system, or database.
+
+## Core
+
+Core is the Atlas's source-independent, multi-source synthesis. It follows physical and conceptual dependencies rather than a book, software workflow, or list of properties. The published opening sequence is:
+
+```text
+What Electronic Structure Explains
+→ The Quantum Problem of Matter
+→ Fermions, Mean Fields, and Correlation
+```
+
+Later conceptual directions may appear in a roadmap, but they do not receive routes until reviewed content exists. Core remains readable without leaving the sequence; links to Foundations supply optional prerequisite depth, links to Guided Reading offer a source-specific alternative, and DFT Research Workflow begins when the task becomes execution, convergence, validation, or evidence.
+
+Core uses ordinary Astro pages, native MathML, semantic HTML figures, and small inline SVGs only when a spatial relationship cannot be explained as clearly in prose. It has no client-side quiz, progress, course registry, or copied source figure.
 
 ## Foundations
 

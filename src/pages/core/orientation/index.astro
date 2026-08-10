@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="What Electronic Structure Explains" description="Why electronic states connect electrons and nuclei to energies, bonding, response, and excitation." current="theory">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/theory/')}>Foundations</a><span aria-hidden="true">/</span><a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Orientation</span>
+  </nav>
+
+  <p class="secondary">Orientation</p>
+  <h1>What Electronic Structure Explains</h1>
+  <p class="lede">Electronic structure connects the quantum state of electrons to why matter binds, which structures it favors, how it responds, and which excitations it can support.</p>
+
+  <h2>Electrons turn composition into behavior</h2>
+  <p>Nuclear charges identify the elements in a system. In a fixed-nuclei model, a chosen set of nuclear positions defines a geometry; in the fully coupled problem those positions are quantum coordinates rather than permanently fixed classical points. The electronic state determines how charge redistributes, how the electronic energy—together with nucleus–nucleus repulsion—varies with geometry, and how the system couples to electric, magnetic, or optical probes. It is therefore the link between atomic composition and much of the energetic, electrical, optical, and magnetic behavior of matter.</p>
+  <p>This link is not a claim that every material property is purely electronic. Nuclear motion controls vibrations and contributes entropy; temperature changes populations and phases; defects, surfaces, reservoirs, and external fields change the physical system. The point is narrower and more useful: before those effects can be combined, one must know which electronic problem has been defined for the chosen nuclei and boundaries.</p>
+
+  <h2>Electronic structure is a hierarchy of quantum information</h2>
+  <p>In its broad sense, <strong>electronic structure</strong> is the quantum description of the electrons in a specified physical model. At the most complete level it includes many-electron states and their energy spectrum. Reduced descriptions retain selected information: the electron density, one-particle density matrix, orbitals within a declared theory, pair correlations, or spectral amplitudes. None of these objects is simply a synonym for all the others.</p>
+  <p>A band structure is one possible spectral representation for a periodic system, not the definition of electronic structure. A density-functional calculation is one route to ground-state information, not the definition either. The same material name can also lead to different electronic problems when charge, geometry, dimensionality, boundary conditions, spin state, or external fields change. A calculated object acquires meaning only together with that physical model and the approximation used to obtain it.</p>
+
+  <h2>Ground state, response, and excitation answer different questions</h2>
+  <p>The lowest-energy electronic state for a declared fixed-nuclei model organizes bonding and zero-temperature electronic energetics. Its geometry-dependent electronic energy, together with nucleus–nucleus repulsion, defines the surface from which forces and structural preferences can be derived. Its density describes where electronic charge is distributed. Finite-temperature equilibrium requires additional free-energy and ensemble information. These are <strong>ground-state</strong> questions.</p>
+  <p>A different question asks how that state changes when a specified perturbation is applied. A small displacement, electric field, magnetic field, or other external change can induce a density, force, polarization, or current. The derivative connecting cause to induced change is a <strong>response</strong>. It depends on both the perturbation and the measured object; “the response” is not one universal number.</p>
+  <p>An <strong>excitation</strong> asks about a state beyond the ground state. Adding or removing an electron changes the particle-number sector and produces a charged excitation. Promoting the system while keeping the electron number fixed produces a neutral excitation, which may include an interacting electron–hole pair. Optical absorption is not automatically a difference between two ground-state orbital labels: it also depends on the neutral excitation, its coupling to the probe, and selection rules.</p>
+
+  <figure class="concept-branches" aria-labelledby="electronic-questions-caption">
+    <div>
+      <section>
+        <h3>Ground state</h3>
+        <p>Which state minimizes the energy for the declared model?</p>
+        <p class="secondary">Energy and density · energy derivatives · bonding interpretation</p>
+      </section>
+      <section>
+        <h3>Response</h3>
+        <p>How does that state change under a declared perturbation?</p>
+        <p class="secondary">Susceptibility · polarization · force constants</p>
+      </section>
+      <section>
+        <h3>Excitation</h3>
+        <p>Which charged or neutral states exist beyond the ground state?</p>
+        <p class="secondary">Addition/removal · optical states · collective modes</p>
+      </section>
+    </div>
+    <figcaption id="electronic-questions-caption">One declared electronic model can support several related problem classes. They require related language, but they do not return interchangeable observables.</figcaption>
+  </figure>
+
+  <h2>Objects come before methods</h2>
+  <p>A code or representation cannot decide which physical state or observable a question requires. Part I therefore begins with electrons and nuclei as one coupled quantum problem; later Parts introduce new objects only when the preceding description becomes insufficient.</p>
+  <p><a href={href('/theory/')}>Foundations</a> repairs prerequisites, while <a href={href('/reading/')}>Guided Reading</a> follows an individual source. Core supplies the Atlas’s continuous synthesis. When that understanding becomes an actual calculation, <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> takes over execution, convergence, validation, and evidence.</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/')}>← Core</a>
+    <a href={href('/core/part-i/')}>Part I · The Quantum Problem of Matter →</a>
+  </nav>
+</BaseLayout>

@@ -40,6 +40,9 @@ THEORY_ROUTES = [
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/berry-phases-and-electronic-topology/",
 ]
+CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/"]
+CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/"]
+CORE_UNPUBLISHED_ROUTES = [f"core/part-{roman}/" for roman in ["iii", "iv", "v", "vi", "vii", "viii"]]
 MARTIN_PART_ROUTES = [f"reading/books/martin/part-{roman}/" for roman in ["i", "ii", "iii", "iv", "v", "vi", "vii"]]
 MARTIN_CHAPTER_ROUTES = [f"reading/books/martin/chapter-{number:02d}/" for number in range(1, 29)]
 MARTIN_APPENDIX_ROUTES = [f"reading/books/martin/appendix-{letter}/" for letter in "abcdefghijklmnopqr"]
@@ -55,7 +58,7 @@ CANONICAL_READING_ROUTES = [
 ]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
-    "", "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
+    "", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
     "methods/", "computational-tools/", "reference/",
 ]
 representative_units = []
@@ -72,7 +75,7 @@ BROWSER_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *representative_units,
 ]
 BROWSER_ROUTES = [
-    "", "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
+    "", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
     "methods/", "computational-tools/", "reference/", "404.html",
 ]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]
@@ -116,7 +119,7 @@ def inspect(driver, mode, expected_width=None):
             "font:getComputedStyle(document.body).fontFamily,scripts:document.scripts.length};"
         )
         if expected_width is not None and metrics["viewport"] != expected_width:
-            raise AssertionError(f"viewport is not {expected_width}px in {mode}: {metrics['viewport']}")
+            raise AssertionError(f"viewport is not {expected_width}px in {mode} at {url}: {metrics['viewport']}")
         if metrics["scroll"] - metrics["client"] > 1:
             raise AssertionError(f"horizontal overflow in {mode}: {url}")
         if metrics["bg"] not in {"rgb(255, 255, 255)", "rgba(255, 255, 255, 1)"}:
@@ -131,7 +134,7 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
 
         math_count = 0
-        if route in THEORY_ROUTES:
+        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
                 "const box=node.getBoundingClientRect();return {width:box.width,height:box.height,"
@@ -142,6 +145,41 @@ def inspect(driver, mode, expected_width=None):
                 raise AssertionError(f"native MathML is not visibly laid out in {mode}: {url}")
             if any(item["annotation"] != 1 for item in math_metrics):
                 raise AssertionError(f"MathML expression lacks one TeX annotation in {mode}: {url}")
+
+        if route in CORE_ROUTES:
+            current_links = driver.find_elements(By.CSS_SELECTOR, 'header a[aria-current="page"]')
+            if len(current_links) != 1 or current_links[0].text != "Foundations":
+                raise AssertionError(f"Core route does not retain the Foundations navigation context in {mode}: {url}")
+        if route == "core/":
+            for label in [
+                "Orientation · What Electronic Structure Explains",
+                "Part I · The Quantum Problem of Matter",
+                "Part II · Fermions, Mean Fields, and Correlation",
+            ]:
+                if label not in driver.find_element(By.TAG_NAME, "main").text:
+                    raise AssertionError(f"Core landing lacks {label} in {mode}")
+        if route == "core/part-i/":
+            diagram = driver.find_element(By.CSS_SELECTOR, "figure.energy-curve svg")
+            diagram_metrics = driver.execute_script(
+                "const svg=arguments[0],main=document.querySelector('main');"
+                "const s=svg.getBoundingClientRect(),m=main.getBoundingClientRect();"
+                "return {width:s.width,height:s.height,left:s.left,right:s.right,mainLeft:m.left,mainRight:m.right,"
+                "title:svg.querySelectorAll('title').length,desc:svg.querySelectorAll('desc').length};",
+                diagram,
+            )
+            if diagram_metrics["width"] < 1 or diagram_metrics["height"] < 1:
+                raise AssertionError(f"Core energy diagram is not visible in {mode}")
+            if diagram_metrics["left"] < diagram_metrics["mainLeft"] - 1 or diagram_metrics["right"] > diagram_metrics["mainRight"] + 1:
+                raise AssertionError(f"Core energy diagram overflows main in {mode}")
+            if diagram_metrics["title"] != 1 or diagram_metrics["desc"] != 1:
+                raise AssertionError(f"Core energy diagram lacks one title and description in {mode}")
+            key_metrics = driver.execute_script(
+                "return Array.from(document.querySelectorAll('figure.energy-curve .energy-curve-key dt, figure.energy-curve .energy-curve-key dd')).map((node) => {"
+                "const box=node.getBoundingClientRect(),style=getComputedStyle(node);"
+                "return {height:box.height,fontSize:parseFloat(style.fontSize),text:(node.textContent||'').trim()};});"
+            )
+            if len(key_metrics) != 6 or any(item["height"] < 12 or item["fontSize"] < 14 or not item["text"] for item in key_metrics):
+                raise AssertionError(f"Core energy diagram key is not legible in {mode}")
 
         main_text = driver.find_element(By.TAG_NAME, "main").text
         if route == "reading/books/martin/" and "Read Part I" not in main_text:
@@ -170,6 +208,30 @@ def check_compatibility_redirect(driver):
     return {"from": old_url, "to": driver.current_url}
 
 
+def check_core_keyboard(driver):
+    driver.get(urljoin(BASE_URL, "core/part-i/"))
+    driver.find_element(By.TAG_NAME, "body").send_keys(Keys.TAB)
+    active = driver.switch_to.active_element
+    if active.tag_name != "a" or "Skip to main content" not in active.text:
+        raise AssertionError("Core keyboard navigation did not reach the skip link first")
+    active.send_keys(Keys.ENTER)
+    WebDriverWait(driver, 10).until(lambda current: current.switch_to.active_element.get_attribute("id") == "main-content")
+    sequence_link = driver.find_element(By.CSS_SELECTOR, "nav.sequence-nav a")
+    for _ in range(80):
+        driver.switch_to.active_element.send_keys(Keys.TAB)
+        if driver.switch_to.active_element == sequence_link:
+            break
+    else:
+        raise AssertionError("Core sequence link is not reachable in the natural Tab order")
+    focus_style = driver.execute_script(
+        "const s=getComputedStyle(arguments[0]);return {style:s.outlineStyle,width:s.outlineWidth};",
+        sequence_link,
+    )
+    if focus_style["style"] == "none" or focus_style["width"] == "0px":
+        raise AssertionError("Core sequence link has no visible focus outline")
+    return True
+
+
 def main():
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     report = {"base_url": BASE_URL, "checks": [], "http": {}}
@@ -193,6 +255,11 @@ def main():
         if status != 404:
             raise AssertionError(f"expected HTTP 404 for unpublished Martin unit {route}; observed {status}")
         report["http"][route] = status
+    for route in CORE_UNPUBLISHED_ROUTES:
+        status = http_status(urljoin(BASE_URL, route))
+        if status != 404:
+            raise AssertionError(f"expected HTTP 404 for unpublished Core route {route}; observed {status}")
+        report["http"][route] = status
     for route in LEGACY_ROUTES:
         status = http_status(urljoin(BASE_URL, route))
         if status != 404:
@@ -207,7 +274,7 @@ def main():
         desktop.find_element(By.TAG_NAME, "body").send_keys(Keys.TAB)
         if desktop.execute_script("return document.activeElement.tagName") != "A":
             raise AssertionError("keyboard navigation did not reach a link")
-        report["keyboard"] = True
+        report["keyboard"] = check_core_keyboard(desktop)
     finally:
         desktop.quit()
 
@@ -227,8 +294,9 @@ def main():
     (ARTIFACT_DIR / "clean-slate-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(
         f"Clean-slate browser smoke passed: {len(CONTENT_ROUTES)} published content routes, "
+        f"{len(CORE_UNPUBLISHED_ROUTES)} unpublished Core routes confirmed 404, "
         f"{len(MARTIN_UNPUBLISHED_UNIT_ROUTES)} unpublished Martin units confirmed 404, "
-        "39 MathML Foundations pages, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript."
+        "39 MathML Foundations pages, 2 MathML Core pages, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript."
     )
 
 

@@ -29,6 +29,8 @@ const theorySlugs = [
   'self-consistent-field-methods', 'solid-state-chemistry', 'solid-state-physics',
   'statistical-mechanics', 'surface-and-interface-chemistry', 'thermodynamics',
 ];
+const coreSlugs = ['orientation', 'part-i', 'part-ii'];
+const forbiddenCorePartSlugs = ['part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -44,17 +46,21 @@ const expectedPages = [
   'src/pages/methods/index.astro', 'src/pages/reading/books/index.astro',
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
-  'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro',
+  'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
+  ...coreSlugs.map((slug) => `src/pages/core/${slug}/index.astro`),
   ...theorySlugs.map((slug) => `src/pages/theory/${slug}/index.astro`),
 ].sort();
 const expectedHtml = [
-  '404.html', 'computational-tools/index.html', 'index.html', 'methods/index.html',
+  '404.html', 'computational-tools/index.html', 'core/index.html',
+  ...coreSlugs.map((slug) => `core/${slug}/index.html`),
+  'index.html', 'methods/index.html',
   'reading/books/index.html', 'reading/books/martin/index.html',
   ...martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
 const internalRoutes = new Set([
+  'core/', ...coreSlugs.map((slug) => `core/${slug}/`),
   '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
   'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/', ...martinRoutes,
   'methods/', 'computational-tools/', 'reference/',
@@ -96,6 +102,40 @@ const checkTheoryPages = (baseDirectory, mode) => {
   }
 };
 
+const checkCorePages = (baseDirectory, mode) => {
+  const prefix = mode === 'source' ? 'src/pages/core' : 'core';
+  const extension = mode === 'source' ? 'index.astro' : 'index.html';
+  const landing = fs.readFileSync(path.join(baseDirectory, prefix, extension), 'utf8');
+  for (const slug of coreSlugs) {
+    assert(landing.includes(`/core/${slug}/`), `${prefix}/${extension} is missing Core entry ${slug}`);
+  }
+  for (const slug of forbiddenCorePartSlugs) {
+    assert(!landing.includes(`/core/${slug}/`), `${prefix}/${extension} links unpublished Core ${slug}`);
+  }
+  assert(!/coming soon|placeholder/i.test(landing), `${prefix}/${extension} contains placeholder wording`);
+
+  for (const slug of coreSlugs) {
+    const relative = `${prefix}/${slug}/${extension}`;
+    const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
+    assert(text.length > 2400, `${relative} is unexpectedly short`);
+    assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
+    assert(text.includes('class="sequence-nav"'), `${relative} lacks sequence navigation`);
+    assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
+    assert(!/coming soon|placeholder/i.test(text), `${relative} contains placeholder wording`);
+    for (const forbidden of forbiddenCorePartSlugs) {
+      assert(!text.includes(`/core/${forbidden}/`), `${relative} links unpublished Core ${forbidden}`);
+    }
+  }
+  for (const slug of ['part-i', 'part-ii']) {
+    const relative = `${prefix}/${slug}/${extension}`;
+    checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
+  }
+  const partI = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-i/${extension}`), 'utf8');
+  for (const marker of ['<figure class="energy-curve"', '<svg viewBox=', 'role="img"', '<title id=', '<desc id=', '<figcaption']) {
+    assert(partI.includes(marker), `${prefix}/part-i/${extension} lacks accessible original diagram marker ${marker}`);
+  }
+};
+
 const checkReadingManifest = () => {
   const mainRelative = 'src/reading/books/martin.ts';
   const dataDirectory = path.join(root, 'src/reading/books/martin');
@@ -129,6 +169,9 @@ if (sourceMode) {
     assert(!fs.existsSync(path.join(root, directory)), `legacy directory still exists: ${directory}`);
   }
   assert(!tracked.some((file) => file.startsWith('src/pages/reading/lectures/')), 'empty lecture routes must not be published');
+  for (const slug of forbiddenCorePartSlugs) {
+    assert(!tracked.some((file) => file.startsWith(`src/pages/core/${slug}/`)), `unpublished Core route is present: ${slug}`);
+  }
 
   const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
   assert(JSON.stringify(Object.keys(packageJson.dependencies ?? {}).sort()) === JSON.stringify(['astro']), 'Astro must be the only production dependency');
@@ -155,6 +198,7 @@ if (sourceMode) {
   assert(theorySource.includes('DFT-Research-Workflow'), 'Foundations workflow handoff is missing');
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Foundations is missing ${slug}`);
   checkTheoryPages(root, 'source');
+  checkCorePages(root, 'source');
 
   const book = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/index.astro'), 'utf8');
   for (const marker of ['part.summary', 'part.route', 'Read Part']) {
@@ -194,9 +238,10 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 85, 'sitemap must contain exactly 85 canonical public routes');
+      assert(count(sitemap, /<url>/g) === 89, 'sitemap must contain exactly 89 canonical public routes');
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
+      for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);
     }
     if (fs.existsSync(robotsPath)) assert(fs.readFileSync(robotsPath, 'utf8').includes('/sitemap.xml'), 'robots.txt lacks the sitemap pointer');
 
@@ -218,10 +263,19 @@ if (builtMode) {
         const normalized = target.replace(/^\.\//, '').replace(/^\//, '').replace(/^Electronic-Structure-Learning\//, '');
         const route = normalized.split('#')[0];
         if (!route || route.startsWith('../')) continue;
+        if (route.startsWith('_astro/')) {
+          assert(fs.existsSync(path.join(dist, route)), `${relative} links to a missing built asset: ${target}`);
+          continue;
+        }
         assert(internalRoutes.has(route) || route === '404.html', `${relative} links to an undeclared route: ${target}`);
       }
     }
     checkTheoryPages(dist, 'built');
+    checkCorePages(dist, 'built');
+
+    for (const slug of forbiddenCorePartSlugs) {
+      assert(!fs.existsSync(path.join(dist, `core/${slug}/index.html`)), `unpublished Core route was built: ${slug}`);
+    }
 
     const book = fs.readFileSync(path.join(dist, 'reading/books/martin/index.html'), 'utf8');
     assert(book.includes('Read Part I'), 'built Martin page does not link Part I');
