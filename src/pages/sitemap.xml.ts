@@ -13,6 +13,7 @@ const fixedRoutes = [
   '/core/part-v/',
   '/core/part-vi/',
   '/core/part-vii/',
+  '/core/part-viii/',
   '/theory/',
   '/reading/',
   '/reading/books/',

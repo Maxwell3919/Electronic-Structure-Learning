@@ -29,8 +29,8 @@ const theorySlugs = [
   'self-consistent-field-methods', 'solid-state-chemistry', 'solid-state-physics',
   'statistical-mechanics', 'surface-and-interface-chemistry', 'thermodynamics',
 ];
-const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
-const forbiddenCorePartSlugs = ['part-viii'];
+const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
+const forbiddenCorePartSlugs = [];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -140,7 +140,7 @@ const checkCorePages = (baseDirectory, mode) => {
       assert(!text.includes(`/core/${forbidden}/`), `${relative} links unpublished Core ${forbidden}`);
     }
   }
-  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii']) {
+  for (const slug of ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii']) {
     const relative = `${prefix}/${slug}/${extension}`;
     checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
   }
@@ -201,6 +201,14 @@ const checkCorePages = (baseDirectory, mode) => {
     assert(partVII.includes(marker), `${prefix}/part-vii/${extension} lacks equation-pedagogy marker ${marker}`);
   }
   assert(count(partVII, /class="equation-source"/g) >= 6, `${prefix}/part-vii/${extension} lacks nearby canonical equation sources`);
+  const partVIII = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-viii/${extension}`), 'utf8');
+  for (const marker of ['excitation-sectors', 'spectral-weight', 'neutral-route', 'gap-ledger']) {
+    assert(partVIII.includes(marker), `${prefix}/part-viii/${extension} lacks semantic teaching diagram ${marker}`);
+  }
+  for (const marker of ['different many-body sectors', 'fundamental charged gap', 'dominant pole', 'not one unique correction button', 'same particle-number sector', 'matching unbound electron–hole continuum', 'Sources and further reading']) {
+    assert(partVIII.includes(marker), `${prefix}/part-viii/${extension} lacks equation-pedagogy marker ${marker}`);
+  }
+  assert(count(partVIII, /class="equation-source"/g) >= 6, `${prefix}/part-viii/${extension} lacks nearby canonical equation sources`);
 };
 
 const checkReadingManifest = () => {
@@ -305,7 +313,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 94, 'sitemap must contain exactly 94 canonical public routes');
+      assert(count(sitemap, /<url>/g) === 95, 'sitemap must contain exactly 95 canonical public routes');
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
       for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);
