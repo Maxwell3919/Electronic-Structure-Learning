@@ -43,12 +43,17 @@ const martinPublishedSlugs = [...martinPartSlugs, ...martinPublishedUnitSlugs];
 const martinRoutes = martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/`);
 const shollSteckelChapterSlugs = Array.from({ length: 10 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const shollSteckelRoutes = shollSteckelChapterSlugs.map((slug) => `reading/books/sholl-steckel/${slug}/`);
+const cohenLouiePartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv'];
+const cohenLouieChapterSlugs = Array.from({ length: 16 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
+const cohenLouieSlugs = [...cohenLouiePartSlugs, ...cohenLouieChapterSlugs];
+const cohenLouieRoutes = cohenLouieSlugs.map((slug) => `reading/books/cohen-louie/${slug}/`);
 
 const expectedPages = [
   'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
   'src/pages/methods/index.astro', 'src/pages/reading/books/index.astro',
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
   'src/pages/reading/books/sholl-steckel/[slug].astro', 'src/pages/reading/books/sholl-steckel/index.astro',
+  'src/pages/reading/books/cohen-louie/[slug].astro', 'src/pages/reading/books/cohen-louie/index.astro',
   'src/pages/reading/literature/index.astro',
   ...literatureSlugs.map((slug) => `src/pages/reading/literature/${slug}/index.astro`),
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
@@ -64,6 +69,8 @@ const expectedHtml = [
   ...martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
   'reading/books/sholl-steckel/index.html',
   ...shollSteckelChapterSlugs.map((slug) => `reading/books/sholl-steckel/${slug}/index.html`),
+  'reading/books/cohen-louie/index.html',
+  ...cohenLouieSlugs.map((slug) => `reading/books/cohen-louie/${slug}/index.html`),
   'reading/literature/index.html',
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
@@ -74,6 +81,7 @@ const internalRoutes = new Set([
   '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
   'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/', ...martinRoutes,
   'reading/books/sholl-steckel/', ...shollSteckelRoutes,
+  'reading/books/cohen-louie/', ...cohenLouieRoutes,
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   'methods/', 'computational-tools/', 'reference/',
 ]);
@@ -283,6 +291,17 @@ const checkReadingManifest = () => {
     assert(shollLoader.includes(`'${slug}'`), `Sholl & Steckel loader is missing ${slug}`);
     assert(fs.existsSync(path.join(root, `src/reading/books/sholl-steckel/content/${slug}.astro`)), `Sholl & Steckel detailed content is missing for ${slug}`);
   }
+
+  const cohenMain = fs.readFileSync(path.join(root, 'src/reading/books/cohen-louie.ts'), 'utf8');
+  const cohenLoader = fs.readFileSync(path.join(root, 'src/reading/books/cohen-louie/chapter-content.ts'), 'utf8');
+  assert(count(cohenMain, /chapter\(\s*\d+,/g) === 16, 'Cohen & Louie data must define sixteen chapters');
+  assert(count(cohenMain, /id: 'cohen-louie-part-[iv]+'/g) === 4, 'Cohen & Louie data must define four parts');
+  assert(count(cohenLoader, /'chapter-\d{2}'\s*:/g) === 16, 'Cohen & Louie loader must publish sixteen reviewed chapters');
+  assert(!cohenMain.includes('sourceText'), 'Cohen & Louie data must not contain extracted textbook text');
+  for (const slug of cohenLouieChapterSlugs) {
+    assert(cohenLoader.includes(`'${slug}'`), `Cohen & Louie loader is missing ${slug}`);
+    assert(fs.existsSync(path.join(root, `src/reading/books/cohen-louie/content/${slug}.astro`)), `Cohen & Louie detailed content is missing for ${slug}`);
+  }
 };
 
 if (sourceMode) {
@@ -351,6 +370,17 @@ if (sourceMode) {
   for (const slug of shollSteckelChapterSlugs.slice(0, 9)) {
     checkMathMl(fs.readFileSync(path.join(root, `src/reading/books/sholl-steckel/content/${slug}.astro`), 'utf8'), `src/reading/books/sholl-steckel/content/${slug}.astro`, true);
   }
+  const cohenBook = fs.readFileSync(path.join(root, 'src/pages/reading/books/cohen-louie/index.astro'), 'utf8');
+  for (const marker of ['Source sequence', 'Part {part.number}', 'chapter.title', 'DFT Research Workflow']) {
+    assert(cohenBook.includes(marker), `Cohen & Louie book page is missing ${marker}`);
+  }
+  const cohenRoutePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/cohen-louie/[slug].astro'), 'utf8');
+  for (const marker of ['getStaticPaths', 'cohenLouieReadingSlugs', 'Core Idea.', 'Chapter structure', 'Read the source figures', 'Source anchor', 'Part synthesis']) {
+    assert(cohenRoutePage.includes(marker), `Cohen & Louie route page is missing ${marker}`);
+  }
+  for (const slug of cohenLouieChapterSlugs.slice(1)) {
+    checkMathMl(fs.readFileSync(path.join(root, `src/reading/books/cohen-louie/content/${slug}.astro`), 'utf8'), `src/reading/books/cohen-louie/content/${slug}.astro`, true);
+  }
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
   assert(styles.includes('.source-outline') && styles.includes('list-style: none'), 'Martin source outline does not suppress automatic list markers');
   checkReadingManifest();
@@ -376,7 +406,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length;
+      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
@@ -436,6 +466,20 @@ if (builtMode) {
       for (const marker of ['Core Idea.', 'Chapter overview', 'Read the source figures', 'Source anchor']) {
         assert(text.includes(marker), `${relative} is missing ${marker}`);
       }
+    }
+    const cohenBook = fs.readFileSync(path.join(dist, 'reading/books/cohen-louie/index.html'), 'utf8');
+    for (const marker of ['Read the Part I guide', 'Chapter 1', 'Cambridge record for the book']) {
+      assert(cohenBook.includes(marker), `built Cohen & Louie page is missing ${marker}`);
+    }
+    for (const slug of cohenLouiePartSlugs) {
+      const relative = `reading/books/cohen-louie/${slug}/index.html`;
+      const text = fs.readFileSync(path.join(dist, relative), 'utf8');
+      for (const marker of ['How this Part moves', 'Part synthesis', 'Read Chapter']) assert(text.includes(marker), `${relative} is missing ${marker}`);
+    }
+    for (const slug of cohenLouieChapterSlugs) {
+      const relative = `reading/books/cohen-louie/${slug}/index.html`;
+      const text = fs.readFileSync(path.join(dist, relative), 'utf8');
+      for (const marker of ['Core Idea.', 'Chapter overview', 'Read the source figures', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
     }
     const redirect = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
     assert(redirect.includes('reading/books/martin'), 'Martin compatibility redirect target is missing');

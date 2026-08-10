@@ -1,0 +1,71 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'occupation-language', label: 'Why occupation-number language helps' },
+  { id: 'green-object', label: 'What the one-particle Green function propagates' },
+  { id: 'spectral-weight', label: 'Charged sectors and spectral weight' },
+  { id: 'self-energy', label: 'Self-energy and Dyson organization' },
+  { id: 'diagram-boundary', label: 'How to read diagrams without literalizing them' },
+];
+export const synthesis = 'The chapter replaces a list of many-electron eigenstates by propagators tied to experimental operations. A one-particle Green function connects the N-electron ground state to N±1 sectors; its spectral structure yields charged excitation energies, lifetimes, and weights; and the self-energy organizes how interactions move and broaden those structures.';
+---
+
+<section aria-labelledby="occupation-language">
+  <h2 id="occupation-language">Why occupation-number language helps</h2>
+  <p>
+    First quantization stores antisymmetry in a many-coordinate wavefunction. Second quantization instead labels how many particles occupy each one-particle state and builds fermionic statistics into anticommutation relations. Creation and annihilation operators then describe the change made by adding, removing, or scattering an excitation.
+  </p>
+  <p>
+    This is a change of representation, not a new physical approximation. Approximation enters later when the Hamiltonian, reference propagator, or selected diagrams are truncated.
+  </p>
+</section>
+
+<section aria-labelledby="green-object">
+  <h2 id="green-object">What the one-particle Green function propagates</h2>
+  <p>
+    The time-ordered one-particle Green function asks for the amplitude to add an electron at one spacetime point and remove it at another—or, in the opposite time order, to propagate a hole. In compact notation,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Time ordered one particle Green function">
+      <semantics>
+        <mrow><mi>G</mi><mo>(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>−</mo><mi mathvariant="normal">i</mi><mo>⟨</mo><msubsup><mi>Ψ</mi><mn>0</mn><mi>N</mi></msubsup><mo>|</mo><mi mathvariant="normal">T</mi><mo>[</mo><mover><mi>ψ</mi><mo>^</mo></mover><mo>(</mo><mn>1</mn><mo>)</mo><msup><mover><mi>ψ</mi><mo>^</mo></mover><mo>†</mo></msup><mo>(</mo><mn>2</mn><mo>)</mo><mo>]</mo><mo>|</mo><msubsup><mi>Ψ</mi><mn>0</mn><mi>N</mi></msubsup><mo>⟩</mo></mrow>
+        <annotation encoding="application/x-tex">G(1,2)=-&#92;mathrm i&#92;langle&#92;Psi_0^N|&#92;mathrm T[&#92;hat&#92;psi(1)&#92;hat&#92;psi^&#92;dagger(2)]|&#92;Psi_0^N&#92;rangle</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The labels 1 and 2 collect position, time, and spin; T orders the operators and supplies the fermionic sign. The expectation value is taken in the exact N-electron ground state, but the field operators temporarily connect it to N+1 or N−1 eigenstates. This is why the object naturally describes charged addition and removal rather than a neutral optical excitation.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 13, §13.2, Eqs. 13.26–13.40. See the charged-sector construction in <a href={href('/core/part-viii/')}>Core Part VIII</a>.</p>
+</section>
+
+<section aria-labelledby="spectral-weight">
+  <h2 id="spectral-weight">Charged sectors and spectral weight</h2>
+  <p>
+    Inserting complete N±1 eigenstates turns G into a spectral representation. Each denominator locates an allowed charged excitation; each numerator measures how strongly the simple add/remove operation overlaps that exact many-body state. A sharp, large-weight pole supports a quasiparticle. Remaining weight can appear in incoherent backgrounds or satellites.
+  </p>
+  <p>
+    This distinction is more informative than merely shifting a band energy. Interaction can change energy, lifetime, and spectral weight independently. Photoemission-like spectra therefore need a spectral function and matrix elements, not only a list of Kohn–Sham eigenvalues.
+  </p>
+</section>
+
+<section aria-labelledby="self-energy">
+  <h2 id="self-energy">Self-energy and Dyson organization</h2>
+  <p>
+    Dyson’s equation reorganizes repeated interaction corrections as G=G₀+G₀ΣG. The reference G₀ defines the unperturbed propagation; the self-energy Σ contains irreducible interaction insertions. Its real part shifts dispersion, while its frequency-dependent imaginary part is related to broadening and lifetime under the stated convention.
+  </p>
+  <p>
+    Σ is nonlocal, frequency dependent, and approximation dependent. “GW” names one family in which Σ is approximated from a Green function and a screened interaction; starting point, self-consistency, dimensional screening, and convergence remain part of the scientific definition.
+  </p>
+</section>
+
+<section aria-labelledby="diagram-boundary">
+  <h2 id="diagram-boundary">How to read diagrams without literalizing them</h2>
+  <p>
+    A diagram encodes integrals, sums, signs, and conservation laws for a declared perturbation expansion. A polarization bubble contributes screening; a phonon line contributes lattice-mediated propagation; a vertex correction modifies how objects couple. Drawing one diagram does not establish that it dominates, and summing one class does not guarantee convergence.
+  </p>
+  <p>
+    The chapter’s value is the map from physical processes to formal objects. Detailed diagrammatic derivations belong to <a href={href('/theory/many-body-physics/')}>Foundations · Many-Body Physics</a> and specialist sources.
+  </p>
+</section>

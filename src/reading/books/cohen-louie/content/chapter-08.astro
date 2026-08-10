@@ -1,0 +1,71 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'response-kernel', label: 'A perturbation produces a nonlocal response' },
+  { id: 'dielectric-matrix', label: 'Why a crystal needs a dielectric matrix' },
+  { id: 'rpa-ladder', label: 'Independent response, self-consistency, and RPA' },
+  { id: 'screening-limits', label: 'Metallic and insulating screening' },
+  { id: 'loss-boundary', label: 'What a loss spectrum measures' },
+];
+export const synthesis = 'The chapter replaces the vague statement “the material screens” by a sequence of objects: an external perturbation, a density-response kernel, an induced potential, and a dielectric operator. Approximations such as independent-particle response and RPA enter at identifiable points, so their spectra and screening predictions retain a declared scope.';
+---
+
+<section aria-labelledby="response-kernel">
+  <h2 id="response-kernel">A perturbation produces a nonlocal response</h2>
+  <p>
+    An electric disturbance at r′ can change the density at r. Linear response therefore begins with a two-point kernel rather than one local dielectric number:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Linear density response to an external perturbation">
+      <semantics>
+        <mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi>ω</mi><mo>)</mo><mo>=</mo><mo>∫</mo><mi>χ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>;</mo><mi>ω</mi><mo>)</mo><mi>δ</mi><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo><mspace width="0.25em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup></mrow>
+        <annotation encoding="application/x-tex">&#92;delta n(&#92;mathbf r,&#92;omega)=&#92;int&#92;chi(&#92;mathbf r,&#92;mathbf r';&#92;omega)&#92;,&#92;delta v_&#123;&#92;mathrm&#123;ext&#125;&#125;(&#92;mathbf r',&#92;omega)&#92;,&#92;mathrm d^3&#92;mathbf r'</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read from right to left: a frequency-resolved external potential is applied at every r′; χ weights how each source point contributes to the induced density at r. The object is nonlocal in space and dynamical in frequency. Setting q and ω to special limits produces familiar dielectric constants, but those limits do not replace the full kernel.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 8, §8.1, especially Eqs. 8.1–8.9.</p>
+</section>
+
+<section aria-labelledby="dielectric-matrix">
+  <h2 id="dielectric-matrix">Why a crystal needs a dielectric matrix</h2>
+  <p>
+    Translational symmetry lets the response be labeled by a wavevector q in the first Brillouin zone, but microscopic variation inside the cell remains. Reciprocal-lattice components G and G′ index that variation, so the dielectric response becomes ε<sub>GG′</sub>(q,ω). Off-diagonal elements describe local-field coupling between different microscopic Fourier components.
+  </p>
+  <p>
+    Here q labels the perturbation wavevector and G labels reciprocal-lattice harmonics. Their sum appears in a Fourier component, but q and G are not the same object. Because one applied long-wavelength component can induce several microscopic G components, finding the total field means solving a coupled linear system—hence inverting the dielectric matrix. The macroscopic dielectric function is then extracted from the macroscopic component of that inverse in the long-wavelength limit.
+  </p>
+</section>
+
+<section aria-labelledby="rpa-ladder">
+  <h2 id="rpa-ladder">Independent response, self-consistency, and RPA</h2>
+  <p>
+    The independent-particle response χ₀ asks how occupations move between specified one-particle states under a total perturbing field. Coulomb interaction then lets the induced density create an additional potential, which drives further response. Summing that self-consistent sequence gives the random-phase approximation when exchange–correlation vertex effects are omitted.
+  </p>
+  <p>
+    These labels name different objects and approximations: χ is the target interacting response, χ₀ is a reference response, and RPA is one closure of their relation. Using Kohn–Sham states to build χ₀ does not make the resulting excitation spectrum exact by the ground-state DFT theorems.
+  </p>
+</section>
+
+<section aria-labelledby="screening-limits">
+  <h2 id="screening-limits">Metallic and insulating screening</h2>
+  <p>
+    In a metal, low-energy carriers can rearrange at long wavelength, producing strong static screening. The electron-gas limit yields Thomas–Fermi decay and a nonanalytic structure near 2k<sub>F</sub> that produces Friedel oscillations in real space. An insulator lacks zero-energy carrier rearrangement across a gap, so its long-wavelength static response remains finite rather than metallic.
+  </p>
+  <p>
+    These limits explain qualitative distinctions. Quantitative screening in a real crystal depends on its bands, matrix elements, dimensionality, environment, and many-body approximation.
+  </p>
+</section>
+
+<section aria-labelledby="loss-boundary">
+  <h2 id="loss-boundary">What a loss spectrum measures</h2>
+  <p>
+    Electron energy-loss spectroscopy is related to the imaginary part of the inverse dielectric response, not simply to ε₂ itself. Peaks can reveal plasmons and interband structures, but their positions, widths, and weights depend on q, matrix elements, damping, and local-field effects. A zero of one dielectric component is not automatically an observable undamped collective mode.
+  </p>
+  <p>
+    The chapter therefore bridges ground-state electronic structure and excitation physics without collapsing them. The charged and neutral spectral objects are separated explicitly in <a href={href('/core/part-viii/')}>Core Part VIII</a>.
+  </p>
+</section>

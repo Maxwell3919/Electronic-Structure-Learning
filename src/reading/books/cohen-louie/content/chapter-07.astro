@@ -1,0 +1,71 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'hk-question', label: 'What the density theorem establishes' },
+  { id: 'ks-bridge', label: 'The Kohn–Sham bridge' },
+  { id: 'xc-decomposition', label: 'Where exchange–correlation enters' },
+  { id: 'core-representation', label: 'Pseudopotentials are another layer' },
+  { id: 'applications-boundaries', label: 'How to read the applications' },
+];
+export const synthesis = 'The chapter is most useful when its compressed history is unpacked into layers: Hohenberg–Kohn establishes a ground-state density foundation; Kohn–Sham introduces an auxiliary same-density system; an exchange–correlation approximation closes the energy; and a pseudopotential plus basis makes the equations finite. The applications depend on the full stack.';
+---
+
+<section aria-labelledby="hk-question">
+  <h2 id="hk-question">What the density theorem establishes</h2>
+  <p>
+    The motivating question is whether the three-dimensional density can retain the ground-state information relevant to a fixed-interaction electronic Hamiltonian. The original Hohenberg–Kohn result links a ground-state density to its external potential under its assumptions and supplies a variational energy principle. It does not directly construct a practical functional or a one-electron equation.
+  </p>
+  <p>
+    Later constrained-search formulations clarify the universal functional and admissible density domain. They should not be silently attributed to the wording of the 1964 proof. The Guide to the <a href={href('/reading/literature/hohenberg-kohn-1964/')}>original Hohenberg–Kohn paper</a> follows that distinction in detail.
+  </p>
+</section>
+
+<section aria-labelledby="ks-bridge">
+  <h2 id="ks-bridge">The Kohn–Sham bridge</h2>
+  <p>
+    Existence does not make the interacting kinetic energy known. Assuming the density admits the required pure-state or ensemble noninteracting representation, Kohn and Sham introduce an auxiliary noninteracting system selected to reproduce the interacting ground-state density. Its orbitals give that density and an exactly computable auxiliary kinetic energy, while the remaining unknown many-body contribution is collected elsewhere in the functional.
+  </p>
+  <p>
+    The orbitals are therefore tools inside a density-functional construction. Their reappearance does not convert DFT back into an independent-electron physical theory, and their stationary eigenvalues are not automatically quasiparticle or optical excitation energies.
+  </p>
+</section>
+
+<section aria-labelledby="xc-decomposition">
+  <h2 id="xc-decomposition">Where exchange–correlation enters</h2>
+  <p>
+    The decomposition used by the source can be read as a responsibility ledger:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Kohn Sham energy decomposition">
+      <semantics>
+        <mrow><mi>E</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><mo>∫</mo><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mspace width="0.25em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi></mrow>
+        <annotation encoding="application/x-tex">E[n]=T_s[n]+E_H[n]+E_&#123;&#92;mathrm&#123;xc&#125;&#125;[n]+&#92;int v_&#123;&#92;mathrm&#123;ext&#125;&#125;(&#92;mathbf r)n(&#92;mathbf r)&#92;,&#92;mathrm d^3&#92;mathbf r</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    T<sub>s</sub> is the kinetic energy of the auxiliary orbitals, E<sub>H</sub> is the classical density–density Coulomb term, and the final integral couples the density to the declared nuclei and external fields. E<sub>xc</sub> is whatever is still required to make the decomposition exact: nonclassical exchange and correlation <em>and</em> the difference between interacting and auxiliary kinetic energy. It is neither merely “HF correlation” nor necessarily small.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 7, §§7.1–7.2, especially Eq. 7.17 and the same-density construction in Fig. 7.1. See <a href={href('/core/part-iv/')}>Core Part IV</a> and the <a href={href('/reading/literature/kohn-sham-1965/')}>Kohn–Sham paper guide</a>.</p>
+</section>
+
+<section aria-labelledby="core-representation">
+  <h2 id="core-representation">Pseudopotentials are another layer</h2>
+  <p>
+    After choosing an exchange–correlation approximation, the source replaces tightly bound core behavior by a smoother valence problem. That is a core-treatment and representation choice, not part of the Hohenberg–Kohn theorem. Different pseudopotential or PAW datasets encode different reference configurations, relativistic treatments, projectors, and cutoff behavior.
+  </p>
+  <p>
+    Agreement for one atomic test does not establish transferability to every oxidation state, pressure, magnetic branch, or response. The computational layering is developed in <a href={href('/core/part-v/')}>Core Part V</a>; actual input selection and validation belong to the DFT Research Workflow.
+  </p>
+</section>
+
+<section aria-labelledby="applications-boundaries">
+  <h2 id="applications-boundaries">How to read the applications</h2>
+  <p>
+    The equation-of-state, surface, phonon, and dielectric examples show the breadth of ground-state DFT and its derivatives. They should be read by asking which object was calculated: an energy difference, derivative, harmonic response, or density response. A common-tangent phase comparison needs declared candidates and thermodynamic variables; phonon stability needs full-q evidence; and an approximate Kohn–Sham band is not a general experimental spectrum.
+  </p>
+  <div class="callout" role="note" aria-label="Neutral excitation boundary">
+    <p><strong>Modern boundary.</strong> The source briefly characterizes an optical process using “N+2” language. Do not carry that particle count forward. An ordinary neutral optical excitation remains in the N-electron sector: one electron is promoted and a hole is left behind. Charged addition and removal instead connect N to N±1 sectors, as developed in <a href={href('/core/part-viii/')}>Core Part VIII</a>.</p>
+  </div>
+</section>

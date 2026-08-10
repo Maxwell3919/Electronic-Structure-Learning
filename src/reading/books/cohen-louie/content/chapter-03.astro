@@ -1,0 +1,71 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+export const sectionLinks = [
+  { id: 'three-limits', label: 'Three limits, three kinds of insight' },
+  { id: 'band-formation', label: 'How repeated local states become a band' },
+  { id: 'motion-curvature', label: 'Slope, velocity, and curvature' },
+  { id: 'counting-filling', label: 'Counting and filling states' },
+  { id: 'real-band-plots', label: 'What real-material band plots omit' },
+];
+export const synthesis = 'The free-electron, nearly-free, and tight-binding models are not rival definitions of a band. They illuminate labeling, gap opening, and local-orbital dispersion in complementary limits. Occupation, velocity, and Brillouin-zone counting then turn the abstract eigenvalue family into an electronic state and measurable consequences.';
+---
+
+<section aria-labelledby="three-limits">
+  <h2 id="three-limits">Three limits, three kinds of insight</h2>
+  <p>
+    The free-electron model first shows how a parabola is relabeled when k is restricted to one Brillouin zone. The nearly-free model then asks what a weak periodic potential does where folded free-electron states become degenerate: it mixes them and opens avoided crossings. Tight binding starts from the opposite side, with localized atomic-like orbitals whose overlap spreads a discrete level across k.
+  </p>
+  <p>
+    These models answer different questions. Folding explains label redundancy, Bragg mixing explains one route to gaps, and localized coupling explains chemical band widths and characters. A real material may require ingredients from several pictures.
+  </p>
+</section>
+
+<section aria-labelledby="band-formation">
+  <h2 id="band-formation">How repeated local states become a band</h2>
+  <p>
+    For one orbital per site in a one-dimensional chain with nearest-neighbor coupling, Bloch phases turn identical left and right couplings into a cosine dispersion:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Nearest-neighbor tight-binding dispersion">
+      <semantics>
+        <mrow><mi>E</mi><mo>(</mo><mi>k</mi><mo>)</mo><mo>=</mo><msub><mi>ε</mi><mn>0</mn></msub><mo>+</mo><mn>2</mn><mi>t</mi><mo>cos</mo><mo>(</mo><mi>k</mi><mi>a</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">E(k)=&#92;varepsilon_0+2t&#92;cos(ka)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here ε₀ is the isolated local level, <em>t</em> is the signed hopping matrix element in the source convention, and cos(ka) is the interference of translated amplitudes. If t tends to zero, every k value returns to ε₀: the band collapses to the uncoupled level. Increasing |t| widens the model band. The cosine is therefore an explanatory limit, not a claim that all bands have this shape.
+  </p>
+  <p class="paper-meta">Source locator: Cohen &amp; Louie, Chapter 3, §3.4, especially the translated-orbital construction around Eqs. 3.62–3.76. The displayed one-dimensional form matches the recurring model in <a href={href('/core/part-iii/')}>Core Part III</a>.</p>
+</section>
+
+<section aria-labelledby="motion-curvature">
+  <h2 id="motion-curvature">Slope, velocity, and curvature</h2>
+  <p>
+    The derivative of E<sub>n</sub>(k) is not merely graphical. A wave packet built from nearby Bloch states moves with group velocity proportional to the band slope; the second derivative defines the local inverse effective-mass tensor. Flat bands therefore imply small group velocity and large curvature-based mass in the relevant direction, while a negative curvature is naturally described with a hole near a filled-band maximum.
+  </p>
+  <p>
+    These are local statements about a chosen band and k region. At degeneracies, strong interband mixing, or rapidly varying fields, a single-band effective mass may no longer be the right object.
+  </p>
+</section>
+
+<section aria-labelledby="counting-filling">
+  <h2 id="counting-filling">Counting and filling states</h2>
+  <p>
+    Periodic boundary conditions discretize k in a finite crystal; the thermodynamic limit turns sums into Brillouin-zone integrals. Electron number and allowed spin occupation then decide which band states are filled. A completely filled set separated by a gap from empty states gives a band-insulating classification, whereas a partially filled band or Fermi-level crossing gives a metallic one-particle spectrum.
+  </p>
+  <p>
+    This is a classification of a one-particle spectrum, not a theorem about every interacting solid. Strong correlations can produce insulating behavior even when the simplest band filling suggests a metal.
+  </p>
+</section>
+
+<section aria-labelledby="real-band-plots">
+  <h2 id="real-band-plots">What real-material band plots omit</h2>
+  <p>
+    The closing empirical-pseudopotential examples show selected high-symmetry lines for Ge, GaAs, and ZnSe. They are valuable because extrema, degeneracies, and orbital trends can be compared compactly. They are not complete maps of the Brillouin zone, and the fitted potential is not made first-principles merely because the resulting curve resembles a modern band plot.
+  </p>
+  <p>
+    A path visualizes selected slices. State counting, density of states, total energies, and Fermi-surface searches require full-zone sampling. That distinction is carried into computation in <a href={href('/core/part-v/')}>Core Part V</a>.
+  </p>
+</section>

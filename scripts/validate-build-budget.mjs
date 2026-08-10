@@ -10,9 +10,9 @@ const limits = {
   jsBytes: 0,
   cssBytes: 30_000,
   fontBytes: 0,
-  assetCount: 125,
+  assetCount: 150,
   largestAssetBytes: 210_000,
-  htmlPages: 113,
+  htmlPages: 134,
 };
 const minimumReductions = { bytes: 0.70, assets: 0.70 };
 const baseline = {
