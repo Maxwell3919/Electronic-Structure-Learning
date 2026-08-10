@@ -40,9 +40,9 @@ THEORY_ROUTES = [
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/berry-phases-and-electronic-topology/",
 ]
-CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/"]
-CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/"]
-CORE_UNPUBLISHED_ROUTES = [f"core/part-{roman}/" for roman in ["iii", "iv", "v", "vi", "vii", "viii"]]
+CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/", "core/part-iii/"]
+CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/", "core/part-iii/"]
+CORE_UNPUBLISHED_ROUTES = [f"core/part-{roman}/" for roman in ["iv", "v", "vi", "vii", "viii"]]
 MARTIN_PART_ROUTES = [f"reading/books/martin/part-{roman}/" for roman in ["i", "ii", "iii", "iv", "v", "vi", "vii"]]
 MARTIN_CHAPTER_ROUTES = [f"reading/books/martin/chapter-{number:02d}/" for number in range(1, 29)]
 MARTIN_APPENDIX_ROUTES = [f"reading/books/martin/appendix-{letter}/" for letter in "abcdefghijklmnopqr"]
@@ -155,6 +155,7 @@ def inspect(driver, mode, expected_width=None):
                 "Orientation · What Electronic Structure Explains",
                 "Part I · The Quantum Problem of Matter",
                 "Part II · Fermions, Mean Fields, and Correlation",
+                "Part III · Periodic Matter and Electronic States",
             ]:
                 if label not in driver.find_element(By.TAG_NAME, "main").text:
                     raise AssertionError(f"Core landing lacks {label} in {mode}")
@@ -180,6 +181,30 @@ def inspect(driver, mode, expected_width=None):
             )
             if len(key_metrics) != 6 or any(item["height"] < 12 or item["fontSize"] < 14 or not item["text"] for item in key_metrics):
                 raise AssertionError(f"Core energy diagram key is not legible in {mode}")
+        if route == "core/part-iii/":
+            diagrams = driver.find_elements(By.CSS_SELECTOR, "figure.core-diagram svg")
+            if len(diagrams) != 4:
+                raise AssertionError(f"Part III must contain four original diagrams in {mode}")
+            for diagram in diagrams:
+                diagram_metrics = driver.execute_script(
+                    "const svg=arguments[0],main=document.querySelector('main');"
+                    "const s=svg.getBoundingClientRect(),m=main.getBoundingClientRect();"
+                    "return {width:s.width,height:s.height,left:s.left,right:s.right,mainLeft:m.left,mainRight:m.right,"
+                    "title:svg.querySelectorAll('title').length,desc:svg.querySelectorAll('desc').length};",
+                    diagram,
+                )
+                if diagram_metrics["width"] < 1 or diagram_metrics["height"] < 1:
+                    raise AssertionError(f"Part III diagram is not visible in {mode}")
+                if diagram_metrics["left"] < diagram_metrics["mainLeft"] - 1 or diagram_metrics["right"] > diagram_metrics["mainRight"] + 1:
+                    raise AssertionError(f"Part III diagram overflows main in {mode}")
+                if diagram_metrics["title"] != 1 or diagram_metrics["desc"] != 1:
+                    raise AssertionError(f"Part III diagram lacks one title and description in {mode}")
+            diagram_text = driver.execute_script(
+                "return Array.from(document.querySelectorAll('figure.core-diagram svg text')).map((node) => {"
+                "const box=node.getBoundingClientRect();return {height:box.height,text:(node.textContent||'').trim()};});"
+            )
+            if not diagram_text or any(item["height"] < 9 or not item["text"] for item in diagram_text):
+                raise AssertionError(f"Part III diagram text is not legible in {mode}")
 
         main_text = driver.find_element(By.TAG_NAME, "main").text
         if route == "reading/books/martin/" and "Read Part I" not in main_text:
@@ -296,7 +321,7 @@ def main():
         f"Clean-slate browser smoke passed: {len(CONTENT_ROUTES)} published content routes, "
         f"{len(CORE_UNPUBLISHED_ROUTES)} unpublished Core routes confirmed 404, "
         f"{len(MARTIN_UNPUBLISHED_UNIT_ROUTES)} unpublished Martin units confirmed 404, "
-        "39 MathML Foundations pages, 2 MathML Core pages, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript."
+        "39 MathML Foundations pages, 3 MathML Core pages, compatibility redirect, desktop, true 390px, keyboard, and no-JavaScript."
     )
 
 

@@ -29,8 +29,8 @@ const theorySlugs = [
   'self-consistent-field-methods', 'solid-state-chemistry', 'solid-state-physics',
   'statistical-mechanics', 'surface-and-interface-chemistry', 'thermodynamics',
 ];
-const coreSlugs = ['orientation', 'part-i', 'part-ii'];
-const forbiddenCorePartSlugs = ['part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
+const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii'];
+const forbiddenCorePartSlugs = ['part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -126,13 +126,17 @@ const checkCorePages = (baseDirectory, mode) => {
       assert(!text.includes(`/core/${forbidden}/`), `${relative} links unpublished Core ${forbidden}`);
     }
   }
-  for (const slug of ['part-i', 'part-ii']) {
+  for (const slug of ['part-i', 'part-ii', 'part-iii']) {
     const relative = `${prefix}/${slug}/${extension}`;
     checkMathMl(fs.readFileSync(path.join(baseDirectory, relative), 'utf8'), relative, mode === 'source');
   }
   const partI = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-i/${extension}`), 'utf8');
   for (const marker of ['<figure class="energy-curve"', '<svg viewBox=', 'role="img"', '<title id=', '<desc id=', '<figcaption']) {
     assert(partI.includes(marker), `${prefix}/part-i/${extension} lacks accessible original diagram marker ${marker}`);
+  }
+  const partIII = fs.readFileSync(path.join(baseDirectory, `${prefix}/part-iii/${extension}`), 'utf8');
+  for (const marker of ['lattice-duality', 'bloch-phase', 'band-formation', 'band-dos']) {
+    assert(partIII.includes(`class="core-diagram ${marker}"`), `${prefix}/part-iii/${extension} lacks original diagram ${marker}`);
   }
 };
 
@@ -238,7 +242,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 89, 'sitemap must contain exactly 89 canonical public routes');
+      assert(count(sitemap, /<url>/g) === 90, 'sitemap must contain exactly 90 canonical public routes');
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
       for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);
