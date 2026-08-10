@@ -1,0 +1,231 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Part VIII · Excitations and Spectra" description="How charged addition and removal, quasiparticles, neutral electron–hole excitations, probe matrix elements, and spectra differ from ground-state Kohn–Sham bands." current="core">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/core/')}>Core</a><span aria-hidden="true">/</span><span aria-current="page">Part VIII</span>
+  </nav>
+
+  <p class="secondary">Part VIII</p>
+  <h1>Excitations and Spectra</h1>
+  <p class="lede">A ground-state calculation asks which state minimizes the energy. Spectroscopy asks what happens when energy or a particle is exchanged with the system. The answer therefore depends on which many-body state is created, whether the electron number changes, and how the external probe couples to that state. Those questions lead beyond a ground-state Kohn–Sham spectrum to charged quasiparticles, neutral electron–hole excitations, and probe-dependent spectral weight.</p>
+
+  <h2>A spectrum starts by naming what the experiment changes</h2>
+  <p>Parts IV–VI built a ground-state route: a density determines an auxiliary Kohn–Sham problem, and its self-consistent solution supplies a ground-state energy and density from which specified derivatives can be taken. Part III already explained why any periodic one-particle Hamiltonian—including a periodic Kohn–Sham Hamiltonian—has Bloch states and bands. None of those statements says that every Kohn–Sham eigenvalue is an exact energy for adding, removing, or optically exciting a real electron.</p>
+  <p>The missing distinction is easiest to see through particle number. Let <math class="math-inline" aria-label="E zero superscript N"><semantics><msubsup><mi>E</mi><mn>0</mn><mi>N</mi></msubsup><annotation encoding="application/x-tex">E_0^N</annotation></semantics></math> be the ground-state energy of the interacting system with <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> electrons. A removal experiment leaves an <math class="math-inline" aria-label="N minus one"><semantics><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N-1</annotation></semantics></math>-electron system; an addition experiment creates an <math class="math-inline" aria-label="N plus one"><semantics><mrow><mi>N</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N+1</annotation></semantics></math>-electron system. Optical absorption normally leaves the total electron number at <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> while promoting the system to another many-body state.</p>
+
+  <figure class="excitation-sectors" aria-labelledby="excitation-sectors-caption">
+    <div>
+      <section>
+        <h3>Ground state</h3>
+        <p><math class="math-inline" aria-label="N electrons"><semantics><mrow><mi>N</mi><mtext> electrons</mtext></mrow><annotation encoding="application/x-tex">N\ \text&#123;electrons&#125;</annotation></semantics></math></p>
+        <span>Which state minimizes the energy for the declared system?</span>
+      </section>
+      <section>
+        <h3>Charged excitation</h3>
+        <p><math class="math-inline" aria-label="N plus or minus one electrons"><semantics><mrow><mi>N</mi><mo>±</mo><mn>1</mn><mtext> electrons</mtext></mrow><annotation encoding="application/x-tex">N\!\pm\!1\ \text&#123;electrons&#125;</annotation></semantics></math></p>
+        <span>What energy and amplitude accompany addition or removal?</span>
+      </section>
+      <section>
+        <h3>Neutral excitation</h3>
+        <p><math class="math-inline" aria-label="N electrons in an excited state"><semantics><mrow><mi>N</mi><mtext> electrons, excited state</mtext></mrow><annotation encoding="application/x-tex">N\ \text&#123;electrons, excited state&#125;</annotation></semantics></math></p>
+        <span>Which fixed-particle-number state is created, and can the probe reach it?</span>
+      </section>
+    </div>
+    <figcaption id="excitation-sectors-caption">The three questions refer to different many-body sectors. A single list of one-particle eigenvalues cannot be assumed to answer all three.</figcaption>
+  </figure>
+
+  <h2>The fundamental gap is a charged total-energy difference</h2>
+  <p>Before introducing any quasiparticle approximation, we can define the energy required to change particle number. The ionization energy <math class="math-inline" aria-label="I"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math> compares the <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> and <math class="math-inline" aria-label="N minus one"><semantics><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N-1</annotation></semantics></math> ground states; the electron affinity <math class="math-inline" aria-label="A"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> compares the <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> and <math class="math-inline" aria-label="N plus one"><semantics><mrow><mi>N</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N+1</annotation></semantics></math> ground states. Their difference is the fundamental charged gap:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The ionization energy is the N minus one ground-state energy minus the N-electron ground-state energy, the electron affinity is the N-electron energy minus the N plus one energy, and the fundamental gap is I minus A">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr><mtd><mi>I</mi></mtd><mtd><mo>=</mo></mtd><mtd><msubsup><mi>E</mi><mn>0</mn><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mo>−</mo><msubsup><mi>E</mi><mn>0</mn><mi>N</mi></msubsup><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mi>A</mi></mtd><mtd><mo>=</mo></mtd><mtd><msubsup><mi>E</mi><mn>0</mn><mi>N</mi></msubsup><mo>−</mo><msubsup><mi>E</mi><mn>0</mn><mrow><mi>N</mi><mo>+</mo><mn>1</mn></mrow></msubsup><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msubsup><mi>E</mi><mi mathvariant="normal">g</mi><mtext>fund</mtext></msubsup></mtd><mtd><mo>=</mo></mtd><mtd><mi>I</mi><mo>−</mo><mi>A</mi><mo>=</mo><msubsup><mi>E</mi><mn>0</mn><mrow><mi>N</mi><mo>+</mo><mn>1</mn></mrow></msubsup><mo>+</mo><msubsup><mi>E</mi><mn>0</mn><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mo>−</mo><mn>2</mn><msubsup><mi>E</mi><mn>0</mn><mi>N</mi></msubsup><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">I=E_0^&#123;N-1&#125;-E_0^N,\qquad A=E_0^N-E_0^&#123;N+1&#125;,\qquad E_&#123;\mathrm&#123;g&#125;&#125;^&#123;\mathrm&#123;fund&#125;&#125;=I-A=E_0^&#123;N+1&#125;+E_0^&#123;N-1&#125;-2E_0^N.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the last line as an energy cost, not as a difference between two arbitrary orbital labels. One process removes an electron and lets the other electrons rearrange while the external potential and nuclear geometry remain fixed; the other adds an electron under those same fixed external conditions. The gap therefore compares interacting many-body energies of one electronic Hamiltonian in different particle-number sectors. Allowing the nuclei or structure to relax would instead define an adiabatic charging or charge-transition energy.</p>
+  <p>For an extended solid these differences are understood in the appropriate thermodynamic and electrostatic limit. Charged periodic cells introduce boundary and finite-size questions that a bare formula does not solve. The conceptual conclusion is nevertheless stable: the fundamental gap is defined by addition and removal, whereas a Kohn–Sham gap is a difference between eigenvalues of an auxiliary ground-state Hamiltonian. Exact ground-state DFT relates the two only with additional structure, including the exchange–correlation derivative discontinuity; an approximate Kohn–Sham eigenvalue gap is not the definition above.</p>
+  <p class="equation-source">Sources: Cohen and Louie, <cite>Fundamentals of Condensed Matter Physics</cite>, Chs. 7 and 13; Onida, Reining, and Rubio, <cite>Reviews of Modern Physics</cite> 74, 601 (2002), Secs. I.B and III.A.</p>
+
+  <h2>The one-particle Green function organizes addition and removal</h2>
+  <p>A charged excitation is still associated with adding or removing one electron, but the other electrons respond. The resulting state is not generally “one Kohn–Sham orbital occupied or emptied.” The one-particle Green function is designed for this question: it records the amplitude for an electron added at one space–time point to propagate to another, together with the corresponding hole process. Its poles occur at interacting addition and removal energies, while its residues tell how strongly a simple one-particle operation overlaps each many-body state.</p>
+  <p>If the electrons were independent, each orbital would contribute one sharp pole with unit one-particle weight. Interaction changes both facts. A dominant pole may remain, but some weight can move into satellites involving additional excitations, and a state embedded in a decay continuum can acquire a finite linewidth. A quasiparticle is the useful case in which one dressed pole retains enough weight and lifetime to support a particle-like label.</p>
+
+  <figure class="core-diagram spectral-weight" aria-labelledby="spectral-weight-title spectral-weight-description spectral-weight-caption">
+    <div class="diagram-scroll" role="region" tabindex="0" aria-label="Scrollable comparison of independent and interacting spectral weight">
+    <svg viewBox="0 0 760 280" role="img" aria-labelledby="spectral-weight-title spectral-weight-description">
+      <title id="spectral-weight-title">Interaction redistributes one-particle spectral weight</title>
+      <desc id="spectral-weight-description">The left panel has one sharp independent-particle peak. The right panel has a broadened quasiparticle peak plus a smaller satellite, showing that interaction shifts energy and redistributes spectral weight.</desc>
+      <g transform="translate(38 30)">
+        <text class="diagram-heading" x="0" y="0">Independent reference</text>
+        <line class="diagram-axis" x1="15" y1="205" x2="300" y2="205" />
+        <line class="diagram-axis" x1="35" y1="220" x2="35" y2="28" />
+        <line class="spectral-reference" x1="170" y1="205" x2="170" y2="55" />
+        <text x="158" y="225">ε₀</text><text x="275" y="225">energy</text><text x="4" y="25">weight</text>
+        <text x="74" y="170">one sharp pole</text>
+      </g>
+      <g transform="translate(410 30)">
+        <text class="diagram-heading" x="0" y="0">Interacting spectrum</text>
+        <line class="diagram-axis" x1="15" y1="205" x2="300" y2="205" />
+        <line class="diagram-axis" x1="35" y1="220" x2="35" y2="28" />
+        <path class="spectral-quasiparticle" d="M55,205 C95,205 112,197 128,135 C141,82 151,55 163,55 C178,55 188,92 201,150 C214,198 231,205 252,205" />
+        <path class="spectral-satellite" d="M215,205 C228,205 235,188 242,166 C249,143 259,143 267,166 C274,188 281,205 294,205" />
+        <line class="diagram-fermi" x1="163" y1="205" x2="163" y2="48" />
+        <text x="148" y="225">E<tspan baseline-shift="sub" font-size="9">QP</tspan></text><text x="270" y="225">energy</text><text x="4" y="25">weight</text>
+        <text x="84" y="110">quasiparticle</text><text x="232" y="136">satellite</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption id="spectral-weight-caption">The drawing is schematic: a self-energy can shift and broaden the dominant pole and move part of the one-particle weight into additional structures. A band energy alone does not contain this spectral-weight information.</figcaption>
+  </figure>
+
+  <h2>The self-energy is the price of retaining a one-particle-like description</h2>
+  <p>The interacting Green function is not obtained from a fixed local potential. Instead, Dyson’s equation collects everything beyond a chosen reference propagator <math class="math-inline" aria-label="G zero"><semantics><msub><mi>G</mi><mn>0</mn></msub><annotation encoding="application/x-tex">G_0</annotation></semantics></math> into the self-energy <math class="math-inline" aria-label="Sigma"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>. Near an isolated pole, the same structure can be read as an energy-dependent quasiparticle equation:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Dyson equation for the Green function and the corresponding energy-dependent quasiparticle equation">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.85em">
+          <mtr><mtd><msup><mi>G</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mi>ω</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msubsup><mi>G</mi><mn>0</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>(</mo><mi>ω</mi><mo>)</mo><mo>−</mo><mi>Σ</mi><mo>(</mo><mi>ω</mi><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><mrow><mo>[</mo><msub><mover><mi>h</mi><mo>^</mo></mover><mi mathvariant="normal">H</mi></msub><mo>+</mo><mover><mi>Σ</mi><mo>^</mo></mover><mo>(</mo><msub><mi>E</mi><mi>s</mi></msub><mo>)</mo><mo>]</mo></mrow><msub><mi>φ</mi><mi>s</mi></msub></mtd><mtd><mo>=</mo></mtd><mtd><msub><mi>E</mi><mi>s</mi></msub><msub><mi>φ</mi><mi>s</mi></msub><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">G^&#123;-1&#125;(\omega)=G_0^&#123;-1&#125;(\omega)-\Sigma(\omega),\qquad [\hat h_&#123;\mathrm H&#125;+\hat\Sigma(E_s)]\phi_s=E_s\phi_s.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line as a definition of responsibility. <math class="math-inline" aria-label="G zero"><semantics><msub><mi>G</mi><mn>0</mn></msub><annotation encoding="application/x-tex">G_0</annotation></semantics></math> contains the propagation supplied by the declared reference problem; <math class="math-inline" aria-label="Sigma"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math> changes that propagation so that interacting addition and removal can be described. Here the superscript <math class="math-inline" aria-label="minus one"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math> denotes an inverse propagator or operator inverse, not the reciprocal of an ordinary scalar. The symbols also hide space, spin, time or frequency arguments and the integrations that connect them.</p>
+  <p>In the second line, <math class="math-inline" aria-label="h H"><semantics><msub><mover><mi>h</mi><mo>^</mo></mover><mi mathvariant="normal">H</mi></msub><annotation encoding="application/x-tex">\hat h_&#123;\mathrm H&#125;</annotation></semantics></math> contains kinetic, external, and Hartree terms under this partition. The label <math class="math-inline" aria-label="s"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math> identifies a particular quasiparticle pole: <math class="math-inline" aria-label="E s"><semantics><msub><mi>E</mi><mi>s</mi></msub><annotation encoding="application/x-tex">E_s</annotation></semantics></math> is its quasiparticle energy, while <math class="math-inline" aria-label="phi s"><semantics><msub><mi>φ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\phi_s</annotation></semantics></math> is the associated one-particle addition or removal amplitude—not the full many-electron wavefunction and not automatically a Kohn–Sham orbital. Unlike the static local Kohn–Sham potential, the exact self-energy is generally nonlocal and energy dependent. Its real part shifts a quasiparticle energy; where decay channels exist, its imaginary part describes finite lifetime and broadening. Because the operator depends on the energy being sought, this is not an ordinary fixed Hermitian eigenproblem.</p>
+  <p>A useful limiting case exposes the new physics. If the self-energy were static, real, and energy independent, the second line would reduce to a conventional effective one-particle equation with sharp states. Frequency dependence allows the pole to carry less than unit one-particle weight, and an imaginary part allows it to decay. If no dominant pole survives, a single quasiparticle band is no longer an adequate description even though the full spectral function still exists.</p>
+  <p class="equation-source">Sources: Onida, Reining, and Rubio, Sec. III.A.2, Eqs. (3.13)–(3.15); Hedin, <cite>Physical Review</cite> 139, A796 (1965).</p>
+
+  <h2>GW approximates the self-energy with screened interaction</h2>
+  <p>The self-energy has not made the problem practical by itself; it is an exact but unknown operator. Hedin reorganized the many-body problem into coupled equations for propagation, screening, and vertex corrections. The simplest widely used closure neglects the vertex at the first step and writes the self-energy schematically as:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="In the GW approximation the self-energy is approximated by i times the Green function times the screened interaction">
+      <semantics>
+        <mrow><msup><mi>Σ</mi><mtext>GW</mtext></msup><mo>≈</mo><mi mathvariant="normal">i</mi><mi>G</mi><mi>W</mi><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Sigma^&#123;\mathrm&#123;GW&#125;&#125;\approx \mathrm&#123;i&#125;GW.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>The important content is not the short product but what the two factors do. The upright <math class="math-inline" aria-label="imaginary unit i"><semantics><mi mathvariant="normal">i</mi><annotation encoding="application/x-tex">\mathrm&#123;i&#125;</annotation></semantics></math> is the imaginary unit, and the compact product stands schematically for a contraction or convolution over hidden variables. <math class="math-inline" aria-label="G"><semantics><mi>G</mi><annotation encoding="application/x-tex">G</annotation></semantics></math> propagates the added electron or hole. <math class="math-inline" aria-label="W"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math> is the Coulomb interaction screened by the electronic medium, so it includes how the surrounding electrons rearrange around that disturbance. Replacing <math class="math-inline" aria-label="W"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math> by the bare interaction recovers the exchange-like structure of Hartree–Fock; retaining dynamical screening adds correlation and relaxation effects absent from that static bare-exchange picture.</p>
+  <p>“GW” therefore names an approximation family, not one unique correction button. A calculation must declare the starting Green function, how screening is constructed, whether eigenvalues or the full Green function are updated, how frequency dependence is treated, and which dimensional Coulomb boundary is used. <math class="math-inline" aria-label="G zero W zero"><semantics><mrow><msub><mi>G</mi><mn>0</mn></msub><msub><mi>W</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">G_0W_0</annotation></semantics></math>, eigenvalue-self-consistent GW, quasiparticle-self-consistent GW, and fully self-consistent GW solve different approximate closures; they are not merely convergence settings and do not form a universal accuracy ladder.</p>
+  <p>Practical GW calculations often start from Kohn–Sham orbitals and eigenvalues because those provide a convenient <math class="math-inline" aria-label="G zero"><semantics><msub><mi>G</mi><mn>0</mn></msub><annotation encoding="application/x-tex">G_0</annotation></semantics></math>. That use does not turn the starting Kohn–Sham spectrum into the interacting spectrum. When a quasiparticle correction is written relative to a Kohn–Sham Hamiltonian, the Kohn–Sham exchange–correlation potential must be subtracted to avoid counting the reference contribution twice.</p>
+  <p class="equation-source">Sources: Hedin, <cite>Physical Review</cite> 139, A796 (1965); Onida, Reining, and Rubio, Sec. III.B–C, especially Eq. (3.27).</p>
+
+  <h2>A neutral excitation stays in the N-electron sector</h2>
+  <p>Photoemission and inverse photoemission change electron number. Absorption is different: the incoming field transfers energy and momentum, but the electron remains in the sample. The target is an excited state of the same <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>-electron Hamiltonian. Its exact excitation energy is therefore:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The neutral excitation energy Omega S equals the N-electron excited-state energy minus the N-electron ground-state energy">
+      <semantics>
+        <mrow><msub><mi>Ω</mi><mi>S</mi></msub><mo>=</mo><msubsup><mi>E</mi><mi>S</mi><mi>N</mi></msubsup><mo>−</mo><msubsup><mi>E</mi><mn>0</mn><mi>N</mi></msubsup><mo>.</mo></mrow>
+        <annotation encoding="application/x-tex">\Omega_S=E_S^N-E_0^N.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Both energies now belong to the same particle-number sector. Index <math class="math-inline" aria-label="S"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math> labels a correlated neutral many-body state, not a single conduction band. An independent-transition picture approximates such a state by moving an electron from an occupied label <math class="math-inline" aria-label="v"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math> to an empty label <math class="math-inline" aria-label="c"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>, with an energy difference such as <math class="math-inline" aria-label="E c quasiparticle minus E v quasiparticle"><semantics><mrow><msup><msub><mi>E</mi><mi>c</mi></msub><mtext>QP</mtext></msup><mo>−</mo><msup><msub><mi>E</mi><mi>v</mi></msub><mtext>QP</mtext></msup></mrow><annotation encoding="application/x-tex">E_c^&#123;\mathrm&#123;QP&#125;&#125;-E_v^&#123;\mathrm&#123;QP&#125;&#125;</annotation></semantics></math>. But the promoted electron changes the environment of the missing valence electron—the hole—so their interaction can mix many transitions and bind them into an exciton.</p>
+  <p class="equation-source">Sources: Onida, Reining, and Rubio, Secs. I.B and III.A; Cohen and Louie, Ch. 9.</p>
+
+  <h2>The Bethe–Salpeter equation mixes electron–hole transitions</h2>
+  <p>In a common static-kernel, resonant formulation, the neutral problem is written in a basis of valence-to-conduction transitions. A photon carries little crystal momentum compared with a Brillouin-zone vector, so the displayed optical sector has total momentum <math class="math-inline" aria-label="bold Q approximately zero"><semantics><mrow><mi mathvariant="bold">Q</mi><mo>≈</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mathbf&#123;Q&#125;\approx0</annotation></semantics></math>: each independent vertical transition uses the same <math class="math-inline" aria-label="bold k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> label for its valence and conduction states. One schematic crystalline form is:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The Bethe Salpeter eigenproblem combines quasiparticle transition energies and an electron-hole kernel to obtain neutral excitation energies and transition amplitudes">
+      <semantics>
+        <mrow>
+          <munder><mo largeop="true">∑</mo><mrow><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup></mrow></munder>
+          <mrow><mo>[</mo>
+            <mrow><mo>(</mo><msup><msub><mi>E</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mtext>QP</mtext></msup><mo>−</mo><msup><msub><mi>E</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mtext>QP</mtext></msup><mo>)</mo></mrow>
+            <msub><mi>δ</mi><mrow><mi>v</mi><msup><mi>v</mi><mo>′</mo></msup></mrow></msub><msub><mi>δ</mi><mrow><mi>c</mi><msup><mi>c</mi><mo>′</mo></msup></mrow></msub><msub><mi>δ</mi><mrow><mi mathvariant="bold">k</mi><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup></mrow></msub>
+            <mo>+</mo><msubsup><mi>K</mi><mrow><mi>v</mi><mi>c</mi><mi mathvariant="bold">k</mi><mo>,</mo><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup></mrow><mtext>eh</mtext></msubsup>
+          <mo>]</mo></mrow>
+          <msubsup><mi>A</mi><mrow><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup></mrow><mi>S</mi></msubsup>
+          <mo>=</mo><msub><mi>Ω</mi><mi>S</mi></msub><msubsup><mi>A</mi><mrow><mi>v</mi><mi>c</mi><mi mathvariant="bold">k</mi></mrow><mi>S</mi></msubsup><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\sum_&#123;v'c'\mathbf&#123;k&#125;'&#125;\!\left[(E_&#123;c\mathbf&#123;k&#125;&#125;^&#123;\mathrm&#123;QP&#125;&#125;-E_&#123;v\mathbf&#123;k&#125;&#125;^&#123;\mathrm&#123;QP&#125;&#125;)\delta_&#123;vv'&#125;\delta_&#123;cc'&#125;\delta_&#123;\mathbf&#123;k&#125;\mathbf&#123;k&#125;'&#125;+K^&#123;\mathrm&#123;eh&#125;&#125;_&#123;vc\mathbf&#123;k&#125;,v'c'\mathbf&#123;k&#125;'&#125;\right]A^S_&#123;v'c'\mathbf&#123;k&#125;'&#125;=\Omega_S A^S_&#123;vc\mathbf&#123;k&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the sum as a scan over every primed transition label <math class="math-inline" aria-label="v prime c prime bold k prime"><semantics><mrow><msup><mi>v</mi><mo>′</mo></msup><msup><mi>c</mi><mo>′</mo></msup><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">v'c'\mathbf&#123;k&#125;'</annotation></semantics></math>. The three symbols <math class="math-inline" aria-label="Kronecker delta selectors"><semantics><mrow><msub><mi>δ</mi><mrow><mi>v</mi><msup><mi>v</mi><mo>′</mo></msup></mrow></msub><msub><mi>δ</mi><mrow><mi>c</mi><msup><mi>c</mi><mo>′</mo></msup></mrow></msub><msub><mi>δ</mi><mrow><mi mathvariant="bold">k</mi><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup></mrow></msub></mrow><annotation encoding="application/x-tex">\delta_&#123;vv'&#125;\delta_&#123;cc'&#125;\delta_&#123;\mathbf&#123;k&#125;\mathbf&#123;k&#125;'&#125;</annotation></semantics></math> are Kronecker deltas: they select <math class="math-inline" aria-label="v prime equals v, c prime equals c, and bold k prime equals bold k"><semantics><mrow><msup><mi>v</mi><mo>′</mo></msup><mo>=</mo><mi>v</mi><mo>,</mo><msup><mi>c</mi><mo>′</mo></msup><mo>=</mo><mi>c</mi><mo>,</mo><msup><mi mathvariant="bold">k</mi><mo>′</mo></msup><mo>=</mo><mi mathvariant="bold">k</mi></mrow><annotation encoding="application/x-tex">v'=v,\ c'=c,\ \mathbf&#123;k&#125;'=\mathbf&#123;k&#125;</annotation></semantics></math>, making the quasiparticle energy-difference term diagonal. The electron–hole kernel has no such selector and can therefore mix different transitions.</p>
+  <p>Without the electron–hole kernel <math class="math-inline" aria-label="K e h"><semantics><msup><mi>K</mi><mtext>eh</mtext></msup><annotation encoding="application/x-tex">K^&#123;\mathrm&#123;eh&#125;&#125;</annotation></semantics></math>, every basis vector is an independent transition with its quasiparticle energy difference. The kernel couples those basis vectors. Its screened direct part can attract electron and hole; its exchange-like part changes local-field and singlet–triplet structure. Spin indices are suppressed in the display; the declared spin and spin–orbit treatment determines the corresponding spin structure. The eigenvector coefficients <math class="math-inline" aria-label="A v c k superscript S"><semantics><msubsup><mi>A</mi><mrow><mi>v</mi><mi>c</mi><mi mathvariant="bold">k</mi></mrow><mi>S</mi></msubsup><annotation encoding="application/x-tex">A^S_&#123;vc\mathbf&#123;k&#125;&#125;</annotation></semantics></math> say which independent transitions combine to form neutral state <math class="math-inline" aria-label="S"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>; eigenvalue <math class="math-inline" aria-label="Omega S"><semantics><msub><mi>Ω</mi><mi>S</mi></msub><annotation encoding="application/x-tex">\Omega_S</annotation></semantics></math> is its neutral excitation energy.</p>
+  <p>The two-level model from the Atlas now has a concrete role. If only two transitions were retained, the kernel would supply the off-diagonal coupling of a two-by-two matrix. When that coupling vanishes, the neutral states reduce to the original transitions. When it is finite, the eigenstates are mixtures, their energies repel, and their optical strengths can be redistributed. Real BSE calculations contain many valence bands, conduction bands, and <math class="math-inline" aria-label="bold k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> points, but the same mixing logic remains.</p>
+  <p>The displayed equation is not the unique BSE implementation. The full response can couple resonant and antiresonant sectors, and practical kernels make declared approximations to screening and frequency dependence. BSE and TDDFT are alternative frameworks for neutral response; TDDFT uses a density-response kernel rather than becoming a synonym for BSE. Neither neutral framework changes the definition of a charged quasiparticle pole.</p>
+  <p class="equation-source">Source: Onida, Reining, and Rubio, Sec. IV.B, especially Eqs. (4.9)–(4.12). The display states the static resonant crystalline form rather than the formulation-independent full equation.</p>
+
+  <figure class="neutral-route" aria-labelledby="neutral-route-caption">
+    <ol>
+      <li><strong>Transition basis</strong><span>Occupied-to-empty quasiparticle pairs <math class="math-inline" aria-label="v c bold k"><semantics><mrow><mi>v</mi><mi>c</mi><mi mathvariant="bold">k</mi></mrow><annotation encoding="application/x-tex">vc\mathbf&#123;k&#125;</annotation></semantics></math></span></li>
+      <li><strong>Electron–hole kernel</strong><span>Screened attraction, exchange-like coupling, and declared approximations</span></li>
+      <li><strong>Neutral eigenstates</strong><span>Energies <math class="math-inline" aria-label="Omega S"><semantics><msub><mi>Ω</mi><mi>S</mi></msub><annotation encoding="application/x-tex">\Omega_S</annotation></semantics></math> and mixtures <math class="math-inline" aria-label="A superscript S"><semantics><msup><mi>A</mi><mi>S</mi></msup><annotation encoding="application/x-tex">A^S</annotation></semantics></math></span></li>
+      <li><strong>Probe coupling</strong><span>Matrix elements decide bright, dark, polarization, and spectral weight</span></li>
+    </ol>
+    <figcaption id="neutral-route-caption">A quasiparticle energy difference is the starting transition basis, not the final optical spectrum. Electron–hole mixing and probe coupling still have to be supplied.</figcaption>
+  </figure>
+
+  <h2>An excitation energy becomes a spectral feature only through a probe</h2>
+  <p>Knowing the neutral eigenvalues is still not enough to draw an absorption spectrum. The external field must couple the ground state to the excitation. For light of polarization <math class="math-inline" aria-label="bold e"><semantics><mi mathvariant="bold">e</mi><annotation encoding="application/x-tex">\mathbf&#123;e&#125;</annotation></semantics></math>, a schematic spectrum has the form below. The operator <math class="math-inline" aria-label="D bold e hat"><semantics><msub><mover><mi>D</mi><mo>^</mo></mover><mi mathvariant="bold">e</mi></msub><annotation encoding="application/x-tex">\hat D_&#123;\mathbf&#123;e&#125;&#125;</annotation></semantics></math> stands for the declared light–matter coupling in a consistent gauge and boundary convention:</p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Optical intensity is a sum of transition matrix element weights at neutral excitation energies, and exciton binding is the matching quasiparticle continuum edge minus the neutral excitation energy">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.85em">
+          <mtr><mtd><mi>I</mi><mo>(</mo><mi>ω</mi><mo>)</mo></mtd><mtd><mo>∝</mo></mtd><mtd><munder><mo largeop="true">∑</mo><mi>S</mi></munder><msup><mrow><mo>|</mo><mo>⟨</mo><mi>S</mi><mo>|</mo><msub><mover><mi>D</mi><mo>^</mo></mover><mi mathvariant="bold">e</mi></msub><mo>|</mo><mn>0</mn><mo>⟩</mo><mo>|</mo></mrow><mn>2</mn></msup><mi>δ</mi><mo>(</mo><mi>ℏ</mi><mi>ω</mi><mo>−</mo><msub><mi>Ω</mi><mi>S</mi></msub><mo>)</mo><mo>,</mo></mtd></mtr>
+          <mtr><mtd><msub><mi>E</mi><mrow><mi>b</mi><mo>,</mo><mi>S</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">Q</mi><mo>)</mo></mtd><mtd><mo>=</mo></mtd><mtd><msubsup><mi>E</mi><mtext>cont</mtext><mtext>QP</mtext></msubsup><mo>(</mo><mi mathvariant="bold">Q</mi><mo>)</mo><mo>−</mo><msub><mi>Ω</mi><mi>S</mi></msub><mo>(</mo><mi mathvariant="bold">Q</mi><mo>)</mo><mo>.</mo></mtd></mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">I(\omega)\propto\sum_S|\langle S|\hat D_&#123;\mathbf e&#125;|0\rangle|^2\delta(\hbar\omega-\Omega_S),\qquad E_&#123;b,S&#125;(\mathbf Q)=E_&#123;\mathrm&#123;cont&#125;&#125;^&#123;\mathrm&#123;QP&#125;&#125;(\mathbf Q)-\Omega_S(\mathbf Q).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>Read the first line in two stages. Here <math class="math-inline" aria-label="Dirac delta of h bar omega minus Omega S"><semantics><mrow><mi>δ</mi><mo>(</mo><mi>ℏ</mi><mi>ω</mi><mo>−</mo><msub><mi>Ω</mi><mi>S</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\delta(\hbar\omega-\Omega_S)</annotation></semantics></math> is a Dirac delta that places spectral weight at the neutral excitation energy; unlike the BSE equation’s discrete Kronecker deltas, it represents an ideal sharp line along the continuous energy axis. The squared matrix element determines how much weight that state receives for the chosen probe and polarization. A state can therefore exist at low energy yet be dark because symmetry, spin, momentum, or polarization makes the matrix element vanish or very small. Broadening, lifetime, temperature, disorder, and instrumental resolution then change the observed line shape; they are not contained in a bare excitation energy.</p>
+  <p>The second line defines exciton binding in a matched total-momentum sector <math class="math-inline" aria-label="bold Q"><semantics><mi mathvariant="bold">Q</mi><annotation encoding="application/x-tex">\mathbf&#123;Q&#125;</annotation></semantics></math>. The reference is the lowest unbound quasiparticle electron–hole continuum energy available in that same sector, not automatically the smallest gap anywhere in the Brillouin zone. A positive difference means the neutral electron–hole state lies below its continuum edge. Only under additional direct-gap and selection assumptions can this be reduced to “quasiparticle gap minus optical gap.”</p>
+  <p>Photon momentum is usually small on the scale of a crystal Brillouin zone, so ordinary absorption primarily accesses near-zero total crystal momentum. An indirect excitation can require phonon assistance, and the relevant onset then includes a lattice excitation and its matrix element. This is why the fundamental gap, direct quasiparticle gap, lowest neutral excitation, lowest bright excitation, absorption onset, and peak maximum must remain separate names.</p>
+  <p class="equation-source">Sources: Onida, Reining, and Rubio, Secs. I.A, II.C, and IV.B; Martin, <cite>Electronic Structure</cite>, 2nd ed., Ch. 21. The exciton-binding definition is explicitly matched by total momentum.</p>
+
+  <dl class="gap-ledger">
+    <dt>Kohn–Sham gap</dt><dd>Difference between eigenvalues of the auxiliary ground-state Kohn–Sham Hamiltonian.</dd>
+    <dt>Fundamental gap</dt><dd>Difference between the interacting particle-addition and particle-removal chemical potentials; equivalently <math class="math-inline" aria-label="I minus A"><semantics><mrow><mi>I</mi><mo>−</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">I-A</annotation></semantics></math>.</dd>
+    <dt>Quasiparticle gap</dt><dd>Difference between appropriate charged addition/removal quasiparticle poles; it approximates the corresponding charged gap under the declared theory.</dd>
+    <dt>Neutral excitation</dt><dd>Fixed-<math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> many-body energy difference <math class="math-inline" aria-label="Omega S"><semantics><msub><mi>Ω</mi><mi>S</mi></msub><annotation encoding="application/x-tex">\Omega_S</annotation></semantics></math>.</dd>
+    <dt>Bright optical onset</dt><dd>Lowest neutral excitation accessible to the specified probe, polarization, momentum, and selection rules.</dd>
+    <dt>Spectral peak</dt><dd>A feature shaped by excitation energies, matrix elements, lifetimes, broadening, temperature, environment, and experimental response.</dd>
+  </dl>
+
+  <h2>What the method label does—and does not—tell you</h2>
+  <p>A real excited-state calculation is a stack of choices. A GW result inherits a ground-state or generalized-Kohn–Sham starting point, core treatment, basis, Brillouin-zone sampling, unoccupied-state space, dielectric representation, frequency treatment, dimensional Coulomb boundary, and self-consistency variant. A BSE spectrum adds a transition subspace, electron–hole kernel, screening choice, resonant–antiresonant treatment, optical matrix elements, and broadening. A TDDFT spectrum instead depends decisively on the time-dependent exchange–correlation kernel and the response representation.</p>
+  <p>Those are not all “DFT parameters.” Some specify the underlying physical approximation, some the finite representation, some the response or many-body approximation, and some only the numerical solution. Convergence of one quasiparticle gap does not establish convergence of absolute band edges, lifetimes, satellite weight, exciton energy, oscillator strength, or a full spectrum. Likewise, successful self-consistency says that the chosen equations were solved to their fixed point; it does not validate the starting point, self-energy, kernel, or comparison to experiment.</p>
+  <p>Part VIII stops at these objects and boundaries. Detailed GW, BSE, TDDFT, photoemission, and optical workflows belong to specialized Methods, Guided Reading, and the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>. The Core task is to make the layers legible before those choices appear in a paper.</p>
+
+  <div class="concept-check" role="note" aria-labelledby="part-viii-check">
+    <h3 id="part-viii-check">Check your understanding</h3>
+    <p><strong>Question.</strong> Why can a GW quasiparticle gap and a BSE optical onset both be correct for the same material yet have different values?</p>
+    <p><strong>Answer.</strong> The quasiparticle gap concerns charged addition and removal poles. The optical onset concerns a fixed-electron-number excitation, includes electron–hole interaction, and is visible only if the probe matrix element allows it. Exciton binding can place the neutral state below the matching unbound electron–hole continuum, while dark, indirect, phonon-assisted, and broadening effects can separate that state further from the first observed peak.</p>
+  </div>
+
+  <h2>Sources and further reading</h2>
+  <dl class="source-map">
+    <dt>Green functions, screening, and the GW approximation</dt>
+    <dd>Hedin, “New Method for Calculating the One-Particle Green’s Function with Application to the Electron-Gas Problem,” <cite>Physical Review</cite> 139, A796 (1965), DOI <a href="https://doi.org/10.1103/PhysRev.139.A796">10.1103/PhysRev.139.A796</a>.</dd>
+    <dt>Quasiparticles, electron–hole response, BSE, and TDDFT boundaries</dt>
+    <dd>Onida, Reining, and Rubio, “Electronic excitations: density-functional versus many-body Green’s-function approaches,” <cite>Reviews of Modern Physics</cite> 74, 601 (2002), DOI <a href="https://doi.org/10.1103/RevModPhys.74.601">10.1103/RevModPhys.74.601</a>.</dd>
+    <dt>Condensed-matter physical picture</dt>
+    <dd>Cohen and Louie, <cite>Fundamentals of Condensed Matter Physics</cite>, Chs. 7–9 and 13.</dd>
+    <dt>Connection to the wider electronic-structure formalism</dt>
+    <dd>Martin, <cite>Electronic Structure</cite>, 2nd ed., Ch. 21.</dd>
+  </dl>
+
+  <p class="repair-links">For deeper prerequisite repair, see <a href={href('/theory/many-body-physics/')}>Foundations · Many-Body Physics</a>, <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>Foundations · Many-Body Perturbation Theory and Quasiparticles</a>, or <a href={href('/theory/linear-response-and-excited-states/')}>Foundations · Linear Response and Excited States</a>.</p>
+
+  <p>The Core sequence has now moved from the interacting electron–nuclear problem to fermionic references, periodic states, density-functional reformulation, finite computation, ground-state properties, response, and finally excitations. A real electronic-structure paper can combine several of these layers, but its claims become intelligible only when the physical object, approximation, representation, solution, and probe are kept distinct.</p>
+
+  <nav class="sequence-nav" aria-label="Core sequence navigation">
+    <a href={href('/core/part-vii/')}>← Part VII · Response and Lattice Dynamics</a>
+    <a href={href('/core/')}>Core</a>
+  </nav>
+</BaseLayout>

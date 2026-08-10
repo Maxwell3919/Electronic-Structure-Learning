@@ -40,9 +40,9 @@ THEORY_ROUTES = [
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/berry-phases-and-electronic-topology/",
 ]
-CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/", "core/part-v/", "core/part-vi/", "core/part-vii/"]
-CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/", "core/part-v/", "core/part-vi/", "core/part-vii/"]
-CORE_UNPUBLISHED_ROUTES = ["core/part-viii/"]
+CORE_ROUTES = ["core/", "core/orientation/", "core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/", "core/part-v/", "core/part-vi/", "core/part-vii/", "core/part-viii/"]
+CORE_MATH_ROUTES = ["core/part-i/", "core/part-ii/", "core/part-iii/", "core/part-iv/", "core/part-v/", "core/part-vi/", "core/part-vii/", "core/part-viii/"]
+CORE_UNPUBLISHED_ROUTES = []
 MARTIN_PART_ROUTES = [f"reading/books/martin/part-{roman}/" for roman in ["i", "ii", "iii", "iv", "v", "vi", "vii"]]
 MARTIN_CHAPTER_ROUTES = [f"reading/books/martin/chapter-{number:02d}/" for number in range(1, 29)]
 MARTIN_APPENDIX_ROUTES = [f"reading/books/martin/appendix-{letter}/" for letter in "abcdefghijklmnopqr"]

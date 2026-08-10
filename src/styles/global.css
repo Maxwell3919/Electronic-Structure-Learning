@@ -611,6 +611,68 @@ figcaption {
   align-items: stretch;
   border-block: 1px solid #d7d7d7;
 }
+
+.excitation-sectors > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: 1px solid #d7d7d7;
+}
+.excitation-sectors section { padding: 0.2rem 1rem 0.8rem; }
+.excitation-sectors section + section { border-inline-start: 1px solid #d7d7d7; }
+.excitation-sectors h3 { margin-top: 0.85rem; }
+.excitation-sectors section p { margin-bottom: 0.45rem; color: #123f70; }
+.excitation-sectors section span { color: #555555; font-size: 0.9rem; }
+
+.neutral-route ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-block: 1px solid #d7d7d7;
+  list-style: none;
+}
+.neutral-route li { margin: 0; padding: 0.9rem 1rem; }
+.neutral-route li + li { border-inline-start: 1px solid #d7d7d7; }
+.neutral-route li span { display: block; margin-top: 0.3rem; color: #555555; font-size: 0.9rem; }
+
+.gap-ledger {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1fr);
+  border-block: 1px solid #d7d7d7;
+}
+.gap-ledger dt,
+.gap-ledger dd { margin: 0; padding: 0.7rem 0.85rem; border-top: 1px solid #ececec; }
+.gap-ledger dt:first-of-type,
+.gap-ledger dt:first-of-type + dd { border-top: 0; }
+.gap-ledger dd { color: #4d4d4d; }
+
+.spectral-weight .spectral-reference {
+  stroke: #607d99;
+  stroke-width: 4;
+}
+.spectral-weight .spectral-quasiparticle {
+  fill: none;
+  stroke: #123f70;
+  stroke-width: 3;
+}
+.spectral-weight .spectral-satellite {
+  fill: none;
+  stroke: #8a5a24;
+  stroke-width: 2.5;
+}
+.diagram-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.diagram-scroll:focus-visible {
+  outline: 2px solid #123f70;
+  outline-offset: 3px;
+}
+.spectral-weight .diagram-scroll svg {
+  display: block;
+  min-width: 760px;
+}
 .response-routes section { padding: 0.2rem 1rem 0.25rem; }
 .response-routes h3 { margin-top: 0.85rem; }
 .response-routes section p { margin-bottom: 0.85rem; color: #454545; }
@@ -731,6 +793,8 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .response-map ol,
   .reciprocal-roles ol,
   .response-routes > div,
+  .excitation-sectors > div,
+  .neutral-route ol,
   .hamiltonian-map > div,
   .scf-flow ol,
   .h2-reference ol { display: block; }
@@ -775,6 +839,12 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
     border-top: 1px solid #d7d7d7;
   }
   .response-routes .same-response { border-inline: 0; border-block: 1px solid #d7d7d7; }
+  .excitation-sectors section + section,
+  .neutral-route li + li { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
+  .gap-ledger { display: block; }
+  .gap-ledger dt { padding-bottom: 0.15rem; }
+  .gap-ledger dd { padding-top: 0.15rem; border-top: 0; }
+  .gap-ledger dd + dt { border-top: 1px solid #ececec; }
   .phonon-chain .diagram-scroll { padding-bottom: 0.35rem; }
   .phonon-chain svg { width: 44rem; max-width: none; }
   .layer-ledger { display: block; }
