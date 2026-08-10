@@ -7,7 +7,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
 <BaseLayout
   title="Guided Reading"
-  description="Continuous, source-aligned routes through electronic-structure books and lectures."
+  description="Continuous, source-aligned routes through electronic-structure books and research literature."
   current="reading"
 >
   <h1>Guided Reading</h1>
@@ -28,10 +28,20 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </p>
   </section>
 
+  <section aria-labelledby="literature">
+    <h2 id="literature">Literature</h2>
+    <p>
+      Literature guides follow a paper’s own question and argument. They identify which equations carry the result, what the authors established, what they did not establish, and how later formulations changed the interpretation.
+    </p>
+    <p>
+      <a href={href('/reading/literature/')}>Browse literature guides</a>
+    </p>
+  </section>
+
   <section aria-labelledby="reading-boundary">
     <h2 id="reading-boundary">How this differs from Foundations</h2>
     <p>
-      <a href={href('/theory/')}>Foundations</a> answers what knowledge is needed, how subjects depend on one another, and where to study them. Guided Reading supplies continuity: motivation, argument, formalism, chapter synthesis, and connections to modern research.
+      <a href={href('/theory/')}>Foundations</a> answers what knowledge is needed, how subjects depend on one another, and where to study them. Guided Reading supplies continuity: motivation, argument, formalism, source synthesis, and connections to modern research.
     </p>
   </section>
 </BaseLayout>

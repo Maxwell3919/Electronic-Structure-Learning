@@ -6,7 +6,7 @@ This file defines the repository-specific rules for maintainers and automated ag
 
 This repository is the public source for Electronic Structure Atlas. The production site is Plain Astro, fully static, and currently organized as Home, Core, Foundations, Guided Reading, Methods, Computational Tools, Reference, thirty-nine individually reviewed Foundations pages, and source-aligned Guided Reading pages. Core is the continuous teaching route; Foundations is its peer prerequisite-repair map. The established Foundations routes remain under `/theory/` during the first migration phase.
 
-Guided Reading is grouped by source type. Book guides live below `/reading/books/`; Martin is the first book route at `/reading/books/martin/`. The former `/reading/martin/` path is compatibility-only and must not become the canonical content location. Lecture routes are added only after a real reviewed guide exists.
+Guided Reading is grouped by source type. Book guides live below `/reading/books/`; literature guides live as flat source routes below `/reading/literature/`. Martin is the first book route at `/reading/books/martin/`. The former `/reading/martin/` path is compatibility-only and must not become the canonical content location. A source route is added only after a real reviewed guide exists.
 
 The retired course site is preserved by Git history and the annotated tag `legacy/atlas-v3-martin-site-20260802`. Its routes, components, data, styles, and validators are not maintained on `main`. The current Guided Reading framework is a clean implementation and does not inherit legacy progress, practice, status, or URL-compatibility obligations beyond explicitly configured redirects.
 
@@ -27,7 +27,7 @@ The retired course site is preserved by Git history and the annotated tag `legac
 - Author mathematical notation with native MathML. Every mathematical expression must include a TeX annotation inside `<semantics>`; display equations use the shared `.math-display` wrapper. Do not present equations as code-styled Unicode text, images, or client-rendered MathJax/KaTeX output.
 - Keep display mathematics horizontally contained at narrow widths. Internal equation scrolling is acceptable; page-level horizontal overflow is not.
 - Foundations remains the knowledge, prerequisite, relationship, and reviewed-resource map. Do not turn it into one mandatory course or flatten broad subjects and focused electronic-structure modules into one granularity.
-- Guided Reading is grouped by source type. Book and lecture sources must not accumulate directly in the `/reading/` root.
+- Guided Reading is grouped by source type. Book and literature sources must not accumulate directly in the `/reading/` root.
 - Guided Reading may use small source-specific manifests with real public consumers. Do not publish empty chapter pages, progress badges, source-page markers, authoring prompts, or a general reading-management system.
 - Do not restore legacy Part, Chapter, Appendix, practice, learning-path, lab, case, literature, status, or progress structures merely because they exist in history. Source-aligned identifiers are permitted only when a current guide uses them.
 

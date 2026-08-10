@@ -60,6 +60,9 @@ The production site is a static Plain Astro build. It contains the Home page, a 
 - `/reading/`
 - `/reading/books/`
 - `/reading/books/martin/`
+- `/reading/literature/`
+- `/reading/literature/hohenberg-kohn-1964/`
+- `/reading/literature/kohn-sham-1965/`
 - `/reading/martin/` — compatibility redirect to the canonical Martin route
 - `/methods/`
 - `/computational-tools/`
@@ -72,7 +75,7 @@ Core is the Atlas's own continuous explanation of electronic structure. The publ
 
 Foundations is the knowledge, prerequisite, relationship, and reviewed-resource map. The first implementation phase changes the public label and landing-page role without breaking the established `/theory/` routes.
 
-Guided Reading supplies continuous source-aligned narratives and is organized by source type. Books live under `/reading/books/`; lecture routes will be added only when a complete reviewed guide exists.
+Guided Reading supplies continuous source-aligned narratives and is organized by source type. Books live under `/reading/books/`; research-paper guides live as flat siblings under `/reading/literature/`. The first Literature sequence follows the original Hohenberg–Kohn and Kohn–Sham papers while marking later mathematical clarification separately.
 
 The first book route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, as twenty-eight chapters and eighteen appendices. The route overview exposes this forty-six-unit source spine without publishing empty chapter pages. Content begins with Chapter 1 and proceeds through the book in order; appendices are added when the main sequence first needs them.
 

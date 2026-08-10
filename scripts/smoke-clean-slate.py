@@ -53,8 +53,13 @@ MARTIN_PUBLISHED_UNIT_ROUTES = [f"reading/books/martin/{slug}/" for slug in MART
 MARTIN_UNPUBLISHED_UNIT_ROUTES = [route for route in MARTIN_ALL_UNIT_ROUTES if route not in MARTIN_PUBLISHED_UNIT_ROUTES]
 PUBLISHED_CHAPTER_ROUTES = [route for route in MARTIN_PUBLISHED_UNIT_ROUTES if "/chapter-" in route]
 PUBLISHED_APPENDIX_ROUTES = [route for route in MARTIN_PUBLISHED_UNIT_ROUTES if "/appendix-" in route]
+LITERATURE_ROUTES = [
+    "reading/literature/hohenberg-kohn-1964/",
+    "reading/literature/kohn-sham-1965/",
+]
 CANONICAL_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
+    "reading/literature/", *LITERATURE_ROUTES,
 ]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
@@ -73,6 +78,7 @@ for route in [
         representative_units.append(route)
 BROWSER_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *representative_units,
+    "reading/literature/", *LITERATURE_ROUTES,
 ]
 BROWSER_ROUTES = [
     "", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
@@ -134,7 +140,7 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
 
         math_count = 0
-        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES:
+        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in LITERATURE_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
                 "const box=node.getBoundingClientRect();return {width:box.width,height:box.height,"
@@ -357,6 +363,27 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"Part I lacks Chapter links in {mode}")
         if route in MARTIN_PUBLISHED_UNIT_ROUTES and "Core Idea." not in main_text:
             raise AssertionError(f"published Martin unit lacks Core Idea in {mode}: {route}")
+        if route in LITERATURE_ROUTES:
+            if "What the paper established" not in main_text or "DOI 10.1103" not in main_text:
+                raise AssertionError(f"literature guide lacks source result or canonical DOI in {mode}: {route}")
+            figure_metrics = driver.execute_script(
+                "const figure=document.querySelector('figure.paper-argument'),main=document.querySelector('main');"
+                "const f=figure.getBoundingClientRect(),m=main.getBoundingClientRect();return {height:f.height,left:f.left,right:f.right,"
+                "mainLeft:m.left,mainRight:m.right,items:figure.querySelectorAll('ol > li').length,caption:figure.querySelectorAll('figcaption').length};"
+            )
+            if figure_metrics["height"] < 40 or figure_metrics["items"] != 4 or figure_metrics["caption"] != 1:
+                raise AssertionError(f"literature argument diagram is incomplete in {mode}: {route}")
+            if figure_metrics["left"] < figure_metrics["mainLeft"] - 1 or figure_metrics["right"] > figure_metrics["mainRight"] + 1:
+                raise AssertionError(f"literature argument diagram overflows main in {mode}: {route}")
+            math_typography = driver.execute_script(
+                "const display=document.querySelector('.math-display math'),inline=document.querySelector('math.math-inline');"
+                "const ds=getComputedStyle(display),is=getComputedStyle(inline);return {displayLineHeight:ds.lineHeight,displayFont:ds.fontFamily,"
+                "inlineLineHeight:is.lineHeight,sources:document.querySelectorAll('.equation-source').length};"
+            )
+            if math_typography["displayLineHeight"] != "normal" or math_typography["inlineLineHeight"] != "normal":
+                raise AssertionError(f"literature MathML line height is not typography-safe in {mode}: {route}")
+            if "math" not in math_typography["displayFont"].lower() or math_typography["sources"] < 4:
+                raise AssertionError(f"literature guide lacks math-font fallback or equation sources in {mode}: {route}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             raw_href = anchor.get_dom_attribute("href") or ""

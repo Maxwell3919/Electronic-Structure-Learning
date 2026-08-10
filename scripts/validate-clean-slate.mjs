@@ -31,6 +31,7 @@ const theorySlugs = [
 ];
 const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
 const forbiddenCorePartSlugs = [];
+const literatureSlugs = ['hohenberg-kohn-1964', 'kohn-sham-1965'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -45,6 +46,8 @@ const expectedPages = [
   'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
   'src/pages/methods/index.astro', 'src/pages/reading/books/index.astro',
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
+  'src/pages/reading/literature/index.astro',
+  ...literatureSlugs.map((slug) => `src/pages/reading/literature/${slug}/index.astro`),
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
   'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
   ...coreSlugs.map((slug) => `src/pages/core/${slug}/index.astro`),
@@ -56,6 +59,8 @@ const expectedHtml = [
   'index.html', 'methods/index.html',
   'reading/books/index.html', 'reading/books/martin/index.html',
   ...martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
+  'reading/literature/index.html',
+  ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
@@ -63,6 +68,7 @@ const internalRoutes = new Set([
   'core/', ...coreSlugs.map((slug) => `core/${slug}/`),
   '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
   'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/', ...martinRoutes,
+  'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   'methods/', 'computational-tools/', 'reference/',
 ]);
 
@@ -211,6 +217,35 @@ const checkCorePages = (baseDirectory, mode) => {
   assert(count(partVIII, /class="equation-source"/g) >= 6, `${prefix}/part-viii/${extension} lacks nearby canonical equation sources`);
 };
 
+const checkLiteraturePages = (baseDirectory, mode) => {
+  const prefix = mode === 'source' ? 'src/pages/reading/literature' : 'reading/literature';
+  const extension = mode === 'source' ? 'index.astro' : 'index.html';
+  const landing = fs.readFileSync(path.join(baseDirectory, prefix, extension), 'utf8');
+  for (const slug of literatureSlugs) {
+    assert(landing.includes(`/reading/literature/${slug}/`), `${prefix}/${extension} is missing literature guide ${slug}`);
+    const relative = `${prefix}/${slug}/${extension}`;
+    const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
+    assert(text.length > 8000, `${relative} is unexpectedly short`);
+    assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
+    assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
+    assert(text.includes('class="sequence-nav"'), `${relative} lacks literature sequence navigation`);
+    assert(text.includes('class="paper-argument"'), `${relative} lacks an original argument diagram`);
+    assert(text.includes('What the paper established'), `${relative} does not separate source result and boundary`);
+    assert(text.includes('https://doi.org/10.1103/'), `${relative} lacks its canonical APS DOI`);
+    if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
+    else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
+    checkMathMl(text, relative, mode === 'source');
+  }
+  const hk = fs.readFileSync(path.join(baseDirectory, `${prefix}/hohenberg-kohn-1964/${extension}`), 'utf8');
+  for (const marker of ['Eqs. (6)–(8)', 'footnote 12', 'Almost constant density', 'Slowly varying density', 'Fig. 1 on p. B867', 'Fig. 2 on p. B868', 'Levy’s constrained search']) {
+    assert(hk.includes(marker), `${prefix}/hohenberg-kohn-1964/${extension} lacks source-fidelity marker ${marker}`);
+  }
+  const ks = fs.readFileSync(path.join(baseDirectory, `${prefix}/kohn-sham-1965/${extension}`), 'utf8');
+  for (const marker of ['Note added in proof', 'The eigenvalue sum is not the total energy', 'A second branch keeps exact exchange nonlocal', 'not reported', 'Bloch theorem']) {
+    assert(ks.includes(marker), `${prefix}/kohn-sham-1965/${extension} lacks source-fidelity marker ${marker}`);
+  }
+};
+
 const checkReadingManifest = () => {
   const mainRelative = 'src/reading/books/martin.ts';
   const dataDirectory = path.join(root, 'src/reading/books/martin');
@@ -274,6 +309,7 @@ if (sourceMode) {
   for (const slug of theorySlugs) assert(theorySource.includes(`/theory/${slug}/`), `Foundations is missing ${slug}`);
   checkTheoryPages(root, 'source');
   checkCorePages(root, 'source');
+  checkLiteraturePages(root, 'source');
 
   const book = fs.readFileSync(path.join(root, 'src/pages/reading/books/martin/index.astro'), 'utf8');
   for (const marker of ['part.summary', 'part.route', 'Read Part']) {
@@ -313,7 +349,8 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      assert(count(sitemap, /<url>/g) === 95, 'sitemap must contain exactly 95 canonical public routes');
+      const expectedSitemapRoutes = 96 + literatureSlugs.length;
+      assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
       for (const slug of forbiddenCorePartSlugs) assert(!sitemap.includes(`/core/${slug}/`), `sitemap includes unpublished Core ${slug}`);
@@ -347,6 +384,7 @@ if (builtMode) {
     }
     checkTheoryPages(dist, 'built');
     checkCorePages(dist, 'built');
+    checkLiteraturePages(dist, 'built');
 
     for (const slug of forbiddenCorePartSlugs) {
       assert(!fs.existsSync(path.join(dist, `core/${slug}/index.html`)), `unpublished Core route was built: ${slug}`);

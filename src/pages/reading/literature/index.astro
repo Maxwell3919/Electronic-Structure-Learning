@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout
+  title="Literature · Guided Reading"
+  description="Source-faithful guides to foundational and research papers in electronic structure."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Literature</span>
+  </nav>
+
+  <h1>Literature</h1>
+  <p class="lede">
+    A literature guide helps you read the paper that changed the field without replacing it. The paper’s own problem, sequence, equations, evidence, and limits remain the organizing structure.
+  </p>
+  <p>
+    Later clarification is marked as later clarification. For computational papers, guides reconstruct what the authors reported about the physical model, approximations, numerical representation, sampling, and calculated objects; unreported parameters remain unreported.
+  </p>
+
+  <section aria-labelledby="density-foundations">
+    <h2 id="density-foundations">The density-functional foundations</h2>
+    <p>
+      These two papers should be read as a sequence. Hohenberg and Kohn establish why the ground-state density can carry an exact variational problem. Kohn and Sham then show how auxiliary one-electron equations make a useful density calculation possible while leaving exchange and correlation in a density functional.
+    </p>
+    <ol class="section-list source-list">
+      <li>
+        <h3>Hohenberg & Kohn · Inhomogeneous Electron Gas</h3>
+        <p>P. Hohenberg and W. Kohn, <cite>Physical Review</cite> 136, B864–B871 (1964).</p>
+        <p class="item-summary">The original density–potential theorem, density variational principle, and the paper’s own nearly-uniform and slowly-varying approximations.</p>
+        <a href={href('/reading/literature/hohenberg-kohn-1964/')}>Read the Hohenberg–Kohn guide</a>
+      </li>
+      <li>
+        <h3>Kohn & Sham · Self-Consistent Equations</h3>
+        <p>W. Kohn and L. J. Sham, <cite>Physical Review</cite> 140, A1133–A1138 (1965).</p>
+        <p class="item-summary">The route from an unknown density functional to auxiliary orbitals, local exchange–correlation approximations, and a density-dependent self-consistent problem.</p>
+        <a href={href('/reading/literature/kohn-sham-1965/')}>Read the Kohn–Sham guide</a>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="literature-boundary">
+    <h2 id="literature-boundary">Read the source and the Atlas together</h2>
+    <p>
+      <a href={href('/core/part-iv/')}>Core Part IV · Density Functional Theory</a> gives the Atlas’s modern synthesis. These guides instead preserve what each paper argues in its own order, including historical notation and limitations that a modern textbook often reorganizes.
+    </p>
+  </section>
+</BaseLayout>
