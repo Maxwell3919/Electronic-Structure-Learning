@@ -63,10 +63,10 @@ export const synthesis =
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
-          <mi mathvariant="script">A</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mo>⟨</mo><msub><mi>u</mi><mi>x</mi></msub><mo>|</mo><mi>i</mi><msub><mo>∂</mo><mi>x</mi></msub><mo>|</mo><msub><mi>u</mi><mi>x</mi></msub><mo>⟩</mo><mo>,</mo>
-          <mspace width="1em"/><mi>φ</mi><mo>=</mo><mo>∮</mo><mi mathvariant="script">A</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
+          <mi mathvariant="script">A</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mo>⟨</mo><msub><mi>u</mi><mi>x</mi></msub><mo>|</mo><mi mathvariant="normal">i</mi><msub><mo>∂</mo><mi>x</mi></msub><mo>|</mo><msub><mi>u</mi><mi>x</mi></msub><mo>⟩</mo><mo>,</mo>
+          <mspace width="1em"/><mi>φ</mi><mo>=</mo><mo>∮</mo><mi mathvariant="script">A</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi mathvariant="normal">d</mi><mi>x</mi><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\mathcal A(x)=\langle u_x|i\partial_x|u_x\rangle,\qquad \phi=\oint \mathcal A(x)\,dx\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
+        <annotation encoding="application/x-tex">\mathcal A(x)=\langle u_x|\mathrm&#123;i&#125;\partial_x|u_x\rangle,\qquad \phi=\oint \mathcal A(x)\,\mathrm&#123;d&#125;x\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
       </semantics>
     </math>
   </div>
@@ -98,10 +98,10 @@ export const synthesis =
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
-          <mi>Φ</mi><mo>=</mo><msub><mo>∫</mo><mi>S</mi></msub><mi mathvariant="bold">Ω</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi>
-          <mo>=</mo><msub><mo>∮</mo><mrow><mo>∂</mo><mi>S</mi></mrow></msub><mi mathvariant="script">A</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">x</mi><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
+          <mi>Φ</mi><mo>=</mo><msub><mo>∫</mo><mi>S</mi></msub><mi mathvariant="bold">Ω</mi><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">S</mi>
+          <mo>=</mo><msub><mo>∮</mo><mrow><mo>∂</mo><mi>S</mi></mrow></msub><mi mathvariant="script">A</mi><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">x</mi><mspace width="0.4em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>2</mn><mi>π</mi><mo>)</mo><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\Phi=\int_S\boldsymbol\Omega\cdot d\mathbf S=\oint_&#123;\partial S&#125;\boldsymbol\mathcal A\cdot d\mathbf x\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
+        <annotation encoding="application/x-tex">\Phi=\int_S\boldsymbol\Omega\cdot\mathrm&#123;d&#125;\mathbf S=\oint_&#123;\partial S&#125;\boldsymbol\mathcal A\cdot\mathrm&#123;d&#125;\mathbf x\quad(\mathrm&#123;mod&#125;\;2\pi).</annotation>
       </semantics>
     </math>
   </div>
@@ -119,9 +119,9 @@ export const synthesis =
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
-          <mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∫</mo><mi>S</mi></msub><mi mathvariant="bold">Ω</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo>
+          <mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mi>π</mi></mrow></mfrac><msub><mo>∫</mo><mi>S</mi></msub><mi mathvariant="bold">Ω</mi><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">S</mi><mo>∈</mo><mi mathvariant="double-struck">Z</mi><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_S\boldsymbol\Omega\cdot d\mathbf S\in\mathbb Z.</annotation>
+        <annotation encoding="application/x-tex">C=\frac&#123;1&#125;&#123;2\pi&#125;\int_S\boldsymbol\Omega\cdot\mathrm&#123;d&#125;\mathbf S\in\mathbb Z.</annotation>
       </semantics>
     </math>
   </div>
@@ -152,9 +152,9 @@ export const synthesis =
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
-          <msub><mi>Φ</mi><mi>B</mi></msub><mo>=</mo><msub><mo>∫</mo><mi>S</mi></msub><mi mathvariant="bold">B</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">S</mi><mo>=</mo><mo>∮</mo><mi mathvariant="bold">A</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">r</mi><mo>.</mo>
+          <msub><mi>Φ</mi><mi>B</mi></msub><mo>=</mo><msub><mo>∫</mo><mi>S</mi></msub><mi mathvariant="bold">B</mi><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">S</mi><mo>=</mo><mo>∮</mo><mi mathvariant="bold">A</mi><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\Phi_B=\int_S\mathbf B\cdot d\mathbf S=\oint\mathbf A\cdot d\mathbf r.</annotation>
+        <annotation encoding="application/x-tex">\Phi_B=\int_S\mathbf B\cdot\mathrm&#123;d&#125;\mathbf S=\oint\mathbf A\cdot\mathrm&#123;d&#125;\mathbf r.</annotation>
       </semantics>
     </math>
   </div>
@@ -165,11 +165,11 @@ export const synthesis =
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
         <mrow>
-          <msub><mi>γ</mi><mi>AB</mi></msub><mo>=</mo><mfrac><mi>e</mi><mrow><mi>ℏ</mi><mi>c</mi></mrow></mfrac><mo>∮</mo><mi mathvariant="bold">A</mi><mo>·</mo><mi>d</mi><mi mathvariant="bold">r</mi>
+          <msub><mi>γ</mi><mi>AB</mi></msub><mo>=</mo><mfrac><mi>e</mi><mrow><mi>ℏ</mi><mi>c</mi></mrow></mfrac><mo>∮</mo><mi mathvariant="bold">A</mi><mo>·</mo><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi>
           <mo>=</mo><mfrac><mi>e</mi><mrow><mi>ℏ</mi><mi>c</mi></mrow></mfrac><msub><mi>Φ</mi><mi>B</mi></msub><mo>,</mo>
           <mspace width="1em"/><msub><mi>Φ</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mi>h</mi><mi>c</mi></mrow><mi>e</mi></mfrac><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\gamma_&#123;\mathrm&#123;AB&#125;&#125;=\frac&#123;e&#125;&#123;\hbar c&#125;\oint\mathbf A\cdot d\mathbf r=\frac&#123;e&#125;&#123;\hbar c&#125;\Phi_B,\qquad \Phi_0=\frac&#123;hc&#125;&#123;e&#125;.</annotation>
+        <annotation encoding="application/x-tex">\gamma_&#123;\mathrm&#123;AB&#125;&#125;=\frac&#123;e&#125;&#123;\hbar c&#125;\oint\mathbf A\cdot\mathrm&#123;d&#125;\mathbf r=\frac&#123;e&#125;&#123;\hbar c&#125;\Phi_B,\qquad \Phi_0=\frac&#123;hc&#125;&#123;e&#125;.</annotation>
       </semantics>
     </math>
   </div>

@@ -9,13 +9,11 @@ export const sectionLinks = [
 ];
 
 export const modernPerspective = [
-  'The integer quantum Hall effect and a Chern insulator share the same chiral bulk–boundary structure, but their symmetry settings differ: the ordinary QHE uses an external magnetic field, while a Chern insulator realizes a nonzero Chern number without that Landau-level construction. A time-reversal-invariant Z₂ topological insulator is different again because its boundary channels are helical rather than a single set of co-propagating chiral modes.',
-  'Topological protection fixes the net chiral channel count as long as the relevant bulk topological phase is maintained. It does not make every microscopic feature of an edge dispersion universal: termination, electrostatics, reconstruction, and additional trivial edge states can reshape the spectrum while leaving the invariant channel imbalance unchanged.',
-  'For electronic-structure calculations, one edge band on one chosen termination is therefore complementary evidence rather than the bulk invariant itself. The Chern number must be established for the specified occupied subspace, gap, filling, magnetic state, and Hamiltonian; a boundary calculation then tests the corresponding bulk–boundary connectivity.',
+  'The ordinary quantum Hall effect, a Chern insulator, and a time-reversal-invariant Z₂ insulator have related but different boundary structures. Topology fixes a net channel count only for a specified gapped bulk Hamiltonian and occupied subspace; termination can reshape an edge spectrum, so one calculated edge band complements rather than replaces the bulk invariant.',
 ];
 
 export const synthesis =
-  'Appendix Q turns the Chern number of Appendix P into a transport statement. Filled Landau levels produce an insulating bulk, while the boundary necessarily carries one-way states through the bulk gap. Laughlin’s gauge argument explains why Hall conductance is quantized, and the TKNN formulation identifies the integer as a Chern invariant of the bulk bands. The edge-band calculation then shows why the contribution of one chiral channel is independent of its detailed dispersion: the one-dimensional density of states and group velocity cancel, leaving the conductance quantum e²/h. Thus the quantum Hall effect supplies the clearest precedent for the bulk–boundary correspondence used throughout Chapters 25–28.';
+  'Appendix Q turns Appendix P’s Chern number into the chiral-edge transport picture used throughout Chapters 25–28.';
 ---
 
 <section aria-labelledby="section-q-1-quantum-hall-topology">
@@ -71,14 +69,14 @@ export const synthesis =
           <mi>Δ</mi><mi>I</mi><mo>=</mo>
           <mfrac><mi>e</mi><mrow><mn>2</mn><mi>π</mi></mrow></mfrac>
           <msubsup><mo>∫</mo><mi>k</mi><mrow><mi>k</mi><mo>+</mo><mi>Δ</mi><mi>k</mi></mrow></msubsup>
-          <mi>d</mi><mi>k</mi><mspace width="0.2em"/><msub><mi>v</mi><mi>g</mi></msub>
+          <mi mathvariant="normal">d</mi><mi>k</mi><mspace width="0.2em"/><msub><mi>v</mi><mi>g</mi></msub>
           <mo>=</mo>
           <mfrac><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>ℏ</mi></mrow></mfrac>
           <msubsup><mo>∫</mo><mi>k</mi><mrow><mi>k</mi><mo>+</mo><mi>Δ</mi><mi>k</mi></mrow></msubsup>
-          <mi>d</mi><mi>k</mi><mspace width="0.2em"/><mfrac><mrow><mi>d</mi><mi>ε</mi></mrow><mrow><mi>d</mi><mi>k</mi></mrow></mfrac>
+          <mi mathvariant="normal">d</mi><mi>k</mi><mspace width="0.2em"/><mfrac><mrow><mi mathvariant="normal">d</mi><mi>ε</mi></mrow><mrow><mi mathvariant="normal">d</mi><mi>k</mi></mrow></mfrac>
           <mo>=</mo><mfrac><mi>e</mi><mi>h</mi></mfrac><mi>Δ</mi><msub><mi>E</mi><mi>F</mi></msub><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\Delta I=\frac&#123;e&#125;&#123;2\pi&#125;\int_k^&#123;k+\Delta k&#125;dk\,v_g=\frac&#123;e&#125;&#123;2\pi\hbar&#125;\int_k^&#123;k+\Delta k&#125;dk\,\frac&#123;d\varepsilon&#125;&#123;dk&#125;=\frac&#123;e&#125;&#123;h&#125;\Delta E_F.</annotation>
+        <annotation encoding="application/x-tex">\Delta I=\frac&#123;e&#125;&#123;2\pi&#125;\int_k^&#123;k+\Delta k&#125;\mathrm&#123;d&#125;k\,v_g=\frac&#123;e&#125;&#123;2\pi\hbar&#125;\int_k^&#123;k+\Delta k&#125;\mathrm&#123;d&#125;k\,\frac&#123;\mathrm&#123;d&#125;\varepsilon&#125;&#123;\mathrm&#123;d&#125;k&#125;=\frac&#123;e&#125;&#123;h&#125;\Delta E_F.</annotation>
       </semantics>
     </math>
   </div>

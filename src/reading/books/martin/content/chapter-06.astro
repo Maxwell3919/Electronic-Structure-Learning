@@ -53,14 +53,14 @@ export const synthesis =
       <semantics>
         <mrow>
           <msub><mi>E</mi><mi>TFD</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo>
-          <msub><mi>C</mi><mn>1</mn></msub><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msup><mi>n</mi><mfrac><mn>5</mn><mn>3</mn></mfrac></msup>
-          <mo>+</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mi>n</mi>
-          <mo>+</mo><msub><mi>C</mi><mn>2</mn></msub><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msup><mi>n</mi><mfrac><mn>4</mn><mn>3</mn></mfrac></msup>
+          <msub><mi>C</mi><mn>1</mn></msub><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msup><mi>n</mi><mfrac><mn>5</mn><mn>3</mn></mfrac></msup>
+          <mo>+</mo><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mi>n</mi>
+          <mo>+</mo><msub><mi>C</mi><mn>2</mn></msub><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msup><mi>n</mi><mfrac><mn>4</mn><mn>3</mn></mfrac></msup>
           <mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
-          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
           <mfrac><mrow><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mi>n</mi><mo>(</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi>r</mi><mo>−</mo><msup><mi>r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;TFD&#125;&#125;[n]=C_1\int d^3r\,n^&#123;5/3&#125;+\int d^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;n+C_2\int d^3r\,n^&#123;4/3&#125;+\frac&#123;1&#125;&#123;2&#125;\int d^3r\,d^3r'\frac&#123;n(r)n(r')&#125;&#123;|r-r'|&#125;.</annotation>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;TFD&#125;&#125;[n]=C_1\int \mathrm&#123;d&#125;^3r\,n^&#123;5/3&#125;+\int \mathrm&#123;d&#125;^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;n+C_2\int \mathrm&#123;d&#125;^3r\,n^&#123;4/3&#125;+\frac&#123;1&#125;&#123;2&#125;\int \mathrm&#123;d&#125;^3r\,\mathrm&#123;d&#125;^3r'\frac&#123;n(r)n(r')&#125;&#123;|r-r'|&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -71,11 +71,11 @@ export const synthesis =
     <math display="block" aria-label="density normalization and Euler condition for constrained minimization">
       <semantics>
         <mrow>
-          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo><mi>N</mi>
+          <mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo><mi>N</mi>
           <mo>,</mo><mspace width="1em"></mspace>
           <mfrac><mrow><mi>δ</mi><mi>E</mi><mo>[</mo><mi>n</mi><mo>]</mo></mrow><mrow><mi>δ</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo></mrow></mfrac><mo>=</mo><mi>μ</mi><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">\int d^3r\,n(r)=N,\qquad \frac&#123;\delta E[n]&#125;&#123;\delta n(r)&#125;=\mu.</annotation>
+        <annotation encoding="application/x-tex">\int \mathrm&#123;d&#125;^3r\,n(r)=N,\qquad \frac&#123;\delta E[n]&#125;&#123;\delta n(r)&#125;=\mu.</annotation>
       </semantics>
     </math>
   </div>
@@ -130,9 +130,9 @@ export const synthesis =
           <msub><mi>F</mi><mi>HK</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><mi>T</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mi>int</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
           <mo>,</mo><mspace width="1em"></mspace>
           <msub><mi>E</mi><mi>v</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><msub><mi>F</mi><mi>HK</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
-          <mo>+</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
+          <mo>+</mo><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">F_&#123;\mathrm&#123;HK&#125;&#125;[n]=T[n]+E_&#123;\mathrm&#123;int&#125;&#125;[n],\qquad E_v[n]=F_&#123;\mathrm&#123;HK&#125;&#125;[n]+\int d^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;(r)n(r)+E_&#123;II&#125;.</annotation>
+        <annotation encoding="application/x-tex">F_&#123;\mathrm&#123;HK&#125;&#125;[n]=T[n]+E_&#123;\mathrm&#123;int&#125;&#125;[n],\qquad E_v[n]=F_&#123;\mathrm&#123;HK&#125;&#125;[n]+\int \mathrm&#123;d&#125;^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;(r)n(r)+E_&#123;II&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -191,10 +191,10 @@ export const synthesis =
           <msub><mi>E</mi><mn>0</mn></msub><mo>=</mo>
           <munder><mi>min</mi><mrow><mi>n</mi><mo>∈</mo><msub><mi>D</mi><mi>N</mi></msub></mrow></munder>
           <mrow><mo>&#123;</mo><msub><mi>F</mi><mi>LL</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
-          <mo>+</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mi>n</mi><mo>&#125;</mo></mrow>
+          <mo>+</mo><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mi>n</mi><mo>&#125;</mo></mrow>
           <mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">E_0=\min_&#123;n\in D_N&#125;\left\&#123;F_&#123;\mathrm&#123;LL&#125;&#125;[n]+\int d^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;n\right\&#125;+E_&#123;II&#125;.</annotation>
+        <annotation encoding="application/x-tex">E_0=\min_&#123;n\in D_N&#125;\left\&#123;F_&#123;\mathrm&#123;LL&#125;&#125;[n]+\int \mathrm&#123;d&#125;^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;n\right\&#125;+E_&#123;II&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -295,11 +295,11 @@ export const synthesis =
         <mrow>
           <mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>≥</mo><mn>0</mn>
           <mo>,</mo><mspace width="0.8em"></mspace>
-          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>=</mo><mi>N</mi>
+          <mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>=</mo><mi>N</mi>
           <mo>,</mo><mspace width="0.8em"></mspace>
-          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msup><mrow><mo>|</mo><mi>∇</mi><msqrt><mi>n</mi></msqrt><mo>|</mo></mrow><mn>2</mn></msup><mo>&lt;</mo><mi>∞</mi><mo>.</mo>
+          <mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msup><mrow><mo>|</mo><mi>∇</mi><msqrt><mi>n</mi></msqrt><mo>|</mo></mrow><mn>2</mn></msup><mo>&lt;</mo><mi>∞</mi><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">n(r)\ge0,\qquad\int d^3r\,n=N,\qquad\int d^3r\,|\nabla\sqrt&#123;n&#125;|^2&lt;\infty.</annotation>
+        <annotation encoding="application/x-tex">n(r)\ge0,\qquad\int \mathrm&#123;d&#125;^3r\,n=N,\qquad\int \mathrm&#123;d&#125;^3r\,|\nabla\sqrt&#123;n&#125;|^2&lt;\infty.</annotation>
       </semantics>
     </math>
   </div>

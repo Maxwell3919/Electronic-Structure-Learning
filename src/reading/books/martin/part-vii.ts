@@ -26,6 +26,6 @@ export const partVII: MartinReadingPart = {
   numeral: "VII",
   title: "Appendices",
   summary: "Part VII collects derivations, formulas, numerical tools, and physical background that support the main chapters but would interrupt their central narrative.",
-  progression: "The appendices range from functional calculus, exchange–correlation formulas, adiabatic separation, response theory, electrostatics, forces, and stress to scattering, special functions, numerical algorithms, relativity, Berry geometry, the quantum Hall effect, and a publication-era map of electronic-structure codes.",
+  progression: "The source contains Appendices A–R as a broad technical reference. This deep-reading sequence follows O–Q because they complete the main book’s relativistic and topological argument: Dirac and spin–orbit structure lead into Berry geometry, then the quantum Hall effect supplies the clearest bulk–boundary example. The remaining technical appendices are best consulted from the chapters that invoke them rather than presented here as unfinished reading units.",
   units: [appendixA, appendixB, appendixC, appendixD, appendixE, appendixF, appendixG, appendixH, appendixI, appendixJ, appendixK, appendixL, appendixM, appendixN, appendixO, appendixP, appendixQ, appendixR],
 };

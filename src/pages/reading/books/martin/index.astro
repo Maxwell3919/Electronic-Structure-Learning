@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { martinParts } from '../../../../reading/books/martin';
+import { martinChapterSlugs } from '../../../../reading/books/martin/chapter-content';
+import { martinCanonicalSource } from '../../../../reading/books/martin/source-reading';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -26,6 +28,9 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>
     The guide preserves Martin’s sequence in original prose. This page identifies each Part’s role; Part pages show the progression among chapters, and chapter pages carry the scientific argument.
   </p>
+  <p class="paper-meta">
+    Source: Richard M. Martin, <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition. <a href={martinCanonicalSource.href}>{martinCanonicalSource.label}</a>.
+  </p>
   <p>
     Use <a href={href('/theory/')}>Foundations</a> when a prerequisite interrupts the source sequence.
   </p>
@@ -37,7 +42,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
         <h3 id={part.id}>Part {part.numeral} · {part.title}</h3>
         <p>{part.summary}</p>
         <ul>
-          {part.units.map((unit) => (
+          {part.units.filter((unit) => martinChapterSlugs.includes(unit.slug)).map((unit) => (
             <li>{unit.kind === 'appendix' ? `Appendix ${unit.number}` : `Chapter ${unit.number}`}: {unit.title}</li>
           ))}
         </ul>

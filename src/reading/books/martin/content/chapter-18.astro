@@ -50,12 +50,15 @@ export const synthesis =
         <mrow>
           <mover><mi>ρ</mi><mo>^</mo></mover><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>M</mi></munderover><mo>|</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>⟩</mo><msub><mi>f</mi><mi>i</mi></msub><mo>⟨</mo><msub><mi>ψ</mi><mi>i</mi></msub><mo>|</mo>
           <mo>,</mo><mspace width="1em"/>
-          <mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>M</mi></munderover><msubsup><mi>ψ</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>f</mi><mi>i</mi></msub><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo>
+          <mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi>M</mi></munderover><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>f</mi><mi>i</mi></msub><msubsup><mi>ψ</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo>
         </mrow>
-        <annotation encoding="application/x-tex">&#92;hat&#123;&#92;rho&#125;=&#92;sum_i^M |&#92;psi_i&#92;rangle f_i&#92;langle&#92;psi_i|,&#92;qquad &#92;rho(&#92;mathbf r,&#92;mathbf r')=&#92;sum_i^M &#92;psi_i^*(&#92;mathbf r)f_i&#92;psi_i(&#92;mathbf r')</annotation>
+        <annotation encoding="application/x-tex">&#92;hat&#123;&#92;rho&#125;=&#92;sum_i^M |&#92;psi_i&#92;rangle f_i&#92;langle&#92;psi_i|,&#92;qquad &#92;rho(&#92;mathbf r,&#92;mathbf r')=&#92;langle&#92;mathbf r|&#92;hat&#123;&#92;rho&#125;|&#92;mathbf r'&#92;rangle=&#92;sum_i^M &#92;psi_i(&#92;mathbf r)f_i&#92;psi_i^*(&#92;mathbf r')</annotation>
       </semantics>
     </math>
   </div>
+  <p>
+    The coordinate kernel is defined here in the usual order, ρ(<strong>r</strong>, <strong>r</strong>′) = ⟨<strong>r</strong>|ρ̂|<strong>r</strong>′⟩. Its diagonal gives the density; its off-diagonal entries record coherence between two positions and are the information that can decay with their separation.
+  </p>
   <p>
     with the Fermi occupations <em>f</em><sub>i</sub>. At zero temperature in an insulator this becomes the projector onto the occupied subspace. The decisive fact is spatial decay: Martin emphasizes exponential decay of the density matrix for insulators at zero temperature and for metals at nonzero temperature, whereas a three-dimensional metal at zero temperature has a much slower power-law tail with Fermi-surface oscillations. The localization length is therefore a property of the electronic state and temperature, not a universal numerical constant.
   </p>
@@ -71,7 +74,7 @@ export const synthesis =
     </math>
   </div>
   <p>
-    and the electron density is the diagonal element <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">n(&#92;mathbf r)=&#92;rho(&#92;mathbf r,&#92;mathbf r)</annotation></semantics></math></span>. In Kohn–Sham theory this supplies the density-dependent terms needed to reconstruct the total energy and potential.
+    and the electron density is the diagonal element <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" class="math-inline"><semantics><mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">n(&#92;mathbf r)=&#92;rho(&#92;mathbf r,&#92;mathbf r)</annotation></semantics></math></span>. In Kohn–Sham theory this supplies the density-dependent terms needed to reconstruct the total energy and potential.
   </p>
   <p>
     At zero temperature the same occupied projector can be represented by localized Wannier-like functions,
@@ -116,8 +119,8 @@ export const synthesis =
   <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
-        <mrow><msub><mi>n</mi><mi>m</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>π</mi></mfrac><mi>Im</mi><msub><mi>G</mi><mrow><mi>m</mi><mi>m</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>+</mo><mi>i</mi><mi>δ</mi><mo>)</mo></mrow>
-        <annotation encoding="application/x-tex">n_m(&#92;varepsilon)=-&#92;frac&#123;1&#125;&#123;&#92;pi&#125;&#92;operatorname&#123;Im&#125;G_&#123;mm&#125;(&#92;varepsilon+i&#92;delta)</annotation>
+        <mrow><msub><mi>n</mi><mi>m</mi></msub><mo>(</mo><mi>ε</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mi>π</mi></mfrac><mi>Im</mi><msub><mi>G</mi><mrow><mi>m</mi><mi>m</mi></mrow></msub><mo>(</mo><mi>ε</mi><mo>+</mo><mi mathvariant="normal">i</mi><mi>δ</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">n_m(&#92;varepsilon)=-&#92;frac&#123;1&#125;&#123;&#92;pi&#125;&#92;operatorname&#123;Im&#125;G_&#123;mm&#125;(&#92;varepsilon+&#92;mathrm&#123;i&#125;&#92;delta)</annotation>
       </semantics>
     </math>
   </div>
@@ -136,16 +139,19 @@ export const synthesis =
     so the desired diagonal Green function becomes a continued fraction. Only the local region reached by the finite recursion depth enters. Moments of the local spectrum provide a related route. The price is termination or moment-reconstruction error, and off-diagonal density-matrix elements required for bond order and forces are more difficult than local densities of states.
   </p>
   <p>
-    The force illustrates why off-diagonal information matters:
+    The eigenvalue-sum contribution to a force illustrates why off-diagonal information matters:
   </p>
   <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
-        <mrow><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mi>Tr</mi><mo>&#123;</mo><mover><mi>ρ</mi><mo>^</mo></mover><mfrac><mrow><mo>∂</mo><mover><mi>H</mi><mo>^</mo></mover></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>&#125;</mo></mrow>
-        <annotation encoding="application/x-tex">&#92;mathbf F_I=-&#92;mathrm&#123;Tr&#125;&#92;&#123;&#92;hat&#123;&#92;rho&#125;&#92;frac&#123;&#92;partial&#92;hat H&#125;&#123;&#92;partial&#92;mathbf R_I&#125;&#92;&#125;</annotation>
+        <mrow><msubsup><mi mathvariant="bold">F</mi><mi>I</mi><mtext>band</mtext></msubsup><mo>=</mo><mo>−</mo><mi>Tr</mi><mo>&#123;</mo><mover><mi>ρ</mi><mo>^</mo></mover><mfrac><mrow><mo>∂</mo><mover><mi>H</mi><mo>^</mo></mover></mrow><mrow><mo>∂</mo><msub><mi mathvariant="bold">R</mi><mi>I</mi></msub></mrow></mfrac><mo>&#125;</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;mathbf F_I^&#123;&#92;mathrm&#123;band&#125;&#125;=-&#92;mathrm&#123;Tr&#125;&#92;&#123;&#92;hat&#123;&#92;rho&#125;&#92;frac&#123;&#92;partial&#92;hat H&#125;&#123;&#92;partial&#92;mathbf R_I&#125;&#92;&#125;</annotation>
       </semantics>
     </math>
   </div>
+  <p>
+    Read the derivative ∂Ĥ/∂<strong>R</strong><sub>I</sub> as the change in the one-particle Hamiltonian produced by moving nucleus <em>I</em>. Under the stationary-orbital, fixed-representation conditions used for this term, the trace contracts that change with the occupied density operator and sums the band contribution from every occupied component. It is not automatically the complete physical force: the chosen total-energy expression can also contribute ionic and double-counting derivatives, while a moving nonorthogonal localized basis introduces Pulay or overlap terms. A diagonal local Green function can recover a local density of states, but even the displayed contraction generally needs off-diagonal density-matrix elements that connect the Hamiltonian derivative across neighboring basis functions.
+  </p>
   <p>
     <strong>Divide and conquer.</strong> Another direct construction partitions the system into small interiors plus buffer regions. Each buffered subsystem can be solved with an ordinary cubic method, but only the converged interior density and energy are retained. If both interior and buffer sizes remain bounded as the full system grows, the number of local solves grows in proportion to N and the overall algorithm is asymptotically linear. The buffer size is therefore an accuracy parameter tied to the physical localization length.
   </p>
@@ -289,8 +295,8 @@ export const synthesis =
   <div class="math-display" tabindex="0">
     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
       <semantics>
-        <mrow><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow></munder><msubsup><mi>Φ</mi><mi>i</mi><mo>*</mo></msubsup><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>K</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>Φ</mi><mi>j</mi></msub><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow>
-        <annotation encoding="application/x-tex">&#92;rho(&#92;mathbf r,&#92;mathbf r')=&#92;sum_&#123;ij&#125;&#92;Phi_i^*(&#92;mathbf r)K_&#123;ij&#125;&#92;Phi_j(&#92;mathbf r')</annotation>
+        <mrow><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>,</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow></munder><msub><mi>Φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>K</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msubsup><mi>Φ</mi><mi>j</mi><mo>*</mo></msubsup><mo>(</mo><msup><mi mathvariant="bold">r</mi><mo>′</mo></msup><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">&#92;rho(&#92;mathbf r,&#92;mathbf r')=&#92;sum_&#123;ij&#125;&#92;Phi_i(&#92;mathbf r)K_&#123;ij&#125;&#92;Phi_j^*(&#92;mathbf r')</annotation>
       </semantics>
     </math>
   </div>

@@ -87,12 +87,12 @@ export const synthesis =
       <semantics>
         <mrow>
           <mi>E</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><msub><mi>T</mi><mi>s</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
-          <mo>+</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>+</mo><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
           <mo>+</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
           <mo>+</mo><msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
           <mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">E[n]=T_s[n]+\int d^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;(r)n(r)+E_H[n]+E_&#123;xc&#125;[n]+E_&#123;II&#125;.</annotation>
+        <annotation encoding="application/x-tex">E[n]=T_s[n]+\int \mathrm&#123;d&#125;^3r\,v_&#123;\mathrm&#123;ext&#125;&#125;(r)n(r)+E_H[n]+E_&#123;xc&#125;[n]+E_&#123;II&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -166,10 +166,10 @@ export const synthesis =
       <semantics>
         <mrow>
           <msub><mi>v</mi><mi>H</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo>
-          <mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
+          <mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><msup><mi>r</mi><mo>′</mo></msup>
           <mfrac><mrow><mi>n</mi><mo>(</mo><msup><mi>r</mi><mo>′</mo></msup><mo>)</mo></mrow><mrow><mo>|</mo><mi>r</mi><mo>−</mo><msup><mi>r</mi><mo>′</mo></msup><mo>|</mo></mrow></mfrac><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">v_H(r)=\int d^3r'\,\frac&#123;n(r')&#125;&#123;|r-r'|&#125;.</annotation>
+        <annotation encoding="application/x-tex">v_H(r)=\int \mathrm&#123;d&#125;^3r'\,\frac&#123;n(r')&#125;&#123;|r-r'|&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -224,10 +224,10 @@ export const synthesis =
           <mi>E</mi><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mo></mo></munderover><msub><mi>f</mi><mi>i</mi></msub><msub><mi>ε</mi><mi>i</mi></msub>
           <mo>−</mo><msub><mi>E</mi><mi>H</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
           <mo>+</mo><msub><mi>E</mi><mi>xc</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo>
-          <mo>−</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><msub><mi>v</mi><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>−</mo><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo><msub><mi>v</mi><mi>xc</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo>
           <mo>+</mo><msub><mi>E</mi><mi>II</mi></msub><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">E=\sum_i f_i\epsilon_i-E_H[n]+E_&#123;xc&#125;[n]-\int d^3r\,n(r)v_&#123;xc&#125;(r)+E_&#123;II&#125;.</annotation>
+        <annotation encoding="application/x-tex">E=\sum_i f_i\epsilon_i-E_H[n]+E_&#123;xc&#125;[n]-\int \mathrm&#123;d&#125;^3r\,n(r)v_&#123;xc&#125;(r)+E_&#123;II&#125;.</annotation>
       </semantics>
     </math>
   </div>
@@ -313,11 +313,11 @@ export const synthesis =
       <semantics>
         <mrow>
           <msub><mi>F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><mfrac><mrow><mi>∂</mi><mi>E</mi></mrow><mrow><mi>∂</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac>
-          <mo>=</mo><mo>−</mo><mo>∫</mo><msup><mi>d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
+          <mo>=</mo><mo>−</mo><mo>∫</mo><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi>r</mi><mi>n</mi><mo>(</mo><mi>r</mi><mo>)</mo>
           <mfrac><mrow><mi>∂</mi><msub><mi>v</mi><mi>ext</mi></msub><mo>(</mo><mi>r</mi><mo>)</mo></mrow><mrow><mi>∂</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac>
           <mo>−</mo><mfrac><mrow><mi>∂</mi><msub><mi>E</mi><mi>II</mi></msub></mrow><mrow><mi>∂</mi><msub><mi>R</mi><mi>I</mi></msub></mrow></mfrac><mo>.</mo>
         </mrow>
-        <annotation encoding="application/x-tex">F_I=-\frac&#123;\partial E&#125;&#123;\partial R_I&#125;=-\int d^3r\,n(r)\frac&#123;\partial v_&#123;\mathrm&#123;ext&#125;&#125;(r)&#125;&#123;\partial R_I&#125;-\frac&#123;\partial E_&#123;II&#125;&#125;&#123;\partial R_I&#125;.</annotation>
+        <annotation encoding="application/x-tex">F_I=-\frac&#123;\partial E&#125;&#123;\partial R_I&#125;=-\int \mathrm&#123;d&#125;^3r\,n(r)\frac&#123;\partial v_&#123;\mathrm&#123;ext&#125;&#125;(r)&#125;&#123;\partial R_I&#125;-\frac&#123;\partial E_&#123;II&#125;&#125;&#123;\partial R_I&#125;.</annotation>
       </semantics>
     </math>
   </div>
