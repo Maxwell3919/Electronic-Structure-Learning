@@ -113,13 +113,16 @@ dd { margin: 0.25rem 0 0 1.25rem; }
   margin-inline: auto;
   color: #161616;
   font-family:
+    math,
     "STIX Two Math",
     "Cambria Math",
     "Latin Modern Math",
+    "Noto Sans Math",
     "Times New Roman",
     serif;
   font-size: 1.28rem;
-  line-height: 1.45;
+  line-height: normal;
+  math-style: normal;
 }
 
 .math-display:focus-visible {
@@ -132,15 +135,18 @@ math.math-inline {
   margin-inline: 0.06em;
   color: #161616;
   font-family:
+    math,
     "STIX Two Math",
     "Cambria Math",
     "Latin Modern Math",
+    "Noto Sans Math",
     "Times New Roman",
     serif;
   font-size: 1em;
-  line-height: 1;
-  vertical-align: -0.12em;
+  line-height: normal;
+  vertical-align: -0.08em;
   white-space: nowrap;
+  math-style: compact;
 }
 
 math annotation { display: none; }
@@ -324,6 +330,15 @@ figcaption {
 .core-diagram .diagram-fermi { stroke: #8a5a24; stroke-width: 1.5; stroke-dasharray: 6 5; }
 
 .repair-links { margin-top: 2.3rem; color: #454545; }
+.equation-source {
+  margin-top: -0.7rem;
+  color: #666666;
+  font-size: 0.86rem;
+}
+.source-map { margin-bottom: 1.6rem; }
+.source-map dt { margin-top: 0.75rem; font-size: 0.95rem; }
+.source-map dd { color: #555555; font-size: 0.92rem; }
+.further-reading li + li { margin-top: 0.7rem; }
 .sequence-nav {
   display: flex;
   justify-content: space-between;
