@@ -28,6 +28,7 @@ const fixedRoutes = [
   '/reading/literature/hohenberg-kohn-1964/',
   '/reading/literature/kohn-sham-1965/',
   '/reading/literature/levy-1979/',
+  '/reading/literature/hedin-1965/',
   '/methods/',
   '/computational-tools/',
   '/reference/',

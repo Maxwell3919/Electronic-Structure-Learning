@@ -67,6 +67,7 @@ The production site is a static Plain Astro build. It contains the Home page, a 
 - `/reading/literature/hohenberg-kohn-1964/`
 - `/reading/literature/kohn-sham-1965/`
 - `/reading/literature/levy-1979/`
+- `/reading/literature/hedin-1965/`
 - `/reading/martin/` — compatibility redirect to the canonical Martin route
 - `/methods/`
 - `/computational-tools/`

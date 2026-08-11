@@ -51,10 +51,25 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </ol>
   </section>
 
+  <section aria-labelledby="many-body-spectra">
+    <h2 id="many-body-spectra">One-particle spectra and screened interactions</h2>
+    <p>
+      Density-functional theory is a ground-state reformulation. Hedin instead asks how an interacting system propagates an added electron or hole, how the electronic medium screens the Coulomb interaction, and how those coupled objects can become a controlled approximation.
+    </p>
+    <ol class="section-list source-list">
+      <li>
+        <h3>Hedin · One-Particle Green Function</h3>
+        <p>L. Hedin, <cite>Physical Review</cite> 139, A796–A823 (1965).</p>
+        <p class="item-summary">The screened-interaction expansion, the coupled relations now called Hedin’s equations, the first GW and COHSEX approximations, and the electron-gas calculation actually reported.</p>
+        <a href={href('/reading/literature/hedin-1965/')}>Read the Hedin guide</a>
+      </li>
+    </ol>
+  </section>
+
   <section aria-labelledby="literature-boundary">
     <h2 id="literature-boundary">Read the source and the Atlas together</h2>
     <p>
-      <a href={href('/core/part-iv/')}>Core Part IV · Density Functional Theory</a> gives the Atlas’s modern synthesis. These guides instead preserve what each paper argues in its own order, including historical notation and limitations that a modern textbook often reorganizes.
+      <a href={href('/core/part-iv/')}>Core Part IV · Density Functional Theory</a> and <a href={href('/core/part-viii/')}>Core Part VIII · Excitations and Spectra</a> give the Atlas’s modern synthesis. These guides instead preserve what each paper argues in its own order, including historical notation and limitations that a modern textbook often reorganizes.
     </p>
   </section>
 </BaseLayout>

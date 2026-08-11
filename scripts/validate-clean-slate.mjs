@@ -31,7 +31,7 @@ const theorySlugs = [
 ];
 const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
 const forbiddenCorePartSlugs = [];
-const literatureSlugs = ['hohenberg-kohn-1964', 'kohn-sham-1965', 'levy-1979'];
+const literatureSlugs = ['hohenberg-kohn-1964', 'kohn-sham-1965', 'levy-1979', 'hedin-1965'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -251,7 +251,7 @@ const checkLiteraturePages = (baseDirectory, mode) => {
     assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
     assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
     assert(text.includes('class="sequence-nav"'), `${relative} lacks literature sequence navigation`);
-    assert(text.includes('class="paper-argument"'), `${relative} lacks an original argument diagram`);
+    assert(/class="[^"]*\bpaper-argument\b[^"]*"/.test(text), `${relative} lacks an original argument diagram`);
     assert(text.includes('What the paper established'), `${relative} does not separate source result and boundary`);
     assert(text.includes('https://doi.org/10.'), `${relative} lacks its canonical DOI`);
     if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
@@ -269,6 +269,10 @@ const checkLiteraturePages = (baseDirectory, mode) => {
   const levy = fs.readFileSync(path.join(baseDirectory, `${prefix}/levy-1979/${extension}`), 'utf8');
   for (const marker of ['Eqs. (1)–(4)', 'Eq. (5)', 'Theorems I and II', 'Eqs. (22)–(27)', 'pure-state constrained search', 'N</em>-representability']) {
     assert(levy.includes(marker), `${prefix}/levy-1979/${extension} lacks source-fidelity marker ${marker}`);
+  }
+  const hedin = fs.readFileSync(path.join(baseDirectory, `${prefix}/hedin-1965/${extension}`), 'utf8');
+  for (const marker of ['Eqs. (2)–(5)', 'Eqs. (A20)–(A25)', 'Eqs. (A27)–(A30)', 'Eqs. (18)–(20)', 'Eqs. (41)–(43)', 'Not reported in the paper']) {
+    assert(hedin.includes(marker), `${prefix}/hedin-1965/${extension} lacks source-fidelity marker ${marker}`);
   }
 };
 
