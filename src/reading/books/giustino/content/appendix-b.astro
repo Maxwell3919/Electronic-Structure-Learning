@@ -1,0 +1,61 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'orbital-variables', label: 'Why orbitals return' },
+  { id: 'constrained-density', label: 'Vary orbitals under orthonormality constraints' },
+  { id: 'ks-equation', label: 'The common local Kohn–Sham potential' },
+  { id: 'interpretation', label: 'Auxiliary orbitals and physical output' },
+];
+export const synthesis = 'Appendix B turns the Kohn–Sham energy functional into auxiliary orbital equations through constrained variation. The orbitals provide the density and noninteracting kinetic energy; functional derivatives create one common local effective potential. This construction is distinct from the Hohenberg–Kohn existence result and becomes a practical method only after exchange–correlation is approximated and the nonlinear density cycle is solved.';
+---
+
+<section aria-labelledby="orbital-variables">
+  <h2 id="orbital-variables">Why orbitals return</h2>
+  <p>
+    Density-functional theory chose the density as its ground-state variable, yet the largest unknown contribution to the universal functional is kinetic. Kohn–Sham theory handles a tractable part by introducing an auxiliary noninteracting system with the same ground-state density, when that representation is available. Its occupied orbitals build both the density and the auxiliary kinetic energy explicitly.
+  </p>
+  <p>
+    Orbitals therefore return as variables of a construction inside density-functional theory. They are not a declaration that the physical electrons no longer interact, nor are they a reconstruction of the full many-electron wavefunction. Their task is to make a difficult functional component calculable while preserving the target density.
+  </p>
+</section>
+
+<section aria-labelledby="constrained-density">
+  <h2 id="constrained-density">Vary orbitals under orthonormality constraints</h2>
+  <p>
+    The energy is rewritten in terms of occupied auxiliary orbitals, whose squared magnitudes sum to the density. During the variation, changing an orbital generally changes that density; the constraints preserve orbital orthonormality and total occupation, not the density point by point. The chain rule converts functional derivatives with respect to the changing density into derivatives with respect to each orbital, while a multiplier matrix enforces the occupied-subspace constraints.
+  </p>
+  <p>
+    This route matters because every orbital contributes to one shared density. Varying any one of them changes the Hartree and exchange–correlation potentials felt by all of them. Diagonalizing the multiplier matrix chooses canonical orbitals without changing the occupied density.
+  </p>
+</section>
+
+<section aria-labelledby="ks-equation">
+  <h2 id="ks-equation">The common local Kohn–Sham potential</h2>
+  <p>
+    The constrained stationary condition gives one local effective one-particle equation for every auxiliary orbital:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Kohn Sham one particle equation and effective potential">
+      <semantics>
+        <mrow><mo>[</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msup><mo>∇</mo><mn>2</mn></msup><mo>+</mo><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>v</mi><mtext>H</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>v</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>]</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>φ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">\left[-\frac12\nabla^2+v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)+v_&#123;\mathrm&#123;H&#125;&#125;[n](\mathbf&#123;r&#125;)+v_&#123;\mathrm&#123;xc&#125;&#125;[n](\mathbf&#123;r&#125;)\right]\phi_i(\mathbf&#123;r&#125;)=\varepsilon_i\phi_i(\mathbf&#123;r&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the four pieces on the left as auxiliary kinetic energy, the declared external environment, classical density–density repulsion, and the functional derivative of exchange–correlation energy. The latter two depend on the density constructed from the occupied orbitals. This is why the equation resembles a linear eigenproblem only after a density has been supplied; the closed Kohn–Sham problem is nonlinear.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Appendix B, Eqs. B.1–B.11. The exact-DFT and auxiliary-representability boundary is developed in <a href={href('/core/part-iv/')}>Core IV · Density Functional Theory</a>.</p>
+</section>
+
+<section aria-labelledby="interpretation">
+  <h2 id="interpretation">Auxiliary orbitals and physical output</h2>
+  <p>
+    The construction is designed to reproduce the interacting ground-state density and energy through an exact functional decomposition. It does not make every canonical eigenvalue an exact charged or neutral excitation energy. The density, energy, and their justified derivatives are the primary ground-state objects; spectral interpretations require the additional theory and boundaries developed later in the Atlas.
+  </p>
+  <p>
+    The appendix derives the equation but does not choose an exchange–correlation approximation, finite representation, or self-consistent solver. Those are separate decisions. Keeping them separate makes it possible to ask whether an error came from the functional, the basis or grid, the core treatment, the nonlinear solution, or the physical model itself.
+  </p>
+</section>

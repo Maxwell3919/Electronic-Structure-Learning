@@ -1,0 +1,72 @@
+---
+export const sectionLinks = [
+  { id: 'harmonic-limit', label: 'Why the harmonic approximation works locally' },
+  { id: 'normal-modes', label: 'Curvature becomes a normal-mode problem' },
+  { id: 'crystal-waves', label: 'Translation organizes crystal vibrations' },
+  { id: 'how-computed', label: 'Finite displacement and linear response' },
+  { id: 'reported-realization', label: 'What the model calculations establish' },
+];
+export const synthesis = 'Chapter 7 builds lattice dynamics from the local curvature of the Born–Oppenheimer surface. Mass weighting turns coupled Cartesian equations into normal modes; crystal translation labels those modes by q and produces branches. Finite displacement and DFPT are computational routes to the same harmonic force-constant or dynamical-matrix object, not competing physical theories.';
+---
+
+<section aria-labelledby="harmonic-limit">
+  <h2 id="harmonic-limit">Why the harmonic approximation works locally</h2>
+  <p>
+    The N₂ binding curve first appeared as a global structure problem. Chapter 7 zooms into the narrow energy window sampled around its minimum. There the linear term vanishes and the quadratic term dominates, so the bond behaves like a spring with stiffness equal to the second derivative of the energy. The limiting picture is powerful precisely because its locality is visible in Figure 7.1.
+  </p>
+  <p>
+    If temperature or excitation makes the molecule explore farther from equilibrium, cubic and higher derivatives matter. Anharmonicity is therefore not a separate numerical correction to a frequency; it is a change in the physical energy model beyond the local parabola.
+  </p>
+</section>
+
+<section aria-labelledby="normal-modes">
+  <h2 id="normal-modes">Curvature becomes a normal-mode problem</h2>
+  <p>
+    In a many-atom system, displacing one coordinate changes forces on many coordinates. The Hessian collects those couplings. Dividing its components by square roots of the corresponding masses produces the dynamical matrix, whose eigenproblem separates the coupled motion:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="mass weighted vibrational eigenvalue problem">
+      <semantics>
+        <mrow><munder><mo>∑</mo><mrow><mi>J</mi><mi>β</mi></mrow></munder><mfrac><msub><mi>K</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>J</mi><mi>β</mi></mrow></msub><msqrt><mrow><msub><mi>M</mi><mi>I</mi></msub><msub><mi>M</mi><mi>J</mi></msub></mrow></msqrt></mfrac><msub><mi>e</mi><mrow><mi>J</mi><mi>β</mi><mo>,</mo><mi>ν</mi></mrow></msub><mo>=</mo><msubsup><mi>ω</mi><mi>ν</mi><mn>2</mn></msubsup><msub><mi>e</mi><mrow><mi>I</mi><mi>α</mi><mo>,</mo><mi>ν</mi></mrow></msub></mrow>
+        <annotation encoding="application/x-tex">\sum_&#123;J\beta&#125;\frac&#123;K_&#123;I\alpha,J\beta&#125;&#125;&#123;\sqrt&#123;M_I M_J&#125;&#125;e_&#123;J\beta,\nu&#125;=\omega_\nu^2 e_&#123;I\alpha,\nu&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Indices I and J name nuclei; α and β name Cartesian directions. Each eigenvalue is a squared angular frequency, while the eigenvector e gives the polarization in mass-weighted coordinates. Physical relative displacement amplitudes are proportional to e divided by the square root of the corresponding mass. This is why a normal mode is a collective pattern, not one atom vibrating independently.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 7, §§7.2–7.3 and Eqs. 7.11–7.21.</p>
+</section>
+
+<section aria-labelledby="crystal-waves">
+  <h2 id="crystal-waves">Translation organizes crystal vibrations</h2>
+  <p>
+    In a crystal, the same basis of atoms repeats in every cell. A normal-mode displacement can therefore reproduce its cell pattern with a phase from cell to cell. The label for that phase is the phonon wavevector <strong>q</strong>. It is distinct from an electronic Bloch label <strong>k</strong> and from a reciprocal-lattice vector <strong>G</strong>, even though all three live in reciprocal space.
+  </p>
+  <p>
+    Fourier transforming the real-space force constants gives a dynamical matrix D(q). With M atoms in the primitive cell, diagonalizing it returns 3M branches at each q. Three acoustic branches approach zero frequency near Γ when translation invariance and the acoustic sum rule are satisfied; additional branches describe relative motion within the cell.
+  </p>
+  <p>
+    The one-dimensional chain makes the phase relation and reciprocal periodicity visible, but Figure 7.5 also shows its limit: truncating forces at nearest neighbors changes the dispersion. A path through q space is a visualization slice. Dynamical stability requires evidence across the full region relevant to the claim, not only Γ or one displayed line.
+  </p>
+</section>
+
+<section aria-labelledby="how-computed">
+  <h2 id="how-computed">Finite displacement and linear response</h2>
+  <p>
+    The source gives two routes to D(q). Finite displacement perturbs atomic coordinates, calculates the induced forces, and obtains real-space force constants by numerical differentiation before Fourier transformation. Density-functional perturbation theory instead solves the self-consistent first-order electronic response to a perturbation at q and constructs the dynamical matrix directly.
+  </p>
+  <p>
+    The two routes share the same harmonic target and the same underlying ground-state theory. They differ in representation, supercell or q-space organization, derivative construction, and numerical controls. Neither route makes a harmonic approximation exact, and agreement at one q does not establish full-zone convergence.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">What the model calculations establish</h2>
+  <dl class="layer-ledger">
+    <dt>N₂ and water</dt><dd>DFT/LDA energy or force derivatives around relaxed molecular structures generate harmonic stretching and normal-mode frequencies for comparison with spectroscopy in Chapter 8.</dd>
+    <dt>Cumulene chain</dt><dd>A periodic 20-C-atom model and a small displacement illustrate real-space forces; the source contrasts a nearest-neighbor analytic dispersion with a fuller DFT/LDA result.</dd>
+    <dt>Diamond</dt><dd>Selected DFPT dynamical matrices at Γ and points along Γ–X are supplied as an eigenproblem exercise, not as a complete q-mesh reproducibility record.</dd>
+  </dl>
+  <p><strong>Not reported uniformly:</strong> code/version, exact pseudopotential identity, all electronic thresholds, displacement convergence, q-mesh convergence, nonanalytic correction treatment, or acoustic-sum-rule enforcement.</p>
+</section>

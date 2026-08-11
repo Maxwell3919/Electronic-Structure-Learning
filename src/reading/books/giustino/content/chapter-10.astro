@@ -1,0 +1,75 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'driven-atom', label: 'A driven atom exposes response' },
+  { id: 'complex-response', label: 'Why the dielectric function is complex' },
+  { id: 'independent-particle', label: 'How a Kohn–Sham transition spectrum is assembled' },
+  { id: 'missing-physics', label: 'Electron–hole and phonon-assisted processes' },
+  { id: 'reported-realization', label: 'What the optical examples support' },
+];
+export const synthesis = 'Chapter 10 builds optical response from a perturbation rather than from a band gap alone. A time-dependent field mixes states; transition matrix elements determine which couplings are allowed; complex response separates reactive polarization from absorption. An independent-particle KS spectrum is one calculable layer, while electron–hole attraction, phonon assistance, local fields, and quasiparticle energies can change the neutral observable.';
+---
+
+<section aria-labelledby="driven-atom">
+  <h2 id="driven-atom">A driven atom exposes response</h2>
+  <p>
+    The source deliberately begins far from a realistic solid: one hydrogen atom in an oscillating electric field. The field adds a time-dependent dipole perturbation, and the electronic state becomes a superposition whose coefficients evolve in time. Symmetry eliminates many position matrix elements; resonance occurs when the driving frequency approaches an allowed level separation.
+  </p>
+  <p>
+    This model separates two ingredients often collapsed in optical discussion. Energy differences determine where a transition can resonate. Dipole matrix elements determine whether the field couples the two states and with what strength. A list of levels therefore cannot predict a spectrum by itself.
+  </p>
+</section>
+
+<section aria-labelledby="complex-response">
+  <h2 id="complex-response">Why the dielectric function is complex</h2>
+  <p>
+    The induced dipole can lag behind the driving field. Writing the frequency-dependent response as a complex quantity records both in-phase polarization and out-of-phase dissipation. The real part changes propagation and screening; the imaginary part is tied to absorbed power under the stated conventions. Causality links the two parts, so they are not independent fitted curves.
+  </p>
+  <p>
+    The model lattice of polarizable atoms supplies intuition for a macroscopic dielectric function, but real crystals can respond nonlocally and anisotropically. Microscopic local fields, surfaces, finite wavevector, and tensor components matter once the long-wavelength homogeneous idealization is relaxed.
+  </p>
+</section>
+
+<section aria-labelledby="independent-particle">
+  <h2 id="independent-particle">How a Kohn–Sham transition spectrum is assembled</h2>
+  <p>
+    In the source’s practical solid-state approximation, occupied Kohn–Sham states are connected to empty states by an optical operator. Schematically, the absorptive weight has the structure
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="independent particle optical transition sum">
+      <semantics>
+        <mrow><msub><mi>ε</mi><mn>2</mn></msub><mo>(</mo><mi>ω</mi><mo>)</mo><mo>∝</mo><munder><mo>∑</mo><mrow><mi>v</mi><mi>c</mi><mi mathvariant="bold">k</mi></mrow></munder><msup><mrow><mo>|</mo><mrow><mo>⟨</mo><mi>c</mi><mi mathvariant="bold">k</mi><mo>|</mo><mover><mi>O</mi><mo>^</mo></mover><mo>|</mo><mi>v</mi><mi mathvariant="bold">k</mi><mo>⟩</mo></mrow><mo>|</mo></mrow><mn>2</mn></msup><mi>δ</mi><mo>(</mo><msub><mi>ε</mi><mrow><mi>c</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><msub><mi>ε</mi><mrow><mi>v</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>−</mo><mi>ℏ</mi><mi>ω</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">\varepsilon_2(\omega)\propto\sum_&#123;vc\mathbf&#123;k&#125;&#125;\left|\langle c\mathbf&#123;k&#125;|\hat O|v\mathbf&#123;k&#125;\rangle\right|^2\delta(\varepsilon_&#123;c\mathbf&#123;k&#125;&#125;-\varepsilon_&#123;v\mathbf&#123;k&#125;&#125;-\hbar\omega)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The sum runs over occupied valence labels v, empty conduction labels c, and Brillouin-zone points k. The squared matrix element weights allowed transitions for the chosen polarization and operator. The Dirac delta places weight where the transition energy matches the photon energy; practical calculations broaden it to represent finite resolution and lifetimes. The formula therefore contains both available transitions and their brightness.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 10, §10.3, especially the independent-particle dielectric-function construction in Eqs. 10.54–10.61.</p>
+</section>
+
+<section aria-labelledby="missing-physics">
+  <h2 id="missing-physics">Electron–hole and phonon-assisted processes</h2>
+  <p>
+    Optical absorption creates a neutral excitation: an electron is promoted and a hole is left behind. Their Coulomb attraction can bind an exciton or redistribute spectral weight, so an independent Kohn–Sham transition picture can miss both onset and peak structure. Bethe–Salpeter or time-dependent density-functional approaches introduce an interacting neutral-excitation problem; they are not mere plotting options.
+  </p>
+  <p>
+    Momentum conservation creates another branch. In an indirect-gap material, a photon alone cannot usually bridge the crystal-momentum mismatch. Absorption can proceed with a phonon that supplies or removes q. The process combines electronic k labels, a phonon q label, coupling matrix elements, and occupations. It is more than “reading the gap” from a selected band path.
+  </p>
+  <p>
+    These distinctions connect directly to <a href={href('/core/part-viii/')}>Core VIII</a>: charged quasiparticle gaps, neutral excitations, optical matrix elements, and spectral peaks are different objects even when their energy scales are plotted together.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">What the optical examples support</h2>
+  <dl class="layer-ledger">
+    <dt>Hydrogen model</dt><dd>A truncated driven-state model exposes selection rules, resonance, polarization, damping, and dissipated power; deliberately strong fields in the visualization are pedagogical.</dd>
+    <dt>Independent-particle solids</dt><dd>Kohn–Sham transition sums illustrate dielectric spectra and the effect of dipole matrix elements, with empirical alignment or broadening used in selected comparisons.</dd>
+    <dt>Beyond the model</dt><dd>The source identifies electron–hole attraction, phonon-assisted absorption, and more advanced response theories as additional physical layers.</dd>
+  </dl>
+  <p><strong>Not reported as a universal recipe:</strong> one code/version, all k meshes, empty-band convergence, dielectric cutoffs, local-field settings, broadening provenance, or excitonic-kernel convergence across examples.</p>
+</section>

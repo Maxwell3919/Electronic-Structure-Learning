@@ -1,0 +1,81 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'density-question', label: 'What can the density retain?' },
+  { id: 'hk-boundary', label: 'What Hohenberg–Kohn establishes' },
+  { id: 'ks-bridge', label: 'The Kohn–Sham bridge' },
+  { id: 'lda-scf', label: 'LDA and the nonlinear closure' },
+  { id: 'remit', label: 'Read the remit with modern boundaries' },
+];
+export const synthesis = 'Chapter 3 separates an existence result from a practical construction. Ground-state energy can be organized as a functional of an admissible density, but the universal interacting functional is unknown. Kohn–Sham theory makes the dominant kinetic contribution tractable through an auxiliary same-density system, leaves the remainder in exchange–correlation, and produces a nonlinear one-particle problem only after an approximation is chosen.';
+---
+
+<section aria-labelledby="density-question">
+  <h2 id="density-question">What can the density retain?</h2>
+  <p>
+    Chapter 2 ended with a wavefunction whose spatial dependence grows with particle number. Chapter 3 asks whether ground-state questions need all of that information. The electron density retains only the expected number of electrons near each point in ordinary three-dimensional space. It is obtained from the joint state by integrating over every coordinate except one and summing over the indistinguishable choices.
+  </p>
+  <p>
+    Dimensional reduction is attractive, but convenience is not the theorem. The central question is whether the density still determines the ground-state energy for the chosen interacting Hamiltonian. A density can be smooth, nonnegative, and correctly normalized yet still fail to belong to the admissible domain of the variational problem; the source’s compact notation should be read with that domain condition in mind.
+  </p>
+</section>
+
+<section aria-labelledby="hk-boundary">
+  <h2 id="hk-boundary">What Hohenberg–Kohn establishes</h2>
+  <p>
+    The original Hohenberg–Kohn result concerns interacting electrons with a fixed interaction and shows that the ground-state density determines the external potential, up to an additive constant, under its stated assumptions. Consequently the ground-state wavefunction and energy are functionals of that density. A variational principle then selects the ground-state density from the appropriate admissible set.
+  </p>
+  <p>
+    Later constrained-search formulations make the universal functional and density domain more explicit. They should not be silently attributed to the original proof. In either language, the decisive limitation is the same: existence does not reveal a usable exact expression for the interacting kinetic and electron–electron energy.
+  </p>
+</section>
+
+<section aria-labelledby="ks-bridge">
+  <h2 id="ks-bridge">The Kohn–Sham bridge</h2>
+  <p>
+    Kohn–Sham theory introduces an auxiliary noninteracting system chosen to reproduce the interacting ground-state density, when such an auxiliary representation is available. Its orbitals make a noninteracting kinetic functional explicit. The exact energy is then partitioned so that the unknown remainder has one named home:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Kohn Sham energy functional decomposition">
+      <semantics>
+        <mrow><mi>E</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><msub><mi>T</mi><mtext>s</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mtext>H</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><msub><mi>E</mi><mtext>xc</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>+</mo><mo>∫</mo><msub><mi>v</mi><mtext>ext</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mspace width="0.2em"/><mi mathvariant="normal">d</mi><mi mathvariant="bold">r</mi></mrow>
+        <annotation encoding="application/x-tex">E[n]=T_&#123;\mathrm&#123;s&#125;&#125;[n]+E_&#123;\mathrm&#123;H&#125;&#125;[n]+E_&#123;\mathrm&#123;xc&#125;&#125;[n]+\int v_&#123;\mathrm&#123;ext&#125;&#125;(\mathbf&#123;r&#125;)n(\mathbf&#123;r&#125;)\,\mathrm&#123;d&#125;\mathbf&#123;r&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the first term as the auxiliary noninteracting kinetic energy, the second as classical Hartree density–density repulsion, and the last integral as coupling to nuclei or another external potential. The exchange–correlation functional must supply everything needed beyond that partition, including the difference between interacting and auxiliary kinetic energies as well as nonclassical exchange and correlation. It is not defined as a small empirical correction or as ordinary Hartree–Fock correlation energy.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 3, §3.2 and Eq. 3.10. Modern decomposition boundary: <a href={href('/core/part-iv/')}>Core IV · Density Functional Theory</a>.</p>
+</section>
+
+<section aria-labelledby="lda-scf">
+  <h2 id="lda-scf">LDA and the nonlinear closure</h2>
+  <p>
+    The homogeneous electron gas supplies exchange and correlation energy per electron as a function of uniform density. LDA applies that information point by point to an inhomogeneous density. Figures 3.1 and 3.2 should therefore be read as the source data and locality assumption behind one approximation, not as the definition of exchange–correlation theory.
+  </p>
+  <p>
+    Functional variation produces a density-dependent effective potential. Solving its one-particle eigenproblem gives orbitals whose occupied weights build a new density, which in turn changes the potential. Figure 3.3 closes this loop. Self-consistency appears because the Hamiltonian required to find the density depends on that same density; it is a solution procedure shared by many nonlinear mean-field theories, not the approximation that defines LDA or DFT.
+  </p>
+  <figure class="paper-argument">
+    <ol>
+      <li><strong>Trial density</strong><span>Defines Hartree and exchange–correlation potentials.</span></li>
+      <li><strong>Kohn–Sham problem</strong><span>Returns auxiliary orbitals and eigenvalues.</span></li>
+      <li><strong>Occupied orbitals</strong><span>Construct an updated ground-state density.</span></li>
+      <li><strong>Fixed point</strong><span>Reached when input and output densities agree to the chosen criterion.</span></li>
+    </ol>
+    <figcaption>The conceptual self-consistent closure reconstructed from the source’s Figure 3.3.</figcaption>
+  </figure>
+</section>
+
+<section aria-labelledby="remit">
+  <h2 id="remit">Read the remit with modern boundaries</h2>
+  <p>
+    The chapter closes by associating DFT with a wide range of materials properties. Preserve the useful ambition while separating objects. Exact ground-state DFT establishes ground-state density and energy relations; an approximate Kohn–Sham calculation supplies an auxiliary spectrum and ground-state derivatives; time-dependent, many-body, thermodynamic, or nuclear theories may be needed to reach optical excitations, charged spectra, finite-temperature phases, or nonadiabatic dynamics.
+  </p>
+  <p>
+    The same caution applies to “limitations of DFT.” A failure can originate in the chosen exchange–correlation approximation, the Kohn–Sham interpretation, the numerical representation, or the physical model outside ground-state DFT. Naming the layer turns a vague limitation into a research question.
+  </p>
+</section>

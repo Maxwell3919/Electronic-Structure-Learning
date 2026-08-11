@@ -58,6 +58,10 @@ SHOLL_STECKEL_MATH_ROUTES = SHOLL_STECKEL_CHAPTER_ROUTES[:9]
 COHEN_LOUIE_PART_ROUTES = [f"reading/books/cohen-louie/part-{roman}/" for roman in ["i", "ii", "iii", "iv"]]
 COHEN_LOUIE_CHAPTER_ROUTES = [f"reading/books/cohen-louie/chapter-{number:02d}/" for number in range(1, 17)]
 COHEN_LOUIE_MATH_ROUTES = COHEN_LOUIE_CHAPTER_ROUTES[1:]
+GIUSTINO_CHAPTER_ROUTES = [f"reading/books/giustino/chapter-{number:02d}/" for number in range(1, 12)]
+GIUSTINO_APPENDIX_ROUTES = [f"reading/books/giustino/appendix-{letter}/" for letter in "abcde"]
+GIUSTINO_UNIT_ROUTES = [*GIUSTINO_CHAPTER_ROUTES, *GIUSTINO_APPENDIX_ROUTES]
+GIUSTINO_MATH_ROUTES = [*GIUSTINO_CHAPTER_ROUTES[1:], *GIUSTINO_APPENDIX_ROUTES]
 LITERATURE_ROUTES = [
     "reading/literature/hohenberg-kohn-1964/",
     "reading/literature/kohn-sham-1965/",
@@ -66,6 +70,7 @@ CANONICAL_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
     "reading/books/sholl-steckel/", *SHOLL_STECKEL_CHAPTER_ROUTES,
     "reading/books/cohen-louie/", *COHEN_LOUIE_PART_ROUTES, *COHEN_LOUIE_CHAPTER_ROUTES,
+    "reading/books/giustino/", *GIUSTINO_UNIT_ROUTES,
     "reading/literature/", *LITERATURE_ROUTES,
 ]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
@@ -87,6 +92,7 @@ BROWSER_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *representative_units,
     "reading/books/sholl-steckel/", *SHOLL_STECKEL_CHAPTER_ROUTES,
     "reading/books/cohen-louie/", *COHEN_LOUIE_PART_ROUTES, *COHEN_LOUIE_CHAPTER_ROUTES,
+    "reading/books/giustino/", *GIUSTINO_UNIT_ROUTES,
     "reading/literature/", *LITERATURE_ROUTES,
 ]
 BROWSER_ROUTES = [
@@ -149,7 +155,7 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
 
         math_count = 0
-        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in LITERATURE_ROUTES or route in SHOLL_STECKEL_MATH_ROUTES or route in COHEN_LOUIE_MATH_ROUTES:
+        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in LITERATURE_ROUTES or route in SHOLL_STECKEL_MATH_ROUTES or route in COHEN_LOUIE_MATH_ROUTES or route in GIUSTINO_MATH_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
                 "const box=node.getBoundingClientRect();return {width:box.width,height:box.height,"
@@ -388,6 +394,12 @@ def inspect(driver, mode, expected_width=None):
             for marker in ["Core Idea.", "Chapter overview", "Read the source figures", "Source anchor"]:
                 if marker not in main_text:
                     raise AssertionError(f"Cohen & Louie chapter lacks {marker} in {mode}: {route}")
+        if route == "reading/books/giustino/" and ("Read Chapter 1" not in main_text or "Read Appendix A" not in main_text):
+            raise AssertionError(f"Giustino book page lacks complete source-unit links in {mode}")
+        if route in GIUSTINO_UNIT_ROUTES:
+            for marker in ["Core Idea.", "overview", "Read the source figures", "Source anchor"]:
+                if marker not in main_text:
+                    raise AssertionError(f"Giustino unit lacks {marker} in {mode}: {route}")
         if route in LITERATURE_ROUTES:
             if "What the paper established" not in main_text or "DOI 10.1103" not in main_text:
                 raise AssertionError(f"literature guide lacks source result or canonical DOI in {mode}: {route}")
@@ -517,7 +529,7 @@ def main():
         f"Clean-slate browser smoke passed: {len(CONTENT_ROUTES)} published content routes, "
         f"{len(CORE_UNPUBLISHED_ROUTES)} unpublished Core routes confirmed 404, "
         f"{len(MARTIN_UNPUBLISHED_UNIT_ROUTES)} unpublished Martin units confirmed 404, "
-        f"39 MathML Foundations pages, {len(CORE_MATH_ROUTES)} MathML Core pages, {len(COHEN_LOUIE_MATH_ROUTES)} MathML Cohen & Louie pages, compatibility redirect, "
+        f"39 MathML Foundations pages, {len(CORE_MATH_ROUTES)} MathML Core pages, {len(COHEN_LOUIE_MATH_ROUTES)} MathML Cohen & Louie pages, {len(GIUSTINO_MATH_ROUTES)} MathML Giustino pages, compatibility redirect, "
         "desktop, true 390px, keyboard, and no-JavaScript."
     )
 

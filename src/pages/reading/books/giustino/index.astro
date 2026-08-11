@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { giustinoUnits } from '../../../../reading/books/giustino';
+import { giustinoCanonicalSource } from '../../../../reading/books/giustino/source-reading';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const chapters = giustinoUnits.filter((entry) => entry.kind === 'chapter');
+const appendices = giustinoUnits.filter((entry) => entry.kind === 'appendix');
+---
+
+<BaseLayout
+  title="Giustino · Materials Modelling Using Density Functional Theory"
+  description="A source-aligned guide to Feliciano Giustino's materials-modelling introduction to density-functional theory."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <a href={href('/reading/books/')}>Books</a>
+    <span aria-hidden="true">/</span>
+    <span>Giustino</span>
+  </nav>
+
+  <h1>Giustino · Materials Modelling Using Density Functional Theory</h1>
+  <p class="lede">
+    A source-aligned guide to Feliciano Giustino’s 2014 book. Its distinctive route begins with what materials calculations explain, builds the many-electron and density-functional foundations, and then keeps calculation and measurement beside one another through structure, elasticity, vibrations, spectra, and magnetism.
+  </p>
+  <p>
+    The Guide follows all eleven chapters and five appendices in their original order. It preserves the source’s physical examples while separating exact theory, exchange–correlation approximation, numerical representation, core treatment, response model, and experimental interpretation. The Atlas explains figure and equation locators without reproducing Oxford artwork.
+  </p>
+  <p class="paper-meta">
+    Source: Feliciano Giustino, <cite>Materials Modelling Using Density Functional Theory: Properties and Predictions</cite>, first edition (Oxford University Press, 2014). <a href={giustinoCanonicalSource.href}>{giustinoCanonicalSource.label}</a>.
+  </p>
+
+  <section aria-labelledby="how-to-read">
+    <h2 id="how-to-read">How to use this guide</h2>
+    <p>
+      Keep the book open beside the Atlas. Each unit reconstructs the source’s argument, teaches the retained equations, and identifies the figures or derivations that carry the reasoning. Source claims are followed by explicit modern boundaries where ground-state DFT, Kohn–Sham eigenvalues, harmonic response, thermodynamics, or magnetic model selection need more care. Execution, convergence design, and reproducibility continue in the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+    </p>
+  </section>
+
+  <section aria-labelledby="chapters">
+    <h2 id="chapters">Chapters</h2>
+    <ol class="section-list source-list">
+      {chapters.map((entry) => (
+        <li>
+          <h3>{entry.label} · {entry.title}</h3>
+          <p class="item-summary">{entry.contribution}</p>
+          <a href={href(entry.route)}>Read {entry.label} →</a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section aria-labelledby="appendices">
+    <h2 id="appendices">Appendices</h2>
+    <ol class="section-list source-list">
+      {appendices.map((entry) => (
+        <li>
+          <h3>{entry.label} · {entry.title}</h3>
+          <p class="item-summary">{entry.contribution}</p>
+          <a href={href(entry.route)}>Read {entry.label} →</a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section aria-labelledby="atlas-connections">
+    <h2 id="atlas-connections">Read the source and the Atlas together</h2>
+    <p>
+      <a href={href('/core/')}>Core</a> supplies the Atlas’s modern theory-to-computation spine. This Guide instead preserves Giustino’s route from physical examples to formalism and back to experimental comparison. Use <a href={href('/theory/')}>Foundations</a> for prerequisite repair, and follow the workflow handoff only when the question becomes how to execute and validate a real calculation.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,75 @@
+---
+export const sectionLinks = [
+  { id: 'spectroscopy', label: 'A mode becomes visible through a probe' },
+  { id: 'quantization', label: 'From classical modes to phonons' },
+  { id: 'dos', label: 'Dispersion and DOS retain different information' },
+  { id: 'free-energy', label: 'Vibrations enter thermodynamic comparison' },
+  { id: 'reported-realization', label: 'What the examples do and do not report' },
+];
+export const synthesis = 'Chapter 8 connects harmonic modes to two new layers. Quantization turns each mode into occupation-number states, while a measurement couples to those modes through probe-specific matrix elements and conservation laws. Summing occupied mode energies produces vibrational thermodynamic terms; comparing phases then requires the free energy appropriate to the controlled temperature and pressure.';
+---
+
+<section aria-labelledby="spectroscopy">
+  <h2 id="spectroscopy">A mode becomes visible through a probe</h2>
+  <p>
+    A vibrational eigenfrequency is not automatically a spectral peak. Raman scattering modulates electronic polarizability as nuclei move. A first-order peak appears only when the mode changes the polarizability in the selected light polarizations, and photon momentum restricts ordinary first-order Raman measurements in a crystal to modes near Γ. The Stokes and anti-Stokes shifts then reveal the mode energy, while their intensities depend on matrix elements and occupations.
+  </p>
+  <p>
+    Inelastic neutron scattering transfers both momentum and energy to nuclear motion. The experiment measures a scattering-vector transfer Q; subtracting an appropriate reciprocal-lattice vector G gives the reduced phonon wavevector q. Its dynamic structure factor can therefore map phonon dispersion away from Γ. The axes matter: q identifies the crystal-momentum label of the phonon and E the transferred energy. Peaks trace allowed modes weighted by nuclear scattering lengths, eigenvectors, occupations, and experimental geometry.
+  </p>
+  <p>
+    The same normal mode can be bright in one probe and dark in another. This is why frequency agreement and intensity agreement are separate validation questions.
+  </p>
+</section>
+
+<section aria-labelledby="quantization">
+  <h2 id="quantization">From classical modes to phonons</h2>
+  <p>
+    Chapter 7 treated each normal coordinate as a classical oscillator. Quantum mechanics replaces its continuous energy by equally spaced levels. For independent harmonic modes, a state with occupation numbers n<sub>ν</sub> has energy
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="energy of independent quantized harmonic modes">
+      <semantics>
+        <mrow><mi>E</mi><mo>=</mo><msub><mi>U</mi><mn>0</mn></msub><mo>+</mo><munder><mo>∑</mo><mi>ν</mi></munder><mrow><mo>(</mo><msub><mi>n</mi><mi>ν</mi></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mi>ℏ</mi><msub><mi>ω</mi><mi>ν</mi></msub></mrow>
+        <annotation encoding="application/x-tex">E=U_0+\sum_\nu\left(n_\nu+\frac&#123;1&#125;&#123;2&#125;\right)\hbar\omega_\nu</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    U₀ is the clamped-nuclei minimum. Each integer n<sub>ν</sub> counts quanta in mode ν, and the one-half term gives zero-point energy even at zero temperature. In a molecule the quantum is often called a vibron; in a crystal the mode also carries q and its quantum is a phonon. A phonon is therefore not an arbitrary snapshot of atoms moving, but one quantum of a normal-mode branch.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 8, §§8.2–8.3 and Eqs. 8.23–8.28.</p>
+</section>
+
+<section aria-labelledby="dos">
+  <h2 id="dos">Dispersion and DOS retain different information</h2>
+  <p>
+    A phonon dispersion records ω<sub>qν</sub> as a function of wavevector and branch. The phonon density of states integrates over q and counts mode weight near each energy. Peaks in the DOS can expose flat branches or critical regions, but the integration forgets where those modes occur and how they transform. A DOS cannot prove that a soft feature lies at a particular q, and a high-symmetry dispersion path cannot replace a full-zone DOS integral.
+  </p>
+  <p>
+    The neutron examples make the distinction concrete: a measured path resolves momentum, while a powder-averaged or integrated spectrum can resemble a DOS. Comparing the wrong objects can produce apparent agreement while losing the physics of the mode location.
+  </p>
+</section>
+
+<section aria-labelledby="free-energy">
+  <h2 id="free-energy">Vibrations enter thermodynamic comparison</h2>
+  <p>
+    Thermal occupation of phonons changes internal energy and entropy. The partition function reorganizes all occupation-number states, and the resulting Helmholtz free energy at fixed volume combines the electronic minimum, zero-point contribution, and temperature-dependent vibrational term. At fixed external pressure, volume must also adjust and the appropriate comparison is Gibbs free energy.
+  </p>
+  <p>
+    The quasiharmonic approximation repeats harmonic phonon calculations at several volumes so that frequencies and free energy can respond to expansion. It can describe thermal expansion and many solid–solid phase boundaries while still neglecting explicit strong anharmonicity. The stable phase is the lowest free-energy member of the declared candidate set—not whichever has the lowest zero-temperature electronic energy.
+  </p>
+  <p>
+    The source’s Mg phase diagram makes model sensitivity visible: LDA and GGA shift the boundary, and a separate interatomic model plus molecular dynamics is used to reach melting. That second route is a scale handoff seeded by DFT, not the same calculation continued unchanged.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">What the examples do and do not report</h2>
+  <dl class="layer-ledger">
+    <dt>Raman comparison</dt><dd>DFT/LDA harmonic frequencies for N₂, H₂O, and diamond are compared with reported Raman shifts; the table tests mode energies, not a full Raman-intensity calculation.</dd>
+    <dt>Neutron comparison</dt><dd>Measured and calculated phonon dispersions illustrate energy–momentum-resolved validation and the different weighting of a scattering experiment.</dd>
+    <dt>Mg phase diagram</dt><dd>Published DFT total energies and vibrational free-energy calculations enter the hcp–bcc boundary; a separately parameterized interatomic model and dynamics address melting.</dd>
+  </dl>
+  <p><strong>Not reported as one common setup:</strong> code/version, exact datasets, full q meshes, interpolation details, anharmonic convergence, or all numerical uncertainties for the published examples.</p>
+</section>

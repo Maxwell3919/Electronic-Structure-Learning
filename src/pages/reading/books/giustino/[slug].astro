@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { giustinoUnits } from '../../../../reading/books/giustino';
+import { getGiustinoUnitContent, giustinoUnitSlugs } from '../../../../reading/books/giustino/chapter-content';
+import { getGiustinoSourceGuides, giustinoCanonicalSource } from '../../../../reading/books/giustino/source-reading';
+
+export function getStaticPaths() {
+  return giustinoUnitSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const slug = Astro.params.slug ?? '';
+const unit = giustinoUnits.find((entry) => entry.slug === slug);
+const unitContent = await getGiustinoUnitContent(slug);
+const UnitComponent = unitContent?.default as any;
+const sectionLinks = unitContent?.sectionLinks ?? [];
+const sourceGuides = getGiustinoSourceGuides(slug);
+const synthesis = unitContent?.synthesis;
+const unitIndex = unit ? giustinoUnits.findIndex((entry) => entry.slug === unit.slug) : -1;
+const previousUnit = unitIndex > 0 ? giustinoUnits[unitIndex - 1] : undefined;
+const nextUnit = unitIndex >= 0 && unitIndex < giustinoUnits.length - 1 ? giustinoUnits[unitIndex + 1] : undefined;
+---
+
+{unit && unitContent && (
+  <BaseLayout title={unit.title} description={unit.coreIdea} current="reading">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href={href('/reading/')}>Guided Reading</a>
+      <span aria-hidden="true">/</span>
+      <a href={href('/reading/books/')}>Books</a>
+      <span aria-hidden="true">/</span>
+      <a href={href('/reading/books/giustino/')}>Giustino</a>
+      <span aria-hidden="true">/</span>
+      <span>{unit.label}</span>
+    </nav>
+
+    <p class="secondary">{unit.label}</p>
+    <h1>{unit.title}</h1>
+    <p><strong>Core Idea.</strong> {unit.coreIdea}</p>
+
+    <section aria-labelledby="unit-overview">
+      <h2 id="unit-overview">{unit.kind === 'chapter' ? 'Chapter' : 'Appendix'} overview</h2>
+      <p>{unit.overview}</p>
+    </section>
+
+    <p class="paper-meta">
+      Source anchor: Feliciano Giustino, <cite>Materials Modelling Using Density Functional Theory</cite>, {unit.label}. <a href={giustinoCanonicalSource.href}>{giustinoCanonicalSource.label}</a>.
+    </p>
+
+    <nav aria-labelledby="unit-structure">
+      <h2 id="unit-structure">{unit.kind === 'chapter' ? 'Chapter' : 'Appendix'} structure</h2>
+      <ol class="source-outline">
+        {sectionLinks.map((entry) => <li><a href={`#${entry.id}`}>{entry.label}</a></li>)}
+      </ol>
+    </nav>
+
+    {sourceGuides.length > 0 && (
+      <section aria-labelledby="source-guides">
+        <h2 id="source-guides">Read the source figures and derivations</h2>
+        <p>
+          Keep these passages, figures, or tables open in the book. The Atlas does not reproduce Oxford artwork; each note identifies what to inspect, how it advances the source’s reasoning, and where its evidence stops.
+        </p>
+        <dl class="source-figure-list">
+          {sourceGuides.map((entry) => (
+            <>
+              <dt>{entry.locator} <span>· {entry.section}</span></dt>
+              <dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    {UnitComponent && <UnitComponent />}
+
+    {synthesis && (
+      <section aria-labelledby="unit-synthesis">
+        <h2 id="unit-synthesis">{unit.kind === 'chapter' ? 'Chapter' : 'Appendix'} synthesis</h2>
+        <p>{synthesis}</p>
+      </section>
+    )}
+
+    <p>Return to the <a href={href('/reading/books/giustino/')}>Giustino source sequence</a>.</p>
+
+    {(previousUnit || nextUnit) && (
+      <nav aria-label="Source-unit navigation">
+        <p>{previousUnit && <a href={href(previousUnit.route)}>← {previousUnit.label} · {previousUnit.title}</a>}</p>
+        <p>{nextUnit && <a href={href(nextUnit.route)}>{nextUnit.label} · {nextUnit.title} →</a>}</p>
+      </nav>
+    )}
+  </BaseLayout>
+)}
