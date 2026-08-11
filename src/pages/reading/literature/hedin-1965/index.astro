@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PaperProfile from '../../../../reading/PaperProfile.astro';
+import { paperProfiles } from '../../../../reading/paper-profiles';
 import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
@@ -27,6 +29,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     L. Hedin, <cite>Physical Review</cite> 139, A796–A823 (1965). <a href="https://doi.org/10.1103/PhysRev.139.A796">DOI 10.1103/PhysRev.139.A796</a>. An open author-deposited scan is indexed by <a href="https://lup.lub.lu.se/search/publication/8777834">Lund University Publications</a>.
   </p>
+  <PaperProfile profile={paperProfiles['hedin-1965']} />
 
   <h2>The paper asks for a controlled one-particle description</h2>
   <p>

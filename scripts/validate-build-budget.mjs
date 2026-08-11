@@ -10,11 +10,13 @@ const limits = {
   jsBytes: 0,
   cssBytes: 30_000,
   fontBytes: 0,
-  assetCount: 155,
+  // Four source-recorded book covers serve the Guided Reading index. Keep the
+  // allowance narrow rather than treating the images as unbounded decoration.
+  assetCount: 160,
   largestAssetBytes: 210_000,
   htmlPages: 151,
 };
-const minimumReductions = { bytes: 0.70, assets: 0.67 };
+const minimumReductions = { bytes: 0.70, assets: 0.66 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,

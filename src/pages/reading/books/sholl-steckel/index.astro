@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BookCover from '../../../../reading/BookCover.astro';
+import BookProfile from '../../../../reading/BookProfile.astro';
+import { bookProfiles } from '../../../../reading/book-profiles';
+import { bookCovers } from '../../../../reading/book-covers';
 import { shollSteckelChapters } from '../../../../reading/books/sholl-steckel';
 import { shollSteckelCanonicalSource } from '../../../../reading/books/sholl-steckel/source-reading';
 
@@ -30,6 +34,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     Source: David S. Sholl and Janice A. Steckel, <cite>Density Functional Theory: A Practical Introduction</cite> (Wiley, 2009). <a href={shollSteckelCanonicalSource.href}>{shollSteckelCanonicalSource.label}</a>.
   </p>
+  <BookCover cover={bookCovers['sholl-steckel']} />
+  <BookProfile profile={bookProfiles['sholl-steckel']} />
 
   <section aria-labelledby="how-to-read">
     <h2 id="how-to-read">How to use this guide</h2>

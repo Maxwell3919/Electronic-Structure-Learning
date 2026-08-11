@@ -1,0 +1,17 @@
+---
+import type { BookCover as BookCoverRecord } from './book-covers';
+
+interface Props {
+  cover: BookCoverRecord;
+}
+
+const { cover } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+---
+
+<figure class="book-cover">
+  <img src={`${base}${cover.localFilename}`} alt={cover.alt} loading="lazy" />
+  <figcaption>
+    Cover image from <a href={cover.sourceUrl}>{cover.sourceAuthorOrPublisher}</a>; catalog record retrieved {cover.retrievedDate}.
+  </figcaption>
+</figure>

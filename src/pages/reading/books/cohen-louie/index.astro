@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BookCover from '../../../../reading/BookCover.astro';
+import BookProfile from '../../../../reading/BookProfile.astro';
+import { bookProfiles } from '../../../../reading/book-profiles';
+import { bookCovers } from '../../../../reading/book-covers';
 import { cohenLouieChapters, cohenLouieParts } from '../../../../reading/books/cohen-louie';
 import { cohenLouieCanonicalSource } from '../../../../reading/books/cohen-louie/source-reading';
 
@@ -28,6 +32,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     Source: Marvin L. Cohen and Steven G. Louie, <cite>Fundamentals of Condensed Matter Physics</cite> (Cambridge University Press, 2016). <a href={cohenLouieCanonicalSource.href}>{cohenLouieCanonicalSource.label}</a>.
   </p>
+  <BookCover cover={bookCovers['cohen-louie']} />
+  <BookProfile profile={bookProfiles['cohen-louie']} />
 
   <section aria-labelledby="how-to-read">
     <h2 id="how-to-read">How to use this guide</h2>

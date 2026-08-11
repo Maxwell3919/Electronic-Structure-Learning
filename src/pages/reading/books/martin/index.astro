@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BookCover from '../../../../reading/BookCover.astro';
+import BookProfile from '../../../../reading/BookProfile.astro';
+import { bookProfiles } from '../../../../reading/book-profiles';
+import { bookCovers } from '../../../../reading/book-covers';
 import { martinParts } from '../../../../reading/books/martin';
 import { martinChapterSlugs } from '../../../../reading/books/martin/chapter-content';
 import { martinCanonicalSource } from '../../../../reading/books/martin/source-reading';
@@ -31,6 +35,8 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     Source: Richard M. Martin, <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition. <a href={martinCanonicalSource.href}>{martinCanonicalSource.label}</a>.
   </p>
+  <BookCover cover={bookCovers.martin} />
+  <BookProfile profile={bookProfiles.martin} />
   <p>
     Use <a href={href('/theory/')}>Foundations</a> when a prerequisite interrupts the source sequence.
   </p>

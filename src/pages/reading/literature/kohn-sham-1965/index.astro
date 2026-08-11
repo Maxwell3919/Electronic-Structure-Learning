@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PaperProfile from '../../../../reading/PaperProfile.astro';
+import { paperProfiles } from '../../../../reading/paper-profiles';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -26,6 +28,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     W. Kohn and L. J. Sham, <cite>Physical Review</cite> 140, A1133–A1138 (1965). <a href="https://doi.org/10.1103/PhysRev.140.A1133">DOI 10.1103/PhysRev.140.A1133</a>.
   </p>
+  <PaperProfile profile={paperProfiles['kohn-sham-1965']} />
 
   <h2>The paper begins from a practical impasse</h2>
   <p>
