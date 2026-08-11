@@ -1,5 +1,5 @@
 export interface BookCover {
-  id: 'martin' | 'sholl-steckel' | 'cohen-louie' | 'giustino';
+  id: 'martin' | 'sholl-steckel' | 'cohen-louie' | 'giustino' | 'liu-conceptual-dft';
   alt: string;
   localFilename: string;
   sourceUrl: string;
@@ -51,5 +51,15 @@ export const bookCovers: Record<BookCover['id'], BookCover> = {
     sourceAuthorOrPublisher: 'Feliciano Giustino; Oxford University Press',
     retrievedDate: '2026-08-11',
     usageContext: 'Guided Reading book index',
+  },
+  'liu-conceptual-dft': {
+    id: 'liu-conceptual-dft',
+    alt: 'Cover of Conceptual Density Functional Theory: Towards a New Chemical Reactivity Theory, edited by Shubin Liu.',
+    localFilename: 'media/books/liu-conceptual-density-functional-theory.jpg',
+    sourceUrl: 'https://www.wiley-vch.de/en/areas-interest/natural-sciences/chemistry-11ch/computational-chemistry-molecular-modeling-11chd/conceptual-density-functional-theory-978-3-527-34843-5',
+    sourceTitle: 'Conceptual Density Functional Theory: Towards a New Chemical Reactivity Theory',
+    sourceAuthorOrPublisher: 'Shubin Liu (editor); Wiley-VCH',
+    retrievedDate: '2026-08-11',
+    usageContext: 'Guided Reading book index and Reference page',
   },
 };

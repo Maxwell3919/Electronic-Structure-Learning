@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { paperProfiles } from '../../../reading/paper-profiles';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -32,20 +33,23 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <ol class="section-list source-list">
       <li>
         <h3>Hohenberg & Kohn · Inhomogeneous Electron Gas</h3>
-        <p>P. Hohenberg and W. Kohn, <cite>Physical Review</cite> 136, B864–B871 (1964).</p>
-        <p class="item-summary">The original density–potential theorem, density variational principle, and the paper’s own nearly-uniform and slowly-varying approximations.</p>
+        <p>{paperProfiles['hohenberg-kohn-1964'].citation} <a href={paperProfiles['hohenberg-kohn-1964'].sourceUrl}>Original source</a>.</p>
+        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['hohenberg-kohn-1964'].whyItMatters}</p>
+        <p><strong>What to look for.</strong> {paperProfiles['hohenberg-kohn-1964'].lookFor}</p>
         <a href={href('/reading/literature/hohenberg-kohn-1964/')}>Read the Hohenberg–Kohn guide</a>
       </li>
       <li>
         <h3>Kohn & Sham · Self-Consistent Equations</h3>
-        <p>W. Kohn and L. J. Sham, <cite>Physical Review</cite> 140, A1133–A1138 (1965).</p>
-        <p class="item-summary">The route from an unknown density functional to auxiliary orbitals, local exchange–correlation approximations, and a density-dependent self-consistent problem.</p>
+        <p>{paperProfiles['kohn-sham-1965'].citation} <a href={paperProfiles['kohn-sham-1965'].sourceUrl}>Original source</a>.</p>
+        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['kohn-sham-1965'].whyItMatters}</p>
+        <p><strong>What to look for.</strong> {paperProfiles['kohn-sham-1965'].lookFor}</p>
         <a href={href('/reading/literature/kohn-sham-1965/')}>Read the Kohn–Sham guide</a>
       </li>
       <li>
         <h3>Levy · Universal Variational Functionals</h3>
-        <p>M. Levy, <cite>Proceedings of the National Academy of Sciences</cite> 76, 6062–6065 (1979).</p>
-        <p class="item-summary">The pure-state constrained search, the distinction between <em>N</em>- and <em>v</em>-representability, and parallel searches for restricted states and first-order density matrices.</p>
+        <p>{paperProfiles['levy-1979'].citation} <a href={paperProfiles['levy-1979'].sourceUrl}>Original source</a>.</p>
+        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['levy-1979'].whyItMatters}</p>
+        <p><strong>What to look for.</strong> {paperProfiles['levy-1979'].lookFor}</p>
         <a href={href('/reading/literature/levy-1979/')}>Read the Levy guide</a>
       </li>
     </ol>
@@ -59,8 +63,9 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <ol class="section-list source-list">
       <li>
         <h3>Hedin · One-Particle Green Function</h3>
-        <p>L. Hedin, <cite>Physical Review</cite> 139, A796–A823 (1965).</p>
-        <p class="item-summary">The screened-interaction expansion, the coupled relations now called Hedin’s equations, the first GW and COHSEX approximations, and the electron-gas calculation actually reported.</p>
+        <p>{paperProfiles['hedin-1965'].citation} <a href={paperProfiles['hedin-1965'].sourceUrl}>Original source</a>.</p>
+        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['hedin-1965'].whyItMatters}</p>
+        <p><strong>What to look for.</strong> {paperProfiles['hedin-1965'].lookFor}</p>
         <a href={href('/reading/literature/hedin-1965/')}>Read the Hedin guide</a>
       </li>
     </ol>

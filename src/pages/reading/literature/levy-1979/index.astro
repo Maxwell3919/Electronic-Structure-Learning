@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PaperProfile from '../../../../reading/PaperProfile.astro';
+import { paperProfiles } from '../../../../reading/paper-profiles';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -26,6 +28,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     M. Levy, <cite>Proceedings of the National Academy of Sciences</cite> 76, 6062–6065 (1979). <a href="https://doi.org/10.1073/pnas.76.12.6062">DOI 10.1073/pnas.76.12.6062</a>. A complete journal scan is available through <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC411802/">PubMed Central</a>.
   </p>
+  <PaperProfile profile={paperProfiles['levy-1979']} />
 
   <h2>The paper begins with a domain problem</h2>
   <p>

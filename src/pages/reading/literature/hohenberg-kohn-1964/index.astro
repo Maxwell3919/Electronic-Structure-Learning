@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PaperProfile from '../../../../reading/PaperProfile.astro';
+import { paperProfiles } from '../../../../reading/paper-profiles';
 import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
@@ -27,6 +29,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="paper-meta">
     P. Hohenberg and W. Kohn, <cite>Physical Review</cite> 136, B864–B871 (1964). <a href="https://doi.org/10.1103/PhysRev.136.B864">DOI 10.1103/PhysRev.136.B864</a>.
   </p>
+  <PaperProfile profile={paperProfiles['hohenberg-kohn-1964']} />
 
   <h2>Why the paper begins with the inhomogeneous electron gas</h2>
   <p>

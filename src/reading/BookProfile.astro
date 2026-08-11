@@ -1,0 +1,21 @@
+---
+import type { BookProfile as BookProfileRecord } from './book-profiles';
+
+interface Props {
+  profile: BookProfileRecord;
+}
+
+const { profile } = Astro.props;
+---
+
+<section class="book-profile" aria-labelledby={`${profile.id}-reading-position`}>
+  <h2 id={`${profile.id}-reading-position`}>Reading position</h2>
+  <p><strong>Role.</strong> {profile.role}</p>
+  <p><strong>What it teaches.</strong></p>
+  <ul>
+    {profile.teaches.map((item) => <li>{item}</li>)}
+  </ul>
+  <p><strong>Best use.</strong> {profile.bestUse}</p>
+  <p><strong>Relation to Atlas.</strong> {profile.atlasRole}</p>
+  <p><strong>Reading path.</strong> {profile.readingPath}</p>
+</section>
