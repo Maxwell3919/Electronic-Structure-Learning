@@ -27,7 +27,7 @@ const sourceFigures: Record<string, ShollSteckelSourceFigureGuide[]> = {
   ],
   'chapter-02': [
     {
-      locator: 'Figs. 2.1, 2.3, and 2.4',
+      locator: 'Figs. 2.1–2.4',
       section: '§§2.1–2.3 · energy landscapes for candidate crystals',
       reading: 'In each panel, find the minimum only after identifying which structural degrees of freedom were varied. The hcp panel adds a second coordinate through c/a and therefore exposes why a one-parameter scan does not generalize.',
       boundary: 'A minimum is conditional on the chosen structure, functional, representation, and candidate set; it is not an unrestricted crystal prediction.',
