@@ -3,6 +3,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { giustinoUnits } from '../../../../reading/books/giustino';
 import { getGiustinoUnitContent, giustinoUnitSlugs } from '../../../../reading/books/giustino/chapter-content';
 import { getGiustinoSourceGuides, giustinoCanonicalSource } from '../../../../reading/books/giustino/source-reading';
+import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 export function getStaticPaths() {
   return giustinoUnitSlugs.map((slug) => ({ params: { slug } }));
@@ -64,7 +65,7 @@ const nextUnit = unitIndex >= 0 && unitIndex < giustinoUnits.length - 1 ? giusti
           {sourceGuides.map((entry) => (
             <>
               <dt>{entry.locator} <span>· {entry.section}</span></dt>
-              <dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+              <dd>{entry.visual && <SourceVisual kind={entry.visual} />}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
             </>
           ))}
         </dl>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -96,6 +97,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <div class="callout">
     <p><strong>Read the source diagrams.</strong> In Figs. 1–2 on p. A798, an arrow is <em>G</em> and a wiggly line is <em>W</em>. Start with the first diagram in Fig. 1: one propagator joined by one screened interaction is the first self-energy term. The later diagrams add vertex structure. Fig. 2 performs the parallel expansion for the polarization. These are bookkeeping diagrams for terms in a many-body expansion, not real-space electron trajectories and not measured scattering images.</p>
   </div>
+  <SourceVisual kind="hedin-diagrams" />
 
   <h2>The first truncation is what later readers call GW</h2>
   <p>

@@ -8,6 +8,7 @@ export type GiustinoSourceGuide = {
   section: string;
   reading: string;
   boundary: string;
+  visual?: 'phonon-chain';
 };
 
 const sourceGuides: Record<string, GiustinoSourceGuide[]> = {
@@ -37,7 +38,7 @@ const sourceGuides: Record<string, GiustinoSourceGuide[]> = {
   ],
   'chapter-07': [
     { locator: 'Figs. 7.1–7.3', section: '§§7.1–7.3 · harmonic expansion and molecular modes', reading: 'Zoom from the full N₂ potential to the thermally sampled neighborhood, then trace how the Hessian and masses turn coupled Cartesian displacements into collective eigenvectors.', boundary: 'The parabolic model is local. Large-amplitude, anharmonic, rotating, or nonadiabatic motion requires additional terms.' },
-    { locator: 'Figs. 7.4–7.5', section: '§7.4 · crystal waves and dispersion', reading: 'Follow the phase of one displacement through repeated cells and compare the nearest-neighbor model dispersion with the full DFT result. Look for what changes when force constants extend farther than one bond.', boundary: 'A displayed high-symmetry q path is not the full Brillouin zone, and a nearest-neighbor chain is a teaching limit rather than a universal phonon model.' },
+    { locator: 'Figs. 7.4–7.5', visual: 'phonon-chain', section: '§7.4 · crystal waves and dispersion', reading: 'Follow the phase of one displacement through repeated cells and compare the nearest-neighbor model dispersion with the full DFT result. Look for what changes when force constants extend farther than one bond.', boundary: 'A displayed high-symmetry q path is not the full Brillouin zone, and a nearest-neighbor chain is a teaching limit rather than a universal phonon model.' },
   ],
   'chapter-08': [
     { locator: 'Figs. 8.1–8.3 and Table 8.1', section: '§8.1 · Raman and neutron probes', reading: 'For Raman, identify the elastic line, shifted sidebands, and activity condition. For neutron scattering, track both transferred momentum and energy before comparing measured and calculated dispersions.', boundary: 'A mode can exist yet be dark to a chosen probe. Raman mainly samples near Γ at first order, whereas one displayed neutron path does not prove full-zone stability.' },

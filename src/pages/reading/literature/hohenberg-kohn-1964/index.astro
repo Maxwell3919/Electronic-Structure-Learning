@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -148,6 +149,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <div class="callout" role="note" aria-labelledby="hk-source-figures">
     <p id="hk-source-figures"><strong>Read the source figures.</strong> In Fig. 1 on p. B867, read the horizontal axis as the perturbation wavevector scaled by the Fermi wavevector, <math class="math-inline" aria-label="q divided by q sub F"><semantics><mfrac><mi>q</mi><msub><mi>q</mi><mi>F</mi></msub></mfrac><annotation encoding="application/x-tex">q/q_F</annotation></semantics></math>, and the vertical curve as the uniform electron gas polarizability. The figure labels this scale <math class="math-inline" aria-label="q sub F"><semantics><msub><mi>q</mi><mi>F</mi></msub><annotation encoding="application/x-tex">q_F</annotation></semantics></math>; the neighboring formulas use the more familiar <math class="math-inline" aria-label="k sub F"><semantics><msub><mi>k</mi><mi>F</mi></msub><annotation encoding="application/x-tex">k_F</annotation></semantics></math> for the same Fermi-wavevector scale. Fig. 2 on p. B868 carries that response into the kernel <math class="math-inline" aria-label="K of q"><semantics><mrow><mi>K</mi><mo>(</mo><mi>q</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">K(q)</annotation></semantics></math>. Look near <math class="math-inline" aria-label="q equals two k sub F"><semantics><mrow><mi>q</mi><mo>=</mo><mn>2</mn><msub><mi>k</mi><mi>F</mi></msub></mrow><annotation encoding="application/x-tex">q=2k_F</annotation></semantics></math>: the nonanalytic change there cannot be reproduced by a power series around <math class="math-inline" aria-label="q equals zero"><semantics><mrow><mi>q</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">q=0</annotation></semantics></math>, which is why a local gradient expansion misses the associated long-range Friedel oscillation. These are response and kernel diagrams for the paper’s uniform-gas analysis, not measured density profiles or evidence that the approximation is accurate for every real material.</p>
   </div>
+  <SourceVisual kind="hk-response" />
   <p class="equation-source">Source: Hohenberg and Kohn, Parts II–III and concluding remarks, pp. B866–B871.</p>
 
   <h2>What the paper established—and what it did not</h2>

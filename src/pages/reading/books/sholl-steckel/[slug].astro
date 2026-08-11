@@ -3,6 +3,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { shollSteckelChapters } from '../../../../reading/books/sholl-steckel';
 import { getShollSteckelChapterContent, shollSteckelChapterSlugs } from '../../../../reading/books/sholl-steckel/chapter-content';
 import { getShollSteckelSourceFigures, shollSteckelCanonicalSource } from '../../../../reading/books/sholl-steckel/source-reading';
+import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 export function getStaticPaths() {
   return shollSteckelChapterSlugs.map((slug) => ({ params: { slug } }));
@@ -64,7 +65,7 @@ const nextChapter = chapterIndex >= 0 && chapterIndex < shollSteckelChapters.len
           {sourceFigureGuides.map((entry) => (
             <>
               <dt>{entry.locator} <span>· {entry.section}</span></dt>
-              <dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+              <dd>{entry.visual && <SourceVisual kind={entry.visual} />}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
             </>
           ))}
         </dl>

@@ -3,6 +3,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { cohenLouieChapters, cohenLouieParts, cohenLouieReadingSlugs } from '../../../../reading/books/cohen-louie';
 import { getCohenLouieChapterContent } from '../../../../reading/books/cohen-louie/chapter-content';
 import { cohenLouieCanonicalSource, getCohenLouieSourceFigures } from '../../../../reading/books/cohen-louie/source-reading';
+import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 export function getStaticPaths() {
   return cohenLouieReadingSlugs.map((slug) => ({ params: { slug } }));
@@ -74,7 +75,7 @@ const description = chapter?.coreIdea ?? part?.question ?? '';
             <h2 id="source-figures">Read the source figures</h2>
             <p>Keep these figures or tables open in the book. The Atlas does not reproduce Cambridge artwork; each note identifies where to look, what the visual contributes, and where its evidence stops.</p>
             <dl class="source-figure-list">
-              {sourceFigureGuides.map((entry) => (<><dt>{entry.locator} <span>· {entry.section}</span></dt><dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd></>))}
+              {sourceFigureGuides.map((entry) => (<><dt>{entry.locator} <span>· {entry.section}</span></dt><dd>{entry.visual && <SourceVisual kind={entry.visual} />}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd></>))}
             </dl>
           </section>
         )}
