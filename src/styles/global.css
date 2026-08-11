@@ -107,6 +107,25 @@ dd { margin: 0.25rem 0 0 1.25rem; }
   max-width: 46rem;
   margin: 0.3rem 0 0 1.1rem;
 }
+.source-visual {
+  max-width: 46rem;
+  margin: 1rem 0 1.6rem;
+  padding: 0.75rem;
+  border: 1px solid #d7d7d7;
+  background: #ffffff;
+}
+.source-visual-scroll { max-width: 100%; overflow-x: auto; scrollbar-width: thin; }
+.source-visual svg { display: block; width: 100%; min-width: 38rem; height: auto; }
+.source-visual-scroll:focus-visible { outline: 2px solid #123f70; outline-offset: -2px; }
+.source-visual .visual-axis path,
+.source-visual .visual-state path { fill: none; stroke: #333333; stroke-width: 2; }
+.source-visual .visual-grid path,
+.source-visual .visual-guide path { fill: none; stroke: #c6cdd4; stroke-width: 1.5; stroke-dasharray: 5 5; }
+.source-visual .visual-wave path { fill: none; stroke: #123f70; stroke-width: 3; }
+.source-visual .visual-accent path { fill: none; stroke: #9b3d2f; stroke-width: 3; }
+.source-visual .visual-dot circle { fill: #123f70; }
+.source-visual .visual-label { fill: #333333; font-family: Georgia, "Times New Roman", serif; font-size: 15px; }
+.source-visual figcaption { margin: 0.65rem 0 0; }
 
 .math-display {
   max-width: 100%;

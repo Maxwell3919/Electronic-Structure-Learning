@@ -3,6 +3,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { martinParts, martinReadingUnits } from '../../../../reading/books/martin';
 import { getMartinChapterContent, martinChapterSlugs } from '../../../../reading/books/martin/chapter-content';
 import { getMartinSourceFigures, martinCanonicalSource } from '../../../../reading/books/martin/source-reading';
+import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 export function getStaticPaths() {
   const publishedSlugs = [
@@ -153,7 +154,7 @@ const sourceFigureGuides = getMartinSourceFigures(slug);
             {sourceFigureGuides.map((entry) => (
               <>
                 <dt>{entry.locator} <span>· {entry.section}</span></dt>
-                <dd><strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+                <dd>{entry.visual && <SourceVisual kind={entry.visual} />}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
               </>
             ))}
           </dl>
