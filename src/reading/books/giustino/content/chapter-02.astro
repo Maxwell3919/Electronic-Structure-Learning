@@ -1,0 +1,70 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'joint-problem', label: 'One state for all particles' },
+  { id: 'approximation-ladder', label: 'What each approximation changes' },
+  { id: 'fermions', label: 'Antisymmetry before mean field' },
+  { id: 'mean-fields', label: 'Hartree, Hartree–Fock, and the Kohn–Sham preview' },
+];
+export const synthesis = 'Chapter 2 starts from a joint interacting state and makes every simplification visible. Clamping nuclei changes the dynamical problem; a product state removes joint electronic structure; a determinant restores exact fermionic antisymmetry but retains a restricted correlation pattern; Hartree and Hartree–Fock determine their orbitals self-consistently. The heuristic Kohn–Sham endpoint is therefore a question, not yet a density-functional derivation—precisely the task of Chapter 3.';
+---
+
+<section aria-labelledby="joint-problem">
+  <h2 id="joint-problem">One state for all particles</h2>
+  <p>
+    Coulomb’s law first appears as pairwise interactions, but the quantum difficulty is not simply the number of pairs. The state is one joint function of every electronic and nuclear coordinate. Moving one electron changes the point at which the same many-particle function is evaluated; it does not select an independent trajectory for that electron.
+  </p>
+  <p>
+    The structural form of the source Hamiltonian makes the responsibilities visible:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="full electron nuclear Hamiltonian split into kinetic and Coulomb terms">
+      <semantics>
+        <mrow><mover><mi>H</mi><mo>^</mo></mover><mo>=</mo><msub><mover><mi>T</mi><mo>^</mo></mover><mtext>e</mtext></msub><mo>+</mo><msub><mover><mi>T</mi><mo>^</mo></mover><mtext>N</mtext></msub><mo>+</mo><msub><mover><mi>V</mi><mo>^</mo></mover><mtext>ee</mtext></msub><mo>+</mo><msub><mover><mi>V</mi><mo>^</mo></mover><mtext>eN</mtext></msub><mo>+</mo><msub><mover><mi>V</mi><mo>^</mo></mover><mtext>NN</mtext></msub></mrow>
+        <annotation encoding="application/x-tex">\hat H=\hat T_&#123;\mathrm&#123;e&#125;&#125;+\hat T_&#123;\mathrm&#123;N&#125;&#125;+\hat V_&#123;\mathrm&#123;ee&#125;&#125;+\hat V_&#123;\mathrm&#123;eN&#125;&#125;+\hat V_&#123;\mathrm&#123;NN&#125;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the expression as two kinds of motion plus all three charge-pair interactions. The electron–electron term depends simultaneously on two electronic coordinates, which is why a generic state cannot be separated into unrelated one-electron functions. The electron–nuclear term ties the electronic environment to geometry, while the nuclear repulsion must return when fixed-geometry electronic energies are assembled into a total energy surface.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 2, §§2.1–2.2, especially Eq. 2.19.</p>
+</section>
+
+<section aria-labelledby="approximation-ladder">
+  <h2 id="approximation-ladder">What each approximation changes</h2>
+  <p>
+    The source’s scale estimate makes direct solution look impossible for realistic materials, but that estimate is useful only after the next moves are classified. Atomic units change notation. Clamping nuclei changes which degrees of freedom are solved dynamically. Replacing a joint electronic state by a product changes the allowed many-electron state. Replacing instantaneous interactions by a field changes how coupling is represented. These are not interchangeable simplifications.
+  </p>
+  <dl class="layer-ledger">
+    <dt>Clamped nuclei</dt><dd>Nuclear coordinates become parameters of an electronic Hamiltonian; nuclear physics returns through energy surfaces and later dynamics.</dd>
+    <dt>Independent product</dt><dd>Each spatial factor is assigned separately, so general joint electronic correlation is absent.</dd>
+    <dt>Slater determinant</dt><dd>One-particle spin orbitals are combined into an exactly antisymmetric N-electron state, but only one determinant is retained.</dd>
+    <dt>Mean field</dt><dd>Orbitals are determined in fields built from the same evolving orbital set or density, hence the equations remain nonlinear and self-consistent.</dd>
+  </dl>
+</section>
+
+<section aria-labelledby="fermions">
+  <h2 id="fermions">Antisymmetry before mean field</h2>
+  <p>
+    Exchanging two identical electron labels cannot create a different classical identity. The probability is unchanged, while the fermionic amplitude changes sign. A determinant enforces that sign structure automatically and vanishes when two columns become identical, giving the exclusion principle its many-electron form.
+  </p>
+  <p>
+    This is why exchange is not an optional electrostatic correction added later. Once the Coulomb energy is evaluated in an antisymmetric determinant, direct products and exchanged products both appear. The determinant is exact about exchange symmetry and approximate about the rest of the interacting state. <a href={href('/core/part-ii/')}>Core II</a> develops that distinction before the Guide’s Appendix A derives the equations.
+  </p>
+</section>
+
+<section aria-labelledby="mean-fields">
+  <h2 id="mean-fields">Hartree, Hartree–Fock, and the Kohn–Sham preview</h2>
+  <p>
+    Hartree replaces the other electrons’ instantaneous coordinates by a smooth density-generated Coulomb field. The interaction has not been removed: every orbital contributes to the density that builds the field in which all orbitals are solved. This circular dependence creates the self-consistent cycle.
+  </p>
+  <p>
+    Hartree–Fock changes the state class rather than deleting repulsion. It minimizes the original interacting expectation value over single determinants, so the resulting Fock operator contains a classical-looking direct term and a nonlocal exchange term. What remains missing is the correlation structure unavailable to one determinant.
+  </p>
+  <p>
+    The chapter’s final Kohn–Sham equation resembles these orbital equations, but resemblance does not yet establish a density-functional theory. Its local effective potential and auxiliary orbitals require a separate argument about the ground-state density and energy functional. Treat Section 2.9 as the problem Chapter 3 will solve, not as proof that Kohn–Sham orbitals are literal independent physical electrons.
+  </p>
+</section>

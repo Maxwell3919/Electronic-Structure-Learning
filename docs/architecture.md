@@ -79,7 +79,8 @@ Guided Reading
 ├── Books
 │   ├── Martin · Electronic Structure
 │   ├── Sholl & Steckel · Density Functional Theory: A Practical Introduction
-│   └── Cohen & Louie · Fundamentals of Condensed Matter Physics
+│   ├── Cohen & Louie · Fundamentals of Condensed Matter Physics
+│   └── Giustino · Materials Modelling Using Density Functional Theory
 └── Literature
     ├── Hohenberg–Kohn 1964
     └── Kohn–Sham 1965
@@ -93,6 +94,7 @@ The current canonical routes are:
 /reading/books/martin/
 /reading/books/sholl-steckel/
 /reading/books/cohen-louie/
+/reading/books/giustino/
 /reading/literature/
 /reading/literature/hohenberg-kohn-1964/
 /reading/literature/kohn-sham-1965/
@@ -394,6 +396,7 @@ The current additional book manifests follow the same source-specific pattern:
 ```text
 src/reading/books/sholl-steckel.ts
 src/reading/books/cohen-louie.ts
+src/reading/books/giustino.ts
 ```
 
 ## Visual and technical character

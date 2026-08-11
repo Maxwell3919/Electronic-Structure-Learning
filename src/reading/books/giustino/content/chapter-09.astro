@@ -1,0 +1,75 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'ks-meaning', label: 'What a Kohn–Sham eigenvalue is first' },
+  { id: 'periodic-bands', label: 'Why periodic Kohn–Sham states form bands' },
+  { id: 'copper', label: 'Reading a real band plot' },
+  { id: 'photoemission', label: 'What photoemission measures' },
+  { id: 'gaps', label: 'Keep the gap ledger explicit' },
+];
+export const synthesis = 'Chapter 9 uses Kohn–Sham states as a practical one-particle spectrum while exposing the need for interpretation. Their Bloch and band structure follows the periodic Kohn–Sham Hamiltonian, not density-functional theory itself. Filling supports a one-particle metal–insulator classification, but charged photoemission and fundamental gaps belong to interacting N±1 sectors and need more than an unqualified KS eigenvalue plot.';
+---
+
+<section aria-labelledby="ks-meaning">
+  <h2 id="ks-meaning">What a Kohn–Sham eigenvalue is first</h2>
+  <p>
+    A Kohn–Sham orbital is first an auxiliary function used to construct the ground-state density and noninteracting kinetic energy. Its eigenvalue is first the multiplier in the stationary auxiliary equation. This starting definition is more reliable than treating every eigenvalue as the energy of a physical electron.
+  </p>
+  <p>
+    The source rewrites the total energy as an occupied eigenvalue sum plus double-counting corrections and invokes the derivative of energy with respect to fractional occupation. That reasoning helps explain why Kohn–Sham spectra are often useful starting points, but finite addition and removal energies allow the other electrons to relax at fixed external potential and nuclear geometry. They belong to different particle-number sectors and are not generally equal to one frozen integer-occupation eigenvalue.
+  </p>
+</section>
+
+<section aria-labelledby="periodic-bands">
+  <h2 id="periodic-bands">Why periodic Kohn–Sham states form bands</h2>
+  <p>
+    Once the self-consistent Kohn–Sham potential repeats with the crystal, the auxiliary Hamiltonian is a periodic one-particle Hamiltonian. Translation symmetry therefore classifies its eigenstates by k exactly as in <a href={href('/core/part-iii/')}>Core III</a>:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="periodic Kohn Sham Bloch eigenproblem">
+      <semantics>
+        <mrow><msub><mover><mi>H</mi><mo>^</mo></mover><mtext>KS</mtext></msub><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>=</mo><msub><mi>ε</mi><mi>n</mi></msub><mo>(</mo><mi mathvariant="bold">k</mi><mo>)</mo><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>,</mo><mspace width="0.7em"/><msub><mi>ψ</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><msup><mi mathvariant="normal">e</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="bold">k</mi><mo>·</mo><mi mathvariant="bold">r</mi></mrow></msup><msub><mi>u</mi><mrow><mi>n</mi><mi mathvariant="bold">k</mi></mrow></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">\hat H_&#123;\mathrm&#123;KS&#125;&#125;\psi_&#123;n\mathbf&#123;k&#125;&#125;=\varepsilon_n(\mathbf&#123;k&#125;)\psi_&#123;n\mathbf&#123;k&#125;&#125;,\qquad \psi_&#123;n\mathbf&#123;k&#125;&#125;(\mathbf&#123;r&#125;)=\mathrm&#123;e&#125;^&#123;\mathrm&#123;i&#125;\mathbf&#123;k&#125;\cdot\mathbf&#123;r&#125;&#125;u_&#123;n\mathbf&#123;k&#125;&#125;(\mathbf&#123;r&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The band index n distinguishes multiple eigenstates in the same translation sector; k labels the translation character. As k varies, ε<sub>n</sub>(k) forms a Kohn–Sham band. The full Bloch state is generally not periodic; its cell factor u is. None of these symmetry statements requires DFT: any periodic one-particle Hamiltonian has the same organizational structure.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 9, §9.2 and Eqs. 9.6–9.10. Translation-first treatment: <a href={href('/core/part-iii/')}>Core III</a>.</p>
+</section>
+
+<section aria-labelledby="copper">
+  <h2 id="copper">Reading a real band plot</h2>
+  <p>
+    Copper turns the abstract labels into a materials plot. Begin with the horizontal axis: it joins selected high-symmetry points, so every segment is a one-dimensional slice through a three-dimensional Brillouin zone. Then find the Fermi level and identify which bands cross it. Finally use orbital projections or limiting models to interpret broad dispersive s-like bands and narrower d-like features.
+  </p>
+  <p>
+    The path helps visualize degeneracies, crossings, and orbital character. It cannot rule out an off-path pocket or extremum, and it is not the weighted k mesh used to integrate density or total energy. Those two k-space tasks remain separate even when the same labels appear in a calculation report.
+  </p>
+</section>
+
+<section aria-labelledby="photoemission">
+  <h2 id="photoemission">What photoemission measures</h2>
+  <p>
+    Angle-resolved photoemission removes an electron. Energy and emission angle constrain the electron’s binding energy and momentum component, while the intensity also contains matrix elements, surface sensitivity, occupations, lifetime broadening, and the interacting spectral function. The experiment is therefore a charged-removal probe of the N−1 sector, not a direct photograph of auxiliary orbitals.
+  </p>
+  <p>
+    Comparing an ARPES peak with a Kohn–Sham band can be informative when quasiparticle corrections are modest and the experimental geometry is understood. Disagreement can reflect self-energy, matrix elements, surfaces, temperature, disorder, or the starting approximation. <a href={href('/core/part-viii/')}>Core VIII</a> supplies the Green-function and spectral-weight objects needed to state that comparison precisely.
+  </p>
+</section>
+
+<section aria-labelledby="gaps">
+  <h2 id="gaps">Keep the gap ledger explicit</h2>
+  <dl class="layer-ledger">
+    <dt>Kohn–Sham gap</dt><dd>Difference between auxiliary conduction- and valence-edge eigenvalues for a stated approximation.</dd>
+    <dt>Fundamental gap</dt><dd>Difference between vertical electron-addition and electron-removal energies at fixed external potential and nuclear geometry.</dd>
+    <dt>Quasiparticle gap</dt><dd>Charged excitation gap described through interacting spectral poles or an approximation such as a stated GW variant.</dd>
+    <dt>Optical onset</dt><dd>Lowest bright neutral excitation under stated polarization, temperature, and selection rules.</dd>
+  </dl>
+  <p>
+    Exact DFT has a derivative discontinuity contribution beyond the exact Kohn–Sham eigenvalue gap. Approximate semilocal functionals commonly miss much of that contribution and can also distort the potential. A scissor shift can align a chosen onset empirically, but it does not turn the original Kohn–Sham spectrum into a general excitation theory.
+  </p>
+</section>

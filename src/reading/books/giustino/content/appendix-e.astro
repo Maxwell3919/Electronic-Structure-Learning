@@ -1,0 +1,69 @@
+---
+export const sectionLinks = [
+  { id: 'core-valence', label: 'Separate core and valence with care' },
+  { id: 'why-smooth', label: 'Why smooth pseudo-wavefunctions help' },
+  { id: 'inverse-problem', label: 'Construct a channel potential' },
+  { id: 'nonlocality', label: 'Angular channels make the operator nonlocal' },
+  { id: 'transferability', label: 'Atomic matching is not material validation' },
+];
+export const synthesis = 'Appendix E turns the empirical core–valence separation into a computational approximation. Smooth pseudo-wavefunctions remove expensive core-region nodes while matching selected all-electron valence behavior outside a cutoff. Inverting the atomic equation yields channel-dependent potentials whose nonlocal assembly must be versioned and tested for transferability in the target chemical and observable regime.';
+---
+
+<section aria-labelledby="core-valence">
+  <h2 id="core-valence">Separate core and valence with care</h2>
+  <p>
+    Figure E.1 compares tightly localized silicon core states with more extended valence states. This spatial separation motivates a frozen-core approximation: retain a fixed core contribution inherited from a reference atom and solve explicitly for the states most involved in bonding. Explicit relaxation or polarization of that core is excluded by the approximation, while removing the core orbitals from the active solution can reduce the number of states dramatically.
+  </p>
+  <p>
+    “Core” and “valence” are nevertheless modeling choices, not immutable periodic-table labels. Semicore states may overlap the bonding region or respond under pressure, oxidation, excitation, or spectroscopy. The required partition depends on the element, chemical environment, relativistic treatment, target observable, and accuracy sought.
+  </p>
+</section>
+
+<section aria-labelledby="why-smooth">
+  <h2 id="why-smooth">Why smooth pseudo-wavefunctions help</h2>
+  <p>
+    All-electron valence orbitals oscillate near a nucleus so that they remain orthogonal to lower core states. A uniform grid or plane-wave basis must resolve those rapid oscillations even when the chemically important valence density is farther away. Figure E.2 shows both the sampling difficulty and the pseudization response: replace the core-region oscillation by a smooth nodeless function while preserving selected matching conditions beyond a cutoff radius.
+  </p>
+  <p>
+    The limiting case is useful. Outside the chosen core radius, the pseudo and reference all-electron radial functions are constructed to agree for the reference channel; inside it, smoothness reduces the representation cost. This agreement is selective—it does not state that every all-electron observable has become identical.
+  </p>
+</section>
+
+<section aria-labelledby="inverse-problem">
+  <h2 id="inverse-problem">Construct a channel potential</h2>
+  <p>
+    Ordinarily a potential is supplied and the radial equation is solved for a wavefunction. Pseudopotential construction reverses that logic: choose a smooth reference pseudo-wavefunction and invert the radial Kohn–Sham equation to find the potential that makes it an eigenfunction at the selected reference energy.
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="pseudo radial wavefunction matches all electron radial wavefunction outside core radius">
+      <semantics>
+        <mrow><msubsup><mi>u</mi><mi>l</mi><mtext>PS</mtext></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo><msubsup><mi>u</mi><mi>l</mi><mtext>AE</mtext></msubsup><mo>(</mo><mi>r</mi><mo>)</mo><mspace width="0.8em"/><mtext>for</mtext><mspace width="0.3em"/><mi>r</mi><mo>≥</mo><msub><mi>r</mi><mtext>c</mtext></msub></mrow>
+        <annotation encoding="application/x-tex">u_l^&#123;\mathrm&#123;PS&#125;&#125;(r)=u_l^&#123;\mathrm&#123;AE&#125;&#125;(r)\qquad\text&#123;for &#125;r\ge r_&#123;\mathrm&#123;c&#125;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here l labels the angular-momentum channel, PS and AE distinguish pseudo and all-electron reference functions, and the cutoff radius marks the pseudized region. Matching the value alone is not the whole construction: practical norm-conserving schemes also impose norm and smoothness or derivative conditions so that scattering behavior changes as little as possible near the chosen reference state.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Appendix E, Figs. E.1–E.2 and Eqs. E.1–E.3.</p>
+</section>
+
+<section aria-labelledby="nonlocality">
+  <h2 id="nonlocality">Angular channels make the operator nonlocal</h2>
+  <p>
+    Different angular momenta penetrate the core differently, so one radial potential cannot generally reproduce every reference channel with the same accuracy. The source constructs channel-dependent potentials and assembles them with angular projectors. The action of that operator depends on the angular character of the state, which makes the ionic pseudopotential nonlocal in real space.
+  </p>
+  <p>
+    This nonlocality is a designed feature, not electron correlation. It also changes some operator matrix elements—for example velocity or optical expressions derived for a purely local potential may need additional nonlocal contributions.
+  </p>
+</section>
+
+<section aria-labelledby="transferability">
+  <h2 id="transferability">Atomic matching is not material validation</h2>
+  <p>
+    A pseudopotential is generated for selected atomic reference configurations, cutoff radii, angular channels, relativistic choices, and an exchange–correlation setup. Materials expose it to different occupations, bond lengths, oxidation environments, pressures, and observables. Agreement in the generating atom therefore establishes construction consistency, not universal transferability.
+  </p>
+  <p>
+    Modern PAW and other core treatments reorganize this approximation differently, but the same responsibility remains: the dataset is a versioned scientific input coupled to the functional and valence partition. Library provenance and checksum verification establish identity; system- and observable-specific comparisons establish whether that input is adequate. Selection, convergence, and validation continue in the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+</section>

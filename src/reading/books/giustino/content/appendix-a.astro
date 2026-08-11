@@ -1,0 +1,81 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'restrict-state', label: 'Restrict the state before varying it' },
+  { id: 'direct-exchange', label: 'Direct and exchanged products' },
+  { id: 'constrained-variation', label: 'Orthonormality shapes the equations' },
+  { id: 'canonical-orbitals', label: 'Canonical Fock equations' },
+  { id: 'what-remains', label: 'What the derivation leaves out' },
+];
+export const synthesis = 'Appendix A derives a one-particle eigenproblem without deleting electron–electron repulsion. The simplification comes first from restricting the many-electron state to one determinant; antisymmetry then creates direct and exchange terms, and constrained variation makes every orbital depend on the occupied set. The result is self-consistent and exactly antisymmetric, yet incomplete as an interacting state description.';
+---
+
+<section aria-labelledby="restrict-state">
+  <h2 id="restrict-state">Restrict the state before varying it</h2>
+  <p>
+    The appendix begins with the two-electron interacting Hamiltonian, then makes the choice that defines Hartree–Fock: search only among Slater determinants. For two spin-suppressed orbitals, the determinant is the antisymmetric combination
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="two electron Slater determinant">
+      <semantics>
+        <mrow><mi>Φ</mi><mo>(</mo><msub><mi mathvariant="bold">r</mi><mn>1</mn></msub><mo>,</mo><msub><mi mathvariant="bold">r</mi><mn>2</mn></msub><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><msqrt><mn>2</mn></msqrt></mfrac><mo>[</mo><msub><mi>ψ</mi><mn>1</mn></msub><mo>(</mo><msub><mi mathvariant="bold">r</mi><mn>1</mn></msub><mo>)</mo><msub><mi>ψ</mi><mn>2</mn></msub><mo>(</mo><msub><mi mathvariant="bold">r</mi><mn>2</mn></msub><mo>)</mo><mo>−</mo><msub><mi>ψ</mi><mn>1</mn></msub><mo>(</mo><msub><mi mathvariant="bold">r</mi><mn>2</mn></msub><mo>)</mo><msub><mi>ψ</mi><mn>2</mn></msub><mo>(</mo><msub><mi mathvariant="bold">r</mi><mn>1</mn></msub><mo>)</mo><mo>]</mo></mrow>
+        <annotation encoding="application/x-tex">\Phi(\mathbf&#123;r&#125;_1,\mathbf&#123;r&#125;_2)=\frac&#123;1&#125;&#123;\sqrt&#123;2&#125;&#125;[\psi_1(\mathbf&#123;r&#125;_1)\psi_2(\mathbf&#123;r&#125;_2)-\psi_1(\mathbf&#123;r&#125;_2)\psi_2(\mathbf&#123;r&#125;_1)]</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the two products as the same pair of orbitals assigned to the two electron coordinates in the two possible orders. Their minus sign guarantees antisymmetry under exchange. The prefactor shown in the equation normalizes this two-orbital determinant when the orbitals are orthonormal; the constraint is made explicit below. Antisymmetry does not make the determinant the exact interacting wavefunction: all amplitudes still come from one occupied orbital set, so more general joint rearrangements are excluded before the minimization begins.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Appendix A, Eqs. A.1–A.3. State-class boundary: <a href={href('/core/part-ii/')}>Core II · Fermions, Mean Fields, and Correlation</a>.</p>
+</section>
+
+<section aria-labelledby="direct-exchange">
+  <h2 id="direct-exchange">Direct and exchanged products</h2>
+  <p>
+    Substituting the determinant into the energy expectation value generates two kinds of Coulomb contribution. The direct term pairs each orbital density with the other orbital density and resembles a classical electrostatic interaction between two smooth charge distributions. The exchange term pairs amplitudes with exchanged orbital labels. It comes from the determinant’s sign structure and has no independent classical-force interpretation.
+  </p>
+  <p>
+    This distinction explains why antisymmetry is physically consequential rather than bookkeeping. Exchange changes the variational energy and the orbital equation, depends on the occupied orbitals and their spin structure, and cancels the one-orbital self-Coulomb contribution in Hartree–Fock. It is still not the whole of electron correlation.
+  </p>
+</section>
+
+<section aria-labelledby="constrained-variation">
+  <h2 id="constrained-variation">Orthonormality shapes the equations</h2>
+  <p>
+    Minimizing the determinant energy without constraints would allow the orbital norms and mutual overlaps to drift. The appendix therefore introduces a matrix of Lagrange multipliers to enforce orthonormal occupied orbitals. Varying an orbital changes its one-electron energy, its direct interaction with every occupied orbital, and its exchanged amplitudes with them. The stationarity condition is consequently an orbital equation whose operator depends on the other orbitals.
+  </p>
+  <p>
+    The multiplier matrix can be diagonalized by a unitary rotation within the occupied subspace. That rotation changes the orbital labels but not the determinant’s occupied subspace or its density. In the resulting canonical representation, the multiplier eigenvalues become the familiar orbital eigenvalues.
+  </p>
+</section>
+
+<section aria-labelledby="canonical-orbitals">
+  <h2 id="canonical-orbitals">Canonical Fock equations</h2>
+  <p>
+    After that rotation, the coupled stationarity conditions take the form
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="canonical Hartree Fock orbital equation">
+      <semantics>
+        <mrow><mover><mi>f</mi><mo>^</mo></mover><mo>[</mo><mo>&#123;</mo><msub><mi>χ</mi><mi>j</mi></msub><mo>&#125;</mo><mo>]</mo><msub><mi>χ</mi><mi>i</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><msub><mi>χ</mi><mi>i</mi></msub></mrow>
+        <annotation encoding="application/x-tex">\hat f[\left\&#123;\chi_j\right\&#125;]\chi_i=\varepsilon_i\chi_i</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The bracket on the Fock operator is the important part: this is not an externally fixed one-particle Hamiltonian. The occupied orbitals construct its direct and nonlocal exchange terms, yet those same orbitals are its eigenfunctions. A guess therefore builds an operator, the eigenproblem returns a new occupied set, and the cycle repeats to self-consistency.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Appendix A, Eqs. A.9–A.19 and the N-electron generalization following Eq. A.19.</p>
+</section>
+
+<section aria-labelledby="what-remains">
+  <h2 id="what-remains">What the derivation leaves out</h2>
+  <p>
+    Hartree–Fock keeps the interacting Hamiltonian and exact fermionic antisymmetry inside its chosen state class. Its approximation is the single-determinant restriction. Self-consistency solves the resulting nonlinear stationarity equations; it does not enlarge the allowed many-electron state beyond one determinant.
+  </p>
+  <p>
+    The missing energy and state flexibility are therefore defined relative to that reference and the declared Hamiltonian and basis convention. Near equilibrium the reference may be qualitatively useful. When several configurations become nearly degenerate—as in a stretched covalent bond—the restriction can fail qualitatively even after perfect numerical convergence.
+  </p>
+</section>

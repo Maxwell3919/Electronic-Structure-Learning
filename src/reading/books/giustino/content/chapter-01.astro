@@ -1,0 +1,61 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'first-principles', label: 'What “from first principles” commits us to' },
+  { id: 'examples', label: 'Five examples, five calculated objects' },
+  { id: 'why-dft', label: 'Why DFT became a materials method' },
+  { id: 'emergence', label: 'Where electronic structure hands off' },
+];
+export const synthesis = 'Chapter 1 earns the rest of the book by showing both reach and limits. Quantum-mechanical electronic calculations can supply structures, energies, response ingredients, and reduced parameters across many materials, but every prediction still has a declared approximation stack and an observable-specific bridge. The next chapter therefore asks what quantum problem these practical calculations are trying to replace.';
+---
+
+<section aria-labelledby="first-principles">
+  <h2 id="first-principles">What “from first principles” commits us to</h2>
+  <p>
+    Giustino begins with an attractive promise: material behavior can be connected to atomic composition through quantum mechanics without fitting the answer to the same target experiment. The phrase <em>first principles</em> names that starting commitment. It does not mean that the resulting calculation is exact, parameter-free in every implementation detail, or complete across all scales. A density-functional calculation still chooses an exchange–correlation approximation, a core treatment, a finite representation, boundary conditions, and a target physical state.
+  </p>
+  <p>
+    This distinction is the key to reading the chapter’s examples. The electronic calculation produces a particular object—an energy difference, density, force, response function, or coupling. Additional theory may then transform that object into a spectrum, heat capacity, phase boundary, fracture law, or screening descriptor. A numerical output and an experimental observable can agree only after the bridge between them has been stated.
+  </p>
+</section>
+
+<section aria-labelledby="examples">
+  <h2 id="examples">Five examples, five calculated objects</h2>
+  <p>
+    The chapter deliberately ranges from nanostructure to planetary pressure. Detonation nanodiamond uses calculated candidate structures and X-ray absorption to identify an interface motif. MgB₂ combines electronic bands and electron–phonon information with superconducting theory to interpret heat capacity. Iron in the Earth’s core requires pressure- and temperature-dependent free-energy comparisons. Silicon fracture passes electronic energies into a larger-scale mechanics model. Catalyst screening reduces a complicated electrochemical problem to declared adsorption and stability descriptors before ranking candidates.
+  </p>
+  <figure class="paper-argument">
+    <ol>
+      <li><strong>Physical question</strong><span>Which structure, state, response, or process is under study?</span></li>
+      <li><strong>Electronic object</strong><span>Energy, density, force, spectrum ingredient, or coupling.</span></li>
+      <li><strong>Bridge model</strong><span>Thermodynamics, spectroscopy, continuum mechanics, or screening descriptor.</span></li>
+      <li><strong>Comparison</strong><span>Evidence tied to the same observable and conditions.</span></li>
+    </ol>
+    <figcaption>How the chapter’s applications move from an electronic calculation to a material claim.</figcaption>
+  </figure>
+  <p>
+    Reading the examples through this sequence prevents “DFT predicted it” from hiding the actual inference. The MgB₂ heat-capacity curve is not a raw Kohn–Sham output; the phase diagram is not a zero-temperature total-energy plot; and a catalyst descriptor is not catalytic activity itself. The value of the electronic calculation is that it supplies controlled microscopic information to the next layer.
+  </p>
+</section>
+
+<section aria-labelledby="why-dft">
+  <h2 id="why-dft">Why DFT became a materials method</h2>
+  <p>
+    The source attributes DFT’s popularity to a useful balance: the same density-based framework transfers across chemical species and bonding environments, produces tractable one-particle equations, can be shared through general software, and often supplies a reasonable reference even when a specialized theory must follow. These are practical advantages, not a theorem that one approximation works uniformly.
+  </p>
+  <p>
+    Transferability is therefore conditional. A semilocal functional may predict a lattice parameter well while missing a gap; a pseudopotential may be reliable for one bonding environment but require semicore states under pressure; a converged ground state may be an excellent input to a response calculation without itself being the response. <a href={href('/core/part-v/')}>Core V</a> separates these layers before the Guide uses them repeatedly.
+  </p>
+</section>
+
+<section aria-labelledby="emergence">
+  <h2 id="emergence">Where electronic structure hands off</h2>
+  <p>
+    The final section broadens the scale until a direct atomistic description is no longer the useful language. Fracture fronts, phase coexistence, biological machines, and catalytic operation organize many microscopic degrees of freedom into collective variables, reservoirs, constraints, and histories. Their behavior is compatible with the underlying quantum mechanics, yet it is not normally obtained by solving one ever-larger ground-state electronic problem.
+  </p>
+  <p>
+    This is not a defeat for first-principles modelling. It identifies the handoff: electronic structure supplies energies, forces, response coefficients, and interaction parameters; statistical mechanics, continuum theory, kinetics, and experiment decide how those quantities enter the higher-scale question. The source’s opening survey is strongest when read as a map of these interfaces rather than as a list of DFT successes.
+  </p>
+</section>

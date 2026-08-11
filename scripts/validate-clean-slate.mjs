@@ -47,6 +47,10 @@ const cohenLouiePartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv'];
 const cohenLouieChapterSlugs = Array.from({ length: 16 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const cohenLouieSlugs = [...cohenLouiePartSlugs, ...cohenLouieChapterSlugs];
 const cohenLouieRoutes = cohenLouieSlugs.map((slug) => `reading/books/cohen-louie/${slug}/`);
+const giustinoChapterSlugs = Array.from({ length: 11 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
+const giustinoAppendixSlugs = 'abcde'.split('').map((letter) => `appendix-${letter}`);
+const giustinoSlugs = [...giustinoChapterSlugs, ...giustinoAppendixSlugs];
+const giustinoRoutes = giustinoSlugs.map((slug) => `reading/books/giustino/${slug}/`);
 
 const expectedPages = [
   'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
@@ -54,6 +58,7 @@ const expectedPages = [
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
   'src/pages/reading/books/sholl-steckel/[slug].astro', 'src/pages/reading/books/sholl-steckel/index.astro',
   'src/pages/reading/books/cohen-louie/[slug].astro', 'src/pages/reading/books/cohen-louie/index.astro',
+  'src/pages/reading/books/giustino/[slug].astro', 'src/pages/reading/books/giustino/index.astro',
   'src/pages/reading/literature/index.astro',
   ...literatureSlugs.map((slug) => `src/pages/reading/literature/${slug}/index.astro`),
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
@@ -71,6 +76,8 @@ const expectedHtml = [
   ...shollSteckelChapterSlugs.map((slug) => `reading/books/sholl-steckel/${slug}/index.html`),
   'reading/books/cohen-louie/index.html',
   ...cohenLouieSlugs.map((slug) => `reading/books/cohen-louie/${slug}/index.html`),
+  'reading/books/giustino/index.html',
+  ...giustinoSlugs.map((slug) => `reading/books/giustino/${slug}/index.html`),
   'reading/literature/index.html',
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
@@ -82,6 +89,7 @@ const internalRoutes = new Set([
   'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/', ...martinRoutes,
   'reading/books/sholl-steckel/', ...shollSteckelRoutes,
   'reading/books/cohen-louie/', ...cohenLouieRoutes,
+  'reading/books/giustino/', ...giustinoRoutes,
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   'methods/', 'computational-tools/', 'reference/',
 ]);
@@ -302,6 +310,22 @@ const checkReadingManifest = () => {
     assert(cohenLoader.includes(`'${slug}'`), `Cohen & Louie loader is missing ${slug}`);
     assert(fs.existsSync(path.join(root, `src/reading/books/cohen-louie/content/${slug}.astro`)), `Cohen & Louie detailed content is missing for ${slug}`);
   }
+
+  const giustinoMain = fs.readFileSync(path.join(root, 'src/reading/books/giustino.ts'), 'utf8');
+  const giustinoLoader = fs.readFileSync(path.join(root, 'src/reading/books/giustino/chapter-content.ts'), 'utf8');
+  const giustinoSourceReading = fs.readFileSync(path.join(root, 'src/reading/books/giustino/source-reading.ts'), 'utf8');
+  assert(count(giustinoMain, /unit\('chapter'/g) === 11, 'Giustino data must define eleven chapters');
+  assert(count(giustinoMain, /unit\('appendix'/g) === 5, 'Giustino data must define five appendices');
+  assert(count(giustinoLoader, /'(?:chapter-\d{2}|appendix-[a-e])'\s*:/g) === 16, 'Giustino loader must publish sixteen reviewed units');
+  assert(count(giustinoSourceReading, /\{ locator:/g) >= 16, 'Giustino guide must include source-reading locators for every unit');
+  assert(!giustinoMain.includes('sourceText') && !giustinoSourceReading.includes('assets/mineru'), 'Giustino public data must not contain extracted textbook text or MinerU assets');
+  for (const slug of giustinoSlugs) {
+    assert(giustinoLoader.includes(`'${slug}'`), `Giustino loader is missing ${slug}`);
+    assert(fs.existsSync(path.join(root, `src/reading/books/giustino/content/${slug}.astro`)), `Giustino detailed content is missing for ${slug}`);
+    const content = fs.readFileSync(path.join(root, `src/reading/books/giustino/content/${slug}.astro`), 'utf8');
+    assert(content.length > 2200, `Giustino detailed content is unexpectedly short for ${slug}`);
+    if (slug !== 'chapter-01') checkMathMl(content, `src/reading/books/giustino/content/${slug}.astro`, true);
+  }
 };
 
 if (sourceMode) {
@@ -381,6 +405,14 @@ if (sourceMode) {
   for (const slug of cohenLouieChapterSlugs.slice(1)) {
     checkMathMl(fs.readFileSync(path.join(root, `src/reading/books/cohen-louie/content/${slug}.astro`), 'utf8'), `src/reading/books/cohen-louie/content/${slug}.astro`, true);
   }
+  const giustinoBook = fs.readFileSync(path.join(root, 'src/pages/reading/books/giustino/index.astro'), 'utf8');
+  for (const marker of ['all eleven chapters and five appendices', 'DFT Research Workflow', 'entry.contribution', 'Read {entry.label}']) {
+    assert(giustinoBook.includes(marker), `Giustino book page is missing ${marker}`);
+  }
+  const giustinoRoutePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/giustino/[slug].astro'), 'utf8');
+  for (const marker of ['getStaticPaths', 'giustinoUnitSlugs', 'Core Idea.', "unit.kind === 'chapter'", 'unit-structure', 'Read the source figures', 'Source anchor']) {
+    assert(giustinoRoutePage.includes(marker), `Giustino route page is missing ${marker}`);
+  }
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
   assert(styles.includes('.source-outline') && styles.includes('list-style: none'), 'Martin source outline does not suppress automatic list markers');
   checkReadingManifest();
@@ -406,7 +438,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length;
+      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
@@ -480,6 +512,15 @@ if (builtMode) {
       const relative = `reading/books/cohen-louie/${slug}/index.html`;
       const text = fs.readFileSync(path.join(dist, relative), 'utf8');
       for (const marker of ['Core Idea.', 'Chapter overview', 'Read the source figures', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
+    }
+    const giustinoBook = fs.readFileSync(path.join(dist, 'reading/books/giustino/index.html'), 'utf8');
+    for (const marker of ['Read Chapter 1', 'Read Appendix A', 'Oxford University Press record']) {
+      assert(giustinoBook.includes(marker), `built Giustino page is missing ${marker}`);
+    }
+    for (const slug of giustinoSlugs) {
+      const relative = `reading/books/giustino/${slug}/index.html`;
+      const text = fs.readFileSync(path.join(dist, relative), 'utf8');
+      for (const marker of ['Core Idea.', 'overview', 'Read the source figures', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
     }
     const redirect = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
     assert(redirect.includes('reading/books/martin'), 'Martin compatibility redirect target is missing');

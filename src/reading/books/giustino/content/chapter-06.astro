@@ -1,0 +1,75 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'strain-stress', label: 'Deformation, strain, and stress' },
+  { id: 'curvature', label: 'Elasticity as local energy curvature' },
+  { id: 'stress-theorem', label: 'Why direct stress can be calculated' },
+  { id: 'extreme-pressure', label: 'Pressure changes the comparison' },
+  { id: 'reported-realization', label: 'What the reported calculations support' },
+];
+export const synthesis = 'Chapter 6 makes elasticity a derivative hierarchy on the same adiabatic energy surface: first derivative with respect to strain gives stress, and the local second derivative gives elastic response. Symmetry reduces the tensor, while pressure changes the thermodynamic potential and candidate ranking. Local stiffness and global phase stability remain distinct.';
+---
+
+<section aria-labelledby="strain-stress">
+  <h2 id="strain-stress">Deformation, strain, and stress</h2>
+  <p>
+    Atomic forces differentiate energy with respect to internal coordinates. Elasticity instead asks how the energy changes when the simulation cell and material are deformed. The deformation gradient records the local map from undeformed to deformed coordinates. In the small-deformation limit, subtracting the identity leaves the displacement gradient: its symmetric part is the infinitesimal strain tensor, while its antisymmetric part describes an infinitesimal rigid rotation. The stress tensor is conjugate to strain and records force per area. Its indices specify both surface normal and force direction, which is why a solid’s response is generally tensorial.
+  </p>
+  <p>
+    Giustino first uses virtual compression, stretching, and shear experiments to build the picture before introducing Voigt notation. Symmetry can equate or eliminate tensor components, but it does not change what stress and strain mean. A cubic solid needs fewer independent constants than a low-symmetry solid because its rotations map more deformations into equivalent ones.
+  </p>
+</section>
+
+<section aria-labelledby="curvature">
+  <h2 id="curvature">Elasticity as local energy curvature</h2>
+  <p>
+    Near an unstrained equilibrium cell, the energy density can be expanded in small strain. The linear term vanishes at zero external stress, and the quadratic term defines the elastic tensor:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="elastic energy is quadratic in small strain">
+      <semantics>
+        <mrow><mi>U</mi><mo>(</mo><mi mathvariant="bold">ε</mi><mo>)</mo><mo>=</mo><msub><mi>U</mi><mn>0</mn></msub><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>Ω</mi><munder><mo>∑</mo><mrow><mi>α</mi><mi>β</mi><mi>γ</mi><mi>δ</mi></mrow></munder><msub><mi>C</mi><mrow><mi>α</mi><mi>β</mi><mi>γ</mi><mi>δ</mi></mrow></msub><msub><mi>ε</mi><mrow><mi>α</mi><mi>β</mi></mrow></msub><msub><mi>ε</mi><mrow><mi>γ</mi><mi>δ</mi></mrow></msub><mo>+</mo><mi>O</mi><mo>(</mo><msup><mi>ε</mi><mn>3</mn></msup><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">U(\boldsymbol&#123;\varepsilon&#125;)=U_0+\frac&#123;1&#125;&#123;2&#125;\Omega\sum_&#123;\alpha\beta\gamma\delta&#125;C_&#123;\alpha\beta\gamma\delta&#125;\varepsilon_&#123;\alpha\beta&#125;\varepsilon_&#123;\gamma\delta&#125;+O(\varepsilon^3)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The volume Ω converts an energy density into energy. Each C component is a second derivative at the reference state, so fitting total energies for carefully chosen small distortions isolates combinations of elastic constants. The cubic and higher-order terms are precisely what the harmonic elastic approximation neglects.
+  </p>
+  <p>
+    Positive curvature along the tested strains supports local elastic stability of that branch. It does not compare every structure, determine a finite-temperature free energy, or rule out a soft phonon at another wavevector. <a href={href('/core/part-vi/')}>Core VI</a> places these claims on separate rungs of the stability ladder.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 6, §§6.3–6.4, especially Eqs. 6.9–6.20.</p>
+</section>
+
+<section aria-labelledby="stress-theorem">
+  <h2 id="stress-theorem">Why direct stress can be calculated</h2>
+  <p>
+    Energy fitting is not the only route. Differentiating the stationary electronic energy with respect to strain gives a stress expression containing electrostatic, kinetic, and exchange–correlation contributions. This stress theorem is the cell-deformation analogue of the force theorem: it avoids a separate finite energy curve for every small strain component.
+  </p>
+  <p>
+    Representation dependence again matters. A basis tied to the cell can generate Pulay stress when it changes under strain; incomplete Brillouin-zone sampling and insufficient SCF precision can contaminate small stress differences. Direct evaluation changes the computational route, not the physical definition of stress.
+  </p>
+</section>
+
+<section aria-labelledby="extreme-pressure">
+  <h2 id="extreme-pressure">Pressure changes the comparison</h2>
+  <p>
+    At fixed external pressure, the stable zero-temperature candidate minimizes enthalpy rather than internal energy alone. The MgSiO₃ example therefore combines structural candidates, pressure-dependent enthalpies, elastic constants, and seismic observables. The enthalpy crossing identifies where the preferred candidate changes; calculated elastic response then connects the candidate structures to wave velocities.
+  </p>
+  <p>
+    This multi-object argument is stronger than a single energy minimum and narrower than a universal stability claim. Candidate completeness, XC sensitivity, finite-temperature contributions, and experimental pressure conditions still define the evidence boundary.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">What the reported calculations support</h2>
+  <dl class="layer-ledger">
+    <dt>Silicon and tungsten exercises</dt><dd>DFT/LDA energy changes for prescribed small isotropic, tetragonal, and trigonal distortions; fits yield cubic elastic constants or a bulk modulus and test sensitivity to fitting windows.</dd>
+    <dt>MgSiO₃ example</dt><dd>Published DFT enthalpy and elastic calculations for perovskite and post-perovskite candidates at extreme pressure, compared with seismic constraints.</dd>
+    <dt>Evidence scope</dt><dd>The tables demonstrate the derivative-and-comparison method and its material examples; they do not provide one complete modern convergence and dataset record.</dd>
+  </dl>
+  <p><strong>Not reported uniformly:</strong> code versions, exact core datasets, all representation and sampling controls, and observable-specific convergence for each literature example.</p>
+</section>

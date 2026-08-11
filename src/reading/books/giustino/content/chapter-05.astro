@@ -1,0 +1,71 @@
+---
+export const sectionLinks = [
+  { id: 'energy-reference', label: 'Binding and cohesion need references' },
+  { id: 'crystal-candidates', label: 'Periodic crystals and candidate structures' },
+  { id: 'measurement', label: 'From geometry to a measured signal' },
+  { id: 'surfaces', label: 'Surface reconstruction and STM' },
+  { id: 'reported-realization', label: 'What the examples actually calculate' },
+];
+export const synthesis = 'Chapter 5 tests the structural framework against experiment, but the comparisons are never object-free. Molecular and cohesive energies need atomic references; crystal prediction needs a candidate set; X-ray peaks arise from a structure factor; STM contrast arises from tunnelling states under a measurement model. The strongest agreement is therefore agreement between explicitly connected calculated and measured objects.';
+---
+
+<section aria-labelledby="energy-reference">
+  <h2 id="energy-reference">Binding and cohesion need references</h2>
+  <p>
+    For N₂, the source subtracts two isolated nitrogen atoms from the molecular energy. The binding curve therefore answers a comparison question rather than assigning meaning to an absolute electronic energy:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="molecular binding energy relative to separated atoms">
+      <semantics>
+        <mrow><msub><mi>E</mi><mtext>b</mtext></msub><mo>(</mo><mi>d</mi><mo>)</mo><mo>=</mo><mi>U</mi><mo>(</mo><mi>d</mi><mo>)</mo><mo>−</mo><mn>2</mn><msub><mi>E</mi><mtext>N</mtext></msub></mrow>
+        <annotation encoding="application/x-tex">E_&#123;\mathrm&#123;b&#125;&#125;(d)=U(d)-2E_&#123;\mathrm&#123;N&#125;&#125;</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The coordinate d is the N–N separation, U includes electronic energy and nuclear repulsion at that geometry, and the reference uses two isolated atomic states. The minimum locates the equilibrium bond within the selected electronic branch; the depth relative to a consistent dissociation reference gives a dissociation energy. The source’s large-distance mismatch reveals why spin state and reference consistency matter even when the equilibrium bond length looks excellent.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 5, §5.1 and Eq. 5.1.</p>
+</section>
+
+<section aria-labelledby="crystal-candidates">
+  <h2 id="crystal-candidates">Periodic crystals and candidate structures</h2>
+  <p>
+    Silicon replaces one bond coordinate by lattice and internal coordinates repeated through space. Periodic boundary conditions reduce the calculation to a cell, while Bloch phases organize the one-particle states. The cohesive energy subtracts a consistent isolated-atom reference per atom, so its minimum identifies the preferred scale of one declared crystal structure.
+  </p>
+  <p>
+    Repeating the scan for diamond and β-Sn phases exposes a second responsibility: structure prediction requires a candidate catalog. Lower energy among two curves establishes a ranking among those two candidates at the stated conditions. Under external pressure the relevant comparison becomes enthalpy, and finite temperature requires free energy. A zero-pressure energy minimum cannot silently answer those different thermodynamic questions.
+  </p>
+</section>
+
+<section aria-labelledby="measurement">
+  <h2 id="measurement">From geometry to a measured signal</h2>
+  <p>
+    X-ray diffraction does not directly return a list of nuclear coordinates. The periodic electron density scatters radiation, and the complex amplitudes from atoms in the unit cell interfere. Reciprocal-lattice peak positions constrain the lattice, while measured intensities constrain the magnitudes of structure factors. Their phases also encode positional information but are not ordinarily measured directly—the resulting phase problem is one reason structural refinement is an inverse problem rather than a coordinate readout.
+  </p>
+  <p>
+    The chapter’s comparison is strongest when the forward calculation is made explicit: proposed coordinates generate a structure factor, which generates predicted diffraction intensities. Agreement supports that model within the experimental resolution and candidate space; it does not prove that the coordinates are a unique direct observable.
+  </p>
+</section>
+
+<section aria-labelledby="surfaces">
+  <h2 id="surfaces">Surface reconstruction and STM</h2>
+  <p>
+    A surface breaks bulk translation symmetry and can change termination, stoichiometry, bonding, and periodicity. The source’s silicon example uses a periodic slab to compare reconstructed motifs. Cell dimensions, slab thickness, vacuum, constrained layers, and termination are therefore part of the physical model rather than hidden numerical settings.
+  </p>
+  <p>
+    STM adds another interpretive layer. Under the Tersoff–Hamann approximation, tunnelling current is related to electronic states in an energy window and near the tip position. A bright feature can reflect a large tunnelling-state amplitude instead of a nucleus sitting higher in real space. Simulated and measured maps support a structural assignment only together with bias, tip, surface, and electronic-state assumptions.
+  </p>
+</section>
+
+<section aria-labelledby="reported-realization">
+  <h2 id="reported-realization">What the examples actually calculate</h2>
+  <dl class="layer-ledger">
+    <dt>N₂</dt><dd>DFT/LDA binding curve with a frozen 1s core, a 10 Å periodic cubic cell, and a diamagnetic molecular branch near equilibrium; the source also reports a GGA dissociation comparison from the literature.</dd>
+    <dt>Silicon</dt><dd>Periodic primitive-cell cohesive-energy curves for diamond and β-Sn candidates with a frozen core; lattice minima and reference energies are compared with experiment.</dd>
+    <dt>Graphite and surfaces</dt><dd>The chapter uses periodic models and published calculations to illustrate weak interlayer binding, surface reconstruction, and simulated STM contrast.</dd>
+  </dl>
+  <p>
+    <strong>Not reported as one complete reproducibility record:</strong> a uniform code/version, exact dataset identifiers, cutoffs, k meshes, SCF thresholds, geometry thresholds, and convergence evidence for every example. Treat the figures as source-aligned teaching calculations, not present-day recommended inputs. Parameter selection and validation belong to the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+</section>

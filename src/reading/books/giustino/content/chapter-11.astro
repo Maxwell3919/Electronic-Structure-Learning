@@ -1,0 +1,75 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'spin-object', label: 'Spin is a quantum degree of freedom' },
+  { id: 'spin-density', label: 'Charge and magnetization densities' },
+  { id: 'exchange-models', label: 'Exchange energy and reduced spin models' },
+  { id: 'spin-dft', label: 'What spin-DFT adds' },
+  { id: 'fe-mno', label: 'Itinerant Fe and localized MnO' },
+];
+export const synthesis = 'Chapter 11 expands the density variable to include magnetization and uses spin-dependent Kohn–Sham fields to compare magnetic branches. The Fe and MnO examples show why itinerant and localized magnetism need different interpretations and reduced models. Magnetic order, spin–orbit physics, finite-temperature transitions, and strong local correlation remain separate layers beyond one converged collinear spin-DFT solution.';
+---
+
+<section aria-labelledby="spin-object">
+  <h2 id="spin-object">Spin is a quantum degree of freedom</h2>
+  <p>
+    The source starts from the Dirac equation to show that spin is not a literal sphere rotating in space. In a low-energy description, a two-component spinor carries amplitudes relative to a chosen quantization basis. Measurement probabilities and magnetic moments follow from spin operators acting on that spinor.
+  </p>
+  <p>
+    This origin also fixes an important modeling boundary. A scalar-relativistic Hamiltonian, collinear spin polarization, noncollinear magnetism, and spin–orbit coupling keep different parts of the relativistic and spin structure. They cannot be inferred from the word “spin-polarized” alone.
+  </p>
+</section>
+
+<section aria-labelledby="spin-density">
+  <h2 id="spin-density">Charge and magnetization densities</h2>
+  <p>
+    For a collinear state, spin-resolved densities can be combined into total charge density and magnetization density:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="charge and collinear magnetization densities from spin resolved densities">
+      <semantics>
+        <mrow><mi>n</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>+</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo><mspace width="0.8em"/><mi>m</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><msub><mi>n</mi><mo>↑</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>−</mo><msub><mi>n</mi><mo>↓</mo></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">n(\mathbf&#123;r&#125;)=n_\uparrow(\mathbf&#123;r&#125;)+n_\downarrow(\mathbf&#123;r&#125;),\qquad m(\mathbf&#123;r&#125;)=n_\uparrow(\mathbf&#123;r&#125;)-n_\downarrow(\mathbf&#123;r&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first quantity counts electrons regardless of spin projection. The second records an imbalance along the chosen collinear axis; multiplying by the appropriate magnetic-moment factor gives a magnetization convention. A globally vanishing integral does not imply that m(r) vanishes locally—an antiferromagnet can have opposite sublattice moments and zero net magnetization.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 11, §11.2, especially Eqs. 11.34 and 11.39–11.43; the collinear specialization appears in §11.6.</p>
+</section>
+
+<section aria-labelledby="exchange-models">
+  <h2 id="exchange-models">Exchange energy and reduced spin models</h2>
+  <p>
+    Antisymmetry produces exchange contributions when Coulomb repulsion is evaluated in a determinant. Mapping several many-electron states onto a Heisenberg-like Hamiltonian then creates parameters that summarize energy differences between declared spin configurations. Those parameters are model-dependent effective couplings, not additional classical forces between little arrows.
+  </p>
+  <p>
+    A sign convention must always accompany J. So must the chosen neighbor pairs, spin magnitude, structural geometry, and state set used in the fit. A model that reproduces three DFT energies need not reproduce magnons, anisotropy, or a transition temperature without further interactions and statistical mechanics.
+  </p>
+</section>
+
+<section aria-labelledby="spin-dft">
+  <h2 id="spin-dft">What spin-DFT adds</h2>
+  <p>
+    Spin-density functional theory treats charge and magnetization densities as basic ground-state variables under its stated external scalar and magnetic potentials. In a collinear Kohn–Sham realization, spin-up and spin-down auxiliary orbitals feel different exchange–correlation magnetic fields. The densities built from those orbitals update the same fields, so multiple self-consistent magnetic branches can exist.
+  </p>
+  <p>
+    This nonlinearity makes initialization scientifically relevant without making it evidence of uniqueness. A nonmagnetic, ferromagnetic, or antiferromagnetic solution is one stationary branch under the selected cell, spin constraint, relativistic model, XC approximation, and starting state. Comparing physically plausible branches is part of the model, not a convergence afterthought.
+  </p>
+</section>
+
+<section aria-labelledby="fe-mno">
+  <h2 id="fe-mno">Itinerant Fe and localized MnO</h2>
+  <p>
+    The bcc Fe example reads ferromagnetism through spin-split itinerant bands and DOS near the Fermi level. The source’s Stoner-like reduction explains why DOS and an exchange–correlation field can favor a polarized solution, while the full spin-DFT calculation supplies the self-consistent moment and energy difference. Domain behavior and the Curie transition occur at larger spatial and thermodynamic scales.
+  </p>
+  <p>
+    MnO instead carries largely localized Mn moments and antiferromagnetic order. Comparing FM, AF-I, and AF-II total energies allows a reduced exchange model to be fitted, but the source’s poor transition-temperature estimate demonstrates the sensitivity of that handoff. Semilocal LDA/GGA also struggle with localized d-electron spectra; modern treatments may require DFT+U, hybrids, or many-body methods with their own parameters and validation.
+  </p>
+  <p>
+    The two materials therefore teach a boundary rather than one universal theory of magnetism. A converged moment can support a branch comparison; it does not by itself prove the global magnetic ground state, a finite-temperature ordered phase, or an accurate excitation spectrum. Deeper model distinctions are mapped in <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>Foundations · Relativistic Electronic Structure, Spin, and Magnetism</a>.
+  </p>
+</section>

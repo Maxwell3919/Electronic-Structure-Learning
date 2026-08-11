@@ -1,0 +1,79 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'finite-domain', label: 'Choose a finite computational domain' },
+  { id: 'real-space', label: 'Real-space grids replace derivatives' },
+  { id: 'basis-expansion', label: 'Basis functions replace unknown functions' },
+  { id: 'representation-choices', label: 'Plane waves and localized orbitals' },
+  { id: 'nested-problem', label: 'The finite problem remains self-consistent' },
+];
+export const synthesis = 'Appendix C shows how boundary conditions and finite representations turn continuous Kohn–Sham equations into finite algebra. Grids approximate derivatives directly; plane waves and localized functions approximate orbitals through coefficients and may produce ordinary or generalized eigenproblems. These representation choices control numerical error but remain distinct from XC, pseudopotentials, Brillouin-zone quadrature, and the nonlinear SCF closure.';
+---
+
+<section aria-labelledby="finite-domain">
+  <h2 id="finite-domain">Choose a finite computational domain</h2>
+  <p>
+    A continuous orbital lives on an unbounded or periodically repeated domain, whereas a computer stores finitely many numbers. The first numerical decision is therefore a domain and its boundary conditions. A large isolated-system box aims to suppress overlap between periodic replicas; a crystalline cell uses translation symmetry intentionally. These are physical and numerical boundary choices, not interchangeable convenience settings.
+  </p>
+  <p>
+    Enlarging a molecular box can reduce direct wavefunction overlap while electrostatic image interactions remain. Conversely, a primitive crystal cell exactly represents an infinite periodic model only after its atomic basis, charge state, electrostatic convention, and sampled reciprocal information are declared.
+  </p>
+</section>
+
+<section aria-labelledby="real-space">
+  <h2 id="real-space">Real-space grids replace derivatives</h2>
+  <p>
+    On a real-space grid, each orbital becomes a list of values at grid points. Finite-difference formulas replace the Laplacian by weighted combinations of neighboring values, converting a differential operator into a sparse matrix. Smaller spacing can represent faster variation but increases the number of unknowns and does not remove errors from the domain, boundary condition, XC approximation, or core model.
+  </p>
+  <p>
+    Figure C.1 makes this transformation visible: the curve is not merely sampled for plotting; its samples become the degrees of freedom of the approximate eigenproblem. Figure C.2 then shows why a finite box and a periodically repeated cell encode different physical surroundings.
+  </p>
+</section>
+
+<section aria-labelledby="basis-expansion">
+  <h2 id="basis-expansion">Basis functions replace unknown functions</h2>
+  <p>
+    A basis representation makes the same reduction by expanding each unknown orbital in known functions. Projecting the Kohn–Sham equation onto those functions produces a finite coefficient problem:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="orbital basis expansion and generalized eigenvalue problem">
+      <semantics>
+        <mrow><msub><mi>ψ</mi><mi>i</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mi>μ</mi></munder><msub><mi>c</mi><mrow><mi>μ</mi><mi>i</mi></mrow></msub><msub><mi>ϕ</mi><mi>μ</mi></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mo>,</mo><mspace width="0.9em"/><mi mathvariant="bold">H</mi><msub><mi mathvariant="bold">c</mi><mi>i</mi></msub><mo>=</mo><msub><mi>ε</mi><mi>i</mi></msub><mi mathvariant="bold">S</mi><msub><mi mathvariant="bold">c</mi><mi>i</mi></msub></mrow>
+        <annotation encoding="application/x-tex">\psi_i(\mathbf&#123;r&#125;)=\sum_\mu c_&#123;\mu i&#125;\phi_\mu(\mathbf&#123;r&#125;),\qquad \mathbf&#123;H&#125;\mathbf&#123;c&#125;_i=\varepsilon_i\mathbf&#123;S&#125;\mathbf&#123;c&#125;_i</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first relation says that the finite coefficients carry the unknown information. In the second, H contains projected Hamiltonian matrix elements and S records overlaps between basis functions. If the basis is orthonormal, S becomes the identity and the problem is an ordinary eigenproblem; otherwise the overlap matrix is part of the mathematics, not an optional correction.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Appendix C, Eqs. C.12–C.24. Representation layers are connected in <a href={href('/core/part-v/')}>Core V · From Equations to Computation</a>.</p>
+</section>
+
+<section aria-labelledby="representation-choices">
+  <h2 id="representation-choices">Plane waves and localized orbitals</h2>
+  <p>
+    Plane waves are orthogonal and systematically ordered by kinetic energy. A cutoff retains reciprocal components below a declared kinetic-energy ceiling; increasing it enlarges the basis in a controlled sequence. Their uniform spatial resolution is well matched to periodic boundary conditions but makes rapid core-region oscillations expensive.
+  </p>
+  <p>
+    Localized atomic-like functions concentrate resolution near selected atoms and can describe compact states with fewer coefficients. Their completeness is less naturally summarized by one scalar cutoff, and functions on different atoms usually overlap, producing S in the generalized eigenproblem. Neither family is intrinsically “more DFT”: both are numerical representations of an equation whose physical approximation is specified elsewhere.
+  </p>
+  <dl class="layer-ledger">
+    <dt>Exchange–correlation</dt><dd>Approximates the unknown density functional.</dd>
+    <dt>Core treatment</dt><dd>Decides which electrons and ionic response are represented explicitly.</dd>
+    <dt>Basis or grid</dt><dd>Chooses the finite coordinates used for orbitals, density, and potentials.</dd>
+    <dt>Sampling</dt><dd>Approximates integrals over periodic reciprocal labels.</dd>
+    <dt>Solver</dt><dd>Finds the finite eigenvectors and nonlinear fixed point to declared tolerances.</dd>
+  </dl>
+</section>
+
+<section aria-labelledby="nested-problem">
+  <h2 id="nested-problem">The finite problem remains self-consistent</h2>
+  <p>
+    Discretization makes each trial-density Kohn–Sham equation finite, but the matrix elements still depend on the density reconstructed from its occupied eigenvectors. The calculation therefore nests a finite eigenproblem inside a nonlinear density update. A small algebraic residual does not establish that the basis, domain, k sampling, pseudopotential, or XC model is adequate for the target observable.
+  </p>
+  <p>
+    The source introduces representative algorithms only at a conceptual level. How to choose cutoffs, cells, meshes, mixing, stopping criteria, and validation evidence is an execution problem and continues in the <a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a>.
+  </p>
+</section>

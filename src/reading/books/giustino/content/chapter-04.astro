@@ -1,0 +1,73 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+export const sectionLinks = [
+  { id: 'adiabatic-surface', label: 'From a joint problem to an energy surface' },
+  { id: 'force', label: 'Why a fixed-nuclei calculation yields a force' },
+  { id: 'force-theorem', label: 'Hellmann–Feynman and its conditions' },
+  { id: 'search', label: 'Following forces to a stationary structure' },
+];
+export const synthesis = 'Chapter 4 turns electronic energy into a geometric object. For each nuclear configuration, the electrons define an adiabatic energy; nuclear repulsion completes the potential-energy surface; its gradient gives forces. Force evaluation and geometry search are therefore separate layers, and zero force establishes only a stationary point within the chosen electronic and structural model.';
+---
+
+<section aria-labelledby="adiabatic-surface">
+  <h2 id="adiabatic-surface">From a joint problem to an energy surface</h2>
+  <p>
+    Chapter 2 clamped the nuclei to make the electronic problem manageable. This chapter returns them without discarding that solution. The large nuclear-to-electron mass ratio motivates an adiabatic picture: at each temporarily fixed geometry, the electronic state adjusts to the selected electronic eigenstate, usually the ground state. Repeating that calculation across geometries produces an electronic energy function of all nuclear coordinates.
+  </p>
+  <p>
+    Adding nucleus–nucleus repulsion gives the potential felt by the nuclei:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Born Oppenheimer potential energy surface">
+      <semantics>
+        <mrow><mi>U</mi><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>=</mo><msub><mi>E</mi><mtext>e</mtext></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo><mo>+</mo><msub><mi>V</mi><mtext>NN</mtext></msub><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">U(\mathbf&#123;R&#125;)=E_&#123;\mathrm&#123;e&#125;&#125;(\mathbf&#123;R&#125;)+V_&#123;\mathrm&#123;NN&#125;&#125;(\mathbf&#123;R&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Here <strong>R</strong> denotes the complete nuclear geometry, not one atom. The electronic term changes because the electron–nuclear potential changes with geometry; the second term adds the Coulomb cost among the fixed nuclei. The resulting surface is the object on which equilibrium, forces, barriers, and harmonic curvature are later defined.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 4, §§4.1–4.2 and Eqs. 4.4–4.9.</p>
+</section>
+
+<section aria-labelledby="force">
+  <h2 id="force">Why a fixed-nuclei calculation yields a force</h2>
+  <p>
+    “Fixed nuclei” describes how one point on the surface is computed; it does not assert that nuclei feel no force. Compare nearby geometries. If the energy decreases when nucleus I moves along one direction, the force points toward that decrease. In Cartesian form,
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="force is the negative gradient of the Born Oppenheimer energy">
+      <semantics>
+        <mrow><msub><mi mathvariant="bold">F</mi><mi>I</mi></msub><mo>=</mo><mo>−</mo><msub><mo>∇</mo><mi>I</mi></msub><mi>U</mi><mo>(</mo><mi mathvariant="bold">R</mi><mo>)</mo></mrow>
+        <annotation encoding="application/x-tex">\mathbf&#123;F&#125;_I=-\nabla_I U(\mathbf&#123;R&#125;)</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The gradient collects three Cartesian slopes for nucleus I. Its minus sign says that classical acceleration follows downhill on the adiabatic surface. A vanishing force is therefore a stationarity condition. Curvature must still distinguish a minimum from a saddle, and comparison with other basins is needed before claiming the global lowest structure.
+  </p>
+  <p class="paper-meta">Source locator: Giustino, Chapter 4, Eq. 4.13 and the potential-energy-surface discussion following it.</p>
+</section>
+
+<section aria-labelledby="force-theorem">
+  <h2 id="force-theorem">Hellmann–Feynman and its conditions</h2>
+  <p>
+    Directly differencing many total energies is conceptually simple but expensive and noisy. The Hellmann–Feynman theorem replaces the derivative of an exact stationary eigenvalue by the expectation value of the Hamiltonian derivative. Physically, the electronic force can then be read from how the nuclear potential changes, weighted by the self-consistent electronic density, together with nucleus–nucleus repulsion.
+  </p>
+  <p>
+    The theorem’s simplicity depends on stationarity and representation. If an orbital basis changes with nuclear position, differentiating that basis produces Pulay terms. If the electronic state is not converged sufficiently for the desired force, residual variational errors can also matter. The source’s classical electrostatic picture is valuable intuition, while a practical force expression must match the actual Hamiltonian, core treatment, boundary conditions, and basis.
+  </p>
+</section>
+
+<section aria-labelledby="search">
+  <h2 id="search">Following forces to a stationary structure</h2>
+  <p>
+    Once forces are available, a separate optimization algorithm proposes new coordinates. The loop is an outer problem around the inner electronic self-consistency: solve the electrons for the present geometry, evaluate energy and forces, update the geometry, and repeat. A geometry optimizer can reach different basins from different initial structures because it follows local information on a multidimensional surface.
+  </p>
+  <p>
+    This separation is the chapter’s most reusable computational lesson. The Born–Oppenheimer approximation defines the surface; DFT approximates its electronic part; the representation and SCF solver evaluate a point; force formulas differentiate it; and the optimizer searches it. <a href={href('/core/part-vi/')}>Core VI</a> uses the same layers to distinguish stationarity, local stability, and phase comparison.
+  </p>
+</section>

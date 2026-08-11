@@ -60,6 +60,9 @@ The production site is a static Plain Astro build. It contains the Home page, a 
 - `/reading/`
 - `/reading/books/`
 - `/reading/books/martin/`
+- `/reading/books/sholl-steckel/`
+- `/reading/books/cohen-louie/`
+- `/reading/books/giustino/`
 - `/reading/literature/`
 - `/reading/literature/hohenberg-kohn-1964/`
 - `/reading/literature/kohn-sham-1965/`
@@ -77,7 +80,7 @@ Foundations is the knowledge, prerequisite, relationship, and reviewed-resource 
 
 Guided Reading supplies continuous source-aligned narratives and is organized by source type. Books live under `/reading/books/`; research-paper guides live as flat siblings under `/reading/literature/`. The first Literature sequence follows the original Hohenberg–Kohn and Kohn–Sham papers while marking later mathematical clarification separately.
 
-The first book route follows Richard M. Martin's *Electronic Structure: Basic Theory and Practical Methods*, second edition, as twenty-eight chapters and eighteen appendices. The route overview exposes this forty-six-unit source spine without publishing empty chapter pages. Content begins with Chapter 1 and proceeds through the book in order; appendices are added when the main sequence first needs them.
+The completed Books collection follows four distinct sources without merging their arguments: Martin's theory-to-method spine, Sholl and Steckel's practical plane-wave DFT sequence, Cohen and Louie's condensed-matter progression, and Giustino's route between formal DFT, calculated properties, and experiment. Each guide publishes only completed source-aligned units and keeps its own chapter order.
 
 The guide uses original prose and original or openly licensed diagrams. Textbook PDFs, complete extracted textbook text, copied figures, and page scans are not stored or published.
 
