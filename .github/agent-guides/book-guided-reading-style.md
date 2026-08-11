@@ -146,7 +146,7 @@ Add a simple original diagram only when it clarifies something that prose alone 
 - inheritance between methods;
 - branches between ground-state, response, and excitation theories.
 
-Prefer compact text or SVG diagrams. Do not add decorative images. Do not copy textbook figures.
+Prefer compact text or SVG diagrams for abstractions that have no fixed source visual. Do not add decorative images. If the page specifically discusses a real source figure or table and a reliable source asset is available, use the shared source-media manifest and an exact, tightly cropped excerpt with lightweight caption and provenance instead of redrawing that object. Do not publish a full textbook page or imply that an excerpt has an open licence.
 
 ## Source-aligned explanation and modern additions
 
@@ -203,7 +203,7 @@ Do not repeat the Core Idea in slightly different words. Do not add separate `Su
 - Clearly distinguish source-derived content from modern additions or external research.
 - If the source does not support a claim, do not attribute it to the source.
 - Use original prose.
-- Do not commit textbook pages, complete extracted text, copied figures, or page scans.
+- Do not commit textbook pages, complete extracted text, or page scans. A source-linked figure or table excerpt is allowed only when the shared media manifest records its source, figure/table identifier, page, retrieval URL, usage pages, hash, and rights note; it must preserve the original data and labels.
 - Do not expose private source-file paths in public pages.
 
 ## Before publishing
@@ -218,7 +218,7 @@ Check that the page:
 - clearly separates later developments from the source;
 - links instead of repeating existing Atlas content;
 - is substantially shorter than the source;
-- contains no copied source text or figures;
+- contains no copied source text or untracked source visuals; any source-linked figure or table is recorded in the shared media manifest;
 - avoids administrative wording in public prose;
 - renders correctly with JavaScript disabled and at 390-pixel width.
 

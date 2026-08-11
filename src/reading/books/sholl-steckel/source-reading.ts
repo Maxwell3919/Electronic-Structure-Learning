@@ -8,7 +8,6 @@ export type ShollSteckelSourceFigureGuide = {
   section: string;
   reading: string;
   boundary: string;
-  visual?: 'smearing-cutoff';
 };
 
 const sourceFigures: Record<string, ShollSteckelSourceFigureGuide[]> = {
@@ -49,7 +48,6 @@ const sourceFigures: Record<string, ShollSteckelSourceFigureGuide[]> = {
     },
     {
       locator: 'Figs. 3.3–3.4',
-      visual: 'smearing-cutoff',
       section: '§§3.1.4–3.2 · metallic occupations and plane-wave cutoff',
       reading: 'Fig. 3.3 shows a sharp occupation boundary being regularized; Fig. 3.4 shows an independent basis-size limit. Read them as two distinct approximations that must be tested separately.',
       boundary: 'A smearing width is not automatically a physical electronic temperature, and cutoff convergence does not validate the pseudopotential or exchange–correlation model.',

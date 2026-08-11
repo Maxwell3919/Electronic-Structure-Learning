@@ -6,9 +6,9 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
+const count = (text, expression) => (text.match(expression) ?? []).length;
 const sourceMode = process.argv.includes('--source') || !process.argv.includes('--built');
 const builtMode = process.argv.includes('--built');
-const count = (text, expression) => (text.match(expression) ?? []).length;
 
 const theorySlugs = [
   'atomic-and-molecular-physics', 'berry-phases-and-electronic-topology',
@@ -396,7 +396,7 @@ if (sourceMode) {
     assert(shollBook.includes(marker), `Sholl & Steckel book page is missing ${marker}`);
   }
   const shollRoutePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/sholl-steckel/[slug].astro'), 'utf8');
-  for (const marker of ['getStaticPaths', 'shollSteckelChapterSlugs', 'Core Idea.', 'Chapter structure', 'Read the source figures', 'Source anchor']) {
+  for (const marker of ['getStaticPaths', 'shollSteckelChapterSlugs', 'Core Idea.', 'Chapter structure', 'Source visuals and reading notes', 'Source anchor']) {
     assert(shollRoutePage.includes(marker), `Sholl & Steckel route page is missing ${marker}`);
   }
   for (const slug of shollSteckelChapterSlugs.slice(0, 9)) {
@@ -407,7 +407,7 @@ if (sourceMode) {
     assert(cohenBook.includes(marker), `Cohen & Louie book page is missing ${marker}`);
   }
   const cohenRoutePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/cohen-louie/[slug].astro'), 'utf8');
-  for (const marker of ['getStaticPaths', 'cohenLouieReadingSlugs', 'Core Idea.', 'Chapter structure', 'Read the source figures', 'Source anchor', 'Part synthesis']) {
+  for (const marker of ['getStaticPaths', 'cohenLouieReadingSlugs', 'Core Idea.', 'Chapter structure', 'Source visuals and reading notes', 'Source anchor', 'Part synthesis']) {
     assert(cohenRoutePage.includes(marker), `Cohen & Louie route page is missing ${marker}`);
   }
   for (const slug of cohenLouieChapterSlugs.slice(1)) {
@@ -418,7 +418,7 @@ if (sourceMode) {
     assert(giustinoBook.includes(marker), `Giustino book page is missing ${marker}`);
   }
   const giustinoRoutePage = fs.readFileSync(path.join(root, 'src/pages/reading/books/giustino/[slug].astro'), 'utf8');
-  for (const marker of ['getStaticPaths', 'giustinoUnitSlugs', 'Core Idea.', "unit.kind === 'chapter'", 'unit-structure', 'Read the source figures', 'Source anchor']) {
+  for (const marker of ['getStaticPaths', 'giustinoUnitSlugs', 'Core Idea.', "unit.kind === 'chapter'", 'unit-structure', 'Source visuals and reading notes', 'Source anchor']) {
     assert(giustinoRoutePage.includes(marker), `Giustino route page is missing ${marker}`);
   }
   const styles = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
@@ -503,7 +503,7 @@ if (builtMode) {
     for (const slug of shollSteckelChapterSlugs) {
       const relative = `reading/books/sholl-steckel/${slug}/index.html`;
       const text = fs.readFileSync(path.join(dist, relative), 'utf8');
-      for (const marker of ['Core Idea.', 'Chapter overview', 'Read the source figures', 'Source anchor']) {
+      for (const marker of ['Core Idea.', 'Chapter overview', 'Source visuals and reading notes', 'Source anchor']) {
         assert(text.includes(marker), `${relative} is missing ${marker}`);
       }
     }
@@ -519,7 +519,7 @@ if (builtMode) {
     for (const slug of cohenLouieChapterSlugs) {
       const relative = `reading/books/cohen-louie/${slug}/index.html`;
       const text = fs.readFileSync(path.join(dist, relative), 'utf8');
-      for (const marker of ['Core Idea.', 'Chapter overview', 'Read the source figures', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
+      for (const marker of ['Core Idea.', 'Chapter overview', 'Source visuals and reading notes', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
     }
     const giustinoBook = fs.readFileSync(path.join(dist, 'reading/books/giustino/index.html'), 'utf8');
     for (const marker of ['Read Chapter 1', 'Read Appendix A', 'Oxford University Press record']) {
@@ -528,7 +528,7 @@ if (builtMode) {
     for (const slug of giustinoSlugs) {
       const relative = `reading/books/giustino/${slug}/index.html`;
       const text = fs.readFileSync(path.join(dist, relative), 'utf8');
-      for (const marker of ['Core Idea.', 'overview', 'Read the source figures', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
+      for (const marker of ['Core Idea.', 'overview', 'Source visuals and reading notes', 'Source anchor']) assert(text.includes(marker), `${relative} is missing ${marker}`);
     }
     const redirect = fs.readFileSync(path.join(dist, 'reading/martin/index.html'), 'utf8');
     assert(redirect.includes('reading/books/martin'), 'Martin compatibility redirect target is missing');

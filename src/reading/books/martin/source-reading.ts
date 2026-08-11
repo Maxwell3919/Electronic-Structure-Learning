@@ -8,7 +8,6 @@ export type MartinSourceFigureGuide = {
   section: string;
   reading: string;
   boundary: string;
-  visual?: 'bloch-phase';
 };
 
 const sourceFigures: Record<string, MartinSourceFigureGuide[]> = {
@@ -47,7 +46,6 @@ const sourceFigures: Record<string, MartinSourceFigureGuide[]> = {
     },
     {
       locator: 'Fig. 4.11',
-      visual: 'bloch-phase',
       section: '§4.3 · Bloch theorem',
       reading: 'Compare the repeated atomic-scale pattern at k = 0 with the sign/phase change at the zone boundary. What repeats is the cell-periodic structure; the full Bloch state may acquire a phase from one cell to the next.',
       boundary: 'The schematic is a one-dimensional picture of translation character, not a trajectory followed by an electron.',

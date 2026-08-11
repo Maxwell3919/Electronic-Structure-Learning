@@ -1,3 +1,5 @@
+import type { SourceVisualId } from '../../source-media';
+
 export const giustinoCanonicalSource = {
   href: 'https://global.oup.com/academic/product/materials-modelling-using-density-functional-theory-9780199662449',
   label: 'Oxford University Press record for the book',
@@ -8,13 +10,14 @@ export type GiustinoSourceGuide = {
   section: string;
   reading: string;
   boundary: string;
-  visual?: 'phonon-chain';
+  visuals?: SourceVisualId[];
 };
 
 const sourceGuides: Record<string, GiustinoSourceGuide[]> = {
   'chapter-01': [
-    { locator: 'Figs. 1.2–1.4', section: '§1.2 · structure, superconductivity, and phase examples', reading: 'Identify the calculated object in each example before reading the agreement: an atomistic structure and X-ray absorption spectrum, an electron–phonon-informed heat capacity, and competing free-energy branches under pressure.', boundary: 'The panels do not show that one ground-state DFT run directly returns an X-ray spectrum, superconducting heat capacity, or finite-temperature phase diagram; each result adds theory and post-processing.' },
-    { locator: 'Figs. 1.5–1.7', section: '§§1.2.4–1.5 · scale bridging and emergence', reading: 'Follow where the electronic calculation hands information to a fracture model, a catalyst-screening descriptor, or a higher-scale structural argument. Ask which variables disappear at each handoff.', boundary: 'A first-principles input does not make every later layer parameter-free or guarantee that emergent organization follows from brute-force electronic calculation.' },
+    { locator: 'Figs. 1.2–1.4', section: '§1.2 · structure, superconductivity, and phase examples', reading: 'Identify the calculated object in each example before reading the agreement: an atomistic structure and X-ray absorption spectrum, an electron–phonon-informed heat capacity, and competing free-energy branches under pressure.', boundary: 'The panels do not show that one ground-state DFT run directly returns an X-ray spectrum, superconducting heat capacity, or finite-temperature phase diagram; each result adds theory and post-processing.', visuals: ['giustino-fig-1-2', 'giustino-fig-1-3', 'giustino-fig-1-4'] },
+    { locator: 'Figs. 1.5–1.6', section: '§§1.2.4–1.2.5 · scale bridging and materials discovery', reading: 'Follow where the electronic calculation hands information to a fracture model or a catalyst-screening descriptor. Ask which variables disappear at each handoff.', boundary: 'A first-principles input does not make every later layer parameter-free or guarantee that emergent organization follows from brute-force electronic calculation.', visuals: ['giustino-fig-1-5', 'giustino-fig-1-6'] },
+    { locator: 'Fig. 1.7', section: '§§1.2.6–1.5 · later scale-bridging example', reading: 'Use the source locator to connect the final example to the chapter’s claim about how electronic structure enters a larger-scale materials argument.', boundary: 'The official preview inspected for this pass does not contain a recoverable standalone copy of Figure 1.7, so the Atlas leaves this source object unresolved rather than redrawing it.' },
   ],
   'chapter-02': [
     { locator: 'Eqs. 2.19, 2.28, and 2.42', section: '§§2.2–2.6 · the interacting problem and determinant restriction', reading: 'First count the kinetic and Coulomb terms in the full Hamiltonian, then compare the joint wavefunction with the antisymmetric determinant built from one-particle orbitals.', boundary: 'Antisymmetry is exact for fermions, but one determinant is a restricted state class and does not contain general correlation.' },
@@ -38,7 +41,7 @@ const sourceGuides: Record<string, GiustinoSourceGuide[]> = {
   ],
   'chapter-07': [
     { locator: 'Figs. 7.1–7.3', section: '§§7.1–7.3 · harmonic expansion and molecular modes', reading: 'Zoom from the full N₂ potential to the thermally sampled neighborhood, then trace how the Hessian and masses turn coupled Cartesian displacements into collective eigenvectors.', boundary: 'The parabolic model is local. Large-amplitude, anharmonic, rotating, or nonadiabatic motion requires additional terms.' },
-    { locator: 'Figs. 7.4–7.5', visual: 'phonon-chain', section: '§7.4 · crystal waves and dispersion', reading: 'Follow the phase of one displacement through repeated cells and compare the nearest-neighbor model dispersion with the full DFT result. Look for what changes when force constants extend farther than one bond.', boundary: 'A displayed high-symmetry q path is not the full Brillouin zone, and a nearest-neighbor chain is a teaching limit rather than a universal phonon model.' },
+    { locator: 'Figs. 7.4–7.5', section: '§7.4 · crystal waves and dispersion', reading: 'Follow the phase of one displacement through repeated cells and compare the nearest-neighbor model dispersion with the full DFT result. Look for what changes when force constants extend farther than one bond.', boundary: 'A displayed high-symmetry q path is not the full Brillouin zone, and a nearest-neighbor chain is a teaching limit rather than a universal phonon model.' },
   ],
   'chapter-08': [
     { locator: 'Figs. 8.1–8.3 and Table 8.1', section: '§8.1 · Raman and neutron probes', reading: 'For Raman, identify the elastic line, shifted sidebands, and activity condition. For neutron scattering, track both transferred momentum and energy before comparing measured and calculated dispersions.', boundary: 'A mode can exist yet be dark to a chosen probe. Raman mainly samples near Γ at first order, whereas one displayed neutron path does not prove full-zone stability.' },
