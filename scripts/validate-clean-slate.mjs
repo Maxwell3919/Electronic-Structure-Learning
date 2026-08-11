@@ -31,7 +31,7 @@ const theorySlugs = [
 ];
 const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
 const forbiddenCorePartSlugs = [];
-const literatureSlugs = ['hohenberg-kohn-1964', 'kohn-sham-1965'];
+const literatureSlugs = ['hohenberg-kohn-1964', 'kohn-sham-1965', 'levy-1979'];
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -253,7 +253,7 @@ const checkLiteraturePages = (baseDirectory, mode) => {
     assert(text.includes('class="sequence-nav"'), `${relative} lacks literature sequence navigation`);
     assert(text.includes('class="paper-argument"'), `${relative} lacks an original argument diagram`);
     assert(text.includes('What the paper established'), `${relative} does not separate source result and boundary`);
-    assert(text.includes('https://doi.org/10.1103/'), `${relative} lacks its canonical APS DOI`);
+    assert(text.includes('https://doi.org/10.'), `${relative} lacks its canonical DOI`);
     if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
     else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
     checkMathMl(text, relative, mode === 'source');
@@ -265,6 +265,10 @@ const checkLiteraturePages = (baseDirectory, mode) => {
   const ks = fs.readFileSync(path.join(baseDirectory, `${prefix}/kohn-sham-1965/${extension}`), 'utf8');
   for (const marker of ['Note added in proof', 'The eigenvalue sum is not the total energy', 'A second branch keeps exact exchange nonlocal', 'not reported', 'Bloch theorem']) {
     assert(ks.includes(marker), `${prefix}/kohn-sham-1965/${extension} lacks source-fidelity marker ${marker}`);
+  }
+  const levy = fs.readFileSync(path.join(baseDirectory, `${prefix}/levy-1979/${extension}`), 'utf8');
+  for (const marker of ['Eqs. (1)–(4)', 'Eq. (5)', 'Theorems I and II', 'Eqs. (22)–(27)', 'pure-state constrained search', 'N</em>-representability']) {
+    assert(levy.includes(marker), `${prefix}/levy-1979/${extension} lacks source-fidelity marker ${marker}`);
   }
 };
 

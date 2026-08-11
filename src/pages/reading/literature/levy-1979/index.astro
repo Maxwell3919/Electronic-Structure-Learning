@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout
+  title="Levy 1979 · Universal Variational Functionals"
+  description="A source-faithful guide to Levy's pure-state constrained search, its density variational proof, and its extensions to restricted wavefunctions and first-order density matrices."
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <a href={href('/reading/literature/')}>Literature</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Levy 1979</span>
+  </nav>
+
+  <p class="secondary">Foundational paper · 1979</p>
+  <h1>Universal Variational Functionals of Electron Densities, First-Order Density Matrices, and Natural Spin-Orbitals and Solution of the <em>v</em>-Representability Problem</h1>
+  <p class="lede">
+    Levy identifies a gap between the original density theorem and an unrestricted density variation: a trial density need not be the ground-state density of any local external potential. His constrained search repairs that gap by fixing a density first, minimizing over every antisymmetric wavefunction that yields it, and only then comparing different densities.
+  </p>
+  <p class="paper-meta">
+    M. Levy, <cite>Proceedings of the National Academy of Sciences</cite> 76, 6062–6065 (1979). <a href="https://doi.org/10.1073/pnas.76.12.6062">DOI 10.1073/pnas.76.12.6062</a>. A complete journal scan is available through <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC411802/">PubMed Central</a>.
+  </p>
+
+  <h2>The paper begins with a domain problem</h2>
+  <p>
+    Hohenberg and Kohn had made the ground-state density a legitimate basic variable, but their functional was attached to densities that arise as ground-state densities of some local potential. Levy calls such a density <em>v</em>-representable. A variational calculation, however, must compare many trial densities. If one of them is not the ground-state density of any potential, the earlier definition does not say what value the universal functional should assign to it.
+  </p>
+  <p>
+    Levy keeps the physical Hamiltonian fixed in form while allowing its local external potential to change:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The Hamiltonian is kinetic energy plus electron-electron repulsion plus a sum of local external-potential terms">
+      <semantics>
+        <mrow>
+          <mover accent="true"><mi>H</mi><mo stretchy="false">^</mo></mover><mo>=</mo>
+          <mover accent="true"><mi>T</mi><mo stretchy="false">^</mo></mover><mo>+</mo>
+          <msub><mover accent="true"><mi>V</mi><mo stretchy="false">^</mo></mover><mrow><mi>e</mi><mi>e</mi></mrow></msub><mo>+</mo>
+          <munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover>
+          <mi>v</mi><mo>(</mo><msub><mi mathvariant="bold">r</mi><mi>i</mi></msub><mo>)</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">\hat&#123;H&#125;=\hat&#123;T&#125;+\hat&#123;V&#125;_&#123;ee&#125;+\sum_&#123;i=1&#125;^N v(\mathbf&#123;r&#125;_i).</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first two operators are common to the whole class of systems: electronic kinetic energy and the declared electron–electron interaction. The last term contains the particular external potential. Changing that potential may change the ground-state density, but it does not change what the internal kinetic-plus-interaction energy means. That separation is what makes a universal functional possible.
+  </p>
+  <p>
+    The weaker condition Levy uses for trial densities is <em>N</em>-representability: a density is admitted if at least one normalized antisymmetric <em>N</em>-electron wavefunction yields it. This does not mean that every nonnegative function integrating to <math class="math-inline" aria-label="N"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> is automatically physical. The density must still come from an allowed fermionic state. The change is narrower and more useful: a trial density no longer has to be the ground-state density of another external potential.
+  </p>
+  <p class="equation-source">Source: Levy, Eqs. (1)–(4) and the <em>N</em>-representability footnote, p. 6062.</p>
+
+  <h2>Constrained search defines the missing functional</h2>
+  <p>
+    The new object is not obtained by guessing a potential. Instead, fix one trial density <math class="math-inline" aria-label="rho"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math> and collect every normalized antisymmetric wavefunction that yields it. The wavefunctions in that set can carry very different joint many-electron information even though their one-particle density is the same. Levy then chooses the member with the lowest internal energy:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Q of rho is the minimum kinetic plus electron-electron energy over antisymmetric wavefunctions yielding rho">
+      <semantics>
+        <mrow>
+          <mi>Q</mi><mo>[</mo><mi>ρ</mi><mo>]</mo><mo>=</mo>
+          <munder><mo>min</mo><mrow><mi>Ψ</mi><mo>→</mo><mi>ρ</mi></mrow></munder>
+          <mo>⟨</mo><mi>Ψ</mi><mo>|</mo>
+          <mover accent="true"><mi>T</mi><mo stretchy="false">^</mo></mover><mo>+</mo>
+          <msub><mover accent="true"><mi>V</mi><mo stretchy="false">^</mo></mover><mrow><mi>e</mi><mi>e</mi></mrow></msub>
+          <mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo>
+        </mrow>
+        <annotation encoding="application/x-tex">Q[\rho]=\min_&#123;\Psi\to\rho&#125;\langle\Psi|\hat&#123;T&#125;+\hat&#123;V&#125;_&#123;ee&#125;|\Psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    Read the condition below “min” before reading the expectation value. It says that the search is not over all wavefunctions at once: it is restricted to wavefunctions that reproduce the chosen density. Within that constrained set, the expression measures kinetic plus electron–electron energy and keeps the smallest value. The external potential is absent, so the result depends on the particle number, statistics, and interaction law, but not on which molecule, crystal, or applied scalar potential will later use the functional.
+  </p>
+  <p>
+    The density has therefore not been assumed to contain the full wavefunction. Many wavefunctions may map to the same density. What matters for a ground-state energy variation is that the inner search extracts one exact scalar from that whole fiber of states. In modern notation this pure-state constrained-search functional is often called <math class="math-inline" aria-label="F sub L L of n"><semantics><mrow><msub><mi>F</mi><mrow><mi>L</mi><mi>L</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">F_&#123;LL&#125;[n]</annotation></semantics></math>; the paper itself calls it <math class="math-inline" aria-label="Q of rho"><semantics><mrow><mi>Q</mi><mo>[</mo><mi>ρ</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">Q[\rho]</annotation></semantics></math>.
+  </p>
+  <p class="equation-source">Source: Levy, Eq. (5) and its definition, p. 6063.</p>
+
+  <figure class="paper-argument" aria-labelledby="levy-search-caption">
+    <ol>
+      <li><strong>Choose</strong><span>an <em>N</em>-representable trial density</span></li>
+      <li><strong>Constrain</strong><span>the state search to antisymmetric wavefunctions yielding that density</span></li>
+      <li><strong>Minimize</strong><span>kinetic plus interaction energy inside the constrained set</span></li>
+      <li><strong>Compare</strong><span>the resulting density energies in the actual external potential</span></li>
+    </ol>
+    <figcaption id="levy-search-caption">The paper replaces one problematic density variation with two nested searches. The inner search defines a universal internal-energy functional; the outer comparison restores the actual external potential.</figcaption>
+  </figure>
+
+  <h2>Two short theorems close the ground-state variation</h2>
+  <p>
+    A definition is not enough: Levy must show that it produces an upper-bound variational principle and becomes exact at a ground-state density. For the actual external potential <math class="math-inline" aria-label="v"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>, ground-state energy <math class="math-inline" aria-label="E ground state"><semantics><msub><mi>E</mi><mtext>g.s.</mtext></msub><annotation encoding="application/x-tex">E_&#123;\mathrm&#123;g.s.&#125;&#125;</annotation></semantics></math>, and one ground-state density <math class="math-inline" aria-label="rho ground state"><semantics><msub><mi>ρ</mi><mtext>g.s.</mtext></msub><annotation encoding="application/x-tex">\rho_&#123;\mathrm&#123;g.s.&#125;&#125;</annotation></semantics></math>, the paper states
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="Every N-representable trial density gives an energy no lower than the ground-state energy, with equality for a ground-state density">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.7em">
+          <mtr>
+            <mtd><mo>∫</mo><mi>v</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mi>ρ</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mspace width="0.17em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi><mo>+</mo><mi>Q</mi><mo>[</mo><mi>ρ</mi><mo>]</mo></mtd>
+            <mtd><mo>≥</mo></mtd>
+            <mtd><msub><mi>E</mi><mtext>g.s.</mtext></msub><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mo>∫</mo><mi>v</mi><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><msub><mi>ρ</mi><mtext>g.s.</mtext></msub><mo>(</mo><mi mathvariant="bold">r</mi><mo>)</mo><mspace width="0.17em"/><msup><mi mathvariant="normal">d</mi><mn>3</mn></msup><mi mathvariant="bold">r</mi><mo>+</mo><mi>Q</mi><mo>[</mo><msub><mi>ρ</mi><mtext>g.s.</mtext></msub><mo>]</mo></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><msub><mi>E</mi><mtext>g.s.</mtext></msub><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">\int v(\mathbf&#123;r&#125;)\rho(\mathbf&#123;r&#125;)\,\mathrm&#123;d&#125;^3\mathbf&#123;r&#125;+Q[\rho]\ge E_&#123;\mathrm&#123;g.s.&#125;&#125;,qquad \int v(\mathbf&#123;r&#125;)\rho_&#123;\mathrm&#123;g.s.&#125;&#125;(\mathbf&#123;r&#125;)\,\mathrm&#123;d&#125;^3\mathbf&#123;r&#125;+Q[\rho_&#123;\mathrm&#123;g.s.&#125;&#125;]=E_&#123;\mathrm&#123;g.s.&#125;&#125;.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    The first line follows by choosing the wavefunction that minimizes the internal energy at the trial density. Once the external-potential term is restored, its expectation value is the energy of an admissible state of the real Hamiltonian, so it cannot lie below the true ground-state energy. The second line uses the actual ground-state density. The true ground-state wavefunction belongs to its constrained set, while any state in that set with a lower full energy would contradict the definition of the ground state. The two bounds therefore meet.
+  </p>
+  <p>
+    This proof also explains why degeneracy need not destroy the energy statement. Different degenerate ground-state wavefunctions may yield one or more ground-state densities, but every such ground-state density still reaches the same minimum energy. The paper does not need to pretend that a unique wavefunction has been recovered from the density in the degenerate case.
+  </p>
+  <p class="equation-source">Source: Levy, Theorems I and II, Eqs. (6)–(21), p. 6063.</p>
+
+  <h2>The repair is precise, not unlimited</h2>
+  <p>
+    When a density is <em>v</em>-representable in the earlier sense, Levy shows that the Hohenberg–Kohn functional and the constrained-search value agree. The new definition therefore extends the variational domain without changing the exact answer where the old definition already applied. What disappears is the requirement that every trial density first be reverse-engineered as the ground-state density of another potential.
+  </p>
+  <p>
+    Several harder questions remain outside the result. The paper does not provide a computable closed form for <math class="math-inline" aria-label="Q of rho"><semantics><mrow><mi>Q</mi><mo>[</mo><mi>ρ</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">Q[\rho]</annotation></semantics></math>, prove that a useful functional derivative exists at every density, or show that every interacting ground-state density has a pure-state noninteracting Kohn–Sham representation. It also does not make arbitrary excited-state information a ground-state density functional. Removing <em>v</em>-representability from the trial search is not the removal of every representability or regularity condition.
+  </p>
+  <div class="callout">
+    <p><strong>Later mathematical clarification.</strong> Levy’s 1979 construction is a pure-state constrained search. Later ensemble and convex formulations enlarge and regularize the setting. Lieb’s 1983 work places the energy–potential relation in convex analysis and makes the admissible density space central. Those are later developments, not statements silently present in the 1964 theorem or the 1979 notation.</p>
+  </div>
+
+  <h2>The same architecture exposes restricted theories</h2>
+  <p>
+    The paper deliberately does more than density-functional theory. Levy repeats the same constrained-search architecture with a smaller state class. If the admissible wavefunctions are restricted to single Slater determinants, the resulting density functional belongs to Hartree–Fock theory.
+  </p>
+  <p>
+    The other branch changes the basic variable. The first-order reduced density matrix <math class="math-inline" aria-label="gamma of x and x prime"><semantics><mrow><mi>γ</mi><mo>(</mo><mi>x</mi><mo>|</mo><msup><mi>x</mi><mo>′</mo></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">\gamma(x|x')</annotation></semantics></math> has two one-particle arguments. Its diagonal gives the density, while its off-diagonal elements retain one-particle coherence that the density alone discards. Because this matrix determines the expectation value of every one-body operator, it already determines the kinetic and external-potential contributions. The unknown constrained-search contribution is therefore only the electron–electron repulsion:
+  </p>
+  <div class="math-display" tabindex="0">
+    <math display="block" aria-label="The restricted determinant density functional P and first-order density-matrix functional W are constrained searches over different objects">
+      <semantics>
+        <mtable columnalign="right center left" columnspacing="0.5em" rowspacing="0.75em">
+          <mtr>
+            <mtd><mi>P</mi><mo>[</mo><mi>ρ</mi><mo>]</mo></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><munder><mo>min</mo><mrow><mi>Φ</mi><mo>→</mo><mi>ρ</mi><mo>,</mo><mspace width="0.25em"/><mi>Φ</mi><mtext> a single determinant</mtext></mrow></munder><mo>⟨</mo><mi>Φ</mi><mo>|</mo><mover accent="true"><mi>T</mi><mo stretchy="false">^</mo></mover><mo>+</mo><msub><mover accent="true"><mi>V</mi><mo stretchy="false">^</mo></mover><mrow><mi>e</mi><mi>e</mi></mrow></msub><mo>|</mo><mi>Φ</mi><mo>⟩</mo><mo>,</mo></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mi>W</mi><mo>[</mo><mi>γ</mi><mo>]</mo></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><munder><mo>min</mo><mrow><mi>Ψ</mi><mo>→</mo><mi>γ</mi></mrow></munder><mo>⟨</mo><mi>Ψ</mi><mo>|</mo><msub><mover accent="true"><mi>V</mi><mo stretchy="false">^</mo></mover><mrow><mi>e</mi><mi>e</mi></mrow></msub><mo>|</mo><mi>Ψ</mi><mo>⟩</mo><mo>.</mo></mtd>
+          </mtr>
+        </mtable>
+        <annotation encoding="application/x-tex">P[\rho]=\min_&#123;\Phi\to\rho,\,\Phi\text&#123; a single determinant&#125;&#125;\langle\Phi|\hat&#123;T&#125;+\hat&#123;V&#125;_&#123;ee&#125;|\Phi\rangle,qquad W[\gamma]=\min_&#123;\Psi\to\gamma&#125;\langle\Psi|\hat&#123;V&#125;_&#123;ee&#125;|\Psi\rangle.</annotation>
+      </semantics>
+    </math>
+  </div>
+  <p>
+    These equations make a useful comparison visible. The constrained-search idea is not tied to one basic variable, and the choice of admissible state class matters physically. The unrestricted density search can recover the exact interacting ground-state energy in principle. The determinant-restricted search is exact only within that ansatz class. The one-matrix search retains more one-particle information than the density but imposes its own <em>N</em>-representability conditions.
+  </p>
+  <p>
+    Levy then diagonalizes the first-order density matrix. Its eigenfunctions are the natural spin-orbitals, and its eigenvalues are their occupation numbers. A one-matrix built from one Slater determinant is idempotent: in its natural-orbital basis the occupations are either zero or one. A general interacting state can instead have fractional natural occupations. The paper therefore stresses that the exact interacting one-matrix is generally not the idempotent one-matrix built from occupied Kohn–Sham orbitals. Kohn–Sham orbitals are auxiliary tools for reproducing a density and auxiliary kinetic energy; they are not automatically the natural spin-orbitals of the interacting ground state.
+  </p>
+  <p class="equation-source">Source: Levy, Eqs. (22)–(27), pp. 6063–6064.</p>
+
+  <h2>What the paper established</h2>
+  <dl class="source-map">
+    <dt>Established</dt>
+    <dd>A pure-state constrained-search definition of the universal internal-energy functional on <em>N</em>-representable densities, together with the upper-bound inequality and equality at a ground-state density.</dd>
+    <dt>Also established</dt>
+    <dd>The same nested-search logic can define functionals for restricted wavefunction classes and for first-order density matrices, making the chosen basic variable and state class explicit.</dd>
+    <dt>Not supplied</dt>
+    <dd>A practical expression for the exact functional, a universal differentiability result, a proof of pure-state noninteracting representability, or an excitation theory.</dd>
+    <dt>Modern boundary</dt>
+    <dd>Ensemble, convex, and lower-semicontinuous formulations sharpen the density domain after this paper. They extend the mathematical setting; they do not turn every normalized nonnegative function into an admissible electronic density.</dd>
+  </dl>
+
+  <h2>How this paper fits the Atlas</h2>
+  <p>
+    Read <a href={href('/reading/literature/hohenberg-kohn-1964/')}>Hohenberg and Kohn 1964</a> first for the original density–potential and density-variational arguments. <a href={href('/core/part-iv/')}>Core Part IV · Density Functional Theory</a> integrates the constrained search with the later Kohn–Sham bridge, while <a href={href('/theory/density-functional-theory-foundations/')}>Foundations · Density-Functional Theory Foundations</a> repairs functional and representability language. The <a href={href('/reading/literature/kohn-sham-1965/')}>Kohn–Sham 1965 guide</a> follows the separate auxiliary-orbital construction; it should not be read as though it were proved by Levy’s constrained search.
+  </p>
+
+  <h2>Source and further reading</h2>
+  <dl class="source-map">
+    <dt>Primary source</dt>
+    <dd>Levy, “Universal Variational Functionals of Electron Densities, First-Order Density Matrices, and Natural Spin-Orbitals and Solution of the <em>v</em>-Representability Problem,” <cite>PNAS</cite> 76, 6062–6065 (1979), <a href="https://doi.org/10.1073/pnas.76.12.6062">DOI 10.1073/pnas.76.12.6062</a>.</dd>
+    <dt>Earlier theorem</dt>
+    <dd>Hohenberg and Kohn, “Inhomogeneous Electron Gas,” <cite>Physical Review</cite> 136, B864–B871 (1964), <a href="https://doi.org/10.1103/PhysRev.136.B864">DOI 10.1103/PhysRev.136.B864</a>.</dd>
+    <dt>Later convex formulation</dt>
+    <dd>E. H. Lieb, “Density Functionals for Coulomb Systems,” <cite>International Journal of Quantum Chemistry</cite> 24, 243–277 (1983), <a href="https://doi.org/10.1002/qua.560240302">DOI 10.1002/qua.560240302</a>.</dd>
+  </dl>
+
+  <nav class="sequence-nav" aria-label="Literature sequence">
+    <a href={href('/reading/literature/kohn-sham-1965/')}>← Kohn–Sham 1965</a>
+    <a href={href('/reading/literature/')}>Literature</a>
+  </nav>
+</BaseLayout>
