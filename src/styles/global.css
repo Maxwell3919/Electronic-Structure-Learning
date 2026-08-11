@@ -190,6 +190,7 @@ math annotation { display: none; }
   color: #607d99;
   content: "→";
 }
+.paper-argument.hedin-cycle ol { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .paper-argument strong,
 .paper-argument span { display: block; }
 .paper-argument span { margin-top: 0.4rem; color: #555555; font-size: 0.92rem; }
@@ -856,6 +857,7 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .h2-reference .model-axis { display: block; padding-block: 0.6rem; }
   .h2-reference .model-axis::before { margin-bottom: -0.85rem; }
   .paper-argument ol { grid-template-columns: 1fr; }
+  .paper-argument.hedin-cycle ol { grid-template-columns: 1fr; }
   .paper-argument li + li { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .paper-argument li + li::before {
     inset-inline-start: 1rem;

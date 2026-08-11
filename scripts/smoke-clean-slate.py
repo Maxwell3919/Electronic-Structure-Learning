@@ -66,6 +66,7 @@ LITERATURE_ROUTES = [
     "reading/literature/hohenberg-kohn-1964/",
     "reading/literature/kohn-sham-1965/",
     "reading/literature/levy-1979/",
+    "reading/literature/hedin-1965/",
 ]
 CANONICAL_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
@@ -409,7 +410,7 @@ def inspect(driver, mode, expected_width=None):
                 "const f=figure.getBoundingClientRect(),m=main.getBoundingClientRect();return {height:f.height,left:f.left,right:f.right,"
                 "mainLeft:m.left,mainRight:m.right,items:figure.querySelectorAll('ol > li').length,caption:figure.querySelectorAll('figcaption').length};"
             )
-            if figure_metrics["height"] < 40 or figure_metrics["items"] != 4 or figure_metrics["caption"] != 1:
+            if figure_metrics["height"] < 40 or figure_metrics["items"] < 4 or figure_metrics["caption"] != 1:
                 raise AssertionError(f"literature argument diagram is incomplete in {mode}: {route}")
             if figure_metrics["left"] < figure_metrics["mainLeft"] - 1 or figure_metrics["right"] > figure_metrics["mainRight"] + 1:
                 raise AssertionError(f"literature argument diagram overflows main in {mode}: {route}")
