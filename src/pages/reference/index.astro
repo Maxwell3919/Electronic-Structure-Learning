@@ -1,34 +1,62 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { normalizedReferenceCount, normalizedReferenceGroups } from '../../reference/normalized-works';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+
+const ecosystemGroups = [
+  {
+    title: 'Pseudopotential and verification resources',
+    entries: [
+      { title: 'SSSP', url: 'https://sssp.materialscloud.org/', whyUse: 'Use a named release for documented pseudopotential precision and efficiency tests.', boundary: 'Covered benchmarks do not replace system- and observable-specific validation.' },
+      { title: 'PseudoDojo', url: 'https://www.pseudo-dojo.org/', whyUse: 'Use a named table for generated and tested norm-conserving pseudopotentials.', boundary: 'Functional, relativistic treatment, transferability, and target observable remain separate choices.' },
+    ],
+  },
+  {
+    title: 'Courses and learning resources',
+    entries: [
+      { title: 'Materials Cloud Learn', url: 'https://www.materialscloud.org/learn', whyUse: 'Use a dated school for a coherent computational-materials learning route.', boundary: 'Software version, exercise files, access terms, and licence are school-specific.' },
+      { title: 'MolSSI Education', url: 'https://education.molssi.org/', whyUse: 'Use its open lessons for molecular-science programming and modelling foundations.', boundary: 'Each lesson has its own repository, licence, date, and scientific scope.' },
+    ],
+  },
+  {
+    title: 'Reproducibility and stewardship',
+    entries: [
+      { title: 'FAIR Principles', url: 'https://www.go-fair.org/fair-principles/', whyUse: 'Use them to design findable, accessible, interoperable, and reusable digital objects.', boundary: 'FAIR metadata and access do not establish that data or conclusions are correct.' },
+      { title: 'Materials Cloud Archive', url: 'https://archive.materialscloud.org/', whyUse: 'Use a specific DOI-addressable record for dated files, metadata, and licence information.', boundary: 'Repository presence does not establish completeness or suitability for a later claim.' },
+    ],
+  },
+];
 ---
 
-<BaseLayout title="Reference" description="A selective map of authoritative sources, benchmarks, and stewardship guidance." current="reference">
+<BaseLayout title="Reference" description="Normalized sources, verification resources, and stewardship guidance for the Atlas." current="reference">
   <h1>Reference</h1>
-  <p class="lede">Use each source for its distinct role; its access route, version, and scientific boundary remain part of the citation.</p>
+  <p class="lede">This page materializes the current normalized source classification. A published/preprint family appears once, supplementary information stays attached to its parent work, and deferred or excluded material is not presented as an active source.</p>
+  <p class="paper-meta">{normalizedReferenceCount} normalized works are listed: 66 current <em>reference-only</em> works plus the eight sources with published Guided Reading. Each entry states a use and a boundary rather than becoming a miniature Guide.</p>
 
-  <h2>Continuous sources</h2>
-  <dl>
-    <dt><a href="https://www.cambridge.org/core/books/electronic-structure/ED0FF348536BFFE8899627C8F78FEE6A">Electronic Structure: Basic Theory and Practical Methods</a></dt>
-    <dd>Richard M. Martin, 2nd ed., Cambridge University Press, 2020, DOI 10.1017/9781108555586; publisher metadata and preview are public, while full access depends on purchase or institutional entitlement and no reuse licence is implied. Use it for a continuous theory-to-method argument, then separate later developments from the source.</dd>
-    <dt><a href="https://www.materialscloud.org/learn">Materials Cloud Learn</a></dt>
-    <dd>A rolling collection of recorded computational-materials schools. Use a dated school for a coherent implementation route; its software version, exercise files, access terms, and licence are item-specific.</dd>
-    <dt><a href="https://education.molssi.org/">MolSSI Education</a></dt>
-    <dd>An openly accessible, rolling collection of molecular-science programming and modelling lessons. Use it for software and molecular-method foundations; each lesson states its own repository, licence, date, and scope.</dd>
-  </dl>
+  {normalizedReferenceGroups.map((group) => (
+    <section aria-labelledby={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+      <h2 id={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>{group.title} <span class="secondary">· {group.entries.length}</span></h2>
+      <dl class="reference-list">
+        {group.entries.map((entry) => (
+          <>
+            <dt><a href={entry.url}>{entry.title}</a> <span>· {entry.authors}, {entry.year}</span></dt>
+            <dd>{entry.whyUse} <strong>Boundary.</strong> {entry.boundary} {entry.guideHref && <a href={href(entry.guideHref)}>Read the Guide →</a>}</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+  ))}
 
-  <h2>Verification collections</h2>
-  <dl>
-    <dt><a href="https://sssp.materialscloud.org/">SSSP</a></dt>
-    <dd>A versioned Materials Cloud verification collection for pseudopotential precision and efficiency. Cite the exact release and component; each pseudopotential retains its original licence, and covered benchmarks do not replace system- and observable-specific validation.</dd>
-    <dt><a href="https://www.pseudo-dojo.org/">PseudoDojo</a></dt>
-    <dd>A versioned pseudopotential generation and grading project with public downloads. Use a named dataset and its documented tests, and check that dataset’s reuse terms; functional, relativistic treatment, transferability, and target observable remain separate choices.</dd>
-  </dl>
-
-  <h2>Stewardship</h2>
-  <dl>
-    <dt><a href="https://www.go-fair.org/fair-principles/">FAIR Principles</a></dt>
-    <dd>Community guidance for making digital objects findable, accessible, interoperable, and reusable; the public text is available under CC BY 4.0. Use it to design metadata and access, not as evidence that data are correct.</dd>
-    <dt><a href="https://archive.materialscloud.org/">Materials Cloud Archive</a></dt>
-    <dd>A repository of dated, DOI-addressable materials-data records. Use the specific record’s version, files, metadata, and licence; platform presence does not establish completeness or suitability for a later claim.</dd>
-  </dl>
+  {ecosystemGroups.map((group) => (
+    <section aria-labelledby={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+      <h2 id={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>{group.title} <span class="secondary">· {group.entries.length}</span></h2>
+      <dl class="reference-list">
+        {group.entries.map((entry) => (
+          <><dt><a href={entry.url}>{entry.title}</a></dt><dd>{entry.whyUse} <strong>Boundary.</strong> {entry.boundary}</dd></>
+        ))}
+      </dl>
+    </section>
+  ))}
 </BaseLayout>
