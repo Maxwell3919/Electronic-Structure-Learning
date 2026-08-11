@@ -65,6 +65,7 @@ GIUSTINO_MATH_ROUTES = [*GIUSTINO_CHAPTER_ROUTES[1:], *GIUSTINO_APPENDIX_ROUTES]
 LITERATURE_ROUTES = [
     "reading/literature/hohenberg-kohn-1964/",
     "reading/literature/kohn-sham-1965/",
+    "reading/literature/levy-1979/",
 ]
 CANONICAL_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
@@ -401,7 +402,7 @@ def inspect(driver, mode, expected_width=None):
                 if marker not in main_text:
                     raise AssertionError(f"Giustino unit lacks {marker} in {mode}: {route}")
         if route in LITERATURE_ROUTES:
-            if "What the paper established" not in main_text or "DOI 10.1103" not in main_text:
+            if "What the paper established" not in main_text or "DOI 10." not in main_text:
                 raise AssertionError(f"literature guide lacks source result or canonical DOI in {mode}: {route}")
             figure_metrics = driver.execute_script(
                 "const figure=document.querySelector('figure.paper-argument'),main=document.querySelector('main');"

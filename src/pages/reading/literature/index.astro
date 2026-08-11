@@ -27,7 +27,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <section aria-labelledby="density-foundations">
     <h2 id="density-foundations">The density-functional foundations</h2>
     <p>
-      These two papers should be read as a sequence. Hohenberg and Kohn establish why the ground-state density can carry an exact variational problem. Kohn and Sham then show how auxiliary one-electron equations make a useful density calculation possible while leaving exchange and correlation in a density functional.
+      The first two papers form the original theorem-to-orbitals sequence. Hohenberg and Kohn establish why the ground-state density can carry an exact variational problem. Kohn and Sham then introduce auxiliary one-electron equations. Levy returns to the density variation itself and defines the universal functional by a constrained search that no longer requires every trial density to be the ground-state density of another potential.
     </p>
     <ol class="section-list source-list">
       <li>
@@ -41,6 +41,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
         <p>W. Kohn and L. J. Sham, <cite>Physical Review</cite> 140, A1133–A1138 (1965).</p>
         <p class="item-summary">The route from an unknown density functional to auxiliary orbitals, local exchange–correlation approximations, and a density-dependent self-consistent problem.</p>
         <a href={href('/reading/literature/kohn-sham-1965/')}>Read the Kohn–Sham guide</a>
+      </li>
+      <li>
+        <h3>Levy · Universal Variational Functionals</h3>
+        <p>M. Levy, <cite>Proceedings of the National Academy of Sciences</cite> 76, 6062–6065 (1979).</p>
+        <p class="item-summary">The pure-state constrained search, the distinction between <em>N</em>- and <em>v</em>-representability, and parallel searches for restricted states and first-order density matrices.</p>
+        <a href={href('/reading/literature/levy-1979/')}>Read the Levy guide</a>
       </li>
     </ol>
   </section>

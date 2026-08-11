@@ -83,7 +83,8 @@ Guided Reading
 │   └── Giustino · Materials Modelling Using Density Functional Theory
 └── Literature
     ├── Hohenberg–Kohn 1964
-    └── Kohn–Sham 1965
+    ├── Kohn–Sham 1965
+    └── Levy 1979
 ```
 
 The current canonical routes are:
@@ -98,6 +99,7 @@ The current canonical routes are:
 /reading/literature/
 /reading/literature/hohenberg-kohn-1964/
 /reading/literature/kohn-sham-1965/
+/reading/literature/levy-1979/
 ```
 
 The former `/reading/martin/` route remains only as a compatibility redirect to `/reading/books/martin/`. It is not the canonical location of the Martin guide.
