@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BookCover from '../../../reading/BookCover.astro';
+import { bookCovers } from '../../../reading/book-covers';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -26,6 +28,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <section aria-labelledby="martin">
     <h2 id="martin">Martin · Electronic Structure</h2>
+    <BookCover cover={bookCovers.martin} />
     <p>
       Richard M. Martin’s <cite>Electronic Structure: Basic Theory and Practical Methods</cite>, second edition, provides a continuous route from the many-electron problem and density-functional theory through numerical methods, material properties, Berry phases, and topology.
     </p>
@@ -36,6 +39,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <section aria-labelledby="sholl-steckel">
     <h2 id="sholl-steckel">Sholl &amp; Steckel · Density Functional Theory: A Practical Introduction</h2>
+    <BookCover cover={bookCovers['sholl-steckel']} />
     <p>
       David S. Sholl and Janice A. Steckel organize plane-wave DFT around the decisions that turn a formal ground-state method into studies of solids, surfaces, vibrations, rates, phase equilibria, electronic structure, and molecular dynamics. The guide preserves that practical sequence while marking its 2009 scope.
     </p>
@@ -46,6 +50,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <section aria-labelledby="cohen-louie">
     <h2 id="cohen-louie">Cohen &amp; Louie · Fundamentals of Condensed Matter Physics</h2>
+    <BookCover cover={bookCovers['cohen-louie']} />
     <p>
       Marvin L. Cohen and Steven G. Louie connect microscopic constituents to elementary excitations, response functions, optical and transport phenomena, many-body propagation, collective order, and reduced-dimensional materials. The guide preserves the source’s four Parts and sixteen-chapter argument while making modern object and method boundaries explicit.
     </p>
@@ -56,6 +61,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <section aria-labelledby="giustino">
     <h2 id="giustino">Giustino · Materials Modelling Using Density Functional Theory</h2>
+    <BookCover cover={bookCovers.giustino} />
     <p>
       Feliciano Giustino moves repeatedly between formal electronic structure and what calculations or experiments actually return: equilibrium structures, elasticity, phonons, thermodynamics, bands, optical response, and magnetism. The Guide follows all eleven chapters and five appendices while marking the boundary between DFT, numerical realization, response theory, and measurement.
     </p>

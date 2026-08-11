@@ -97,6 +97,16 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .secondary, .item-summary { color: #666666; }
 .item-summary { font-size: 0.96em; }
 .paper-meta { color: #555555; font-size: 0.95rem; }
+.book-cover {
+  max-width: 12rem;
+  margin: 1.25rem 0;
+}
+.book-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.book-cover figcaption { font-size: 0.82rem; }
 .source-figure-list { margin-block: 1.25rem 2rem; }
 .source-figure-list dt {
   margin-top: 1.1rem;
