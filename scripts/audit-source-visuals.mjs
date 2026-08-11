@@ -130,8 +130,21 @@ const unresolvedBookLocators = bookLocators.filter((entry) => !entry.resolved);
 const literatureStatus = [
   { id: 'hohenberg-kohn-1964', status: 'REAL_PRESENT', visual_count: 2 },
   { id: 'hedin-1965', status: 'REAL_PRESENT', visual_count: 12 },
+  { id: 'zhong-vanderbilt-rabe-1995', status: 'REAL_PRESENT', visual_count: 1 },
   { id: 'kohn-sham-1965', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
   { id: 'levy-1979', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'lieb-1983', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'ceperley-alder-1980', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'perdew-zunger-1981', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'perdew-burke-ernzerhof-1996', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'vanderbilt-1990', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'blochl-1994', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'baroni-2001', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'onida-reining-rubio-2002', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'runge-gross-1984', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'marzari-vanderbilt-1997', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'king-smith-vanderbilt-1993', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
+  { id: 'fu-kane-mele-2007', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
 ];
 
 const report = {

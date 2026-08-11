@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { normalizedReferenceCount, normalizedReferenceGroups } from '../../reference/normalized-works';
+import { literatureBibliography, literatureGuides } from '../../reading/literature';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -33,7 +34,7 @@ const ecosystemGroups = [
 <BaseLayout title="Reference" description="Normalized sources, verification resources, and stewardship guidance for the Atlas." current="reference">
   <h1>Reference</h1>
   <p class="lede">This page materializes the current normalized source classification. A published/preprint family appears once, supplementary information stays attached to its parent work, and deferred or excluded material is not presented as an active source.</p>
-  <p class="paper-meta">{normalizedReferenceCount} normalized works are listed: 66 current <em>reference-only</em> works plus the eight sources with published Guided Reading. Each entry states a use and a boundary rather than becoming a miniature Guide.</p>
+  <p class="paper-meta">{normalizedReferenceCount} normalized works are listed here. The scholarly subset is maintained in the unified <a href={href('/reading/literature/')}>Literature layer</a> as {literatureGuides.length} learning guides and {literatureBibliography.length} bibliography-only paper references; books and non-scholarly resources remain in their own groups. Each entry states a use and a boundary rather than becoming a miniature Guide.</p>
 
   {normalizedReferenceGroups.map((group) => (
     <section aria-labelledby={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>

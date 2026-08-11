@@ -13,6 +13,7 @@
     "build": "astro build && node scripts/write-deployment-manifest.mjs",
     "preview": "astro preview",
     "audit:source-visuals": "node scripts/audit-source-visuals.mjs",
+    "audit:literature": "node scripts/audit-literature.mjs",
     "validate:clean-slate": "node scripts/validate-clean-slate.mjs --source",
     "validate:build-budget": "node scripts/validate-build-budget.mjs",
     "check": "astro check && npm run validate:clean-slate && astro build && npm run validate:build-budget && node scripts/validate-clean-slate.mjs --built"

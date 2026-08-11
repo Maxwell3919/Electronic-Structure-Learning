@@ -1,14 +1,35 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { paperProfiles } from '../../../reading/paper-profiles';
+import { literatureBibliography, literatureGuides, literatureRecords } from '../../../reading/literature';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const topicOrder = [
+  'Foundations of electronic structure',
+  'Exchange and correlation',
+  'Electronic-structure methods',
+  'Response, phonons, and electron–phonon coupling',
+  'Many-body and excitations',
+  'Wannier, Berry, and topology',
+  'Applications and representative systems',
+  'Reviews and field maps',
+];
+const topicDescription: Record<string, string> = {
+  'Foundations of electronic structure': 'The theorem, constrained-search, and rigorous-functional steps that make density-based electronic structure a defined problem.',
+  'Exchange and correlation': 'The benchmark data and approximation papers that turn the unknown universal functional into usable approximation families.',
+  'Electronic-structure methods': 'Representation and algorithm papers that make first-principles calculations tractable while retaining their input and observable boundaries.',
+  'Response, phonons, and electron–phonon coupling': 'Primary methods and material cases for derivatives, lattice dynamics, and coupling observables.',
+  'Many-body and excitations': 'Green functions, quasiparticles, optical response, and the distinction between ground-state and excitation sectors.',
+  'Wannier, Berry, and topology': 'Localized representations, polarization changes, and symmetry- and gap-conditioned topological invariants.',
+  'Applications and representative systems': 'Material-specific papers retained because their calculations are used as teaching cases in the Atlas.',
+  'Reviews and field maps': 'Reviews that orient a topic and point back to primary evidence; they are not substitutes for the cited papers.',
+};
+const roleText = (record: (typeof literatureRecords)[number]) => record.role === 'LITERATURE_GUIDE' ? 'learning guide' : 'bibliography reference';
 ---
 
 <BaseLayout
   title="Literature · Guided Reading"
-  description="Source-faithful guides to foundational and research papers in electronic structure."
+  description="A unified, source-aligned literature layer for electronic-structure theory, methods, response, excitations, topology, and representative applications."
   current="reading"
 >
   <nav class="breadcrumbs" aria-label="Breadcrumb">
@@ -19,62 +40,62 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 
   <h1>Literature</h1>
   <p class="lede">
-    A literature guide helps you read the paper that changed the field without replacing it. The paper’s own problem, sequence, equations, evidence, and limits remain the organizing structure.
+    The Literature layer answers a different question from Theory: where did a concept, method, approximation, or reported result enter the field, and what should a careful reader inspect in the original source?
   </p>
   <p>
-    Later clarification is marked as later clarification. For computational papers, guides reconstruct what the authors reported about the physical model, approximations, numerical representation, sampling, and calculated objects; unreported parameters remain unreported.
+    The Atlas currently tracks <strong>{literatureRecords.length} unique paper-like sources</strong>: <strong>{literatureGuides.length} learning guides</strong> for papers that carry the development chain, and <strong>{literatureBibliography.length} bibliography references</strong> retained for evidence, examples, and source navigation. Both roles use the same DOI, author, year, venue, locator, and canonical URL record.
+  </p>
+  <p>
+    A bibliography reference is not a second-rate source. It is kept compact when the paper is not itself a foundational construction, a repeated conceptual dependency, or a teaching case. A learning guide is selective: it reconstructs the paper’s problem, contribution, evidence, reading targets, and limits without replacing the paper.
   </p>
 
-  <section aria-labelledby="density-foundations">
-    <h2 id="density-foundations">The density-functional foundations</h2>
-    <p>
-      The first two papers form the original theorem-to-orbitals sequence. Hohenberg and Kohn establish why the ground-state density can carry an exact variational problem. Kohn and Sham then introduce auxiliary one-electron equations. Levy returns to the density variation itself and defines the universal functional by a constrained search that no longer requires every trial density to be the ground-state density of another potential.
-    </p>
-    <ol class="section-list source-list">
-      <li>
-        <h3>Hohenberg & Kohn · Inhomogeneous Electron Gas</h3>
-        <p>{paperProfiles['hohenberg-kohn-1964'].citation} <a href={paperProfiles['hohenberg-kohn-1964'].sourceUrl}>Original source</a>.</p>
-        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['hohenberg-kohn-1964'].whyItMatters}</p>
-        <p><strong>What to look for.</strong> {paperProfiles['hohenberg-kohn-1964'].lookFor}</p>
-        <a href={href('/reading/literature/hohenberg-kohn-1964/')}>Read the Hohenberg–Kohn guide</a>
-      </li>
-      <li>
-        <h3>Kohn & Sham · Self-Consistent Equations</h3>
-        <p>{paperProfiles['kohn-sham-1965'].citation} <a href={paperProfiles['kohn-sham-1965'].sourceUrl}>Original source</a>.</p>
-        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['kohn-sham-1965'].whyItMatters}</p>
-        <p><strong>What to look for.</strong> {paperProfiles['kohn-sham-1965'].lookFor}</p>
-        <a href={href('/reading/literature/kohn-sham-1965/')}>Read the Kohn–Sham guide</a>
-      </li>
-      <li>
-        <h3>Levy · Universal Variational Functionals</h3>
-        <p>{paperProfiles['levy-1979'].citation} <a href={paperProfiles['levy-1979'].sourceUrl}>Original source</a>.</p>
-        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['levy-1979'].whyItMatters}</p>
-        <p><strong>What to look for.</strong> {paperProfiles['levy-1979'].lookFor}</p>
-        <a href={href('/reading/literature/levy-1979/')}>Read the Levy guide</a>
-      </li>
-    </ol>
-  </section>
+  {topicOrder.map((topic) => {
+    const guides = literatureGuides.filter((record) => record.topic === topic);
+    const bibliography = literatureBibliography.filter((record) => record.topic === topic);
+    if (guides.length === 0 && bibliography.length === 0) return null;
+    return (
+      <section aria-labelledby={`topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+        <h2 id={`topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{topic}</h2>
+        <p>{topicDescription[topic]}</p>
+        {guides.length > 0 ? (
+          <>
+            <h3>Learning guides</h3>
+            <ol class="section-list source-list">
+              {guides.map((record) => (
+                <li>
+                  <h4><a href={href(record.guideHref!)}>{record.title}</a></h4>
+                  <p>{record.authors} · {record.year} · <cite>{record.venue}</cite> {record.locator}. <a href={record.canonical_url}>{record.doi.startsWith('10.48550/arxiv.') ? record.doi.replace('10.48550/', '') : `DOI ${record.doi}`}</a>.</p>
+                  <p class="item-summary"><strong>Role.</strong> {roleText(record)}. {record.whyUse}</p>
+                  <p><strong>Boundary.</strong> {record.boundary}</p>
+                </li>
+              ))}
+            </ol>
+          </>
+        ) : null}
+        {bibliography.length > 0 ? (
+          <>
+            <h3>Bibliography references</h3>
+            <ul class="source-list">
+              {bibliography.map((record) => (
+                <li>
+                  <p><strong>{record.title}</strong> · {record.authors} · {record.year} · <cite>{record.venue}</cite> {record.locator}. <a href={record.canonical_url}>Source</a>.</p>
+                  <p class="item-summary">{record.whyUse} <strong>Boundary.</strong> {record.boundary}</p>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+      </section>
+    );
+  })}
 
-  <section aria-labelledby="many-body-spectra">
-    <h2 id="many-body-spectra">One-particle spectra and screened interactions</h2>
+  <section aria-labelledby="literature-reading-route">
+    <h2 id="literature-reading-route">How to use the source layer</h2>
     <p>
-      Density-functional theory is a ground-state reformulation. Hedin instead asks how an interacting system propagates an added electron or hole, how the electronic medium screens the Coulomb interaction, and how those coupled objects can become a controlled approximation.
+      Start with a <a href={href('/theory/')}>Foundations</a> concept or a <a href={href('/reading/books/')}>Book guide</a>. Follow its source link when the original paper is carrying a theorem, construction, approximation, response method, or material-specific result. Read the guide for the development chain and evidence boundary, then return to the original section, equation, table, or figure named there.
     </p>
-    <ol class="section-list source-list">
-      <li>
-        <h3>Hedin · One-Particle Green Function</h3>
-        <p>{paperProfiles['hedin-1965'].citation} <a href={paperProfiles['hedin-1965'].sourceUrl}>Original source</a>.</p>
-        <p class="item-summary"><strong>Why it matters.</strong> {paperProfiles['hedin-1965'].whyItMatters}</p>
-        <p><strong>What to look for.</strong> {paperProfiles['hedin-1965'].lookFor}</p>
-        <a href={href('/reading/literature/hedin-1965/')}>Read the Hedin guide</a>
-      </li>
-    </ol>
-  </section>
-
-  <section aria-labelledby="literature-boundary">
-    <h2 id="literature-boundary">Read the source and the Atlas together</h2>
     <p>
-      <a href={href('/core/part-iv/')}>Core Part IV · Density Functional Theory</a> and <a href={href('/core/part-viii/')}>Core Part VIII · Excitations and Spectra</a> give the Atlas’s modern synthesis. These guides instead preserve what each paper argues in its own order, including historical notation and limitations that a modern textbook often reorganizes.
+      The existing Hohenberg–Kohn and Hedin guides retain source-linked paper figures. The newer guides deliberately do not invent visual substitutes for theorem- or equation-led papers; where a source result needs an exact crop, it remains marked in the metadata audit until the crop and provenance are reviewed.
     </p>
   </section>
 </BaseLayout>
