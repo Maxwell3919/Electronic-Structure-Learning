@@ -4,57 +4,110 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations/';
+
+type Tool = { name: string; url: string; role: string; atlas: string; atlasLabel: string; drw: string; drwLabel: string };
+type Group = { title: string; tools: Tool[] };
+const tool = (name: string, url: string, role: string, atlas: string, atlasLabel: string, drw: string, drwLabel: string): Tool => ({ name, url, role, atlas, atlasLabel, drw, drwLabel });
+
+const groups: Group[] = [
+  { title: 'Electronic-structure engines', tools: [
+    tool('Quantum ESPRESSO', 'https://www.quantum-espresso.org/', 'Plane-wave/pseudopotential suite for periodic DFT, DFPT, spectroscopy, and related methods.', '/core/part-v/', 'equations to computation', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+    tool('ABINIT', 'https://www.abinit.org/', 'Plane-wave/pseudopotential platform for ground states, response, excited states, and materials properties.', '/methods/', 'method map', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+    tool('CP2K', 'https://www.cp2k.org/', 'Mixed Gaussian/plane-wave and real-space methods for molecular, condensed-phase, and periodic simulations.', '/theory/localized-orbital-methods/', 'localized representations', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+    tool('GPAW', 'https://gpaw.readthedocs.io/', 'Real-space-grid, finite-difference, and plane-wave PAW calculations through a Python-facing environment.', '/theory/plane-wave-and-real-space-methods/', 'real-space methods', 'test-numerical-convergence/', 'test convergence'),
+    tool('SIESTA', 'https://siesta-project.org/siesta/', 'Periodic DFT with numerical atomic orbitals and norm-conserving pseudopotentials.', '/theory/localized-orbital-methods/', 'localized representations', 'test-numerical-convergence/', 'test convergence'),
+    tool('OpenMX', 'https://www.openmx-square.org/', 'Localized pseudoatomic-orbital calculations for electronic, magnetic, transport, and structural problems.', '/theory/localized-orbital-methods/', 'localized representations', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+    tool('FHI-aims', 'https://fhi-aims.org/', 'All-electron electronic structure with numeric atom-centred orbitals for molecules and solids.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'core treatment', 'test-numerical-convergence/', 'test convergence'),
+    tool('WIEN2k', 'https://www.wien2k.at/', 'All-electron augmented-plane-wave electronic structure for crystalline solids.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'all-electron methods', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+    tool('Elk', 'https://elk.sourceforge.io/', 'Open all-electron full-potential linearized augmented-plane-wave code.', '/theory/discretization-and-basis-representations/', 'finite representations', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+    tool('exciting', 'https://www.exciting-code.org/', 'All-electron full-potential calculations with ground-state and spectroscopy capabilities.', '/core/part-viii/', 'excitations and spectra', 'independent-particle-optical-properties/', 'calculate optical properties'),
+    tool('PySCF', 'https://pyscf.org/', 'Python framework for molecular and periodic HF, DFT, correlated wavefunction, response, and embedding methods.', '/core/part-ii/', 'mean fields and correlation', 'calculate-reference-ground-state/', 'calculate reference states'),
+    tool('DFTB+', 'https://dftbplus.org/', 'Density-functional tight-binding and related approximate atomistic electronic-structure models.', '/methods/', 'method map', 'choose-dft-method-and-computational-setup/', 'choose the setup'),
+  ]},
+  { title: 'Structure, symmetry, and visualization', tools: [
+    tool('ASE', 'https://ase-lib.org/', 'Python tools for structures, calculators, trajectories, and atomistic workflow building.', '/theory/crystallography/', 'crystallography', 'build-or-modify-computational-model/', 'build the model'),
+    tool('pymatgen', 'https://pymatgen.org/', 'Python materials-analysis toolkit for structures, transformations, inputs, and computed outputs.', '/theory/solid-state-chemistry/', 'solid-state chemistry', 'build-or-modify-computational-model/', 'build the model'),
+    tool('spglib', 'https://spglib.readthedocs.io/', 'Crystal-symmetry detection and standardization under declared numerical tolerances.', '/theory/group-theory-and-symmetry/', 'symmetry', 'obtain-material-structure/', 'obtain the structure'),
+    tool('VESTA', 'https://jp-minerals.org/vesta/en/', 'Desktop visualization of crystal structures and volumetric fields.', '/theory/crystallography/', 'crystallography', 'build-or-modify-computational-model/', 'inspect the model'),
+    tool('XCrySDen', 'http://www.xcrysden.org/', 'Visualization of periodic structures, reciprocal space, and selected electronic-structure outputs.', '/core/part-iii/', 'periodic states', 'analyze-and-compare-results/', 'analyze electronic structure'),
+    tool('SeeK-path', 'https://seekpath.readthedocs.io/', 'Standardized primitive cells and suggested high-symmetry paths for band-structure visualization.', '/core/part-iii/', 'band path versus BZ', 'band-structure/', 'calculate band structure'),
+  ]},
+  { title: 'Materials databases and interoperability', tools: [
+    tool('Materials Project', 'https://materialsproject.org/', 'Computed materials database and API for structures and derived materials properties.', '/core/part-vi/', 'ground-state properties', 'obtain-material-structure/', 'obtain structures'),
+    tool('NOMAD', 'https://nomad-lab.eu/', 'Materials-data platform for parsed calculations, metadata, APIs, and publication.', '/methods/', 'method objects', 'document-and-preserve-study/', 'preserve the study'),
+    tool('Crystallography Open Database', 'https://www.crystallography.net/cod/', 'Open collection of experimentally reported crystal structures.', '/theory/crystallography/', 'crystal identity', 'obtain-material-structure/', 'obtain structures'),
+    tool('AFLOW', 'https://aflowlib.org/', 'High-throughput computed materials data, prototypes, and web services.', '/core/part-vi/', 'property interpretation', 'validate-results-and-scientific-conclusions/', 'validate conclusions'),
+    tool('OQMD', 'https://oqmd.org/', 'Open computed thermodynamic and structural materials database.', '/theory/thermodynamics/', 'thermodynamic boundaries', 'relative-and-formation-energies/', 'compare energies'),
+    tool('JARVIS', 'https://jarvis.nist.gov/', 'NIST materials datasets spanning DFT, experiments, machine learning, and derived properties.', '/methods/', 'method map', 'validate-results-and-scientific-conclusions/', 'validate conclusions'),
+    tool('C2DB', 'https://c2db.fysik.dtu.dk/', 'Computed database focused on two-dimensional materials and their properties.', '/theory/surface-and-interface-chemistry/', 'dimensional models', 'obtain-material-structure/', 'obtain structures'),
+    tool('OPTIMADE', 'https://www.optimade.org/', 'Interoperability specification for querying structures across materials databases.', '/theory/crystallography/', 'structure objects', 'obtain-material-structure/', 'obtain structures'),
+  ]},
+  { title: 'Pseudopotential and PAW ecosystem', tools: [
+    tool('SSSP', 'https://www.materialscloud.org/discover/sssp/table/efficiency', 'Curated plane-wave pseudopotential collections with documented precision and efficiency tests.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'versioned core treatment', 'choose-dft-method-and-computational-setup/', 'choose and verify datasets'),
+    tool('PseudoDojo', 'http://www.pseudo-dojo.org/', 'Generator, testing framework, and curated norm-conserving pseudopotential tables.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'versioned core treatment', 'choose-dft-method-and-computational-setup/', 'choose and verify datasets'),
+    tool('PSlibrary', 'https://dalcorso.github.io/pslibrary/', 'Open pseudopotential library and generation workflow associated with Quantum ESPRESSO.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'pseudopotentials', 'choose-dft-method-and-computational-setup/', 'choose and verify datasets'),
+    tool('GBRV library', 'https://www.physics.rutgers.edu/gbrv/', 'Ultrasoft pseudopotential library designed for broad solid-state calculations and benchmark comparison.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'transferability', 'choose-dft-method-and-computational-setup/', 'choose and verify datasets'),
+    tool('SG15 ONCV potentials', 'http://www.quantum-simulation.org/potentials/sg15_oncv/', 'Optimized norm-conserving Vanderbilt potential set with published construction and tests.', '/theory/pseudopotentials-paw-and-core-valence-treatments/', 'transferability', 'choose-dft-method-and-computational-setup/', 'choose and verify datasets'),
+  ]},
+  { title: 'Phonons and lattice dynamics', tools: [
+    tool('phonopy', 'https://phonopy.github.io/phonopy/', 'Finite-displacement harmonic and quasi-harmonic lattice dynamics.', '/core/part-vii/', 'phonons and response', 'harmonic-phonons/', 'calculate phonons'),
+    tool('phono3py', 'https://phonopy.github.io/phono3py/', 'Anharmonic force constants, phonon lifetimes, and lattice thermal transport.', '/core/part-vii/', 'response objects', 'lattice-thermal-transport/', 'calculate anharmonic transport'),
+    tool('ALAMODE', 'https://alamode.readthedocs.io/', 'Harmonic and anharmonic lattice-dynamics modeling from force-displacement data.', '/core/part-vii/', 'lattice dynamics', 'anharmonic-phonons/', 'calculate anharmonic response'),
+    tool('hiphive', 'https://hiphive.materialsmodeling.org/', 'Python construction and fitting of high-order force-constant models.', '/core/part-vii/', 'force constants', 'anharmonic-phonons/', 'fit force constants'),
+    tool('ShengBTE', 'https://www.shengbte.org/', 'Solution of the phonon Boltzmann transport equation from anharmonic force constants.', '/methods/', 'transport methods', 'lattice-thermal-transport/', 'calculate thermal transport'),
+  ]},
+  { title: 'Wannier and topology', tools: [
+    tool('Wannier90', 'https://wannier.org/', 'Maximally localized Wannier functions, interpolation, and localized subspace analysis.', '/theory/berry-phases-and-electronic-topology/', 'Berry and topology', 'wannier-function-construction/', 'construct Wannier functions'),
+    tool('WannierTools', 'https://www.wanniertools.org/', 'Topological invariants and boundary spectra from tight-binding or Wannier Hamiltonians.', '/theory/berry-phases-and-electronic-topology/', 'topological objects', 'topological-invariants-and-boundary-states/', 'analyze topology'),
+  ]},
+  { title: 'Many-body and spectroscopy', tools: [
+    tool('BerkeleyGW', 'https://berkeleygw.org/', 'GW quasiparticles and Bethe–Salpeter neutral excitations for periodic systems.', '/core/part-viii/', 'charged and neutral excitations', 'quasiparticle-corrections/', 'calculate quasiparticles'),
+    tool('Yambo', 'https://www.yambo-code.eu/', 'Many-body perturbation theory, response, and spectroscopy from plane-wave ground-state inputs.', '/core/part-viii/', 'spectra', 'time-dependent-response-and-spectroscopy/', 'calculate response'),
+  ]},
+  { title: 'Electron–phonon coupling', tools: [
+    tool('EPW', 'https://docs.epw-code.org/', 'DFPT and Wannier–Fourier interpolation for electron–phonon matrix elements and derived observables.', '/core/part-vii/', 'electron–phonon coupling', 'electron-phonon-coupling/', 'calculate electron–phonon coupling'),
+  ]},
+  { title: 'Post-processing and interpretation', tools: [
+    tool('Bader analysis tools', 'https://theory.cm.utexas.edu/henkelman/code/bader/', 'Grid-based partitioning of charge density into Bader basins.', '/theory/chemical-bonding-and-molecular-structure/', 'bonding interpretations', 'charge-density-and-charge-redistribution/', 'analyze charge'),
+    tool('critic2', 'https://aoterodelaroza.github.io/critic2/', 'Topological analysis of scalar fields in molecules and crystals.', '/theory/chemical-bonding-and-molecular-structure/', 'density topology', 'chemical-bonding-analysis/', 'analyze bonding'),
+    tool('LOBSTER', 'http://www.cohp.de/', 'Projection-based bonding and chemical analysis from supported plane-wave calculations.', '/theory/chemical-bonding-and-molecular-structure/', 'bonding frameworks', 'chemical-bonding-analysis/', 'analyze bonding'),
+    tool('Multiwfn', 'http://sobereva.com/multiwfn/', 'Wavefunction and real-space analysis for many molecular and periodic data formats.', '/theory/quantum-chemistry/', 'wavefunction analysis', 'chemical-bonding-analysis/', 'analyze outputs'),
+    tool('sumo', 'https://smtg-bham.github.io/sumo/', 'Command-line plotting and analysis for electronic and phonon structure data.', '/core/part-iii/', 'bands and DOS', 'analyze-and-compare-results/', 'analyze electronic structure'),
+    tool('PyProcar', 'https://pyprocar.readthedocs.io/', 'Projection-aware visualization and analysis of band structures and Fermi surfaces.', '/core/part-iii/', 'bands and Fermi surfaces', 'fermi-surface-and-full-brillouin-zone-analysis/', 'analyze Fermi surfaces'),
+    tool('VASPKIT', 'https://vaspkit.com/', 'Pre- and post-processing utilities for VASP-oriented electronic-structure workflows.', '/core/part-v/', 'calculation layers', 'analyze-and-compare-results/', 'analyze outputs'),
+  ]},
+  { title: 'Workflow and provenance', tools: [
+    tool('AiiDA', 'https://www.aiida.net/', 'Workflow execution with recorded process inputs, outputs, and provenance graphs.', '/methods/', 'method objects', 'document-and-preserve-study/', 'preserve the study'),
+    tool('atomate2', 'https://materialsproject.github.io/atomate2/', 'Python workflows for atomistic simulations built around jobflow and materials-code makers.', '/core/part-v/', 'calculation stack', 'choose-dft-method-and-computational-setup/', 'plan a campaign'),
+    tool('FireWorks', 'https://materialsproject.github.io/fireworks/', 'Workflow definition, dependency management, and distributed execution for computational tasks.', '/core/part-v/', 'solver workflow boundary', 'choose-dft-method-and-computational-setup/', 'plan a campaign'),
+    tool('custodian', 'https://materialsproject.github.io/custodian/', 'Monitors computational jobs and applies declared error handlers and recovery actions.', '/core/part-v/', 'solver boundary', 'troubleshooting/', 'troubleshoot calculations'),
+  ]},
+];
+
+const toolCount = groups.reduce((count, group) => count + group.tools.length, 0);
 ---
 
-<BaseLayout title="Computational Tools" description="A selective map from computational implementations to their scientific objects." current="computational-tools">
+<BaseLayout title="Computational Tools" description="A map from computational implementations to their scientific roles." current="computational-tools">
   <h1>Computational Tools</h1>
-  <p class="lede">Tools implement methods, representations, data models, or provenance. Availability of a feature does not establish its suitability for a material or observable.</p>
+  <p class="lede">Atlas explains what a tool implements and which scientific object it produces. To use these tools in an actual calculation—choose inputs, converge representations, validate observables, and preserve evidence—continue to <a href={workflow}>DFT Research Workflow</a>.</p>
+  <p class="paper-meta">This is a selective ecosystem map of {toolCount} tools, not a ranking. Feature availability, popularity, or workflow automation does not establish suitability for a material or observable.</p>
 
-  <h2>Electronic-structure engines</h2>
-  <dl>
-    <dt><a href="https://www.quantum-espresso.org/">Quantum ESPRESSO</a></dt>
-    <dd>An open plane-wave/pseudopotential suite for periodic DFT, perturbation theory, and related methods. Use it when that representation and its versioned datasets fit the model; connect <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane waves</a> to <a href={`${workflow}choose-dft-method-and-computational-setup/`}>setup choice</a>.</dd>
-    <dt><a href="https://fhi-aims.org/">FHI-aims</a></dt>
-    <dd>An all-electron code based on numeric atom-centred orbitals for molecules and solids. It exposes localized-basis and core-explicit choices; basis tiers, grids, access terms, and release remain calculation inputs. See <a href={href('/theory/localized-orbital-methods/')}>localized orbitals</a> and <a href={`${workflow}test-numerical-convergence/`}>observable convergence</a>.</dd>
-    <dt><a href="https://pyscf.org/">PySCF</a></dt>
-    <dd>An open Python framework for molecular and periodic Hartree–Fock, DFT, correlated wavefunction, response, and embedding methods. It is useful for explicit method construction, but basis, reference stability, active space, and boundary model remain scientific decisions. See <a href={href('/theory/hartree-and-hartree-fock-theory/')}>Hartree–Fock</a> and <a href={`${workflow}calculate-reference-ground-state/`}>reference states</a>.</dd>
-  </dl>
+  {groups.map((group) => (
+    <section aria-labelledby={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+      <h2 id={group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>{group.title}</h2>
+      <dl class="tool-list">
+        {group.tools.map((entry) => (
+          <>
+            <dt><a href={entry.url}>{entry.name}</a></dt>
+            <dd>{entry.role} Understand: <a href={href(entry.atlas)}>{entry.atlasLabel}</a>. Execute: <a href={`${workflow}${entry.drw}`}>{entry.drwLabel}</a>.</dd>
+          </>
+        ))}
+      </dl>
+    </section>
+  ))}
 
-  <h2>Structure, symmetry, and visualization</h2>
-  <dl>
-    <dt><a href="https://ase-lib.org/">Atomic Simulation Environment</a></dt>
-    <dd>An open Python layer for constructing structures and connecting atomistic calculators. It is useful for model manipulation and automation, not independent validation of the attached calculator. See <a href={href('/theory/crystallography/')}>crystallography</a> and <a href={`${workflow}build-or-modify-computational-model/`}>model construction</a>.</dd>
-    <dt><a href="https://spglib.readthedocs.io/">Spglib</a></dt>
-    <dd>An open crystal-symmetry library. It identifies symmetry under declared structural and magnetic tolerances; it does not decide whether that symmetry should constrain the physical model. See <a href={href('/theory/group-theory-and-symmetry/')}>symmetry</a> and <a href={`${workflow}obtain-material-structure/`}>structure provenance</a>.</dd>
-    <dt><a href="https://jp-minerals.org/vesta/en/">VESTA</a></dt>
-    <dd>A desktop viewer for crystal structures and volumetric data, distributed under its official use and redistribution terms. It is useful for inspection; a rendering does not validate a structure, density partition, or bond. See <a href={href('/theory/chemical-bonding-and-molecular-structure/')}>bonding interpretations</a> and <a href={`${workflow}build-or-modify-computational-model/`}>model construction</a>.</dd>
-  </dl>
-
-  <h2>Materials databases</h2>
-  <dl>
-    <dt><a href="https://www.crystallography.net/cod/">Crystallography Open Database</a></dt>
-    <dd>An open collection of experimentally reported crystal structures with a public-domain data policy. Use it to locate candidate structures, then inspect measurement context, disorder, occupancy, and model suitability. Connect <a href={href('/theory/crystallography/')}>crystallographic identity</a> to <a href={`${workflow}obtain-material-structure/`}>structure acquisition</a>.</dd>
-    <dt><a href="https://nomad-lab.eu/">NOMAD</a></dt>
-    <dd>A materials-data platform with parsers, APIs, metadata, and publication services. Use it to discover calculations and provenance; parser success does not establish numerical or physical adequacy. Compare the declared <a href={href('/methods/')}>method object</a> before <a href={`${workflow}validate-results-and-scientific-conclusions/`}>validation</a>.</dd>
-    <dt><a href="https://www.optimade.org/">OPTIMADE</a></dt>
-    <dd>A specification for interoperable queries across materials databases. It normalizes access to fields, not the source databases’ methods, corrections, releases, or uncertainties. Treat returned <a href={href('/theory/crystallography/')}>structures</a> as sourced model candidates, then follow <a href={`${workflow}obtain-material-structure/`}>structure acquisition</a>.</dd>
-  </dl>
-
-  <h2>Phonon, Wannier, and response ecosystem</h2>
-  <dl>
-    <dt><a href="https://phonopy.github.io/phonopy/">phonopy</a></dt>
-    <dd>An open finite-displacement implementation for harmonic and quasi-harmonic lattice dynamics. It turns forces into force constants and phonon objects; supercell, displacement, force, q-space, and non-analytic choices remain observable-specific. See <a href={href('/theory/classical-mechanics/')}>normal modes</a> and <a href={`${workflow}harmonic-phonons/`}>phonon execution</a>.</dd>
-    <dt><a href="https://wannier.org/">Wannier90</a></dt>
-    <dd>An open implementation of maximally localized Wannier functions and related interpolation. Use it for a declared band subspace; windows, gauge, localization, topology obstructions, and matrix-element fidelity must be checked. See <a href={href('/theory/berry-phases-and-electronic-topology/')}>Berry and topology</a> and <a href={`${workflow}wannier-function-construction/`}>Wannier construction</a>.</dd>
-    <dt><a href="https://docs.epw-code.org/">EPW</a></dt>
-    <dd>An open DFPT and Wannier–Fourier implementation for electron–phonon quantities. It is useful for dense interpolation of coupling objects, but mesh, interpolation, screening, and final-observable convergence remain distinct. Connect <a href={href('/theory/linear-response-and-excited-states/')}>response objects</a> to <a href={`${workflow}electron-phonon-coupling/`}>electron–phonon calculations</a>.</dd>
-    <dt><a href="https://berkeleygw.org/documentation/">BerkeleyGW</a></dt>
-    <dd>An open GW and GW–BSE implementation for quasiparticle and neutral optical objects; official documentation identifies versioned manuals and examples. Starting point, screening, empty-state/frequency representation, Coulomb boundary, and kernel convergence remain model decisions. See <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>many-body perturbation theory</a> and <a href={`${workflow}quasiparticle-corrections/`}>quasiparticle calculations</a>.</dd>
-  </dl>
-
-  <h2>Workflow and provenance infrastructure</h2>
-  <dl>
-    <dt><a href="https://www.aiida.net/">AiiDA</a></dt>
-    <dd>An open workflow system that records process inputs, outputs, and lineage in a provenance graph. Use it to automate and preserve declared <a href={href('/methods/')}>method objects</a>; provenance does not certify convergence or scientific support. DFT Research Workflow defines the corresponding <a href={`${workflow}document-and-preserve-study/`}>study record</a>.</dd>
-  </dl>
+  <section class="callout" aria-labelledby="tools-handoff">
+    <h2 id="tools-handoff">Use these tools in an actual calculation</h2>
+    <p><strong>Atlas</strong> explains the theory, representation, and calculated object. <strong>DFT Research Workflow</strong> covers <a href={workflow}>execution, convergence, validation, and evidence</a>. A successful run or a provenance record is not by itself a scientifically supported result.</p>
+  </section>
 </BaseLayout>
