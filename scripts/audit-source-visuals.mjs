@@ -18,9 +18,11 @@ const walk = (directory) => {
   return files;
 };
 
+const bookContentFiles = walk(path.join(root, 'src/reading/books')).filter((file) => file.includes(`${path.sep}content${path.sep}`) && file.endsWith('.astro'));
 const pageFiles = [
   ...walk(path.join(root, 'src/pages/reading')).filter((file) => file.endsWith('.astro')),
   ...walk(path.join(root, 'src/pages/theory')).filter((file) => file.endsWith('.astro')),
+  ...bookContentFiles,
 ];
 const sourceReadingFiles = walk(path.join(root, 'src/reading/books')).filter((file) => file.endsWith('source-reading.ts'));
 const relative = (file) => path.relative(root, file).replaceAll(path.sep, '/');
@@ -51,9 +53,41 @@ const pageRecords = [];
 const realPlacements = [];
 const bookVisualPlacements = [];
 const textOnlyReferences = [];
+const contentSourceUnresolvedReferences = [];
 const svgSubstitutes = [];
 const oldVisualKinds = /(?:bloch-phase|smearing-cutoff|pairing-gap|phonon-chain|hk-response|hedin-diagrams)/g;
-const concreteVisualReference = /\b(?:Figs?\.?|Figures?|Tables?)\s+(?:[A-Z]?\d|[IVX]+)\b|\bsource\s+(?:figures?|diagrams?)\b/gi;
+const concreteVisualReference = /\b(?:Figs?\.?|Figures?|Tables?)\s+\d+(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?)?(?:\s+(?:and|,)\s*\d+(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?)?)*(?=\W|$)|\bsource\s+(?:figures?|diagrams?)\b/gi;
+const visualTokens = (text) => {
+  const tokens = new Set([...text.matchAll(/\b\d+\.\d+\b/g)].map((match) => match[0]));
+  for (const match of text.matchAll(/\b(\d+)\.(\d+)\s*[–-]\s*(?:(\d+)\.)?(\d+)\b/g)) {
+    const [, firstMajor, firstMinor, secondMajor, secondMinor] = match;
+    const major = secondMajor ?? firstMajor;
+    if (major !== firstMajor) continue;
+    for (let minor = Number(firstMinor); minor <= Number(secondMinor); minor += 1) tokens.add(`${major}.${minor}`);
+  }
+  return [...tokens];
+};
+
+const bookLocators = [];
+for (const file of sourceReadingFiles) {
+  const text = fs.readFileSync(file, 'utf8');
+  const book = relative(file).split('/')[3];
+  for (const match of text.matchAll(/\{\s*locator:\s*'([^']+)',([\s\S]*?)\},/g)) {
+    const locator = match[1];
+    if (!/(?:Fig|Table)/i.test(locator)) continue;
+    const slug = [...text.slice(0, match.index).matchAll(/^\s*'([^']+)':\s*\[/gm)].at(-1)?.[1] ?? 'unknown';
+    const visualMatch = match[2].match(/visuals:\s*\[([^\]]*)\]/);
+    const visuals = visualMatch ? [...visualMatch[1].matchAll(/'([^']+)'/g)].map((entry) => entry[1]) : [];
+    for (const id of visuals) {
+      if (!visualById.has(id)) {
+        failures.push(`${book} ${locator}: unknown source visual ${id}`);
+        continue;
+      }
+      bookVisualPlacements.push({ page: visualById.get(id).usagePages[0] ?? `/reading/books/${book}/`, id, locator, source_file: relative(file) });
+    }
+    bookLocators.push({ book, slug, locator, locator_tokens: visualTokens(locator), source_file: relative(file), visuals, resolved: visuals.length > 0 });
+  }
+}
 
 for (const file of pageFiles) {
   const text = fs.readFileSync(file, 'utf8');
@@ -67,30 +101,27 @@ for (const file of pageFiles) {
   for (const id of oldKinds) svgSubstitutes.push({ page, id });
   const references = [...text.matchAll(concreteVisualReference)].map((match) => match[0]);
   const isDynamicBookTemplate = page.includes('src/pages/reading/books/') && page.includes('[slug]');
-  if (references.length > 0 && realCalls.length === 0 && !isDynamicBookTemplate) {
+  const isBookContentPage = page.startsWith('src/reading/books/') && page.includes('/content/');
+  if (references.length > 0 && isBookContentPage) {
+    const pathParts = page.split('/');
+    const book = pathParts[3];
+    const slug = path.basename(file, '.astro');
+    const candidates = bookLocators.filter((entry) => entry.book === book && entry.slug === slug);
+    for (const reference of [...new Set(references)]) {
+      const tokens = visualTokens(reference);
+      const matching = candidates.filter((entry) => tokens.length > 0 && tokens.every((token) => entry.locator_tokens.includes(token)));
+      if (matching.length === 0) {
+        textOnlyReferences.push({ page, references: [reference], reason: 'book body reference has no matching source-reading locator' });
+      } else if (matching.some((entry) => entry.resolved)) {
+        contentSourceUnresolvedReferences.push({ page, reference, status: 'REAL_PRESENT', source_locators: matching.map((entry) => entry.locator) });
+      } else {
+        contentSourceUnresolvedReferences.push({ page, reference, status: 'SOURCE_UNRESOLVED', source_locators: matching.map((entry) => entry.locator) });
+      }
+    }
+  } else if (references.length > 0 && realCalls.length === 0 && !isDynamicBookTemplate) {
     textOnlyReferences.push({ page, references: [...new Set(references)] });
   }
   pageRecords.push({ page, real_visuals: realCalls, explicit_visual_references: [...new Set(references)] });
-}
-
-const bookLocators = [];
-for (const file of sourceReadingFiles) {
-  const text = fs.readFileSync(file, 'utf8');
-  const book = relative(file).split('/')[3];
-  for (const match of text.matchAll(/\{\s*locator:\s*'([^']+)',([\s\S]*?)\},/g)) {
-    const locator = match[1];
-    if (!/(?:Fig|Table)/i.test(locator)) continue;
-    const visualMatch = match[2].match(/visuals:\s*\[([^\]]*)\]/);
-    const visuals = visualMatch ? [...visualMatch[1].matchAll(/'([^']+)'/g)].map((entry) => entry[1]) : [];
-    for (const id of visuals) {
-      if (!visualById.has(id)) {
-        failures.push(`${book} ${locator}: unknown source visual ${id}`);
-        continue;
-      }
-      bookVisualPlacements.push({ page: visualById.get(id).usagePages[0] ?? `/reading/books/${book}/`, id, locator, source_file: relative(file) });
-    }
-    bookLocators.push({ book, locator, source_file: relative(file), visuals, resolved: visuals.length > 0 });
-  }
 }
 
 const allRealPlacements = [...realPlacements, ...bookVisualPlacements];
@@ -106,7 +137,7 @@ const literatureStatus = [
 const report = {
   generated_at: new Date().toISOString(),
   scope: {
-    page_roots: ['src/pages/reading', 'src/pages/theory'],
+    page_roots: ['src/pages/reading', 'src/pages/theory', 'src/reading/books/*/content'],
     page_files: pageFiles.map(relative),
     source_reading_manifests: sourceReadingFiles.map(relative),
   },
@@ -129,6 +160,7 @@ const report = {
   },
   literature: literatureStatus,
   text_only_references: textOnlyReferences,
+  content_source_unresolved_references: contentSourceUnresolvedReferences,
   svg_substitutes: svgSubstitutes,
   source_unresolved: unresolvedBookLocators,
   manifest_visual_records: visualEntries.length,
@@ -139,11 +171,12 @@ if (process.argv.includes('--json')) {
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
 } else {
   console.log('SOURCE VISUAL AUDIT');
-  console.log(`Scope: ${pageFiles.length} Astro pages + ${sourceReadingFiles.length} book source manifests`);
+  console.log(`Scope: ${pageFiles.length} Astro content files + ${sourceReadingFiles.length} book source manifests`);
   console.log(`REAL_PRESENT: ${report.counts.REAL_PRESENT} placements / ${report.real_present.unique_assets.length} unique assets`);
   console.log(`TEXT_ONLY_REFERENCE: ${report.counts.TEXT_ONLY_REFERENCE}`);
   console.log(`SVG_SUBSTITUTE: ${report.counts.SVG_SUBSTITUTE}`);
   console.log(`SOURCE_UNRESOLVED: ${report.counts.SOURCE_UNRESOLVED} book Figure/Table locator groups`);
+  console.log(`CONTENT_SOURCE_UNRESOLVED: ${contentSourceUnresolvedReferences.filter((entry) => entry.status === 'SOURCE_UNRESOLVED').length} book-body references cross-bound to those locator groups`);
   console.log(`NO_VISUAL_NEEDED: ${report.counts.NO_VISUAL_NEEDED} literature guides`);
   console.log(`Book locator groups: ${JSON.stringify(report.books.by_book)}`);
   console.log(`Manifest visual records: ${report.manifest_visual_records}`);
