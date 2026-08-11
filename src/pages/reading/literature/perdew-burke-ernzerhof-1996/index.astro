@@ -1,0 +1,10 @@
+---
+import LiteratureGuide from '../../../../reading/LiteratureGuide.astro';
+import { literatureById } from '../../../../reading/literature';
+import { literatureGuideContent } from '../../../../reading/literature-guides';
+
+const record = literatureById['perdew-burke-ernzerhof-1996'];
+const guide = literatureGuideContent['perdew-burke-ernzerhof-1996'];
+---
+
+<LiteratureGuide record={record} guide={guide} />

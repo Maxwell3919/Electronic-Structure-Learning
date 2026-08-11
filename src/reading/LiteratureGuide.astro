@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { LiteratureRecord } from './literature';
+import type { LiteratureGuideContent } from './literature-guides';
+import { literatureCitation } from './literature';
+import SourceVisual from './SourceVisual.astro';
+
+interface Props {
+  record: LiteratureRecord;
+  guide: LiteratureGuideContent;
+}
+
+const { record, guide } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const topicRoutes: Record<string, string> = {
+  'Foundations of electronic structure': '/theory/density-functional-theory-foundations/',
+  'Exchange and correlation': '/theory/exchange-correlation-functionals-and-approximations/',
+  'Electronic-structure methods': '/theory/pseudopotentials-paw-and-core-valence-treatments/',
+  'Response, phonons, and electron–phonon coupling': '/theory/linear-response-and-excited-states/',
+  'Many-body and excitations': '/theory/many-body-perturbation-theory-and-quasiparticles/',
+  'Wannier, Berry, and topology': '/theory/berry-phases-and-electronic-topology/',
+  'Applications and representative systems': '/reference/',
+  'Reviews and field maps': '/reference/',
+};
+const sourceLabel = record.doi.startsWith('10.48550/arxiv.') ? record.doi.replace('10.48550/', '') : `DOI ${record.doi}`;
+---
+
+<BaseLayout
+  title={`${record.year} · ${record.title}`}
+  description={guide.lede}
+  current="reading"
+>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href={href('/reading/')}>Guided Reading</a>
+    <span aria-hidden="true">/</span>
+    <a href={href('/reading/literature/')}>Literature</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">{record.year}</span>
+  </nav>
+
+  <p class="secondary">{record.topic} · {record.year}</p>
+  <h1>{record.title}</h1>
+  <p class="lede">{guide.lede}</p>
+  <p class="paper-meta">
+    {literatureCitation(record)} <a href={record.canonical_url}>{sourceLabel}</a>.
+  </p>
+
+  <section class="paper-profile" aria-labelledby="why-this-paper">
+    <h2 id="why-this-paper">Why this paper enters Atlas</h2>
+    <p>{guide.why}</p>
+  </section>
+
+  <h2>Place in the development chain</h2>
+  <figure class="paper-argument" aria-labelledby={`${record.id}-chain-caption`}>
+    <ol aria-label="Paper contribution chain">
+      {guide.chain.map((step) => (
+        <li><strong>{step.label}</strong><span>{step.text}</span></li>
+      ))}
+      <li><strong>Test the boundary</strong><span>Check the paper’s assumptions before carrying its result into a later Atlas concept or calculation.</span></li>
+    </ol>
+    <figcaption id={`${record.id}-chain-caption`}>The chain separates the problem inherited by the authors, the source contribution, and the later work it made possible. It is an Atlas reading aid, not a figure reproduced from the paper.</figcaption>
+  </figure>
+
+  <h2>What the paper established</h2>
+  {guide.sections.map((section) => (
+    <section aria-labelledby={`${record.id}-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+      <h3 id={`${record.id}-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{section.heading}</h3>
+      {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      {section.source ? <p class="equation-source">{section.source}</p> : null}
+      {guide.visual && guide.visualAfter === section.heading ? <SourceVisual kind={guide.visual} /> : null}
+    </section>
+  ))}
+
+  <dl class="source-map">
+    <dt>Established</dt>
+    <dd>{guide.established.join(' ')}</dd>
+    <dt>Not supplied</dt>
+    <dd>{guide.notEstablished.join(' ')}</dd>
+    <dt>Atlas connection</dt>
+    <dd>
+      <a href={href(topicRoutes[record.topic] ?? '/reference/')}>{record.topic}</a> carries the concept or method forward; this guide preserves the original paper’s problem, construction, and evidence boundary.
+    </dd>
+  </dl>
+
+  <h2>What to read in the original</h2>
+  <ul class="reading-prompts">
+    {guide.whatToRead.map((item) => <li>{item}</li>)}
+  </ul>
+
+  <h2>Interpretation and limitations</h2>
+  <p>{record.boundary}</p>
+  <p>{guide.visualNote}</p>
+
+  <h2>Source and further reading</h2>
+  <dl class="source-map">
+    <dt>Primary source</dt>
+    <dd>{literatureCitation(record)} <a href={record.canonical_url}>{sourceLabel}</a>.</dd>
+    <dt>Bibliography record</dt>
+    <dd>The same DOI, authors, year, venue, and locator are maintained in the Atlas <a href={href('/reference/')}>Reference</a> layer and Literature index.</dd>
+  </dl>
+
+  <nav class="sequence-nav" aria-label="Literature sequence">
+    <a href={href('/reading/literature/')}>← Literature index</a>
+    <a href={href('/reading/')}>Guided Reading</a>
+    <a href={href(topicRoutes[record.topic] ?? '/reference/')}>Continue to {record.topic} →</a>
+  </nav>
+</BaseLayout>

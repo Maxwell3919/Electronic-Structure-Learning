@@ -1,0 +1,10 @@
+---
+import LiteratureGuide from '../../../../reading/LiteratureGuide.astro';
+import { literatureById } from '../../../../reading/literature';
+import { literatureGuideContent } from '../../../../reading/literature-guides';
+
+const record = literatureById['king-smith-vanderbilt-1993'];
+const guide = literatureGuideContent['king-smith-vanderbilt-1993'];
+---
+
+<LiteratureGuide record={record} guide={guide} />

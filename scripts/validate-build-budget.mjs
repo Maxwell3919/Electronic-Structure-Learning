@@ -13,11 +13,14 @@ const limits = {
   // The governed site budget excludes source-linked scientific visuals. Those
   // assets are a separately audited evidence surface, not decorative images;
   // their hashes, provenance, and count are checked by audit-source-visuals.
-  assetCount: 160,
+  // The Literature closure adds thirteen reviewed static guide routes. Keep
+  // the route and governed-file budget explicit rather than treating those
+  // source-aligned pages as an accidental legacy-site regression.
+  assetCount: 180,
   largestAssetBytes: 210_000,
-  htmlPages: 151,
+  htmlPages: 170,
 };
-const minimumReductions = { bytes: 0.70, assets: 0.66 };
+const minimumReductions = { bytes: 0.70, assets: 0.63 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,

@@ -41,6 +41,7 @@ export type SourceVisualId =
   | 'hedin-fig-10'
   | 'hedin-fig-11'
   | 'hedin-fig-12'
+  | 'zhong-table-iii'
   | 'giustino-fig-1-2'
   | 'giustino-fig-1-3'
   | 'giustino-fig-1-4'
@@ -579,6 +580,27 @@ export const sourceMedia = {
       caption: 'Figure 12. Specific heat of an electron gas relative to a non-interacting or Sommerfeld gas.',
       rights_note: paperExcerptRights,
       sha256: '9a08cfc8332ec7127a74c1330aee60163814f13bab510d497c8abb4eb106851d',
+    },
+    'zhong-table-iii': {
+      id: 'zhong-table-iii',
+      media_role: 'visual',
+      source_type: 'paper',
+      source_title: 'First-principles theory of ferroelectric phase transitions for perovskites: The case of BaTiO3',
+      authors: ['W. Zhong', 'David Vanderbilt', 'K. M. Rabe'],
+      publication_or_publisher: 'Physical Review B 52, American Physical Society',
+      year: 1995,
+      figure_or_table_id: 'Table III',
+      page_if_applicable: '6309',
+      source_url: 'https://doi.org/10.1103/PhysRevB.52.6301',
+      retrieval_url: 'https://harvest.aps.org/v2/journals/articles/10.1103/PhysRevB.52.6301/fulltext',
+      local_asset: 'media/source-visuals/zhong/zhong-table-iii.png',
+      retrieved_at: '2026-08-12',
+      usage_pages: ['/reading/literature/zhong-vanderbilt-rabe-1995/'],
+      section: 'phase-transition comparison',
+      alt: 'Original Zhong, Vanderbilt, and Rabe 1995 Table III comparing calculated BaTiO3 transition temperatures, spontaneous polarizations, latent heats, and experimental values.',
+      caption: 'Table III. Calculated transition temperatures, saturated spontaneous polarizations, and estimated latent heats for several simulation cell sizes, compared with experiment.',
+      rights_note: paperExcerptRights,
+      sha256: 'dcf99ec33ffc76990a7bb7cbc40d3809d66bbcb4167df8de4cdf399df1627486',
     },
     'dftk-graphene-band-structure': {
       id: 'dftk-graphene-band-structure',
