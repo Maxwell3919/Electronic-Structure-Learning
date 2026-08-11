@@ -107,6 +107,8 @@ dd { margin: 0.25rem 0 0 1.25rem; }
   max-width: 46rem;
   margin: 0.3rem 0 0 1.1rem;
 }
+.reference-list dt span { color: #555555; font-weight: 400; }
+.reference-list dd { max-width: 48rem; margin-block-end: 1rem; }
 .source-visual {
   max-width: 46rem;
   margin: 1rem 0 1.6rem;
