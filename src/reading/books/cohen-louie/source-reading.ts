@@ -8,7 +8,6 @@ export type CohenLouieSourceFigureGuide = {
   section: string;
   reading: string;
   boundary: string;
-  visual?: 'pairing-gap';
 };
 
 const sourceFigures: Record<string, CohenLouieSourceFigureGuide[]> = {
@@ -67,7 +66,7 @@ const sourceFigures: Record<string, CohenLouieSourceFigureGuide[]> = {
   ],
   'chapter-14': [
     { locator: 'Figs. 14.1–14.10', section: '§14.1 · defining experimental signatures', reading: 'Compare zero resistance with flux expulsion, critical fields, heat capacity, and acoustic attenuation. Treat the collection of signatures—not one curve alone—as the phenomenon to be explained.', boundary: 'A calculated electron–phonon coupling constant or gap estimate is not by itself evidence of superconductivity in a real material.' },
-    { locator: 'Figs. 14.12–14.17 and 14.24–14.33', visual: 'pairing-gap', section: '§14.2 · quasiparticles, coherence, and thermodynamics', reading: 'Track how pairing reorganizes states near the Fermi surface, opens an excitation gap, and changes occupations, entropy, heat capacity, and density of states.', boundary: 'The simplest isotropic weak-coupling BCS curves are a model limit, not a universal form for anisotropic, multiband, strong-coupling, or unconventional superconductors.' },
+    { locator: 'Figs. 14.12–14.17 and 14.24–14.33', section: '§14.2 · quasiparticles, coherence, and thermodynamics', reading: 'Track how pairing reorganizes states near the Fermi surface, opens an excitation gap, and changes occupations, entropy, heat capacity, and density of states.', boundary: 'The simplest isotropic weak-coupling BCS curves are a model limit, not a universal form for anisotropic, multiband, strong-coupling, or unconventional superconductors.' },
     { locator: 'Figs. 14.34–14.53', section: '§§14.3–14.6 · tunneling, spectroscopy, and pairing kernels', reading: 'Use tunneling to relate conductance to quasiparticle DOS, then compare Coulomb and phonon kernels and how energy cutoffs reshape the gap equation.', boundary: 'Spectral inversion and effective kernels depend on junction, broadening, and model assumptions; they do not uniquely determine a microscopic pairing mechanism.' },
   ],
   'chapter-15': [

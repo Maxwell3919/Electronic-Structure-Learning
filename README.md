@@ -84,7 +84,7 @@ Guided Reading supplies continuous source-aligned narratives and is organized by
 
 The completed Books collection follows four distinct sources without merging their arguments: Martin's theory-to-method spine, Sholl and Steckel's practical plane-wave DFT sequence, Cohen and Louie's condensed-matter progression, and Giustino's route between formal DFT, calculated properties, and experiment. Each guide publishes only completed source-aligned units and keeps its own chapter order.
 
-The guide uses original prose and original or openly licensed diagrams. Textbook PDFs, complete extracted textbook text, copied figures, and page scans are not stored or published.
+The guide uses original prose and follows a source-visual-first rule. When a real source figure or table materially supports the explanation, the site may publish an exact, tightly cropped source-linked excerpt with its source, page or figure identifier, retrieval record, hash, usage pages, and rights note in `src/reading/source-media.ts`. Full textbook PDFs, complete extracted textbook text, and page scans are not stored or published; a catalog cover or source excerpt is not treated as an open-licence claim.
 
 ## Internal writing guidance
 

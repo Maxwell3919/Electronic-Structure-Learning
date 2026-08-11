@@ -1,100 +1,26 @@
 ---
-type Kind = 'bloch-phase' | 'smearing-cutoff' | 'pairing-gap' | 'phonon-chain' | 'hk-response' | 'hedin-diagrams';
+import { sourceVisuals, type SourceVisualId } from './source-media';
 
 interface Props {
-  kind: Kind;
+  kind: SourceVisualId;
 }
 
 const { kind } = Astro.props;
+const visual = sourceVisuals[kind];
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 
-{kind === 'bloch-phase' && (
-  <figure class="source-visual" aria-labelledby="bloch-redraw-caption">
-    <div class="source-visual-scroll" role="region" aria-label="Scrollable Bloch-phase redraw" tabindex="0">
-    <svg viewBox="0 0 720 270" role="img" aria-labelledby="bloch-redraw-title bloch-redraw-desc">
-      <title id="bloch-redraw-title">Bloch phase across a one-dimensional chain</title>
-      <desc id="bloch-redraw-desc">The same cell-periodic wave pattern repeats with equal sign at k equals zero and alternating sign at the zone boundary.</desc>
-      <g class="visual-grid"><path d="M90 40V232M200 40V232M310 40V232M420 40V232M530 40V232M640 40V232" /></g>
-      <g class="visual-axis"><path d="M55 110H655M55 210H655" /></g>
-      <g class="visual-wave"><path d="M90 110 Q145 65 200 110 Q255 65 310 110 Q365 65 420 110 Q475 65 530 110 Q585 65 640 110" /><path d="M90 210 Q145 165 200 210 Q255 255 310 210 Q365 165 420 210 Q475 255 530 210 Q585 165 640 210" /></g>
-      <g class="visual-label"><text x="18" y="114">k = 0</text><text x="8" y="214">k = π/a</text><text x="310" y="25">same local pattern, different cell-to-cell phase</text></g>
-    </svg></div>
-    <figcaption id="bloch-redraw-caption"><strong>Atlas redraw.</strong> The cell-scale pattern repeats, while the full Bloch state can retain its sign or alternate it between cells. Based on the teaching role of Martin, Fig. 4.11; <a href="https://doi.org/10.1017/9781108555586">read the original figure</a>.</figcaption>
-  </figure>
-)}
-
-{kind === 'smearing-cutoff' && (
-  <figure class="source-visual" aria-labelledby="smearing-redraw-caption">
-    <div class="source-visual-scroll" role="region" aria-label="Scrollable smearing and cutoff redraw" tabindex="0">
-    <svg viewBox="0 0 720 280" role="img" aria-labelledby="smearing-redraw-title smearing-redraw-desc">
-      <title id="smearing-redraw-title">Smearing and cutoff are independent numerical controls</title>
-      <desc id="smearing-redraw-desc">A Fermi occupation curve broadens around the Fermi energy, while a separate total-energy curve settles as the basis cutoff grows.</desc>
-      <g class="visual-axis"><path d="M55 220H325M55 220V45M395 220H665M395 220V45" /></g>
-      <g class="visual-wave"><path d="M65 65 C150 65 165 75 185 132 C205 189 220 210 315 210" /><path d="M405 72 C445 105 480 145 520 169 C560 194 605 199 655 201" /></g>
-      <g class="visual-guide"><path d="M185 45V220M395 201H665" /></g>
-      <g class="visual-label"><text x="92" y="28">occupation f(E)</text><text x="440" y="28">total energy</text><text x="164" y="246">E<tspan baseline-shift="sub">F</tspan></text><text x="477" y="246">basis cutoff</text><text x="82" y="265">smearing changes the edge</text><text x="440" y="265">cutoff changes the representation</text></g>
-    </svg></div>
-    <figcaption id="smearing-redraw-caption"><strong>Atlas redraw.</strong> Smearing regularizes metallic occupations; cutoff controls basis completeness. They answer different numerical questions and require separate tests. Based on Sholl &amp; Steckel, Figs. 3.3–3.4; <a href="https://doi.org/10.1002/9780470447710">read the originals</a>.</figcaption>
-  </figure>
-)}
-
-{kind === 'pairing-gap' && (
-  <figure class="source-visual" aria-labelledby="pairing-redraw-caption">
-    <div class="source-visual-scroll" role="region" aria-label="Scrollable pairing-gap redraw" tabindex="0">
-    <svg viewBox="0 0 720 280" role="img" aria-labelledby="pairing-redraw-title pairing-redraw-desc">
-      <title id="pairing-redraw-title">Normal and paired electronic states near the Fermi energy</title>
-      <desc id="pairing-redraw-desc">A normal-state dispersion crosses the Fermi energy, while paired quasiparticle branches back-bend on both sides of the Fermi wavevector and open a symmetric excitation gap.</desc>
-      <g class="visual-axis"><path d="M70 220H325M70 220V45M395 220H650M395 220V45" /></g>
-      <g class="visual-guide"><path d="M70 140H325M198 45V220M395 140H650M522 45V220" /></g>
-      <g class="visual-state"><path d="M90 205L305 75" /><path d="M415 75 C465 94 500 126 522 126 C544 126 580 94 630 75 M415 205 C465 186 500 154 522 154 C544 154 580 186 630 205" /></g>
-      <g class="visual-accent"><path d="M548 154V126M541 154H555M541 126H555" /></g>
-      <g class="visual-label"><text x="139" y="28">normal</text><text x="482" y="28">paired</text><text x="74" y="134">E<tspan baseline-shift="sub">F</tspan></text><text x="399" y="134">E<tspan baseline-shift="sub">F</tspan></text><text x="184" y="242">k<tspan baseline-shift="sub">F</tspan></text><text x="508" y="242">k<tspan baseline-shift="sub">F</tspan></text><text x="563" y="145">gap</text><text x="442" y="266">state mixing near k<tspan baseline-shift="sub">F</tspan></text></g>
-    </svg></div>
-    <figcaption id="pairing-redraw-caption"><strong>Atlas redraw.</strong> Pairing produces back-bending quasiparticle branches and a gap at the Fermi wavevector; the source figures then show the accompanying occupation changes. This weak-coupling isotropic picture is a model limit. Based on Cohen &amp; Louie, Figs. 14.12–14.17; <a href="https://www.cambridge.org/9780521513319">read the originals</a>.</figcaption>
-  </figure>
-)}
-
-{kind === 'phonon-chain' && (
-  <figure class="source-visual" aria-labelledby="phonon-redraw-caption">
-    <div class="source-visual-scroll" role="region" aria-label="Scrollable phonon-chain redraw" tabindex="0">
-    <svg viewBox="0 0 720 270" role="img" aria-labelledby="phonon-redraw-title phonon-redraw-desc">
-      <title id="phonon-redraw-title">A lattice wave is a phased displacement pattern</title>
-      <desc id="phonon-redraw-desc">Equilibrium sites lie on a straight chain, while displaced atoms follow a sinusoidal envelope whose phase advances from cell to cell.</desc>
-      <g class="visual-axis"><path d="M65 85H655M65 205H655" /></g>
-      <g class="visual-guide"><path d="M95 55V225M175 55V225M255 55V225M335 55V225M415 55V225M495 55V225M575 55V225" /></g>
-      <g class="visual-wave"><path d="M95 205 C125 185 145 165 175 165 C195 165 205 155 215 155 C225 155 235 165 255 165 C285 165 305 185 335 205 C365 225 385 245 415 245 C435 245 445 255 455 255 C465 255 475 245 495 245 C525 245 545 225 575 205" /></g>
-      <g class="visual-dot"><circle cx="95" cy="85" r="7"/><circle cx="175" cy="85" r="7"/><circle cx="255" cy="85" r="7"/><circle cx="335" cy="85" r="7"/><circle cx="415" cy="85" r="7"/><circle cx="495" cy="85" r="7"/><circle cx="575" cy="85" r="7"/><circle cx="95" cy="205" r="7"/><circle cx="175" cy="165" r="7"/><circle cx="255" cy="165" r="7"/><circle cx="335" cy="205" r="7"/><circle cx="415" cy="245" r="7"/><circle cx="495" cy="245" r="7"/><circle cx="575" cy="205" r="7"/></g>
-      <g class="visual-label"><text x="18" y="90">R<tspan baseline-shift="sub">I</tspan></text><text x="8" y="210">R<tspan baseline-shift="sub">I</tspan>+u<tspan baseline-shift="sub">I</tspan></text><text x="278" y="28">one collective displacement pattern</text></g>
-    </svg></div>
-    <figcaption id="phonon-redraw-caption"><strong>Atlas redraw.</strong> A phonon mode organizes relative displacements by a wavevector and polarization; it is not an arbitrary collection of atomic trajectories. Based on Giustino, Figs. 7.4–7.5; <a href="https://global.oup.com/academic/product/materials-modelling-using-density-functional-theory-9780199662449">read the originals</a>.</figcaption>
-  </figure>
-)}
-
-{kind === 'hk-response' && (
-  <figure class="source-visual" aria-labelledby="hk-response-caption">
-    <div class="source-visual-scroll" role="region" aria-label="Scrollable response-kernel redraw" tabindex="0">
-    <svg viewBox="0 0 720 280" role="img" aria-labelledby="hk-response-title hk-response-desc">
-      <title id="hk-response-title">Response nonanalyticity at twice the Fermi wavevector</title>
-      <desc id="hk-response-desc">Two schematic response curves are smooth away from two k F but develop a kink there, which a local expansion around q equals zero cannot reproduce.</desc>
-      <g class="visual-axis"><path d="M60 220H330M60 220V45M390 220H660M390 220V45" /></g>
-      <g class="visual-wave"><path d="M70 75 C135 82 190 100 218 135 L228 153 C255 181 288 194 320 201" /><path d="M400 198 C455 192 505 178 540 145 L552 113 C580 82 615 70 650 65" /></g>
-      <g class="visual-guide"><path d="M225 45V220M550 45V220" /></g>
-      <g class="visual-label"><text x="105" y="28">polarizability</text><text x="490" y="28">kernel K(q)</text><text x="204" y="247">2k<tspan baseline-shift="sub">F</tspan></text><text x="529" y="247">2k<tspan baseline-shift="sub">F</tspan></text><text x="185" y="267">nonanalytic change</text><text x="510" y="267">same scale</text></g>
-    </svg></div>
-    <figcaption id="hk-response-caption"><strong>Atlas redraw, not source data.</strong> The feature at twice the Fermi wavevector is the part a power series around q = 0 cannot reproduce. Based on Hohenberg–Kohn, Figs. 1–2, pp. B867–B868; <a href="https://doi.org/10.1103/PhysRev.136.B864">read the originals</a>.</figcaption>
-  </figure>
-)}
-
-{kind === 'hedin-diagrams' && (
-  <figure class="source-visual" aria-labelledby="hedin-diagram-caption">
-    <div class="source-visual-scroll" role="region" aria-label="Scrollable diagram-vocabulary redraw" tabindex="0">
-    <svg viewBox="0 0 720 250" role="img" aria-labelledby="hedin-diagram-title hedin-diagram-desc">
-      <title id="hedin-diagram-title">How Hedin's diagram vocabulary builds corrections</title>
-      <desc id="hedin-diagram-desc">A straight propagator line G and a screened-interaction line W combine into a first self-energy topology; repeated rungs between two propagator lines form a ladder vertex sequence.</desc>
-      <g class="visual-state"><path d="M45 105H190M270 105H420M500 70H665M500 175H665" /></g>
-      <g class="visual-wave"><path d="M80 180 C90 160 100 200 110 180 C120 160 130 200 140 180 C150 160 160 200 170 180" /><path d="M285 105 C285 45 405 45 405 105" /><path d="M530 70 C510 82 550 94 530 106 C510 118 550 130 530 142 C510 154 550 166 530 175 M582 70 C562 82 602 94 582 106 C562 118 602 130 582 142 C562 154 602 166 582 175 M634 70 C614 82 654 94 634 106 C614 118 654 130 634 142 C614 154 654 166 634 175" /></g>
-      <g class="visual-label"><text x="102" y="85">G</text><text x="112" y="218">W</text><text x="282" y="30">first screened term</text><text x="540" y="30">vertex ladder</text><text x="210" y="130">→</text><text x="447" y="130">→</text><text x="520" y="215">repeated interaction rungs</text></g>
-    </svg></div>
-    <figcaption id="hedin-diagram-caption"><strong>Atlas redraw.</strong> Lines are compact bookkeeping for terms in an expansion, not particle trajectories. Based on Hedin, Figs. 1–2 and Fig. 5, pp. A798 and A805; <a href="https://doi.org/10.1103/PhysRev.139.A796">read the original diagrams</a>.</figcaption>
-  </figure>
-)}
+<figure class="source-visual" data-source-media-id={visual.id} aria-labelledby={`source-visual-${visual.id}-caption`}>
+  <a class="source-visual-source" href={visual.source_url}>
+    <img
+      class="source-visual-image"
+      src={`${base}${visual.local_asset}`}
+      alt={visual.alt}
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+  <figcaption id={`source-visual-${visual.id}-caption`}>
+    {visual.caption} <a href={visual.source_url}>Source: {visual.authors.join(' and ')}, <cite>{visual.source_title}</cite>, {visual.figure_or_table_id}{visual.page_if_applicable ? `, p. ${visual.page_if_applicable}` : ''}.</a>
+  </figcaption>
+</figure>

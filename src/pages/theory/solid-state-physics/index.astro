@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SourceVisual from '../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -88,6 +89,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>A plotted band path shows selected eigenvalues along selected lines. It is useful for interpretation, but it is not a substitute for integrating over the full Brillouin zone or searching the full zone for extrema and Fermi-surface pockets.</p>
+
+  <h2>A real calculation makes the band-path boundary visible</h2>
+  <p>The official DFTK graphene example below is an actual plane-wave DFT calculation rather than an Atlas redraw. It shows a selected Γ–M–K–Γ path and the crossing near K. The plot is useful evidence for how a band-path result is presented, but it is not full-zone integration, a universal graphene benchmark, or proof of every low-energy property.</p>
+  <SourceVisual kind="dftk-graphene-band-structure" />
 
   <h2>Filling determines whether low-energy electronic states are available</h2>
   <p>The electron count, degeneracies, spin treatment, and occupation rule determine which one-electron states are filled. At zero temperature, the Fermi energy separates occupied from unoccupied states in the independent-particle picture.</p>

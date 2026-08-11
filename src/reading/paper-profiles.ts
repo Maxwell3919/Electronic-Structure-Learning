@@ -18,7 +18,7 @@ export const paperProfiles: Record<PaperProfileId, PaperProfile> = {
     lookFor: 'Read the two theorem statements first, then the way the paper moves from exact statements to the nearly-uniform and slowly-varying limits. Keep the theorem separate from any later exchange–correlation approximation.',
     connection: 'This is the historical source behind Core Part IV’s density-functional route; the guide preserves the paper’s theorem and approximation order rather than retrofitting Kohn–Sham machinery into it.',
     sourceUrl: 'https://doi.org/10.1103/PhysRev.136.B864',
-    visualNote: 'The original article’s figures are publisher material without a clear reusable licence in the source record, so this guide links to the original rather than substituting a redraw for a paper figure.',
+    visualNote: 'The original Figs. 1–2 are embedded as exact source-linked crops at the point where the response argument is discussed. The media manifest records the APS source, page, retrieval URL, hash, and the absence of an open-licence claim.',
   },
   'kohn-sham-1965': {
     id: 'kohn-sham-1965',
@@ -27,7 +27,7 @@ export const paperProfiles: Record<PaperProfileId, PaperProfile> = {
     lookFor: 'Follow the separation of the auxiliary kinetic energy from the remaining functional, then read the proof note carefully: it distinguishes the exact formal construction from the paper’s local approximation development.',
     connection: 'Core Part IV uses the modern Kohn–Sham formulation; this guide identifies the original paper’s narrower problem and notation before later practice is added.',
     sourceUrl: 'https://doi.org/10.1103/PhysRev.140.A1133',
-    visualNote: 'The paper’s article graphics are not copied because the accessible source does not state a reusable figure licence. The original DOI remains the direct visual and documentary source.',
+    visualNote: 'The paper has no separately necessary visual for this guide; its contribution is followed through the equations and argument. The DOI remains the direct documentary source.',
   },
   'levy-1979': {
     id: 'levy-1979',
@@ -45,6 +45,6 @@ export const paperProfiles: Record<PaperProfileId, PaperProfile> = {
     lookFor: 'Start with Figs. 1–2 as diagrams for propagator and screened-interaction expansions, then compare the exact coupled equations with the first screened-interaction truncation and the electron-gas calculation actually reported.',
     connection: 'Core Part VIII distinguishes one-particle spectra from ground-state DFT. This source guide makes the screened-interaction and quasiparticle language behind that distinction inspectable.',
     sourceUrl: 'https://doi.org/10.1103/PhysRev.139.A796',
-    visualNote: 'The guide keeps an Atlas-labelled conceptual diagram only for the coupled-equation relationship. It does not reproduce Hedin’s copyrighted article diagrams; use the linked original for those primary figures.',
+    visualNote: 'The original Figs. 1–2 are embedded as exact source-linked crops at the point where the diagram vocabulary is discussed. The media manifest records the APS source, page, retrieval URL, hash, and the absence of an open-licence claim.',
   },
 };

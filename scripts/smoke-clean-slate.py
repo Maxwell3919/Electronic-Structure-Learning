@@ -68,6 +68,13 @@ LITERATURE_ROUTES = [
     "reading/literature/levy-1979/",
     "reading/literature/hedin-1965/",
 ]
+SOURCE_VISUAL_ROUTES = [
+    "reading/literature/hohenberg-kohn-1964/",
+    "reading/literature/hedin-1965/",
+    "theory/density-functional-theory-foundations/",
+    "theory/many-body-perturbation-theory-and-quasiparticles/",
+    "theory/solid-state-physics/",
+]
 CANONICAL_READING_ROUTES = [
     "reading/", "reading/books/", "reading/books/martin/", *MARTIN_PART_ROUTES, *MARTIN_PUBLISHED_UNIT_ROUTES,
     "reading/books/sholl-steckel/", *SHOLL_STECKEL_CHAPTER_ROUTES,
@@ -155,6 +162,29 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"legacy UI marker found in {mode}: {url}")
         if DEAD_CAMBRIDGE_ID in driver.page_source:
             raise AssertionError(f"dead Cambridge resource remains in {mode}: {url}")
+
+        if route in SOURCE_VISUAL_ROUTES:
+            visual_count = driver.execute_script("return document.querySelectorAll('figure.source-visual img').length;")
+            for visual_index in range(visual_count):
+                driver.execute_script(
+                    "const image=document.querySelectorAll('figure.source-visual img')[arguments[0]];"
+                    "if (image) image.scrollIntoView({block:'center', inline:'nearest'});",
+                    visual_index,
+                )
+                WebDriverWait(driver, 20).until(lambda current, index=visual_index: current.execute_script(
+                    "const image=document.querySelectorAll('figure.source-visual img')[arguments[0]];"
+                    "return !!image && image.complete && image.naturalWidth > 0 && image.naturalHeight > 0;",
+                    index,
+                ))
+            visual_metrics = driver.execute_script(
+                "return Array.from(document.querySelectorAll('figure.source-visual')).map((figure) => ({"
+                "media:figure.dataset.sourceMediaId,caption:(figure.querySelector('figcaption')||{}).textContent||'',"
+                "source:!!figure.querySelector('figcaption a[href^=\"http\"]'),"
+                "img:figure.querySelector('img')?.naturalWidth||0}));"
+            )
+            if not visual_metrics or any(item["img"] <= 0 or not item["caption"].strip() or not item["source"] for item in visual_metrics):
+                raise AssertionError(f"source visual image/caption/source is incomplete in {mode}: {url}")
+            driver.execute_script("window.scrollTo(0, 0);")
 
         math_count = 0
         if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in LITERATURE_ROUTES or route in SHOLL_STECKEL_MATH_ROUTES or route in COHEN_LOUIE_MATH_ROUTES or route in GIUSTINO_MATH_ROUTES:
@@ -383,7 +413,7 @@ def inspect(driver, mode, expected_width=None):
         if route == "reading/books/sholl-steckel/" and "Read Chapter 1" not in main_text:
             raise AssertionError(f"Sholl & Steckel book page lacks Chapter links in {mode}")
         if route in SHOLL_STECKEL_CHAPTER_ROUTES:
-            for marker in ["Core Idea.", "Chapter overview", "Read the source figures", "Source anchor"]:
+            for marker in ["Core Idea.", "Chapter overview", "Source visuals and reading notes", "Source anchor"]:
                 if marker not in main_text:
                     raise AssertionError(f"Sholl & Steckel chapter lacks {marker} in {mode}: {route}")
         if route == "reading/books/cohen-louie/" and "Read the Part I guide" not in main_text:
@@ -393,13 +423,13 @@ def inspect(driver, mode, expected_width=None):
                 if marker not in main_text:
                     raise AssertionError(f"Cohen & Louie Part lacks {marker} in {mode}: {route}")
         if route in COHEN_LOUIE_CHAPTER_ROUTES:
-            for marker in ["Core Idea.", "Chapter overview", "Read the source figures", "Source anchor"]:
+            for marker in ["Core Idea.", "Chapter overview", "Source visuals and reading notes", "Source anchor"]:
                 if marker not in main_text:
                     raise AssertionError(f"Cohen & Louie chapter lacks {marker} in {mode}: {route}")
         if route == "reading/books/giustino/" and ("Read Chapter 1" not in main_text or "Read Appendix A" not in main_text):
             raise AssertionError(f"Giustino book page lacks complete source-unit links in {mode}")
         if route in GIUSTINO_UNIT_ROUTES:
-            for marker in ["Core Idea.", "overview", "Read the source figures", "Source anchor"]:
+            for marker in ["Core Idea.", "overview", "Source visuals and reading notes", "Source anchor"]:
                 if marker not in main_text:
                     raise AssertionError(f"Giustino unit lacks {marker} in {mode}: {route}")
         if route in LITERATURE_ROUTES:

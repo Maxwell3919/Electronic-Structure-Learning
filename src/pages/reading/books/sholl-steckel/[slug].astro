@@ -3,7 +3,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { shollSteckelChapters } from '../../../../reading/books/sholl-steckel';
 import { getShollSteckelChapterContent, shollSteckelChapterSlugs } from '../../../../reading/books/sholl-steckel/chapter-content';
 import { getShollSteckelSourceFigures, shollSteckelCanonicalSource } from '../../../../reading/books/sholl-steckel/source-reading';
-import SourceVisual from '../../../../reading/SourceVisual.astro';
 
 export function getStaticPaths() {
   return shollSteckelChapterSlugs.map((slug) => ({ params: { slug } }));
@@ -57,15 +56,15 @@ const nextChapter = chapterIndex >= 0 && chapterIndex < shollSteckelChapters.len
 
     {sourceFigureGuides.length > 0 && (
       <section aria-labelledby="source-figures">
-        <h2 id="source-figures">Read the source figures</h2>
+        <h2 id="source-figures">Source visuals and reading notes</h2>
         <p>
-          Keep these figures or tables open in the source. The Atlas does not reproduce the Wiley artwork; the notes identify where to look, what the visual contributes to the chapter’s argument, and where its evidence stops.
+          A real source visual is embedded when it has been located and recorded in the shared media manifest. Other concrete Figure or Table references remain explicitly marked for later source resolution; no redraw is presented as the source object.
         </p>
         <dl class="source-figure-list">
           {sourceFigureGuides.map((entry) => (
             <>
               <dt>{entry.locator} <span>· {entry.section}</span></dt>
-              <dd>{entry.visual && <SourceVisual kind={entry.visual} />}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+              <dd>{/(?:Fig|Table)/i.test(entry.locator) && <span class="source-visual-unresolved">SOURCE_UNRESOLVED</span>}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
             </>
           ))}
         </dl>

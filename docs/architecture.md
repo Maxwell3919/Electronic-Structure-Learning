@@ -379,7 +379,7 @@ All public explanations use original prose. The repository does not store or pub
 - private notes, credentials, or restricted files;
 - large raw calculation outputs or restart data.
 
-Original diagrams are preferred. Openly licensed external figures may be used only when the license, source, and purpose are recorded. Textbook extraction may be used privately as a reading aid, but it is not public site content or route authority.
+Original diagrams are still appropriate for abstractions that have no single fixed source visual. When a page specifically discusses a real source figure, table, structure, spectrum, or calculation, a tightly cropped source-linked visual may be used when a reliable source asset is available and its figure/table identifier, page, retrieval record, hash, usage pages, and rights note are recorded in the shared media manifest. This does not assert an open licence or authorize publishing full textbook PDFs, complete extracted text, or page scans.
 
 ## Routes and source data
 

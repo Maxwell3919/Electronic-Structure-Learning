@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SourceVisual from '../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -120,6 +121,12 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <li>small self-consistent residuals do not measure functional error;</li>
     <li>agreement for one observable does not establish transferability to another.</li>
   </ul>
+
+  <h2>The original response figures show a limitation of local expansion</h2>
+  <p>Hohenberg and Kohn’s nearly uniform analysis is not only a theorem statement. Their response plots show why a short-wavelength feature in the uniform electron gas cannot be recovered by a power series built only around zero wavevector.</p>
+  <SourceVisual kind="hohenberg-kohn-fig-1" />
+  <p>The kernel plot carries the same point into the functional expansion. It is a source-specific response result, not a universal error bar for every density functional or material.</p>
+  <SourceVisual kind="hohenberg-kohn-fig-2" />
 
   <h2>This page stops before Kohn–Sham theory</h2>
   <p>The density-only variational framework does not yet provide the orbital equations used in most calculations. Kohn–Sham theory introduces an auxiliary noninteracting system chosen to reproduce the interacting ground-state density and moves the remaining unknown physics into exchange–correlation terms.</p>

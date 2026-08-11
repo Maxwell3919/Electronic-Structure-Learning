@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SourceVisual from '../../../reading/SourceVisual.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -51,6 +52,11 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     </math>
   </div>
   <p>Vertex corrections are omitted at this level. The notation hides choices about the starting Green function, polarizability, frequency treatment, self-consistency, spin, relativistic effects, and core–valence partition.</p>
+
+  <h2>Hedin’s original diagrams show what the compact notation abbreviates</h2>
+  <p>Hedin’s paper makes the expansion concrete with two diagram plates. The first organizes self-energy terms from propagators and screened interactions; the second performs the parallel polarization expansion. The diagrams are terms in a declared approximation hierarchy, not trajectories or a claim that GW is exact.</p>
+  <SourceVisual kind="hedin-fig-1" />
+  <SourceVisual kind="hedin-fig-2" />
 
   <h2>Quasiparticle energies solve an energy-dependent equation</h2>
   <p>For a Kohn–Sham starting orbital <math class="math-inline" aria-label="phi n"><semantics><msub><mi>φ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\phi_n</annotation></semantics></math>, a real-energy diagonal linearization around the reference eigenvalue is often written</p>
