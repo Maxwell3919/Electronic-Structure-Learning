@@ -2,9 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { normalizedReferenceCount, normalizedReferenceGroups } from '../../reference/normalized-works';
 import { literatureBibliography, literatureGuides } from '../../reading/literature';
+import { literatureAnnotationByDoi } from '../../reading/literature-annotations';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const doiFromUrl = (url: string) => url.match(/doi\.org\/(10\.[^?#]+)/i)?.[1]?.toLowerCase();
 
 const ecosystemGroups = [
   {
@@ -43,7 +45,7 @@ const ecosystemGroups = [
         {group.entries.map((entry) => (
           <>
             <dt><a href={entry.url}>{entry.title}</a> <span>· {entry.authors}, {entry.year}</span></dt>
-            <dd>{entry.whyUse} <strong>Boundary.</strong> {entry.boundary} {entry.guideHref && <a href={href(entry.guideHref)}>Read the Guide →</a>}</dd>
+            <dd>{literatureAnnotationByDoi[doiFromUrl(entry.url) ?? '']?.text ?? <>{entry.whyUse} <strong>Boundary.</strong> {entry.boundary}</>} {entry.guideHref && <a href={href(entry.guideHref)}>Read the Guide →</a>}</dd>
           </>
         ))}
       </dl>

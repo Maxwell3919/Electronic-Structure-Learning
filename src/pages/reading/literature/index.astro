@@ -65,8 +65,8 @@ const roleText = (record: (typeof literatureRecords)[number]) => record.role ===
                 <li>
                   <h4><a href={href(record.guideHref!)}>{record.title}</a></h4>
                   <p>{record.authors} · {record.year} · <cite>{record.venue}</cite> {record.locator}. <a href={record.canonical_url}>{record.doi.startsWith('10.48550/arxiv.') ? record.doi.replace('10.48550/', '') : `DOI ${record.doi}`}</a>.</p>
-                  <p class="item-summary"><strong>Role.</strong> {roleText(record)}. {record.whyUse}</p>
-                  <p><strong>Boundary.</strong> {record.boundary}</p>
+                  <p class="item-summary"><strong>Role.</strong> {roleText(record)}. {record.annotation ?? record.whyUse}</p>
+                  {record.annotation ? null : <p><strong>Boundary.</strong> {record.boundary}</p>}
                 </li>
               ))}
             </ol>
@@ -79,7 +79,7 @@ const roleText = (record: (typeof literatureRecords)[number]) => record.role ===
               {bibliography.map((record) => (
                 <li>
                   <p><strong>{record.title}</strong> · {record.authors} · {record.year} · <cite>{record.venue}</cite> {record.locator}. <a href={record.canonical_url}>Source</a>.</p>
-                  <p class="item-summary">{record.whyUse} <strong>Boundary.</strong> {record.boundary}</p>
+                  <p class="item-summary">{record.annotation ?? `${record.whyUse} Boundary. ${record.boundary}`}</p>
                 </li>
               ))}
             </ul>

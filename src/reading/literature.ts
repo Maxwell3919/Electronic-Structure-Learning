@@ -1,5 +1,6 @@
 import { normalizedReferenceGroups } from '../reference/normalized-works';
 import { publicationByDoi } from './literature-publication';
+import { literatureAnnotationByDoi } from './literature-annotations';
 
 export type LiteratureRole = 'LITERATURE_GUIDE' | 'BIBLIOGRAPHY_REFERENCE';
 export type LiteraturePriority = 'core' | 'supporting' | 'case-study';
@@ -23,6 +24,8 @@ export type LiteratureRecord = {
   visualStatus: LiteratureVisualStatus;
   whyUse: string;
   boundary: string;
+  annotation?: string;
+  sourceRead?: 'PRIMARY_FULL_TEXT' | 'PRIMARY_ARTICLE_RECORD';
 };
 
 const topicForGroup: Record<string, string> = {
@@ -81,6 +84,7 @@ const recordFromNormalized = (groupTitle: string, entry: (typeof normalizedRefer
   if (!publication) return null;
   const topic = topicForGroup[groupTitle] ?? groupTitle;
   const guideHref = entry.guideHref ?? guideByDoi[doi];
+  const annotation = literatureAnnotationByDoi[doi];
   return {
     id: guideHref ? guideHref.split('/').filter(Boolean).pop()! : slugFrom(entry.title, entry.year),
     title: entry.title,
@@ -99,6 +103,8 @@ const recordFromNormalized = (groupTitle: string, entry: (typeof normalizedRefer
     visualStatus: visualStatusByDoi[doi] ?? 'NO_VISUAL_NEEDED',
     whyUse: entry.whyUse,
     boundary: entry.boundary,
+    annotation: annotation?.text,
+    sourceRead: annotation?.sourceRead,
   };
 };
 
