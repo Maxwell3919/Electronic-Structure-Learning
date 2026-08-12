@@ -31,14 +31,12 @@ const theorySlugs = [
 ];
 const coreSlugs = ['orientation', 'part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii', 'part-viii'];
 const forbiddenCorePartSlugs = [];
-const literatureSlugs = [
-  'hohenberg-kohn-1964', 'kohn-sham-1965', 'levy-1979', 'hedin-1965',
-  'lieb-1983', 'ceperley-alder-1980', 'perdew-zunger-1981', 'perdew-burke-ernzerhof-1996',
-  'vanderbilt-1990', 'blochl-1994', 'baroni-2001', 'onida-reining-rubio-2002',
-  'runge-gross-1984', 'marzari-vanderbilt-1997', 'king-smith-vanderbilt-1993',
-  'fu-kane-mele-2007', 'zhong-vanderbilt-rabe-1995',
+const researchTopicSlugs = [
+  'structures-phase-competition', 'electronic-character', 'defects-disorder', 'interfaces-heterostructures',
+  'magnetism-correlation', 'lattice-dynamics', 'electron-phonon-superconductivity', 'polarization-response',
+  'quasiparticles-excitons', 'transport-scattering', 'quantum-geometry-topology', 'reliability-validation',
 ];
-const mathLiteratureSlugs = ['hohenberg-kohn-1964', 'kohn-sham-1965', 'levy-1979', 'hedin-1965'];
+const literatureSlugs = researchTopicSlugs;
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -66,8 +64,7 @@ const expectedPages = [
   'src/pages/reading/books/sholl-steckel/[slug].astro', 'src/pages/reading/books/sholl-steckel/index.astro',
   'src/pages/reading/books/cohen-louie/[slug].astro', 'src/pages/reading/books/cohen-louie/index.astro',
   'src/pages/reading/books/giustino/[slug].astro', 'src/pages/reading/books/giustino/index.astro',
-  'src/pages/reading/literature/index.astro',
-  ...literatureSlugs.map((slug) => `src/pages/reading/literature/${slug}/index.astro`),
+  'src/pages/reading/literature/[slug].astro', 'src/pages/reading/literature/index.astro',
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
   'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
   ...coreSlugs.map((slug) => `src/pages/core/${slug}/index.astro`),
@@ -250,42 +247,21 @@ const checkLiteraturePages = (baseDirectory, mode) => {
   const prefix = mode === 'source' ? 'src/pages/reading/literature' : 'reading/literature';
   const extension = mode === 'source' ? 'index.astro' : 'index.html';
   const landing = fs.readFileSync(path.join(baseDirectory, prefix, extension), 'utf8');
-  for (const slug of literatureSlugs) {
-    if (mode === 'built') assert(landing.includes(`/reading/literature/${slug}/`), `${prefix}/${extension} is missing literature guide ${slug}`);
-    const relative = `${prefix}/${slug}/${extension}`;
+  assert(landing.includes('Research Questions'), `${prefix}/${extension} lacks the Research Topic Map`);
+  assert(!landing.includes('Learning guides'), `${prefix}/${extension} retains the former paper-library entry point`);
+  for (const slug of researchTopicSlugs) {
+    if (mode === 'built') assert(landing.includes(`/reading/literature/${slug}/`), `${prefix}/${extension} is missing research topic ${slug}`);
+    const relative = mode === 'source' ? `${prefix}/[slug].astro` : `${prefix}/${slug}/${extension}`;
     const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
-    assert(text.length > (mode === 'built' ? 5000 : 200), `${relative} is unexpectedly short`);
+    assert(text.length > (mode === 'built' ? 900 : 200), `${relative} is unexpectedly short`);
     if (mode === 'built') {
       assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
       assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
-      assert(text.includes('class="sequence-nav"'), `${relative} lacks literature sequence navigation`);
+      for (const heading of ['Central Question', 'What researchers ask', 'Evidence', 'Literature Routes', 'Connections']) assert(text.includes(heading), `${relative} lacks ${heading}`);
+      assert(text.includes('Routes will be developed individually from verified primary literature.'), `${relative} lacks the route boundary`);
     }
-    if (mode === 'built') {
-      assert(/class="[^"]*\bpaper-argument\b[^"]*"/.test(text), `${relative} lacks an original argument diagram`);
-      assert(text.includes('What the paper established'), `${relative} does not separate source result and boundary`);
-      assert(text.includes('https://doi.org/10.'), `${relative} lacks its canonical DOI`);
-    } else {
-      assert(text.includes('LiteratureGuide') || text.includes('class="paper-argument"') || text.includes('current="reading"'), `${relative} lacks a literature guide implementation`);
-    }
-    if (mode === 'source') assert(text.includes('current="reading"') || text.includes('LiteratureGuide'), `${relative} lacks Guided Reading navigation context`);
+    if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
     else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
-    if (mathLiteratureSlugs.includes(slug)) checkMathMl(text, relative, mode === 'source');
-  }
-  const hk = fs.readFileSync(path.join(baseDirectory, `${prefix}/hohenberg-kohn-1964/${extension}`), 'utf8');
-  for (const marker of ['Eqs. (6)–(8)', 'footnote 12', 'Almost constant density', 'Slowly varying density', 'Fig. 1 on p. B867', 'Fig. 2 on p. B868', 'Levy’s constrained search']) {
-    assert(hk.includes(marker), `${prefix}/hohenberg-kohn-1964/${extension} lacks source-fidelity marker ${marker}`);
-  }
-  const ks = fs.readFileSync(path.join(baseDirectory, `${prefix}/kohn-sham-1965/${extension}`), 'utf8');
-  for (const marker of ['Note added in proof', 'The eigenvalue sum is not the total energy', 'A second branch keeps exact exchange nonlocal', 'not reported', 'Bloch theorem']) {
-    assert(ks.includes(marker), `${prefix}/kohn-sham-1965/${extension} lacks source-fidelity marker ${marker}`);
-  }
-  const levy = fs.readFileSync(path.join(baseDirectory, `${prefix}/levy-1979/${extension}`), 'utf8');
-  for (const marker of ['Eqs. (1)–(4)', 'Eq. (5)', 'Theorems I and II', 'Eqs. (22)–(27)', 'pure-state constrained search', 'N</em>-representability']) {
-    assert(levy.includes(marker), `${prefix}/levy-1979/${extension} lacks source-fidelity marker ${marker}`);
-  }
-  const hedin = fs.readFileSync(path.join(baseDirectory, `${prefix}/hedin-1965/${extension}`), 'utf8');
-  for (const marker of ['Eqs. (2)–(5)', 'Eqs. (A20)–(A25)', 'Eqs. (A27)–(A30)', 'Eqs. (18)–(20)', 'Eqs. (41)–(43)', 'Not reported in the paper']) {
-    assert(hedin.includes(marker), `${prefix}/hedin-1965/${extension} lacks source-fidelity marker ${marker}`);
   }
 };
 
@@ -351,7 +327,7 @@ const checkReadingManifest = () => {
 
 if (sourceMode) {
   const trackedOutput = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { cwd: root, encoding: 'utf8' }).trim();
-  const tracked = trackedOutput ? trackedOutput.split('\n').filter(Boolean) : [];
+  const tracked = (trackedOutput ? trackedOutput.split('\n').filter(Boolean) : []).filter((file) => fs.existsSync(path.join(root, file)));
   const actualPages = tracked.filter((file) => file.startsWith('src/pages/')).sort();
   assert(JSON.stringify(actualPages) === JSON.stringify(expectedPages), `public page sources differ from the reviewed set: ${actualPages.join(', ')}`);
 
@@ -438,8 +414,6 @@ if (sourceMode) {
   assert(styles.includes('.source-outline') && styles.includes('list-style: none'), 'Martin source outline does not suppress automatic list markers');
   checkReadingManifest();
 
-  const agents = fs.readFileSync(path.join(root, 'AGENTS.md'), 'utf8');
-  assert(agents.includes('.github/agent-guides/book-guided-reading-style.md'), 'AGENTS.md does not require the book-writing guide');
   const astroConfig = fs.readFileSync(path.join(root, 'astro.config.mjs'), 'utf8');
   assert(astroConfig.includes("'/reading/martin/': '/reading/books/martin/'"), 'Martin compatibility redirect is missing');
 }

@@ -4,7 +4,7 @@ import { martinChapterSlugs } from '../reading/books/martin/chapter-content';
 import { shollSteckelChapterSlugs } from '../reading/books/sholl-steckel/chapter-content';
 import { cohenLouieReadingSlugs } from '../reading/books/cohen-louie';
 import { giustinoReadingSlugs } from '../reading/books/giustino';
-import { literatureGuides } from '../reading/literature';
+import { researchTopics } from '../reading/research-topics';
 
 const fixedRoutes = [
   '/',
@@ -40,7 +40,7 @@ const martinRoutes = [
 const shollSteckelRoutes = shollSteckelChapterSlugs.map((slug) => `/reading/books/sholl-steckel/${slug}/`);
 const cohenLouieRoutes = cohenLouieReadingSlugs.map((slug) => `/reading/books/cohen-louie/${slug}/`);
 const giustinoRoutes = giustinoReadingSlugs.map((slug) => `/reading/books/giustino/${slug}/`);
-const literatureRoutes = literatureGuides.map((record) => record.guideHref).filter((route): route is string => Boolean(route));
+const literatureRoutes = researchTopics.map((topic) => `/reading/literature/${topic.id}/`);
 
 export const GET: APIRoute = ({ site }) => {
   const routes = [...new Set([...fixedRoutes, ...literatureRoutes, ...theoryRoutes, ...martinRoutes, ...shollSteckelRoutes, ...cohenLouieRoutes, ...giustinoRoutes])].sort();

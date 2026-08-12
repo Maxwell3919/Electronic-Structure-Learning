@@ -1,101 +1,26 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { literatureBibliography, literatureGuides, literatureRecords } from '../../../reading/literature';
+import { researchTopics } from '../../../reading/research-topics';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
-const topicOrder = [
-  'Foundations of electronic structure',
-  'Exchange and correlation',
-  'Electronic-structure methods',
-  'Response, phonons, and electron–phonon coupling',
-  'Many-body and excitations',
-  'Wannier, Berry, and topology',
-  'Applications and representative systems',
-  'Reviews and field maps',
-];
-const topicDescription: Record<string, string> = {
-  'Foundations of electronic structure': 'The theorem, constrained-search, and rigorous-functional steps that make density-based electronic structure a defined problem.',
-  'Exchange and correlation': 'The benchmark data and approximation papers that turn the unknown universal functional into usable approximation families.',
-  'Electronic-structure methods': 'Representation and algorithm papers that make first-principles calculations tractable while retaining their input and observable boundaries.',
-  'Response, phonons, and electron–phonon coupling': 'Primary methods and material cases for derivatives, lattice dynamics, and coupling observables.',
-  'Many-body and excitations': 'Green functions, quasiparticles, optical response, and the distinction between ground-state and excitation sectors.',
-  'Wannier, Berry, and topology': 'Localized representations, polarization changes, and symmetry- and gap-conditioned topological invariants.',
-  'Applications and representative systems': 'Material-specific papers retained because their calculations are used as teaching cases in the Atlas.',
-  'Reviews and field maps': 'Reviews that orient a topic and point back to primary evidence; they are not substitutes for the cited papers.',
-};
-const roleText = (record: (typeof literatureRecords)[number]) => record.role === 'LITERATURE_GUIDE' ? 'learning guide' : 'bibliography reference';
 ---
 
-<BaseLayout
-  title="Literature · Guided Reading"
-  description="A unified, source-aligned literature layer for electronic-structure theory, methods, response, excitations, topology, and representative applications."
-  current="reading"
->
-  <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href={href('/reading/')}>Guided Reading</a>
-    <span aria-hidden="true">/</span>
-    <span aria-current="page">Literature</span>
-  </nav>
-
+<BaseLayout title="Literature · Guided Reading" description="A research-oriented map from electronic-structure questions to future literature routes." current="reading">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={href('/reading/')}>Guided Reading</a><span aria-hidden="true">/</span><span aria-current="page">Literature</span></nav>
   <h1>Literature</h1>
-  <p class="lede">
-    The Literature layer answers a different question from Theory: where did a concept, method, approximation, or reported result enter the field, and what should a careful reader inspect in the original source?
-  </p>
-  <p>
-    The Atlas currently tracks <strong>{literatureRecords.length} unique paper-like sources</strong>: <strong>{literatureGuides.length} learning guides</strong> for papers that carry the development chain, and <strong>{literatureBibliography.length} bibliography references</strong> retained for evidence, examples, and source navigation. Both roles use the same DOI, author, year, venue, locator, and canonical URL record.
-  </p>
-  <p>
-    A bibliography reference is not a second-rate source. It is kept compact when the paper is not itself a foundational construction, a repeated conceptual dependency, or a teaching case. A learning guide is selective: it reconstructs the paper’s problem, contribution, evidence, reading targets, and limits without replacing the paper.
-  </p>
-
-  {topicOrder.map((topic) => {
-    const guides = literatureGuides.filter((record) => record.topic === topic);
-    const bibliography = literatureBibliography.filter((record) => record.topic === topic);
-    if (guides.length === 0 && bibliography.length === 0) return null;
-    return (
-      <section aria-labelledby={`topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-        <h2 id={`topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{topic}</h2>
-        <p>{topicDescription[topic]}</p>
-        {guides.length > 0 ? (
-          <>
-            <h3>Learning guides</h3>
-            <ol class="section-list source-list">
-              {guides.map((record) => (
-                <li>
-                  <h4><a href={href(record.guideHref!)}>{record.title}</a></h4>
-                  <p>{record.authors} · {record.year} · <cite>{record.venue}</cite> {record.locator}. <a href={record.canonical_url}>{record.doi.startsWith('10.48550/arxiv.') ? record.doi.replace('10.48550/', '') : `DOI ${record.doi}`}</a>.</p>
-                  <p class="item-summary"><strong>Role.</strong> {roleText(record)}. {record.annotation ?? record.whyUse}</p>
-                  {record.annotation ? null : <p><strong>Boundary.</strong> {record.boundary}</p>}
-                </li>
-              ))}
-            </ol>
-          </>
-        ) : null}
-        {bibliography.length > 0 ? (
-          <>
-            <h3>Bibliography references</h3>
-            <ul class="source-list">
-              {bibliography.map((record) => (
-                <li>
-                  <p><strong>{record.title}</strong> · {record.authors} · {record.year} · <cite>{record.venue}</cite> {record.locator}. <a href={record.canonical_url}>Source</a>.</p>
-                  <p class="item-summary">{record.annotation ?? `${record.whyUse} Boundary. ${record.boundary}`}</p>
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : null}
-      </section>
-    );
-  })}
-
-  <section aria-labelledby="literature-reading-route">
-    <h2 id="literature-reading-route">How to use the source layer</h2>
-    <p>
-      Start with a <a href={href('/theory/')}>Foundations</a> concept or a <a href={href('/reading/books/')}>Book guide</a>. Follow its source link when the original paper is carrying a theorem, construction, approximation, response method, or material-specific result. Read the guide for the development chain and evidence boundary, then return to the original section, equation, table, or figure named there.
-    </p>
-    <p>
-      The existing Hohenberg–Kohn and Hedin guides retain source-linked paper figures. The newer guides deliberately do not invent visual substitutes for theorem- or equation-led papers; where a source result needs an exact crop, it remains marked in the metadata audit until the crop and provenance are reviewed.
-    </p>
+  <p class="lede">Literature is a map of how electronic-structure researchers turn questions into evidence and bounded conclusions.</p>
+  <p>Theory teaches the knowledge. Books teach a route through a source. Literature follows the move from a research question to an observable, a method, evidence, interpretation, and the next question.</p>
+  <section aria-labelledby="research-questions">
+    <h2 id="research-questions">Research Questions</h2>
+    <ol class="section-list">
+      {researchTopics.map((topic, index) => (
+        <li>
+          <h3><span class="secondary">{String(index + 1).padStart(2, '0')}</span> <a href={href(`/reading/literature/${topic.id}/`)}>{topic.title}</a></h3>
+          <p>{topic.centralQuestion}</p>
+          <p><a href={href(`/reading/literature/${topic.id}/`)}>Enter this research topic →</a></p>
+        </li>
+      ))}
+    </ol>
   </section>
 </BaseLayout>
