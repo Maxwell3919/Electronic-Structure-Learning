@@ -21,6 +21,10 @@ const synthesis = unitContent?.synthesis;
 const unitIndex = unit ? giustinoUnits.findIndex((entry) => entry.slug === unit.slug) : -1;
 const previousUnit = unitIndex > 0 ? giustinoUnits[unitIndex - 1] : undefined;
 const nextUnit = unitIndex >= 0 && unitIndex < giustinoUnits.length - 1 ? giustinoUnits[unitIndex + 1] : undefined;
+const displayBoundary = (boundary: string) => boundary.replace(
+  'the Atlas leaves this source object unresolved rather than redrawing it.',
+  'Atlas cites the original figure but does not republish or redraw it.',
+);
 ---
 
 {unit && unitContent && (
@@ -69,7 +73,7 @@ const nextUnit = unitIndex >= 0 && unitIndex < giustinoUnits.length - 1 ? giusti
                 {/(?:Fig|Table)/i.test(entry.locator) && <><span class={(entry.visuals?.length ?? 0) > 0 ? 'source-visual-present' : 'source-visual-cited'}>{(entry.visuals?.length ?? 0) > 0 ? 'REAL_PRESENT' : 'SOURCE_CITED'}</span><a href={giustinoCanonicalSource.href}>Original source: {entry.locator}</a>. </>}
                 <strong>Read.</strong> {entry.reading}
                 {entry.visuals?.map((visual) => <SourceVisual kind={visual} />)}
-                <strong>Boundary.</strong> {entry.boundary}
+                <strong>Boundary.</strong> {displayBoundary(entry.boundary)}
               </dd>
             </>
           ))}
