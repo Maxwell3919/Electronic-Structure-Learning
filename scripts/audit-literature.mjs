@@ -9,6 +9,7 @@ const failures = [];
 const normalized = read('src/reference/normalized-works.ts');
 const literature = read('src/reading/literature.ts');
 const publication = read('src/reading/literature-publication.ts');
+const annotations = read('src/reading/literature-annotations.ts');
 const groupPattern = /\{\n    "title": "([^"]+)",\n    "entries": \[\n([\s\S]*?)\n    \]\n  \}/g;
 const topicForGroup = {
   'Foundational papers': 'Foundations of electronic structure',
@@ -46,6 +47,36 @@ const publicationKeys = [...publication.matchAll(/^  "(10\.[^"]+)":/gm)].map((ma
 const missingMetadata = uniqueDois.filter((doi) => !publicationKeys.includes(doi));
 const duplicateDois = allDois.filter((doi, index) => allDois.indexOf(doi) !== index);
 
+const genericBibliographyPhrases = [
+  'Use it as a case study of lattice response',
+  'Use it for the reported computational method, approximation, or design strategy',
+  'Use it for a concrete symmetry, Wannier, Berry, or topological analysis',
+  'Use it as a bounded material or interface case study',
+  'remain model- and convergence-dependent',
+  'are not interchangeable evidence',
+];
+const legacyBibliographyProse = genericBibliographyPhrases.reduce((total, phrase) => total + (normalized.split(phrase).length - 1), 0);
+const publicAnnotationEntries = [...annotations.matchAll(/^  '(10\.[^']+)': \{ sourceRead: '[^']+', text: '([^']+)' \},$/gm)]
+  .map((match) => ({ doi: match[1].toLowerCase(), text: match[2] }));
+const duplicateAnnotations = publicAnnotationEntries.filter((entry, index, entries) => entries.findIndex((candidate) => candidate.text === entry.text) !== index);
+const normalizedEntries = [...normalized.matchAll(/"whyUse": "([^"]*)",\n\s+"boundary": "([^"]*)"/g)];
+const duplicateNonempty = (values) => values.filter((value, index) => values.indexOf(value) !== index);
+const duplicateWhyUse = [...new Set(duplicateNonempty(normalizedEntries.map((match) => match[1]).filter(Boolean)))];
+const duplicateBoundary = [...new Set(duplicateNonempty(normalizedEntries.map((match) => match[2]).filter(Boolean)))];
+const sourceFiles = (directory) => fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+  const entryPath = path.join(directory, entry.name);
+  if (entry.isDirectory()) return sourceFiles(entryPath);
+  return /\.(?:astro|ts|tsx|js|mjs)$/.test(entry.name) ? [fs.readFileSync(entryPath, 'utf8')] : [];
+});
+const publicSource = sourceFiles(path.join(root, 'src')).join('\n');
+const privateReadingLeaks = [
+  /\bP-[0-9a-f]{12}\b/i,
+  /NEWT-DATA/i,
+  /Research-Workflow-Records/i,
+  /(?:^|\/)literature\/mineru\//i,
+  /(?:^|\/)assets\/mineru\//i,
+].filter((pattern) => pattern.test(publicSource)).map((pattern) => pattern.toString());
+
 const literatureDirectory = path.join(root, 'src/pages/reading/literature');
 const guideFiles = fs.readdirSync(literatureDirectory, { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && fs.existsSync(path.join(literatureDirectory, entry.name, 'index.astro')))
@@ -78,6 +109,11 @@ if (extraRecords.length !== 12) failures.push(`expected 12 explicit literature r
 if (guideFiles.length !== coreGuideIds.length) failures.push(`expected ${coreGuideIds.length} guide routes, found ${guideFiles.length}`);
 if (missingMetadata.length > 0) failures.push(`missing publication metadata: ${missingMetadata.join(', ')}`);
 if (duplicateDois.length > 0) failures.push(`duplicate DOI records: ${[...new Set(duplicateDois)].join(', ')}`);
+if (legacyBibliographyProse > 0) failures.push(`legacy bibliography prose retained: ${legacyBibliographyProse}`);
+if (duplicateAnnotations.length > 0) failures.push(`duplicate paper-specific annotations: ${duplicateAnnotations.map((entry) => entry.doi).join(', ')}`);
+if (duplicateWhyUse.length > 0) failures.push(`duplicate nonempty paper-specific whyUse: ${duplicateWhyUse.join(' | ')}`);
+if (duplicateBoundary.length > 0) failures.push(`duplicate nonempty paper-specific boundary: ${duplicateBoundary.join(' | ')}`);
+if (privateReadingLeaks.length > 0) failures.push(`private reading identifiers leaked into public source: ${privateReadingLeaks.join(', ')}`);
 
 const report = {
   generated_at: new Date().toISOString(),
@@ -93,6 +129,11 @@ const report = {
   TOPIC_GUIDE_COUNTS: Object.fromEntries(Object.entries(topicGuideIds).map(([topic, ids]) => [topic, ids.length])),
   BASE_NORMALIZED_PAPER_REFERENCES: baseRecords.length,
   EXPLICIT_CORE_RECORDS: extraRecords.length,
+  LEGACY_BIBLIOGRAPHY_PROSE: legacyBibliographyProse,
+  DUPLICATE_PAPER_SPECIFIC_ANNOTATIONS: duplicateAnnotations.length,
+  DUPLICATE_PAPER_SPECIFIC_WHY_USE: duplicateWhyUse.length,
+  DUPLICATE_PAPER_SPECIFIC_BOUNDARY: duplicateBoundary.length,
+  PRIVATE_READING_LEAKS: privateReadingLeaks.length,
   guide_routes: guideFiles,
   failures,
 };
