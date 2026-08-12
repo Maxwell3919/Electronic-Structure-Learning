@@ -147,13 +147,13 @@ const sourceFigureGuides = getMartinSourceFigures(slug);
         <section aria-labelledby="unit-source-figures">
           <h2 id="unit-source-figures">Source visuals and reading notes</h2>
           <p>
-            A real source visual is embedded when it has been located and recorded in the shared media manifest. Other concrete Figure or Table references remain explicitly marked for later source resolution; no redraw is presented as the source object.
+            Every concrete Figure or Table locator below identifies the original object in the authoritative book source. Atlas republishes an image only when a rights-safe source visual has been recorded in the shared media manifest. <code>SOURCE_CITED</code> means that the source object is precisely cited but is not republished here.
           </p>
           <dl class="source-figure-list">
             {sourceFigureGuides.map((entry) => (
               <>
                 <dt>{entry.locator} <span>· {entry.section}</span></dt>
-                <dd>{/(?:Fig|Table)/i.test(entry.locator) && <span class="source-visual-unresolved">SOURCE_UNRESOLVED</span>}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
+                <dd>{/(?:Fig|Table)/i.test(entry.locator) && <><span class="source-visual-cited">SOURCE_CITED</span><a href={martinCanonicalSource.href}>Original source: {entry.locator}</a>. </>}<strong>Read.</strong> {entry.reading} <strong>Boundary.</strong> {entry.boundary}</dd>
               </>
             ))}
           </dl>
