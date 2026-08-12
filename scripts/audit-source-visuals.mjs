@@ -162,26 +162,6 @@ const sourceCitedBookLocators = bookLocators.filter((entry) => entry.status === 
 const unresolvedBookLocators = bookLocators.filter((entry) => entry.status === 'SOURCE_UNRESOLVED');
 const unresolvedContentReferences = contentSourceReferences.filter((entry) => entry.status === 'SOURCE_UNRESOLVED');
 
-const literatureStatus = [
-  { id: 'hohenberg-kohn-1964', status: 'REAL_PRESENT', visual_count: 2 },
-  { id: 'hedin-1965', status: 'REAL_PRESENT', visual_count: 12 },
-  { id: 'zhong-vanderbilt-rabe-1995', status: 'REAL_PRESENT', visual_count: 1 },
-  { id: 'kohn-sham-1965', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'levy-1979', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'lieb-1983', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'ceperley-alder-1980', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'perdew-zunger-1981', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'perdew-burke-ernzerhof-1996', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'vanderbilt-1990', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'blochl-1994', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'baroni-2001', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'onida-reining-rubio-2002', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'runge-gross-1984', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'marzari-vanderbilt-1997', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'king-smith-vanderbilt-1993', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-  { id: 'fu-kane-mele-2007', status: 'NO_VISUAL_NEEDED', visual_count: 0 },
-];
-
 const report = {
   generated_at: new Date().toISOString(),
   scope: {
@@ -195,7 +175,6 @@ const report = {
     TEXT_ONLY_REFERENCE: textOnlyReferences.length,
     SVG_SUBSTITUTE: svgSubstitutes.length,
     SOURCE_UNRESOLVED: unresolvedBookLocators.length,
-    NO_VISUAL_NEEDED: literatureStatus.filter((entry) => entry.status === 'NO_VISUAL_NEEDED').length,
   },
   real_present: {
     unique_assets: [...new Set(allRealPlacements.map((entry) => entry.id))].sort(),
@@ -208,7 +187,6 @@ const report = {
     unresolved_locator_groups: unresolvedBookLocators.length,
     by_book: Object.fromEntries([...new Set(bookLocators.map((entry) => entry.book))].sort().map((book) => [book, bookLocators.filter((entry) => entry.book === book).length])),
   },
-  literature: literatureStatus,
   text_only_references: textOnlyReferences,
   content_source_references: contentSourceReferences,
   content_source_unresolved_references: unresolvedContentReferences,
@@ -230,7 +208,6 @@ if (process.argv.includes('--json')) {
   console.log(`SVG_SUBSTITUTE: ${report.counts.SVG_SUBSTITUTE}`);
   console.log(`SOURCE_UNRESOLVED: ${report.counts.SOURCE_UNRESOLVED} book Figure/Table locator groups`);
   console.log(`CONTENT_SOURCE_UNRESOLVED: ${unresolvedContentReferences.length} book-body references`);
-  console.log(`NO_VISUAL_NEEDED: ${report.counts.NO_VISUAL_NEEDED} literature guides`);
   console.log(`Book locator groups: ${JSON.stringify(report.books.by_book)}`);
   console.log(`Manifest visual records: ${report.manifest_visual_records}`);
   if (textOnlyReferences.length > 0) {

@@ -82,10 +82,9 @@ Guided Reading
 │   ├── Cohen & Louie · Fundamentals of Condensed Matter Physics
 │   └── Giustino · Materials Modelling Using Density Functional Theory
 └── Literature
-    ├── Hohenberg–Kohn 1964
-    ├── Kohn–Sham 1965
-    ├── Levy 1979
-    └── Hedin 1965
+    └── Research Topic Map
+        └── Literature Routes
+            └── Individual Papers
 ```
 
 The current canonical routes are:
@@ -98,15 +97,23 @@ The current canonical routes are:
 /reading/books/cohen-louie/
 /reading/books/giustino/
 /reading/literature/
-/reading/literature/hohenberg-kohn-1964/
-/reading/literature/kohn-sham-1965/
-/reading/literature/levy-1979/
-/reading/literature/hedin-1965/
+/reading/literature/structures-phase-competition/
+/reading/literature/electronic-character/
+/reading/literature/defects-disorder/
+/reading/literature/interfaces-heterostructures/
+/reading/literature/magnetism-correlation/
+/reading/literature/lattice-dynamics/
+/reading/literature/electron-phonon-superconductivity/
+/reading/literature/polarization-response/
+/reading/literature/quasiparticles-excitons/
+/reading/literature/transport-scattering/
+/reading/literature/quantum-geometry-topology/
+/reading/literature/reliability-validation/
 ```
 
 The former `/reading/martin/` route remains only as a compatibility redirect to `/reading/books/martin/`. It is not the canonical location of the Martin guide.
 
-Books and Literature are peer source-type landings. Literature routes are flat siblings because a paper’s own argument, rather than a subject taxonomy, organizes each guide. Empty categories and empty source pages are not exposed merely to display a future plan.
+Books and Literature are peer source-type landings. Literature is organized as a research-question map: each topic can later gain individually planned Literature Routes, and each route can then introduce the papers that carry a necessary research move. Empty paper pages are not exposed merely to display a future plan.
 
 ### Books
 

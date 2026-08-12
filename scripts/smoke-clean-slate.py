@@ -63,29 +63,14 @@ GIUSTINO_APPENDIX_ROUTES = [f"reading/books/giustino/appendix-{letter}/" for let
 GIUSTINO_UNIT_ROUTES = [*GIUSTINO_CHAPTER_ROUTES, *GIUSTINO_APPENDIX_ROUTES]
 GIUSTINO_MATH_ROUTES = [*GIUSTINO_CHAPTER_ROUTES[1:], *GIUSTINO_APPENDIX_ROUTES]
 LITERATURE_ROUTES = [
-    "reading/literature/hohenberg-kohn-1964/",
-    "reading/literature/kohn-sham-1965/",
-    "reading/literature/levy-1979/",
-    "reading/literature/hedin-1965/",
-    "reading/literature/lieb-1983/",
-    "reading/literature/ceperley-alder-1980/",
-    "reading/literature/perdew-zunger-1981/",
-    "reading/literature/perdew-burke-ernzerhof-1996/",
-    "reading/literature/vanderbilt-1990/",
-    "reading/literature/blochl-1994/",
-    "reading/literature/baroni-2001/",
-    "reading/literature/onida-reining-rubio-2002/",
-    "reading/literature/runge-gross-1984/",
-    "reading/literature/marzari-vanderbilt-1997/",
-    "reading/literature/king-smith-vanderbilt-1993/",
-    "reading/literature/fu-kane-mele-2007/",
-    "reading/literature/zhong-vanderbilt-rabe-1995/",
+    "reading/literature/structures-phase-competition/", "reading/literature/electronic-character/",
+    "reading/literature/defects-disorder/", "reading/literature/interfaces-heterostructures/",
+    "reading/literature/magnetism-correlation/", "reading/literature/lattice-dynamics/",
+    "reading/literature/electron-phonon-superconductivity/", "reading/literature/polarization-response/",
+    "reading/literature/quasiparticles-excitons/", "reading/literature/transport-scattering/",
+    "reading/literature/quantum-geometry-topology/", "reading/literature/reliability-validation/",
 ]
-MATH_LITERATURE_ROUTES = LITERATURE_ROUTES[:4]
 SOURCE_VISUAL_ROUTES = [
-    "reading/literature/hohenberg-kohn-1964/",
-    "reading/literature/hedin-1965/",
-    "reading/literature/zhong-vanderbilt-rabe-1995/",
     "theory/density-functional-theory-foundations/",
     "theory/many-body-perturbation-theory-and-quasiparticles/",
     "theory/solid-state-physics/",
@@ -448,29 +433,11 @@ def inspect(driver, mode, expected_width=None):
                 if marker not in main_text:
                     raise AssertionError(f"Giustino unit lacks {marker} in {mode}: {route}")
         if route in LITERATURE_ROUTES:
-            if "What the paper established" not in main_text or "DOI 10." not in main_text:
-                raise AssertionError(f"literature guide lacks source result or canonical DOI in {mode}: {route}")
-            figure_metrics = driver.execute_script(
-                "const figure=document.querySelector('figure.paper-argument'),main=document.querySelector('main');"
-                "if (!figure) return null; const f=figure.getBoundingClientRect(),m=main.getBoundingClientRect();return {height:f.height,left:f.left,right:f.right,"
-                "mainLeft:m.left,mainRight:m.right,items:figure.querySelectorAll('ol > li').length,caption:figure.querySelectorAll('figcaption').length};"
-            )
-            if figure_metrics is None:
-                raise AssertionError(f"literature guide lacks argument chain in {mode}: {route}")
-            if figure_metrics["height"] < 40 or figure_metrics["items"] < 4 or figure_metrics["caption"] != 1:
-                raise AssertionError(f"literature argument diagram is incomplete in {mode}: {route}")
-            if figure_metrics["left"] < figure_metrics["mainLeft"] - 1 or figure_metrics["right"] > figure_metrics["mainRight"] + 1:
-                raise AssertionError(f"literature argument diagram overflows main in {mode}: {route}")
-            if route in MATH_LITERATURE_ROUTES:
-                math_typography = driver.execute_script(
-                    "const display=document.querySelector('.math-display math'),inline=document.querySelector('math.math-inline');"
-                    "const ds=getComputedStyle(display),is=getComputedStyle(inline);return {displayLineHeight:ds.lineHeight,displayFont:ds.fontFamily,"
-                    "inlineLineHeight:is.lineHeight,sources:document.querySelectorAll('.equation-source').length};"
-                )
-                if math_typography["displayLineHeight"] != "normal" or math_typography["inlineLineHeight"] != "normal":
-                    raise AssertionError(f"literature MathML line height is not typography-safe in {mode}: {route}")
-                if "math" not in math_typography["displayFont"].lower() or math_typography["sources"] < 4:
-                    raise AssertionError(f"literature guide lacks math-font fallback or equation sources in {mode}: {route}")
+            for marker in ["Central Question", "What researchers ask", "Evidence", "Literature Routes", "Connections"]:
+                if marker not in main_text:
+                    raise AssertionError(f"research topic lacks {marker} in {mode}: {route}")
+            if "Routes will be developed individually from verified primary literature." not in main_text:
+                raise AssertionError(f"research topic lacks route boundary in {mode}: {route}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             raw_href = anchor.get_dom_attribute("href") or ""

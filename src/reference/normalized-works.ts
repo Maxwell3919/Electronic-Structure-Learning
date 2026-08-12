@@ -66,7 +66,6 @@ export const normalizedReferenceGroups: { title: string; entries: ReferenceEntry
         "authors": "Pierre Hohenberg and Walter Kohn",
         "year": "1964",
         "url": "https://doi.org/10.1103/PhysRev.136.B864",
-        "guideHref": "/reading/literature/hohenberg-kohn-1964/",
         "whyUse": "Use it for the original density–potential and density-variational argument.",
         "boundary": "The original theorem organization is not the later Levy–Lieb constrained-search formulation."
       },
@@ -75,7 +74,6 @@ export const normalizedReferenceGroups: { title: string; entries: ReferenceEntry
         "authors": "Walter Kohn and Lu Jeu Sham",
         "year": "1965",
         "url": "https://doi.org/10.1103/PhysRev.140.A1133",
-        "guideHref": "/reading/literature/kohn-sham-1965/",
         "whyUse": "Use it for the auxiliary one-particle construction that makes ground-state DFT computationally usable.",
         "boundary": "Auxiliary orbitals and eigenvalues are not general many-body excitation observables."
       },
@@ -84,7 +82,6 @@ export const normalizedReferenceGroups: { title: string; entries: ReferenceEntry
         "authors": "Mel Levy",
         "year": "1979",
         "url": "https://doi.org/10.1073/pnas.76.12.6062",
-        "guideHref": "/reading/literature/levy-1979/",
         "whyUse": "Use it for the constrained-search construction and its density-domain repair.",
         "boundary": "The paper establishes a variational definition, not a closed practical approximation."
       }
@@ -537,7 +534,6 @@ export const normalizedReferenceGroups: { title: string; entries: ReferenceEntry
         "authors": "Lars Hedin",
         "year": "1965",
         "url": "https://doi.org/10.1103/PhysRev.139.A796",
-        "guideHref": "/reading/literature/hedin-1965/",
         "whyUse": "Use it for the coupled propagator, screening, self-energy, and vertex framework behind GW.",
         "boundary": "GW variants follow from additional truncation and self-consistency choices; they are not one universal algorithm."
       }
