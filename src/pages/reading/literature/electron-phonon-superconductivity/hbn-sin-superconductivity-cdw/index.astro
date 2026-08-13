@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../../../../../layouts/BaseLayout.astro';
 import { literaturePaperById } from '../../../../../reading/literature-papers';
-import { pilotAnnotations, pilotAnnotationCounts } from '../../../../../reading/pilot-annotations';
 
 const paper = literaturePaperById['hbn-sin-superconductivity-cdw'];
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
-const pdfUrl = import.meta.env.ATLAS_PILOT_PDF_URL ?? '';
-const readerEnabled = pdfUrl.length > 0;
+const sourceSha256 = '7b66fdf0f4b4688f3633bd43ce908289923da5ab79c928fcd4964ebb7e8fbdaf';
+const pdfUrl = href(`/papers/${paper.id}.pdf`);
+const annotationsUrl = href(`/papers/${paper.id}/annotations.json`);
 ---
 
 <BaseLayout title={paper.title} description={`Read the original ${paper.journal} paper with source-aligned annotations.`} current="reading" wide>
@@ -19,33 +19,24 @@ const readerEnabled = pdfUrl.length > 0;
     </nav>
     <h1>{paper.title}</h1>
     <p class="reader-meta">{paper.authors.join(', ')} · {paper.journal} · {paper.year} · <a href={`https://doi.org/${paper.doi}`}>DOI {paper.doi}</a></p>
-    {readerEnabled ? <p><a class="pdf-download" href={pdfUrl} download>Download PDF</a></p> : (
-      <p class="rights-gate"><strong>Original PDF unavailable here.</strong> The located version of record is subscription content and no lawful open-access copy has been verified. <a href={`https://doi.org/${paper.doi}`}>Open the publisher record.</a></p>
-    )}
+    <p><a class="pdf-download" href={pdfUrl} download>Download PDF</a></p>
   </div>
 
-  {readerEnabled && (
-    <section class="paper-reader" aria-label="Annotated paper reader" data-pdf-url={pdfUrl}>
-      <aside class="annotation-rail annotation-left" aria-label="What does this mean?">
-        <h2>What does this mean?</h2>
-        <ol>
-          {pilotAnnotations.map((anchor) => <li><button type="button" data-anchor={anchor.id}><span>{anchor.figureId ?? `${anchor.type} · p. ${anchor.page}`}</span>{anchor.left}</button></li>)}
-        </ol>
-      </aside>
-      <div class="pdf-column">
-        <p class="reader-status" role="status">Loading original PDF…</p>
-        <div id="pdf-viewer" aria-label="Original PDF"></div>
-      </div>
-      <aside class="annotation-rail annotation-right" aria-label="Why does this matter?">
-        <h2>Why does this matter?</h2>
-        <ol>
-          {pilotAnnotations.map((anchor) => <li><button type="button" data-anchor={anchor.id}><span>{anchor.figureId ?? `${anchor.type} · p. ${anchor.page}`}</span>{anchor.right}</button></li>)}
-        </ol>
-      </aside>
-      <script id="pilot-annotations" type="application/json" set:html={JSON.stringify(pilotAnnotations)} is:inline></script>
-    </section>
-  )}
+  <section class="paper-reader" aria-label="Annotated paper reader" data-paper-id={paper.id} data-source-sha256={sourceSha256} data-pdf-url={pdfUrl} data-annotations-url={annotationsUrl}>
+    <aside class="annotation-rail annotation-left" aria-label="What does this mean?">
+      <h2>What does this mean?</h2>
+      <ol></ol>
+    </aside>
+    <div class="pdf-column">
+      <p class="reader-status" role="status">Loading annotations and original PDF…</p>
+      <div id="pdf-viewer" aria-label="Original PDF"></div>
+    </div>
+    <aside class="annotation-rail annotation-right" aria-label="Why does this matter?">
+      <h2>Why does this matter?</h2>
+      <ol></ol>
+    </aside>
+  </section>
 
-  <p class="annotation-coverage">Reader annotation set: {pilotAnnotationCounts.paragraph} paragraphs, {pilotAnnotationCounts.figure} figures, {pilotAnnotationCounts.table} tables, and {pilotAnnotationCounts.equation} equations.</p>
+  <p class="annotation-coverage" data-annotation-coverage>Loading annotation coverage…</p>
   <script src="../../../../../scripts/paper-reader.ts"></script>
 </BaseLayout>

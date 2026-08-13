@@ -12,7 +12,7 @@
     "start": "astro dev",
     "build": "astro build && node scripts/write-deployment-manifest.mjs",
     "preview": "astro preview",
-    "serve:literature-pdf": "node services/literature-pdf-server.mjs",
+    "serve:literature": "node services/literature-runtime-server.mjs",
     "audit:source-visuals": "node scripts/audit-source-visuals.mjs",
     "validate:clean-slate": "node scripts/validate-clean-slate.mjs --source",
     "validate:build-budget": "node scripts/validate-build-budget.mjs",

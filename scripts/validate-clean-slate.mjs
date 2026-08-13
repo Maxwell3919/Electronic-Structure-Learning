@@ -38,6 +38,7 @@ const researchTopicSlugs = [
 ];
 const literatureSlugs = researchTopicSlugs;
 const pilotPaperRoute = 'reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/';
+const pilotPdfRoute = 'papers/hbn-sin-superconductivity-cdw.pdf';
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -99,6 +100,7 @@ const internalRoutes = new Set([
   'reading/books/giustino/', ...giustinoRoutes,
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   pilotPaperRoute,
+  pilotPdfRoute,
   'methods/', 'computational-tools/', 'reference/',
 ]);
 
