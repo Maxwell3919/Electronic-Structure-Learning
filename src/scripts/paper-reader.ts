@@ -3,13 +3,18 @@ import EmbedPDF, {
   LockModeType,
   PdfAnnotationBorderStyle,
   PdfAnnotationSubtype,
+  SelectionPlugin,
   ScrollPlugin,
   ScrollStrategy,
   type AnnotationTransferItem,
   type PdfSquareAnnoObject,
   type ScrollMetrics,
 } from '@embedpdf/snippet';
-import type { PaperAnchor, PaperAnnotationDocument } from '../reading/paper-reader-schema';
+import type {
+  PaperAnchor,
+  PaperAnnotationDocument,
+  PaperReadingNote,
+} from '../reading/paper-reader-schema';
 
 const reader = document.querySelector<HTMLElement>('.paper-reader');
 const target = document.querySelector<HTMLElement>('#pdf-viewer');
@@ -24,46 +29,114 @@ const isNormalizedBox = (anchor: PaperAnchor) => {
 const validateDocument = (value: unknown, paperId: string, sourceSha256: string): PaperAnnotationDocument => {
   const annotationDocument = value as Partial<PaperAnnotationDocument>;
   if (
-    annotationDocument.schema_version !== 1
+    annotationDocument.schema_version !== 2
     || annotationDocument.paper_id !== paperId
     || annotationDocument.source_sha256 !== sourceSha256
     || annotationDocument.coordinate_space?.origin !== 'top-left'
     || annotationDocument.coordinate_space?.units !== 'normalized'
     || !Number.isFinite(annotationDocument.coordinate_space.page_width_points)
     || !Number.isFinite(annotationDocument.coordinate_space.page_height_points)
-    || !Array.isArray(annotationDocument.annotations)
-    || annotationDocument.annotations.length === 0
+    || !Array.isArray(annotationDocument.anchors)
+    || annotationDocument.anchors.length === 0
+    || !Array.isArray(annotationDocument.readingNotes)
   ) throw new Error('Annotation authority does not match this paper.');
 
   const ids = new Set<string>();
-  for (const anchor of annotationDocument.annotations) {
+  for (const anchor of annotationDocument.anchors) {
     if (
       !anchor || typeof anchor.id !== 'string' || ids.has(anchor.id)
       || !Number.isInteger(anchor.page) || anchor.page < 1
       || !['paragraph', 'figure', 'equation', 'table'].includes(anchor.type)
       || !isNormalizedBox(anchor)
-      || typeof anchor.left !== 'string' || typeof anchor.right !== 'string'
     ) throw new Error('Annotation authority contains an invalid anchor.');
     ids.add(anchor.id);
+  }
+  const noteIds = new Set<string>();
+  for (const note of annotationDocument.readingNotes) {
+    const entries = [...(note?.left ?? []), ...(note?.right ?? [])];
+    if (
+      !note || typeof note.id !== 'string' || noteIds.has(note.id)
+      || !Array.isArray(note.anchorIds) || note.anchorIds.length === 0
+      || note.anchorIds.some((id) => typeof id !== 'string' || !ids.has(id))
+      || !Array.isArray(note.left) || !Array.isArray(note.right)
+      || entries.some((entry) => (
+        !entry || typeof entry.anchorId !== 'string' || !note.anchorIds.includes(entry.anchorId)
+        || typeof entry.text !== 'string'
+      ))
+    ) throw new Error('Annotation authority contains an invalid reading note.');
+    noteIds.add(note.id);
   }
   return annotationDocument as PaperAnnotationDocument;
 };
 
-const renderRail = (selector: string, anchors: PaperAnchor[], side: 'left' | 'right') => {
+const noteLabel = (note: PaperReadingNote, anchorsById: Map<string, PaperAnchor>) => {
+  const pages = [...new Set(note.anchorIds.map((id) => anchorsById.get(id)?.page).filter((page): page is number => page !== undefined))];
+  const pageText = pages.length === 1 ? `Page ${pages[0]}` : `Pages ${Math.min(...pages)}–${Math.max(...pages)}`;
+  return `${pageText} · ${note.anchorIds.length} ${note.anchorIds.length === 1 ? 'anchor' : 'anchors'}`;
+};
+
+const renderRail = (
+  selector: string,
+  notes: PaperReadingNote[],
+  anchorsById: Map<string, PaperAnchor>,
+  side: 'left' | 'right',
+) => {
   const list = document.querySelector<HTMLOListElement>(`${selector} ol`);
   if (!list) throw new Error(`Missing ${side} annotation rail.`);
-  const items = anchors.map((anchor) => {
+  const items = notes.map((note) => {
     const item = document.createElement('li');
-    const button = document.createElement('button');
-    const label = document.createElement('span');
-    button.type = 'button';
-    button.dataset.anchor = anchor.id;
-    label.textContent = `${anchor.type} · page ${anchor.page}`;
-    button.append(label, document.createTextNode(anchor[side]));
-    item.append(button);
+    const heading = document.createElement('button');
+    const body = document.createElement('div');
+    heading.type = 'button';
+    heading.className = 'reading-note-heading';
+    heading.dataset.note = note.id;
+    heading.dataset.primaryAnchor = note.anchorIds[0];
+    heading.setAttribute('aria-expanded', 'false');
+    heading.textContent = noteLabel(note, anchorsById);
+    body.className = 'reading-note-body';
+    body.dataset.noteBody = note.id;
+    for (const entry of note[side]) {
+      const anchor = anchorsById.get(entry.anchorId);
+      if (!anchor) continue;
+      const button = document.createElement('button');
+      const label = document.createElement('span');
+      button.type = 'button';
+      button.className = 'reading-note-entry';
+      button.dataset.anchor = anchor.id;
+      label.textContent = `${anchor.type} · page ${anchor.page}`;
+      button.append(label, document.createTextNode(entry.text));
+      body.append(button);
+    }
+    item.dataset.noteItem = note.id;
+    item.append(heading, body);
     return item;
   });
   list.replaceChildren(...items);
+};
+
+const createNativeSelectionMirror = (readerElement: HTMLElement) => {
+  const mirror = document.createElement('span');
+  mirror.className = 'pdf-native-selection';
+  mirror.setAttribute('aria-hidden', 'true');
+  readerElement.append(mirror);
+
+  const clear = () => {
+    const selection = window.getSelection();
+    if (selection?.anchorNode && mirror.contains(selection.anchorNode)) selection.removeAllRanges();
+    mirror.textContent = '';
+  };
+
+  const select = (text: string) => {
+    if (!text) return clear();
+    mirror.textContent = text;
+    const range = document.createRange();
+    range.selectNodeContents(mirror);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  };
+
+  return { clear, select };
 };
 
 const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement) => {
@@ -76,19 +149,22 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   const response = await fetch(annotationsUrl, { credentials: 'same-origin' });
   if (!response.ok) throw new Error(`Annotation request failed with HTTP ${response.status}.`);
   const annotationDocument = validateDocument(await response.json(), paperId, sourceSha256);
-  const anchors = annotationDocument.annotations;
+  const anchors = annotationDocument.anchors;
+  const readingNotes = annotationDocument.readingNotes;
+  const anchorsById = new Map(anchors.map((anchor) => [anchor.id, anchor]));
+  const noteByAnchorId = new Map(readingNotes.flatMap((note) => note.anchorIds.map((anchorId) => [anchorId, note] as const)));
   const pageWidth = annotationDocument.coordinate_space.page_width_points;
   const pageHeight = annotationDocument.coordinate_space.page_height_points;
 
-  renderRail('.annotation-left', anchors, 'left');
-  renderRail('.annotation-right', anchors, 'right');
+  renderRail('.annotation-left', readingNotes, anchorsById, 'left');
+  renderRail('.annotation-right', readingNotes, anchorsById, 'right');
   const counts = anchors.reduce<Record<string, number>>((result, anchor) => {
     result[anchor.type] = (result[anchor.type] ?? 0) + 1;
     return result;
   }, {});
   const coverage = document.querySelector<HTMLElement>('[data-annotation-coverage]');
   if (coverage) {
-    coverage.textContent = `${anchors.length} source-aligned anchors: ${counts.paragraph ?? 0} paragraphs, ${counts.figure ?? 0} figures, ${counts.equation ?? 0} equations, ${counts.table ?? 0} tables.`;
+    coverage.textContent = `${anchors.length} source-aligned anchors · ${readingNotes.length} grouped demo reading notes: ${counts.paragraph ?? 0} paragraphs, ${counts.figure ?? 0} figures, ${counts.equation ?? 0} equations, ${counts.table ?? 0} tables.`;
   }
 
   const uuidById = new Map(anchors.map((anchor, index) => [anchor.id, `10000000-0000-4000-8000-${String(index + 1).padStart(12, '0')}`]));
@@ -102,10 +178,19 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   });
 
   const setActive = (id: string) => {
+    const activeNote = noteByAnchorId.get(id);
     document.querySelectorAll<HTMLElement>('[data-anchor]').forEach((button) => button.classList.toggle('active', button.dataset.anchor === id));
+    document.querySelectorAll<HTMLElement>('[data-note-item]').forEach((item) => item.classList.toggle('active', item.dataset.noteItem === activeNote?.id));
+    document.querySelectorAll<HTMLButtonElement>('[data-note]').forEach((button) => {
+      const isActive = button.dataset.note === activeNote?.id;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-expanded', String(isActive));
+    });
     readerElement.dataset.activeAnchor = id;
-    document.querySelector<HTMLElement>(`.annotation-left [data-anchor="${id}"]`)?.scrollIntoView({ block: 'nearest' });
-    document.querySelector<HTMLElement>(`.annotation-right [data-anchor="${id}"]`)?.scrollIntoView({ block: 'nearest' });
+    if (activeNote) {
+      document.querySelector<HTMLElement>(`.annotation-left [data-note-item="${activeNote.id}"]`)?.scrollIntoView({ block: 'nearest' });
+      document.querySelector<HTMLElement>(`.annotation-right [data-note-item="${activeNote.id}"]`)?.scrollIntoView({ block: 'nearest' });
+    }
   };
 
   const nearestAnchor = (metrics: ScrollMetrics) => {
@@ -121,8 +206,11 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   if (!registry) throw new Error('PDF viewer registry is unavailable.');
   const scroll = registry.getPlugin<ScrollPlugin>('scroll')?.provides?.();
   const annotation = registry.getPlugin<AnnotationPlugin>('annotation')?.provides?.();
-  if (!scroll || !annotation) throw new Error('Required PDF viewer plugins are unavailable.');
+  const selection = registry.getPlugin<SelectionPlugin>('selection')?.provides?.();
+  if (!scroll || !annotation || !selection) throw new Error('Required PDF viewer plugins are unavailable.');
   const annotationScope = annotation.forDocument('pilot-paper');
+  const selectionScope = selection.forDocument('pilot-paper');
+  const nativeSelection = createNativeSelectionMirror(readerElement);
   let overlaysReady = false;
   let navigationLock = false;
   let navigationSettled: number | undefined;
@@ -179,6 +267,23 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
       const anchor = anchors.find((item) => item.id === button.dataset.anchor);
       if (anchor) activate(anchor, true);
     });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-note]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const anchor = anchorsById.get(button.dataset.primaryAnchor ?? '');
+      if (anchor) activate(anchor, true);
+    });
+  });
+
+  selectionScope.onSelectionChange((range) => {
+    if (!range) nativeSelection.clear();
+  });
+  selectionScope.onBeginSelection(() => nativeSelection.clear());
+  selectionScope.onEndSelection(() => {
+    selectionScope.getSelectedText().wait((chunks) => {
+      window.requestAnimationFrame(() => nativeSelection.select(chunks.join('\n')));
+    }, () => nativeSelection.clear());
   });
 
   scroll.onScroll((event) => {
