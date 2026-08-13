@@ -14,12 +14,22 @@ export type PaperAnchor = {
   bbox: NormalizedBBox;
   sourceText?: string;
   figureId?: string;
-  left: string;
-  right: string;
+};
+
+export type ReadingNoteEntry = {
+  anchorId: string;
+  text: string;
+};
+
+export type PaperReadingNote = {
+  id: string;
+  anchorIds: string[];
+  left: ReadingNoteEntry[];
+  right: ReadingNoteEntry[];
 };
 
 export type PaperAnnotationDocument = {
-  schema_version: 1;
+  schema_version: 2;
   paper_id: string;
   source_sha256: string;
   coordinate_space: {
@@ -28,5 +38,6 @@ export type PaperAnnotationDocument = {
     page_width_points: number;
     page_height_points: number;
   };
-  annotations: PaperAnchor[];
+  anchors: PaperAnchor[];
+  readingNotes: PaperReadingNote[];
 };
