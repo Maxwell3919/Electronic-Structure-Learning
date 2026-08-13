@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import { literaturePaperById } from '../../../../../reading/literature-papers';
+
+const paper = literaturePaperById['hbn-sin-superconductivity-cdw'];
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const sourceSha256 = '7b66fdf0f4b4688f3633bd43ce908289923da5ab79c928fcd4964ebb7e8fbdaf';
+const pdfUrl = href(`/papers/${paper.id}.pdf`);
+const annotationsUrl = href(`/papers/${paper.id}/annotations.json`);
+---
+
+<BaseLayout title={paper.title} description={`Read the original ${paper.journal} paper with source-aligned annotations.`} current="reading" wide>
+  <div class="reader-heading">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href={href('/reading/literature/')}>Literature</a><span aria-hidden="true">/</span>
+      <a href={href('/reading/literature/electron-phonon-superconductivity/')}>Electron–phonon interaction and conventional superconductivity</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Paper Reader</span>
+    </nav>
+    <h1>{paper.title}</h1>
+    <p class="reader-meta">{paper.authors.join(', ')} · {paper.journal} · {paper.year} · <a href={`https://doi.org/${paper.doi}`}>DOI {paper.doi}</a></p>
+    <p><a class="pdf-download" href={pdfUrl} download>Download PDF</a></p>
+  </div>
+
+  <section class="paper-reader" aria-label="Annotated paper reader" data-paper-id={paper.id} data-source-sha256={sourceSha256} data-pdf-url={pdfUrl} data-annotations-url={annotationsUrl}>
+    <aside class="annotation-rail annotation-left" aria-label="What does this mean?">
+      <h2>What does this mean?</h2>
+      <ol></ol>
+    </aside>
+    <div class="pdf-column">
+      <p class="reader-status" role="status">Loading annotations and original PDF…</p>
+      <div id="pdf-viewer" aria-label="Original PDF"></div>
+    </div>
+    <aside class="annotation-rail annotation-right" aria-label="Why does this matter?">
+      <h2>Why does this matter?</h2>
+      <ol></ol>
+    </aside>
+  </section>
+
+  <p class="annotation-coverage" data-annotation-coverage>Loading annotation coverage…</p>
+  <script src="../../../../../scripts/paper-reader.ts"></script>
+</BaseLayout>

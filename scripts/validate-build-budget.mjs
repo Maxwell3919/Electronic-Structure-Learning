@@ -20,6 +20,13 @@ const limits = {
   largestAssetBytes: 210_000,
   htmlPages: 170,
 };
+const pdfReaderLimits = {
+  totalBytes: 7_000_000,
+  jsBytes: 2_200_000,
+  wasmBytes: 4_800_000,
+  assetCount: 6,
+  largestAssetBytes: 4_800_000,
+};
 const minimumReductions = { bytes: 0.70, assets: 0.63 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
@@ -45,7 +52,12 @@ walk(dist);
 const size = (file) => fs.statSync(file).size;
 const bytesFor = (extensions) => files.filter((file) => extensions.includes(path.extname(file).toLowerCase())).reduce((sum, file) => sum + size(file), 0);
 const isSourceVisual = (file) => path.relative(dist, file).startsWith('media/source-visuals/');
-const governedFiles = files.filter((file) => !isSourceVisual(file));
+const isPdfReaderRuntime = (file) => {
+  const relative = path.relative(dist, file);
+  return relative.startsWith('_astro/') && ['.js', '.wasm'].includes(path.extname(relative));
+};
+const pdfReaderFiles = files.filter(isPdfReaderRuntime);
+const governedFiles = files.filter((file) => !isSourceVisual(file) && !isPdfReaderRuntime(file));
 const largest = governedFiles.map((file) => ({ file: path.relative(dist, file), bytes: size(file) })).sort((a, b) => b.bytes - a.bytes)[0];
 const measured = {
   htmlPages: files.filter((file) => file.endsWith('.html')).length,
@@ -55,17 +67,28 @@ const measured = {
   fontBytes: bytesFor(['.woff', '.woff2', '.ttf', '.otf']),
   assetCount: files.length,
   sourceVisualAssetCount: files.filter(isSourceVisual).length,
+  pdfReaderRuntime: {
+    totalBytes: pdfReaderFiles.reduce((sum, file) => sum + size(file), 0),
+    jsBytes: pdfReaderFiles.filter((file) => file.endsWith('.js')).reduce((sum, file) => sum + size(file), 0),
+    wasmBytes: pdfReaderFiles.filter((file) => file.endsWith('.wasm')).reduce((sum, file) => sum + size(file), 0),
+    assetCount: pdfReaderFiles.length,
+    largestAsset: pdfReaderFiles.map((file) => ({ file: path.relative(dist, file), bytes: size(file) })).sort((a, b) => b.bytes - a.bytes)[0],
+  },
   governedAssetCount: governedFiles.length,
   largestAsset: largest,
 };
-console.log(JSON.stringify({ baseline, limits, minimumReductions, measured }, null, 2));
+console.log(JSON.stringify({ baseline, limits, pdfReaderLimits, minimumReductions, measured }, null, 2));
 const failures = [];
-for (const key of ['htmlPages', 'htmlBytes', 'jsBytes', 'cssBytes', 'fontBytes']) {
+for (const key of ['htmlPages', 'htmlBytes', 'cssBytes', 'fontBytes']) {
   if (measured[key] > limits[key]) failures.push(`${key} ${measured[key]} > ${limits[key]}`);
 }
 if (measured.governedTotalBytes > limits.totalBytes) failures.push(`governedTotalBytes ${measured.governedTotalBytes} > ${limits.totalBytes}`);
 if (measured.governedAssetCount > limits.assetCount) failures.push(`governedAssetCount ${measured.governedAssetCount} > ${limits.assetCount}`);
 if (largest.bytes > limits.largestAssetBytes) failures.push(`largest asset ${largest.bytes} > ${limits.largestAssetBytes}: ${largest.file}`);
+for (const key of ['totalBytes', 'jsBytes', 'wasmBytes', 'assetCount']) {
+  if (measured.pdfReaderRuntime[key] > pdfReaderLimits[key]) failures.push(`PDF reader ${key} ${measured.pdfReaderRuntime[key]} > ${pdfReaderLimits[key]}`);
+}
+if (!measured.pdfReaderRuntime.largestAsset || measured.pdfReaderRuntime.largestAsset.bytes > pdfReaderLimits.largestAssetBytes) failures.push(`PDF reader largest asset exceeds ${pdfReaderLimits.largestAssetBytes}`);
 const reductions = {
   bytes: 1 - measured.governedTotalBytes / baseline.totalBytes,
   assets: 1 - measured.governedAssetCount / baseline.assetCount,

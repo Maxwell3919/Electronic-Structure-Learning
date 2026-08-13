@@ -6,9 +6,10 @@ interface Props {
   description: string;
   current?: 'home' | 'core' | 'theory' | 'reading' | 'methods' | 'computational-tools' | 'reference';
   noIndex?: boolean;
+  wide?: boolean;
 }
 
-const { title, description, current, noIndex = false } = Astro.props;
+const { title, description, current, noIndex = false, wide = false } = Astro.props;
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -31,7 +32,7 @@ const navigation = [
     {noIndex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <title>{title} · Electronic Structure Atlas</title>
   </head>
-  <body>
+  <body class:list={{ 'wide-page': wide }}>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <a class="site-name" href={href('/')} aria-current={current === 'home' ? 'page' : undefined}>
