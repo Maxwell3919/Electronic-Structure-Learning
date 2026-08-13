@@ -37,6 +37,7 @@ const researchTopicSlugs = [
   'quasiparticles-excitons', 'transport-scattering', 'quantum-geometry-topology', 'reliability-validation',
 ];
 const literatureSlugs = researchTopicSlugs;
+const pilotPaperRoute = 'reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/';
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -65,6 +66,7 @@ const expectedPages = [
   'src/pages/reading/books/cohen-louie/[slug].astro', 'src/pages/reading/books/cohen-louie/index.astro',
   'src/pages/reading/books/giustino/[slug].astro', 'src/pages/reading/books/giustino/index.astro',
   'src/pages/reading/literature/[slug].astro', 'src/pages/reading/literature/index.astro',
+  `src/pages/${pilotPaperRoute}index.astro`,
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
   'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
   ...coreSlugs.map((slug) => `src/pages/core/${slug}/index.astro`),
@@ -84,6 +86,7 @@ const expectedHtml = [
   ...giustinoSlugs.map((slug) => `reading/books/giustino/${slug}/index.html`),
   'reading/literature/index.html',
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
+  `${pilotPaperRoute}index.html`,
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
@@ -95,6 +98,7 @@ const internalRoutes = new Set([
   'reading/books/cohen-louie/', ...cohenLouieRoutes,
   'reading/books/giustino/', ...giustinoRoutes,
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
+  pilotPaperRoute,
   'methods/', 'computational-tools/', 'reference/',
 ]);
 
@@ -257,8 +261,7 @@ const checkLiteraturePages = (baseDirectory, mode) => {
     if (mode === 'built') {
       assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
       assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
-      for (const heading of ['Central Question', 'What researchers ask', 'Evidence', 'Literature Routes', 'Connections']) assert(text.includes(heading), `${relative} lacks ${heading}`);
-      assert(text.includes('Routes will be developed individually from verified primary literature.'), `${relative} lacks the route boundary`);
+      for (const heading of ['Central Question', 'What researchers ask', 'Evidence', 'Literature Routes', 'Connections']) assert(!text.includes(heading), `${relative} retains former topic teaching section ${heading}`);
     }
     if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
     else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
@@ -340,13 +343,15 @@ if (sourceMode) {
   }
 
   const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
-  assert(JSON.stringify(Object.keys(packageJson.dependencies ?? {}).sort()) === JSON.stringify(['astro']), 'Astro must be the only production dependency');
+  assert(JSON.stringify(Object.keys(packageJson.dependencies ?? {}).sort()) === JSON.stringify(['@embedpdf/snippet', 'astro']), 'production dependencies must remain limited to Astro and the pinned PDF viewer');
+  assert(packageJson.dependencies?.['@embedpdf/snippet'] === '2.15.0', 'EmbedPDF must remain pinned to reviewed stable v2.15.0');
   assert(JSON.stringify(Object.keys(packageJson.devDependencies ?? {}).sort()) === JSON.stringify(['@astrojs/check', 'typescript']), 'unexpected development dependency');
 
   const sources = tracked.filter((file) => file.startsWith('src/')).map((file) => fs.readFileSync(path.join(root, file), 'utf8')).join('\n');
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
-  assert(!/<script(?:\s|>)/i.test(sources), 'page-specific client script remains');
+  const scriptedPages = tracked.filter((file) => file.endsWith('.astro') && /<script(?:\s|>)/i.test(fs.readFileSync(path.join(root, file), 'utf8')));
+  assert(scriptedPages.every((file) => file === 'src/pages/reading/literature/[slug].astro' || file === `src/pages/${pilotPaperRoute}index.astro`), `client scripts exist outside the Literature list and pilot reader: ${scriptedPages.join(', ')}`);
   for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'reading contract', 'card grid', 'status badge']) {
     assert(!sources.toLowerCase().includes(term), `legacy or administrative term remains in public source: ${term}`);
   }
@@ -425,7 +430,8 @@ if (builtMode) {
     const actualHtml = walk(dist).filter((file) => file.endsWith('.html')).map((file) => path.relative(dist, file)).sort();
     assert(JSON.stringify(actualHtml) === JSON.stringify(expectedHtml), `built HTML differs from the reviewed set: ${actualHtml.join(', ')}`);
     const builtFiles = walk(dist);
-    assert(!builtFiles.some((file) => /\.(?:js|mjs|cjs)$/i.test(file)), 'built site contains client JavaScript');
+    const builtScripts = builtFiles.filter((file) => /\.(?:js|mjs|cjs)$/i.test(file));
+    assert(builtScripts.length > 0 && builtScripts.every((file) => path.relative(dist, file).startsWith('_astro/')), 'built client JavaScript must remain bundled and limited to Astro assets');
     assert(!builtFiles.some((file) => /\.(?:woff2?|ttf|otf)$/i.test(file)), 'built site contains packaged fonts');
     const sitemapPath = path.join(dist, 'sitemap.xml');
     const robotsPath = path.join(dist, 'robots.txt');
@@ -433,7 +439,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length;
+      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + 1;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
@@ -443,7 +449,7 @@ if (builtMode) {
 
     for (const relative of expectedHtml) {
       const text = fs.readFileSync(path.join(dist, relative), 'utf8');
-      assert(!/<script(?:\s|>)/i.test(text), `${relative} contains a script element`);
+      if (relative !== 'reading/literature/index.html' && !relative.startsWith('reading/literature/')) assert(!/<script(?:\s|>)/i.test(text), `${relative} contains an out-of-scope script element`);
       assert(!text.includes('/Electronic-Structure-Learning//'), `${relative} contains a malformed base path`);
       if (relative === '404.html') {
         assert(text.includes('name="robots" content="noindex"'), '404 is not marked noindex');
