@@ -80,7 +80,7 @@ Core is the Atlas's own continuous explanation of electronic structure. The publ
 
 Foundations is the knowledge, prerequisite, relationship, and reviewed-resource map. The first implementation phase changes the public label and landing-page role without breaking the established `/theory/` routes.
 
-Guided Reading supplies continuous source-aligned narratives and is organized by source type. Books live under `/reading/books/`; research-paper guides live as flat siblings under `/reading/literature/`. The first Literature sequence follows the original Hohenberg–Kohn and Kohn–Sham papers while marking later mathematical clarification separately.
+Guided Reading supplies source-aligned routes and is organized by source type. Books live under `/reading/books/`. Literature uses twelve research-topic entrances; each topic is a restrained paper index, and an individually integrated Paper Reader keeps the original PDF central while binding reviewed notes to page evidence.
 
 The completed Books collection follows four distinct sources without merging their arguments: Martin's theory-to-method spine, Sholl and Steckel's practical plane-wave DFT sequence, Cohen and Louie's condensed-matter progression, and Giustino's route between formal DFT, calculated properties, and experiment. Each guide publishes only completed source-aligned units and keeps its own chapter order.
 
@@ -92,6 +92,13 @@ Book-guide writing guidance for maintainers and automated agents is stored at:
 
 ```text
 .github/agent-guides/book-guided-reading-style.md
+```
+
+The one-paper-at-a-time source, scientific-reading, evidence-integration, and release
+contract for Literature is stored at:
+
+```text
+.github/agent-guides/literature-ingestion-contract.md
 ```
 
 It is not rendered or linked from the public website. The repository is public, so the file remains visible to anyone browsing GitHub.
