@@ -120,6 +120,24 @@ const createNativeSelectionMirror = (readerElement: HTMLElement) => {
   mirror.setAttribute('aria-hidden', 'true');
   readerElement.append(mirror);
 
+  const ownsSelection = (selection: Selection | null) => (
+    selection !== null
+    && selection.rangeCount > 0
+    && !selection.isCollapsed
+    && selection.anchorNode !== null
+    && selection.focusNode !== null
+    && mirror.contains(selection.anchorNode)
+    && mirror.contains(selection.focusNode)
+  );
+
+  document.addEventListener('copy', (event) => {
+    const selection = window.getSelection();
+    const text = mirror.textContent;
+    if (!event.clipboardData || !text || !ownsSelection(selection)) return;
+    event.clipboardData.setData('text/plain', text);
+    event.preventDefault();
+  }, true);
+
   const clear = () => {
     const selection = window.getSelection();
     if (selection?.anchorNode && mirror.contains(selection.anchorNode)) selection.removeAllRanges();
