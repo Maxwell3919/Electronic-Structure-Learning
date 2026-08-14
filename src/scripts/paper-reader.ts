@@ -182,7 +182,7 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   }, {});
   const coverage = document.querySelector<HTMLElement>('[data-annotation-coverage]');
   if (coverage) {
-    coverage.textContent = `${anchors.length} source-aligned anchors · ${readingNotes.length} grouped demo reading notes: ${counts.paragraph ?? 0} paragraphs, ${counts.figure ?? 0} figures, ${counts.equation ?? 0} equations, ${counts.table ?? 0} tables.`;
+    coverage.textContent = `${anchors.length} source-aligned anchors · ${readingNotes.length} grouped reading notes: ${counts.paragraph ?? 0} paragraphs, ${counts.figure ?? 0} figures, ${counts.equation ?? 0} equations, ${counts.table ?? 0} tables.`;
   }
 
   const uuidById = new Map(anchors.map((anchor, index) => [anchor.id, `10000000-0000-4000-8000-${String(index + 1).padStart(12, '0')}`]));
