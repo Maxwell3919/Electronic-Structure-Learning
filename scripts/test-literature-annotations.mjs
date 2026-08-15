@@ -1,14 +1,28 @@
 import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-library.json'), 'utf8'));
-const [first, second] = manifest.papers.filter((paper) => paper.status === 'published');
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-annotation-test-'));
 const databasePath = path.join(temp, 'annotations.sqlite3');
+const recordsRoot = path.join(temp, 'records');
+const fixturePdf = (id, contents) => {
+  const pdfPath = path.join('literature', id, `${id}.pdf`);
+  const bytes = Buffer.from(`%PDF-1.4\n% annotation fixture ${contents}\n%%EOF\n`);
+  fs.mkdirSync(path.join(recordsRoot, 'literature', id), { recursive: true });
+  fs.writeFileSync(path.join(recordsRoot, pdfPath), bytes);
+  return {
+    paper_id: id, pdf_path: pdfPath, document_sha256: createHash('sha256').update(bytes).digest('hex'),
+    page_count: 2, status: 'published',
+  };
+};
+const first = fixturePdf('fixture-one', 'one');
+const second = fixturePdf('fixture-two', 'two');
+const manifestPath = path.join(temp, 'literature-library.json');
+fs.writeFileSync(manifestPath, JSON.stringify({ papers: [first, second] }));
 const port = 20_000 + (process.pid % 10_000);
 const base = `http://127.0.0.1:${port}/papers/api/annotations/`;
 const runtimeArgs = Number(process.versions.node.split('.')[0]) === 22
@@ -19,7 +33,13 @@ let child;
 const start = async () => {
   child = spawn(process.execPath, runtimeArgs, {
     cwd: root,
-    env: { ...process.env, ATLAS_LITERATURE_PORT: String(port), ATLAS_ANNOTATION_DB: databasePath },
+    env: {
+      ...process.env,
+      ATLAS_LITERATURE_PORT: String(port),
+      ATLAS_ANNOTATION_DB: databasePath,
+      ATLAS_LITERATURE_MANIFEST: manifestPath,
+      ATLAS_LITERATURE_ROOT: recordsRoot,
+    },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   let diagnostics = '';

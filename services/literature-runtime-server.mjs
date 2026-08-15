@@ -8,6 +8,7 @@ const host = '127.0.0.1';
 const port = Number(process.env.ATLAS_LITERATURE_PORT ?? 8103);
 const recordsRoot = resolve(process.env.ATLAS_LITERATURE_ROOT ?? '/home/talos/work/Research-Workflow-Records');
 const databasePath = resolve(process.env.ATLAS_ANNOTATION_DB ?? '/home/talos/.local/share/electronic-structure-atlas/annotations.sqlite3');
+const libraryManifestPath = resolve(process.env.ATLAS_LITERATURE_MANIFEST ?? new URL('../src/reading/literature-library.json', import.meta.url).pathname);
 const maxAnnotationBytes = 64 * 1024;
 const rateLimitWindowMs = 60_000;
 const rateLimitMax = 30;
@@ -28,7 +29,7 @@ const resolveInsideRoot = (entryPath) => {
   return absolute;
 };
 
-const library = JSON.parse(readFileSync(new URL('../src/reading/literature-library.json', import.meta.url), 'utf8'));
+const library = JSON.parse(readFileSync(libraryManifestPath, 'utf8'));
 const publishedEntries = library.papers.filter((entry) => entry.status === 'published');
 const papers = new Map(publishedEntries.map((entry) => {
   if (!entry.paper_id || !entry.pdf_path || !/^[a-f0-9]{64}$/.test(entry.document_sha256) || !Number.isInteger(entry.page_count)) {
@@ -48,13 +49,18 @@ if (papers.size !== publishedEntries.length) throw new Error('Duplicate literatu
 const papersByHash = new Map([...papers.values()].map((paper) => [paper.sourceSha256, paper]));
 if (papersByHash.size !== papers.size) throw new Error('Duplicate canonical PDF hash in literature manifest.');
 
-const annotatedManifest = JSON.parse(readFileSync(resolveInsideRoot('manifests/readers/hbn-sin-superconductivity-cdw.json'), 'utf8'));
-const scientificAnnotationsPath = resolveInsideRoot(annotatedManifest.annotations.path);
-if (annotatedManifest.paper_id !== 'hbn-sin-superconductivity-cdw' || !statSync(scientificAnnotationsPath).isFile()) {
-  throw new Error('Scientific annotation authority mismatch for hbn-sin-superconductivity-cdw.');
-}
-if (sha256File(scientificAnnotationsPath) !== annotatedManifest.annotations.sha256) {
-  throw new Error('Scientific annotation file hash mismatch for hbn-sin-superconductivity-cdw.');
+let scientificAnnotationsPath = null;
+let scientificAnnotationsSha256 = null;
+if (papers.has('hbn-sin-superconductivity-cdw')) {
+  const annotatedManifest = JSON.parse(readFileSync(resolveInsideRoot('manifests/readers/hbn-sin-superconductivity-cdw.json'), 'utf8'));
+  scientificAnnotationsPath = resolveInsideRoot(annotatedManifest.annotations.path);
+  scientificAnnotationsSha256 = annotatedManifest.annotations.sha256;
+  if (annotatedManifest.paper_id !== 'hbn-sin-superconductivity-cdw' || !statSync(scientificAnnotationsPath).isFile()) {
+    throw new Error('Scientific annotation authority mismatch for hbn-sin-superconductivity-cdw.');
+  }
+  if (sha256File(scientificAnnotationsPath) !== scientificAnnotationsSha256) {
+    throw new Error('Scientific annotation file hash mismatch for hbn-sin-superconductivity-cdw.');
+  }
 }
 
 mkdirSync(dirname(databasePath), { recursive: true, mode: 0o700 });
@@ -212,12 +218,13 @@ const serveSharedAnnotations = (request, response, documentHash, paper) => {
 };
 
 const serveScientificJson = (request, response) => {
+  if (!scientificAnnotationsPath || !scientificAnnotationsSha256) return notFound(response);
   const body = readFileSync(scientificAnnotationsPath);
   response.writeHead(200, {
     'Cache-Control': 'private, no-store',
     'Content-Length': body.length,
     'Content-Type': 'application/json; charset=utf-8',
-    ETag: `"sha256-${annotatedManifest.annotations.sha256}"`,
+    ETag: `"sha256-${scientificAnnotationsSha256}"`,
     'X-Content-Type-Options': 'nosniff',
   });
   if (request.method === 'HEAD') response.end(); else response.end(body);
