@@ -11,10 +11,13 @@ const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-annotation-test-'));
 const databasePath = path.join(temp, 'annotations.sqlite3');
 const port = 20_000 + (process.pid % 10_000);
 const base = `http://127.0.0.1:${port}/papers/api/annotations/`;
+const runtimeArgs = Number(process.versions.node.split('.')[0]) === 22
+  ? ['--experimental-sqlite', 'services/literature-runtime-server.mjs']
+  : ['services/literature-runtime-server.mjs'];
 let child;
 
 const start = async () => {
-  child = spawn(process.execPath, ['services/literature-runtime-server.mjs'], {
+  child = spawn(process.execPath, runtimeArgs, {
     cwd: root,
     env: { ...process.env, ATLAS_LITERATURE_PORT: String(port), ATLAS_ANNOTATION_DB: databasePath },
     stdio: ['ignore', 'pipe', 'pipe'],
