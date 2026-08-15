@@ -1,0 +1,114 @@
+[
+  {
+    "paper_id": "stable-semiconducting-1t-prime-hfcl2-monolayer",
+    "doi": "10.1021/acsomega.4c10560",
+    "pdf_path": "literature/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material.pdf",
+    "source_sha256": "9b5df45cffcfc6194b73fbc0823bbac2573f4f93fc51a0ab2811cf370cf6dd90",
+    "page_count": 15,
+    "identity_markers": ["Unveiling the Stable Semiconducting 1T′-HfCl2", "10.1021/acsomega.4c10560"]
+  },
+  {
+    "paper_id": "hfx2-type-ii-photovoltaic-heterostructures",
+    "doi": "10.1088/0256-307X/37/12/127101",
+    "pdf_path": "literature/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -.pdf",
+    "source_sha256": "7243ef2245ef4f4e722b0ebaecc70efa94465281ada57199dc7bb4852b828ab0",
+    "page_count": 4,
+    "identity_markers": ["HfX2 (X = Cl, Br, I) Monolayer", "Xingyong Huang"]
+  },
+  {
+    "paper_id": "dfpt-phonons-crystal-properties",
+    "doi": "10.1103/RevModPhys.73.515",
+    "pdf_path": "literature/Phonons and related crystal properties from density-functional perturbation theory/Phonons and related crystal properties from density-functional perturbation theory.pdf",
+    "source_sha256": "6fac9bb9a5ef0b1d26eaeafef43b8780c612744acac5592aa3999d8092f84089",
+    "page_count": 48,
+    "identity_markers": ["Phonons and related crystal properties", "Stefano Baroni"]
+  },
+  {
+    "paper_id": "electron-phonon-interactions-first-principles",
+    "doi": "10.1103/RevModPhys.89.015003",
+    "pdf_path": "literature/Electron-phonon interactions from first principles/Electron-phonon interactions from first principles.pdf",
+    "source_sha256": "5d980627ad272b2a92d1f760f0e6a0883b1b3fcc941436903a361024ce330251",
+    "page_count": 68,
+    "identity_markers": ["Electron-phonon interactions from first principles", "Feliciano Giustino"]
+  },
+  {
+    "paper_id": "gated-2d-dfpt",
+    "doi": "10.1103/PhysRevB.96.075448",
+    "pdf_path": "literature/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene.pdf",
+    "source_sha256": "2a64d0291a511dc8e62300edd3d2f4491184aa233078bc03d68e021124c5156b",
+    "page_count": 23,
+    "identity_markers": ["Density functional perturbation theory for gated two-dimensional heterostructures", "Thibault Sohier"]
+  },
+  {
+    "paper_id": "allen-dynes-transition-temperature",
+    "doi": "10.1103/PhysRevB.12.905",
+    "pdf_path": "literature/Transition temperature of strong-coupled superconductors reanalyzed/Transition temperature of strong-coupled superconductors reanalyzed.pdf",
+    "source_sha256": "ab8fb4e5df8e7bc8c38195e3d6ed4c5f0325cd86b6065b5f293a3380cc26ee0f",
+    "page_count": 18,
+    "identity_markers": ["Transition temperature", "P. B. Allen"]
+  },
+  {
+    "paper_id": "snse2-ptte2-interfacial-superconductivity",
+    "doi": "10.1088/0256-307X/43/1/010711",
+    "pdf_path": "literature/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2.pdf",
+    "source_sha256": "bb66d9ebfaeb4b019c8d360f784e7a0c4637a96291dd72d43dae7a5cabcb2ade",
+    "page_count": 7,
+    "identity_markers": ["Interfacial superconductivity in the type-III heterostructure", "Jun Fan"]
+  },
+  {
+    "paper_id": "bilayer-cote2-superconductivity",
+    "doi": "10.1103/l89c-t2s4",
+    "pdf_path": "literature/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2.pdf",
+    "source_sha256": "6206e9d9d634f31d5ff051b578592dd2806cc498ec3d176ce2f59037cac594b8",
+    "page_count": 10,
+    "identity_markers": ["Interlayer-coupling-driven stabilization", "Wenping Chen"]
+  },
+  {
+    "paper_id": "cu2n-electron-phonon-topology",
+    "doi": "10.1103/t7nc-p31n",
+    "pdf_path": "literature/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties.pdf",
+    "source_sha256": "53a7d612f3d2b93cf4ac915c00c877f29ef273b0d5ec41a27153dc36892d49cb",
+    "page_count": 8,
+    "identity_markers": ["Enhanced superconductivity in two-dimensional Cu2", "10.1103/t7nc-p31n"]
+  },
+  {
+    "paper_id": "cross-dimensional-electron-phonon-coupling",
+    "doi": "10.1038/s41467-019-10400-z",
+    "pdf_path": "literature/Cross-dimensional electron-phonon coupling in van der Waals heterostructures/Cross-dimensional electron-phonon coupling in van der Waals heterostructures.pdf",
+    "source_sha256": "5648ed6ad95247c1183c1bd23aecbb5273670d35187437e34e02f241f3c57d8b",
+    "page_count": 9,
+    "identity_markers": ["Cross-dimensional electron-phonon coupling", "10.1038/s41467-019-10400-z"]
+  },
+  {
+    "paper_id": "nbse2-stacking-superconductivity-cdw",
+    "doi": "10.48550/arXiv.2607.20335",
+    "pdf_path": "literature/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2.pdf",
+    "source_sha256": "5ae69f78321d293c171bd87343110f48fe80eca3f1fb65f46870d67793898167",
+    "page_count": 13,
+    "identity_markers": ["Stacking-tuned superconductivity", "Sandra Sajan"]
+  },
+  {
+    "paper_id": "functionalized-double-mxene-superconductivity",
+    "doi": "10.1038/s41524-026-02245-0",
+    "pdf_path": "literature/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes.pdf",
+    "source_sha256": "45ff82b05336812cdb155bf2e2c194dce34ac1a72d838ea7cf04b5c4c7d61452",
+    "page_count": 26,
+    "identity_markers": ["High-Tc superconductivity in functionalized", "10.1038/s41524-026-02245-0"]
+  },
+  {
+    "paper_id": "layered-dihalides-trihalides-structures",
+    "doi": "10.3390/cryst7050121",
+    "pdf_path": "literature/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides.pdf",
+    "source_sha256": "e25c2502ecca2cb6504ca1ebff83c111a383b3fb6168167b4eac61a183aff00a",
+    "page_count": 17,
+    "identity_markers": ["Crystal and Magnetic Structures in Layered", "Michael A. McGuire"]
+  },
+  {
+    "paper_id": "trigonal-symmetry-breaking-dihalides-trihalides",
+    "doi": "10.1103/PhysRevB.105.245153",
+    "pdf_path": "literature/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3.pdf",
+    "source_sha256": "75576a64c366908f80fa92049e279525a012cb86af8dc3c33b400b54eb44fbd9",
+    "page_count": 12,
+    "identity_markers": ["Trigonal Symmetry Breaking and its Electronic Effects", "Alexandru B. Georgescu"]
+  }
+]

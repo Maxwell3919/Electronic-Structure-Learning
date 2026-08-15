@@ -42,7 +42,7 @@ const shollSteckelRoutes = shollSteckelChapterSlugs.map((slug) => `/reading/book
 const cohenLouieRoutes = cohenLouieReadingSlugs.map((slug) => `/reading/books/cohen-louie/${slug}/`);
 const giustinoRoutes = giustinoReadingSlugs.map((slug) => `/reading/books/giustino/${slug}/`);
 const literatureRoutes = researchTopics.map((topic) => `/reading/literature/${topic.id}/`);
-const paperRoutes = literaturePapers.map((paper) => paper.href);
+const paperRoutes = literaturePapers.flatMap((paper) => paper.href ? [paper.href] : []);
 
 export const GET: APIRoute = ({ site }) => {
   const routes = [...new Set([...fixedRoutes, ...literatureRoutes, ...paperRoutes, ...theoryRoutes, ...martinRoutes, ...shollSteckelRoutes, ...cohenLouieRoutes, ...giustinoRoutes])].sort();

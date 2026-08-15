@@ -6,7 +6,7 @@ import { isAbsolute, relative, resolve, sep } from 'node:path';
 const host = '127.0.0.1';
 const port = Number(process.env.ATLAS_LITERATURE_PORT ?? 8103);
 const recordsRoot = resolve(process.env.ATLAS_LITERATURE_ROOT ?? '/home/talos/work/Research-Workflow-Records');
-const whitelist = [{
+const annotatedWhitelist = [{
   paperId: 'hbn-sin-superconductivity-cdw',
   doi: '10.1103/jmys-zkgs',
   sourceSha256: '7b66fdf0f4b4688f3633bd43ce908289923da5ab79c928fcd4964ebb7e8fbdaf',
@@ -21,7 +21,7 @@ const resolveInsideRoot = (path) => {
   return absolute;
 };
 
-const papers = new Map(whitelist.map((entry) => {
+const annotatedPapers = annotatedWhitelist.map((entry) => {
   const manifestPath = resolveInsideRoot(entry.manifestPath);
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
   if (manifest.paper_id !== entry.paperId || manifest.doi !== entry.doi || manifest.pdf?.sha256 !== entry.sourceSha256) {
@@ -37,7 +37,26 @@ const papers = new Map(whitelist.map((entry) => {
     throw new Error(`Annotation identity mismatch: ${entry.paperId}`);
   }
   return [entry.paperId, { ...entry, manifest, pdfPath, annotationsPath }];
-}));
+});
+
+const preprocessingWhitelist = JSON.parse(readFileSync(new URL('./literature-preprocessing-sources.json', import.meta.url), 'utf8'));
+const preprocessingPapers = preprocessingWhitelist.map((entry) => {
+  const paperId = entry.paper_id;
+  const pdfPath = resolveInsideRoot(entry.pdf_path);
+  if (!paperId || !entry.doi || !entry.source_sha256 || !statSync(pdfPath).isFile()) {
+    throw new Error(`Invalid preprocessing literature mapping: ${paperId ?? 'unknown'}`);
+  }
+  if (sha256(pdfPath) !== entry.source_sha256) throw new Error(`PDF hash mismatch: ${paperId}`);
+  return [paperId, {
+    paperId,
+    doi: entry.doi,
+    sourceSha256: entry.source_sha256,
+    pdfPath,
+  }];
+});
+
+const papers = new Map([...annotatedPapers, ...preprocessingPapers]);
+if (papers.size !== annotatedPapers.length + preprocessingPapers.length) throw new Error('Duplicate literature runtime paper ID.');
 
 const allowedOrigins = new Set(['http://127.0.0.1:4321', 'http://localhost:4321', 'http://127.0.0.1:8101']);
 
@@ -47,6 +66,7 @@ const notFound = (response) => {
 };
 
 const serveJson = (request, response, paper) => {
+  if (!paper.annotationsPath) return notFound(response);
   const body = readFileSync(paper.annotationsPath);
   response.writeHead(200, {
     'Cache-Control': 'private, no-store',
@@ -107,5 +127,5 @@ const server = createServer((request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`Atlas literature runtime listening on http://${host}:${port} for ${papers.size} whitelisted paper`);
+  console.log(`Atlas literature runtime listening on http://${host}:${port} for ${papers.size} whitelisted papers`);
 });

@@ -1,0 +1,155 @@
+[
+  {
+    "paper_id": "stable-semiconducting-1t-prime-hfcl2-monolayer",
+    "canonical_title": "Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer: A New 2D Material",
+    "priority": 1,
+    "records_source_path": "literature/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material",
+    "source_status": "source_ready",
+    "target_literature_topic": "structures-phase-competition",
+    "atlas_slug": "stable-semiconducting-1t-prime-hfcl2-monolayer"
+  },
+  {
+    "paper_id": "hfx2-type-ii-photovoltaic-heterostructures",
+    "canonical_title": "HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics",
+    "priority": 1,
+    "records_source_path": "literature/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -",
+    "source_status": "source_ready",
+    "target_literature_topic": "interfaces-heterostructures",
+    "atlas_slug": "hfx2-type-ii-photovoltaic-heterostructures"
+  },
+  {
+    "paper_id": "dfpt-phonons-crystal-properties",
+    "canonical_title": "Phonons and Related Crystal Properties from Density-Functional Perturbation Theory",
+    "priority": 1,
+    "records_source_path": "literature/Phonons and related crystal properties from density-functional perturbation theory",
+    "source_status": "source_ready",
+    "target_literature_topic": "lattice-dynamics",
+    "atlas_slug": "dfpt-phonons-crystal-properties"
+  },
+  {
+    "paper_id": "electron-phonon-interactions-first-principles",
+    "canonical_title": "Electron-Phonon Interactions from First Principles",
+    "priority": 1,
+    "records_source_path": "literature/Electron-phonon interactions from first principles",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "electron-phonon-interactions-first-principles"
+  },
+  {
+    "paper_id": "gated-2d-dfpt",
+    "canonical_title": "Density Functional Perturbation Theory for Gated Two-Dimensional Heterostructures",
+    "priority": 1,
+    "records_source_path": "literature/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene",
+    "source_status": "source_ready",
+    "target_literature_topic": "lattice-dynamics",
+    "atlas_slug": "gated-2d-dfpt"
+  },
+  {
+    "paper_id": "allen-dynes-transition-temperature",
+    "canonical_title": "Transition Temperature of Strong-Coupled Superconductors Reanalyzed",
+    "priority": 1,
+    "records_source_path": "literature/Transition temperature of strong-coupled superconductors reanalyzed",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "allen-dynes-transition-temperature"
+  },
+  {
+    "paper_id": "snse2-ptte2-interfacial-superconductivity",
+    "canonical_title": "Interfacial Superconductivity in the Type-III Heterostructure SnSe2/PtTe2",
+    "priority": 1,
+    "records_source_path": "literature/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "snse2-ptte2-interfacial-superconductivity"
+  },
+  {
+    "paper_id": "bilayer-cote2-superconductivity",
+    "canonical_title": "Interlayer-Coupling-Driven Stabilization and Superconductivity in Bilayer CoTe2",
+    "priority": 1,
+    "records_source_path": "literature/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "bilayer-cote2-superconductivity"
+  },
+  {
+    "paper_id": "electron-doped-hfncl-superconductivity",
+    "canonical_title": "High-Tc Superconductivity in Weakly Electron-Doped HfNCl",
+    "priority": 1,
+    "records_source_path": null,
+    "source_status": "source_pending",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "electron-doped-hfncl-superconductivity"
+  },
+  {
+    "paper_id": "cu2n-electron-phonon-topology",
+    "canonical_title": "Enhanced Superconductivity in Two-Dimensional Cu2N: First-Principles Investigation of Electron-Phonon Coupling and Topological Properties",
+    "priority": 1,
+    "records_source_path": "literature/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "cu2n-electron-phonon-topology"
+  },
+  {
+    "paper_id": "fese-srtio3-interfacial-mode-coupling",
+    "canonical_title": "Interfacial Mode Coupling as the Origin of the Enhancement of Tc in FeSe Films on SrTiO3",
+    "priority": 1,
+    "records_source_path": null,
+    "source_status": "source_pending",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "fese-srtio3-interfacial-mode-coupling"
+  },
+  {
+    "paper_id": "wannier-electron-phonon-interaction",
+    "canonical_title": "Electron-Phonon Interaction Using Wannier Functions",
+    "priority": 1,
+    "records_source_path": null,
+    "source_status": "source_pending",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "wannier-electron-phonon-interaction"
+  },
+  {
+    "paper_id": "cross-dimensional-electron-phonon-coupling",
+    "canonical_title": "Cross-Dimensional Electron-Phonon Coupling in van der Waals Heterostructures",
+    "priority": 2,
+    "records_source_path": "literature/Cross-dimensional electron-phonon coupling in van der Waals heterostructures",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "cross-dimensional-electron-phonon-coupling"
+  },
+  {
+    "paper_id": "nbse2-stacking-superconductivity-cdw",
+    "canonical_title": "Stacking-Tuned Superconductivity and Competing Charge-Density-Wave States in NbSe2",
+    "priority": 2,
+    "records_source_path": "literature/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "nbse2-stacking-superconductivity-cdw"
+  },
+  {
+    "paper_id": "functionalized-double-mxene-superconductivity",
+    "canonical_title": "High-Tc Superconductivity in Functionalized Out-of-Plane Ordered Double Transition Metal MXenes",
+    "priority": 2,
+    "records_source_path": "literature/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes",
+    "source_status": "source_ready",
+    "target_literature_topic": "electron-phonon-superconductivity",
+    "atlas_slug": "functionalized-double-mxene-superconductivity"
+  },
+  {
+    "paper_id": "layered-dihalides-trihalides-structures",
+    "canonical_title": "Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides",
+    "priority": 2,
+    "records_source_path": "literature/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides",
+    "source_status": "source_ready",
+    "target_literature_topic": "structures-phase-competition",
+    "atlas_slug": "layered-dihalides-trihalides-structures"
+  },
+  {
+    "paper_id": "trigonal-symmetry-breaking-dihalides-trihalides",
+    "canonical_title": "Trigonal Symmetry Breaking and Its Electronic Effects in the Two-Dimensional Dihalides MX2 and Trihalides MX3",
+    "priority": 2,
+    "records_source_path": "literature/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3",
+    "source_status": "source_ready",
+    "target_literature_topic": "structures-phase-competition",
+    "atlas_slug": "trigonal-symmetry-breaking-dihalides-trihalides"
+  }
+]
