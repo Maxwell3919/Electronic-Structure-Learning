@@ -16,9 +16,10 @@ const limits = {
   // The Literature closure adds thirteen reviewed static guide routes. Keep
   // the route and governed-file budget explicit rather than treating those
   // source-aligned pages as an accidental legacy-site regression.
-  assetCount: 180,
+  // Fourteen source-ready preprocessing shells add fourteen reviewed HTML files.
+  assetCount: 182,
   largestAssetBytes: 210_000,
-  htmlPages: 170,
+  htmlPages: 174,
 };
 const pdfReaderLimits = {
   totalBytes: 7_000_000,
@@ -27,7 +28,7 @@ const pdfReaderLimits = {
   assetCount: 6,
   largestAssetBytes: 4_800_000,
 };
-const minimumReductions = { bytes: 0.70, assets: 0.63 };
+const minimumReductions = { bytes: 0.70, assets: 0.61 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,

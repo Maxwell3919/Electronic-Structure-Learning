@@ -39,6 +39,10 @@ const researchTopicSlugs = [
 const literatureSlugs = researchTopicSlugs;
 const pilotPaperRoute = 'reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/';
 const pilotPdfRoute = 'papers/hbn-sin-superconductivity-cdw.pdf';
+const preprocessingQueue = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-preprocessing.json'), 'utf8'));
+const readyPreprocessing = preprocessingQueue.filter((entry) => entry.source_status === 'source_ready');
+const preprocessingPaperRoutes = readyPreprocessing.map((entry) => `reading/literature/${entry.target_literature_topic}/${entry.atlas_slug}/`);
+const preprocessingPdfRoutes = readyPreprocessing.map((entry) => `papers/${entry.paper_id}.pdf`);
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -67,6 +71,7 @@ const expectedPages = [
   'src/pages/reading/books/cohen-louie/[slug].astro', 'src/pages/reading/books/cohen-louie/index.astro',
   'src/pages/reading/books/giustino/[slug].astro', 'src/pages/reading/books/giustino/index.astro',
   'src/pages/reading/literature/[slug].astro', 'src/pages/reading/literature/index.astro',
+  'src/pages/reading/literature/[topic]/[paper].astro',
   `src/pages/${pilotPaperRoute}index.astro`,
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
   'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
@@ -88,6 +93,7 @@ const expectedHtml = [
   'reading/literature/index.html',
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   `${pilotPaperRoute}index.html`,
+  ...preprocessingPaperRoutes.map((route) => `${route}index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
@@ -101,6 +107,8 @@ const internalRoutes = new Set([
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   pilotPaperRoute,
   pilotPdfRoute,
+  ...preprocessingPaperRoutes,
+  ...preprocessingPdfRoutes,
   'methods/', 'computational-tools/', 'reference/',
 ]);
 
@@ -268,6 +276,25 @@ const checkLiteraturePages = (baseDirectory, mode) => {
     if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
     else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
   }
+  if (mode === 'source') {
+    const shell = fs.readFileSync(path.join(baseDirectory, prefix, '[topic]/[paper].astro'), 'utf8');
+    for (const marker of ['Reading analysis pending', 'No Reading Notes', 'Open Records canonical PDF', 'pdf-only-shell', 'pdf-only-frame']) {
+      assert(shell.includes(marker), `${prefix}/[topic]/[paper].astro lacks preprocessing boundary ${marker}`);
+    }
+    for (const forbidden of ['annotations.json', 'data-annotations-url', 'annotation-left', 'annotation-right', 'readingNotes']) {
+      assert(!shell.includes(forbidden), `${prefix}/[topic]/[paper].astro fabricates or requires ${forbidden}`);
+    }
+  } else {
+    for (const route of preprocessingPaperRoutes) {
+      const relative = `${route}index.html`;
+      const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
+      assert(text.includes('Reading analysis pending'), `${relative} lacks the pre-reading boundary`);
+      assert(text.includes(`/papers/${route.split('/').at(-2)}.pdf`) || text.includes('data-paper-id='), `${relative} lacks a PDF runtime mapping`);
+      for (const forbidden of ['annotation-left', 'annotation-right', 'annotation-coverage']) {
+        assert(!text.includes(forbidden), `${relative} exposes completed Reader UI: ${forbidden}`);
+      }
+    }
+  }
 };
 
 const checkReadingManifest = () => {
@@ -353,7 +380,7 @@ if (sourceMode) {
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   const scriptedPages = tracked.filter((file) => file.endsWith('.astro') && /<script(?:\s|>)/i.test(fs.readFileSync(path.join(root, file), 'utf8')));
-  assert(scriptedPages.every((file) => file === 'src/pages/reading/literature/[slug].astro' || file === `src/pages/${pilotPaperRoute}index.astro`), `client scripts exist outside the Literature list and pilot reader: ${scriptedPages.join(', ')}`);
+  assert(scriptedPages.every((file) => file === 'src/pages/reading/literature/[slug].astro' || file === `src/pages/${pilotPaperRoute}index.astro`), `client scripts exist outside the Literature list and completed Paper Reader: ${scriptedPages.join(', ')}`);
   for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'reading contract', 'card grid', 'status badge']) {
     assert(!sources.toLowerCase().includes(term), `legacy or administrative term remains in public source: ${term}`);
   }
@@ -441,7 +468,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + 1;
+      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + 1 + preprocessingPaperRoutes.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');

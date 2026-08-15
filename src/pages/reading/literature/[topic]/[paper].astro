@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { literaturePaperById, type LiteraturePaper } from '../../../../reading/literature-papers';
+import { literaturePreprocessingQueue, type LiteraturePreprocessingEntry } from '../../../../reading/literature-preprocessing';
+import { researchTopicById } from '../../../../reading/research-topics';
+
+export function getStaticPaths() {
+  return literaturePreprocessingQueue
+    .filter((entry) => entry.source_status === 'source_ready')
+    .map((entry) => ({
+      params: { topic: entry.target_literature_topic, paper: entry.atlas_slug },
+      props: { entry, paper: literaturePaperById[entry.paper_id] },
+    }));
+}
+
+const { entry, paper } = Astro.props as { entry: LiteraturePreprocessingEntry; paper: LiteraturePaper };
+const topic = researchTopicById[entry.target_literature_topic];
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => route.startsWith('http') ? route : `${base}${route.replace(/^\//, '')}`;
+const pdfUrl = href(`/papers/${paper.id}.pdf`);
+---
+
+<BaseLayout title={paper.title} description={`Open the Records canonical source PDF for ${paper.title}. Scientific reading is pending.`} current="reading" wide>
+  <div class="reader-heading">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href={href('/reading/literature/')}>Literature</a><span aria-hidden="true">/</span>
+      <a href={href(`/reading/literature/${topic.id}/`)}>{topic.title}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Pre-reading PDF</span>
+    </nav>
+    <h1>{paper.title}</h1>
+    <p class="reader-meta">{paper.authors.join(', ')} · {paper.journal} · {paper.year} · <a href={`https://doi.org/${paper.doi}`}>DOI {paper.doi}</a></p>
+    {paper.companionCorrections?.map((correction) => (
+      <p class="reader-meta">Companion correction: <a href={`https://doi.org/${correction.doi}`}>{correction.label} · DOI {correction.doi}</a></p>
+    ))}
+    <p class="reader-meta">Source version: {paper.sourceVersion}</p>
+    <p><a class="pdf-download" href={pdfUrl}>Open Records canonical PDF</a></p>
+    <p class="pre-reading-notice">Reading analysis pending. No Reading Notes, source anchors, figure interpretation, equations, claims, or evidence commentary have been published for this paper.</p>
+  </div>
+
+  <section class="pdf-only-shell" aria-label="Pre-reading canonical PDF" data-paper-id={paper.id} data-pdf-url={pdfUrl}>
+    <div class="pdf-column">
+      <iframe class="pdf-only-frame" src={pdfUrl} title={`Records canonical PDF · ${paper.title}`}></iframe>
+    </div>
+  </section>
+</BaseLayout>
