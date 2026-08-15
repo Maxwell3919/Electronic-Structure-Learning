@@ -16,20 +16,23 @@ const limits = {
   // The Literature closure adds thirteen reviewed static guide routes. Keep
   // the route and governed-file budget explicit rather than treating those
   // source-aligned pages as an accidental legacy-site regression.
-  // Fourteen source-ready preprocessing shells add fourteen reviewed HTML files.
-  // Vite may emit one additional governed metadata asset on a cold CI build.
-  assetCount: 183,
+  // The Records-wide Literature manifest adds 95 source-ready Reader routes
+  // (the completed pilot remains its dedicated route). Keep one governed file
+  // per route instead of hiding the explicitly requested library expansion.
+  assetCount: 264,
   largestAssetBytes: 210_000,
-  htmlPages: 174,
+  htmlPages: 255,
 };
 const pdfReaderLimits = {
   totalBytes: 7_000_000,
   jsBytes: 2_200_000,
   wasmBytes: 4_800_000,
-  assetCount: 6,
+  // Complete and pre-reading Readers use separate small entry modules while
+  // sharing the pinned EmbedPDF runtime and annotation implementation.
+  assetCount: 7,
   largestAssetBytes: 4_800_000,
 };
-const minimumReductions = { bytes: 0.70, assets: 0.61 };
+const minimumReductions = { bytes: 0.70, assets: 0.44 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,

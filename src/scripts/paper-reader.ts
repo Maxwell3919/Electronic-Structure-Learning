@@ -1,6 +1,5 @@
 import EmbedPDF, {
   AnnotationPlugin,
-  LockModeType,
   PdfAnnotationBorderStyle,
   PdfAnnotationSubtype,
   SelectionPlugin,
@@ -10,6 +9,7 @@ import EmbedPDF, {
   type PdfSquareAnnoObject,
   type ScrollMetrics,
 } from '@embedpdf/snippet';
+import { attachSharedAnnotationLayer, sharedAnnotationViewerConfig } from './shared-pdf-annotations';
 import type {
   PaperAnchor,
   PaperAnnotationDocument,
@@ -162,7 +162,8 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   const sourceSha256 = readerElement.dataset.sourceSha256;
   const pdfUrl = readerElement.dataset.pdfUrl;
   const annotationsUrl = readerElement.dataset.annotationsUrl;
-  if (!paperId || !sourceSha256 || !pdfUrl || !annotationsUrl) throw new Error('Missing Paper Reader source mapping.');
+  const sharedAnnotationsUrl = readerElement.dataset.sharedAnnotationsUrl;
+  if (!paperId || !sourceSha256 || !pdfUrl || !annotationsUrl || !sharedAnnotationsUrl) throw new Error('Missing Paper Reader source mapping.');
 
   const response = await fetch(annotationsUrl, { credentials: 'same-origin' });
   if (!response.ok) throw new Error(`Annotation request failed with HTTP ${response.status}.`);
@@ -190,9 +191,10 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
     type: 'container',
     target: viewerTarget,
     documentManager: { initialDocuments: [{ url: pdfUrl, documentId: 'pilot-paper' }] },
-    disabledCategories: ['annotation', 'form', 'redaction', 'insert', 'document-open', 'document-export', 'document-print'],
+    ...sharedAnnotationViewerConfig,
     scroll: { defaultStrategy: ScrollStrategy.Vertical, defaultPageGap: 18 },
     theme: { preference: 'light' },
+    fonts: { ui: null, signature: null },
   });
 
   const setActive = (id: string) => {
@@ -254,9 +256,21 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
       return { annotation: object };
     });
     annotationScope.importAnnotations(items);
-    annotationScope.setLocked({ type: LockModeType.All });
     document.querySelector<HTMLElement>('.reader-status')?.remove();
     setActive(anchors[0]?.id ?? '');
+    void attachSharedAnnotationLayer({
+      registry,
+      documentId: 'pilot-paper',
+      documentHash: sourceSha256,
+      apiUrl: sharedAnnotationsUrl,
+      readerElement,
+      ignoredAnnotationIds: uuidById.values(),
+    }).catch((error) => {
+      console.error(error);
+      readerElement.dataset.sharedAnnotationError = 'true';
+      const status = document.querySelector<HTMLElement>('[data-shared-annotation-status]');
+      if (status) status.textContent = 'Shared annotations are temporarily unavailable.';
+    });
   });
 
   annotationScope.onStateChange(() => {

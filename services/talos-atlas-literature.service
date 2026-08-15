@@ -8,13 +8,16 @@ Type=simple
 WorkingDirectory=/home/talos/work/Electronic-Structure-Learning
 Environment=ATLAS_LITERATURE_ROOT=/home/talos/work/Research-Workflow-Records
 Environment=ATLAS_LITERATURE_PORT=8103
+Environment=ATLAS_ANNOTATION_DB=/home/talos/.local/share/electronic-structure-atlas/annotations.sqlite3
 ExecStart=/home/talos/.nvm/versions/node/v25.8.2/bin/node /home/talos/work/Electronic-Structure-Learning/services/literature-runtime-server.mjs
 Restart=always
 RestartSec=5
+UMask=0077
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ReadOnlyPaths=/home/talos/work/Electronic-Structure-Learning /home/talos/work/Research-Workflow-Records
+ReadWritePaths=/home/talos/.local/share/electronic-structure-atlas
 
 [Install]
 WantedBy=default.target

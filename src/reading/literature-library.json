@@ -1,0 +1,2905 @@
+{
+  "schema_version": 1,
+  "authority": "Maxwell3919/Research-Workflow-Records",
+  "records_main_sha": "40bf372a7a1cbffa72859aea6f10345b30189ccd",
+  "generated_at": "2026-08-15T16:41:07.179Z",
+  "stats": {
+    "scanned": 130,
+    "atlas_related": 99,
+    "published": 96,
+    "deduplicated": 7,
+    "missing_pdf": 3,
+    "unclassified": 0,
+    "failed": 0
+  },
+  "deduplicated_records": [
+    "Ferroelectric control of a quantum spin Hall phase in - P t T e 2 - - alpha - - I n 2 S e 3 van der Waals heterobilayers",
+    "Ferroelectric switching of a quantum spin Hall phase in - P t T e 2 - - alpha - - I n 2 S e 3 van der Waals heterobilayers",
+    "Ferroelectric switching of a quantum spin Hall phase in a PtTe2 - alpha-In2Se3 van der Waals heterobilayer",
+    "High-throughput-study-on-magnetic-ground-states-with-Hubbard-U-corrections-in-transition-metal-dihalide-monolayers-(Supplementary-Information)",
+    "Origin-of-charge-transfer-and-enhanced-electron-phonon-coupling-in-single-unit-cell-FeSe-films-on-SrTiO3-(Supplementary-Information)",
+    "Reversible-and-selective-ion-intercalation-through-the-top-surface-of-few-layer-MoS2-(Supplementary-Information-2)",
+    "Supplementary Information"
+  ],
+  "excluded_records": [
+    "A Model Context Protocol Server for Quantum Execution in Hybrid Quantum-HPC Environments",
+    "A Sample Article Using IEEEtran.cls for IEEE Journals and Transactions",
+    "APS Author Guide for REVTEX 4.2",
+    "Attention Is All You Need",
+    "Comparative Electron–Phonon Screening of Carrier-Doped Monolayer HfX2 (X = Cl, Br, I)",
+    "DeepSeekMath - Pushing the Limits of Mathematical Reasoning in Open Language Models",
+    "Density Functional Theory - A Practical Introduction",
+    "DoRA - Weight-Decomposed Low-Rank Adaptation",
+    "Electronic Structure - Basic Theory and Practical Methods",
+    "Electronic Structure Calculations for Solids and Molecules",
+    "Front Matter",
+    "Fundamentals of Condensed Matter Physics",
+    "Graph of Thoughts - Solving Elaborate Problems with Large Language Models",
+    "How to Use the IEEEtran LATEX Templates",
+    "Manuscript Title - with Forced Linebreak",
+    "Materials Modelling Using Density Functional Theory",
+    "MinerU Library Index",
+    "REVTEX 4.2 Command and Options Summary",
+    "ReAct - Synergizing Reasoning and Acting in Language Models",
+    "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "Revisiting Long-context Modeling from Context Denoising Perspective",
+    "Surface Modification for III-V Selective Area Molecular Beam Epitaxy of Non-Selective Mask Materials",
+    "The Sky Remembers everything - Celestial amplitude, Shadow and OPE in quadratic EFT of gravity",
+    "auguide4-2",
+    "tcallmaterials",
+    "temp",
+    "附录 C几何结构优化与解析导数法"
+  ],
+  "papers": [
+    {
+      "paper_id": "records-a-unified-tight-binding-description-of-the-electronic-structure-and-ising-protection-of-superconductivity",
+      "title": "A unified tight-binding description of the electronic structure and Ising protection of superconductivity in misfit layered compounds",
+      "authors": [
+        "G. A. Bobkov",
+        "I. A. Shvets",
+        "I. V. Bobkova"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2607.19308",
+      "arxiv": "2607.19308",
+      "source_record_path": "literature/A unified tight-binding description of the electronic structure and Ising protection of superconductivity in misfit layered compounds",
+      "pdf_path": "literature/A unified tight-binding description of the electronic structure and Ising protection of superconductivity in misfit layered compounds/A unified tight-binding description of the electronic structure and Ising protection of superconductivity in misfit layered compounds.pdf",
+      "document_sha256": "e61ead88000a4d3b223fc4d637dfc087d6adede2a0e2cf4ef37419cb24f8bfc2",
+      "page_count": 16,
+      "primary_category": "quantum-geometry-topology",
+      "topic_relations": [
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/quantum-geometry-topology/records-a-unified-tight-binding-description-of-the-electronic-structure-and-ising-protection-of-superconductivity/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-ab-initio-downfolding-for-electron-phonon-coupled-systems-constrained-density-functional-perturbation-theory-cdfpt",
+      "title": "Ab initio downfolding for electron-phonon coupled systems - constrained density-functional perturbation theory (cDFPT)",
+      "authors": [
+        "Yusuke Nomura",
+        "Ryotaro Arita"
+      ],
+      "year": 2015,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.92.245108",
+      "arxiv": null,
+      "source_record_path": "literature/Ab initio downfolding for electron-phonon coupled systems - constrained density-functional perturbation theory (cDFPT)",
+      "pdf_path": "literature/Ab initio downfolding for electron-phonon coupled systems - constrained density-functional perturbation theory (cDFPT)/Ab initio downfolding for electron-phonon coupled systems - constrained density-functional perturbation theory (cDFPT).pdf",
+      "document_sha256": "35cb323f3dfbdd7671015c99db5b84b50138fb44a48f40f9822c0e9509054c3b",
+      "page_count": 18,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-ab-initio-downfolding-for-electron-phonon-coupled-systems-constrained-density-functional-perturbation-theory-cdfpt/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-ah-scdft-a-general-approach-for-superconductivity-with-anharmonic-corrections",
+      "title": "Ah-SCDFT - A general approach for superconductivity with anharmonic corrections",
+      "authors": [
+        "Ryota Akashi"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2607.21051",
+      "source_record_path": "literature/Ah-SCDFT - A general approach for superconductivity with anharmonic corrections",
+      "pdf_path": "literature/Ah-SCDFT - A general approach for superconductivity with anharmonic corrections/Ah-SCDFT - A general approach for superconductivity with anharmonic corrections.pdf",
+      "document_sha256": "54d692d7e285fd3598f7fe1b1e9286b3bb843cf992e121d80d31f5402ebfe622",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-ah-scdft-a-general-approach-for-superconductivity-with-anharmonic-corrections/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-anomalous-charge-density-wave-in-a-two-dimensional-superatomic-superconductor",
+      "title": "Anomalous charge density wave in a two-dimensional superatomic superconductor",
+      "authors": [
+        "Boqin Song",
+        "Shuaishuai Sun",
+        "Zhongxu Wei",
+        "Xinbo Wang",
+        "Xiaoping Ma",
+        "Kaifa Luo",
+        "Lei Wang",
+        "Jun Deng",
+        "Xu Chen",
+        "Tian Qian",
+        "Shuya Xing",
+        "Zhihai Cheng",
+        "Jian-gang Guo",
+        "Tianping Ying",
+        "Xiaolong Chen"
+      ],
+      "year": 2026,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-026-75635-z",
+      "arxiv": null,
+      "source_record_path": "literature/Anomalous charge density wave in a two-dimensional superatomic superconductor",
+      "pdf_path": "literature/Anomalous charge density wave in a two-dimensional superatomic superconductor/Anomalous charge density wave in a two-dimensional superatomic superconductor.pdf",
+      "document_sha256": "5a8ccfce85fe7ba98bd81b574898733ae3193d17072aa77154d13de30ce06a07",
+      "page_count": 20,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-anomalous-charge-density-wave-in-a-two-dimensional-superatomic-superconductor/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-atomic-scale-observation-of-localized-phonons-at-fese-srtio3-interface",
+      "title": "Atomic-scale observation of localized phonons at FeSe - SrTiO3 interface",
+      "authors": [
+        "Ruochen Shi",
+        "Qize Li",
+        "Xiaofeng Xu",
+        "Bo Han",
+        "Ruixue Zhu",
+        "Fachen Liu",
+        "Ruishi Qi",
+        "Xiaowen Zhang",
+        "Jinlong Du",
+        "Ji Chen",
+        "Dapeng Yu",
+        "Xuetao Zhu",
+        "Jiandong Guo",
+        "Peng Gao"
+      ],
+      "year": 2024,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-024-47688-5",
+      "arxiv": null,
+      "source_record_path": "literature/Atomic-scale observation of localized phonons at FeSe - SrTiO3 interface",
+      "pdf_path": "literature/Atomic-scale observation of localized phonons at FeSe - SrTiO3 interface/Atomic-scale observation of localized phonons at FeSe - SrTiO3 interface.pdf",
+      "document_sha256": "7fb6d2eb52a21f44645c5b8c1196f140440d7c467b76f943faa3b153009aa5bb",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-atomic-scale-observation-of-localized-phonons-at-fese-srtio3-interface/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-bulk-ising-superconductivity-in-an-intercalated-tase2-bilayer-structure",
+      "title": "Bulk Ising superconductivity in an intercalated TaSe2 bilayer structure",
+      "authors": [
+        "Yupeng Li",
+        "Zhaopeng Guo",
+        "Lihong Hu",
+        "Guoan Li",
+        "Siqi Wu",
+        "Xinyi Zheng",
+        "Xiao Deng",
+        "Zhiyuan Zhang",
+        "Anqi Wang",
+        "Xingchen Guo",
+        "Ziwei Dou",
+        "Peiling Li",
+        "Yuke Li",
+        "Fanming Qu",
+        "Guangtong Liu",
+        "Jin-Ke Bao",
+        "Guang-Han Cao",
+        "Li Lu",
+        "Jie Shen",
+        "Zhu-An Xu"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2608.01209",
+      "source_record_path": "literature/Bulk Ising superconductivity in an intercalated TaSe2 bilayer structure",
+      "pdf_path": "literature/Bulk Ising superconductivity in an intercalated TaSe2 bilayer structure/Bulk Ising superconductivity in an intercalated TaSe2 bilayer structure.pdf",
+      "document_sha256": "4361c490a3005da7453500825e416d93a46d8e51af7fb9a1997ac6c8652d0c75",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-bulk-ising-superconductivity-in-an-intercalated-tase2-bilayer-structure/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-cavity-tuning-of-the-cdw-superconductivity-interplay-in-a-kagome-metal",
+      "title": "Cavity Tuning of the CDW--Superconductivity Interplay in a Kagome Metal",
+      "authors": [
+        "Lan-Ting Shi",
+        "I-Te Lu",
+        "Xin Wang",
+        "Dongbin Shin",
+        "Lede Xian",
+        "Angel Rubio"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2607.27769",
+      "arxiv": "2607.27769",
+      "source_record_path": "literature/Cavity Tuning of the CDW--Superconductivity Interplay in a Kagome Metal",
+      "pdf_path": "literature/Cavity Tuning of the CDW--Superconductivity Interplay in a Kagome Metal/Cavity Tuning of the CDW--Superconductivity Interplay in a Kagome Metal.pdf",
+      "document_sha256": "fb97ba573b41da85979f168d846d5f1f40b754182b880483df0679ba94f4fff2",
+      "page_count": 14,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-cavity-tuning-of-the-cdw-superconductivity-interplay-in-a-kagome-metal/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-charge-density-wave-and-superconducting-phase-in-monolayer-inse",
+      "title": "Charge density wave and superconducting phase in monolayer InSe",
+      "authors": [
+        "Mohammad Alidoosti",
+        "Davoud Nasr Esfahani",
+        "Reza Asgari"
+      ],
+      "year": 2021,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.103.035411",
+      "arxiv": null,
+      "source_record_path": "literature/Charge density wave and superconducting phase in monolayer InSe",
+      "pdf_path": "literature/Charge density wave and superconducting phase in monolayer InSe/Charge density wave and superconducting phase in monolayer InSe.pdf",
+      "document_sha256": "2317e44c9909d18e1d88cee3859b4d97beca49dcb1d2043b9e717c419f466826",
+      "page_count": 11,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-charge-density-wave-and-superconducting-phase-in-monolayer-inse/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-charge-density-wave-phase-selection-by-janus-induced-intrinsic-strain-in-monolayer-nbssias2",
+      "title": "Charge-Density-Wave Phase Selection by Janus-Induced Intrinsic Strain in Monolayer NbSSiAs2",
+      "authors": [
+        "Chun-Jie Zhang",
+        "Bing Zhang",
+        "Dongliang Mao",
+        "Yapeng Wu",
+        "Xiao-Ping Li",
+        "Lei Wang"
+      ],
+      "year": 2026,
+      "venue": "Preprint",
+      "doi": null,
+      "arxiv": null,
+      "source_record_path": "literature/Charge-Density-Wave Phase Selection by Janus-Induced Intrinsic Strain in Monolayer NbSSiAs2",
+      "pdf_path": "literature/Charge-Density-Wave Phase Selection by Janus-Induced Intrinsic Strain in Monolayer NbSSiAs2/Charge-Density-Wave Phase Selection by Janus-Induced Intrinsic Strain in Monolayer NbSSiAs2.pdf",
+      "document_sha256": "ba9ba12ad5617337d4fab6190f0a5cb4adf09f4ab717ae0659fd0aa6e7b2432f",
+      "page_count": 13,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-charge-density-wave-phase-selection-by-janus-induced-intrinsic-strain-in-monolayer-nbssias2/",
+      "status": "published",
+      "metadata_source": "Records source package title page"
+    },
+    {
+      "paper_id": "records-charge-density-wave-phase-transitions-in-monolayer-1t-tas2-from-universal-machine-learning-molecular",
+      "title": "Charge-Density-Wave Phase Transitions in Monolayer 1T-TaS2 from Universal Machine Learning Molecular Dynamics",
+      "authors": [
+        "Valentina Nesterova",
+        "Tribhuwan Pandey",
+        "Tom Berlijn",
+        "Fariborz Kargar",
+        "Lucas Lindsay",
+        "Konstantin Klyukin"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2607.22316",
+      "source_record_path": "literature/Charge-Density-Wave Phase Transitions in Monolayer 1T-TaS2 from Universal Machine Learning Molecular Dynamics",
+      "pdf_path": "literature/Charge-Density-Wave Phase Transitions in Monolayer 1T-TaS2 from Universal Machine Learning Molecular Dynamics/Charge-Density-Wave Phase Transitions in Monolayer 1T-TaS2 from Universal Machine Learning Molecular Dynamics.pdf",
+      "document_sha256": "9a162aadfce0629f78c840cb040a40801ad6990b87fd9f31bf83404246d3b48a",
+      "page_count": 16,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-charge-density-wave-phase-transitions-in-monolayer-1t-tas2-from-universal-machine-learning-molecular/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-computing-topological-invariants-without-inversion-symmetry",
+      "title": "Computing topological invariants without inversion symmetry",
+      "authors": [
+        "Alexey A. Soluyanov",
+        "David Vanderbilt"
+      ],
+      "year": 2011,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.83.235401",
+      "arxiv": null,
+      "source_record_path": "literature/Computing topological invariants without inversion symmetry",
+      "pdf_path": "literature/Computing topological invariants without inversion symmetry/Computing topological invariants without inversion symmetry.pdf",
+      "document_sha256": "1cf72f5d8a2ece9d873d82e095784e07a29519b1ce9844031cf58eeebda86753",
+      "page_count": 9,
+      "primary_category": "quantum-geometry-topology",
+      "topic_relations": [
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/quantum-geometry-topology/records-computing-topological-invariants-without-inversion-symmetry/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-correlation-enhanced-electron-phonon-coupling-applications-of-gw-and-screened-hybrid-functional-to-bismuthates",
+      "title": "Correlation-enhanced electron-phonon coupling - Applications of GW and screened hybrid functional to bismuthates, chloronitrides, and other high Tc superconductors",
+      "authors": [
+        "Z. P. Yin",
+        "A. Kutepov",
+        "G. Kotliar"
+      ],
+      "year": 2013,
+      "venue": "Physical Review X",
+      "doi": "10.1103/PhysRevX.3.021011",
+      "arxiv": null,
+      "source_record_path": "literature/Correlation-enhanced electron-phonon coupling - Applications of GW and screened hybrid functional to bismuthates, chloronitrides, and other high Tc superconductors",
+      "pdf_path": "literature/Correlation-enhanced electron-phonon coupling - Applications of GW and screened hybrid functional to bismuthates, chloronitrides, and other high Tc superconductors/Correlation-enhanced electron-phonon coupling - Applications of GW and screened hybrid functional to bismuthates, chloronitrides, and other high Tc superconductors.pdf",
+      "document_sha256": "5ddacb8cfdf6b408b68a64cdb21b70c3e2aafe3264ec8af3f74d8b688a00762c",
+      "page_count": 19,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics",
+        "magnetism-correlation"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-correlation-enhanced-electron-phonon-coupling-applications-of-gw-and-screened-hybrid-functional-to-bismuthates/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "cross-dimensional-electron-phonon-coupling",
+      "title": "Cross-dimensional electron-phonon coupling in van der Waals heterostructures",
+      "authors": [
+        "Miao-Ling Lin",
+        "Yu Zhou",
+        "Jiang-Bin Wu",
+        "Xin Cong",
+        "Xue-Lu Liu",
+        "Jun Zhang",
+        "Hai Li",
+        "Wang Yao",
+        "Ping-Heng Tan"
+      ],
+      "year": 2019,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-019-10400-z",
+      "arxiv": null,
+      "source_record_path": "literature/Cross-dimensional electron-phonon coupling in van der Waals heterostructures",
+      "pdf_path": "literature/Cross-dimensional electron-phonon coupling in van der Waals heterostructures/Cross-dimensional electron-phonon coupling in van der Waals heterostructures.pdf",
+      "document_sha256": "5648ed6ad95247c1183c1bd23aecbb5273670d35187437e34e02f241f3c57d8b",
+      "page_count": 9,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/cross-dimensional-electron-phonon-coupling/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "layered-dihalides-trihalides-structures",
+      "title": "Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides",
+      "authors": [
+        "Michael McGuire"
+      ],
+      "year": 2017,
+      "venue": "Crystals",
+      "doi": "10.3390/cryst7050121",
+      "arxiv": null,
+      "source_record_path": "literature/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides",
+      "pdf_path": "literature/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides.pdf",
+      "document_sha256": "e25c2502ecca2cb6504ca1ebff83c111a383b3fb6168167b4eac61a183aff00a",
+      "page_count": 17,
+      "primary_category": "structures-phase-competition",
+      "topic_relations": [
+        "structures-phase-competition",
+        "magnetism-correlation"
+      ],
+      "atlas_route": "/reading/literature/structures-phase-competition/layered-dihalides-trihalides-structures/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "gated-2d-dfpt",
+      "title": "Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene",
+      "authors": [
+        "Thibault Sohier",
+        "Matteo Calandra",
+        "Francesco Mauri"
+      ],
+      "year": 2017,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.96.075448",
+      "arxiv": null,
+      "source_record_path": "literature/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene",
+      "pdf_path": "literature/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene.pdf",
+      "document_sha256": "2a64d0291a511dc8e62300edd3d2f4491184aa233078bc03d68e021124c5156b",
+      "page_count": 23,
+      "primary_category": "lattice-dynamics",
+      "topic_relations": [
+        "lattice-dynamics",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/lattice-dynamics/gated-2d-dfpt/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-doping-tunable-charge-density-waves-in-misfit-layer-compounds",
+      "title": "Doping tunable charge density waves in misfit layer compounds",
+      "authors": [
+        "Hugo Le Du",
+        "Ludovica Zullo",
+        "Justine Cordiez",
+        "Robin Salvatore",
+        "Daniel Schmieg",
+        "Arindam Mukherjee",
+        "Giovanni Marini",
+        "Dominik Volavka",
+        "Francois Debontridder",
+        "Marie Herve",
+        "Tomas Samuely",
+        "Shunsuke Sasaki",
+        "Florent Pawula",
+        "Etienne Janod",
+        "Matteo Calandra",
+        "Laurent Cario",
+        "Tristan Cren"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2607.19095",
+      "arxiv": "2607.19095",
+      "source_record_path": "literature/Doping tunable charge density waves in misfit layer compounds",
+      "pdf_path": "literature/Doping tunable charge density waves in misfit layer compounds/Doping tunable charge density waves in misfit layer compounds.pdf",
+      "document_sha256": "a9264c40ce76eb369347adaaa0321e5c01c63aabb47729298c2470901b8a9ee4",
+      "page_count": 9,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-doping-tunable-charge-density-waves-in-misfit-layer-compounds/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-effect-of-hubbard-u-corrections-on-the-electronic-and-magnetic-properties-of-2d-materials",
+      "title": "Effect of Hubbard U-corrections on the electronic and magnetic properties of 2D materials - a high-throughput study",
+      "authors": [
+        "Sahar Pakdel",
+        "Thomas Olsen",
+        "Kristian S. Thygesen"
+      ],
+      "year": 2025,
+      "venue": "npj Computational Materials",
+      "doi": "10.1038/s41524-024-01503-3",
+      "arxiv": null,
+      "source_record_path": "literature/Effect of Hubbard U-corrections on the electronic and magnetic properties of 2D materials - a high-throughput study",
+      "pdf_path": "literature/Effect of Hubbard U-corrections on the electronic and magnetic properties of 2D materials - a high-throughput study/Effect of Hubbard U-corrections on the electronic and magnetic properties of 2D materials - a high-throughput study.pdf",
+      "document_sha256": "eedd7cb2213e7e55903c2cb41f39c3454077e0b08e52e2a17c46cf8225843b64",
+      "page_count": 9,
+      "primary_category": "magnetism-correlation",
+      "topic_relations": [
+        "magnetism-correlation"
+      ],
+      "atlas_route": "/reading/literature/magnetism-correlation/records-effect-of-hubbard-u-corrections-on-the-electronic-and-magnetic-properties-of-2d-materials/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-efficient-computational-design-of-2d-van-der-waals-heterostructures-band-alignment-lattice-mismatch-and",
+      "title": "Efficient Computational Design of 2D van der Waals Heterostructures - Band- Alignment, Lattice-Mismatch, and Machine-learning",
+      "authors": [
+        "Kamal Choudhary",
+        "Kevin F. Garrity",
+        "Steven T. Hartman",
+        "Ghanshyam Pilania",
+        "Francesca Tavazza"
+      ],
+      "year": 2023,
+      "venue": "Physical Review Materials",
+      "doi": "10.1103/physrevmaterials.7.014009",
+      "arxiv": null,
+      "source_record_path": "literature/Efficient Computational Design of 2D van der Waals Heterostructures - Band- Alignment, Lattice-Mismatch, and Machine-learning",
+      "pdf_path": "literature/Efficient Computational Design of 2D van der Waals Heterostructures - Band- Alignment, Lattice-Mismatch, and Machine-learning/Efficient Computational Design of 2D van der Waals Heterostructures - Band- Alignment, Lattice-Mismatch, and Machine-learning.pdf",
+      "document_sha256": "2a5ecfe8e892808a911917049444c88c9bffabf86cb102498f66ac79f0b18577",
+      "page_count": 29,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-efficient-computational-design-of-2d-van-der-waals-heterostructures-band-alignment-lattice-mismatch-and/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-electron-doped-phosphorene-a-potential-monolayer-superconductor",
+      "title": "Electron-doped phosphorene - A potential monolayer superconductor",
+      "authors": [
+        "D. F. Shao",
+        "W. J. Lu",
+        "H. Y. Lv",
+        "Y. P. Sun"
+      ],
+      "year": 2014,
+      "venue": "EPL (Europhysics Letters)",
+      "doi": "10.1209/0295-5075/108/67004",
+      "arxiv": null,
+      "source_record_path": "literature/Electron-doped phosphorene - A potential monolayer superconductor",
+      "pdf_path": "literature/Electron-doped phosphorene - A potential monolayer superconductor/Electron-doped phosphorene - A potential monolayer superconductor.pdf",
+      "document_sha256": "13336fff6fac0004b3741b9d8c1d78954e02dfd039a613200ca1c031ede66ac0",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-doped-phosphorene-a-potential-monolayer-superconductor/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-electron-phonon-coupling-and-spin-fluctuations-in-the-ising-superconductor-nbse2",
+      "title": "Electron-phonon coupling and spin fluctuations in the Ising superconductor NbSe2",
+      "authors": [
+        "S. Das",
+        "H. Paudyal",
+        "E. R. Margine",
+        "D. F. Agterberg",
+        "I. I. Mazin"
+      ],
+      "year": 2023,
+      "venue": "npj Computational Materials",
+      "doi": "10.1038/s41524-023-01017-4",
+      "arxiv": null,
+      "source_record_path": "literature/Electron-phonon coupling and spin fluctuations in the Ising superconductor NbSe2",
+      "pdf_path": "literature/Electron-phonon coupling and spin fluctuations in the Ising superconductor NbSe2/Electron-phonon coupling and spin fluctuations in the Ising superconductor NbSe2.pdf",
+      "document_sha256": "04d5bc997ba3d7a3fdafa2afb1a5d0092523b801da6cda004693fce859699310",
+      "page_count": 9,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics",
+        "quantum-geometry-topology",
+        "magnetism-correlation"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-coupling-and-spin-fluctuations-in-the-ising-superconductor-nbse2/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-electron-phonon-coupling-and-the-coexistence-of-superconductivity-and-charge-density-wave-in-monolayer",
+      "title": "Electron-phonon coupling and the coexistence of superconductivity and charge-density wave in monolayer NbSe2",
+      "authors": [
+        "Feipeng Zheng",
+        "Ji Feng"
+      ],
+      "year": 2019,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.99.161119",
+      "arxiv": null,
+      "source_record_path": "literature/Electron-phonon coupling and the coexistence of superconductivity and charge-density wave in monolayer NbSe2",
+      "pdf_path": "literature/Electron-phonon coupling and the coexistence of superconductivity and charge-density wave in monolayer NbSe2/Electron-phonon coupling and the coexistence of superconductivity and charge-density wave in monolayer NbSe2.pdf",
+      "document_sha256": "99015f9fda0f24fd219870d148a8700f0cd0f27b4fded99b0586747991e6ce95",
+      "page_count": 12,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-coupling-and-the-coexistence-of-superconductivity-and-charge-density-wave-in-monolayer/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "wannier-electron-phonon-interaction",
+      "title": "Electron-Phonon Interaction Using Wannier Functions",
+      "authors": [
+        "Feliciano Giustino",
+        "Marvin L. Cohen",
+        "Steven G. Louie"
+      ],
+      "year": 2007,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.76.165108",
+      "primary_category": "electron-phonon-superconductivity",
+      "arxiv": null,
+      "source_record_path": null,
+      "pdf_path": null,
+      "document_sha256": null,
+      "page_count": null,
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": null,
+      "status": "source_pending",
+      "metadata_source": "existing Atlas preprocessing queue"
+    },
+    {
+      "paper_id": "electron-phonon-interactions-first-principles",
+      "title": "Electron-phonon interactions from first principles",
+      "authors": [
+        "Feliciano Giustino"
+      ],
+      "year": 2017,
+      "venue": "Reviews of Modern Physics",
+      "doi": "10.1103/RevModPhys.89.015003",
+      "arxiv": null,
+      "source_record_path": "literature/Electron-phonon interactions from first principles",
+      "pdf_path": "literature/Electron-phonon interactions from first principles/Electron-phonon interactions from first principles.pdf",
+      "document_sha256": "5d980627ad272b2a92d1f760f0e6a0883b1b3fcc941436903a361024ce330251",
+      "page_count": 68,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/electron-phonon-interactions-first-principles/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-electron-phonon-mediated-superconductivity-in-1t-mos2-and-effect-of-pressure-on-the-same",
+      "title": "Electron-Phonon Mediated Superconductivity in 1T−MoS2 and Effect of Pressure on the Same",
+      "authors": [
+        "Jagdish Kumar",
+        "Harkirat Singh"
+      ],
+      "year": 2021,
+      "venue": "Journal of Physics and Chemistry of Solids",
+      "doi": "10.1016/j.jpcs.2021.110185",
+      "arxiv": null,
+      "source_record_path": "literature/Electron-Phonon Mediated Superconductivity in 1T−MoS2 and Effect of Pressure on the Same",
+      "pdf_path": "literature/Electron-Phonon Mediated Superconductivity in 1T−MoS2 and Effect of Pressure on the Same/Electron-Phonon Mediated Superconductivity in 1T−MoS2 and Effect of Pressure on the Same.pdf",
+      "document_sha256": "abbf2c0ea1e28435b8fa6c638edfeedccfa4b3a5f39092b1724b9d8e61c83638",
+      "page_count": 16,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-mediated-superconductivity-in-1t-mos2-and-effect-of-pressure-on-the-same/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-electron-phonon-superconductivity-in-monolayer-nih3-and-hole-doped-cuh3-role-of-hybridization-of",
+      "title": "Electron-phonon superconductivity in monolayer NiH3 and hole-doped CuH3 - Role of hybridization of transition metal eg and hydrogen 1s states",
+      "authors": [
+        "Renyu Duan",
+        "Meiling Xu",
+        "Yan Liu",
+        "Yiming Zhang",
+        "Yinwei Li"
+      ],
+      "year": 2026,
+      "venue": "Physical Review B",
+      "doi": "10.1103/xqsd-2fnl",
+      "arxiv": null,
+      "source_record_path": "literature/Electron-phonon superconductivity in monolayer NiH3 and hole-doped CuH3 - Role of hybridization of transition metal eg and hydrogen 1s states",
+      "pdf_path": "literature/Electron-phonon superconductivity in monolayer NiH3 and hole-doped CuH3 - Role of hybridization of transition metal eg and hydrogen 1s states/Electron-phonon superconductivity in monolayer NiH3 and hole-doped CuH3 - Role of hybridization of transition metal eg and hydrogen 1s states.pdf",
+      "document_sha256": "294cabc7a578231eb3babaf2fef570b7656676414d16d6baeb629a62181c9504",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-superconductivity-in-monolayer-nih3-and-hole-doped-cuh3-role-of-hybridization-of/",
+      "status": "published",
+      "metadata_source": "Records source package title page"
+    },
+    {
+      "paper_id": "records-electronic-origin-of-high-temperature-superconductivity-in-single-layer-fese-superconductor",
+      "title": "Electronic origin of high-temperature superconductivity in single-layer FeSe superconductor",
+      "authors": [
+        "Defa Liu",
+        "Wenhao Zhang",
+        "Daixiang Mou",
+        "Junfeng He",
+        "Yun-Bo Ou",
+        "Qing-Yan Wang",
+        "Zhi Li",
+        "Lili Wang",
+        "Lin Zhao",
+        "Shaolong He",
+        "Yingying Peng",
+        "Xu Liu",
+        "Chaoyu Chen",
+        "Li Yu",
+        "Guodong Liu",
+        "Xiaoli Dong",
+        "Jun Zhang",
+        "Chuangtian Chen",
+        "Zuyan Xu",
+        "Jiangping Hu",
+        "Xi Chen",
+        "Xucun Ma",
+        "Qikun Xue",
+        "X.J. Zhou"
+      ],
+      "year": 2012,
+      "venue": "Nature Communications",
+      "doi": "10.1038/ncomms1946",
+      "arxiv": null,
+      "source_record_path": "literature/Electronic origin of high-temperature superconductivity in single-layer FeSe superconductor",
+      "pdf_path": "literature/Electronic origin of high-temperature superconductivity in single-layer FeSe superconductor/Electronic origin of high-temperature superconductivity in single-layer FeSe superconductor.pdf",
+      "document_sha256": "1fb8472f4e7eecfc584ea7cf5e007209e14cdfef5af069390879cd9e1a6382d8",
+      "page_count": 6,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electronic-origin-of-high-temperature-superconductivity-in-single-layer-fese-superconductor/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-electronic-structure-of-superconducting-graphite-intercalate-compounds-the-role-of-the-interlayer-state",
+      "title": "Electronic structure of superconducting graphite intercalate compounds - The role of the interlayer state",
+      "authors": [
+        "Gábor Csányi",
+        "P. B. Littlewood",
+        "Andriy H. Nevidomskyy",
+        "Chris J. Pickard",
+        "B. D. Simons"
+      ],
+      "year": 2005,
+      "venue": "Nature Physics",
+      "doi": "10.1038/nphys119",
+      "arxiv": null,
+      "source_record_path": "literature/Electronic structure of superconducting graphite intercalate compounds - The role of the interlayer state",
+      "pdf_path": "literature/Electronic structure of superconducting graphite intercalate compounds - The role of the interlayer state/Electronic structure of superconducting graphite intercalate compounds - The role of the interlayer state.pdf",
+      "document_sha256": "7c8cc23fe43d8bb292f8d0e2a931ce454dde43017cdf5af71264cab66d762f10",
+      "page_count": 11,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electronic-structure-of-superconducting-graphite-intercalate-compounds-the-role-of-the-interlayer-state/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-emergence-of-superconductivity-in-an-inse-monolayer-roles-of-deposited-metal-and-biaxial-strain",
+      "title": "Emergence of superconductivity in an InSe monolayer - Roles of deposited metal and biaxial strain",
+      "authors": [
+        "Jianyong Chen",
+        "Xing Wang",
+        "Xiumin Liu"
+      ],
+      "year": 2022,
+      "venue": "Journal of Physics and Chemistry of Solids",
+      "doi": "10.1016/j.jpcs.2022.110823",
+      "arxiv": null,
+      "source_record_path": "literature/Emergence of superconductivity in an InSe monolayer - Roles of deposited metal and biaxial strain",
+      "pdf_path": "literature/Emergence of superconductivity in an InSe monolayer - Roles of deposited metal and biaxial strain/Emergence of superconductivity in an InSe monolayer - Roles of deposited metal and biaxial strain.pdf",
+      "document_sha256": "27be53a338569d5f2d8956c076bbe32e0d821e2cf1a9f925a2983cac721a8be5",
+      "page_count": 9,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-emergence-of-superconductivity-in-an-inse-monolayer-roles-of-deposited-metal-and-biaxial-strain/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-emergent-superconductivity-and-non-reciprocal-transport-in-a-van-der-waals-dirac-semimetal-antiferromagnet",
+      "title": "Emergent superconductivity and non-reciprocal transport in a van der Waals Dirac semimetal-antiferromagnet heterostructure",
+      "authors": [
+        "Saurav Islam",
+        "Max Stanley",
+        "Anthony Richardella",
+        "Seungjun Lee",
+        "Kalana D. Halanayake",
+        "Sandra Santhosh",
+        "Danielle Reifsnyder Hickey",
+        "Tony Low",
+        "Nitin Samarth"
+      ],
+      "year": 2025,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2504.20393",
+      "source_record_path": "literature/Emergent superconductivity and non-reciprocal transport in a van der Waals Dirac semimetal-antiferromagnet heterostructure",
+      "pdf_path": "literature/Emergent superconductivity and non-reciprocal transport in a van der Waals Dirac semimetal-antiferromagnet heterostructure/Emergent superconductivity and non-reciprocal transport in a van der Waals Dirac semimetal-antiferromagnet heterostructure.pdf",
+      "document_sha256": "a232dc0559dc2a76baa7c88c25bdf9b33aeb89d936e7b9b99bb75cab4e1e7710",
+      "page_count": 21,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-emergent-superconductivity-and-non-reciprocal-transport-in-a-van-der-waals-dirac-semimetal-antiferromagnet/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-enhanced-charge-density-wave-order-and-suppressed-superconductivity-in-intercalated-bulk-nbse2",
+      "title": "Enhanced charge-density-wave order and suppressed superconductivity in intercalated bulk NbSe2",
+      "authors": [
+        "Huanhuan Shi",
+        "Qili Li",
+        "Antoine M. T. Baron",
+        "Marie-Aude Méasson",
+        "Sangjun Kang",
+        "Dirk Fuchs",
+        "Fabian Henssler",
+        "Alexander Haas",
+        "Di Wang",
+        "Paolo Battistoni",
+        "Konstantin Semeniuk",
+        "Elena Hassinger",
+        "Nour Maraytta",
+        "Michael Merz",
+        "Amir-Abbas Haghighirad",
+        "Wulf Wulfhekel",
+        "Christian Kübel",
+        "Matthieu Le Tacon"
+      ],
+      "year": 2026,
+      "venue": "Communications Materials",
+      "doi": "10.1038/s43246-026-01270-2",
+      "arxiv": null,
+      "source_record_path": "literature/Enhanced charge-density-wave order and suppressed superconductivity in intercalated bulk NbSe2",
+      "pdf_path": "literature/Enhanced charge-density-wave order and suppressed superconductivity in intercalated bulk NbSe2/Enhanced charge-density-wave order and suppressed superconductivity in intercalated bulk NbSe2.pdf",
+      "document_sha256": "2d19b38771ed64793e2de672d5a8b16269e3d6b009ecb94359b6d951cbe24bfc",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-enhanced-charge-density-wave-order-and-suppressed-superconductivity-in-intercalated-bulk-nbse2/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-enhanced-electron-phonon-interaction-in-multivalley-materials",
+      "title": "Enhanced Electron-Phonon Interaction in Multivalley Materials",
+      "authors": [
+        "Thibault Sohier",
+        "Evgeniy Ponomarev",
+        "Marco Gibertini",
+        "Helmuth Berger",
+        "Nicola Marzari",
+        "Nicolas Ubrig",
+        "Alberto F. Morpurgo"
+      ],
+      "year": 2019,
+      "venue": "Physical Review X",
+      "doi": "10.1103/PhysRevX.9.031019",
+      "arxiv": null,
+      "source_record_path": "literature/Enhanced Electron-Phonon Interaction in Multivalley Materials",
+      "pdf_path": "literature/Enhanced Electron-Phonon Interaction in Multivalley Materials/Enhanced Electron-Phonon Interaction in Multivalley Materials.pdf",
+      "document_sha256": "b01efd1de812333c9024cff1e61693201916cbadf324f2ac3577a9742be90e80",
+      "page_count": 17,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-enhanced-electron-phonon-interaction-in-multivalley-materials/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "cu2n-electron-phonon-topology",
+      "title": "Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties",
+      "authors": [
+        "Guang-ren Na",
+        "Meng-hui Wang",
+        "Rui Bian",
+        "Zhong-hua Cui"
+      ],
+      "year": 2025,
+      "venue": "Physical Review B",
+      "doi": "10.1103/t7nc-p31n",
+      "arxiv": null,
+      "source_record_path": "literature/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties",
+      "pdf_path": "literature/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties.pdf",
+      "document_sha256": "53a7d612f3d2b93cf4ac915c00c877f29ef273b0d5ec41a27153dc36892d49cb",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics",
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/cu2n-electron-phonon-topology/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-evidence-for-superconductivity-in-li-decorated-monolayer-graphene",
+      "title": "Evidence for superconductivity in Li-decorated monolayer graphene",
+      "authors": [
+        "B. M. Ludbrook",
+        "G. Levy",
+        "P. Nigge",
+        "M. Zonno",
+        "M. Schneider",
+        "D. J. Dvorak",
+        "C. N. Veenstra",
+        "S. Zhdanovich",
+        "D. Wong",
+        "P. Dosanjh",
+        "C. Straßer",
+        "A. Stöhr",
+        "S. Forti",
+        "C. R. Ast",
+        "U. Starke",
+        "A. Damascelli"
+      ],
+      "year": 2015,
+      "venue": "Proceedings of the National Academy of Sciences",
+      "doi": "10.1073/pnas.1510435112",
+      "arxiv": null,
+      "source_record_path": "literature/Evidence for superconductivity in Li-decorated monolayer graphene",
+      "pdf_path": "literature/Evidence for superconductivity in Li-decorated monolayer graphene/Evidence for superconductivity in Li-decorated monolayer graphene.pdf",
+      "document_sha256": "dec845eb9011a1b4024dcaab9ae2b18076a89dae9280fce5d56f6e97e038ec7f",
+      "page_count": 11,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-evidence-for-superconductivity-in-li-decorated-monolayer-graphene/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-evidence-of-cooperative-effect-on-the-enhanced-superconducting-transition-temperature-at-the-fese-srtio3",
+      "title": "Evidence of cooperative effect on the enhanced superconducting transition temperature at the FeSe - SrTiO3 interface",
+      "authors": [
+        "Q. Song",
+        "T. L. Yu",
+        "X. Lou",
+        "B. P. Xie",
+        "H. C. Xu",
+        "C. H. P. Wen",
+        "Q. Yao",
+        "S. Y. Zhang",
+        "X. T. Zhu",
+        "J. D. Guo",
+        "R. Peng",
+        "D. L. Feng"
+      ],
+      "year": 2019,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-019-08560-z",
+      "arxiv": null,
+      "source_record_path": "literature/Evidence of cooperative effect on the enhanced superconducting transition temperature at the FeSe - SrTiO3 interface",
+      "pdf_path": "literature/Evidence of cooperative effect on the enhanced superconducting transition temperature at the FeSe - SrTiO3 interface/Evidence of cooperative effect on the enhanced superconducting transition temperature at the FeSe - SrTiO3 interface.pdf",
+      "document_sha256": "467d00433ee37020769c5c0ecde489fe2b3a2385dfa0fac50b623d90f712a764",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-evidence-of-cooperative-effect-on-the-enhanced-superconducting-transition-temperature-at-the-fese-srtio3/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-exchange-enhancement-of-the-electron-phonon-interaction-the-case-of-weakly-doped-two-dimensional",
+      "title": "Exchange Enhancement of the Electron-Phonon Interaction - the Case of Weakly Doped Two-Dimensional Multivalley Semiconductors",
+      "authors": [
+        "Betül Pamuk",
+        "Paolo Zoccante",
+        "Jacopo Baima",
+        "Francesco Mauri",
+        "Matteo Calandra"
+      ],
+      "year": 2018,
+      "venue": "Journal of the Physical Society of Japan",
+      "doi": "10.7566/JPSJ.87.041013",
+      "arxiv": null,
+      "source_record_path": "literature/Exchange Enhancement of the Electron-Phonon Interaction - the Case of Weakly Doped Two-Dimensional Multivalley Semiconductors",
+      "pdf_path": "literature/Exchange Enhancement of the Electron-Phonon Interaction - the Case of Weakly Doped Two-Dimensional Multivalley Semiconductors/Exchange Enhancement of the Electron-Phonon Interaction - the Case of Weakly Doped Two-Dimensional Multivalley Semiconductors.pdf",
+      "document_sha256": "671d6b8a65ce364ede246eaaefa6549741a2bc963cad5b425a5561218be8e2fb",
+      "page_count": 15,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-exchange-enhancement-of-the-electron-phonon-interaction-the-case-of-weakly-doped-two-dimensional/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-fabrication-of-oxide-fese-multilayer-films-using-the-pld-technique",
+      "title": "Fabrication of oxide-FeSe multilayer films using the PLD technique",
+      "authors": [
+        "Tomoki Kobayashi",
+        "Hiroki Nakagawa",
+        "Ryo Ogawa",
+        "Atsutaka Maeda"
+      ],
+      "year": 2025,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2509.23591",
+      "source_record_path": "literature/Fabrication of oxide-FeSe multilayer films using the PLD technique",
+      "pdf_path": "literature/Fabrication of oxide-FeSe multilayer films using the PLD technique/Fabrication of oxide-FeSe multilayer films using the PLD technique.pdf",
+      "document_sha256": "b70096fabb2e44d3f546ae209f9f6c4d0dfd7f03b6951de6c7d2dad0bec9dd19",
+      "page_count": 15,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-fabrication-of-oxide-fese-multilayer-films-using-the-pld-technique/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-ferroelectric-heterobilayer-with-tunable-first-and-higher-order-topological-states",
+      "title": "Ferroelectric heterobilayer with tunable first- and higher-order topological states",
+      "authors": [
+        "Runhan Li",
+        "Ning Mao",
+        "Linke Cai",
+        "Yingxi Bai",
+        "Baibiao Huang",
+        "Ying Dai",
+        "Chengwang Niu"
+      ],
+      "year": 2023,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.108.125302",
+      "arxiv": null,
+      "source_record_path": "literature/Ferroelectric heterobilayer with tunable first- and higher-order topological states",
+      "pdf_path": "literature/Ferroelectric heterobilayer with tunable first- and higher-order topological states/Ferroelectric heterobilayer with tunable first- and higher-order topological states.pdf",
+      "document_sha256": "bfe5e4310817210240f8ff748b689bfdfe1670322617ce82e68bec05654717b0",
+      "page_count": 9,
+      "primary_category": "quantum-geometry-topology",
+      "topic_relations": [
+        "quantum-geometry-topology",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/quantum-geometry-topology/records-ferroelectric-heterobilayer-with-tunable-first-and-higher-order-topological-states/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-first-principles-investigation-of-electron-phonon-coupling-and-intrinsic-two-gap-superconductivity-in-hexagonal",
+      "title": "First-Principles Investigation of Electron--Phonon Coupling and Intrinsic Two-Gap Superconductivity in Hexagonal BAs3 Monolayer",
+      "authors": [
+        "Jakkapat Seeyangnok",
+        "Udomsilp Pinsook"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2606.08423",
+      "arxiv": "2606.08423",
+      "source_record_path": "literature/First-Principles Investigation of Electron--Phonon Coupling and Intrinsic Two-Gap Superconductivity in Hexagonal BAs3 Monolayer",
+      "pdf_path": "literature/First-Principles Investigation of Electron--Phonon Coupling and Intrinsic Two-Gap Superconductivity in Hexagonal BAs3 Monolayer/First-Principles Investigation of Electron--Phonon Coupling and Intrinsic Two-Gap Superconductivity in Hexagonal BAs3 Monolayer.pdf",
+      "document_sha256": "98e84821aaf58046e38de529d6ea1d3d62b2948a0b1e63e5f1f62ea30b7c764f",
+      "page_count": 14,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-first-principles-investigation-of-electron-phonon-coupling-and-intrinsic-two-gap-superconductivity-in-hexagonal/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-first-principles-theory-of-ferroelectric-phase-transitions-for-perovskites-the-case-of-batio-3",
+      "title": "First-principles theory of ferroelectric phase transitions for perovskites - The case of BaTiO 3",
+      "authors": [
+        "W. Zhong",
+        "David Vanderbilt",
+        "K. M. Rabe"
+      ],
+      "year": 1995,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.52.6301",
+      "arxiv": null,
+      "source_record_path": "literature/First-principles theory of ferroelectric phase transitions for perovskites - The case of BaTiO 3",
+      "pdf_path": "literature/First-principles theory of ferroelectric phase transitions for perovskites - The case of BaTiO 3/First-principles theory of ferroelectric phase transitions for perovskites - The case of BaTiO 3.pdf",
+      "document_sha256": "7ea20052b2b728acb6ccd05413331cf31fcc799946dab27cdb73bf165fb0c432",
+      "page_count": 12,
+      "primary_category": "polarization-response",
+      "topic_relations": [
+        "polarization-response"
+      ],
+      "atlas_route": "/reading/literature/polarization-response/records-first-principles-theory-of-ferroelectric-phase-transitions-for-perovskites-the-case-of-batio-3/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-gated-tuned-superconductivity-and-phonon-softening-in-monolayer-and-bilayer-mos2",
+      "title": "Gated tuned superconductivity and phonon softening in monolayer and bilayer MoS2",
+      "authors": [
+        "Yajun Fu",
+        "Erfu Liu",
+        "Hongtao Yuan",
+        "Peizhe Tang",
+        "Biao Lian",
+        "Gang Xu",
+        "Junwen Zeng",
+        "Zhuoyu Chen",
+        "Yaojia Wang",
+        "Wei Zhou",
+        "Kang Xu",
+        "Anyuan Gao",
+        "Chen Pan",
+        "Miao Wang",
+        "Baigeng Wang",
+        "Shou-Cheng Zhang",
+        "Yi Cui",
+        "Harold Y. Hwang",
+        "Feng Miao"
+      ],
+      "year": 2017,
+      "venue": "npj Quantum Materials",
+      "doi": "10.1038/s41535-017-0056-1",
+      "arxiv": null,
+      "source_record_path": "literature/Gated tuned superconductivity and phonon softening in monolayer and bilayer MoS2",
+      "pdf_path": "literature/Gated tuned superconductivity and phonon softening in monolayer and bilayer MoS2/Gated tuned superconductivity and phonon softening in monolayer and bilayer MoS2.pdf",
+      "document_sha256": "7a59807c7b650d2e3a3b8e6b18dc4d2e15700d8ac9ab1665e884c164208db8ef",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-gated-tuned-superconductivity-and-phonon-softening-in-monolayer-and-bilayer-mos2/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "hfx2-type-ii-photovoltaic-heterostructures",
+      "title": "HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics",
+      "authors": [
+        "Xingyong Huang",
+        "Liujiang Zhou",
+        "Luo Yan",
+        "You Wang",
+        "Wei Zhang",
+        "Xiumin Xie",
+        "Qiang Xu",
+        "Hai-Zhi Song"
+      ],
+      "year": 2020,
+      "venue": "Chinese Physics Letters",
+      "doi": "10.1088/0256-307X/37/12/127101",
+      "arxiv": null,
+      "source_record_path": "literature/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -",
+      "pdf_path": "literature/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -.pdf",
+      "document_sha256": "7243ef2245ef4f4e722b0ebaecc70efa94465281ada57199dc7bb4852b828ab0",
+      "page_count": 4,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures",
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/hfx2-type-ii-photovoltaic-heterostructures/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-high-throughput-study-on-magnetic-ground-states-with-hubbard-i-u-i-corrections-in",
+      "title": "High throughput study on magnetic ground states with Hubbard - i - U - - i - corrections in transition metal dihalide monolayers",
+      "authors": [
+        "Xinru Li",
+        "Zeying Zhang",
+        "Hongbin Zhang"
+      ],
+      "year": 2020,
+      "venue": "Nanoscale Advances",
+      "doi": "10.1039/C9NA00588A",
+      "arxiv": null,
+      "source_record_path": "literature/High throughput study on magnetic ground states with Hubbard - i - U - - i - corrections in transition metal dihalide monolayers",
+      "pdf_path": "literature/High throughput study on magnetic ground states with Hubbard - i - U - - i - corrections in transition metal dihalide monolayers/High throughput study on magnetic ground states with Hubbard - i - U - - i - corrections in transition metal dihalide monolayers.pdf",
+      "document_sha256": "dbc8dc8a5036397d9c6c1609dfe5db8e74409e1efc3da77eb6250907ce6baa98",
+      "page_count": 13,
+      "primary_category": "magnetism-correlation",
+      "topic_relations": [
+        "magnetism-correlation",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/magnetism-correlation/records-high-throughput-study-on-magnetic-ground-states-with-hubbard-i-u-i-corrections-in/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "functionalized-double-mxene-superconductivity",
+      "title": "High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes",
+      "authors": [
+        "Mohammad Keivanloo",
+        "Fateme Dinmohammad",
+        "Shashi B. Mishra",
+        "Mohammad Sandoghchi",
+        "Mohammad Javad Arshia",
+        "Mitsuaki Kawamura",
+        "Elena R. Margine",
+        "Muhammad Haris Mahyuddin",
+        "Hannes Raebiger",
+        "Reza Pamungkas Putra Sukanli",
+        "Kenta Hongo",
+        "Ryo Maezono",
+        "Mohammad Khazaei"
+      ],
+      "year": 2026,
+      "venue": "npj Computational Materials",
+      "doi": "10.1038/s41524-026-02245-0",
+      "arxiv": null,
+      "source_record_path": "literature/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes",
+      "pdf_path": "literature/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes.pdf",
+      "document_sha256": "45ff82b05336812cdb155bf2e2c194dce34ac1a72d838ea7cf04b5c4c7d61452",
+      "page_count": 26,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/functionalized-double-mxene-superconductivity/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "electron-doped-hfncl-superconductivity",
+      "title": "High-Tc Superconductivity in Weakly Electron-Doped HfNCl",
+      "authors": [
+        "Betül Pamuk",
+        "Francesco Mauri",
+        "Matteo Calandra"
+      ],
+      "year": 2017,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.96.024518",
+      "primary_category": "electron-phonon-superconductivity",
+      "arxiv": null,
+      "source_record_path": null,
+      "pdf_path": null,
+      "document_sha256": null,
+      "page_count": null,
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": null,
+      "status": "source_pending",
+      "metadata_source": "existing Atlas preprocessing queue"
+    },
+    {
+      "paper_id": "records-high-throughput-bandstructure-simulations-of-van-der-waals-hetero-bilayers-formed-by-1t-and",
+      "title": "High-throughput bandstructure simulations of van der Waals hetero-bilayers formed by 1T and 2H monolayers",
+      "authors": [
+        "Rui Dong",
+        "Alain Jacob",
+        "Stéphane Bourdais",
+        "Stefano Sanvito"
+      ],
+      "year": 2021,
+      "venue": "npj 2D Materials and Applications",
+      "doi": "10.1038/s41699-021-00200-9",
+      "arxiv": null,
+      "source_record_path": "literature/High-throughput bandstructure simulations of van der Waals hetero-bilayers formed by 1T and 2H monolayers",
+      "pdf_path": "literature/High-throughput bandstructure simulations of van der Waals hetero-bilayers formed by 1T and 2H monolayers/High-throughput bandstructure simulations of van der Waals hetero-bilayers formed by 1T and 2H monolayers.pdf",
+      "document_sha256": "9982d5f94b6376e75b3b6d0f548a51033f3bf50bcc38692c76179f18ca4d963c",
+      "page_count": 12,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-high-throughput-bandstructure-simulations-of-van-der-waals-hetero-bilayers-formed-by-1t-and/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-highly-crystalline-2d-superconductors",
+      "title": "Highly crystalline 2D superconductors",
+      "authors": [
+        "Yu Saito",
+        "Tsutomu Nojima",
+        "Yoshihiro Iwasa"
+      ],
+      "year": 2016,
+      "venue": "Nature Reviews Materials",
+      "doi": "10.1038/natrevmats.2016.94",
+      "arxiv": null,
+      "source_record_path": "literature/Highly crystalline 2D superconductors",
+      "pdf_path": "literature/Highly crystalline 2D superconductors/Highly crystalline 2D superconductors.pdf",
+      "document_sha256": "8b85d7c8691bde5becb2433d9bc0906d8baa660348d54824283bd464d369aba4",
+      "page_count": 53,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-highly-crystalline-2d-superconductors/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-interface-confined-superconductivity-with-thickness-independent-superfluid-stiffness-in-pb-sn-te-fete-bilayers",
+      "title": "Interface-Confined Superconductivity with Thickness-Independent Superfluid Stiffness in (Pb,Sn)Te - FeTe Bilayers",
+      "authors": [
+        "Zi-Jie Yan",
+        "Hongtao Rong",
+        "Yiyuan Luo",
+        "Yufei Zhao",
+        "Pu Xiao",
+        "Zihao Wang",
+        "Lok-Kan Lai",
+        "Annie G. Wang",
+        "Zhiyuan Xi",
+        "Yanxing Li",
+        "Xiaoyu Wei",
+        "Ke Wang",
+        "Binghai Yan",
+        "Chih-Kang Shih",
+        "Cui-Zu Chang"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2607.17539",
+      "source_record_path": "literature/Interface-Confined Superconductivity with Thickness-Independent Superfluid Stiffness in (Pb,Sn)Te - FeTe Bilayers",
+      "pdf_path": "literature/Interface-Confined Superconductivity with Thickness-Independent Superfluid Stiffness in (Pb,Sn)Te - FeTe Bilayers/Interface-Confined Superconductivity with Thickness-Independent Superfluid Stiffness in (Pb,Sn)Te - FeTe Bilayers.pdf",
+      "document_sha256": "a6936df3683233ed2a531075d8878a1e4f72b6894d8fca034a32941bec6e645f",
+      "page_count": 30,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-interface-confined-superconductivity-with-thickness-independent-superfluid-stiffness-in-pb-sn-te-fete-bilayers/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-interface-induced-high-temperature-superconductivity-in-single-unit-cell-fese-films-on-srtio3",
+      "title": "Interface-Induced High-Temperature Superconductivity in Single Unit-Cell FeSe Films on SrTiO3",
+      "authors": [
+        "Qing-Yan Wang",
+        "Zhi Li",
+        "Wen-Hao Zhang",
+        "Zuo-Cheng Zhang",
+        "Jin-Song Zhang",
+        "Wei Li",
+        "Hao Ding",
+        "Yun-Bo Ou",
+        "Peng Deng",
+        "Kai Chang",
+        "Jing Wen",
+        "Can-Li Song",
+        "Ke He",
+        "Jin-Feng Jia",
+        "Shuai-Hua Ji",
+        "Ya-Yu Wang",
+        "Li-Li Wang",
+        "Xi Chen",
+        "Xu-Cun Ma",
+        "Qi-Kun Xue"
+      ],
+      "year": 2012,
+      "venue": "Chinese Physics Letters",
+      "doi": "10.1088/0256-307X/29/3/037402",
+      "arxiv": null,
+      "source_record_path": "literature/Interface-Induced High-Temperature Superconductivity in Single Unit-Cell FeSe Films on SrTiO3",
+      "pdf_path": "literature/Interface-Induced High-Temperature Superconductivity in Single Unit-Cell FeSe Films on SrTiO3/Interface-Induced High-Temperature Superconductivity in Single Unit-Cell FeSe Films on SrTiO3.pdf",
+      "document_sha256": "7e554d2ed47fcf6991d9e81234f30c126838105f02a28696fd861c9ae5aaa8ce",
+      "page_count": 4,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-interface-induced-high-temperature-superconductivity-in-single-unit-cell-fese-films-on-srtio3/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-interfacial-electron-phonon-coupling-constants-extracted-from-intrinsic-replica-bands-in-monolayer-fese-srti",
+      "title": "Interfacial Electron-Phonon Coupling Constants Extracted from Intrinsic Replica Bands in Monolayer FeSe - SrTi O 3",
+      "authors": [
+        "Brendan D. Faeth",
+        "Saien Xie",
+        "Shuolong Yang",
+        "Jason K. Kawasaki",
+        "Jocienne N. Nelson",
+        "Shuyuan Zhang",
+        "Christopher Parzyck",
+        "Pramita Mishra",
+        "Chen Li",
+        "Christopher Jozwiak",
+        "Aaron Bostwick",
+        "Eli Rotenberg",
+        "Darrell G. Schlom",
+        "Kyle M. Shen"
+      ],
+      "year": 2021,
+      "venue": "Physical Review Letters",
+      "doi": "10.1103/PhysRevLett.127.016803",
+      "arxiv": null,
+      "source_record_path": "literature/Interfacial Electron-Phonon Coupling Constants Extracted from Intrinsic Replica Bands in Monolayer FeSe - SrTi O 3",
+      "pdf_path": "literature/Interfacial Electron-Phonon Coupling Constants Extracted from Intrinsic Replica Bands in Monolayer FeSe - SrTi O 3/Interfacial Electron-Phonon Coupling Constants Extracted from Intrinsic Replica Bands in Monolayer FeSe - SrTi O 3.pdf",
+      "document_sha256": "2ac59d41b9df75d5ffab1ffd0e9af3892bcb4d5662342bd9dc7f5e4a11de897d",
+      "page_count": 6,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-interfacial-electron-phonon-coupling-constants-extracted-from-intrinsic-replica-bands-in-monolayer-fese-srti/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "fese-srtio3-interfacial-mode-coupling",
+      "title": "Interfacial Mode Coupling as the Origin of the Enhancement of Tc in FeSe Films on SrTiO3",
+      "authors": [
+        "J. J. Lee",
+        "F. T. Schmitt",
+        "R. G. Moore",
+        "S. Johnston",
+        "Y.-T. Cui",
+        "W. Li",
+        "M. Yi",
+        "Z. K. Liu",
+        "M. Hashimoto",
+        "Y. Zhang",
+        "D. H. Lu",
+        "T. P. Devereaux",
+        "D.-H. Lee",
+        "Z.-X. Shen"
+      ],
+      "year": 2014,
+      "venue": "Nature",
+      "doi": "10.1038/nature13894",
+      "primary_category": "electron-phonon-superconductivity",
+      "arxiv": null,
+      "source_record_path": null,
+      "pdf_path": null,
+      "document_sha256": null,
+      "page_count": null,
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": null,
+      "status": "source_pending",
+      "metadata_source": "existing Atlas preprocessing queue"
+    },
+    {
+      "paper_id": "snse2-ptte2-interfacial-superconductivity",
+      "title": "Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2",
+      "authors": [
+        "Jun Fan",
+        "Xiao-Le Qiu",
+        "Zhong-Yi Lu",
+        "Kai Liu",
+        "Ben-Chao Gong"
+      ],
+      "year": 2026,
+      "venue": "Chinese Physics Letters",
+      "doi": "10.1088/0256-307X/43/1/010711",
+      "arxiv": null,
+      "source_record_path": "literature/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2",
+      "pdf_path": "literature/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2.pdf",
+      "document_sha256": "bb66d9ebfaeb4b019c8d360f784e7a0c4637a96291dd72d43dae7a5cabcb2ade",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/snse2-ptte2-interfacial-superconductivity/",
+      "status": "published",
+      "metadata_source": "Records source package title page"
+    },
+    {
+      "paper_id": "bilayer-cote2-superconductivity",
+      "title": "Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2",
+      "authors": [
+        "Wenping Chen",
+        "Ziyun Zhang",
+        "Feipeng Zheng"
+      ],
+      "year": 2026,
+      "venue": "Physical Review B",
+      "doi": "10.1103/l89c-t2s4",
+      "arxiv": null,
+      "source_record_path": "literature/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2",
+      "pdf_path": "literature/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2.pdf",
+      "document_sha256": "6206e9d9d634f31d5ff051b578592dd2806cc498ec3d176ce2f59037cac594b8",
+      "page_count": 10,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/bilayer-cote2-superconductivity/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-invdesflow-al-active-learning-based-workflow-for-inverse-design-of-functional-materials",
+      "title": "InvDesFlow-AL - active learning-based workflow for inverse design of functional materials",
+      "authors": [
+        "Xiao-Qi Han",
+        "Peng-Jie Guo",
+        "Ze-Feng Gao",
+        "Hao Sun",
+        "Zhong-Yi Lu"
+      ],
+      "year": 2025,
+      "venue": "npj Computational Materials",
+      "doi": "10.1038/s41524-025-01830-z",
+      "arxiv": null,
+      "source_record_path": "literature/InvDesFlow-AL - active learning-based workflow for inverse design of functional materials",
+      "pdf_path": "literature/InvDesFlow-AL - active learning-based workflow for inverse design of functional materials/InvDesFlow-AL - active learning-based workflow for inverse design of functional materials.pdf",
+      "document_sha256": "27a32c442476de4ef7c48b6383e40a6742eb8e96d4f7fb65fdf7d5dbbc3cbea7",
+      "page_count": 14,
+      "primary_category": "reliability-validation",
+      "topic_relations": [
+        "reliability-validation"
+      ],
+      "atlas_route": "/reading/literature/reliability-validation/records-invdesflow-al-active-learning-based-workflow-for-inverse-design-of-functional-materials/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-mechanism-for-nodal-topological-superconductivity-on-ptbi2-surface",
+      "title": "Mechanism for Nodal Topological Superconductivity on PtBi2 Surface",
+      "authors": [
+        "Kristian Mæland",
+        "Giorgio Sangiovanni",
+        "Björn Trauzettel"
+      ],
+      "year": 2026,
+      "venue": "Physical Review Letters",
+      "doi": "10.1103/x1cy-w5zd",
+      "arxiv": null,
+      "source_record_path": "literature/Mechanism for Nodal Topological Superconductivity on PtBi2 Surface",
+      "pdf_path": "literature/Mechanism for Nodal Topological Superconductivity on PtBi2 Surface/Mechanism for Nodal Topological Superconductivity on PtBi2 Surface.pdf",
+      "document_sha256": "a9b1f9f7270efc5718f5baac189db8c3e204802ccacc99ac7cc4c456a8a58711",
+      "page_count": 23,
+      "primary_category": "quantum-geometry-topology",
+      "topic_relations": [
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/quantum-geometry-topology/records-mechanism-for-nodal-topological-superconductivity-on-ptbi2-surface/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-microscopic-theory-for-electron-phonon-coupling-in-twisted-bilayer-graphene",
+      "title": "Microscopic theory for electron-phonon coupling in twisted bilayer graphene",
+      "authors": [
+        "Ziyan Zhu",
+        "Thomas P. Devereaux"
+      ],
+      "year": 2026,
+      "venue": "Physical Review B",
+      "doi": "10.1103/tpww-cq4k",
+      "arxiv": null,
+      "source_record_path": "literature/Microscopic theory for electron-phonon coupling in twisted bilayer graphene",
+      "pdf_path": "literature/Microscopic theory for electron-phonon coupling in twisted bilayer graphene/Microscopic theory for electron-phonon coupling in twisted bilayer graphene.pdf",
+      "document_sha256": "338f72a6fd4d18f956ed688d7d8993cfa6a93bb454e22f8b3927498c4be004a6",
+      "page_count": 16,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-microscopic-theory-for-electron-phonon-coupling-in-twisted-bilayer-graphene/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-modulation-of-superconductivity-and-superhardness-in-x-b-4-c-4-x-be-b",
+      "title": "Modulation of superconductivity and superhardness in X B 4 C 4 ( X = Be , B , Al , Si , P , and Ti ) borocarbides at ambient pressure",
+      "authors": [
+        "Qiwen Jiang",
+        "Zihao Huo",
+        "Zhengtao Liu",
+        "Ling Chen",
+        "Tiancheng Ma",
+        "Shuqing Jiang",
+        "Defang Duan",
+        "Tian Cui"
+      ],
+      "year": 2025,
+      "venue": "Physical Review B",
+      "doi": "10.1103/lswp-5cxx",
+      "arxiv": null,
+      "source_record_path": "literature/Modulation of superconductivity and superhardness in X B 4 C 4 ( X = Be , B , Al , Si , P , and Ti ) borocarbides at ambient pressure",
+      "pdf_path": "literature/Modulation of superconductivity and superhardness in X B 4 C 4 ( X = Be , B , Al , Si , P , and Ti ) borocarbides at ambient pressure/Modulation of superconductivity and superhardness in X B 4 C 4 ( X = Be , B , Al , Si , P , and Ti ) borocarbides at ambient pressure.pdf",
+      "document_sha256": "93c01038ca36ae9665a8a82f4e0f8647a851b7b775aa37d767dbb6e3a3a40e65",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-modulation-of-superconductivity-and-superhardness-in-x-b-4-c-4-x-be-b/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-moire-phonons-in-magic-angle-twisted-bilayer-graphene",
+      "title": "Moiré Phonons in Magic-Angle Twisted Bilayer Graphene",
+      "authors": [
+        "Xiaoqian Liu",
+        "Ran Peng",
+        "Zhaoru Sun",
+        "Jianpeng Liu"
+      ],
+      "year": 2022,
+      "venue": "Nano Letters",
+      "doi": "10.1021/acs.nanolett.2c02010",
+      "arxiv": null,
+      "source_record_path": "literature/Moiré Phonons in Magic-Angle Twisted Bilayer Graphene",
+      "pdf_path": "literature/Moiré Phonons in Magic-Angle Twisted Bilayer Graphene/Moiré Phonons in Magic-Angle Twisted Bilayer Graphene.pdf",
+      "document_sha256": "397961deb2e99814e76d89fe76662454e0d95af23b3446a2a4c4a6fc3a6ac6ce",
+      "page_count": 7,
+      "primary_category": "lattice-dynamics",
+      "topic_relations": [
+        "lattice-dynamics",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/lattice-dynamics/records-moire-phonons-in-magic-angle-twisted-bilayer-graphene/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-observation-of-an-intermediate-state-during-lithium-intercalation-of-twisted-bilayer-mos2",
+      "title": "Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2",
+      "authors": [
+        "Yecun Wu",
+        "Jingyang Wang",
+        "Yanbin Li",
+        "Jiawei Zhou",
+        "Bai Yang Wang",
+        "Ankun Yang",
+        "Lin-Wang Wang",
+        "Harold Y. Hwang",
+        "Yi Cui"
+      ],
+      "year": 2022,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-022-30516-z",
+      "arxiv": null,
+      "source_record_path": "literature/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2",
+      "pdf_path": "literature/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2.pdf",
+      "document_sha256": "f0ef6546654f72c835a0799d81281c68d31d9c33c40ad70f306975139dc5f6f2",
+      "page_count": 11,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-observation-of-an-intermediate-state-during-lithium-intercalation-of-twisted-bilayer-mos2/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-observation-of-interface-superconductivity-in-a-snse-2-epitaxial-graphene-van-der-waals-heterostructure",
+      "title": "Observation of interface superconductivity in a SnSe 2 - epitaxial graphene van der Waals heterostructure",
+      "authors": [
+        "Yi-Min Zhang",
+        "Jia-Qi Fan",
+        "Wen-Lin Wang",
+        "Ding Zhang",
+        "Lili Wang",
+        "Wei Li",
+        "Ke He",
+        "Can-Li Song",
+        "Xu-Cun Ma",
+        "Qi-Kun Xue"
+      ],
+      "year": 2018,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.98.220508",
+      "arxiv": null,
+      "source_record_path": "literature/Observation of interface superconductivity in a SnSe 2 - epitaxial graphene van der Waals heterostructure",
+      "pdf_path": "literature/Observation of interface superconductivity in a SnSe 2 - epitaxial graphene van der Waals heterostructure/Observation of interface superconductivity in a SnSe 2 - epitaxial graphene van der Waals heterostructure.pdf",
+      "document_sha256": "67898b542f64f03191713d1c0d6ca9b3f6ca70c682ac3ede5ce8602d32710ff6",
+      "page_count": 5,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-observation-of-interface-superconductivity-in-a-snse-2-epitaxial-graphene-van-der-waals-heterostructure/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-observation-of-two-dimensional-superconductivity-in-bilayers-of-babio-3-and-bapbo-3",
+      "title": "Observation of two-dimensional superconductivity in bilayers of BaBiO 3 and BaPbO 3",
+      "authors": [
+        "B. Meir",
+        "S. Gorol",
+        "T. Kopp",
+        "G. Hammerl"
+      ],
+      "year": 2017,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.96.100507",
+      "arxiv": null,
+      "source_record_path": "literature/Observation of two-dimensional superconductivity in bilayers of BaBiO 3 and BaPbO 3",
+      "pdf_path": "literature/Observation of two-dimensional superconductivity in bilayers of BaBiO 3 and BaPbO 3/Observation of two-dimensional superconductivity in bilayers of BaBiO 3 and BaPbO 3.pdf",
+      "document_sha256": "b17645414db220ab4d28b235fdcee685f431000f5683f5dd3cf2ee60e8cb9555",
+      "page_count": 5,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-observation-of-two-dimensional-superconductivity-in-bilayers-of-babio-3-and-bapbo-3/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-origin-of-charge-transfer-and-enhanced-electron-phonon-coupling-in-single-unit-cell-fese",
+      "title": "Origin of charge transfer and enhanced electron–phonon coupling in single unit-cell FeSe films on SrTiO3",
+      "authors": [
+        "Huimin Zhang",
+        "Ding Zhang",
+        "Xiaowei Lu",
+        "Chong Liu",
+        "Guanyu Zhou",
+        "Xucun Ma",
+        "Lili Wang",
+        "Peng Jiang",
+        "Qi-Kun Xue",
+        "Xinhe Bao"
+      ],
+      "year": 2017,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-017-00281-5",
+      "arxiv": null,
+      "source_record_path": "literature/Origin of charge transfer and enhanced electron–phonon coupling in single unit-cell FeSe films on SrTiO3",
+      "pdf_path": "literature/Origin of charge transfer and enhanced electron–phonon coupling in single unit-cell FeSe films on SrTiO3/Origin of charge transfer and enhanced electron–phonon coupling in single unit-cell FeSe films on SrTiO3.pdf",
+      "document_sha256": "220de97be7d410239912af9fad49880112f984a1b26e224cfd44f32a010bb11a",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-origin-of-charge-transfer-and-enhanced-electron-phonon-coupling-in-single-unit-cell-fese/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-origin-of-the-structural-and-magnetic-anomalies-of-the-layered-compound-srfeo-2-a",
+      "title": "Origin of the Structural and Magnetic Anomalies of the Layered Compound SrFeO 2 - A Density Functional Investigation",
+      "authors": [
+        "H. J. Xiang",
+        "Su-Huai Wei",
+        "M.-H. Whangbo"
+      ],
+      "year": 2008,
+      "venue": "Physical Review Letters",
+      "doi": "10.1103/PhysRevLett.100.167207",
+      "arxiv": null,
+      "source_record_path": "literature/Origin of the Structural and Magnetic Anomalies of the Layered Compound SrFeO 2 - A Density Functional Investigation",
+      "pdf_path": "literature/Origin of the Structural and Magnetic Anomalies of the Layered Compound SrFeO 2 - A Density Functional Investigation/Origin of the Structural and Magnetic Anomalies of the Layered Compound SrFeO 2 - A Density Functional Investigation.pdf",
+      "document_sha256": "3326e5c2b2e1a2c783c30824fd9f41cd9d87989080d20e3083faca2dfea409fe",
+      "page_count": 4,
+      "primary_category": "magnetism-correlation",
+      "topic_relations": [
+        "magnetism-correlation"
+      ],
+      "atlas_route": "/reading/literature/magnetism-correlation/records-origin-of-the-structural-and-magnetic-anomalies-of-the-layered-compound-srfeo-2-a/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-phase-transitions-in-bati-o-3-from-first-principles",
+      "title": "Phase Transitions in BaTi O 3 from First Principles",
+      "authors": [
+        "W. Zhong",
+        "David Vanderbilt",
+        "K. M. Rabe"
+      ],
+      "year": 1994,
+      "venue": "Physical Review Letters",
+      "doi": "10.1103/PhysRevLett.73.1861",
+      "arxiv": null,
+      "source_record_path": "literature/Phase Transitions in BaTi O 3 from First Principles",
+      "pdf_path": "literature/Phase Transitions in BaTi O 3 from First Principles/Phase Transitions in BaTi O 3 from First Principles.pdf",
+      "document_sha256": "7e895ceee5956fe7b0800a12e720034cac0e57bbf8a500dbb5fd52ee0c953693",
+      "page_count": 5,
+      "primary_category": "structures-phase-competition",
+      "topic_relations": [
+        "structures-phase-competition"
+      ],
+      "atlas_route": "/reading/literature/structures-phase-competition/records-phase-transitions-in-bati-o-3-from-first-principles/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-phonon-mediated-superconductivity-in-electron-doped-monolayer-inse-a-first-principles-investigation",
+      "title": "Phonon-mediated superconductivity in electron-doped monolayer InSe - A first-principles investigation",
+      "authors": [
+        "Jianyong Chen"
+      ],
+      "year": 2019,
+      "venue": "Journal of Physics and Chemistry of Solids",
+      "doi": "10.1016/j.jpcs.2018.09.039",
+      "arxiv": null,
+      "source_record_path": "literature/Phonon-mediated superconductivity in electron-doped monolayer InSe - A first-principles investigation",
+      "pdf_path": "literature/Phonon-mediated superconductivity in electron-doped monolayer InSe - A first-principles investigation/Phonon-mediated superconductivity in electron-doped monolayer InSe - A first-principles investigation.pdf",
+      "document_sha256": "b584c12a026533b75201d6e830ac527d433eeaabb320550865306d3d307e2bdc",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-phonon-mediated-superconductivity-in-electron-doped-monolayer-inse-a-first-principles-investigation/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-phonon-mediated-superconductivity-in-electron-doped-single-layer-mos-2-a-first-principles-prediction",
+      "title": "Phonon-mediated superconductivity in electron-doped single-layer MoS 2 - A first-principles prediction",
+      "authors": [
+        "Yizhi Ge",
+        "Amy Y. Liu"
+      ],
+      "year": 2013,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.87.241408",
+      "arxiv": null,
+      "source_record_path": "literature/Phonon-mediated superconductivity in electron-doped single-layer MoS 2 - A first-principles prediction",
+      "pdf_path": "literature/Phonon-mediated superconductivity in electron-doped single-layer MoS 2 - A first-principles prediction/Phonon-mediated superconductivity in electron-doped single-layer MoS 2 - A first-principles prediction.pdf",
+      "document_sha256": "828b76e3d92945f2d3345f25e4fab96d01823ce90280753d81b5f5ad134538e4",
+      "page_count": 5,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-phonon-mediated-superconductivity-in-electron-doped-single-layer-mos-2-a-first-principles-prediction/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-phonon-mediated-superconductivity-in-graphene-by-lithium-deposition",
+      "title": "Phonon-mediated superconductivity in graphene by lithium deposition",
+      "authors": [
+        "Gianni Profeta",
+        "Matteo Calandra",
+        "Francesco Mauri"
+      ],
+      "year": 2012,
+      "venue": "Nature Physics",
+      "doi": "10.1038/nphys2181",
+      "arxiv": null,
+      "source_record_path": "literature/Phonon-mediated superconductivity in graphene by lithium deposition",
+      "pdf_path": "literature/Phonon-mediated superconductivity in graphene by lithium deposition/Phonon-mediated superconductivity in graphene by lithium deposition.pdf",
+      "document_sha256": "53deac0846398279be37d958d4d0f96d29908515a4359366a28dd3e32d412806",
+      "page_count": 4,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-phonon-mediated-superconductivity-in-graphene-by-lithium-deposition/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "dfpt-phonons-crystal-properties",
+      "title": "Phonons and related crystal properties from density-functional perturbation theory",
+      "authors": [
+        "Stefano Baroni",
+        "Stefano de Gironcoli",
+        "Andrea Dal Corso",
+        "Paolo Giannozzi"
+      ],
+      "year": 2001,
+      "venue": "Reviews of Modern Physics",
+      "doi": "10.1103/RevModPhys.73.515",
+      "arxiv": null,
+      "source_record_path": "literature/Phonons and related crystal properties from density-functional perturbation theory",
+      "pdf_path": "literature/Phonons and related crystal properties from density-functional perturbation theory/Phonons and related crystal properties from density-functional perturbation theory.pdf",
+      "document_sha256": "6fac9bb9a5ef0b1d26eaeafef43b8780c612744acac5592aa3999d8092f84089",
+      "page_count": 48,
+      "primary_category": "lattice-dynamics",
+      "topic_relations": [
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/lattice-dynamics/dfpt-phonons-crystal-properties/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-physics-of-thin-film-ferroelectric-oxides",
+      "title": "Physics of thin-film ferroelectric oxides",
+      "authors": [
+        "M. Dawber",
+        "K. M. Rabe",
+        "J. F. Scott"
+      ],
+      "year": 2005,
+      "venue": "Reviews of Modern Physics",
+      "doi": "10.1103/RevModPhys.77.1083",
+      "arxiv": null,
+      "source_record_path": "literature/Physics of thin-film ferroelectric oxides",
+      "pdf_path": "literature/Physics of thin-film ferroelectric oxides/Physics of thin-film ferroelectric oxides.pdf",
+      "document_sha256": "599468ddf00df86fea161d38a8e3cff8632292436f4fe6a525c4813416a54221",
+      "page_count": 48,
+      "primary_category": "polarization-response",
+      "topic_relations": [
+        "polarization-response"
+      ],
+      "atlas_route": "/reading/literature/polarization-response/records-physics-of-thin-film-ferroelectric-oxides/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-predicting-the-spin-lattice-order-of-frustrated-systems-from-first-principles",
+      "title": "Predicting the spin-lattice order of frustrated systems from first principles",
+      "authors": [
+        "H. J. Xiang",
+        "E. J. Kan",
+        "Su-Huai Wei",
+        "M.-H. Whangbo",
+        "X. G. Gong"
+      ],
+      "year": 2011,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.84.224429",
+      "arxiv": null,
+      "source_record_path": "literature/Predicting the spin-lattice order of frustrated systems from first principles",
+      "pdf_path": "literature/Predicting the spin-lattice order of frustrated systems from first principles/Predicting the spin-lattice order of frustrated systems from first principles.pdf",
+      "document_sha256": "b120d8a33f0a9671cce150084c70dfeb7238302ac2fd0616b1e7b2b75488f60d",
+      "page_count": 5,
+      "primary_category": "magnetism-correlation",
+      "topic_relations": [
+        "magnetism-correlation",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/magnetism-correlation/records-predicting-the-spin-lattice-order-of-frustrated-systems-from-first-principles/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "hbn-sin-superconductivity-cdw",
+      "title": "Prediction of superconductivity and charge density wave in monolayer h-BN via functionalization with Si-N layer",
+      "authors": [
+        "Shu-Ying Shang",
+        "Shu-Xiang Qiao",
+        "Yu-Lin Han",
+        "Kai-Yue Jiang",
+        "Na Jiao",
+        "Ping Zhang",
+        "Hong-Yan Lu"
+      ],
+      "year": 2026,
+      "venue": "Physical Review B",
+      "doi": "10.1103/jmys-zkgs",
+      "arxiv": null,
+      "source_record_path": "literature/Prediction of superconductivity and charge density wave in monolayer h-BN via functionalization with Si-N layer",
+      "pdf_path": "literature/Prediction of superconductivity and charge density wave in monolayer h-BN via functionalization with Si-N layer/Prediction of superconductivity and charge density wave in monolayer h-BN via functionalization with Si-N layer.pdf",
+      "document_sha256": "7b66fdf0f4b4688f3633bd43ce908289923da5ab79c928fcd4964ebb7e8fbdaf",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-pressure-induced-magnetic-field-free-superconducting-diode-effect-in-nbse2-flake",
+      "title": "Pressure induced magnetic-field-free superconducting diode effect in NbSe2 flake",
+      "authors": [
+        "Shihao Zhu",
+        "Tian Le",
+        "Cuiying Pei",
+        "Changhua Li",
+        "Yi Liao",
+        "Yi Zhao",
+        "Lingxiao Zhao",
+        "Qi Wang",
+        "Juefei Wu",
+        "Qilian Zhang",
+        "Yueshen Wu",
+        "Tonghuan Fu",
+        "Xujie Lü",
+        "Wenge Yang",
+        "Jie Shen",
+        "Jun Li",
+        "Yulin Chen",
+        "Xiao Lin",
+        "Wen-Yu He",
+        "Yanpeng Qi"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2608.03072",
+      "source_record_path": "literature/Pressure induced magnetic-field-free superconducting diode effect in NbSe2 flake",
+      "pdf_path": "literature/Pressure induced magnetic-field-free superconducting diode effect in NbSe2 flake/Pressure induced magnetic-field-free superconducting diode effect in NbSe2 flake.pdf",
+      "document_sha256": "9ee5b93b816d76dd60d186fe081fb3e61b70ad1c062cc8178efdf635ee97f275",
+      "page_count": 10,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "magnetism-correlation"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-pressure-induced-magnetic-field-free-superconducting-diode-effect-in-nbse2-flake/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-quantum-geometry-and-critical-temperature-enhancement-in-mgb2-superconductivity",
+      "title": "Quantum geometry and critical temperature enhancement in MgB2 superconductivity",
+      "authors": [
+        "Yi Jiang",
+        "Haoyu Hu",
+        "Dumitru Călugăru",
+        "Kaja H. Hiorth",
+        "Junze Deng",
+        "Hanqi Pi",
+        "Handong Chen",
+        "Maia G. Vergniory",
+        "Ion Errea",
+        "Emilia Morosan",
+        "Leslie M. Schoop",
+        "Claudia Felser",
+        "Miguel A. L. Marques",
+        "Päivi Törmä",
+        "Daniel Agterberg",
+        "B. Andrei Bernevig"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2607.19458",
+      "arxiv": "2607.19458",
+      "source_record_path": "literature/Quantum geometry and critical temperature enhancement in MgB2 superconductivity",
+      "pdf_path": "literature/Quantum geometry and critical temperature enhancement in MgB2 superconductivity/Quantum geometry and critical temperature enhancement in MgB2 superconductivity.pdf",
+      "document_sha256": "8d265151ff6321ce5c42b61d66300615647903dc291fb332ed320496d6a114a6",
+      "page_count": 96,
+      "primary_category": "quantum-geometry-topology",
+      "topic_relations": [
+        "quantum-geometry-topology"
+      ],
+      "atlas_route": "/reading/literature/quantum-geometry-topology/records-quantum-geometry-and-critical-temperature-enhancement-in-mgb2-superconductivity/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-quasiparticle-gw-for-superconductors-toward-a-unified-treatment-of-electron-phonon-and-electron-plasmon",
+      "title": "Quasiparticle GW for Superconductors - Toward a Unified Treatment of Electron-Phonon and Electron-Plasmon Couplings",
+      "authors": [
+        "Catalin D. Spataru",
+        "Christopher Renskers",
+        "Elena R. Margine"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2605.21700",
+      "arxiv": "2605.21700",
+      "source_record_path": "literature/Quasiparticle GW for Superconductors - Toward a Unified Treatment of Electron-Phonon and Electron-Plasmon Couplings",
+      "pdf_path": "literature/Quasiparticle GW for Superconductors - Toward a Unified Treatment of Electron-Phonon and Electron-Plasmon Couplings/Quasiparticle GW for Superconductors - Toward a Unified Treatment of Electron-Phonon and Electron-Plasmon Couplings.pdf",
+      "document_sha256": "ac3937dab92f0fe4649ec069938a48fd25908a8d6115bbdf3a1627337a98ae8a",
+      "page_count": 20,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-quasiparticle-gw-for-superconductors-toward-a-unified-treatment-of-electron-phonon-and-electron-plasmon/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-reversible-and-selective-ion-intercalation-through-the-top-surface-of-few-layer-mos2",
+      "title": "Reversible and selective ion intercalation through the top surface of few-layer MoS2",
+      "authors": [
+        "Jinsong Zhang",
+        "Ankun Yang",
+        "Xi Wu",
+        "Jorik van de Groep",
+        "Peizhe Tang",
+        "Shaorui Li",
+        "Bofei Liu",
+        "Feifei Shi",
+        "Jiayu Wan",
+        "Qitong Li",
+        "Yongming Sun",
+        "Zhiyi Lu",
+        "Xueli Zheng",
+        "Guangmin Zhou",
+        "Chun-Lan Wu",
+        "Shou-Cheng Zhang",
+        "Mark L. Brongersma",
+        "Jia Li",
+        "Yi Cui"
+      ],
+      "year": 2018,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-018-07710-z",
+      "arxiv": null,
+      "source_record_path": "literature/Reversible and selective ion intercalation through the top surface of few-layer MoS2",
+      "pdf_path": "literature/Reversible and selective ion intercalation through the top surface of few-layer MoS2/Reversible and selective ion intercalation through the top surface of few-layer MoS2.pdf",
+      "document_sha256": "365c3d95dc5a36734e0152cbd11064000e4c9a5aeab1c84b770784213baf86ff",
+      "page_count": 26,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-reversible-and-selective-ion-intercalation-through-the-top-surface-of-few-layer-mos2/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-robust-two-dimensional-superconductivity-and-vortex-system-in-bi2te3-fete-heterostructures",
+      "title": "Robust two-dimensional superconductivity and vortex system in Bi2Te3 - FeTe heterostructures",
+      "authors": [
+        "Hong-Chao Liu",
+        "Hui Li",
+        "Qing Lin He",
+        "Iam Keong Sou",
+        "Swee K. Goh",
+        "Jiannong Wang"
+      ],
+      "year": 2016,
+      "venue": "Scientific Reports",
+      "doi": "10.1038/srep26168",
+      "arxiv": null,
+      "source_record_path": "literature/Robust two-dimensional superconductivity and vortex system in Bi2Te3 - FeTe heterostructures",
+      "pdf_path": "literature/Robust two-dimensional superconductivity and vortex system in Bi2Te3 - FeTe heterostructures/Robust two-dimensional superconductivity and vortex system in Bi2Te3 - FeTe heterostructures.pdf",
+      "document_sha256": "308ff5b67be696fc5304fc624302e350afed63f334e3688d9090c46048814555",
+      "page_count": 21,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-robust-two-dimensional-superconductivity-and-vortex-system-in-bi2te3-fete-heterostructures/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-simultaneous-visualization-of-covalent-and-noncovalent-interactions-using-regions-of-density-overlap",
+      "title": "Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap",
+      "authors": [
+        "Piotr de Silva",
+        "Clémence Corminboeuf"
+      ],
+      "year": 2014,
+      "venue": "Journal of Chemical Theory and Computation",
+      "doi": "10.1021/ct500490b",
+      "arxiv": null,
+      "source_record_path": "literature/Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap",
+      "pdf_path": "literature/Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap/Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap.pdf",
+      "document_sha256": "7476ffcb86201dea4d3a52097538386edb4364b3f485ba6b2543c52a92f52128",
+      "page_count": 8,
+      "primary_category": "reliability-validation",
+      "topic_relations": [
+        "reliability-validation"
+      ],
+      "atlas_route": "/reading/literature/reliability-validation/records-simultaneous-visualization-of-covalent-and-noncovalent-interactions-using-regions-of-density-overlap/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "nbse2-stacking-superconductivity-cdw",
+      "title": "Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2",
+      "authors": [
+        "Sandra Sajan",
+        "Xinze Yang",
+        "Haojie Guo",
+        "Tarushi Agarwal",
+        "Samuel Mañas-Valero",
+        "Carla Boix-Constant",
+        "Eugenio Coronado",
+        "Fernando de Juan",
+        "Eduardo H. da Silva Neto",
+        "Ravi P. Singh",
+        "Maria N. Gastiasoro",
+        "Miguel M. Ugeda"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "10.48550/arXiv.2607.20335",
+      "arxiv": "2607.20335",
+      "source_record_path": "literature/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2",
+      "pdf_path": "literature/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2.pdf",
+      "document_sha256": "5ae69f78321d293c171bd87343110f48fe80eca3f1fb65f46870d67793898167",
+      "page_count": 13,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/nbse2-stacking-superconductivity-cdw/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-studies-on-the-origin-of-the-interfacial-superconductivity-of-sb2-te3-fe1-y-te",
+      "title": "Studies on the origin of the interfacial superconductivity of Sb2 Te3 - Fe1+y Te heterostructures",
+      "authors": [
+        "Jing Liang",
+        "Yu Jun Zhang",
+        "Xiong Yao",
+        "Hui Li",
+        "Zi-Xiang Li",
+        "Jiannong Wang",
+        "Yuanzhen Chen",
+        "Iam Keong Sou"
+      ],
+      "year": 2019,
+      "venue": "Proceedings of the National Academy of Sciences",
+      "doi": "10.1073/pnas.1914534117",
+      "arxiv": null,
+      "source_record_path": "literature/Studies on the origin of the interfacial superconductivity of Sb2 Te3 - Fe1+y Te heterostructures",
+      "pdf_path": "literature/Studies on the origin of the interfacial superconductivity of Sb2 Te3 - Fe1+y Te heterostructures/Studies on the origin of the interfacial superconductivity of Sb2 Te3 - Fe1+y Te heterostructures.pdf",
+      "document_sha256": "8a1795f3131915a7131a761ecb90f84e8754de4bb1d590552ce41e866d9e1ea3",
+      "page_count": 36,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-studies-on-the-origin-of-the-interfacial-superconductivity-of-sb2-te3-fe1-y-te/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-superconductivity-in-monolayer-ba-2-n-electride-first-principles-study",
+      "title": "Superconductivity in monolayer Ba 2 N electride - First-principles study",
+      "authors": [
+        "Xiao-Le Qiu",
+        "Jian-Feng Zhang",
+        "Huan-Cheng Yang",
+        "Zhong-Yi Lu",
+        "Kai Liu"
+      ],
+      "year": 2022,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.105.165101",
+      "arxiv": null,
+      "source_record_path": "literature/Superconductivity in monolayer Ba 2 N electride - First-principles study",
+      "pdf_path": "literature/Superconductivity in monolayer Ba 2 N electride - First-principles study/Superconductivity in monolayer Ba 2 N electride - First-principles study.pdf",
+      "document_sha256": "f6dd24f5d0cb0c6b311f200314c72bd331818aae5ea7119328171ea426e0c7a4",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-monolayer-ba-2-n-electride-first-principles-study/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-superconductivity-in-the-intercalated-graphite-compounds-c6yb-and-c6ca",
+      "title": "Superconductivity in the intercalated graphite compounds C6Yb and C6Ca",
+      "authors": [
+        "Thomas E. Weller",
+        "Mark Ellerby",
+        "Siddharth S. Saxena",
+        "Robert P. Smith",
+        "Neal T. Skipper"
+      ],
+      "year": 2005,
+      "venue": "Nature Physics",
+      "doi": "10.1038/nphys0010",
+      "arxiv": null,
+      "source_record_path": "literature/Superconductivity in the intercalated graphite compounds C6Yb and C6Ca",
+      "pdf_path": "literature/Superconductivity in the intercalated graphite compounds C6Yb and C6Ca/Superconductivity in the intercalated graphite compounds C6Yb and C6Ca.pdf",
+      "document_sha256": "04eda6d19403f8cb6577f4cba098dfe7c16347564920f21b3113f798474cec6f",
+      "page_count": 10,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-the-intercalated-graphite-compounds-c6yb-and-c6ca/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-superconductivity-in-the-two-dimensional-electron-gas-induced-by-high-energy-optical-phonon-mode",
+      "title": "Superconductivity in the two-dimensional electron gas induced by high-energy optical phonon mode and large polarization of the SrTiO 3 substrate",
+      "authors": [
+        "Baruch Rosenstein",
+        "B. Ya. Shapiro",
+        "I. Shapiro",
+        "Dingping Li"
+      ],
+      "year": 2016,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.94.024505",
+      "arxiv": null,
+      "source_record_path": "literature/Superconductivity in the two-dimensional electron gas induced by high-energy optical phonon mode and large polarization of the SrTiO 3 substrate",
+      "pdf_path": "literature/Superconductivity in the two-dimensional electron gas induced by high-energy optical phonon mode and large polarization of the SrTiO 3 substrate/Superconductivity in the two-dimensional electron gas induced by high-energy optical phonon mode and large polarization of the SrTiO 3 substrate.pdf",
+      "document_sha256": "57a311825c370034d29471ed74fecff6789d62c6ea7ed79b26e062cbca1bac5d",
+      "page_count": 11,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-the-two-dimensional-electron-gas-induced-by-high-energy-optical-phonon-mode/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-superconductivity-in-twisted-bilayer-wse2",
+      "title": "Superconductivity in twisted bilayer WSe2",
+      "authors": [
+        "Yinjie Guo",
+        "Jordan Pack",
+        "Joshua Swann",
+        "Luke Holtzman",
+        "Matthew Cothrine",
+        "Kenji Watanabe",
+        "Takashi Taniguchi",
+        "David G. Mandrus",
+        "Katayun Barmak",
+        "James Hone",
+        "Andrew J. Millis",
+        "Abhay Pasupathy",
+        "Cory R. Dean"
+      ],
+      "year": 2025,
+      "venue": "Nature",
+      "doi": "10.1038/s41586-024-08381-1",
+      "arxiv": null,
+      "source_record_path": "literature/Superconductivity in twisted bilayer WSe2",
+      "pdf_path": "literature/Superconductivity in twisted bilayer WSe2/Superconductivity in twisted bilayer WSe2.pdf",
+      "document_sha256": "c8a31ea512e1c534e0859044442cb5da5596c39e936fcf98ae6b440668f53adc",
+      "page_count": 11,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-twisted-bilayer-wse2/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-theoretical-prediction-of-structural-stability-and-superconductivity-in-t-hexagonal-molybdenum-dihydrides-monolayer",
+      "title": "Theoretical prediction of structural stability and superconductivity in T-hexagonal molybdenum dihydrides Monolayer",
+      "authors": [
+        "Jakkapat Seeyangnok",
+        "Udomsilp Pinsook"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": null,
+      "arxiv": "2607.13297",
+      "source_record_path": "literature/Theoretical prediction of structural stability and superconductivity in T-hexagonal molybdenum dihydrides Monolayer",
+      "pdf_path": "literature/Theoretical prediction of structural stability and superconductivity in T-hexagonal molybdenum dihydrides Monolayer/Theoretical prediction of structural stability and superconductivity in T-hexagonal molybdenum dihydrides Monolayer.pdf",
+      "document_sha256": "2a2908f5098f50d5897aecf66f5cedb5b35c151663a3ba898581a7c64e1a4142",
+      "page_count": 7,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theoretical-prediction-of-structural-stability-and-superconductivity-in-t-hexagonal-molybdenum-dihydrides-monolayer/",
+      "status": "published",
+      "metadata_source": "arXiv metadata"
+    },
+    {
+      "paper_id": "records-theory-of-light-enhanced-phonon-mediated-superconductivity",
+      "title": "Theory of light-enhanced phonon-mediated superconductivity",
+      "authors": [
+        "M. A. Sentef",
+        "A. F. Kemper",
+        "A. Georges",
+        "C. Kollath"
+      ],
+      "year": 2016,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.93.144506",
+      "arxiv": null,
+      "source_record_path": "literature/Theory of light-enhanced phonon-mediated superconductivity",
+      "pdf_path": "literature/Theory of light-enhanced phonon-mediated superconductivity/Theory of light-enhanced phonon-mediated superconductivity.pdf",
+      "document_sha256": "8e4b33ea2317f44c06efa995272b0070d67aab084dd2b30cabf96e5a80b5e18e",
+      "page_count": 10,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theory-of-light-enhanced-phonon-mediated-superconductivity/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-theory-of-phonon-mediated-superconductivity-in-twisted-bilayer-graphene",
+      "title": "Theory of Phonon-Mediated Superconductivity in Twisted Bilayer Graphene",
+      "authors": [
+        "Fengcheng Wu",
+        "A. H. MacDonald",
+        "Ivar Martin"
+      ],
+      "year": 2018,
+      "venue": "Physical Review Letters",
+      "doi": "10.1103/PhysRevLett.121.257001",
+      "arxiv": null,
+      "source_record_path": "literature/Theory of Phonon-Mediated Superconductivity in Twisted Bilayer Graphene",
+      "pdf_path": "literature/Theory of Phonon-Mediated Superconductivity in Twisted Bilayer Graphene/Theory of Phonon-Mediated Superconductivity in Twisted Bilayer Graphene.pdf",
+      "document_sha256": "bb63c397f990283ab1d5a667966388c874bb8ac1f3e182e71f6ffd15dbed49d0",
+      "page_count": 6,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theory-of-phonon-mediated-superconductivity-in-twisted-bilayer-graphene/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-theory-of-superconductivity",
+      "title": "Theory of Superconductivity",
+      "authors": [
+        "J. Bardeen",
+        "L. N. Cooper",
+        "J. R. Schrieffer"
+      ],
+      "year": 1957,
+      "venue": "Physical Review",
+      "doi": "10.1103/PhysRev.108.1175",
+      "arxiv": null,
+      "source_record_path": "literature/Theory of Superconductivity",
+      "pdf_path": "literature/Theory of Superconductivity/Theory of Superconductivity.pdf",
+      "document_sha256": "f76a6f79b1497c0e82da0391e1c8e5da26fdc1547b5fa0317f703c72cb4bb1c9",
+      "page_count": 30,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theory-of-superconductivity/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "allen-dynes-transition-temperature",
+      "title": "Transition temperature of strong-coupled superconductors reanalyzed",
+      "authors": [
+        "P. B. Allen",
+        "R. C. Dynes"
+      ],
+      "year": 1975,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.12.905",
+      "arxiv": null,
+      "source_record_path": "literature/Transition temperature of strong-coupled superconductors reanalyzed",
+      "pdf_path": "literature/Transition temperature of strong-coupled superconductors reanalyzed/Transition temperature of strong-coupled superconductors reanalyzed.pdf",
+      "document_sha256": "ab8fb4e5df8e7bc8c38195e3d6ed4c5f0325cd86b6065b5f293a3380cc26ee0f",
+      "page_count": 18,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/allen-dynes-transition-temperature/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "trigonal-symmetry-breaking-dihalides-trihalides",
+      "title": "Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3",
+      "authors": [
+        "Alexandru B. Georgescu",
+        "Andrew J. Millis",
+        "James M. Rondinelli"
+      ],
+      "year": 2022,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.105.245153",
+      "arxiv": null,
+      "source_record_path": "literature/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3",
+      "pdf_path": "literature/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3.pdf",
+      "document_sha256": "75576a64c366908f80fa92049e279525a012cb86af8dc3c33b400b54eb44fbd9",
+      "page_count": 12,
+      "primary_category": "structures-phase-competition",
+      "topic_relations": [
+        "structures-phase-competition",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/structures-phase-competition/trigonal-symmetry-breaking-dihalides-trihalides/",
+      "status": "published",
+      "metadata_source": "Records source package title page"
+    },
+    {
+      "paper_id": "records-tuning-competing-electronic-phases-in-monolayer-vse2-via-interface-hybridization",
+      "title": "Tuning Competing Electronic Phases in Monolayer VSe2 via Interface Hybridization",
+      "authors": [
+        "Ishita Pushkarna",
+        "Árpád Pásztor",
+        "Greta Lupi",
+        "Adolfo O. Fumega",
+        "Christoph Renner"
+      ],
+      "year": 2026,
+      "venue": "ACS Nano",
+      "doi": "10.1021/acsnano.6c04065",
+      "arxiv": null,
+      "source_record_path": "literature/Tuning Competing Electronic Phases in Monolayer VSe2 via Interface Hybridization",
+      "pdf_path": "literature/Tuning Competing Electronic Phases in Monolayer VSe2 via Interface Hybridization/Tuning Competing Electronic Phases in Monolayer VSe2 via Interface Hybridization.pdf",
+      "document_sha256": "b71951d59c1ec00ec3f97ea73b6c4ed43f6d5d7da905dc143baef3bb0c197f84",
+      "page_count": 8,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-tuning-competing-electronic-phases-in-monolayer-vse2-via-interface-hybridization/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-two-dimensional-superconductivity-at-the-interface-of-a-bi2te3-fete-heterostructure",
+      "title": "Two-dimensional superconductivity at the interface of a Bi2Te3 - FeTe heterostructure",
+      "authors": [
+        "Qing Lin He",
+        "Hongchao Liu",
+        "Mingquan He",
+        "Ying Hoi Lai",
+        "Hongtao He",
+        "Gan Wang",
+        "Kam Tuen Law",
+        "Rolf Lortz",
+        "Jiannong Wang",
+        "Iam Keong Sou"
+      ],
+      "year": 2014,
+      "venue": "Nature Communications",
+      "doi": "10.1038/ncomms5247",
+      "arxiv": null,
+      "source_record_path": "literature/Two-dimensional superconductivity at the interface of a Bi2Te3 - FeTe heterostructure",
+      "pdf_path": "literature/Two-dimensional superconductivity at the interface of a Bi2Te3 - FeTe heterostructure/Two-dimensional superconductivity at the interface of a Bi2Te3 - FeTe heterostructure.pdf",
+      "document_sha256": "118f5a6f693603001be51acd407fcbfa38b17576078c81053700a2b2ef73bfd0",
+      "page_count": 8,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-two-dimensional-superconductivity-at-the-interface-of-a-bi2te3-fete-heterostructure/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-two-dimensional-superconductivity-driven-by-interfacial-electron-phonon-coupling-in-a-bapbo3-babio3-bilayer",
+      "title": "Two-dimensional superconductivity driven by interfacial electron-phonon coupling in a BaPbO3 - BaBiO3 bilayer",
+      "authors": [
+        "S. Di Napoli",
+        "C. Helman",
+        "A. M. Llois",
+        "V. Vildosola"
+      ],
+      "year": 2021,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.103.174509",
+      "arxiv": null,
+      "source_record_path": "literature/Two-dimensional superconductivity driven by interfacial electron-phonon coupling in a BaPbO3 - BaBiO3 bilayer",
+      "pdf_path": "literature/Two-dimensional superconductivity driven by interfacial electron-phonon coupling in a BaPbO3 - BaBiO3 bilayer/Two-dimensional superconductivity driven by interfacial electron-phonon coupling in a BaPbO3 - BaBiO3 bilayer.pdf",
+      "document_sha256": "2be412ef7cb1ee80d0fb01eeb7bbf521f15d393a8c0e57c27902495113499a44",
+      "page_count": 11,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-two-dimensional-superconductivity-driven-by-interfacial-electron-phonon-coupling-in-a-bapbo3-babio3-bilayer/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-ubiquitous-strong-electron-phonon-coupling-at-the-interface-of-fese-srtio3",
+      "title": "Ubiquitous strong electron–phonon coupling at the interface of FeSe - SrTiO3",
+      "authors": [
+        "Chaofan Zhang",
+        "Zhongkai Liu",
+        "Zhuoyu Chen",
+        "Yanwu Xie",
+        "Ruihua He",
+        "Shujie Tang",
+        "Junfeng He",
+        "Wei Li",
+        "Tao Jia",
+        "Slavko N. Rebec",
+        "Eric Yue Ma",
+        "Hao Yan",
+        "Makoto Hashimoto",
+        "Donghui Lu",
+        "Sung-Kwan Mo",
+        "Yasuyuki Hikita",
+        "Robert G. Moore",
+        "Harold Y. Hwang",
+        "Dunghai Lee",
+        "Zhixun Shen"
+      ],
+      "year": 2017,
+      "venue": "Nature Communications",
+      "doi": "10.1038/ncomms14468",
+      "arxiv": null,
+      "source_record_path": "literature/Ubiquitous strong electron–phonon coupling at the interface of FeSe - SrTiO3",
+      "pdf_path": "literature/Ubiquitous strong electron–phonon coupling at the interface of FeSe - SrTiO3/Ubiquitous strong electron–phonon coupling at the interface of FeSe - SrTiO3.pdf",
+      "document_sha256": "d74e00b5ca3d6d74268d6843256be72092dcee6877afa96f96ff95960de2a900",
+      "page_count": 6,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-ubiquitous-strong-electron-phonon-coupling-at-the-interface-of-fese-srtio3/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-unconventional-bright-ground-state-excitons-in-monolayer-tii2-from-first-principles-calculations",
+      "title": "Unconventional bright ground-state excitons in monolayer TiI2 from first-principles calculations",
+      "authors": [
+        "Franz Fischer",
+        "Carl Emil Mørch Nielsen",
+        "Marta Prada",
+        "Gabriel Bester"
+      ],
+      "year": 2026,
+      "venue": "npj 2D Materials and Applications",
+      "doi": "10.1038/s41699-025-00656-z",
+      "arxiv": null,
+      "source_record_path": "literature/Unconventional bright ground-state excitons in monolayer TiI2 from first-principles calculations",
+      "pdf_path": "literature/Unconventional bright ground-state excitons in monolayer TiI2 from first-principles calculations/Unconventional bright ground-state excitons in monolayer TiI2 from first-principles calculations.pdf",
+      "document_sha256": "c6c7045ea41f81b711ed265fc86e53320983ae2226bcf5b7e7ac95a3ce60d65c",
+      "page_count": 9,
+      "primary_category": "quasiparticles-excitons",
+      "topic_relations": [
+        "quasiparticles-excitons",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/quasiparticles-excitons/records-unconventional-bright-ground-state-excitons-in-monolayer-tii2-from-first-principles-calculations/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-unified-ab-initio-description-of-fro-hlich-electron-phonon-interactions-in-two-dimensional-and",
+      "title": "Unified ab initio description of Fröhlich electron-phonon interactions in two-dimensional and three-dimensional materials",
+      "authors": [
+        "Weng Hong Sio",
+        "Feliciano Giustino"
+      ],
+      "year": 2022,
+      "venue": "Physical Review B",
+      "doi": "10.1103/PhysRevB.105.115414",
+      "arxiv": null,
+      "source_record_path": "literature/Unified ab initio description of Fröhlich electron-phonon interactions in two-dimensional and three-dimensional materials",
+      "pdf_path": "literature/Unified ab initio description of Fröhlich electron-phonon interactions in two-dimensional and three-dimensional materials/Unified ab initio description of Fröhlich electron-phonon interactions in two-dimensional and three-dimensional materials.pdf",
+      "document_sha256": "b0a1b1fed5ab43eac2d0ec8bfc63182e181488748a65caa2d95f53fe726a6222",
+      "page_count": 18,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity",
+        "interfaces-heterostructures",
+        "lattice-dynamics"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-unified-ab-initio-description-of-fro-hlich-electron-phonon-interactions-in-two-dimensional-and/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "stable-semiconducting-1t-prime-hfcl2-monolayer",
+      "title": "Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material",
+      "authors": [
+        "Celso Alves Do Nascimento Júnior",
+        "Elie Albert Moujaes",
+        "Maurício Jeomar Piotrowski",
+        "Celso Ricardo Caldeira Rêgo",
+        "Diego Guedes-Sobrinho",
+        "Luiz Antônio Ribeiro Júnior",
+        "Teldo Anderson da Silva Pereira",
+        "Alexandre Cavalheiro Dias"
+      ],
+      "year": 2025,
+      "venue": "ACS Omega",
+      "doi": "10.1021/acsomega.4c10560",
+      "arxiv": null,
+      "source_record_path": "literature/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material",
+      "pdf_path": "literature/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material.pdf",
+      "document_sha256": "9b5df45cffcfc6194b73fbc0823bbac2573f4f93fc51a0ab2811cf370cf6dd90",
+      "page_count": 15,
+      "primary_category": "structures-phase-competition",
+      "topic_relations": [
+        "structures-phase-competition",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/structures-phase-competition/stable-semiconducting-1t-prime-hfcl2-monolayer/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-unveiling-vibrational-and-optoelectronic-properties-of-hfx2-x-br-i-monolayers-via-dft-calculations",
+      "title": "Unveiling vibrational and optoelectronic properties of HfX2 (X = Br, I) monolayers via DFT calculations",
+      "authors": [
+        "W. O. Santos",
+        "L. S. Barbosa",
+        "E. Moreira",
+        "D. L. Azevedo"
+      ],
+      "year": 2025,
+      "venue": "Journal of Applied Physics",
+      "doi": "10.1063/5.0286460",
+      "arxiv": null,
+      "source_record_path": "literature/Unveiling vibrational and optoelectronic properties of HfX2 (X = Br, I) monolayers via DFT calculations",
+      "pdf_path": "literature/Unveiling vibrational and optoelectronic properties of HfX2 (X = Br, I) monolayers via DFT calculations/Unveiling vibrational and optoelectronic properties of HfX2 (X = Br, I) monolayers via DFT calculations.pdf",
+      "document_sha256": "fc89ad655c86b98cef2f2ae7fbdeb5cf333cf3631782ef1de30426be0a94b53d",
+      "page_count": 10,
+      "primary_category": "lattice-dynamics",
+      "topic_relations": [
+        "lattice-dynamics",
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/lattice-dynamics/records-unveiling-vibrational-and-optoelectronic-properties-of-hfx2-x-br-i-monolayers-via-dft-calculations/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-van-der-waals-electrides",
+      "title": "Van der Waals Electrides",
+      "authors": [
+        "Jun Zhou",
+        "Jing-Yang You",
+        "Yi-Ming Zhao",
+        "Yuan Ping Feng",
+        "Lei Shen"
+      ],
+      "year": 2024,
+      "venue": "Accounts of Chemical Research",
+      "doi": "10.1021/acs.accounts.4c00394",
+      "arxiv": null,
+      "source_record_path": "literature/Van der Waals Electrides",
+      "pdf_path": "literature/Van der Waals Electrides/Van der Waals Electrides.pdf",
+      "document_sha256": "69d5eb04592beadc321d37a1ce5839ac68cb9193c8db8cb3fd78c03ba85ed2d7",
+      "page_count": 10,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-van-der-waals-electrides/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "records-versatile-method-for-preparing-two-dimensional-metal-dihalides",
+      "title": "Versatile Method for Preparing Two-Dimensional Metal Dihalides",
+      "authors": [
+        "Rongrong Qi",
+        "Yi You",
+        "Magdalena Grzeszczyk",
+        "Hiran Jyothilal",
+        "Achintya Bera",
+        "Jude Laverock",
+        "Noel Natera-Cordero",
+        "Pengru Huang",
+        "Gwang-Hyeon Nam",
+        "Vasyl G. Kravets",
+        "Daniel Burrow",
+        "Jesus Carlos Toscano Figueroa",
+        "Yi Wei Ho",
+        "Neil A. Fox",
+        "Alexander N. Grigorenko",
+        "Ivan J. Vera-Marun",
+        "Ashok Keerthi",
+        "Maciej Koperski",
+        "Boya Radha"
+      ],
+      "year": 2024,
+      "venue": "ACS Nano",
+      "doi": "10.1021/acsnano.4c04397",
+      "arxiv": null,
+      "source_record_path": "literature/Versatile Method for Preparing Two-Dimensional Metal Dihalides",
+      "pdf_path": "literature/Versatile Method for Preparing Two-Dimensional Metal Dihalides/Versatile Method for Preparing Two-Dimensional Metal Dihalides.pdf",
+      "document_sha256": "df77c34bdd059f340747a1acc64dc3eb93245d43d3d82e962bc8465c8736a337",
+      "page_count": 16,
+      "primary_category": "interfaces-heterostructures",
+      "topic_relations": [
+        "interfaces-heterostructures"
+      ],
+      "atlas_route": "/reading/literature/interfaces-heterostructures/records-versatile-method-for-preparing-two-dimensional-metal-dihalides/",
+      "status": "published",
+      "metadata_source": "Crossref DOI metadata"
+    },
+    {
+      "paper_id": "two-dimensional-superconductors-chinese-review",
+      "title": "二维超导材料",
+      "authors": [
+        "肖瑞春",
+        "鲁文建",
+        "孙玉平"
+      ],
+      "year": 2018,
+      "venue": "物理",
+      "doi": "10.7693/wl20180601",
+      "arxiv": null,
+      "source_record_path": "literature/二维超导材料",
+      "pdf_path": "literature/二维超导材料/二维超导材料.pdf",
+      "document_sha256": "23bbdf1e61a3146467b1faea3690e23a69653cd0e6c25cfc7891faa103ea6a08",
+      "page_count": 9,
+      "primary_category": "electron-phonon-superconductivity",
+      "topic_relations": [
+        "electron-phonon-superconductivity"
+      ],
+      "atlas_route": "/reading/literature/electron-phonon-superconductivity/two-dimensional-superconductors-chinese-review/",
+      "status": "published",
+      "metadata_source": "Records source package front matter"
+    }
+  ]
+}

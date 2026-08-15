@@ -1,23 +1,24 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { literaturePaperById, type LiteraturePaper } from '../../../../reading/literature-papers';
-import { literaturePreprocessingQueue, type LiteraturePreprocessingEntry } from '../../../../reading/literature-preprocessing';
+import { publishedLiteraturePapers, type LiteratureLibraryPaper } from '../../../../reading/literature-library';
 import { researchTopicById } from '../../../../reading/research-topics';
 
 export function getStaticPaths() {
-  return literaturePreprocessingQueue
-    .filter((entry) => entry.source_status === 'source_ready')
+  return publishedLiteraturePapers
+    .filter((entry) => entry.paper_id !== 'hbn-sin-superconductivity-cdw')
     .map((entry) => ({
-      params: { topic: entry.target_literature_topic, paper: entry.atlas_slug },
+      params: { topic: entry.primary_category, paper: entry.paper_id },
       props: { entry, paper: literaturePaperById[entry.paper_id] },
     }));
 }
 
-const { entry, paper } = Astro.props as { entry: LiteraturePreprocessingEntry; paper: LiteraturePaper };
-const topic = researchTopicById[entry.target_literature_topic];
+const { entry, paper } = Astro.props as { entry: LiteratureLibraryPaper; paper: LiteraturePaper };
+const topic = researchTopicById[entry.primary_category];
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => route.startsWith('http') ? route : `${base}${route.replace(/^\//, '')}`;
 const pdfUrl = href(`/papers/${paper.id}.pdf`);
+const sharedAnnotationsUrl = href(`/papers/api/annotations/${entry.document_sha256}`);
 ---
 
 <BaseLayout title={paper.title} description={`Open the Records canonical source PDF for ${paper.title}. Scientific reading is pending.`} current="reading" wide>
@@ -28,20 +29,23 @@ const pdfUrl = href(`/papers/${paper.id}.pdf`);
       <span aria-current="page">Pre-reading PDF</span>
     </nav>
     <h1>{paper.title}</h1>
-    <p class="reader-meta">{paper.authors.join(', ')} · {paper.journal} · {paper.year} · <a href={`https://doi.org/${paper.doi}`}>DOI {paper.doi}</a></p>
+    <p class="reader-meta">{paper.authors.join(', ')} · {paper.journal} · {paper.year}{paper.doi && <> · <a href={`https://doi.org/${paper.doi}`}>DOI {paper.doi}</a></>}</p>
     {paper.companionCorrections?.map((correction) => (
       <p class="reader-meta">Companion correction: <a href={`https://doi.org/${correction.doi}`}>{correction.label} · DOI {correction.doi}</a></p>
     ))}
     <p class="reader-meta">Source version: {paper.sourceVersion}</p>
     <p><a class="pdf-download" href={pdfUrl}>Open Records canonical PDF</a></p>
     <p class="pre-reading-notice">Reading analysis pending. No Reading Notes, source anchors, figure interpretation, equations, claims, or evidence commentary have been published for this paper.</p>
+    <p class="reader-meta" data-shared-annotation-status>Loading the global anonymous annotation layer…</p>
   </div>
 
-  <section class="paper-reader pre-reading-reader" aria-label="Pre-reading canonical PDF" data-paper-id={paper.id} data-pdf-url={pdfUrl}>
+  <section class="paper-reader pre-reading-reader" aria-label="Pre-reading canonical PDF" data-paper-id={paper.id} data-pdf-url={pdfUrl} data-source-sha256={entry.document_sha256} data-shared-annotations-url={sharedAnnotationsUrl}>
     <aside class="annotation-rail annotation-left" aria-hidden="true"></aside>
     <div class="pdf-column">
-      <iframe class="pdf-only-frame" src={pdfUrl} title={`Records canonical PDF · ${paper.title}`}></iframe>
+      <div class="reader-status" role="status">Loading canonical PDF and shared annotations…</div>
+      <div id="pdf-viewer" aria-label={`Records canonical PDF · ${paper.title}`}></div>
     </div>
     <aside class="annotation-rail annotation-right" aria-hidden="true"></aside>
   </section>
+  <script src="../../../../scripts/pre-reading-reader.ts"></script>
 </BaseLayout>
