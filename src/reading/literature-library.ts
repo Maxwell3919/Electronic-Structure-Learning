@@ -15,7 +15,8 @@ export type LiteratureLibraryPaper = {
   primary_category: string;
   topic_relations: string[];
   atlas_route: string | null;
-  status: 'published' | 'source_pending';
+  status: 'published' | 'source_pending' | 'source_mismatch';
+  failure_reason?: string;
   metadata_source: string;
 };
 
