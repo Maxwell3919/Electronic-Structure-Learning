@@ -115,6 +115,7 @@ try {
     fs.readFileSync(path.join(root, 'src/pages/reading/literature/[topic]/[paper].astro'), 'utf8'),
   ].join('\n').toLowerCase();
   for (const prohibited of ['login', 'logout', 'avatar', 'reaction', 'vote', 'my annotation']) assert(!frontend.includes(prohibited), `public annotation UI contains prohibited identity/social feature: ${prohibited}`);
+  for (const unsupportedTool of ['annotation-strikeout', 'annotation-squiggly', 'annotation-insert-text', 'annotation-replace-text']) assert(frontend.includes(`'${unsupportedTool}'`), `unsupported annotation tool remains exposed: ${unsupportedTool}`);
   console.log('Shared annotation persistence, overlap, dedupe, isolation, validation, restart, rate-limit, and UI-boundary tests passed.');
 } finally {
   await stop();
