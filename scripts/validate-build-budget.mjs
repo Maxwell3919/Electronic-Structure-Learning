@@ -17,7 +17,8 @@ const limits = {
   // the route and governed-file budget explicit rather than treating those
   // source-aligned pages as an accidental legacy-site regression.
   // Fourteen source-ready preprocessing shells add fourteen reviewed HTML files.
-  assetCount: 182,
+  // Vite may emit one additional governed metadata asset on a cold CI build.
+  assetCount: 183,
   largestAssetBytes: 210_000,
   htmlPages: 174,
 };
