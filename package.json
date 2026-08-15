@@ -18,7 +18,10 @@
     "audit:source-visuals": "node scripts/audit-source-visuals.mjs",
     "validate:clean-slate": "node scripts/validate-clean-slate.mjs --source",
     "validate:build-budget": "node scripts/validate-build-budget.mjs",
-    "check": "astro check && npm run audit:literature-preprocessing && npm run validate:clean-slate && astro build && npm run validate:build-budget && node scripts/validate-clean-slate.mjs --built && npm run audit:source-visuals"
+    "audit:literature-library": "node scripts/audit-literature-library.mjs",
+    "audit:literature-library:records": "node scripts/audit-literature-library.mjs --require-records",
+    "test:literature-annotations": "node scripts/test-literature-annotations.mjs",
+    "check": "astro check && npm run audit:literature-preprocessing && npm run audit:literature-library && npm run test:literature-annotations && npm run validate:clean-slate && astro build && node scripts/audit-literature-library.mjs --built && npm run validate:build-budget && node scripts/validate-clean-slate.mjs --built && npm run audit:source-visuals"
   },
   "dependencies": {
     "@embedpdf/snippet": "2.15.0",

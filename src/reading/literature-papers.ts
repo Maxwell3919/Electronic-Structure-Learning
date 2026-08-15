@@ -1,4 +1,5 @@
 import { literaturePreprocessingQueue } from './literature-preprocessing';
+import { literatureLibraryPapers } from './literature-library';
 
 export type ImpactFactor = {
   value: number | null;
@@ -19,6 +20,7 @@ export type LiteraturePaper = {
   journal: string;
   year: number;
   doi: string;
+  arxiv?: string;
   href?: string;
   abstract?: string;
   impactFactor: ImpactFactor;
@@ -179,6 +181,25 @@ const preReadingPapers: LiteraturePaper[] = literaturePreprocessingQueue.map((en
   };
 });
 
+const establishedPaperIds = new Set(['hbn-sin-superconductivity-cdw', ...preReadingPapers.map((paper) => paper.id)]);
+const libraryAdditions: LiteraturePaper[] = literatureLibraryPapers
+  .filter((entry) => !establishedPaperIds.has(entry.paper_id))
+  .map((entry) => ({
+    id: entry.paper_id,
+    topicId: entry.primary_category,
+    title: entry.title,
+    authors: entry.authors,
+    journal: entry.venue,
+    year: entry.year,
+    doi: entry.doi ?? '',
+    arxiv: entry.arxiv ?? undefined,
+    href: entry.atlas_route
+      ?? (entry.doi ? `https://doi.org/${entry.doi}` : entry.arxiv ? `https://arxiv.org/abs/${entry.arxiv}` : undefined),
+    impactFactor: { value: null, year: null, source: '' },
+    readerState: 'pre_reading',
+    sourceVersion: 'Research-Workflow-Records canonical source package.',
+  }));
+
 export const literaturePapers: LiteraturePaper[] = [
   {
     id: 'hbn-sin-superconductivity-cdw',
@@ -194,6 +215,7 @@ export const literaturePapers: LiteraturePaper[] = [
     readerState: 'complete_reader',
   },
   ...preReadingPapers,
+  ...libraryAdditions,
 ];
 
 export const papersByTopic = Object.fromEntries(

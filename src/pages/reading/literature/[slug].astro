@@ -31,7 +31,13 @@ const href = (route: string) => route.startsWith('http') ? route : `${base}${rou
             <p class="paper-meta">
               {paper.authors.join(', ')} · {paper.journal} · {paper.year}
             </p>
-            <p class="paper-doi"><a href={`https://doi.org/${paper.doi}`}>DOI: {paper.doi}</a></p>
+            {paper.doi ? (
+              <p class="paper-doi"><a href={`https://doi.org/${paper.doi}`}>DOI: {paper.doi}</a></p>
+            ) : paper.arxiv ? (
+              <p class="paper-doi"><a href={`https://arxiv.org/abs/${paper.arxiv}`}>arXiv: {paper.arxiv}</a></p>
+            ) : (
+              <p class="paper-doi">Stable source identity: Records canonical package</p>
+            )}
             {paper.abstract && <p class="paper-abstract">{paper.abstract}</p>}
             {paper.readerState === 'pre_reading' && paper.href?.startsWith('/') ? (
               <p class="pre-reading-state">Pre-reading PDF available · reading analysis pending.</p>

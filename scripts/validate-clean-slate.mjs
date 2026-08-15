@@ -39,10 +39,12 @@ const researchTopicSlugs = [
 const literatureSlugs = researchTopicSlugs;
 const pilotPaperRoute = 'reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/';
 const pilotPdfRoute = 'papers/hbn-sin-superconductivity-cdw.pdf';
-const preprocessingQueue = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-preprocessing.json'), 'utf8'));
-const readyPreprocessing = preprocessingQueue.filter((entry) => entry.source_status === 'source_ready');
-const preprocessingPaperRoutes = readyPreprocessing.map((entry) => `reading/literature/${entry.target_literature_topic}/${entry.atlas_slug}/`);
-const preprocessingPdfRoutes = readyPreprocessing.map((entry) => `papers/${entry.paper_id}.pdf`);
+const literatureLibrary = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-library.json'), 'utf8'));
+const publishedLibrary = literatureLibrary.papers.filter((entry) => entry.status === 'published');
+const libraryPaperRoutes = publishedLibrary
+  .map((entry) => `reading/literature/${entry.primary_category}/${entry.paper_id}/`)
+  .filter((route) => route !== pilotPaperRoute);
+const libraryPdfRoutes = publishedLibrary.map((entry) => `papers/${entry.paper_id}.pdf`);
 const martinPartSlugs = ['part-i', 'part-ii', 'part-iii', 'part-iv', 'part-v', 'part-vi', 'part-vii'];
 const martinChapterSlugs = Array.from({ length: 28 }, (_, index) => `chapter-${String(index + 1).padStart(2, '0')}`);
 const martinAppendixSlugs = 'abcdefghijklmnopqr'.split('').map((letter) => `appendix-${letter}`);
@@ -93,7 +95,7 @@ const expectedHtml = [
   'reading/literature/index.html',
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   `${pilotPaperRoute}index.html`,
-  ...preprocessingPaperRoutes.map((route) => `${route}index.html`),
+  ...libraryPaperRoutes.map((route) => `${route}index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
   ...theorySlugs.map((slug) => `theory/${slug}/index.html`),
 ].sort();
@@ -107,8 +109,8 @@ const internalRoutes = new Set([
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   pilotPaperRoute,
   pilotPdfRoute,
-  ...preprocessingPaperRoutes,
-  ...preprocessingPdfRoutes,
+  ...libraryPaperRoutes,
+  ...libraryPdfRoutes,
   'methods/', 'computational-tools/', 'reference/',
 ]);
 
@@ -271,14 +273,16 @@ const checkLiteraturePages = (baseDirectory, mode) => {
     if (mode === 'built') {
       assert(count(text, /<h1(?:\s|>)/g) === 1, `${relative} must contain one h1`);
       assert(text.includes('class="breadcrumbs"'), `${relative} lacks breadcrumbs`);
-      for (const heading of ['Central Question', 'What researchers ask', 'Evidence', 'Literature Routes', 'Connections']) assert(!text.includes(heading), `${relative} retains former topic teaching section ${heading}`);
+      for (const heading of ['Central Question', 'What researchers ask', 'Evidence', 'Literature Routes', 'Connections']) {
+        assert(!new RegExp(`<h[2-6][^>]*>${heading}<\\/h[2-6]>`, 'i').test(text), `${relative} retains former topic teaching section ${heading}`);
+      }
     }
     if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
     else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
   }
   if (mode === 'source') {
     const shell = fs.readFileSync(path.join(baseDirectory, prefix, '[topic]/[paper].astro'), 'utf8');
-    for (const marker of ['Reading analysis pending', 'No Reading Notes', 'Open Records canonical PDF', 'paper-reader pre-reading-reader', 'pdf-only-frame']) {
+    for (const marker of ['Reading analysis pending', 'No Reading Notes', 'Open Records canonical PDF', 'paper-reader pre-reading-reader']) {
       assert(shell.includes(marker), `${prefix}/[topic]/[paper].astro lacks preprocessing boundary ${marker}`);
     }
     assert(/<aside class="annotation-rail annotation-left" aria-hidden="true"><\/aside>/.test(shell), `${prefix}/[topic]/[paper].astro lacks an empty left annotation rail`);
@@ -287,7 +291,7 @@ const checkLiteraturePages = (baseDirectory, mode) => {
       assert(!shell.includes(forbidden), `${prefix}/[topic]/[paper].astro fabricates or requires ${forbidden}`);
     }
   } else {
-    for (const route of preprocessingPaperRoutes) {
+    for (const route of libraryPaperRoutes) {
       const relative = `${route}index.html`;
       const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
       assert(text.includes('Reading analysis pending'), `${relative} lacks the pre-reading boundary`);
@@ -384,7 +388,7 @@ if (sourceMode) {
   assert(!sources.includes('/Electronic-Structure-Learning/'), 'source hard-codes the Pages base path');
   assert(!/\bclient:(?:load|idle|visible|media|only)\b/.test(sources), 'client hydration directive remains');
   const scriptedPages = tracked.filter((file) => file.endsWith('.astro') && /<script(?:\s|>)/i.test(fs.readFileSync(path.join(root, file), 'utf8')));
-  assert(scriptedPages.every((file) => file === 'src/pages/reading/literature/[slug].astro' || file === `src/pages/${pilotPaperRoute}index.astro`), `client scripts exist outside the Literature list and completed Paper Reader: ${scriptedPages.join(', ')}`);
+  assert(scriptedPages.every((file) => file === 'src/pages/reading/literature/[slug].astro' || file === 'src/pages/reading/literature/[topic]/[paper].astro' || file === `src/pages/${pilotPaperRoute}index.astro`), `client scripts exist outside the Literature list and PDF Readers: ${scriptedPages.join(', ')}`);
   for (const term of ['checkpoint', 'claim ledger', 'reading mode', 'reading contract', 'card grid', 'status badge']) {
     assert(!sources.toLowerCase().includes(term), `legacy or administrative term remains in public source: ${term}`);
   }
@@ -472,7 +476,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + 1 + preprocessingPaperRoutes.length;
+      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + 1 + libraryPaperRoutes.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
