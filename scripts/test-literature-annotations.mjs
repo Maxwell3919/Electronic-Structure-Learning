@@ -83,7 +83,9 @@ const overlap = {
 
 try {
   await start();
-  let result = await request(`${base}${first.document_sha256}`);
+  let result = await request(`http://127.0.0.1:${port}/papers/`);
+  assert(result.status === 200 && result.body.published_papers === 2 && result.body.pdf_identity === 'sha256', 'runtime service index is unavailable');
+  result = await request(`${base}${first.document_sha256}`);
   assert(result.status === 200 && result.body.annotations.length === 0, 'empty document did not load');
   assert((await post(first.document_sha256, highlight)).status === 201, 'annotation was not created');
   result = await post(first.document_sha256, { ...highlight, id: '33333333-3333-4333-8333-333333333333' });
