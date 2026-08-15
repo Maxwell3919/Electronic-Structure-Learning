@@ -19,6 +19,7 @@ const assert = (condition, message) => { if (!condition) failures.push(message);
 const unique = (items) => new Set(items).size === items.length;
 const published = manifest.papers.filter((paper) => paper.status === 'published');
 const pending = manifest.papers.filter((paper) => paper.status === 'source_pending');
+const mismatched = manifest.papers.filter((paper) => paper.status === 'source_mismatch');
 const available = fs.existsSync(recordsRoot) && fs.statSync(recordsRoot).isDirectory();
 
 assert(manifest.schema_version === 1, 'unexpected library manifest schema');
@@ -27,7 +28,9 @@ assert(manifest.stats.atlas_related === manifest.papers.length, 'Atlas-related c
 assert(manifest.stats.published === published.length, 'published count does not match paper entries');
 assert(manifest.stats.missing_pdf === pending.length, 'missing PDF count does not match source_pending entries');
 assert(manifest.stats.deduplicated === manifest.deduplicated_records.length, 'deduplicated count does not match audit records');
-assert(manifest.stats.unclassified === 0 && manifest.stats.failed === 0, 'manifest reports unresolved classification or failures');
+assert(manifest.stats.unclassified === 0, 'manifest reports unresolved classification');
+assert(manifest.stats.failed === mismatched.length, 'failed count does not match source_mismatch entries');
+assert(Array.isArray(manifest.failed_records) && manifest.failed_records.length === mismatched.length, 'failed-record audit does not match source_mismatch entries');
 assert(unique(manifest.papers.map((paper) => paper.paper_id)), 'duplicate paper_id');
 assert(unique(published.map((paper) => paper.document_sha256)), 'duplicate published PDF hash');
 assert(unique(manifest.papers.filter((paper) => paper.doi).map((paper) => paper.doi.toLowerCase())), 'duplicate DOI');
@@ -44,11 +47,16 @@ for (const paper of manifest.papers) {
     assert(!paper.source_record_path && !paper.pdf_path && !paper.document_sha256 && !paper.atlas_route, `pending paper exposes a false Reader: ${paper.paper_id}`);
     continue;
   }
+  assert(['published', 'source_mismatch'].includes(paper.status), `invalid source status: ${paper.paper_id}`);
   assert(paper.source_record_path?.startsWith('literature/'), `invalid Records path: ${paper.paper_id}`);
   assert(paper.pdf_path?.startsWith(`${paper.source_record_path}/`), `PDF leaves source package: ${paper.paper_id}`);
   assert(/^[a-f0-9]{64}$/.test(paper.document_sha256), `invalid PDF SHA-256: ${paper.paper_id}`);
   assert(Number.isInteger(paper.page_count) && paper.page_count > 0, `invalid page count: ${paper.paper_id}`);
-  assert(paper.atlas_route === `/reading/literature/${paper.primary_category}/${paper.paper_id}/`, `route/category mismatch: ${paper.paper_id}`);
+  if (paper.status === 'published') {
+    assert(paper.atlas_route === `/reading/literature/${paper.primary_category}/${paper.paper_id}/`, `route/category mismatch: ${paper.paper_id}`);
+  } else {
+    assert(!paper.atlas_route && typeof paper.failure_reason === 'string' && paper.failure_reason.length > 10, `mismatched source exposes a false Reader: ${paper.paper_id}`);
+  }
   if (!available) continue;
   const pdfPath = path.resolve(recordsRoot, paper.pdf_path);
   const fromRecords = path.relative(recordsRoot, pdfPath);

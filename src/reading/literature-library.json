@@ -2,15 +2,15 @@
   "schema_version": 1,
   "authority": "Maxwell3919/Research-Workflow-Records",
   "records_main_sha": "40bf372a7a1cbffa72859aea6f10345b30189ccd",
-  "generated_at": "2026-08-15T16:41:07.179Z",
+  "generated_at": "2026-08-15T17:20:19.088Z",
   "stats": {
     "scanned": 130,
     "atlas_related": 99,
-    "published": 96,
+    "published": 95,
     "deduplicated": 7,
     "missing_pdf": 3,
     "unclassified": 0,
-    "failed": 0
+    "failed": 1
   },
   "deduplicated_records": [
     "Ferroelectric control of a quantum spin Hall phase in - P t T e 2 - - alpha - - I n 2 S e 3 van der Waals heterobilayers",
@@ -49,6 +49,13 @@
     "tcallmaterials",
     "temp",
     "附录 C几何结构优化与解析导数法"
+  ],
+  "failed_records": [
+    {
+      "paper_id": "records-simultaneous-visualization-of-covalent-and-noncovalent-interactions-using-regions-of-density-overlap",
+      "source_record_path": "literature/Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap",
+      "reason": "canonical PDF opens as PostProc User’s Guide (v.7.2), not the named JCTC article"
+    }
   ],
   "papers": [
     {
@@ -2245,8 +2252,9 @@
       "topic_relations": [
         "reliability-validation"
       ],
-      "atlas_route": "/reading/literature/reliability-validation/records-simultaneous-visualization-of-covalent-and-noncovalent-interactions-using-regions-of-density-overlap/",
-      "status": "published",
+      "atlas_route": null,
+      "status": "source_mismatch",
+      "failure_reason": "canonical PDF opens as PostProc User’s Guide (v.7.2), not the named JCTC article",
       "metadata_source": "Crossref DOI metadata"
     },
     {

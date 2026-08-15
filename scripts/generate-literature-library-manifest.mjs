@@ -50,6 +50,16 @@ const duplicateRecords = new Set([
   'Ferroelectric switching of a quantum spin Hall phase in a PtTe2 - alpha-In2Se3 van der Waals heterobilayer',
 ]);
 
+// Fail closed when a Records package contains a real PDF whose content does not
+// match the package/canonical paper identity.  Keep the metadata visible in the
+// audit manifest, but do not publish that PDF or create an internal Reader.
+const sourceMismatchRecords = new Map([
+  [
+    'Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap',
+    'canonical PDF opens as PostProc User\u2019s Guide (v.7.2), not the named JCTC article',
+  ],
+]);
+
 const idByDoi = new Map(Object.entries({
   '10.1021/acsomega.4c10560': 'stable-semiconducting-1t-prime-hfcl2-monolayer',
   '10.1088/0256-307x/37/12/127101': 'hfx2-type-ii-photovoltaic-heterostructures',
@@ -324,6 +334,7 @@ for (const directory of selected) {
   const canonicalDoi = doi ?? cleanDoi(metadata.doi);
   const paperId = idByDoi.get(canonicalDoi?.toLowerCase()) ?? `records-${slugify(title)}`;
   const primaryCategory = topicByDoi.get(canonicalDoi?.toLowerCase()) ?? topicFor(title);
+  const sourceMismatch = sourceMismatchRecords.get(directory);
   papers.push({
     paper_id: paperId,
     title,
@@ -338,8 +349,9 @@ for (const directory of selected) {
     page_count: pageCount,
     primary_category: primaryCategory,
     topic_relations: topicRelationsFor(title, primaryCategory),
-    atlas_route: `/reading/literature/${primaryCategory}/${paperId}/`,
-    status: 'published',
+    atlas_route: sourceMismatch ? null : `/reading/literature/${primaryCategory}/${paperId}/`,
+    status: sourceMismatch ? 'source_mismatch' : 'published',
+    ...(sourceMismatch ? { failure_reason: sourceMismatch } : {}),
     metadata_source: metadata.metadata_source ?? 'Records source package',
   });
 }
@@ -369,10 +381,15 @@ const manifest = {
     deduplicated: duplicateRecords.size,
     missing_pdf: papers.filter((paper) => !paper.pdf_path).length,
     unclassified: papers.filter((paper) => !paper.primary_category).length,
-    failed: 0,
+    failed: papers.filter((paper) => paper.status === 'source_mismatch').length,
   },
   deduplicated_records: [...duplicateRecords].sort(),
   excluded_records: [...excluded].sort(),
+  failed_records: papers.filter((paper) => paper.status === 'source_mismatch').map((paper) => ({
+    paper_id: paper.paper_id,
+    source_record_path: paper.source_record_path,
+    reason: paper.failure_reason,
+  })),
   papers,
 };
 fs.writeFileSync(outputPath, `${JSON.stringify(manifest, null, 2)}\n`);
