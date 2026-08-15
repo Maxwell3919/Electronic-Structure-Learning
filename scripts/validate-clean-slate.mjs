@@ -278,10 +278,12 @@ const checkLiteraturePages = (baseDirectory, mode) => {
   }
   if (mode === 'source') {
     const shell = fs.readFileSync(path.join(baseDirectory, prefix, '[topic]/[paper].astro'), 'utf8');
-    for (const marker of ['Reading analysis pending', 'No Reading Notes', 'Open Records canonical PDF', 'pdf-only-shell', 'pdf-only-frame']) {
+    for (const marker of ['Reading analysis pending', 'No Reading Notes', 'Open Records canonical PDF', 'paper-reader pre-reading-reader', 'pdf-only-frame']) {
       assert(shell.includes(marker), `${prefix}/[topic]/[paper].astro lacks preprocessing boundary ${marker}`);
     }
-    for (const forbidden of ['annotations.json', 'data-annotations-url', 'annotation-left', 'annotation-right', 'readingNotes']) {
+    assert(/<aside class="annotation-rail annotation-left" aria-hidden="true"><\/aside>/.test(shell), `${prefix}/[topic]/[paper].astro lacks an empty left annotation rail`);
+    assert(/<aside class="annotation-rail annotation-right" aria-hidden="true"><\/aside>/.test(shell), `${prefix}/[topic]/[paper].astro lacks an empty right annotation rail`);
+    for (const forbidden of ['annotations.json', 'data-annotations-url', 'annotation-coverage', 'readingNotes']) {
       assert(!shell.includes(forbidden), `${prefix}/[topic]/[paper].astro fabricates or requires ${forbidden}`);
     }
   } else {
@@ -290,8 +292,10 @@ const checkLiteraturePages = (baseDirectory, mode) => {
       const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
       assert(text.includes('Reading analysis pending'), `${relative} lacks the pre-reading boundary`);
       assert(text.includes(`/papers/${route.split('/').at(-2)}.pdf`) || text.includes('data-paper-id='), `${relative} lacks a PDF runtime mapping`);
-      for (const forbidden of ['annotation-left', 'annotation-right', 'annotation-coverage']) {
-        assert(!text.includes(forbidden), `${relative} exposes completed Reader UI: ${forbidden}`);
+      assert(/<aside class="annotation-rail annotation-left" aria-hidden="true"><\/aside>/.test(text), `${relative} lacks an empty left annotation rail`);
+      assert(/<aside class="annotation-rail annotation-right" aria-hidden="true"><\/aside>/.test(text), `${relative} lacks an empty right annotation rail`);
+      for (const forbidden of ['annotations.json', 'data-annotations-url', 'annotation-coverage']) {
+        assert(!text.includes(forbidden), `${relative} exposes completed Reader data: ${forbidden}`);
       }
     }
   }

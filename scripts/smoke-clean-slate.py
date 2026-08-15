@@ -9,6 +9,7 @@ from urllib.request import urlopen
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -70,6 +71,13 @@ LITERATURE_ROUTES = [
     "reading/literature/quasiparticles-excitons/", "reading/literature/transport-scattering/",
     "reading/literature/quantum-geometry-topology/", "reading/literature/reliability-validation/",
 ]
+PREPROCESSING_QUEUE = json.loads((ROOT / "src/reading/literature-preprocessing.json").read_text())
+READY_PREPROCESSING = [entry for entry in PREPROCESSING_QUEUE if entry["source_status"] == "source_ready"]
+PENDING_PREPROCESSING = [entry for entry in PREPROCESSING_QUEUE if entry["source_status"] == "source_pending"]
+READY_PREPROCESSING_ROUTES = [
+    f'reading/literature/{entry["target_literature_topic"]}/{entry["atlas_slug"]}/'
+    for entry in READY_PREPROCESSING
+]
 SOURCE_VISUAL_ROUTES = [
     "theory/density-functional-theory-foundations/",
     "theory/many-body-perturbation-theory-and-quasiparticles/",
@@ -85,7 +93,7 @@ CANONICAL_READING_ROUTES = [
 COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
     "", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
-    "methods/", "computational-tools/", "reference/",
+    *READY_PREPROCESSING_ROUTES, "methods/", "computational-tools/", "reference/",
 ]
 representative_units = []
 for route in [
@@ -486,6 +494,75 @@ def check_core_keyboard(driver):
     return True
 
 
+def check_literature_preprocessing_ui(driver):
+    ready = []
+    pending = []
+    topic_routes = sorted({entry["target_literature_topic"] for entry in PREPROCESSING_QUEUE})
+    for topic in topic_routes:
+        driver.get(urljoin(BASE_URL, f"reading/literature/{topic}/"))
+        for entry in driver.find_elements(By.CSS_SELECTOR, ".literature-entry"):
+            title = entry.find_element(By.CSS_SELECTOR, "h2 a")
+            state = " ".join(node.text for node in entry.find_elements(By.CSS_SELECTOR, ".pre-reading-state"))
+            abstracts = entry.find_elements(By.CSS_SELECTOR, ".paper-abstract")
+            record = {"title": title.text, "href": title.get_attribute("href"), "abstracts": abstracts}
+            if "Pre-reading PDF available" in state:
+                ready.append(record)
+            elif "Source preparation pending" in state:
+                pending.append(record)
+    if len(ready) != len(READY_PREPROCESSING) or len(pending) != len(PENDING_PREPROCESSING):
+        raise AssertionError(f"Literature title audit found {len(ready)} ready and {len(pending)} pending entries")
+    expected_base = urlparse(BASE_URL).path.rstrip("/") + "/"
+    for record in ready:
+        path = urlparse(record["href"]).path
+        if not path.startswith(f"{expected_base}reading/literature/") or len(record["abstracts"]) != 1:
+            raise AssertionError(f"ready Literature entry lacks its internal route or original Abstract: {record['title']}")
+    for record in pending:
+        if not record["href"].startswith("https://doi.org/") or record["abstracts"]:
+            raise AssertionError(f"pending Literature entry lacks its DOI route or fabricates an Abstract: {record['title']}")
+
+    electron_phonon_topic = urljoin(BASE_URL, "reading/literature/electron-phonon-superconductivity/")
+    driver.get(electron_phonon_topic)
+    if driver.find_elements(By.CSS_SELECTOR, "details.paper-abstract-details, details summary"):
+        raise AssertionError("Literature topic retains click-to-expand Abstract details")
+    for fragment in [
+        "Prediction of superconductivity",
+        "Electron-Phonon Interactions from First Principles",
+        "Transition Temperature of Strong-Coupled",
+    ]:
+        driver.get(electron_phonon_topic)
+        entry = next(node for node in driver.find_elements(By.CSS_SELECTOR, ".literature-entry") if fragment in node.text)
+        abstract = entry.find_element(By.CSS_SELECTOR, ".paper-abstract")
+        if abstract.is_displayed():
+            raise AssertionError(f"Abstract is visible before hover: {fragment}")
+        ActionChains(driver).move_to_element(entry).perform()
+        if not abstract.is_displayed():
+            raise AssertionError(f"Abstract is hidden during hover: {fragment}")
+        ActionChains(driver).move_to_element(driver.find_element(By.TAG_NAME, "h1")).perform()
+        if abstract.is_displayed():
+            raise AssertionError(f"Abstract remains visible after mouse leave: {fragment}")
+    driver.get(electron_phonon_topic)
+    giustino = next(node for node in driver.find_elements(By.CSS_SELECTOR, ".literature-entry") if "Electron-Phonon Interactions from First Principles" in node.text)
+    driver.execute_script("arguments[0].focus()", giustino.find_element(By.CSS_SELECTOR, "h2 a"))
+    if not giustino.find_element(By.CSS_SELECTOR, ".paper-abstract").is_displayed():
+        raise AssertionError("Abstract is hidden during keyboard focus")
+
+    layouts = {}
+    for slug in ["allen-dynes-transition-temperature", "bilayer-cote2-superconductivity"]:
+        driver.get(urljoin(BASE_URL, f"reading/literature/electron-phonon-superconductivity/{slug}/"))
+        driver.refresh()
+        shell = driver.find_element(By.CSS_SELECTOR, ".paper-reader.pre-reading-reader")
+        children = shell.find_elements(By.XPATH, "./*")
+        if [node.tag_name for node in children] != ["aside", "div", "aside"]:
+            raise AssertionError(f"pre-reading Reader lacks left/PDF/right geometry: {slug}")
+        if any(node.text.strip() or node.find_elements(By.XPATH, "./*") for node in (children[0], children[2])):
+            raise AssertionError(f"pre-reading Reader rails are not truly empty: {slug}")
+        widths = [round(node.rect["width"]) for node in children]
+        if any(width < 150 for width in widths):
+            raise AssertionError(f"pre-reading Reader does not preserve three desktop columns: {slug} {widths}")
+        layouts[slug] = widths
+    return {"ready": len(ready), "pending": len(pending), "desktop_widths": layouts}
+
+
 def main():
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     report = {"base_url": BASE_URL, "checks": [], "http": {}}
@@ -524,6 +601,7 @@ def main():
     try:
         report["checks"].extend(inspect(desktop, "desktop"))
         report["compatibility_redirect"] = check_compatibility_redirect(desktop)
+        report["literature_preprocessing"] = check_literature_preprocessing_ui(desktop)
         desktop.get(BASE_URL)
         desktop.find_element(By.TAG_NAME, "body").send_keys(Keys.TAB)
         if desktop.execute_script("return document.activeElement.tagName") != "A":
