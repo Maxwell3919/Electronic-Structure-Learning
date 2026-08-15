@@ -14,6 +14,7 @@
     "preview": "astro preview",
     "serve:literature": "node services/literature-runtime-server.mjs",
     "audit:literature-preprocessing": "node scripts/audit-literature-preprocessing.mjs",
+    "audit:literature-preprocessing:records": "node scripts/audit-literature-preprocessing.mjs --require-records",
     "audit:source-visuals": "node scripts/audit-source-visuals.mjs",
     "validate:clean-slate": "node scripts/validate-clean-slate.mjs --source",
     "validate:build-budget": "node scripts/validate-build-budget.mjs",

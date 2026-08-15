@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const recordsRoot = path.resolve(process.env.ATLAS_LITERATURE_ROOT ?? '/home/talos/work/Research-Workflow-Records');
+const requireRecords = process.argv.includes('--require-records');
+const recordsAvailable = fs.existsSync(recordsRoot) && fs.statSync(recordsRoot).isDirectory();
 const queue = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-preprocessing.json'), 'utf8'));
 const sources = JSON.parse(fs.readFileSync(path.join(root, 'services/literature-preprocessing-sources.json'), 'utf8'));
 const allowedQueueKeys = ['atlas_slug', 'canonical_title', 'paper_id', 'priority', 'records_source_path', 'source_status', 'target_literature_topic'];
@@ -27,6 +29,7 @@ const resolveInsideRecords = (relativePath) => {
 
 assert(queue.length === 17, `queue must contain 17 papers, found ${queue.length}`);
 assert(sources.length === 14, `source whitelist must contain 14 ready PDFs, found ${sources.length}`);
+assert(!requireRecords || recordsAvailable, `Records source root is unavailable: ${recordsRoot}`);
 assert(new Set(queue.map((entry) => entry.paper_id)).size === queue.length, 'queue contains duplicate paper_id values');
 assert(new Set(queue.map((entry) => entry.atlas_slug)).size === queue.length, 'queue contains duplicate atlas_slug values');
 assert(new Set(sources.map((entry) => entry.paper_id)).size === sources.length, 'source whitelist contains duplicate paper_id values');
@@ -45,6 +48,7 @@ for (const entry of queue) {
 
   const source = sourcesById.get(entry.paper_id);
   assert(source.pdf_path.startsWith(`${entry.records_source_path}/`), `runtime PDF leaves queued source directory for ${entry.paper_id}`);
+  if (!recordsAvailable) continue;
   const pdfPath = resolveInsideRecords(source.pdf_path);
   const markdownPath = resolveInsideRecords(source.pdf_path.replace(/\.pdf$/, '.md'));
   assert(fs.existsSync(pdfPath) && fs.statSync(pdfPath).isFile(), `missing canonical PDF for ${entry.paper_id}`);
@@ -87,6 +91,7 @@ console.log(JSON.stringify({
   source_ready: queue.length - pending.length,
   source_pending: pending.length,
   runtime_pdf_mappings: sources.length,
+  records_source_validation: recordsAvailable ? 'passed' : 'skipped',
   page_counts: Object.fromEntries(sources.map((entry) => [entry.paper_id, entry.page_count])),
 }, null, 2));
 console.log('Literature preprocessing audit passed.');
