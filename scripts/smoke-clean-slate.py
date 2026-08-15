@@ -433,11 +433,15 @@ def inspect(driver, mode, expected_width=None):
                 if marker not in main_text:
                     raise AssertionError(f"Giustino unit lacks {marker} in {mode}: {route}")
         if route in LITERATURE_ROUTES:
-            for marker in ["Central Question", "What researchers ask", "Evidence", "Literature Routes", "Connections"]:
-                if marker not in main_text:
-                    raise AssertionError(f"research topic lacks {marker} in {mode}: {route}")
-            if "Routes will be developed individually from verified primary literature." not in main_text:
-                raise AssertionError(f"research topic lacks route boundary in {mode}: {route}")
+            entries = driver.find_elements(By.CSS_SELECTOR, ".literature-list .literature-entry")
+            empty_state = driver.find_elements(By.CSS_SELECTOR, ".empty-literature")
+            if not entries and not empty_state:
+                raise AssertionError(f"research topic lacks a paper list or empty state in {mode}: {route}")
+            if entries and any(not entry.find_elements(By.CSS_SELECTOR, "h2") or not entry.find_elements(By.CSS_SELECTOR, ".paper-meta") or not entry.find_elements(By.CSS_SELECTOR, ".paper-doi") for entry in entries):
+                raise AssertionError(f"research topic has an incomplete paper entry in {mode}: {route}")
+            sequence_links = driver.find_elements(By.CSS_SELECTOR, ".sequence-nav a")
+            if len(sequence_links) != 2 or "Literature" not in sequence_links[0].text or "Guided Reading" not in sequence_links[1].text:
+                raise AssertionError(f"research topic lacks Literature navigation in {mode}: {route}")
 
         for anchor in driver.find_elements(By.CSS_SELECTOR, "header a[href], main a[href]"):
             raw_href = anchor.get_dom_attribute("href") or ""
