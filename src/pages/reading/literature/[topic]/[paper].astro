@@ -37,9 +37,11 @@ const pdfUrl = href(`/papers/${paper.id}.pdf`);
     <p class="pre-reading-notice">Reading analysis pending. No Reading Notes, source anchors, figure interpretation, equations, claims, or evidence commentary have been published for this paper.</p>
   </div>
 
-  <section class="pdf-only-shell" aria-label="Pre-reading canonical PDF" data-paper-id={paper.id} data-pdf-url={pdfUrl}>
+  <section class="paper-reader pre-reading-reader" aria-label="Pre-reading canonical PDF" data-paper-id={paper.id} data-pdf-url={pdfUrl}>
+    <aside class="annotation-rail annotation-left" aria-hidden="true"></aside>
     <div class="pdf-column">
       <iframe class="pdf-only-frame" src={pdfUrl} title={`Records canonical PDF · ${paper.title}`}></iframe>
     </div>
+    <aside class="annotation-rail annotation-right" aria-hidden="true"></aside>
   </section>
 </BaseLayout>
