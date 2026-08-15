@@ -280,6 +280,15 @@ const server = createServer((request, response) => {
     return response.end();
   }
 
+  if (url.pathname === '/papers/' && ['GET', 'HEAD'].includes(request.method ?? '')) {
+    return jsonResponse(response, 200, {
+      service: 'electronic-structure-atlas-literature',
+      published_papers: papers.size,
+      pdf_identity: 'sha256',
+      annotation_api: '/papers/api/annotations/{document_sha256}',
+    });
+  }
+
   const annotationMatch = /^\/papers\/api\/annotations\/([a-f0-9]{64})$/.exec(url.pathname);
   if (annotationMatch) {
     const paper = papersByHash.get(annotationMatch[1]);
