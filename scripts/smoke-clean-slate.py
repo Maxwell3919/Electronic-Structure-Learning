@@ -187,7 +187,7 @@ def inspect(driver, mode, expected_width=None):
             driver.execute_script("window.scrollTo(0, 0);")
 
         math_count = 0
-        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in MATH_LITERATURE_ROUTES or route in SHOLL_STECKEL_MATH_ROUTES or route in COHEN_LOUIE_MATH_ROUTES or route in GIUSTINO_MATH_ROUTES:
+        if route in THEORY_ROUTES or route in CORE_MATH_ROUTES or route in SHOLL_STECKEL_MATH_ROUTES or route in COHEN_LOUIE_MATH_ROUTES or route in GIUSTINO_MATH_ROUTES:
             math_metrics = driver.execute_script(
                 "return Array.from(document.querySelectorAll('main math')).map((node) => {"
                 "const box=node.getBoundingClientRect();return {width:box.width,height:box.height,"
