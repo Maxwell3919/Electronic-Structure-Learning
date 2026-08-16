@@ -374,11 +374,13 @@ if (failures.length) {
   process.exit(1);
 }
 
+const recordsMainSha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: recordsRoot, encoding: 'utf8' }).trim();
+const recordsCommitTime = execFileSync('git', ['show', '-s', '--format=%cI', recordsMainSha], { cwd: recordsRoot, encoding: 'utf8' }).trim();
 const manifest = {
   schema_version: 1,
   authority: 'Maxwell3919/Research-Workflow-Records',
-  records_main_sha: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: recordsRoot, encoding: 'utf8' }).trim(),
-  generated_at: new Date().toISOString(),
+  records_main_sha: recordsMainSha,
+  generated_at: recordsCommitTime,
   stats: {
     scanned: directories.length,
     atlas_related: papers.length,
