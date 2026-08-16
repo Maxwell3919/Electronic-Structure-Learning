@@ -44,13 +44,15 @@ for (const paper of manifest.papers) {
   assert(topicIds.has(paper.primary_category), `invalid category: ${paper.paper_id}`);
   assert(Array.isArray(paper.topic_relations) && paper.topic_relations.includes(paper.primary_category), `invalid topic relations: ${paper.paper_id}`);
   if (paper.status === 'source_pending') {
-    assert(!paper.source_record_path && !paper.pdf_path && !paper.document_sha256 && !paper.atlas_route, `pending paper exposes a false Reader: ${paper.paper_id}`);
+    assert(!paper.source_record_path && !paper.pdf_path && !paper.document_sha256 && !paper.pdf_size_bytes && !paper.annotation_path && !paper.atlas_route, `pending paper exposes a false Reader: ${paper.paper_id}`);
     continue;
   }
   assert(['published', 'source_mismatch'].includes(paper.status), `invalid source status: ${paper.paper_id}`);
   assert(paper.source_record_path?.startsWith('literature/'), `invalid Records path: ${paper.paper_id}`);
   assert(paper.pdf_path?.startsWith(`${paper.source_record_path}/`), `PDF leaves source package: ${paper.paper_id}`);
   assert(/^[a-f0-9]{64}$/.test(paper.document_sha256), `invalid PDF SHA-256: ${paper.paper_id}`);
+  assert(Number.isInteger(paper.pdf_size_bytes) && paper.pdf_size_bytes > 4, `invalid PDF size: ${paper.paper_id}`);
+  assert(paper.annotation_path === `${paper.source_record_path}/annotations`, `annotation directory leaves source package: ${paper.paper_id}`);
   assert(Number.isInteger(paper.page_count) && paper.page_count > 0, `invalid page count: ${paper.paper_id}`);
   if (paper.status === 'published') {
     assert(paper.atlas_route === `/reading/literature/${paper.primary_category}/${paper.paper_id}/`, `route/category mismatch: ${paper.paper_id}`);
@@ -63,6 +65,7 @@ for (const paper of manifest.papers) {
   assert(fromRecords !== '..' && !fromRecords.startsWith(`..${path.sep}`), `PDF escapes Records: ${paper.paper_id}`);
   assert(fs.existsSync(pdfPath) && fs.statSync(pdfPath).isFile(), `canonical PDF missing: ${paper.paper_id}`);
   if (!fs.existsSync(pdfPath)) continue;
+  assert(fs.statSync(pdfPath).size === paper.pdf_size_bytes, `canonical PDF size mismatch: ${paper.paper_id}`);
   const hash = createHash('sha256').update(fs.readFileSync(pdfPath)).digest('hex');
   assert(hash === paper.document_sha256, `canonical PDF hash mismatch: ${paper.paper_id}`);
   const pages = Number(execFileSync('pdfinfo', [pdfPath], { encoding: 'utf8' }).match(/^Pages:\s+(\d+)$/m)?.[1]);

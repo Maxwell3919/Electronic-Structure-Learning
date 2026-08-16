@@ -11,6 +11,8 @@ export type LiteratureLibraryPaper = {
   source_record_path: string | null;
   pdf_path: string | null;
   document_sha256: string | null;
+  pdf_size_bytes: number | null;
+  annotation_path: string | null;
   page_count: number | null;
   primary_category: string;
   topic_relations: string[];
@@ -23,7 +25,7 @@ export type LiteratureLibraryPaper = {
 export const literatureLibraryManifest = manifest;
 export const literatureLibraryPapers = manifest.papers as LiteratureLibraryPaper[];
 export const publishedLiteraturePapers = literatureLibraryPapers.filter(
-  (paper): paper is LiteratureLibraryPaper & { pdf_path: string; document_sha256: string; page_count: number; atlas_route: string } => paper.status === 'published',
+  (paper): paper is LiteratureLibraryPaper & { pdf_path: string; document_sha256: string; pdf_size_bytes: number; annotation_path: string; page_count: number; atlas_route: string } => paper.status === 'published',
 );
 export const literatureLibraryPaperById = Object.fromEntries(
   literatureLibraryPapers.map((paper) => [paper.paper_id, paper]),

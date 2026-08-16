@@ -187,6 +187,8 @@ const pendingPapers = [
   source_record_path: null,
   pdf_path: null,
   document_sha256: null,
+  pdf_size_bytes: null,
+  annotation_path: null,
   page_count: null,
   topic_relations: [paper.primary_category],
   atlas_route: null,
@@ -318,6 +320,7 @@ for (const directory of selected) {
   const doi = cleanDoi(frontmatter.doi) ?? extractDoi(prefix);
   const arxiv = extractArxiv(prefix, doi);
   const documentSha256 = sha256(pdfPath);
+  const pdfSizeBytes = fs.statSync(pdfPath).size;
   const declaredSha = frontmatter.source_sha256;
   if (declaredSha && declaredSha !== documentSha256) failures.push(`${directory}: frontmatter PDF SHA-256 mismatch`);
   const pageCount = Number(execFileSync('pdfinfo', [pdfPath], { encoding: 'utf8' }).match(/^Pages:\s+(\d+)$/m)?.[1]);
@@ -346,6 +349,8 @@ for (const directory of selected) {
     source_record_path: sourceRecordPath,
     pdf_path: path.posix.join(sourceRecordPath, pdfName),
     document_sha256: documentSha256,
+    pdf_size_bytes: pdfSizeBytes,
+    annotation_path: path.posix.join(sourceRecordPath, 'annotations'),
     page_count: pageCount,
     primary_category: primaryCategory,
     topic_relations: topicRelationsFor(title, primaryCategory),

@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Research Workflow Records reconciliation at Talos local midnight
+
+[Timer]
+OnCalendar=*-*-* 00:00:00
+Persistent=true
+AccuracySec=1min
+Unit=talos-research-records-sync.service
+
+[Install]
+WantedBy=timers.target

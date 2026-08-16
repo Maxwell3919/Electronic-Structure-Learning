@@ -2,7 +2,7 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure foundations, continuous Core reading, guided reading, research methods, computational tools, and reviewed references.
 
-The production site is a static Plain Astro build. It contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. It has no search index, client hydration, packaged fonts, course-progress system, or content-management layer.
+The production site uses a static Plain Astro presentation build plus a narrow Literature runtime. The static layer contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. The runtime only streams pre-indexed canonical Records PDFs and reads/creates anonymous shared annotation files; it is not a content-management layer.
 
 ## Public routes
 
@@ -112,7 +112,7 @@ npm ci --no-audit --no-fund
 npm run check
 ```
 
-The deployed browser smoke is intentionally separate because it verifies the GitHub Pages base path, final deployment SHA, keyboard access, native MathML, narrow screens, configured redirects, and operation with JavaScript disabled.
+The deployed browser smoke is intentionally separate because it verifies the Talos → Newt production route, final deployment SHA, PDF Reader behavior, keyboard access, native MathML, narrow screens, configured redirects, and operation with JavaScript disabled. The formal endpoint is `http://188.255.156.20/Electronic-Structure-Learning/`; GitHub Pages is not a deployment acceptance target.
 
 ## Legacy site
 

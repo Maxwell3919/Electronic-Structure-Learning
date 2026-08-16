@@ -1,0 +1,10 @@
+[Unit]
+Description=Reconcile GitHub and Talos Research Workflow Records
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/talos/work/Research-Workflow-Records
+ExecStart=/home/talos/.local/bin/talos-sync-research-records
+Nice=10
