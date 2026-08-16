@@ -7,8 +7,33 @@ import { fileURLToPath } from 'node:url';
 const atlasRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const recordsRoot = path.resolve(process.env.ATLAS_LITERATURE_ROOT ?? '/home/talos/work/Research-Workflow-Records');
 const literatureRoot = path.join(recordsRoot, 'literature');
+const readerManifestRoot = path.join(recordsRoot, 'manifests/readers');
 const outputPath = path.join(atlasRoot, 'src/reading/literature-library.json');
 const refreshMetadata = process.argv.includes('--refresh-metadata');
+const resolveRecordsPath = (entryPath) => {
+  const absolute = path.resolve(recordsRoot, entryPath);
+  const relativePath = path.relative(recordsRoot, absolute);
+  if (path.isAbsolute(relativePath) || relativePath === '..' || relativePath.startsWith(`..${path.sep}`)) throw new Error(`Records path escapes root: ${entryPath}`);
+  return absolute;
+};
+const fileSha256 = (file) => createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+
+const readerAnalysisByPaperId = new Map();
+if (fs.existsSync(readerManifestRoot)) {
+  for (const name of fs.readdirSync(readerManifestRoot).filter((entry) => entry.endsWith('.json')).sort()) {
+    const manifest = JSON.parse(fs.readFileSync(path.join(readerManifestRoot, name), 'utf8'));
+    const analysis = manifest.annotations;
+    if (!manifest.paper_id || !analysis?.path || !/^[a-f0-9]{64}$/.test(analysis.sha256 ?? '')) continue;
+    const analysisPath = resolveRecordsPath(analysis.path);
+    if (!fs.statSync(analysisPath).isFile() || fileSha256(analysisPath) !== analysis.sha256) {
+      throw new Error(`Reader analysis identity mismatch: ${name}`);
+    }
+    readerAnalysisByPaperId.set(manifest.paper_id, {
+      reading_analysis_path: analysis.path,
+      reading_analysis_sha256: analysis.sha256,
+    });
+  }
+}
 
 const excluded = new Set([
   'A Model Context Protocol Server for Quantum Execution in Hybrid Quantum-HPC Environments',
@@ -189,6 +214,8 @@ const pendingPapers = [
   document_sha256: null,
   pdf_size_bytes: null,
   annotation_path: null,
+  reading_analysis_path: null,
+  reading_analysis_sha256: null,
   page_count: null,
   topic_relations: [paper.primary_category],
   atlas_route: null,
@@ -351,6 +378,7 @@ for (const directory of selected) {
     document_sha256: documentSha256,
     pdf_size_bytes: pdfSizeBytes,
     annotation_path: path.posix.join(sourceRecordPath, 'annotations'),
+    ...(readerAnalysisByPaperId.get(paperId) ?? { reading_analysis_path: null, reading_analysis_sha256: null }),
     page_count: pageCount,
     primary_category: primaryCategory,
     topic_relations: topicRelationsFor(title, primaryCategory),

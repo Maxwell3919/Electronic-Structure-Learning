@@ -6,6 +6,7 @@ import {
   type PdfAnnotationObject,
   type PluginRegistry,
 } from '@embedpdf/snippet';
+import { isFinalizedSharedAnnotation, isTextSharedAnnotation } from './shared-annotation-lifecycle.mjs';
 
 type SharedAnnotationResponse = {
   document_hash: string;
@@ -27,14 +28,18 @@ const readOnlyAnnotation = (annotation: PdfAnnotationObject): PdfAnnotationObjec
   flags: [...new Set<PdfAnnotationFlagName>([...(annotation.flags ?? []), 'readOnly', 'locked', 'lockedContents'])],
 });
 
-const updateStatus = (readerElement: HTMLElement, count: number, state: 'ready' | 'saving' | 'error') => {
+const updateStatus = (readerElement: HTMLElement, count: number, state: 'ready' | 'editing' | 'saving' | 'error') => {
   readerElement.dataset.sharedAnnotationCount = String(count);
   readerElement.dataset.sharedAnnotationState = state;
   const status = document.querySelector<HTMLElement>('[data-shared-annotation-status]');
+  const saveButton = document.querySelector<HTMLButtonElement>('[data-save-shared-annotation]');
+  if (saveButton) saveButton.hidden = state !== 'editing';
   if (!status) return;
   status.textContent = state === 'error'
     ? 'Shared annotation save failed. The PDF remains readable; retry by adding the annotation again.'
-    : state === 'saving'
+    : state === 'editing'
+      ? 'Finish the text or comment to save this shared annotation.'
+      : state === 'saving'
       ? 'Saving to the global anonymous annotation layer…'
       : `Global anonymous annotation layer · ${count} ${count === 1 ? 'annotation' : 'annotations'} loaded.`;
 };
@@ -48,9 +53,9 @@ export const sharedAnnotationViewerConfig = {
   annotations: {
     annotationAuthor: '',
     autoCommit: true,
-    deactivateToolAfterCreate: true,
-    editAfterCreate: false,
-    selectAfterCreate: false,
+    deactivateToolAfterCreate: false,
+    editAfterCreate: true,
+    selectAfterCreate: true,
   },
   disabledCategories: [
     'form',
@@ -85,7 +90,31 @@ export const attachSharedAnnotationLayer = async ({
   const scope = capability.forDocument(documentId);
   const ignoredIds = new Set(ignoredAnnotationIds);
   const persistedIds = new Set<string>();
-  const pending = new Map<string, { annotation: PdfAnnotationObject; timer: number }>();
+  const savingIds = new Set<string>();
+  const textDraftIds = new Set<string>();
+  const saveButton = document.querySelector<HTMLButtonElement>('[data-save-shared-annotation]');
+
+  const findEditable = (root: Document | ShadowRoot): HTMLElement | null => {
+    const direct = root.querySelector<HTMLElement>('[contenteditable="true"]');
+    if (direct) return direct;
+    for (const element of root.querySelectorAll<HTMLElement>('*')) {
+      if (element.shadowRoot) {
+        const nested = findEditable(element.shadowRoot);
+        if (nested) return nested;
+      }
+    }
+    return null;
+  };
+
+  saveButton?.addEventListener('click', () => {
+    const selectedId = scope.getSelectedAnnotations()[0]?.object.id;
+    const annotationId = selectedId && textDraftIds.has(selectedId) ? selectedId : [...textDraftIds].at(-1);
+    if (!annotationId) return;
+    const annotation = scope.getAnnotationById(annotationId)?.object;
+    const editor = findEditable(document);
+    if (!annotation || !editor) return;
+    scope.updateAnnotation(annotation.pageIndex, annotation.id, { contents: editor.innerText.replace(/\u00a0/g, ' ') });
+  });
 
   const response = await fetch(apiUrl, { credentials: 'same-origin' });
   if (!response.ok) throw new Error(`Shared annotation request failed with HTTP ${response.status}.`);
@@ -99,6 +128,8 @@ export const attachSharedAnnotationLayer = async ({
   updateStatus(readerElement, persistedIds.size, 'ready');
 
   const persist = async (annotation: PdfAnnotationObject) => {
+    if (savingIds.has(annotation.id)) return;
+    savingIds.add(annotation.id);
     updateStatus(readerElement, persistedIds.size, 'saving');
     try {
       const saveResponse = await fetch(apiUrl, {
@@ -117,10 +148,13 @@ export const attachSharedAnnotationLayer = async ({
         lockPersistedAnnotation(scope, annotation);
       }
       persistedIds.add(saved.annotation.id);
+      textDraftIds.delete(annotation.id);
       updateStatus(readerElement, persistedIds.size, 'ready');
     } catch (error) {
       console.error(error);
       updateStatus(readerElement, persistedIds.size, 'error');
+    } finally {
+      savingIds.delete(annotation.id);
     }
   };
 
@@ -128,18 +162,17 @@ export const attachSharedAnnotationLayer = async ({
     if (event.documentId !== documentId || event.type === 'loaded' || !event.committed) return;
     if (ignoredIds.has(event.annotation.id) || persistedIds.has(event.annotation.id)) return;
     if (event.type === 'delete') {
-      const item = pending.get(event.annotation.id);
-      if (item) window.clearTimeout(item.timer);
-      pending.delete(event.annotation.id);
+      textDraftIds.delete(event.annotation.id);
       return;
     }
-    const prior = pending.get(event.annotation.id);
-    if (prior) window.clearTimeout(prior.timer);
-    const timer = window.setTimeout(() => {
-      pending.delete(event.annotation.id);
-      void persist(event.annotation);
-    }, 500);
-    pending.set(event.annotation.id, { annotation: event.annotation, timer });
+    const annotation = scope.getAnnotationById(event.annotation.id)?.object;
+    if (!annotation) return;
+    if (event.type === 'create' && isTextSharedAnnotation(annotation)) {
+      textDraftIds.add(annotation.id);
+      updateStatus(readerElement, persistedIds.size, 'editing');
+      return;
+    }
+    if (isFinalizedSharedAnnotation(event.type, annotation)) void persist(annotation);
   });
 
   return { scope, count: persistedIds.size };

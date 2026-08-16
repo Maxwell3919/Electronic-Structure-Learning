@@ -13,6 +13,8 @@ export type LiteratureLibraryPaper = {
   document_sha256: string | null;
   pdf_size_bytes: number | null;
   annotation_path: string | null;
+  reading_analysis_path: string | null;
+  reading_analysis_sha256: string | null;
   page_count: number | null;
   primary_category: string;
   topic_relations: string[];

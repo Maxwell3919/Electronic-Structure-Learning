@@ -46,28 +46,22 @@ const papers = new Map(publishedEntries.map((entry) => {
   const pdfPath = resolveInside(packagePath, relative(entry.source_record_path, entry.pdf_path));
   const annotationPath = entry.annotation_path ?? `${entry.source_record_path}/annotations`;
   const annotationDir = resolveInside(packagePath, relative(entry.source_record_path, annotationPath));
+  const analysisPath = entry.reading_analysis_path ? resolveInside(recordsRoot, entry.reading_analysis_path) : null;
+  const analysisSha256 = entry.reading_analysis_sha256 ?? null;
   const metadata = statSync(pdfPath);
   if (!metadata.isFile() || metadata.size !== entry.pdf_size_bytes || !readPdfMagic(pdfPath)) throw new Error(`Pre-indexed PDF metadata mismatch: ${entry.paper_id}`);
+  if ((analysisPath === null) !== (analysisSha256 === null)
+    || (analysisPath && (!/^[a-f0-9]{64}$/.test(analysisSha256) || !statSync(analysisPath).isFile() || sha256(readFileSync(analysisPath)) !== analysisSha256))) {
+    throw new Error(`Pre-indexed reading analysis mismatch: ${entry.paper_id}`);
+  }
   return [entry.paper_id, {
     paperId: entry.paper_id, sourceSha256: entry.document_sha256, pageCount: entry.page_count,
-    pdfSize: entry.pdf_size_bytes, pdfPath, annotationDir,
+    pdfSize: entry.pdf_size_bytes, pdfPath, annotationDir, analysisPath, analysisSha256,
   }];
 }));
 if (papers.size !== publishedEntries.length) throw new Error('Duplicate literature runtime paper ID.');
 const papersByHash = new Map([...papers.values()].map((paper) => [paper.sourceSha256, paper]));
 if (papersByHash.size !== papers.size) throw new Error('Duplicate canonical PDF hash in literature manifest.');
-
-let scientificAnnotationsPath = null;
-let scientificAnnotationsSha256 = null;
-if (papers.has('hbn-sin-superconductivity-cdw')) {
-  const annotatedManifest = JSON.parse(readFileSync(resolveInside(recordsRoot, 'manifests/readers/hbn-sin-superconductivity-cdw.json'), 'utf8'));
-  scientificAnnotationsPath = resolveInside(recordsRoot, annotatedManifest.annotations.path);
-  scientificAnnotationsSha256 = annotatedManifest.annotations.sha256;
-  if (annotatedManifest.paper_id !== 'hbn-sin-superconductivity-cdw' || !statSync(scientificAnnotationsPath).isFile()
-    || sha256(readFileSync(scientificAnnotationsPath)) !== scientificAnnotationsSha256) {
-    throw new Error('Scientific annotation authority mismatch for hbn-sin-superconductivity-cdw.');
-  }
-}
 
 const jsonResponse = (request, response, status, body, extraHeaders = {}) => {
   const payload = Buffer.from(`${JSON.stringify(body)}\n`);
@@ -200,10 +194,10 @@ const serveSharedAnnotations = (request, response, documentHash, paper) => {
   });
 };
 
-const serveScientificJson = (request, response) => {
-  if (!scientificAnnotationsPath || !scientificAnnotationsSha256) return notFound(request, response);
-  const body = readFileSync(scientificAnnotationsPath);
-  response.writeHead(200, { 'Cache-Control': 'private, no-store', 'Content-Length': body.length, 'Content-Type': 'application/json; charset=utf-8', ETag: `"sha256-${scientificAnnotationsSha256}"`, 'X-Content-Type-Options': 'nosniff' });
+const serveReadingAnalysis = (request, response, paper) => {
+  if (!paper.analysisPath || !paper.analysisSha256) return notFound(request, response);
+  const body = readFileSync(paper.analysisPath);
+  response.writeHead(200, { 'Cache-Control': 'private, no-store', 'Content-Length': body.length, 'Content-Type': 'application/json; charset=utf-8', ETag: `"sha256-${paper.analysisSha256}"`, 'X-Content-Type-Options': 'nosniff' });
   if (request.method === 'HEAD') response.end(); else response.end(body);
 };
 const servePdf = (request, response, paper) => {
@@ -246,7 +240,8 @@ const server = createServer((request, response) => {
   if (!['GET', 'HEAD'].includes(request.method ?? '')) return notFound(request, response);
   const pdfMatch = /^\/papers\/([^/]+)\.pdf$/.exec(url.pathname);
   if (pdfMatch) { const paper = papers.get(decodeURIComponent(pdfMatch[1])); return paper ? servePdf(request, response, paper) : notFound(request, response); }
-  if (url.pathname === '/papers/hbn-sin-superconductivity-cdw/annotations.json') return serveScientificJson(request, response);
+  const analysisMatch = /^\/papers\/([^/]+)\/reading-analysis\.json$/.exec(url.pathname);
+  if (analysisMatch) { const paper = papers.get(decodeURIComponent(analysisMatch[1])); return paper ? serveReadingAnalysis(request, response, paper) : notFound(request, response); }
   return notFound(request, response);
 });
 

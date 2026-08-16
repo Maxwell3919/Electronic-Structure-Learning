@@ -161,13 +161,65 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   const paperId = readerElement.dataset.paperId;
   const sourceSha256 = readerElement.dataset.sourceSha256;
   const pdfUrl = readerElement.dataset.pdfUrl;
-  const annotationsUrl = readerElement.dataset.annotationsUrl;
+  const readingAnalysisUrl = readerElement.dataset.readingAnalysisUrl;
   const sharedAnnotationsUrl = readerElement.dataset.sharedAnnotationsUrl;
-  if (!paperId || !sourceSha256 || !pdfUrl || !annotationsUrl || !sharedAnnotationsUrl) throw new Error('Missing Paper Reader source mapping.');
+  if (!paperId || !sourceSha256 || !pdfUrl || !sharedAnnotationsUrl) throw new Error('Missing Literature Reader source mapping.');
+  const documentId = `atlas-${paperId}`;
+  const readingAnalysisPromise = readingAnalysisUrl
+    ? fetch(readingAnalysisUrl, { credentials: 'same-origin' }).then(async (response) => {
+      if (!response.ok) throw new Error(`Reading analysis request failed with HTTP ${response.status}.`);
+      return validateDocument(await response.json(), paperId, sourceSha256);
+    }).catch((error) => {
+      console.error(error);
+      readerElement.dataset.readingAnalysisError = 'true';
+      const state = document.querySelector<HTMLElement>('[data-reading-analysis-state]');
+      if (state) state.textContent = 'Reading analysis is temporarily unavailable; the PDF and shared annotations remain available.';
+      return null;
+    })
+    : Promise.resolve(null);
 
-  const response = await fetch(annotationsUrl, { credentials: 'same-origin' });
-  if (!response.ok) throw new Error(`Annotation request failed with HTTP ${response.status}.`);
-  const annotationDocument = validateDocument(await response.json(), paperId, sourceSha256);
+  // Start the PDF fetch immediately. Curated analysis and shared annotations are
+  // runtime companions and must never gate first-page rendering.
+  const viewer = EmbedPDF.init({
+    type: 'container',
+    target: viewerTarget,
+    documentManager: { initialDocuments: [{ url: pdfUrl, documentId }] },
+    ...sharedAnnotationViewerConfig,
+    scroll: { defaultStrategy: ScrollStrategy.Vertical, defaultPageGap: 18 },
+    theme: { preference: 'light' },
+    fonts: { ui: null, signature: null },
+  });
+  const registry = await viewer?.registry;
+  if (!registry) throw new Error('PDF viewer registry is unavailable.');
+  const scroll = registry.getPlugin<ScrollPlugin>('scroll')?.provides?.();
+  if (!scroll) throw new Error('PDF scroll capability is unavailable.');
+  const layoutReady = new Promise<void>((resolve) => {
+    scroll.onLayoutReady((event) => {
+      if (event.documentId !== documentId || !event.isInitial) return;
+      document.querySelector<HTMLElement>('.reader-status')?.remove();
+      resolve();
+    });
+  });
+
+  const annotationDocument = await readingAnalysisPromise;
+  await layoutReady;
+  const uuidById = new Map((annotationDocument?.anchors ?? []).map((anchor, index) => [anchor.id, `10000000-0000-4000-8000-${String(index + 1).padStart(12, '0')}`]));
+  const ignoredIds = [...uuidById.values()];
+  void attachSharedAnnotationLayer({
+    registry,
+    documentId,
+    documentHash: sourceSha256,
+    apiUrl: sharedAnnotationsUrl,
+    readerElement,
+    ignoredAnnotationIds: ignoredIds,
+  }).catch((error) => {
+    console.error(error);
+    readerElement.dataset.sharedAnnotationError = 'true';
+    const status = document.querySelector<HTMLElement>('[data-shared-annotation-status]');
+    if (status) status.textContent = 'Shared annotations are temporarily unavailable.';
+  });
+  if (!annotationDocument) return;
+
   const anchors = annotationDocument.anchors;
   const readingNotes = annotationDocument.readingNotes;
   const anchorsById = new Map(anchors.map((anchor) => [anchor.id, anchor]));
@@ -185,17 +237,6 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   if (coverage) {
     coverage.textContent = `${anchors.length} source-aligned anchors · ${readingNotes.length} grouped reading notes: ${counts.paragraph ?? 0} paragraphs, ${counts.figure ?? 0} figures, ${counts.equation ?? 0} equations, ${counts.table ?? 0} tables.`;
   }
-
-  const uuidById = new Map(anchors.map((anchor, index) => [anchor.id, `10000000-0000-4000-8000-${String(index + 1).padStart(12, '0')}`]));
-  const viewer = EmbedPDF.init({
-    type: 'container',
-    target: viewerTarget,
-    documentManager: { initialDocuments: [{ url: pdfUrl, documentId: 'pilot-paper' }] },
-    ...sharedAnnotationViewerConfig,
-    scroll: { defaultStrategy: ScrollStrategy.Vertical, defaultPageGap: 18 },
-    theme: { preference: 'light' },
-    fonts: { ui: null, signature: null },
-  });
 
   const setActive = (id: string) => {
     const activeNote = noteByAnchorId.get(id);
@@ -222,22 +263,17 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
       .sort((a, b) => Math.abs(a.bbox.y + a.bbox.height / 2 - viewportCenter) - Math.abs(b.bbox.y + b.bbox.height / 2 - viewportCenter))[0];
   };
 
-  const registry = await viewer?.registry;
-  if (!registry) throw new Error('PDF viewer registry is unavailable.');
-  const scroll = registry.getPlugin<ScrollPlugin>('scroll')?.provides?.();
   const annotation = registry.getPlugin<AnnotationPlugin>('annotation')?.provides?.();
   const selection = registry.getPlugin<SelectionPlugin>('selection')?.provides?.();
-  if (!scroll || !annotation || !selection) throw new Error('Required PDF viewer plugins are unavailable.');
-  const annotationScope = annotation.forDocument('pilot-paper');
-  const selectionScope = selection.forDocument('pilot-paper');
+  if (!annotation || !selection) throw new Error('Reading-analysis plugins are unavailable.');
+  const annotationScope = annotation.forDocument(documentId);
+  const selectionScope = selection.forDocument(documentId);
   const nativeSelection = createNativeSelectionMirror(readerElement);
   let overlaysReady = false;
   let navigationLock = false;
   let navigationSettled: number | undefined;
 
-  scroll.onLayoutReady((event) => {
-    if (event.documentId !== 'pilot-paper' || !event.isInitial) return;
-    const items: AnnotationTransferItem[] = anchors.map((anchor) => {
+  const items: AnnotationTransferItem[] = anchors.map((anchor) => {
       const object: PdfSquareAnnoObject = {
         id: uuidById.get(anchor.id)!,
         pageIndex: anchor.page - 1,
@@ -254,24 +290,9 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
         strokeStyle: PdfAnnotationBorderStyle.SOLID,
       };
       return { annotation: object };
-    });
-    annotationScope.importAnnotations(items);
-    document.querySelector<HTMLElement>('.reader-status')?.remove();
-    setActive(anchors[0]?.id ?? '');
-    void attachSharedAnnotationLayer({
-      registry,
-      documentId: 'pilot-paper',
-      documentHash: sourceSha256,
-      apiUrl: sharedAnnotationsUrl,
-      readerElement,
-      ignoredAnnotationIds: uuidById.values(),
-    }).catch((error) => {
-      console.error(error);
-      readerElement.dataset.sharedAnnotationError = 'true';
-      const status = document.querySelector<HTMLElement>('[data-shared-annotation-status]');
-      if (status) status.textContent = 'Shared annotations are temporarily unavailable.';
-    });
   });
+  annotationScope.importAnnotations(items);
+  setActive(anchors[0]?.id ?? '');
 
   annotationScope.onStateChange(() => {
     overlaysReady = anchors.every((anchor) => annotationScope.getAnnotationById(uuidById.get(anchor.id)!) !== null);
@@ -285,7 +306,7 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
     setActive(anchor.id);
     if (navigate) {
       navigationLock = true;
-      scroll.forDocument('pilot-paper').scrollToPage({
+      scroll.forDocument(documentId).scrollToPage({
         pageNumber: anchor.page,
         pageCoordinates: { x: anchor.bbox.x * pageWidth, y: anchor.bbox.y * pageHeight },
         behavior: 'smooth',
@@ -319,7 +340,7 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   });
 
   scroll.onScroll((event) => {
-    if (event.documentId !== 'pilot-paper') return;
+    if (event.documentId !== documentId) return;
     if (navigationLock) {
       window.clearTimeout(navigationSettled);
       navigationSettled = window.setTimeout(() => { navigationLock = false; }, 180);
