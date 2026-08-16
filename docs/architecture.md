@@ -16,7 +16,9 @@ Reference
 
 Core and Foundations are peer learning entrances. Core is the primary continuous teaching route; Foundations repairs prerequisite gaps without becoming a parent container for Core. The established `/theory/` paths remain unchanged.
 
-The implementation uses Plain Astro pages, one shared layout, and one global stylesheet. It has no Starlight layer, general content registry, search index, client hydration, packaged fonts, interactive runtime, backend, account system, or database.
+The presentation implementation uses Plain Astro pages, one shared layout, and one global stylesheet. Literature metadata is a generated deployment index scanned from the Talos mirror of `Research-Workflow-Records`. A narrow loopback runtime streams the pre-indexed canonical PDF bytes and provides an anonymous append-oriented shared annotation API backed by one JSON file per annotation inside the source paper package. It has no Starlight layer, general CMS, search index, account system, user profile, social layer, Redis, CRDT, or annotation database.
+
+Annotation changes are runtime data: GET reads the current paper-package `annotations/` directory and POST creates one validated record atomically. They do not trigger Astro reindex/build/deploy or service restart. PDF/MinerU/metadata changes remain GitHub-authoritative Records assets; after Records synchronization, those inventory changes require index regeneration and an Atlas static deployment.
 
 ## Core
 
