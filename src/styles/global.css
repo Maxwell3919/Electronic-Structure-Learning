@@ -1035,5 +1035,4 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   .pdf-column { height: 72vh; min-height: 32rem; }
   .annotation-rail { height: auto; max-height: 24rem; margin-top: 1rem; }
   .annotation-right { display: none; }
-  .pre-reading-reader .annotation-rail { display: none; }
 }

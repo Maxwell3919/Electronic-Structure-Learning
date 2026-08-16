@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "authority": "Maxwell3919/Research-Workflow-Records",
-  "records_main_sha": "328e96bf9b6ca31b23eca924878a23a5bbca05aa",
-  "generated_at": "2026-08-16T15:06:52+08:00",
+  "records_main_sha": "3a7aebe3caef52983bf158de1893fac4821d38d9",
+  "generated_at": "2026-08-16T15:38:12+08:00",
   "stats": {
     "scanned": 130,
     "atlas_related": 99,
@@ -75,6 +75,8 @@
       "document_sha256": "e61ead88000a4d3b223fc4d637dfc087d6adede2a0e2cf4ef37419cb24f8bfc2",
       "pdf_size_bytes": 3413205,
       "annotation_path": "literature/A unified tight-binding description of the electronic structure and Ising protection of superconductivity in misfit layered compounds/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 16,
       "primary_category": "quantum-geometry-topology",
       "topic_relations": [
@@ -100,6 +102,8 @@
       "document_sha256": "35cb323f3dfbdd7671015c99db5b84b50138fb44a48f40f9822c0e9509054c3b",
       "pdf_size_bytes": 493007,
       "annotation_path": "literature/Ab initio downfolding for electron-phonon coupled systems - constrained density-functional perturbation theory (cDFPT)/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 18,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -125,6 +129,8 @@
       "document_sha256": "54d692d7e285fd3598f7fe1b1e9286b3bb843cf992e121d80d31f5402ebfe622",
       "pdf_size_bytes": 1816304,
       "annotation_path": "literature/Ah-SCDFT - A general approach for superconductivity with anharmonic corrections/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -163,6 +169,8 @@
       "document_sha256": "5a8ccfce85fe7ba98bd81b574898733ae3193d17072aa77154d13de30ce06a07",
       "pdf_size_bytes": 83590231,
       "annotation_path": "literature/Anomalous charge density wave in a two-dimensional superatomic superconductor/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 20,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -201,6 +209,8 @@
       "document_sha256": "7fb6d2eb52a21f44645c5b8c1196f140440d7c467b76f943faa3b153009aa5bb",
       "pdf_size_bytes": 1870863,
       "annotation_path": "literature/Atomic-scale observation of localized phonons at FeSe - SrTiO3 interface/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -246,6 +256,8 @@
       "document_sha256": "4361c490a3005da7453500825e416d93a46d8e51af7fb9a1997ac6c8652d0c75",
       "pdf_size_bytes": 13937124,
       "annotation_path": "literature/Bulk Ising superconductivity in an intercalated TaSe2 bilayer structure/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -277,6 +289,8 @@
       "document_sha256": "fb97ba573b41da85979f168d846d5f1f40b754182b880483df0679ba94f4fff2",
       "pdf_size_bytes": 25071847,
       "annotation_path": "literature/Cavity Tuning of the CDW--Superconductivity Interplay in a Kagome Metal/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 14,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -303,6 +317,8 @@
       "document_sha256": "2317e44c9909d18e1d88cee3859b4d97beca49dcb1d2043b9e717c419f466826",
       "pdf_size_bytes": 1490580,
       "annotation_path": "literature/Charge density wave and superconducting phase in monolayer InSe/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -333,6 +349,8 @@
       "document_sha256": "ba9ba12ad5617337d4fab6190f0a5cb4adf09f4ab717ae0659fd0aa6e7b2432f",
       "pdf_size_bytes": 5001431,
       "annotation_path": "literature/Charge-Density-Wave Phase Selection by Janus-Induced Intrinsic Strain in Monolayer NbSSiAs2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 13,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -363,6 +381,8 @@
       "document_sha256": "9a162aadfce0629f78c840cb040a40801ad6990b87fd9f31bf83404246d3b48a",
       "pdf_size_bytes": 7768897,
       "annotation_path": "literature/Charge-Density-Wave Phase Transitions in Monolayer 1T-TaS2 from Universal Machine Learning Molecular Dynamics/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 16,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -389,6 +409,8 @@
       "document_sha256": "1cf72f5d8a2ece9d873d82e095784e07a29519b1ce9844031cf58eeebda86753",
       "pdf_size_bytes": 502269,
       "annotation_path": "literature/Computing topological invariants without inversion symmetry/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "quantum-geometry-topology",
       "topic_relations": [
@@ -415,6 +437,8 @@
       "document_sha256": "5ddacb8cfdf6b408b68a64cdb21b70c3e2aafe3264ec8af3f74d8b688a00762c",
       "pdf_size_bytes": 1038466,
       "annotation_path": "literature/Correlation-enhanced electron-phonon coupling - Applications of GW and screened hybrid functional to bismuthates, chloronitrides, and other high Tc superconductors/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 19,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -449,6 +473,8 @@
       "document_sha256": "5648ed6ad95247c1183c1bd23aecbb5273670d35187437e34e02f241f3c57d8b",
       "pdf_size_bytes": 2326330,
       "annotation_path": "literature/Cross-dimensional electron-phonon coupling in van der Waals heterostructures/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -475,6 +501,8 @@
       "document_sha256": "e25c2502ecca2cb6504ca1ebff83c111a383b3fb6168167b4eac61a183aff00a",
       "pdf_size_bytes": 993593,
       "annotation_path": "literature/Crystal and Magnetic Structures in Layered, Transition Metal Dihalides and Trihalides/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 17,
       "primary_category": "structures-phase-competition",
       "topic_relations": [
@@ -502,6 +530,8 @@
       "document_sha256": "2a64d0291a511dc8e62300edd3d2f4491184aa233078bc03d68e021124c5156b",
       "pdf_size_bytes": 779362,
       "annotation_path": "literature/Density functional perturbation theory for gated two-dimensional heterostructures - Theoretical developments and application to flexural phonons in graphene/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 23,
       "primary_category": "lattice-dynamics",
       "topic_relations": [
@@ -543,6 +573,8 @@
       "document_sha256": "a9264c40ce76eb369347adaaa0321e5c01c63aabb47729298c2470901b8a9ee4",
       "pdf_size_bytes": 28099648,
       "annotation_path": "literature/Doping tunable charge density waves in misfit layer compounds/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -569,6 +601,8 @@
       "document_sha256": "eedd7cb2213e7e55903c2cb41f39c3454077e0b08e52e2a17c46cf8225843b64",
       "pdf_size_bytes": 1182636,
       "annotation_path": "literature/Effect of Hubbard U-corrections on the electronic and magnetic properties of 2D materials - a high-throughput study/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "magnetism-correlation",
       "topic_relations": [
@@ -597,6 +631,8 @@
       "document_sha256": "2a5ecfe8e892808a911917049444c88c9bffabf86cb102498f66ac79f0b18577",
       "pdf_size_bytes": 1751975,
       "annotation_path": "literature/Efficient Computational Design of 2D van der Waals Heterostructures - Band- Alignment, Lattice-Mismatch, and Machine-learning/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 29,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -625,6 +661,8 @@
       "document_sha256": "13336fff6fac0004b3741b9d8c1d78954e02dfd039a613200ca1c031ede66ac0",
       "pdf_size_bytes": 1300028,
       "annotation_path": "literature/Electron-doped phosphorene - A potential monolayer superconductor/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -654,6 +692,8 @@
       "document_sha256": "04d5bc997ba3d7a3fdafa2afb1a5d0092523b801da6cda004693fce859699310",
       "pdf_size_bytes": 1596467,
       "annotation_path": "literature/Electron-phonon coupling and spin fluctuations in the Ising superconductor NbSe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -682,6 +722,8 @@
       "document_sha256": "99015f9fda0f24fd219870d148a8700f0cd0f27b4fded99b0586747991e6ce95",
       "pdf_size_bytes": 6245567,
       "annotation_path": "literature/Electron-phonon coupling and the coexistence of superconductivity and charge-density wave in monolayer NbSe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 12,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -711,6 +753,8 @@
       "document_sha256": null,
       "pdf_size_bytes": null,
       "annotation_path": null,
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": null,
       "topic_relations": [
         "electron-phonon-superconductivity"
@@ -734,6 +778,8 @@
       "document_sha256": "5d980627ad272b2a92d1f760f0e6a0883b1b3fcc941436903a361024ce330251",
       "pdf_size_bytes": 7477428,
       "annotation_path": "literature/Electron-phonon interactions from first principles/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 68,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -760,6 +806,8 @@
       "document_sha256": "abbf2c0ea1e28435b8fa6c638edfeedccfa4b3a5f39092b1724b9d8e61c83638",
       "pdf_size_bytes": 1480574,
       "annotation_path": "literature/Electron-Phonon Mediated Superconductivity in 1T−MoS2 and Effect of Pressure on the Same/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 16,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -789,6 +837,8 @@
       "document_sha256": "294cabc7a578231eb3babaf2fef570b7656676414d16d6baeb629a62181c9504",
       "pdf_size_bytes": 1605775,
       "annotation_path": "literature/Electron-phonon superconductivity in monolayer NiH3 and hole-doped CuH3 - Role of hybridization of transition metal eg and hydrogen 1s states/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -838,6 +888,8 @@
       "document_sha256": "1fb8472f4e7eecfc584ea7cf5e007209e14cdfef5af069390879cd9e1a6382d8",
       "pdf_size_bytes": 2443381,
       "annotation_path": "literature/Electronic origin of high-temperature superconductivity in single-layer FeSe superconductor/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 6,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -866,6 +918,8 @@
       "document_sha256": "7c8cc23fe43d8bb292f8d0e2a931ce454dde43017cdf5af71264cab66d762f10",
       "pdf_size_bytes": 322905,
       "annotation_path": "literature/Electronic structure of superconducting graphite intercalate compounds - The role of the interlayer state/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -893,6 +947,8 @@
       "document_sha256": "27be53a338569d5f2d8956c076bbe32e0d821e2cf1a9f925a2983cac721a8be5",
       "pdf_size_bytes": 8405989,
       "annotation_path": "literature/Emergence of superconductivity in an InSe monolayer - Roles of deposited metal and biaxial strain/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -926,6 +982,8 @@
       "document_sha256": "a232dc0559dc2a76baa7c88c25bdf9b33aeb89d936e7b9b99bb75cab4e1e7710",
       "pdf_size_bytes": 9177989,
       "annotation_path": "literature/Emergent superconductivity and non-reciprocal transport in a van der Waals Dirac semimetal-antiferromagnet heterostructure/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 21,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -968,6 +1026,8 @@
       "document_sha256": "2d19b38771ed64793e2de672d5a8b16269e3d6b009ecb94359b6d951cbe24bfc",
       "pdf_size_bytes": 1882465,
       "annotation_path": "literature/Enhanced charge-density-wave order and suppressed superconductivity in intercalated bulk NbSe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -999,6 +1059,8 @@
       "document_sha256": "b01efd1de812333c9024cff1e61693201916cbadf324f2ac3577a9742be90e80",
       "pdf_size_bytes": 1103898,
       "annotation_path": "literature/Enhanced Electron-Phonon Interaction in Multivalley Materials/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 17,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1027,6 +1089,8 @@
       "document_sha256": "53a7d612f3d2b93cf4ac915c00c877f29ef273b0d5ec41a27153dc36892d49cb",
       "pdf_size_bytes": 1779407,
       "annotation_path": "literature/Enhanced superconductivity in two-dimensional Cu2N - First-principles investigation of electron-phonon coupling and topological properties/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1069,6 +1133,8 @@
       "document_sha256": "dec845eb9011a1b4024dcaab9ae2b18076a89dae9280fce5d56f6e97e038ec7f",
       "pdf_size_bytes": 3898096,
       "annotation_path": "literature/Evidence for superconductivity in Li-decorated monolayer graphene/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1105,6 +1171,8 @@
       "document_sha256": "467d00433ee37020769c5c0ecde489fe2b3a2385dfa0fac50b623d90f712a764",
       "pdf_size_bytes": 2246166,
       "annotation_path": "literature/Evidence of cooperative effect on the enhanced superconducting transition temperature at the FeSe - SrTiO3 interface/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1134,6 +1202,8 @@
       "document_sha256": "671d6b8a65ce364ede246eaaefa6549741a2bc963cad5b425a5561218be8e2fb",
       "pdf_size_bytes": 2464155,
       "annotation_path": "literature/Exchange Enhancement of the Electron-Phonon Interaction - the Case of Weakly Doped Two-Dimensional Multivalley Semiconductors/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 15,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1163,6 +1233,8 @@
       "document_sha256": "b70096fabb2e44d3f546ae209f9f6c4d0dfd7f03b6951de6c7d2dad0bec9dd19",
       "pdf_size_bytes": 1223006,
       "annotation_path": "literature/Fabrication of oxide-FeSe multilayer films using the PLD technique/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 15,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1193,6 +1265,8 @@
       "document_sha256": "bfe5e4310817210240f8ff748b689bfdfe1670322617ce82e68bec05654717b0",
       "pdf_size_bytes": 3636725,
       "annotation_path": "literature/Ferroelectric heterobilayer with tunable first- and higher-order topological states/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "quantum-geometry-topology",
       "topic_relations": [
@@ -1219,6 +1293,8 @@
       "document_sha256": "98e84821aaf58046e38de529d6ea1d3d62b2948a0b1e63e5f1f62ea30b7c764f",
       "pdf_size_bytes": 4186431,
       "annotation_path": "literature/First-Principles Investigation of Electron--Phonon Coupling and Intrinsic Two-Gap Superconductivity in Hexagonal BAs3 Monolayer/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 14,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1247,6 +1323,8 @@
       "document_sha256": "7ea20052b2b728acb6ccd05413331cf31fcc799946dab27cdb73bf165fb0c432",
       "pdf_size_bytes": 575605,
       "annotation_path": "literature/First-principles theory of ferroelectric phase transitions for perovskites - The case of BaTiO 3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 12,
       "primary_category": "polarization-response",
       "topic_relations": [
@@ -1289,6 +1367,8 @@
       "document_sha256": "7a59807c7b650d2e3a3b8e6b18dc4d2e15700d8ac9ab1665e884c164208db8ef",
       "pdf_size_bytes": 2417617,
       "annotation_path": "literature/Gated tuned superconductivity and phonon softening in monolayer and bilayer MoS2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1322,6 +1402,8 @@
       "document_sha256": "7243ef2245ef4f4e722b0ebaecc70efa94465281ada57199dc7bb4852b828ab0",
       "pdf_size_bytes": 1521879,
       "annotation_path": "literature/HfX2 (X = Cl, Br, I) Monolayer and Type II Heterostructures with Promising Photovoltaic Characteristics -/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 4,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -1349,6 +1431,8 @@
       "document_sha256": "dbc8dc8a5036397d9c6c1609dfe5db8e74409e1efc3da77eb6250907ce6baa98",
       "pdf_size_bytes": 2119351,
       "annotation_path": "literature/High throughput study on magnetic ground states with Hubbard - i - U - - i - corrections in transition metal dihalide monolayers/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 13,
       "primary_category": "magnetism-correlation",
       "topic_relations": [
@@ -1386,6 +1470,8 @@
       "document_sha256": "45ff82b05336812cdb155bf2e2c194dce34ac1a72d838ea7cf04b5c4c7d61452",
       "pdf_size_bytes": 11410691,
       "annotation_path": "literature/High-Tc superconductivity in functionalized out-of-plane ordered double transition metal MXenes/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 26,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1413,6 +1499,8 @@
       "document_sha256": null,
       "pdf_size_bytes": null,
       "annotation_path": null,
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": null,
       "topic_relations": [
         "electron-phonon-superconductivity"
@@ -1439,6 +1527,8 @@
       "document_sha256": "9982d5f94b6376e75b3b6d0f548a51033f3bf50bcc38692c76179f18ca4d963c",
       "pdf_size_bytes": 2386532,
       "annotation_path": "literature/High-throughput bandstructure simulations of van der Waals hetero-bilayers formed by 1T and 2H monolayers/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 12,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -1465,6 +1555,8 @@
       "document_sha256": "8b85d7c8691bde5becb2433d9bc0906d8baa660348d54824283bd464d369aba4",
       "pdf_size_bytes": 1979756,
       "annotation_path": "literature/Highly crystalline 2D superconductors/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 53,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1503,6 +1595,8 @@
       "document_sha256": "a6936df3683233ed2a531075d8878a1e4f72b6894d8fca034a32941bec6e645f",
       "pdf_size_bytes": 1475488,
       "annotation_path": "literature/Interface-Confined Superconductivity with Thickness-Independent Superfluid Stiffness in (Pb,Sn)Te - FeTe Bilayers/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 30,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1547,6 +1641,8 @@
       "document_sha256": "7e554d2ed47fcf6991d9e81234f30c126838105f02a28696fd861c9ae5aaa8ce",
       "pdf_size_bytes": 853301,
       "annotation_path": "literature/Interface-Induced High-Temperature Superconductivity in Single Unit-Cell FeSe Films on SrTiO3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 4,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1585,6 +1681,8 @@
       "document_sha256": "2ac59d41b9df75d5ffab1ffd0e9af3892bcb4d5662342bd9dc7f5e4a11de897d",
       "pdf_size_bytes": 791946,
       "annotation_path": "literature/Interfacial Electron-Phonon Coupling Constants Extracted from Intrinsic Replica Bands in Monolayer FeSe - SrTi O 3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 6,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1625,6 +1723,8 @@
       "document_sha256": null,
       "pdf_size_bytes": null,
       "annotation_path": null,
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": null,
       "topic_relations": [
         "electron-phonon-superconductivity"
@@ -1652,6 +1752,8 @@
       "document_sha256": "bb66d9ebfaeb4b019c8d360f784e7a0c4637a96291dd72d43dae7a5cabcb2ade",
       "pdf_size_bytes": 4016676,
       "annotation_path": "literature/Interfacial superconductivity in the type-III heterostructure SnSe2 - PtTe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1679,6 +1781,8 @@
       "document_sha256": "6206e9d9d634f31d5ff051b578592dd2806cc498ec3d176ce2f59037cac594b8",
       "pdf_size_bytes": 4548785,
       "annotation_path": "literature/Interlayer-coupling-driven stabilization and superconductivity in bilayer CoTe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 10,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1708,6 +1812,8 @@
       "document_sha256": "27a32c442476de4ef7c48b6383e40a6742eb8e96d4f7fb65fdf7d5dbbc3cbea7",
       "pdf_size_bytes": 2095213,
       "annotation_path": "literature/InvDesFlow-AL - active learning-based workflow for inverse design of functional materials/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 14,
       "primary_category": "reliability-validation",
       "topic_relations": [
@@ -1734,6 +1840,8 @@
       "document_sha256": "a9b1f9f7270efc5718f5baac189db8c3e204802ccacc99ac7cc4c456a8a58711",
       "pdf_size_bytes": 3521432,
       "annotation_path": "literature/Mechanism for Nodal Topological Superconductivity on PtBi2 Surface/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 23,
       "primary_category": "quantum-geometry-topology",
       "topic_relations": [
@@ -1759,6 +1867,8 @@
       "document_sha256": "338f72a6fd4d18f956ed688d7d8993cfa6a93bb454e22f8b3927498c4be004a6",
       "pdf_size_bytes": 12603559,
       "annotation_path": "literature/Microscopic theory for electron-phonon coupling in twisted bilayer graphene/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 16,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1792,6 +1902,8 @@
       "document_sha256": "93c01038ca36ae9665a8a82f4e0f8647a851b7b775aa37d767dbb6e3a3a40e65",
       "pdf_size_bytes": 4278873,
       "annotation_path": "literature/Modulation of superconductivity and superhardness in X B 4 C 4 ( X = Be , B , Al , Si , P , and Ti ) borocarbides at ambient pressure/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1819,6 +1931,8 @@
       "document_sha256": "397961deb2e99814e76d89fe76662454e0d95af23b3446a2a4c4a6fc3a6ac6ce",
       "pdf_size_bytes": 4236699,
       "annotation_path": "literature/Moiré Phonons in Magic-Angle Twisted Bilayer Graphene/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "lattice-dynamics",
       "topic_relations": [
@@ -1852,6 +1966,8 @@
       "document_sha256": "f0ef6546654f72c835a0799d81281c68d31d9c33c40ad70f306975139dc5f6f2",
       "pdf_size_bytes": 3903043,
       "annotation_path": "literature/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -1885,6 +2001,8 @@
       "document_sha256": "67898b542f64f03191713d1c0d6ca9b3f6ca70c682ac3ede5ce8602d32710ff6",
       "pdf_size_bytes": 1774373,
       "annotation_path": "literature/Observation of interface superconductivity in a SnSe 2 - epitaxial graphene van der Waals heterostructure/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 5,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1913,6 +2031,8 @@
       "document_sha256": "b17645414db220ab4d28b235fdcee685f431000f5683f5dd3cf2ee60e8cb9555",
       "pdf_size_bytes": 907167,
       "annotation_path": "literature/Observation of two-dimensional superconductivity in bilayers of BaBiO 3 and BaPbO 3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 5,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1947,6 +2067,8 @@
       "document_sha256": "220de97be7d410239912af9fad49880112f984a1b26e224cfd44f32a010bb11a",
       "pdf_size_bytes": 815704,
       "annotation_path": "literature/Origin of charge transfer and enhanced electron–phonon coupling in single unit-cell FeSe films on SrTiO3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -1974,6 +2096,8 @@
       "document_sha256": "3326e5c2b2e1a2c783c30824fd9f41cd9d87989080d20e3083faca2dfea409fe",
       "pdf_size_bytes": 773514,
       "annotation_path": "literature/Origin of the Structural and Magnetic Anomalies of the Layered Compound SrFeO 2 - A Density Functional Investigation/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 4,
       "primary_category": "magnetism-correlation",
       "topic_relations": [
@@ -2000,6 +2124,8 @@
       "document_sha256": "7e895ceee5956fe7b0800a12e720034cac0e57bbf8a500dbb5fd52ee0c953693",
       "pdf_size_bytes": 478104,
       "annotation_path": "literature/Phase Transitions in BaTi O 3 from First Principles/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 5,
       "primary_category": "structures-phase-competition",
       "topic_relations": [
@@ -2024,6 +2150,8 @@
       "document_sha256": "b584c12a026533b75201d6e830ac527d433eeaabb320550865306d3d307e2bdc",
       "pdf_size_bytes": 1881748,
       "annotation_path": "literature/Phonon-mediated superconductivity in electron-doped monolayer InSe - A first-principles investigation/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2051,6 +2179,8 @@
       "document_sha256": "828b76e3d92945f2d3345f25e4fab96d01823ce90280753d81b5f5ad134538e4",
       "pdf_size_bytes": 890824,
       "annotation_path": "literature/Phonon-mediated superconductivity in electron-doped single-layer MoS 2 - A first-principles prediction/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 5,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2078,6 +2208,8 @@
       "document_sha256": "53deac0846398279be37d958d4d0f96d29908515a4359366a28dd3e32d412806",
       "pdf_size_bytes": 519310,
       "annotation_path": "literature/Phonon-mediated superconductivity in graphene by lithium deposition/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 4,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2106,6 +2238,8 @@
       "document_sha256": "6fac9bb9a5ef0b1d26eaeafef43b8780c612744acac5592aa3999d8092f84089",
       "pdf_size_bytes": 1075116,
       "annotation_path": "literature/Phonons and related crystal properties from density-functional perturbation theory/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 48,
       "primary_category": "lattice-dynamics",
       "topic_relations": [
@@ -2132,6 +2266,8 @@
       "document_sha256": "599468ddf00df86fea161d38a8e3cff8632292436f4fe6a525c4813416a54221",
       "pdf_size_bytes": 2069675,
       "annotation_path": "literature/Physics of thin-film ferroelectric oxides/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 48,
       "primary_category": "polarization-response",
       "topic_relations": [
@@ -2160,6 +2296,8 @@
       "document_sha256": "b120d8a33f0a9671cce150084c70dfeb7238302ac2fd0616b1e7b2b75488f60d",
       "pdf_size_bytes": 292271,
       "annotation_path": "literature/Predicting the spin-lattice order of frustrated systems from first principles/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 5,
       "primary_category": "magnetism-correlation",
       "topic_relations": [
@@ -2191,6 +2329,8 @@
       "document_sha256": "7b66fdf0f4b4688f3633bd43ce908289923da5ab79c928fcd4964ebb7e8fbdaf",
       "pdf_size_bytes": 1839725,
       "annotation_path": "literature/Prediction of superconductivity and charge density wave in monolayer h-BN via functionalization with Si-N layer/annotations",
+      "reading_analysis_path": "literature/Prediction of superconductivity and charge density wave in monolayer h-BN via functionalization with Si-N layer/reader/annotations.json",
+      "reading_analysis_sha256": "6a80b6a553da20afa192eb4b2a7c1f66e656a18a3924e50c1230895f92b0ca27",
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2235,6 +2375,8 @@
       "document_sha256": "9ee5b93b816d76dd60d186fe081fb3e61b70ad1c062cc8178efdf635ee97f275",
       "pdf_size_bytes": 1536059,
       "annotation_path": "literature/Pressure induced magnetic-field-free superconducting diode effect in NbSe2 flake/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 10,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2275,6 +2417,8 @@
       "document_sha256": "8d265151ff6321ce5c42b61d66300615647903dc291fb332ed320496d6a114a6",
       "pdf_size_bytes": 11522048,
       "annotation_path": "literature/Quantum geometry and critical temperature enhancement in MgB2 superconductivity/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 96,
       "primary_category": "quantum-geometry-topology",
       "topic_relations": [
@@ -2301,6 +2445,8 @@
       "document_sha256": "ac3937dab92f0fe4649ec069938a48fd25908a8d6115bbdf3a1627337a98ae8a",
       "pdf_size_bytes": 2779734,
       "annotation_path": "literature/Quasiparticle GW for Superconductors - Toward a Unified Treatment of Electron-Phonon and Electron-Plasmon Couplings/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 20,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2344,6 +2490,8 @@
       "document_sha256": "365c3d95dc5a36734e0152cbd11064000e4c9a5aeab1c84b770784213baf86ff",
       "pdf_size_bytes": 10767184,
       "annotation_path": "literature/Reversible and selective ion intercalation through the top surface of few-layer MoS2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 26,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -2373,6 +2521,8 @@
       "document_sha256": "308ff5b67be696fc5304fc624302e350afed63f334e3688d9090c46048814555",
       "pdf_size_bytes": 1907791,
       "annotation_path": "literature/Robust two-dimensional superconductivity and vortex system in Bi2Te3 - FeTe heterostructures/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 21,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2399,6 +2549,8 @@
       "document_sha256": "7476ffcb86201dea4d3a52097538386edb4364b3f485ba6b2543c52a92f52128",
       "pdf_size_bytes": 234626,
       "annotation_path": "literature/Simultaneous Visualization of Covalent and Noncovalent Interactions Using Regions of Density Overlap/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "reliability-validation",
       "topic_relations": [
@@ -2435,6 +2587,8 @@
       "document_sha256": "5ae69f78321d293c171bd87343110f48fe80eca3f1fb65f46870d67793898167",
       "pdf_size_bytes": 13592848,
       "annotation_path": "literature/Stacking-tuned superconductivity and competing charge-density-wave states in NbSe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 13,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2466,6 +2620,8 @@
       "document_sha256": "8a1795f3131915a7131a761ecb90f84e8754de4bb1d590552ce41e866d9e1ea3",
       "pdf_size_bytes": 1012667,
       "annotation_path": "literature/Studies on the origin of the interfacial superconductivity of Sb2 Te3 - Fe1+y Te heterostructures/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 36,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2495,6 +2651,8 @@
       "document_sha256": "f6dd24f5d0cb0c6b311f200314c72bd331818aae5ea7119328171ea426e0c7a4",
       "pdf_size_bytes": 2146597,
       "annotation_path": "literature/Superconductivity in monolayer Ba 2 N electride - First-principles study/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2524,6 +2682,8 @@
       "document_sha256": "04eda6d19403f8cb6577f4cba098dfe7c16347564920f21b3113f798474cec6f",
       "pdf_size_bytes": 362101,
       "annotation_path": "literature/Superconductivity in the intercalated graphite compounds C6Yb and C6Ca/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 10,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2552,6 +2712,8 @@
       "document_sha256": "57a311825c370034d29471ed74fecff6789d62c6ea7ed79b26e062cbca1bac5d",
       "pdf_size_bytes": 646426,
       "annotation_path": "literature/Superconductivity in the two-dimensional electron gas induced by high-energy optical phonon mode and large polarization of the SrTiO 3 substrate/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2590,6 +2752,8 @@
       "document_sha256": "c8a31ea512e1c534e0859044442cb5da5596c39e936fcf98ae6b440668f53adc",
       "pdf_size_bytes": 7054926,
       "annotation_path": "literature/Superconductivity in twisted bilayer WSe2/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2616,6 +2780,8 @@
       "document_sha256": "2a2908f5098f50d5897aecf66f5cedb5b35c151663a3ba898581a7c64e1a4142",
       "pdf_size_bytes": 4264280,
       "annotation_path": "literature/Theoretical prediction of structural stability and superconductivity in T-hexagonal molybdenum dihydrides Monolayer/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 7,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2644,6 +2810,8 @@
       "document_sha256": "8e4b33ea2317f44c06efa995272b0070d67aab084dd2b30cabf96e5a80b5e18e",
       "pdf_size_bytes": 966813,
       "annotation_path": "literature/Theory of light-enhanced phonon-mediated superconductivity/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 10,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2671,6 +2839,8 @@
       "document_sha256": "bb63c397f990283ab1d5a667966388c874bb8ac1f3e182e71f6ffd15dbed49d0",
       "pdf_size_bytes": 493472,
       "annotation_path": "literature/Theory of Phonon-Mediated Superconductivity in Twisted Bilayer Graphene/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 6,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2699,6 +2869,8 @@
       "document_sha256": "f76a6f79b1497c0e82da0391e1c8e5da26fdc1547b5fa0317f703c72cb4bb1c9",
       "pdf_size_bytes": 2775086,
       "annotation_path": "literature/Theory of Superconductivity/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 30,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2724,6 +2896,8 @@
       "document_sha256": "ab8fb4e5df8e7bc8c38195e3d6ed4c5f0325cd86b6065b5f293a3380cc26ee0f",
       "pdf_size_bytes": 2070254,
       "annotation_path": "literature/Transition temperature of strong-coupled superconductors reanalyzed/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 18,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2750,6 +2924,8 @@
       "document_sha256": "75576a64c366908f80fa92049e279525a012cb86af8dc3c33b400b54eb44fbd9",
       "pdf_size_bytes": 4387087,
       "annotation_path": "literature/Trigonal Symmetry Breaking and its Electronic Effects in Two-Dimensional Dihalides MX2 and Trihalides MX3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 12,
       "primary_category": "structures-phase-competition",
       "topic_relations": [
@@ -2779,6 +2955,8 @@
       "document_sha256": "b71951d59c1ec00ec3f97ea73b6c4ed43f6d5d7da905dc143baef3bb0c197f84",
       "pdf_size_bytes": 10708752,
       "annotation_path": "literature/Tuning Competing Electronic Phases in Monolayer VSe2 via Interface Hybridization/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -2812,6 +2990,8 @@
       "document_sha256": "118f5a6f693603001be51acd407fcbfa38b17576078c81053700a2b2ef73bfd0",
       "pdf_size_bytes": 1307015,
       "annotation_path": "literature/Two-dimensional superconductivity at the interface of a Bi2Te3 - FeTe heterostructure/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 8,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2840,6 +3020,8 @@
       "document_sha256": "2be412ef7cb1ee80d0fb01eeb7bbf521f15d393a8c0e57c27902495113499a44",
       "pdf_size_bytes": 2794519,
       "annotation_path": "literature/Two-dimensional superconductivity driven by interfacial electron-phonon coupling in a BaPbO3 - BaBiO3 bilayer/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 11,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2885,6 +3067,8 @@
       "document_sha256": "d74e00b5ca3d6d74268d6843256be72092dcee6877afa96f96ff95960de2a900",
       "pdf_size_bytes": 909780,
       "annotation_path": "literature/Ubiquitous strong electron–phonon coupling at the interface of FeSe - SrTiO3/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 6,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2914,6 +3098,8 @@
       "document_sha256": "c6c7045ea41f81b711ed265fc86e53320983ae2226bcf5b7e7ac95a3ce60d65c",
       "pdf_size_bytes": 3043528,
       "annotation_path": "literature/Unconventional bright ground-state excitons in monolayer TiI2 from first-principles calculations/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "quasiparticles-excitons",
       "topic_relations": [
@@ -2940,6 +3126,8 @@
       "document_sha256": "b0a1b1fed5ab43eac2d0ec8bfc63182e181488748a65caa2d95f53fe726a6222",
       "pdf_size_bytes": 1130257,
       "annotation_path": "literature/Unified ab initio description of Fröhlich electron-phonon interactions in two-dimensional and three-dimensional materials/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 18,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [
@@ -2973,6 +3161,8 @@
       "document_sha256": "9b5df45cffcfc6194b73fbc0823bbac2573f4f93fc51a0ab2811cf370cf6dd90",
       "pdf_size_bytes": 2079246,
       "annotation_path": "literature/Unveiling the Stable Semiconducting 1T′-HfCl2 Monolayer - A New 2D Material/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 15,
       "primary_category": "structures-phase-competition",
       "topic_relations": [
@@ -3001,6 +3191,8 @@
       "document_sha256": "fc89ad655c86b98cef2f2ae7fbdeb5cf333cf3631782ef1de30426be0a94b53d",
       "pdf_size_bytes": 2859696,
       "annotation_path": "literature/Unveiling vibrational and optoelectronic properties of HfX2 (X = Br, I) monolayers via DFT calculations/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 10,
       "primary_category": "lattice-dynamics",
       "topic_relations": [
@@ -3030,6 +3222,8 @@
       "document_sha256": "69d5eb04592beadc321d37a1ce5839ac68cb9193c8db8cb3fd78c03ba85ed2d7",
       "pdf_size_bytes": 7821568,
       "annotation_path": "literature/Van der Waals Electrides/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 10,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -3072,6 +3266,8 @@
       "document_sha256": "df77c34bdd059f340747a1acc64dc3eb93245d43d3d82e962bc8465c8736a337",
       "pdf_size_bytes": 2020342,
       "annotation_path": "literature/Versatile Method for Preparing Two-Dimensional Metal Dihalides/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 16,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
@@ -3098,6 +3294,8 @@
       "document_sha256": "23bbdf1e61a3146467b1faea3690e23a69653cd0e6c25cfc7891faa103ea6a08",
       "pdf_size_bytes": 5136141,
       "annotation_path": "literature/二维超导材料/annotations",
+      "reading_analysis_path": null,
+      "reading_analysis_sha256": null,
       "page_count": 9,
       "primary_category": "electron-phonon-superconductivity",
       "topic_relations": [

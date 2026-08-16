@@ -1,0 +1,67 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { LiteratureLibraryPaper } from '../reading/literature-library';
+import type { LiteraturePaper } from '../reading/literature-papers';
+import type { ResearchTopic } from '../reading/research-topics';
+
+type Props = {
+  entry: LiteratureLibraryPaper;
+  paper: LiteraturePaper;
+  topic: ResearchTopic;
+  readingAnalysisUrl: string | null;
+};
+
+const { entry, paper, topic, readingAnalysisUrl } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => route.startsWith('http') ? route : `${base}${route.replace(/^\//, '')}`;
+const pdfUrl = href(`/papers/${paper.id}.pdf`);
+const sharedAnnotationsUrl = href(`/papers/api/annotations/${entry.document_sha256}`);
+const hasReadingAnalysis = readingAnalysisUrl !== null;
+---
+
+<BaseLayout title={paper.title} description={`Read ${paper.title} with the shared annotation layer.`} current="reading" wide>
+  <div class="reader-heading">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href={href('/reading/literature/')}>Literature</a><span aria-hidden="true">/</span>
+      <a href={href(`/reading/literature/${topic.id}/`)}>{topic.title}</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Paper Reader</span>
+    </nav>
+    <h1>{paper.title}</h1>
+    <p class="reader-meta">{paper.authors.join(', ')} · {paper.journal} · {paper.year}{paper.doi && <> · <a href={`https://doi.org/${paper.doi}`}>DOI {paper.doi}</a></>}</p>
+    {paper.companionCorrections?.map((correction) => (
+      <p class="reader-meta">Companion correction: <a href={`https://doi.org/${correction.doi}`}>{correction.label} · DOI {correction.doi}</a></p>
+    ))}
+    {paper.sourceVersion && <p class="reader-meta">Source version: {paper.sourceVersion}</p>}
+    <p><a class="pdf-download" href={pdfUrl}>Open PDF</a></p>
+    <p class="pre-reading-notice" data-reading-analysis-state>
+      {hasReadingAnalysis
+        ? 'Curated reading analysis is available in the source-aligned side rails.'
+        : 'Reading analysis pending.'}
+    </p>
+    <p class="reader-meta" data-shared-annotation-status>Loading the global anonymous annotation layer…</p>
+    <p><button class="annotation-save" type="button" data-save-shared-annotation hidden>Save annotation</button></p>
+  </div>
+
+  <section
+    class="paper-reader"
+    aria-label="Literature PDF Reader"
+    data-paper-id={paper.id}
+    data-source-sha256={entry.document_sha256}
+    data-pdf-url={pdfUrl}
+    data-reading-analysis-url={readingAnalysisUrl ?? undefined}
+    data-shared-annotations-url={sharedAnnotationsUrl}
+  >
+    <aside class="annotation-rail annotation-left" aria-label="What does this mean?" aria-hidden={!hasReadingAnalysis}>
+      {hasReadingAnalysis && <><h2>What does this mean?</h2><ol></ol></>}
+    </aside>
+    <div class="pdf-column">
+      <div class="reader-status" role="status">Loading PDF…</div>
+      <div id="pdf-viewer" aria-label={`PDF · ${paper.title}`}></div>
+    </div>
+    <aside class="annotation-rail annotation-right" aria-label="Why does this matter?" aria-hidden={!hasReadingAnalysis}>
+      {hasReadingAnalysis && <><h2>Why does this matter?</h2><ol></ol></>}
+    </aside>
+  </section>
+  {hasReadingAnalysis && <p class="annotation-coverage" data-annotation-coverage>Loading reading-analysis coverage…</p>}
+  <script src="../scripts/literature-reader.ts"></script>
+</BaseLayout>

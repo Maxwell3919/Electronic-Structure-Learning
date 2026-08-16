@@ -550,15 +550,15 @@ def check_literature_preprocessing_ui(driver):
     for slug in ["allen-dynes-transition-temperature", "bilayer-cote2-superconductivity"]:
         driver.get(urljoin(BASE_URL, f"reading/literature/electron-phonon-superconductivity/{slug}/"))
         driver.refresh()
-        shell = driver.find_element(By.CSS_SELECTOR, ".paper-reader.pre-reading-reader")
+        shell = driver.find_element(By.CSS_SELECTOR, ".paper-reader")
         children = shell.find_elements(By.XPATH, "./*")
         if [node.tag_name for node in children] != ["aside", "div", "aside"]:
-            raise AssertionError(f"pre-reading Reader lacks left/PDF/right geometry: {slug}")
+            raise AssertionError(f"unified Reader lacks left/PDF/right geometry: {slug}")
         if any(node.text.strip() or node.find_elements(By.XPATH, "./*") for node in (children[0], children[2])):
-            raise AssertionError(f"pre-reading Reader rails are not truly empty: {slug}")
+            raise AssertionError(f"pending Reader rails are not truly empty: {slug}")
         widths = [round(node.rect["width"]) for node in children]
         if any(width < 150 for width in widths):
-            raise AssertionError(f"pre-reading Reader does not preserve three desktop columns: {slug} {widths}")
+            raise AssertionError(f"unified Reader does not preserve three desktop columns: {slug} {widths}")
         layouts[slug] = widths
     return {"ready": len(ready), "pending": len(pending), "desktop_widths": layouts}
 
