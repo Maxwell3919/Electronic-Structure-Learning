@@ -1,19 +1,15 @@
-import type { PdfAnnotationObject } from '@embedpdf/snippet';
-
-export type SharedAnnotationEventType = 'create' | 'update';
-
 const TEXT = 1;
 const FREETEXT = 3;
 const IMMEDIATE_TYPES = new Set([9, 10]); // highlight, underline
 const PLACEHOLDER_CONTENTS = new Set(['insert text']);
 
-export const isTextSharedAnnotation = (annotation: PdfAnnotationObject) => (
+export const isTextSharedAnnotation = (annotation) => (
   annotation.type === TEXT || annotation.type === FREETEXT
 );
 
 export const isFinalizedSharedAnnotation = (
-  eventType: SharedAnnotationEventType,
-  annotation: PdfAnnotationObject,
+  eventType,
+  annotation,
 ) => {
   if (isTextSharedAnnotation(annotation)) {
     const contents = typeof annotation.contents === 'string' ? annotation.contents.trim() : '';

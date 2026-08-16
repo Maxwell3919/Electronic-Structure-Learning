@@ -6,7 +6,7 @@ import {
   type PdfAnnotationObject,
   type PluginRegistry,
 } from '@embedpdf/snippet';
-import { isFinalizedSharedAnnotation, isTextSharedAnnotation } from './shared-annotation-lifecycle';
+import { isFinalizedSharedAnnotation, isTextSharedAnnotation } from './shared-annotation-lifecycle.mjs';
 
 type SharedAnnotationResponse = {
   document_hash: string;

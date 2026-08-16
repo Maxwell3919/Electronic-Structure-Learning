@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isFinalizedSharedAnnotation } from '../src/scripts/shared-annotation-lifecycle.ts';
+import { isFinalizedSharedAnnotation } from '../src/scripts/shared-annotation-lifecycle.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourcePath = path.join(root, 'src/scripts/shared-pdf-annotations.ts');
