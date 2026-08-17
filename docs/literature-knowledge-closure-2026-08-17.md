@@ -1,6 +1,6 @@
 # Literature v1 knowledge closure
 
-This audit freezes the current Literature corpus at 95 scientifically reviewed papers and 1,379 curated annotations. The 16 acceptance fixtures remain test data and are excluded from every scientific count. The Records coverage manifest and annotation files remain the authority; the generated Atlas concept map records their identities but does not replace them.
+This audit freezes the current Literature corpus at 95 scientifically reviewed papers and 1,379 curated annotations. The 16 acceptance fixtures remain test data and are excluded from every scientific count. The Records coverage manifest and annotation files remain the authority; the generated Atlas concept map records the stable hash of the manifest's paper-state array (excluding its Atlas commit and generation timestamp) but does not replace them.
 
 ## Normalized vocabulary
 

@@ -7,10 +7,17 @@ const atlasRoot = path.resolve(import.meta.dirname, '..');
 const recordsRoot = path.resolve(process.argv[2] ?? '/home/talos/work/Research-Workflow-Records');
 const library = JSON.parse(fs.readFileSync(path.join(atlasRoot, 'src/reading/literature-library.json'), 'utf8'));
 const coveragePath = path.join(recordsRoot, 'manifests/literature-annotation-coverage.json');
-const coverageBytes = fs.readFileSync(coveragePath);
-const coverage = JSON.parse(coverageBytes.toString('utf8'));
+const coverage = JSON.parse(fs.readFileSync(coveragePath, 'utf8'));
 const fixtures = JSON.parse(fs.readFileSync(path.join(recordsRoot, 'manifests/literature-annotation-fixtures.json'), 'utf8'));
 const outputPath = path.join(atlasRoot, 'src/reading/literature-concept-map.json');
+
+function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])]));
+  }
+  return value;
+}
 
 // This is a deliberately small, reviewed vocabulary. Patterns classify evidence into
 // these stable concepts; they never create new concepts from arbitrary keywords.
@@ -113,7 +120,7 @@ for (const concept of concepts) {
 const output = {
   schema_version: 1,
   records_main_sha: library.records_main_sha,
-  coverage_manifest_sha256: crypto.createHash('sha256').update(coverageBytes).digest('hex'),
+  coverage_papers_sha256: crypto.createHash('sha256').update(JSON.stringify(canonical(coverage.papers))).digest('hex'),
   coverage_annotation_count: coverage.papers.reduce((sum, entry) => sum + entry.annotation_count, 0),
   paper_count: papers.length,
   concept_count: concepts.length,
