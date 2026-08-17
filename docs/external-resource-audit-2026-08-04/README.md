@@ -4,7 +4,7 @@ Review date: 2026-08-04
 
 Repository baseline reviewed: `8906164574c88a6f76207c6b1cfe77a39de76b34`
 
-Public site: <https://maxwell3919.github.io/Electronic-Structure-Learning/>
+Current production site: <http://188.255.156.20/Electronic-Structure-Learning/>. The GitHub Pages deployment named in the original 2026-08-04 audit context was retired on 2026-08-17.
 
 This directory is a research and implementation backlog. It does **not** modify public pages. Talos should read the current remote repository, synchronize any stale local checkout, verify every destination again, and then decide which recommendations belong on which page.
 

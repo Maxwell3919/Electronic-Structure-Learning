@@ -3,7 +3,7 @@
 You are responsible for continuing the public repository:
 
 - Repository: `https://github.com/Maxwell3919/Electronic-Structure-Learning`
-- Public site: `https://maxwell3919.github.io/Electronic-Structure-Learning/`
+- Current production site: `http://188.255.156.20/Electronic-Structure-Learning/`; the GitHub Pages target used when this historical prompt was written is retired.
 
 Use goal mode and complete the work directly in the repository. Do not only produce a plan, sample text, or a list of suggestions.
 

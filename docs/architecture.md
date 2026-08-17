@@ -418,7 +418,7 @@ The site remains English-first, fully static, white-background, system-serif, an
 
 Every public behavior change must preserve:
 
-- correct GitHub Pages base paths;
+- correct deployment-prefix paths for the Newt/Talos production route;
 - keyboard navigation;
 - readable 390-pixel layouts;
 - no page-level horizontal overflow;
