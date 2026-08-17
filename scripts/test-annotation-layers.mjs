@@ -10,6 +10,7 @@ const server = fs.readFileSync(path.join(root, 'services/literature-runtime-serv
 assert(source.includes("const DB_NAME = 'electronic-structure-atlas-personal-annotations'"), 'personal annotations must use a dedicated IndexedDB database');
 assert(source.includes("database.transaction(STORE_NAME, 'readwrite', { durability: 'strict' })"), 'personal writes must request strict IndexedDB durability');
 assert(source.includes('scope.getAnnotationById(annotationId)?.object'), 'personal updates must persist the latest live annotation object');
+assert(source.includes("event.type !== 'update' && !event.committed"), 'in-progress text updates must reach IndexedDB without finalizing or locking the editor');
 assert(source.includes("event.type === 'delete'"), 'personal delete events must remove IndexedDB records');
 assert(source.includes('deletePersonalAnnotation(database, documentHash, annotationId)'), 'personal delete is not namespace-scoped');
 assert(source.includes('if (curatedIds.has(record.annotationId))'), 'curated IDs must take precedence over colliding local records');
