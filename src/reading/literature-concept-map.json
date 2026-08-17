@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "records_main_sha": "849fee798ec7f095f990231ef969251e2d155407",
-  "coverage_manifest_sha256": "cc71a44000d45d94c3304517e8952b7a945f3f91e26dbd9b9790289937c945c7",
+  "coverage_papers_sha256": "cc5b5feedc46a0ff86a5f72b5083e5a81825a4f1b00cf061f7f8bcb259d632d0",
   "coverage_annotation_count": 1379,
   "paper_count": 95,
   "concept_count": 44,

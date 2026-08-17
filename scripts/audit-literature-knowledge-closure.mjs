@@ -19,7 +19,7 @@ const fixtureIds = new Set(fixtures.papers.flatMap((paper) => paper.annotation_i
 
 assert.equal(map.schema_version, 1);
 assert.match(map.records_main_sha, /^[0-9a-f]{40}$/, 'Records identity missing from concept map');
-assert.match(map.coverage_manifest_sha256, /^[0-9a-f]{64}$/, 'coverage manifest identity missing from concept map');
+assert.match(map.coverage_papers_sha256, /^[0-9a-f]{64}$/, 'stable coverage paper identity missing from concept map');
 assert.equal(map.paper_count, 95);
 assert.equal(map.coverage_annotation_count, 1379);
 assert(map.concept_count >= 30 && map.concept_count <= 60, 'concept vocabulary must remain normalized');
