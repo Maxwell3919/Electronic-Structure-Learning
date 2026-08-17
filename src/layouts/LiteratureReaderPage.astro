@@ -42,6 +42,19 @@ const paperConcepts = conceptsForPaper(paper.id).slice(0, 10);
     </p>
     <p class="reader-meta" data-curated-annotation-status>Loading curated annotations…</p>
     <p class="reader-meta" data-personal-annotation-status>Loading personal annotations from this browser…</p>
+    <p class="reader-meta" data-reading-progress-status>Loading reading progress from this browser…</p>
+    <details class="reader-personal-tools">
+      <summary>Personal reading tools</summary>
+      <div class="reader-personal-actions">
+        <label><input type="checkbox" data-reading-completed /> Mark this paper finished</label>
+        <button type="button" data-export-personal-json>Export JSON</button>
+        <button type="button" data-export-personal-markdown>Export Markdown</button>
+        <button type="button" data-import-personal-trigger>Import JSON</button>
+        <input type="file" accept="application/json,.json" data-import-personal-json hidden />
+      </div>
+      <p class="reader-meta">Page, zoom, completion, and personal annotations stay in this browser. Imports must match this exact PDF and never modify curated annotations.</p>
+      <p class="reader-meta" role="status" aria-live="polite" data-personal-action-status></p>
+    </details>
     <p class="reader-concepts"><strong>Atlas concepts:</strong> {paperConcepts.map((concept, index) => <>{index > 0 && ' · '}<a href={href(concept.canonical_route)}>{concept.title}</a></>)}</p>
     <details class="reader-diagnostics" data-reader-debug hidden>
       <summary>Reader diagnostics</summary>
@@ -53,6 +66,7 @@ const paperConcepts = conceptsForPaper(paper.id).slice(0, 10);
     class="paper-reader"
     aria-label="Literature PDF Reader"
     data-paper-id={paper.id}
+    data-paper-title={paper.title}
     data-source-sha256={entry.document_sha256}
     data-pdf-url={pdfUrl}
     data-reading-analysis-url={readingAnalysisUrl ?? undefined}

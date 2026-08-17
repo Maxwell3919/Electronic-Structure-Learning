@@ -230,7 +230,7 @@
     {
       "id": "spin-polarization",
       "title": "Spin polarization and magnetic states",
-      "canonical_route": "/theory/relativistic-electronic-structure-spin-and-magnetism/",
+      "canonical_route": "/theory/relativistic-electronic-structure-spin-and-magnetism/#spin-polarization",
       "description": "Candidate spin-dependent electronic solutions and the nonlinear landscape that separates them.",
       "paper_count": 5,
       "papers": [
@@ -258,7 +258,7 @@
     {
       "id": "spin-orbit-coupling",
       "title": "Spin–orbit coupling",
-      "canonical_route": "/theory/relativistic-electronic-structure-spin-and-magnetism/",
+      "canonical_route": "/theory/relativistic-electronic-structure-spin-and-magnetism/#spin-orbit-coupling",
       "description": "Relativistic spin–orbital coupling, symmetry changes and the difference between band splitting and a phase claim.",
       "paper_count": 41,
       "papers": [
@@ -362,7 +362,7 @@
     {
       "id": "bloch-bands",
       "title": "Bloch states and band structure",
-      "canonical_route": "/core/part-iii/",
+      "canonical_route": "/core/part-iii/#bloch-bands",
       "description": "Periodic eigenstates and bands indexed by crystal momentum.",
       "paper_count": 11,
       "papers": [
@@ -447,7 +447,7 @@
     {
       "id": "density-of-states",
       "title": "Density of states and van Hove structure",
-      "canonical_route": "/core/part-iii/",
+      "canonical_route": "/core/part-iii/#density-of-states",
       "description": "A compressed spectrum whose peaks can suggest, but do not alone prove, an instability or coupling mechanism.",
       "paper_count": 32,
       "papers": [
@@ -543,7 +543,7 @@
     {
       "id": "berry-topology",
       "title": "Berry phases, Wilson loops, and topology",
-      "canonical_route": "/theory/berry-phases-and-electronic-topology/",
+      "canonical_route": "/theory/berry-phases-and-electronic-topology/#berry-topology",
       "description": "Gauge-aware invariants and boundary evidence beyond a visual band inversion.",
       "paper_count": 14,
       "papers": [
@@ -586,7 +586,7 @@
     {
       "id": "quantum-geometry",
       "title": "Quantum geometry",
-      "canonical_route": "/theory/berry-phases-and-electronic-topology/",
+      "canonical_route": "/theory/berry-phases-and-electronic-topology/#quantum-geometry",
       "description": "Metric and geometric contributions of occupied subspaces, kept distinct from topology alone.",
       "paper_count": 2,
       "papers": [
@@ -611,7 +611,7 @@
     {
       "id": "structural-stability",
       "title": "Structural and thermodynamic stability",
-      "canonical_route": "/core/part-vi/",
+      "canonical_route": "/core/part-vi/#structural-stability",
       "description": "Stationarity, local curvature, competing phases and thermodynamic accessibility are different claims.",
       "paper_count": 9,
       "papers": [
@@ -677,7 +677,7 @@
     {
       "id": "dfpt",
       "title": "Density-functional perturbation theory",
-      "canonical_route": "/theory/linear-response-and-excited-states/",
+      "canonical_route": "/theory/linear-response-and-excited-states/#dfpt",
       "description": "Self-consistent derivatives of a declared reference state with respect to a declared perturbation.",
       "paper_count": 35,
       "papers": [
@@ -741,7 +741,7 @@
     {
       "id": "phonons",
       "title": "Phonons and lattice dynamics",
-      "canonical_route": "/core/part-vii/",
+      "canonical_route": "/core/part-vii/#phonons-and-lattice-dynamics",
       "description": "Mass-weighted normal modes built from interatomic force constants and crystal momentum q.",
       "paper_count": 56,
       "papers": [
@@ -1898,7 +1898,7 @@
     {
       "id": "wannier-interpolation",
       "title": "Wannier interpolation",
-      "canonical_route": "/theory/berry-phases-and-electronic-topology/",
+      "canonical_route": "/theory/berry-phases-and-electronic-topology/#wannier-functions",
       "description": "A gauge- and subspace-controlled localized representation for dense electronic, phonon and coupling meshes.",
       "paper_count": 23,
       "papers": [
