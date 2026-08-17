@@ -7,13 +7,19 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'src/research/research-p
 const concepts = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-concept-map.json'), 'utf8'));
 const synthesisSource = fs.readFileSync(path.join(root, 'src/reading/literature-syntheses.ts'), 'utf8');
 const drwRoot = process.env.DRW_ROOT ?? '/home/talos/work/DFT-Research-Workflow';
-const drwTopics = JSON.parse(fs.readFileSync(path.join(drwRoot, 'workflow/topics.json'), 'utf8'));
+const drwContract = JSON.parse(fs.readFileSync(path.join(root, 'src/research/drw-operation-contract.json'), 'utf8'));
 
 const fail = (message) => { throw new Error(`Research path audit failed: ${message}`); };
 const conceptIds = new Set(concepts.concepts.map((concept) => concept.id));
 const conceptRoutes = new Map(concepts.concepts.map((concept) => [concept.id, concept.canonical_route]));
 const synthesisIds = new Set([...synthesisSource.matchAll(/\bid:\s*'([^']+)'/g)].map((match) => match[1]));
-const drwSlugs = new Set(drwTopics.sections.flatMap((section) => section.groups.flatMap((group) => group.topics.map((topic) => topic.slug))));
+const drwSlugs = new Set(drwContract.operation_slugs);
+const drwTopicsPath = path.join(drwRoot, 'workflow/topics.json');
+if (fs.existsSync(drwTopicsPath)) {
+  const drwTopics = JSON.parse(fs.readFileSync(drwTopicsPath, 'utf8'));
+  const liveDrwSlugs = new Set(drwTopics.sections.flatMap((section) => section.groups.flatMap((group) => group.topics.map((topic) => topic.slug))));
+  for (const slug of drwSlugs) if (!liveDrwSlugs.has(slug)) fail(`versioned DRW operation is absent from Talos: ${slug}`);
+}
 
 if (data.schema_version !== 1) fail(`unsupported schema ${data.schema_version}`);
 if (data.paths.length < 10 || data.paths.length > 15) fail(`expected 10–15 paths, found ${data.paths.length}`);
@@ -43,7 +49,7 @@ for (const researchPath of data.paths) {
       const output = path.join(root, 'dist', route.replace(/^\//, ''), 'index.html');
       if (!fs.existsSync(output)) fail(`${researchPath.id}/${gate.id} missing built Atlas route ${route}`);
     }
-    if (built) {
+    if (built && fs.existsSync(path.join(drwRoot, 'dist'))) {
       const drwOutput = path.join(drwRoot, 'dist/operations', gate.drw_slug, 'index.html');
       if (!fs.existsSync(drwOutput)) fail(`${researchPath.id}/${gate.id} missing built DRW route ${gate.drw_slug}`);
     }

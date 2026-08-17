@@ -7,21 +7,22 @@ const built = process.argv.includes('--built');
 const paths = JSON.parse(fs.readFileSync(path.join(atlasRoot, 'src/research/research-paths.json'), 'utf8')).paths;
 const drwMapPath = path.join(drwRoot, 'src/lib/atlas-research-paths.ts');
 const drwPagePath = path.join(drwRoot, 'src/pages/operations/[slug].astro');
-const drwMap = fs.readFileSync(drwMapPath, 'utf8');
-const drwPage = fs.readFileSync(drwPagePath, 'utf8');
+const drwAvailable = fs.existsSync(drwMapPath) && fs.existsSync(drwPagePath);
+const drwMap = drwAvailable ? fs.readFileSync(drwMapPath, 'utf8') : '';
+const drwPage = drwAvailable ? fs.readFileSync(drwPagePath, 'utf8') : '';
 const fail = (message) => { throw new Error(`Research cross-link audit failed: ${message}`); };
 
-if (!drwPage.includes('atlasResearchPathsForOperation') || !drwPage.includes('From execution to a research decision')) fail('DRW operation template lacks Atlas backlink');
-if (drwMap.includes('github.io') || drwPage.includes('github.io')) fail('GitHub Pages production link found in DRW bridge');
+if (drwAvailable && (!drwPage.includes('atlasResearchPathsForOperation') || !drwPage.includes('From execution to a research decision'))) fail('DRW operation template lacks Atlas backlink');
+if (drwAvailable && (drwMap.includes('github.io') || drwPage.includes('github.io'))) fail('GitHub Pages production link found in DRW bridge');
 
 let drwToAtlas = 0;
 for (const researchPath of paths) {
-  if (!drwMap.includes(`id: '${researchPath.id}'`)) fail(`DRW mapping lacks ${researchPath.id}`);
+  if (drwAvailable && !drwMap.includes(`id: '${researchPath.id}'`)) fail(`DRW mapping lacks ${researchPath.id}`);
   const uniqueOperations = new Set(researchPath.gates.map((gate) => gate.drw_slug));
   for (const slug of uniqueOperations) {
-    if (!drwMap.includes(`'${slug}'`)) fail(`DRW mapping lacks operation ${slug}`);
+    if (drwAvailable && !drwMap.includes(`'${slug}'`)) fail(`DRW mapping lacks operation ${slug}`);
     drwToAtlas += 1;
-    if (built) {
+    if (built && drwAvailable && fs.existsSync(path.join(drwRoot, 'dist'))) {
       const output = path.join(drwRoot, 'dist/operations', slug, 'index.html');
       if (!fs.existsSync(output)) fail(`missing built DRW route ${slug}`);
       const html = fs.readFileSync(output, 'utf8');
@@ -41,4 +42,4 @@ if (built) {
   }
 }
 
-console.log(`Research cross-link audit passed: ${paths.length} paths and ${drwToAtlas} DRW→Atlas operation-path links.`);
+console.log(`Research cross-link audit passed: ${paths.length} paths and ${drwToAtlas} DRW→Atlas operation-path links (${drwAvailable ? 'Talos bridge verified' : 'versioned contract only'}).`);
