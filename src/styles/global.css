@@ -36,6 +36,51 @@ body.wide-page > footer,
 body.wide-page .reader-heading,
 body.wide-page .annotation-coverage { max-width: 78rem; margin-inline: auto; }
 
+/* cow-cat:start */
+body.home-page { max-width: none; padding: 0; }
+.home-page .site-header {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  width: min(calc(100% - 3rem), 48rem);
+  margin-inline: auto;
+}
+.home-page main { padding: 0; }
+.home-page > footer { width: min(calc(100% - 3rem), 48rem); margin-inline: auto; }
+.cow-cat-stage {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  background: linear-gradient(#fff 0 72%, #f7f6f3 72% 100%);
+}
+.cow-cat-art { display: block; width: min(96vw, 74rem); height: min(92svh, 50rem); }
+.cow-cat-zone { position: absolute; z-index: 1; inset-block: 0; width: 33.333%; }
+.cow-cat-zone-left { inset-inline-start: 0; }
+.cow-cat-zone-center { inset-inline-start: 33.333%; }
+.cow-cat-zone-right { inset-inline-end: 0; }
+.cow-cat-pupil,
+.cow-cat-ear,
+.cow-cat-tail { transform-box: fill-box; transition: transform 180ms ease-out; }
+.cow-cat-eye { transform-box: fill-box; transform-origin: center; animation: cow-cat-blink 7s infinite; }
+.cow-cat-tail { transform-origin: 8% 55%; animation: cow-cat-tail 3.8s ease-in-out infinite alternate; }
+.cow-cat-stage:has(.cow-cat-zone-left:hover) .cow-cat-pupil { transform: translateX(-9px); }
+.cow-cat-stage:has(.cow-cat-zone-right:hover) .cow-cat-pupil { transform: translateX(9px); }
+.cow-cat-stage:has(.cow-cat-zone-center:hover) .cow-cat-ear { transform: rotate(-2deg); }
+.home-content { max-width: 48rem; margin-inline: auto; padding: 4.5rem 1.5rem; }
+@keyframes cow-cat-blink { 0%, 46%, 49%, 100% { transform: scaleY(1); } 47.5% { transform: scaleY(0.08); } }
+@keyframes cow-cat-tail { to { transform: rotate(4deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .cow-cat-eye,
+  .cow-cat-tail { animation: none; }
+  .cow-cat-pupil,
+  .cow-cat-ear,
+  .cow-cat-tail { transition: none; }
+}
+/* cow-cat:end */
+
 .skip-link {
   position: fixed;
   z-index: 10;

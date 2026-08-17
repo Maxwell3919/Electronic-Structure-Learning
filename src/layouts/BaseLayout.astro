@@ -30,7 +30,7 @@ const navigation = [
     {noIndex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <title>{title} · Electronic Structure Atlas</title>
   </head>
-  <body class:list={{ 'wide-page': wide }}>
+  <body class:list={{ 'wide-page': wide, 'home-page': current === 'home' }}>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <a class="site-name" href={href('/')} aria-current={current === 'home' ? 'page' : undefined}>
