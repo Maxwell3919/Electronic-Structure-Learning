@@ -34,6 +34,7 @@ const DB_VERSION = 1;
 const STORE_NAME = 'annotations';
 const DOCUMENT_INDEX = 'documentHash';
 const READ_ONLY_FLAGS: PdfAnnotationFlagName[] = ['readOnly', 'locked', 'lockedContents'];
+const TEXT_ANNOTATION_TYPES = new Set([1, 3]);
 
 const curatedAnnotation = (annotation: PdfAnnotationObject): PdfAnnotationObject => ({
   ...annotation,
@@ -188,6 +189,23 @@ export const attachAnnotationLayers = async ({
     database = null;
     setLayerStatus(readerElement, 'personal', 'error', 0);
   }
+
+  // EmbedPDF 2.15 keeps FreeText/Comment keystrokes inside its shadow editor
+  // until an explicit model update. Mirror each input into the selected personal
+  // annotation so IndexedDB receives the complete visible text without ending
+  // the editing session.
+  readerElement.addEventListener('input', (event) => {
+    if (!database) return;
+    const editor = event.composedPath().find((node) => (
+      node instanceof HTMLElement && node.getAttribute('contenteditable') === 'true'
+    )) as HTMLElement | undefined;
+    const selected = scope.getSelectedAnnotations()[0]?.object;
+    if (!editor || !selected || !TEXT_ANNOTATION_TYPES.has(selected.type)
+      || curatedIds.has(selected.id) || ignoredIds.has(selected.id)) return;
+    scope.updateAnnotation(selected.pageIndex, selected.id, {
+      contents: editor.innerText.replace(/\u00a0/g, ' '),
+    });
+  }, { capture: true });
 
   scope.onAnnotationEvent((event) => {
     if (!database || event.documentId !== documentId || event.type === 'loaded') return;
