@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { literatureConceptById } from '../../reading/literature-concepts';
+import { literatureSynthesisById } from '../../reading/literature-syntheses';
+import { researchPaths, type ResearchPath } from '../../research/research-paths';
+
+export function getStaticPaths() {
+  return researchPaths.map((path) => ({ params: { slug: path.id }, props: { path } }));
+}
+
+const { path } = Astro.props as { path: ResearchPath };
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const drw = (slug: string) => `http://188.255.156.20/DFT-Research-Workflow/operations/${slug}/`;
+---
+
+<BaseLayout title={path.question} description={path.establishes} current="methods">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={href('/research-paths/')}>Research Paths</a><span aria-hidden="true">/</span><span aria-current="page">{path.question}</span></nav>
+  <h1>{path.question}</h1>
+  <p class="lede">{path.establishes}</p>
+
+  <section aria-labelledby="required-evidence">
+    <h2 id="required-evidence">Required evidence</h2>
+    <ol class="section-list research-gates">
+      {path.gates.map((gate, index) => {
+        const concept = literatureConceptById[gate.concept_id];
+        return (
+          <li>
+            <h3>Gate {index + 1} · {gate.title}</h3>
+            <p>{gate.required_evidence}</p>
+            <ul class="compact-link-list">
+              <li><strong>Understand:</strong> <a href={href(concept.canonical_route)}>{concept.title}</a></li>
+              <li><strong>Execute:</strong> <a href={drw(gate.drw_slug)}>DFT Research Workflow · {gate.title}</a></li>
+            </ul>
+            <p><strong>PASS:</strong> {gate.pass}</p>
+            <p><strong>STOP:</strong> {gate.stop}</p>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+
+  <section aria-labelledby="literature-evidence">
+    <h2 id="literature-evidence">Evidence from Literature</h2>
+    <ul>{path.synthesis_ids.map((id) => {
+      const synthesis = literatureSynthesisById[id];
+      return <li><a href={href(`/reading/literature/synthesis/${id}/`)}>{synthesis.title}</a> — {synthesis.question}</li>;
+    })}</ul>
+  </section>
+
+  <section aria-labelledby="claim-boundary">
+    <h2 id="claim-boundary">Claim boundary</h2>
+    <ul>{path.claim_boundary.map((boundary) => <li>{boundary}</li>)}</ul>
+  </section>
+</BaseLayout>

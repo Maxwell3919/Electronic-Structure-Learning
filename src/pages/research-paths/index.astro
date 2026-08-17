@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { researchPaths } from '../../research/research-paths';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Research Paths" description="Evidence-gated routes from electronic-structure questions to calculations and bounded claims." current="methods">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={href('/methods/')}>Methods</a><span aria-hidden="true">/</span><span aria-current="page">Research Paths</span></nav>
+  <h1>Research Paths</h1>
+  <p class="lede">Start from a scientific question. Each path orders the evidence, links the underlying Atlas concepts to concrete DFT Research Workflow operations, and shows where the claim must stop.</p>
+  <ol class="section-list">
+    {researchPaths.map((path) => (
+      <li>
+        <h2><a href={href(`/research-paths/${path.id}/`)}>{path.question}</a></h2>
+        <p>{path.establishes}</p>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>

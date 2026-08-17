@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "production_base": "http://188.255.156.20/DFT-Research-Workflow/operations/",
+  "operation_slugs": [
+    "anharmonic-phonons",
+    "band-structure",
+    "berry-phase-and-berry-curvature",
+    "build-or-modify-computational-model",
+    "calculate-reference-ground-state",
+    "charge-density-and-charge-redistribution",
+    "chemical-bonding-analysis",
+    "choose-dft-method-and-computational-setup",
+    "conventional-superconductivity",
+    "density-of-states-and-projected-density-of-states",
+    "diffusion-barriers",
+    "electron-phonon-coupling",
+    "electrostatic-potential-and-band-alignment",
+    "equation-of-state-and-structural-phase-stability",
+    "fermi-surface-and-full-brillouin-zone-analysis",
+    "harmonic-phonons",
+    "interface-and-heterostructure-energetics",
+    "magnetic-anisotropy-and-exchange-interactions",
+    "magnetic-configuration-and-ground-state-comparison",
+    "obtain-material-structure",
+    "optimize-structure",
+    "reaction-paths-and-transition-states",
+    "test-numerical-convergence",
+    "topological-invariants-and-boundary-states",
+    "validate-results-and-scientific-conclusions",
+    "wannier-function-construction"
+  ]
+}

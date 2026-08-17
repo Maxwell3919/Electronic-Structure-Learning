@@ -6,6 +6,7 @@ import { cohenLouieReadingSlugs } from '../reading/books/cohen-louie';
 import { giustinoReadingSlugs } from '../reading/books/giustino';
 import { researchTopics } from '../reading/research-topics';
 import { literaturePapers } from '../reading/literature-papers';
+import { researchPaths } from '../research/research-paths';
 
 const fixedRoutes = [
   '/',
@@ -44,9 +45,10 @@ const cohenLouieRoutes = cohenLouieReadingSlugs.map((slug) => `/reading/books/co
 const giustinoRoutes = giustinoReadingSlugs.map((slug) => `/reading/books/giustino/${slug}/`);
 const literatureRoutes = researchTopics.map((topic) => `/reading/literature/${topic.id}/`);
 const paperRoutes = literaturePapers.flatMap((paper) => paper.href?.startsWith('/') ? [paper.href] : []);
+const researchPathRoutes = ['/research-paths/', ...researchPaths.map((path) => `/research-paths/${path.id}/`)];
 
 export const GET: APIRoute = ({ site }) => {
-  const routes = [...new Set([...fixedRoutes, ...literatureRoutes, ...paperRoutes, ...theoryRoutes, ...martinRoutes, ...shollSteckelRoutes, ...cohenLouieRoutes, ...giustinoRoutes])].sort();
+  const routes = [...new Set([...fixedRoutes, ...literatureRoutes, ...paperRoutes, ...researchPathRoutes, ...theoryRoutes, ...martinRoutes, ...shollSteckelRoutes, ...cohenLouieRoutes, ...giustinoRoutes])].sort();
   const base = `${import.meta.env.BASE_URL.replace(/^\/|\/$/g, '')}/`;
   const urls = routes.map((route) => `  <url><loc>${new URL(`${base}${route.replace(/^\//, '')}`, site)}</loc></url>`);
   return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`, {

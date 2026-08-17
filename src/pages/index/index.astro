@@ -9,6 +9,7 @@ import { publishedLiteraturePapers } from '../../reading/literature-library';
 import { literatureConcepts } from '../../reading/literature-concepts';
 import { literatureSyntheses } from '../../reading/literature-syntheses';
 import { researchTopics } from '../../reading/research-topics';
+import { researchPaths } from '../../research/research-paths';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
@@ -88,6 +89,8 @@ const books = [
     <h2 id="index-methods">Methods</h2>
     <ul>
       <li><a href={href('/methods/')}>Methods</a> — calculated objects, approximations, and interpretation boundaries.</li>
+      <li><a href={href('/research-paths/')}>Research Paths</a> — evidence-gated routes from a scientific question to an executable and bounded claim.</li>
+      {researchPaths.map((path) => <li><a href={href(`/research-paths/${path.id}/`)}>{path.question}</a></li>)}
       <li><a href={href('/computational-tools/')}>Computational Tools</a> — implementations and supporting resources.</li>
     </ul>
   </section>

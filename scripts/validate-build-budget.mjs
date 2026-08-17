@@ -20,9 +20,10 @@ const limits = {
   // Literature v1 knowledge closure adds one concept map, one synthesis index,
   // and twelve static synthesis pages. Keep one governed file per reviewed
   // route instead of hiding the explicitly requested knowledge layer.
-  assetCount: 277,
+  // Research Paths add one index plus twelve static, zero-JS decision routes.
+  assetCount: 290,
   largestAssetBytes: 210_000,
-  htmlPages: 269,
+  htmlPages: 282,
 };
 const pdfReaderLimits = {
   totalBytes: 7_000_000,
@@ -33,7 +34,7 @@ const pdfReaderLimits = {
   assetCount: 7,
   largestAssetBytes: 4_800_000,
 };
-const minimumReductions = { bytes: 0.70, assets: 0.41 };
+const minimumReductions = { bytes: 0.70, assets: 0.38 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,
