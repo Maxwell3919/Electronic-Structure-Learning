@@ -58,7 +58,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Fix the electron number, the electron–electron interaction, and the allowed class of external scalar potentials. In the standard nondegenerate setting of the original Hohenberg–Kohn theorem, the ground-state density determines the external potential up to an additive constant. That constant shifts every total energy by the same amount without changing the state. Once the potential is known, the Hamiltonian and its ground-state properties are fixed.</p>
   <p>This is an existence and uniqueness statement about the ground state. It does not provide the functional in closed form, turn the density into a general excited-state wavefunction, or introduce Kohn–Sham orbitals. Degenerate ground states require additional care because one potential may support a ground-state subspace rather than one distinguished wavefunction.</p>
 
-  <div class="formulation-views">
+  <div class="formulation-views atlas-panel-grid atlas-panel-grid--2">
     <section>
       <h3>Original external-potential theorem</h3>
       <p>Relates the ground-state density to the external potential, within the theorem’s stated ground-state setting.</p>
@@ -98,7 +98,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="equation-source">Sources: Hohenberg and Kohn, <cite>Phys. Rev.</cite> 136, B864 (1964); Levy, <cite>PNAS</cite> 76, 6062 (1979); Lieb, <cite>Int. J. Quantum Chem.</cite> 24, 243 (1983); Martin, Ch. 6, Secs. 6.3–6.6.</p>
 
   <figure class="dft-logic" aria-labelledby="dft-logic-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--3">
       <li><strong>Choose an admissible trial density</strong><span><math class="math-inline" aria-label="n belongs to D N"><semantics><mrow><mi>n</mi><mo>∈</mo><msub><mi mathvariant="script">D</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">n\in\mathcal&#123;D&#125;_N</annotation></semantics></math></span></li>
       <li><strong>Evaluate the specified energy functional</strong><span>Universal interacting part + external-potential energy</span></li>
       <li><strong>Minimize</strong><span>The minimizing density yields the exact ground-state energy</span></li>
@@ -177,7 +177,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>There is one remaining logical loop. To find the orbitals we need <math class="math-inline" aria-label="v K S of n"><semantics><mrow><msub><mi>v</mi><mtext>KS</mtext></msub><mo>[</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;KS&#125;&#125;[n]</annotation></semantics></math>, but to build that potential we need the density obtained from those same orbitals. The required Hamiltonian therefore depends on the solution it is supposed to produce.</p>
 
   <figure class="ks-scf-loop" aria-labelledby="ks-scf-loop-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--4">
       <li><strong>Input density</strong><span><math class="math-inline" aria-label="n in"><semantics><msub><mi>n</mi><mtext>in</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;in&#125;&#125;</annotation></semantics></math></span></li>
       <li><strong>Density-dependent potential</strong><span><math class="math-inline" aria-label="v K S of n in"><semantics><mrow><msub><mi>v</mi><mtext>KS</mtext></msub><mo>[</mo><msub><mi>n</mi><mtext>in</mtext></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">v_&#123;\mathrm&#123;KS&#125;&#125;[n_&#123;\mathrm&#123;in&#125;&#125;]</annotation></semantics></math></span></li>
       <li><strong>Auxiliary orbitals</strong><span><math class="math-inline" aria-label="set of phi i"><semantics><mrow><mo>&#123;</mo><msub><mi>φ</mi><mi>i</mi></msub><mo>&#125;</mo></mrow><annotation encoding="application/x-tex">\left\&#123;\phi_i\right\&#125;</annotation></semantics></math></span></li>

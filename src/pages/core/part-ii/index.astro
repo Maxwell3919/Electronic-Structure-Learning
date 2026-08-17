@@ -125,7 +125,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Read the first line as an ordinary-looking eigenproblem with one crucial bracketed reminder: <math class="math-inline" aria-label="f hat depends on the set of occupied chi j"><semantics><mrow><mover accent="true"><mi>f</mi><mo stretchy="false">^</mo></mover><mo>[</mo><mo>&#123;</mo><msub><mi>χ</mi><mi>j</mi></msub><mo>&#125;</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">\hat&#123;f&#125;[\&#123;\chi_j\&#125;]</annotation></semantics></math> is not a fixed external operator. Its direct and exchange fields are built from the occupied orbitals that the equation is meant to determine. The hatted <math class="math-inline" aria-label="J sub j hat and K sub j hat"><semantics><mrow><msub><mover accent="true"><mi>J</mi><mo stretchy="false">^</mo></mover><mi>j</mi></msub><mtext> and </mtext><msub><mover accent="true"><mi>K</mi><mo stretchy="false">^</mo></mover><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\hat&#123;J&#125;_j\text&#123; and &#125;\hat&#123;K&#125;_j</annotation></semantics></math> are operators, unlike the scalar integrals in the energy expression. The values <math class="math-inline" aria-label="epsilon sub i"><semantics><msub><mi>ε</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\varepsilon_i</annotation></semantics></math> are canonical orbital eigenvalues of this stationary equation; they are not automatically independently measurable electron energies.</p>
 
   <figure class="scf-flow" aria-labelledby="scf-flow-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--4">
       <li><strong>Guess orbitals</strong><span>start with an occupied set</span></li>
       <li><strong>Build <math class="math-inline" aria-label="f hat"><semantics><mover accent="true"><mi>f</mi><mo stretchy="false">^</mo></mover><annotation encoding="application/x-tex">\hat&#123;f&#125;</annotation></semantics></math></strong><span>form direct and exchange fields</span></li>
       <li><strong>Solve</strong><span>obtain updated canonical orbitals</span></li>
@@ -163,7 +163,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>H₂ makes the distinction concrete by reusing the same bond coordinate <math class="math-inline" aria-label="R"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> as Part I. Near the equilibrium region, the bonding and antibonding configurations are well separated, so a doubly occupied bonding orbital is a qualitatively useful reference while dynamical correlation still lowers the energy. As the atoms separate, those configurations approach degeneracy. The same restricted determinant then retains ionic H⁺H⁻ and H⁻H⁺ pieces with the wrong weight alongside the neutral H· + ·H arrangements. More than one determinant is needed to cancel the unwanted pieces and recover the separated-atom singlet.</p>
 
   <figure class="h2-reference" aria-labelledby="h2-reference-caption">
-    <ol>
+    <ol class="atlas-panel-grid">
       <li>
         <span class="model-label">near equilibrium</span>
         <strong>one dominant configuration</strong>
@@ -180,7 +180,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </figure>
 
   <figure class="state-comparison" aria-labelledby="state-comparison-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--3">
       <li>
         <strong>Hartree product</strong>
         <span>separate orbital factors</span>

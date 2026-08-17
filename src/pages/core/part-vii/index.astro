@@ -33,7 +33,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="equation-source">Sources: Martin, <cite>Electronic Structure</cite>, 2nd ed., Ch. 21; Baroni et al., <cite>Reviews of Modern Physics</cite> 73, 515 (2001), Sec. II.C.</p>
 
   <figure class="response-map" aria-labelledby="response-map-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--3">
       <li><strong>Declare the cause</strong><span>Displacement, strain, electric field, or another specified perturbation, with its wavevector, frequency, and boundary conditions.</span></li>
       <li><strong>Let the state adjust</strong><span>The density, potential, orbitals, and occupations respond consistently within the chosen theory.</span></li>
       <li><strong>Read the derivative</strong><span>Force constant, dielectric response, susceptibility, or another observable-specific coefficient.</span></li>
@@ -47,7 +47,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Differentiating the Kohn–Sham eigenproblem produces a linear Sternheimer equation. The known reference-state Kohn–Sham operator acts on the unknown first-order change of an occupied orbital; the driving term is the first-order self-consistent potential acting on the unperturbed orbital. For a fixed-occupation gapped reference, components inside the occupied subspace are fixed by the orthonormality convention, while the physically relevant density response comes from changing that subspace toward unoccupied directions. Metals add a response of the occupations and Fermi surface. The resulting orbital and occupation changes build an induced density, that density rebuilds the first-order potential, and the coupled linear response is solved self-consistently. This route obtains the needed response without explicitly summing over every empty eigenstate.</p>
 
   <figure class="response-routes" aria-labelledby="response-routes-caption">
-    <div>
+    <div class="atlas-panel-grid">
       <section>
         <h3>Finite displacement</h3>
         <p>Solve nearby self-consistent ground states, compare their forces, and take a controlled numerical derivative.</p>
@@ -189,7 +189,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="equation-source">Source: Giustino, Sec. III.B.2, especially Eqs. (33)–(38), together with the 2019 erratum, <cite>Reviews of Modern Physics</cite> 91, 019901. The normalization convention for <math class="math-inline" aria-label="Delta q nu v K S"><semantics><mrow><msub><mi>Δ</mi><mrow><mi mathvariant="bold">q</mi><mi>ν</mi></mrow></msub><msub><mi>v</mi><mtext>KS</mtext></msub></mrow><annotation encoding="application/x-tex">\Delta_&#123;\mathbf&#123;q&#125;\nu&#125;v_&#123;\mathrm&#123;KS&#125;&#125;</annotation></semantics></math> is stated explicitly because other texts distribute the zero-point and mass factors differently.</p>
 
   <figure class="reciprocal-roles" aria-labelledby="reciprocal-roles-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--3">
       <li><strong>Electronic state</strong><span><math class="math-inline" aria-label="n bold k"><semantics><mrow><mi>n</mi><mo>,</mo><mi mathvariant="bold">k</mi></mrow><annotation encoding="application/x-tex">n,\mathbf&#123;k&#125;</annotation></semantics></math></span><small>initial Bloch state</small></li>
       <li><strong>Lattice perturbation</strong><span><math class="math-inline" aria-label="nu bold q"><semantics><mrow><mi>ν</mi><mo>,</mo><mi mathvariant="bold">q</mi></mrow><annotation encoding="application/x-tex">\nu,\mathbf&#123;q&#125;</annotation></semantics></math></span><small>phonon branch and wavevector</small></li>
       <li><strong>Connected state</strong><span><math class="math-inline" aria-label="m bold k plus bold q"><semantics><mrow><mi>m</mi><mo>,</mo><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">q</mi></mrow><annotation encoding="application/x-tex">m,\mathbf&#123;k&#125;+\mathbf&#123;q&#125;</annotation></semantics></math></span><small>equivalent labels may differ by <math class="math-inline" aria-label="bold G"><semantics><mi mathvariant="bold">G</mi><annotation encoding="application/x-tex">\mathbf&#123;G&#125;</annotation></semantics></math></small></li>
