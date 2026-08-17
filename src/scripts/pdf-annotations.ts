@@ -190,10 +190,9 @@ export const attachAnnotationLayers = async ({
     setLayerStatus(readerElement, 'personal', 'error', 0);
   }
 
-  // EmbedPDF 2.15 keeps FreeText/Comment keystrokes inside its shadow editor
-  // until an explicit model update. Mirror each input into the selected personal
-  // annotation so IndexedDB receives the complete visible text without ending
-  // the editing session.
+  // EmbedPDF 2.15 keeps FreeText/Comment keystrokes inside its shadow editor.
+  // Persist the visible editor state directly: calling updateAnnotation here
+  // rerenders the editor on every key and moves the caret.
   readerElement.addEventListener('input', (event) => {
     if (!database) return;
     const editor = event.composedPath().find((node) => (
@@ -202,9 +201,14 @@ export const attachAnnotationLayers = async ({
     const selected = scope.getSelectedAnnotations()[0]?.object;
     if (!editor || !selected || !TEXT_ANNOTATION_TYPES.has(selected.type)
       || curatedIds.has(selected.id) || ignoredIds.has(selected.id)) return;
-    scope.updateAnnotation(selected.pageIndex, selected.id, {
+    personalIds.add(selected.id);
+    const visibleAnnotation = {
+      ...selected,
       contents: editor.innerText.replace(/\u00a0/g, ' '),
-    });
+    };
+    void savePersonalAnnotation(database, documentHash, visibleAnnotation)
+      .then(() => setLayerStatus(readerElement, 'personal', 'ready', personalIds.size))
+      .catch((error) => { console.error(error); setLayerStatus(readerElement, 'personal', 'error', personalIds.size); });
   }, { capture: true });
 
   scope.onAnnotationEvent((event) => {
