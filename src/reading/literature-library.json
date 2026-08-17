@@ -1,8 +1,8 @@
 {
   "schema_version": 3,
   "authority": "Maxwell3919/Research-Workflow-Records",
-  "records_main_sha": "ed6c47a4121b05750c41edc8d988343a56cc4207",
-  "generated_at": "2026-08-17T19:01:30+08:00",
+  "records_main_sha": "849fee798ec7f095f990231ef969251e2d155407",
+  "generated_at": "2026-08-17T19:18:39+08:00",
   "stats": {
     "scanned": 130,
     "atlas_related": 99,
@@ -2488,12 +2488,12 @@
       "arxiv": null,
       "source_record_path": "literature/Reversible and selective ion intercalation through the top surface of few-layer MoS2",
       "pdf_path": "literature/Reversible and selective ion intercalation through the top surface of few-layer MoS2/Reversible and selective ion intercalation through the top surface of few-layer MoS2.pdf",
-      "document_sha256": "365c3d95dc5a36734e0152cbd11064000e4c9a5aeab1c84b770784213baf86ff",
-      "pdf_size_bytes": 10767184,
+      "document_sha256": "3001a2ad10b3800a74132cc2b3e1d5fe631ea447539d8172bb765b050a4e79b3",
+      "pdf_size_bytes": 1907500,
       "annotation_path": "literature/Reversible and selective ion intercalation through the top surface of few-layer MoS2/annotations",
       "reading_analysis_path": null,
       "reading_analysis_sha256": null,
-      "page_count": 26,
+      "page_count": 9,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
         "interfaces-heterostructures"
@@ -3264,12 +3264,12 @@
       "arxiv": null,
       "source_record_path": "literature/Versatile Method for Preparing Two-Dimensional Metal Dihalides",
       "pdf_path": "literature/Versatile Method for Preparing Two-Dimensional Metal Dihalides/Versatile Method for Preparing Two-Dimensional Metal Dihalides.pdf",
-      "document_sha256": "df77c34bdd059f340747a1acc64dc3eb93245d43d3d82e962bc8465c8736a337",
-      "pdf_size_bytes": 2020342,
+      "document_sha256": "c9156f81032fb7ee44ce9404bade89e83990136bb9f99dd2ce0173ecbf591b6f",
+      "pdf_size_bytes": 3782392,
       "annotation_path": "literature/Versatile Method for Preparing Two-Dimensional Metal Dihalides/annotations",
       "reading_analysis_path": null,
       "reading_analysis_sha256": null,
-      "page_count": 16,
+      "page_count": 15,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
         "interfaces-heterostructures"
