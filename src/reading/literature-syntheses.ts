@@ -1,0 +1,150 @@
+export type LiteratureSynthesis = {
+  id: string;
+  title: string;
+  question: string;
+  mechanism: string;
+  agreements: string[];
+  differences: string[];
+  limits: string[];
+  conceptIds: string[];
+  paperIds: string[];
+};
+
+export const literatureSyntheses: LiteratureSynthesis[] = [
+  {
+    id: 'dynamical-stability-in-2d',
+    title: 'Dynamical stability in two-dimensional materials',
+    question: 'What evidence is sufficient to call a two-dimensional structure dynamically stable?',
+    mechanism: 'The relevant object is the mass-weighted dynamical matrix at every wavevector needed to represent the force constants. Its eigenvalues are squared harmonic frequencies; a negative eigenvalue identifies a downhill collective coordinate of that declared reference model.',
+    agreements: ['A relaxed geometry and a clean Γ point do not establish stability across the Brillouin zone.', 'Electronic, k/q-mesh, supercell and acoustic-sum-rule convergence can change a shallow soft branch.', 'For a two-dimensional sheet, the flexural acoustic branch needs special treatment near Γ.'],
+    differences: ['Some papers use harmonic DFPT as a screening gate; others add SSCHA, TDEP, molecular dynamics or free-energy calculations.', 'Substrate, strain, charge and interlayer coupling can remove or create an instability, so stability is conditional rather than intrinsic to a chemical formula.'],
+    limits: ['No-imaginary-frequency evidence is local and harmonic.', 'A short finite-temperature trajectory does not prove global thermodynamic stability or synthesizability.', 'A soft mode identifies a direction; it does not by itself identify the final reconstructed phase.'],
+    conceptIds: ['dynamical-stability', 'phonons', 'anharmonicity', 'structural-stability'],
+    paperIds: ['bilayer-cote2-superconductivity', 'functionalized-double-mxene-superconductivity', 'gated-2d-dfpt', 'records-charge-density-wave-phase-transitions-in-monolayer-1t-tas2-from-universal-machine-learning-molecular'],
+  },
+  {
+    id: 'from-dfpt-to-tc',
+    title: 'From DFPT to a phonon-mediated Tc',
+    question: 'Which evidence chain connects a ground-state calculation to a superconducting transition-temperature estimate?',
+    mechanism: 'A converged reference state supplies phonons and displacement-induced potentials. Electronic states, phonon modes and matrix elements form α²F(ω); its moments give λ and ωlog; an isotropic Allen–Dynes estimate or a momentum- and frequency-resolved Eliashberg solution then adds a screened Coulomb model and pairing assumptions.',
+    agreements: ['Each contraction discards information, so a converged final scalar cannot repair an unconverged matrix element or phonon.', 'λ and ωlog compete: softer modes can raise λ while lowering the characteristic pairing scale.', 'Dense Fermi-surface and q sampling is a physical requirement, not only a performance detail.'],
+    differences: ['Allen–Dynes, isotropic Eliashberg and anisotropic multiband Eliashberg answer progressively richer model problems.', 'Papers treat Coulomb repulsion, anharmonicity, SOC and nonadiabatic effects at different levels.'],
+    limits: ['A calculated Tc is conditional on the structure, electronic phase, phonon model, μ* or Coulomb kernel and Migdal regime.', 'Agreement with one measured onset does not uniquely establish the pairing mechanism.'],
+    conceptIds: ['dfpt', 'electron-phonon-matrix-elements', 'eliashberg-function', 'epc-lambda', 'omega-log', 'migdal-approximation', 'eliashberg-theory', 'allen-dynes'],
+    paperIds: ['dfpt-phonons-crystal-properties', 'electron-phonon-interactions-first-principles', 'allen-dynes-transition-temperature', 'records-first-principles-investigation-of-electron-phonon-coupling-and-intrinsic-two-gap-superconductivity-in-hexagonal'],
+  },
+  {
+    id: 'what-establishes-conventional-superconductivity',
+    title: 'What establishes conventional superconductivity?',
+    question: 'How should metallicity, phonons, electron–phonon coupling, a Tc estimate and experimental superconductivity be kept distinct?',
+    mechanism: 'These are successive but non-equivalent claims. Available electronic states are necessary for an ordinary metallic pairing problem; viable lattice modes and a coupling calculation define one possible microscopic channel; a pairing equation predicts an instability inside that model; experiment must still establish a superconducting phase.',
+    agreements: ['A Fermi-level crossing is not superconductivity.', 'A large λ is not sufficient when the reference structure is unstable or the characteristic frequencies collapse.', 'Zero resistance, diamagnetism, a gap, vortices, BKT behavior and critical fields constrain different parts of the experimental claim.'],
+    differences: ['Prediction papers often stop at Allen–Dynes or Eliashberg Tc; interface experiments may have strong phase evidence but an underdetermined microscopic mechanism.', 'Replica bands, isotope shifts and mode-resolved calculations constrain conventional coupling differently.'],
+    limits: ['A mechanism should not be inferred from Tc agreement alone.', 'Topological or unconventional pairing requires evidence beyond coexistence with nontrivial normal-state bands.'],
+    conceptIds: ['conventional-superconductivity-evidence', 'fermi-surface', 'dynamical-stability', 'electron-phonon-matrix-elements'],
+    paperIds: ['records-theory-of-superconductivity', 'records-highly-crystalline-2d-superconductors', 'records-evidence-of-cooperative-effect-on-the-enhanced-superconducting-transition-temperature-at-the-fese-srtio3', 'records-observation-of-interface-superconductivity-in-a-snse-2-epitaxial-graphene-van-der-waals-heterostructure'],
+  },
+  {
+    id: 'soc-and-ising-superconductivity',
+    title: 'SOC and Ising superconductivity',
+    question: 'When does spin–orbit coupling support an Ising-pairing interpretation?',
+    mechanism: 'Broken local or global inversion symmetry can lock opposite valleys or bands to opposite out-of-plane spin textures. Pairing between time-reversed partners can then resist an in-plane Zeeman field, but the protection depends on the actual states at the Fermi surface and on interlayer, intervalley, disorder and orbital effects.',
+    agreements: ['SOC band splitting alone is not superconductivity.', 'An upper critical field above a simple Pauli estimate is evidence to explain, not a unique mechanism label.', 'Thickness and symmetry controls separate monolayer-like protection from bulk or disorder-based alternatives.'],
+    differences: ['Some systems have globally noncentrosymmetric layers; others recover inversion in the bulk but retain hidden layer-resolved spin texture.', 'SOC can protect pairs while also changing the Fermi surface, EPC and calculated Tc.'],
+    limits: ['A spin texture calculation needs a validated structural and electronic reference.', 'Critical-field fits are model-dependent and do not alone determine gap symmetry.'],
+    conceptIds: ['spin-orbit-coupling', 'ising-superconductivity', 'two-dimensional-superconductivity'],
+    paperIds: ['records-bulk-ising-superconductivity-in-an-intercalated-tase2-bilayer-structure', 'records-a-unified-tight-binding-description-of-the-electronic-structure-and-ising-protection-of-superconductivity', 'records-electron-phonon-coupling-and-spin-fluctuations-in-the-ising-superconductor-nbse2', 'bilayer-cote2-superconductivity'],
+  },
+  {
+    id: 'fermi-surface-versus-band-path',
+    title: 'Fermi-surface evidence versus band-path evidence',
+    question: 'Why can a high-symmetry band plot fail to answer a metallicity, nesting or pairing question?',
+    mechanism: 'A band path samples selected one-dimensional lines. The Fermi surface is the full set of k points satisfying the occupation boundary in the Brillouin zone. Density of states integrates that spectrum differently; neither object reconstructs the other without the underlying full-zone data.',
+    agreements: ['A missed pocket can change carrier count, nesting, screening and coupling phase space.', 'Van Hove peaks and path crossings are clues that require full-zone confirmation.', 'Fermi-surface-sensitive observables need denser and often interpolation-based sampling than a presentation band path.'],
+    differences: ['ARPES, quantum oscillations, STM/QPI and first-principles interpolation probe different projections and resolutions of the same low-energy structure.'],
+    limits: ['Visual similarity of two band paths does not prove equal Fermi surfaces.', 'Nesting alone does not establish a CDW or strong EPC without the interaction vertex.'],
+    conceptIds: ['bloch-bands', 'fermi-surface', 'density-of-states', 'wannier-interpolation'],
+    paperIds: ['records-electron-doped-phosphorene-a-potential-monolayer-superconductor', 'records-electronic-structure-of-superconducting-graphite-intercalate-compounds-the-role-of-the-interlayer-state', 'records-charge-density-wave-and-superconducting-phase-in-monolayer-inse', 'bilayer-cote2-superconductivity'],
+  },
+  {
+    id: 'interlayer-coupling-as-control',
+    title: 'Interlayer coupling as a control parameter',
+    question: 'What changes when another layer is added, moved or brought into contact?',
+    mechanism: 'Interlayer distance, registry and composition jointly alter electrostatics, orbital hybridization and force constants. Charge redistribution, band alignment, wavefunction mixing and phonon changes are related observations, not interchangeable explanations.',
+    agreements: ['A physical interface must be defined by registry, strain, termination and separation.', 'Charge transfer should use an explicit reference and should not be inferred from nominal valence alone.', 'The same coupling can stabilize a structure while reconstructing the Fermi surface and changing EPC.'],
+    differences: ['Some systems are well described by weak band alignment; others develop strong hybridization, interface-localized modes or chemical bonding.', 'Commensurate model cells can hide moiré, disorder and relaxation scales.'],
+    limits: ['A single relaxed stack does not establish the accessible registry or sliding barrier.', 'Layer-projected DOS alone may not distinguish electrostatic redistribution from hybridization.'],
+    conceptIds: ['van-der-waals-coupling', 'interface-charge-transfer', 'interface-hybridization', 'band-alignment'],
+    paperIds: ['bilayer-cote2-superconductivity', 'snse2-ptte2-interfacial-superconductivity', 'records-origin-of-charge-transfer-and-enhanced-electron-phonon-coupling-in-single-unit-cell-fese', 'records-high-throughput-bandstructure-simulations-of-van-der-waals-hetero-bilayers-formed-by-1t-and'],
+  },
+  {
+    id: 'dft-plus-u-and-low-dimensional-magnetism',
+    title: 'DFT+U in low-dimensional magnetism',
+    question: 'What does a DFT+U magnetic result establish, and which sensitivity tests remain necessary?',
+    mechanism: 'DFT+U changes the energy of a declared localized subspace through chosen projectors, double counting and U. Magnetic energies then compare selected self-consistent states; mapping those energies to exchange parameters adds a spin-model assumption.',
+    agreements: ['U is part of the model, not a universal material constant independent of projectors and implementation.', 'Moment formation, insulating character, exchange sign, anisotropy and finite-temperature order are distinct outputs.', 'Several magnetic initial states and structural branches are needed because the functional is nonlinear.'],
+    differences: ['High-throughput studies use a common U for comparability; focused studies may calibrate or scan U.', 'Collinear energy mapping and spin-spiral calculations span different candidate spaces.'],
+    limits: ['A mean-field Tc is not an independently validated ordering temperature.', 'Agreement with one gap or moment does not validate all exchange pathways.'],
+    conceptIds: ['dft-plus-u', 'spin-polarization', 'magnetic-exchange', 'spin-orbit-coupling'],
+    paperIds: ['records-effect-of-hubbard-u-corrections-on-the-electronic-and-magnetic-properties-of-2d-materials', 'records-high-throughput-study-on-magnetic-ground-states-with-hubbard-i-u-i-corrections-in', 'trigonal-symmetry-breaking-dihalides-trihalides', 'records-origin-of-the-structural-and-magnetic-anomalies-of-the-layered-compound-srfeo-2-a'],
+  },
+  {
+    id: 'effective-hamiltonians-and-ferroelectricity',
+    title: 'Effective Hamiltonians and ferroelectric transitions',
+    question: 'How can first-principles energetics be converted into a finite-temperature ferroelectric phase sequence?',
+    mechanism: 'A reduced Hamiltonian selects local modes, strain and their couplings, fits its parameters to first-principles calculations, then samples many cells and temperatures. The phase behavior belongs to that declared reduced model and parameterization.',
+    agreements: ['Long-range dipolar interactions, homogeneous strain and local anharmonicity play qualitatively different roles.', 'A soft zero-temperature mode does not by itself determine transition order or temperature.', 'Finite films add electrodes, depolarization fields, domains, interfaces and leakage.'],
+    differences: ['Early effective-Hamiltonian work uses few local degrees of freedom; thin-film evidence requires additional electrostatic and microstructural variables.'],
+    limits: ['Truncation, LDA volume error, finite size and Monte Carlo sampling affect phase temperatures.', 'A bulk parameterization cannot be transferred to a film without checking its boundary terms.'],
+    conceptIds: ['ferroelectricity', 'effective-hamiltonians', 'phonons', 'strain-pressure-control'],
+    paperIds: ['records-first-principles-theory-of-ferroelectric-phase-transitions-for-perovskites-the-case-of-batio-3', 'records-phase-transitions-in-bati-o-3-from-first-principles', 'records-physics-of-thin-film-ferroelectric-oxides'],
+  },
+  {
+    id: 'intercalation-as-control',
+    title: 'Intercalation as an electronic-structure control knob',
+    question: 'How does inserting ions or molecules change a layered material, and what evidence separates charge, structure and kinetics?',
+    mechanism: 'An intercalant changes carrier density, electrostatics, spacing, registry, defects and sometimes phase identity. Migration barriers and access paths control which thermodynamic states are reachable on the experimental timescale.',
+    agreements: ['Nominal stoichiometry is not a measured carrier density.', 'Raman, diffraction, microscopy, Hall and spectroscopy constrain different parts of the intercalated state.', 'Top-surface, edge and defect pathways must be distinguished.'],
+    differences: ['Electrochemical, molecular and solid-state intercalation access different disorder and staging regimes.', 'Twist can change kinetic pathways without being the thermodynamic cause of a phase.'],
+    limits: ['A before/after measurement is not operando kinetics or reversibility.', 'Uniform jellium doping does not reproduce every structural and disorder effect of real guests.'],
+    conceptIds: ['intercalation', 'interface-charge-transfer', 'structural-stability', 'transport-evidence'],
+    paperIds: ['records-observation-of-an-intermediate-state-during-lithium-intercalation-of-twisted-bilayer-mos2', 'records-reversible-and-selective-ion-intercalation-through-the-top-surface-of-few-layer-mos2', 'records-enhanced-charge-density-wave-order-and-suppressed-superconductivity-in-intercalated-bulk-nbse2', 'records-superconductivity-in-the-intercalated-graphite-compounds-c6yb-and-c6ca'],
+  },
+  {
+    id: 'soft-modes-and-charge-order',
+    title: 'Soft modes, nesting, and charge order',
+    question: 'What turns a phonon anomaly into evidence for a charge-density-wave mechanism?',
+    mechanism: 'The renormalized phonon combines a bare restoring force with an electronic response weighted by the electron–phonon vertex. Fermi-surface susceptibility can enhance a particular q, but the vertex and competing lattice distortions decide whether nesting is actually causal.',
+    agreements: ['The wavevector and eigenvector of the soft branch must match the proposed reconstruction.', 'Susceptibility without the coupling vertex is incomplete mechanism evidence.', 'The distorted phase should be compared in energy or free energy and checked for residual instabilities.'],
+    differences: ['Some transitions are captured harmonically; others require anharmonic free energies, finite-temperature sampling or competing commensurate cells.', 'Experiment may observe short-range order where a calculation compares ideal long-range phases.'],
+    limits: ['A Kohn anomaly is not automatically a Peierls transition.', 'A softened branch can compete with superconductivity without proving a universal causal relation.'],
+    conceptIds: ['soft-modes-cdw', 'fermi-surface', 'electron-phonon-matrix-elements', 'anharmonicity'],
+    paperIds: ['records-doping-tunable-charge-density-waves-in-misfit-layer-compounds', 'records-charge-density-wave-and-superconducting-phase-in-monolayer-inse', 'records-anomalous-charge-density-wave-in-a-two-dimensional-superatomic-superconductor', 'nbse2-stacking-superconductivity-cdw'],
+  },
+  {
+    id: 'evidence-for-2d-superconductivity',
+    title: 'Evidence for two-dimensional superconductivity',
+    question: 'Which measurements establish superconductivity and which establish its two-dimensional character?',
+    mechanism: 'Phase coherence, superfluid stiffness and vortex physics can become two-dimensional even when the host crystal is thicker. Resistance, nonlinear I–V scaling, BKT fits, angular critical fields, thickness dependence and magnetic response should be read as complementary constraints.',
+    agreements: ['A resistive onset, zero resistance and diamagnetism are not interchangeable criteria.', 'BKT analyses require a consistent temperature window and finite-size awareness.', 'Anisotropic critical fields can support a 2D model but also require orbital, Pauli and thickness controls.'],
+    differences: ['Interface systems localize the superconducting sheet inside a thicker stack; gated or exfoliated systems tune a physical thin layer.', 'Quantum-metal and diode responses add phenomena without replacing the basic superconductivity evidence.'],
+    limits: ['Transport alone may not locate the superconducting layer microscopically.', 'A large in-plane critical field does not uniquely establish Ising pairing.'],
+    conceptIds: ['two-dimensional-superconductivity', 'nonreciprocal-superconductivity', 'transport-evidence'],
+    paperIds: ['records-highly-crystalline-2d-superconductors', 'records-interface-confined-superconductivity-with-thickness-independent-superfluid-stiffness-in-pb-sn-te-fete-bilayers', 'records-observation-of-two-dimensional-superconductivity-in-bilayers-of-babio-3-and-bapbo-3', 'records-pressure-induced-magnetic-field-free-superconducting-diode-effect-in-nbse2-flake'],
+  },
+  {
+    id: 'prediction-to-evidence',
+    title: 'From materials prediction to evidence',
+    question: 'How should a computational screening funnel be converted into a bounded material claim?',
+    mechanism: 'A screening workflow applies successive gates to identity, structure, energetics, dynamics and target observables. Each gate removes candidates under its own approximation; a surviving candidate is a prioritized hypothesis, not an experiment.',
+    agreements: ['Formation energy, hull distance, elastic response, phonons and finite-temperature trajectories test different failure modes.', 'Machine-learning speed does not remove the need for out-of-domain and first-principles readback.', 'Target-property estimates inherit all earlier identity and stability assumptions.'],
+    differences: ['Some workflows enumerate known prototypes; inverse-design workflows generate structures and therefore add a distribution-shift problem.', 'Experimental synthesis evidence can validate a parent phase without validating the predicted monolayer or functional state.'],
+    limits: ['A short AIMD run and a harmonic spectrum do not establish long-term chemical stability.', 'A high predicted Tc, efficiency or hardness is conditional until the structure and model are independently tested.'],
+    conceptIds: ['materials-screening', 'structural-stability', 'dynamical-stability', 'density-functional-theory'],
+    paperIds: ['records-invdesflow-al-active-learning-based-workflow-for-inverse-design-of-functional-materials', 'functionalized-double-mxene-superconductivity', 'records-efficient-computational-design-of-2d-van-der-waals-heterostructures-band-alignment-lattice-mismatch-and', 'records-van-der-waals-electrides'],
+  },
+];
+
+export const literatureSynthesisById = Object.fromEntries(
+  literatureSyntheses.map((synthesis) => [synthesis.id, synthesis]),
+) as Record<string, LiteratureSynthesis>;

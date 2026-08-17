@@ -6,6 +6,8 @@ import { shollSteckelChapters } from '../../reading/books/sholl-steckel';
 import { cohenLouieChapters, cohenLouieParts } from '../../reading/books/cohen-louie';
 import { giustinoUnits } from '../../reading/books/giustino';
 import { publishedLiteraturePapers } from '../../reading/literature-library';
+import { literatureConcepts } from '../../reading/literature-concepts';
+import { literatureSyntheses } from '../../reading/literature-syntheses';
 import { researchTopics } from '../../reading/research-topics';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
@@ -68,6 +70,14 @@ const books = [
   <section class="index-section" aria-labelledby="index-literature">
     <h2 id="index-literature">Literature</h2>
     <p><a href={href('/reading/literature/')}>Literature map</a></p>
+    <h3>Knowledge connections</h3>
+    <ul class="index-columns">
+      <li><a href={href('/reading/literature/concepts/')}>Paper → Concept Map</a></li>
+      <li><a href={href('/reading/literature/synthesis/')}>Cross-paper Synthesis</a></li>
+      {literatureSyntheses.map((synthesis) => <li><a href={href(`/reading/literature/synthesis/${synthesis.id}/`)}>{synthesis.title}</a></li>)}
+    </ul>
+    <h3>Concepts</h3>
+    <ul class="index-columns">{literatureConcepts.map((concept) => <li><a href={href(`/reading/literature/concepts/#${concept.id}`)}>{concept.title}</a></li>)}</ul>
     <h3>Topics</h3>
     <ul class="index-columns">{researchTopics.map((topic) => <li><a href={href(`/reading/literature/${topic.id}/`)}>{topic.title}</a></li>)}</ul>
     <h3>Papers</h3>

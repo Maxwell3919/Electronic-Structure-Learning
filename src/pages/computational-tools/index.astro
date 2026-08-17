@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
-const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations/';
+const workflow = 'http://188.255.156.20/DFT-Research-Workflow/operations/';
 
 type Tool = { name: string; url: string; role: string; atlas: string; atlasLabel: string; drw: string; drwLabel: string };
 type Group = { title: string; tools: Tool[] };

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { literatureSyntheses } from '../../../../reading/literature-syntheses';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Literature Synthesis" description="Short evidence-led syntheses across the reviewed Atlas Literature corpus." current="reading">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={href('/reading/literature/')}>Literature</a><span aria-hidden="true">/</span><span aria-current="page">Synthesis</span></nav>
+  <h1>Literature Synthesis</h1>
+  <p class="lede">Each synthesis answers one recurring research question in five to ten minutes, using the paper corpus to make the evidence boundary explicit.</p>
+  <ol class="section-list">
+    {literatureSyntheses.map((synthesis) => (
+      <li>
+        <h2><a href={href(`/reading/literature/synthesis/${synthesis.id}/`)}>{synthesis.title}</a></h2>
+        <p>{synthesis.question}</p>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>

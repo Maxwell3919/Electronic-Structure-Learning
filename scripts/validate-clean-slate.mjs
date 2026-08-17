@@ -37,6 +37,8 @@ const researchTopicSlugs = [
   'quasiparticles-excitons', 'transport-scattering', 'quantum-geometry-topology', 'reliability-validation',
 ];
 const literatureSlugs = researchTopicSlugs;
+const synthesisSource = fs.readFileSync(path.join(root, 'src/reading/literature-syntheses.ts'), 'utf8');
+const synthesisSlugs = [...synthesisSource.matchAll(/^\s*id: '([^']+)',/gm)].map((match) => match[1]);
 const pilotPaperRoute = 'reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/';
 const pilotPdfRoute = 'papers/hbn-sin-superconductivity-cdw.pdf';
 const literatureLibrary = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-library.json'), 'utf8'));
@@ -73,6 +75,9 @@ const expectedPages = [
   'src/pages/reading/books/giustino/[slug].astro', 'src/pages/reading/books/giustino/index.astro',
   'src/pages/reading/literature/[slug].astro', 'src/pages/reading/literature/index.astro',
   'src/pages/reading/literature/[topic]/[paper].astro',
+  'src/pages/reading/literature/concepts/index.astro',
+  'src/pages/reading/literature/synthesis/index.astro',
+  'src/pages/reading/literature/synthesis/[slug].astro',
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
   'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
   ...coreSlugs.map((slug) => `src/pages/core/${slug}/index.astro`),
@@ -91,6 +96,9 @@ const expectedHtml = [
   'reading/books/giustino/index.html',
   ...giustinoSlugs.map((slug) => `reading/books/giustino/${slug}/index.html`),
   'reading/literature/index.html',
+  'reading/literature/concepts/index.html',
+  'reading/literature/synthesis/index.html',
+  ...synthesisSlugs.map((slug) => `reading/literature/synthesis/${slug}/index.html`),
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   ...libraryPaperRoutes.map((route) => `${route}index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
@@ -104,6 +112,8 @@ const internalRoutes = new Set([
   'reading/books/cohen-louie/', ...cohenLouieRoutes,
   'reading/books/giustino/', ...giustinoRoutes,
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
+  'reading/literature/concepts/', 'reading/literature/synthesis/',
+  ...synthesisSlugs.map((slug) => `reading/literature/synthesis/${slug}/`),
   pilotPaperRoute,
   pilotPdfRoute,
   ...libraryPaperRoutes,

@@ -16,12 +16,13 @@ const limits = {
   // The Literature closure adds thirteen reviewed static guide routes. Keep
   // the route and governed-file budget explicit rather than treating those
   // source-aligned pages as an accidental legacy-site regression.
-  // The Records-wide Literature manifest adds 95 source-ready Reader routes
-  // (the completed pilot remains its dedicated route). Keep one governed file
-  // per route instead of hiding the explicitly requested library expansion.
-  assetCount: 264,
+  // The Records-wide Literature manifest adds 95 source-ready Reader routes.
+  // Literature v1 knowledge closure adds one concept map, one synthesis index,
+  // and twelve static synthesis pages. Keep one governed file per reviewed
+  // route instead of hiding the explicitly requested knowledge layer.
+  assetCount: 277,
   largestAssetBytes: 210_000,
-  htmlPages: 255,
+  htmlPages: 269,
 };
 const pdfReaderLimits = {
   totalBytes: 7_000_000,
@@ -32,7 +33,7 @@ const pdfReaderLimits = {
   assetCount: 7,
   largestAssetBytes: 4_800_000,
 };
-const minimumReductions = { bytes: 0.70, assets: 0.44 };
+const minimumReductions = { bytes: 0.70, assets: 0.41 };
 const baseline = {
   sha: '7cbf789720e152cb76acdc406016a788bc0a8de2',
   htmlPages: 94,
