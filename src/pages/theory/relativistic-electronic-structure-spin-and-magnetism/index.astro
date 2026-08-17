@@ -18,7 +18,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The Dirac equation combines spatial and spin degrees of freedom in a four-component spinor. Practical electronic-structure methods often reduce it to scalar-relativistic Hamiltonians, two-component spinor forms, or effective spin–orbit operators appropriate to the energy range and core treatment.</p>
   <p>Scalar-relativistic treatments include leading mass–velocity and Darwin effects while averaging over explicit spin–orbit splitting. They can significantly change orbital contraction, level ordering, bonding, and equilibrium structure for heavier elements even when no explicit SOC band splitting is calculated.</p>
 
-  <h2>Spin density extends the ordinary particle density</h2>
+  <h2 id="spin-polarization">Spin density extends the ordinary particle density</h2>
   <p>In a collinear calculation, the particle density and a spin-channel number-density imbalance may be represented by</p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="n equals n up plus n down and s z equals n up minus n down">
@@ -34,7 +34,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Here <math class="math-inline" aria-label="s z"><semantics><msub><mi>s</mi><mi>z</mi></msub><annotation encoding="application/x-tex">s_z</annotation></semantics></math> is a declared spin-channel imbalance, not a uniquely signed magnetic-moment density. Converting it to a moment requires a sign and unit convention; the electron magnetic moment and spin angular momentum point oppositely.</p>
   <p>This assumes one global quantization axis. In a noncollinear calculation, the magnetization becomes a vector field and the Kohn–Sham states are two-component spinors. Local “up” and “down” labels then depend on a chosen axis and cannot be assigned globally without loss of information.</p>
 
-  <h2>Spin–orbit coupling links spin to spatial motion</h2>
+  <h2 id="spin-orbit-coupling">Spin–orbit coupling links spin to spatial motion</h2>
   <p>In a central-potential approximation, the leading spin–orbit term has the schematic form</p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="H S O proportional to one over r d V over d r times L dot S">

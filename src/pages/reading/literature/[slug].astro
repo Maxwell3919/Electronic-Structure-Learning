@@ -26,7 +26,7 @@ const href = (route: string) => route.startsWith('http') ? route : `${base}${rou
     <ol class="literature-list">
       {papers.map((paper) => (
         <li>
-          <article class="literature-entry" tabindex="0">
+          <article class="literature-entry" tabindex="0" data-reading-progress-paper={paper.id}>
             <h2><a href={href(paper.href ?? `https://doi.org/${paper.doi}`)}>{paper.title}</a></h2>
             <p class="paper-meta">
               {paper.authors.join(', ')} · {paper.journal} · {paper.year}
@@ -44,10 +44,12 @@ const href = (route: string) => route.startsWith('http') ? route : `${base}${rou
             ) : paper.readerState === 'pre_reading' ? (
               <p class="pre-reading-state">Source preparation pending.</p>
             ) : null}
+            <p class="paper-reading-state" data-reading-progress-label hidden></p>
           </article>
         </li>
       ))}
     </ol>
   ) : <p class="empty-literature">No papers are listed in this topic.</p>}
   <nav class="sequence-nav" aria-label="Literature navigation"><a href={href('/reading/literature/')}>← Literature</a><a href={href('/reading/')}>Guided Reading</a></nav>
+  <script src="../../../scripts/literature-progress.ts"></script>
 </BaseLayout>

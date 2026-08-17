@@ -5,11 +5,13 @@ import EmbedPDF, {
   SelectionPlugin,
   ScrollPlugin,
   ScrollStrategy,
+  ZoomPlugin,
   type AnnotationTransferItem,
   type PdfSquareAnnoObject,
   type ScrollMetrics,
 } from '@embedpdf/snippet';
 import { annotationViewerConfig, attachAnnotationLayers } from './pdf-annotations';
+import { attachPersonalReaderControls } from './personal-reader-controls';
 import type {
   PaperAnchor,
   PaperAnnotationDocument,
@@ -176,11 +178,12 @@ const createNativeSelectionMirror = (readerElement: HTMLElement) => {
 
 const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement | null) => {
   const paperId = readerElement.dataset.paperId;
+  const paperTitle = readerElement.dataset.paperTitle;
   const sourceSha256 = readerElement.dataset.sourceSha256;
   const pdfUrl = readerElement.dataset.pdfUrl;
   const readingAnalysisUrl = readerElement.dataset.readingAnalysisUrl;
   const curatedAnnotationsUrl = readerElement.dataset.curatedAnnotationsUrl;
-  if (!paperId || !sourceSha256 || !curatedAnnotationsUrl) throw new Error('Missing Literature Reader source mapping.');
+  if (!paperId || !paperTitle || !sourceSha256 || !curatedAnnotationsUrl) throw new Error('Missing Literature Reader source mapping.');
   if (!pdfUrl) throw new Error('Missing canonical PDF source mapping.');
   if (!viewerTarget) throw new Error('Missing PDF viewer target.');
   attachDebugDiagnostics(readerElement);
@@ -212,7 +215,8 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   const registry = await viewer?.registry;
   if (!registry) throw new Error('PDF viewer registry is unavailable.');
   const scroll = registry.getPlugin<ScrollPlugin>('scroll')?.provides?.();
-  if (!scroll) throw new Error('PDF scroll capability is unavailable.');
+  const zoom = registry.getPlugin<ZoomPlugin>('zoom')?.provides?.();
+  if (!scroll || !zoom) throw new Error('PDF navigation capability is unavailable.');
   const layoutReady = new Promise<void>((resolve) => {
     scroll.onLayoutReady((event) => {
       if (event.documentId !== documentId || !event.isInitial) return;
@@ -225,18 +229,37 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   await layoutReady;
   const uuidById = new Map((annotationDocument?.anchors ?? []).map((anchor, index) => [anchor.id, `10000000-0000-4000-8000-${String(index + 1).padStart(12, '0')}`]));
   const ignoredIds = [...uuidById.values()];
-  void attachAnnotationLayers({
+  const annotationLayers = attachAnnotationLayers({
     registry,
     documentId,
     documentHash: sourceSha256,
+    pageCount: scroll.forDocument(documentId).getTotalPages(),
+    paperId,
+    paperTitle,
     curatedApiUrl: curatedAnnotationsUrl,
     readerElement,
     ignoredAnnotationIds: ignoredIds,
-  }).catch((error) => {
+  });
+  annotationLayers.catch((error) => {
     console.error(error);
     readerElement.dataset.annotationLayerError = 'true';
     const status = document.querySelector<HTMLElement>('[data-curated-annotation-status]');
     if (status) status.textContent = 'Annotation layers are temporarily unavailable.';
+  });
+  void attachPersonalReaderControls({
+    readerElement,
+    paperId,
+    paperTitle,
+    documentHash: sourceSha256,
+    documentId,
+    scroll,
+    zoom,
+    annotations: annotationLayers,
+  }).catch((error) => {
+    console.error(error);
+    readerElement.dataset.readingProgressError = 'true';
+    const status = document.querySelector<HTMLElement>('[data-reading-progress-status]');
+    if (status) status.textContent = 'Reading progress is unavailable in this browser.';
   });
   if (!annotationDocument) return;
 

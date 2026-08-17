@@ -47,7 +47,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </div>
   <p>For a smooth single-valued gauge on the loop, the phase is invariant modulo <math class="math-inline" aria-label="two pi"><semantics><mrow><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">2\pi</annotation></semantics></math>. The branch choice matters, so phase differences and continuous evolution are often more meaningful than one absolute number.</p>
 
-  <h2>Berry curvature is the local geometric field</h2>
+  <h2 id="quantum-geometry">Berry curvature is the local geometric field</h2>
   <p>The curvature of an isolated band is the curl of the connection:</p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="Omega n equals gradient k cross A n">
@@ -92,7 +92,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </div>
   <p>In a periodic crystal, bulk polarization is defined modulo a polarization quantum. A calculation therefore produces a lattice of branches rather than one unique dipole per arbitrarily chosen cell. Changes along an insulating adiabatic path, with branches tracked continuously, are the physically controlled quantities.</p>
 
-  <h2>A Chern number integrates occupied-subspace curvature over a closed Brillouin zone</h2>
+  <h2 id="berry-topology">A Chern number integrates occupied-subspace curvature over a closed Brillouin zone</h2>
   <p>For a two-dimensional gapped occupied subspace, a gauge-covariant expression for the first Chern number is</p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="C equals one over two pi integral over the Brillouin zone of trace Omega x y of k d squared k">
@@ -124,7 +124,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>At finite mesh spacing, a raw overlap matrix need not be unitary. A discrete parallel transporter is commonly formed from its unitary polar or singular-value-decomposition factor, or from an equivalent orthonormalized construction; the ordered closed-path product of those transporters defines the Wilson-loop operator.</p>
   <p>Its eigenphases can track hybrid Wannier centres and diagnose topological winding. Numerical conclusions depend on path closure, mesh density, occupied or selected subspace, energy windows, disentanglement, and symmetry conventions.</p>
 
-  <h2>Wannier functions require a gauge choice</h2>
+  <h2 id="wannier-functions">Wannier functions require a gauge choice</h2>
   <p>Wannier functions are Fourier transforms of Bloch states after a gauge has been selected across the Brillouin zone. Different smooth gauges redistribute centres and spreads while preserving gauge-invariant information.</p>
   <p>Atom-centred basis functions, canonical Kohn–Sham orbitals, and Wannier functions are different objects. A localized basis used to solve the Hamiltonian does not automatically provide maximally localized Wannier functions or a topology-ready tight-binding model.</p>
 

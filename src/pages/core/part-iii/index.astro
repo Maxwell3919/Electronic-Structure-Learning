@@ -168,7 +168,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </dl>
   <p>Both live in reciprocal space, but they are not the same object. The combination <math class="math-inline" aria-label="bold k plus bold G"><semantics><mrow><mi mathvariant="bold">k</mi><mo>+</mo><mi mathvariant="bold">G</mi></mrow><annotation encoding="application/x-tex">\mathbf&#123;k&#125;+\mathbf&#123;G&#125;</annotation></semantics></math> contains a Bloch-state label and a reciprocal-lattice vector; it does not make the two objects interchangeable.</p>
 
-  <h2>At every k there is a family of eigenstates</h2>
+  <h2 id="bloch-bands">At every k there is a family of eigenstates</h2>
   <p>Choosing a translation sector does not finish the eigenvalue problem. It fixes how a state changes between cells, but many different spatial patterns, orbital characters, or internal nodes can share the same phase label. The Hamiltonian must still be diagonalized inside each <math class="math-inline" aria-label="bold k"><semantics><mi mathvariant="bold">k</mi><annotation encoding="application/x-tex">\mathbf&#123;k&#125;</annotation></semantics></math> sector:</p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="H psi n k equals E n of k psi n k">
@@ -234,7 +234,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   </div>
   <p>This equation is not another eigenvalue problem. It selects, from all existing band states, those exactly at the occupation boundary. The solutions form the <strong>Fermi surface</strong> in three-dimensional <math class="math-inline" aria-label="k"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> space, a Fermi contour in two dimensions, or Fermi points in the chain. It is not a physical crystal surface; it is the locus separating occupied and unoccupied one-particle states at the Fermi energy under the stated zero-temperature picture.</p>
 
-  <h2>Band structure and density of states reorganize the same spectrum</h2>
+  <h2 id="density-of-states">Band structure and density of states reorganize the same spectrum</h2>
   <p>A band structure retains where each eigenvalue occurs: it shows energy as a function of band index and crystal momentum. That is essential when direction, valley, crossing, or dispersion matters, but it is awkward for a different question: how much state weight is available near a chosen energy, regardless of where those states occur? The density of states, or DOS, deliberately forgets the momentum location and counts over the whole Brillouin zone. A normalized conceptual form in <math class="math-inline" aria-label="d"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math> dimensions is</p>
   <div class="math-display" tabindex="0">
     <math display="block" aria-label="D of E equals sum n integral over the Brillouin zone d to the d k over Omega B Z times delta of E minus E n of k">

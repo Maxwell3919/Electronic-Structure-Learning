@@ -164,8 +164,9 @@ def inspect(driver, mode, expected_width=None):
             raise AssertionError(f"body is not white in {mode}: {metrics['bg']}")
         if "serif" not in metrics["font"].lower():
             raise AssertionError(f"body does not use the serif stack in {mode}: {metrics['font']}")
-        if metrics["scripts"] != 0:
-            raise AssertionError(f"client scripts found in {mode}: {url}")
+        expected_scripts = 1 if route in LITERATURE_ROUTES else 0
+        if metrics["scripts"] != expected_scripts:
+            raise AssertionError(f"unexpected client script count in {mode}: {url} ({metrics['scripts']} != {expected_scripts})")
         if driver.find_elements(By.CSS_SELECTOR, '[class*="card"], [class*="status"], [class*="progress"], [class*="dashboard"]'):
             raise AssertionError(f"legacy UI marker found in {mode}: {url}")
         if DEAD_CAMBRIDGE_ID in driver.page_source:

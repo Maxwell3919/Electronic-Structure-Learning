@@ -5,10 +5,13 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = fs.readFileSync(path.join(root, 'src/scripts/pdf-annotations.ts'), 'utf8');
+const storage = fs.readFileSync(path.join(root, 'src/scripts/personal-reader-storage.ts'), 'utf8');
+const controls = fs.readFileSync(path.join(root, 'src/scripts/personal-reader-controls.ts'), 'utf8');
 const server = fs.readFileSync(path.join(root, 'services/literature-runtime-server.mjs'), 'utf8');
 
-assert(source.includes("const DB_NAME = 'electronic-structure-atlas-personal-annotations'"), 'personal annotations must use a dedicated IndexedDB database');
-assert(source.includes("database.transaction(STORE_NAME, 'readwrite', { durability: 'strict' })"), 'personal writes must request strict IndexedDB durability');
+assert(storage.includes("DB_NAME = 'electronic-structure-atlas-personal-annotations'"), 'personal data must use the browser-local IndexedDB database');
+assert(storage.includes('DB_VERSION = 2') && storage.includes("READING_STATE_STORE = 'reading-state'"), 'reading progress must have a versioned IndexedDB store');
+assert(storage.includes("'readwrite', { durability: 'strict' }"), 'personal writes must request strict IndexedDB durability');
 assert(source.includes('scope.getAnnotationById(annotationId)?.object'), 'personal updates must persist the latest live annotation object');
 assert(source.includes("event.type !== 'update' && !event.committed"), 'in-progress text updates must reach IndexedDB without finalizing or locking the editor');
 assert(source.includes("readerElement.addEventListener('input'"), 'shadow text editor input must be mirrored into the personal record');
@@ -18,7 +21,12 @@ assert(source.includes("event.type === 'delete'"), 'personal delete events must 
 assert(source.includes('deletePersonalAnnotation(database, documentHash, annotationId)'), 'personal delete is not namespace-scoped');
 assert(source.includes('if (curatedIds.has(record.annotationId))'), 'curated IDs must take precedence over colliding local records');
 assert(source.includes("authority !== 'github-curated'"), 'curated response authority must be validated');
+assert(source.includes("authority: 'browser-personal'") && source.includes('document_sha256: documentHash'), 'personal export must carry local authority and exact document identity');
+assert(source.includes('stableJson') && storage.includes('records.sort'), 'personal export must be deterministic');
+assert(source.includes('conflicts += 1') && source.includes('collides with read-only annotation ID'), 'imports must be duplicate-safe and unable to overwrite curated annotations');
+assert(controls.includes('scrollToPage({ pageNumber: initialPage') && controls.includes('zoomScope.requestZoom(initialZoom)'), 'page and zoom state must restore through EmbedPDF APIs');
+assert(controls.includes('completed: stored?.paperId === paperId ? stored.completed : false'), 'completion must persist per exact paper identity');
 assert(!source.includes("method: 'POST'") && !source.includes('localStorage'), 'browser must not POST public annotations or use localStorage');
-assert(!/token|password|cookie/i.test(source), 'annotation client must not handle credentials or secrets');
+assert(!/token|password|cookie/i.test(`${source}\n${storage}\n${controls}`), 'personal reader client must not handle credentials or secrets');
 assert(!server.includes("method === 'POST'") && !server.includes("method === 'DELETE'"), 'curated runtime contains a mutation route');
-console.log('Curated read-only and personal IndexedDB create/update/delete structural audit passed.');
+console.log('Curated read-only plus personal IndexedDB create/update/delete/export/import/progress structural audit passed.');
