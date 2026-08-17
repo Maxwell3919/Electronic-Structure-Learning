@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "paths": [
+    {
+      "id": "determine-metallicity",
+      "question": "Is this material metallic?",
+      "establishes": "Whether the accepted reference state has occupied and empty states meeting the Fermi level across the full Brillouin zone.",
+      "concept_ids": ["bloch-bands", "density-of-states", "fermi-surface", "wannier-interpolation"],
+      "synthesis_ids": ["fermi-surface-versus-band-path"],
+      "gates": [
+        {"id":"reference","title":"Accept the electronic reference state","concept_id":"density-functional-theory","drw_slug":"calculate-reference-ground-state","required_evidence":"A converged, physically identified charge and magnetic state.","pass":"The reference state and occupations are reproducible under the declared setup.","stop":"SCF convergence, occupations, or the physical state remain ambiguous."},
+        {"id":"dos","title":"Resolve states near the Fermi level","concept_id":"density-of-states","drw_slug":"density-of-states-and-projected-density-of-states","required_evidence":"A converged DOS with enough energy and k-space resolution near EF.","pass":"Finite or vanishing spectral weight near EF is numerically resolved.","stop":"Broadening or sampling can change the classification."},
+        {"id":"full-bz","title":"Establish the full-zone occupation boundary","concept_id":"fermi-surface","drw_slug":"fermi-surface-and-full-brillouin-zone-analysis","required_evidence":"Full-BZ eigenvalues or a validated dense interpolation.","pass":"All pockets crossing EF are located and stable to mesh refinement.","stop":"Only a presentation band path has been inspected."},
+        {"id":"path","title":"Use the band path as context","concept_id":"bloch-bands","drw_slug":"band-structure","required_evidence":"A symmetry-labelled path calculated from the same accepted reference.","pass":"The path explains dispersions without being used as the sole metallicity test.","stop":"The band-path crossing is being treated as full-BZ proof."},
+        {"id":"claim","title":"Validate the metallicity claim","concept_id":"fermi-surface","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"DOS and full-BZ evidence agree within declared numerical sensitivity.","pass":"The claim names the reference state, sampling and observable.","stop":"Different observables or reference states disagree without explanation."}
+      ],
+      "claim_boundary": ["A high-symmetry band crossing alone does not prove full-BZ metallicity.", "Metallicity does not establish superconductivity, transport quality, or a pairing mechanism."]
+    },
+    {
+      "id": "determine-dynamical-stability",
+      "question": "Is this structure dynamically stable?",
+      "establishes": "Whether an accepted structure is a harmonic local minimum for the sampled collective displacements across the Brillouin zone.",
+      "concept_ids": ["structural-stability", "dynamical-stability", "phonons", "anharmonicity"],
+      "synthesis_ids": ["dynamical-stability-in-2d"],
+      "gates": [
+        {"id":"structure","title":"Accept the relaxed structure","concept_id":"structural-stability","drw_slug":"optimize-structure","required_evidence":"Forces, stress, constraints, cell and identity are accepted.","pass":"The geometry is stationary to target-relevant tolerances.","stop":"Residual force, stress, symmetry or identity is unresolved."},
+        {"id":"electronic","title":"Accept the electronic reference","concept_id":"density-functional-theory","drw_slug":"calculate-reference-ground-state","required_evidence":"Stable SCF and occupations for the relaxed geometry.","pass":"Force constants will be derivatives of a reproducible state.","stop":"Electronic noise can change shallow force constants."},
+        {"id":"gamma","title":"Use Γ as a diagnostic","concept_id":"phonons","drw_slug":"harmonic-phonons","required_evidence":"Γ modes, eigenvectors and acoustic behavior.","pass":"Cell-periodic modes are interpretable and acoustic artifacts are bounded.","stop":"A Γ-only result is being generalized to the full zone."},
+        {"id":"mesh","title":"Check the full q-space model","concept_id":"dynamical-stability","drw_slug":"harmonic-phonons","required_evidence":"A converged q mesh or real-space force-constant range covering the BZ.","pass":"No robust negative eigenvalue remains in the declared harmonic model.","stop":"An instability persists away from Γ or moves with convergence controls."},
+        {"id":"two-d","title":"Interpret acoustic and flexural modes","concept_id":"phonons","drw_slug":"test-numerical-convergence","required_evidence":"Stress, vacuum, rotational/acoustic constraints and long-wavelength behavior.","pass":"A shallow ZA feature is separated from a robust downhill mode.","stop":"A 2D Γ artifact and a physical instability cannot be distinguished."},
+        {"id":"boundary","title":"State the harmonic boundary","concept_id":"anharmonicity","drw_slug":"anharmonic-phonons","required_evidence":"Anharmonic or finite-temperature evidence when the claim requires it.","pass":"The conclusion is explicitly local and harmonic, or supported beyond it.","stop":"Harmonic stability is being used as thermodynamic or synthetic proof."}
+      ],
+      "claim_boundary": ["No imaginary harmonic mode supports only local harmonic stability of the declared model.", "It does not prove global thermodynamic stability, kinetic accessibility, or synthesizability."]
+    },
+    {
+      "id": "assess-phonon-mediated-superconductivity",
+      "question": "Does this material support phonon-mediated superconductivity?",
+      "establishes": "A gated evidence chain from a valid structure and electronic phase through phonons, electron–phonon coupling and a bounded Tc model.",
+      "concept_ids": ["fermi-surface", "dynamical-stability", "electron-phonon-matrix-elements", "eliashberg-function", "epc-lambda", "omega-log", "eliashberg-theory", "allen-dynes"],
+      "synthesis_ids": ["from-dfpt-to-tc", "what-establishes-conventional-superconductivity", "evidence-for-2d-superconductivity"],
+      "gates": [
+        {"id":"structure","title":"Accept structure and phase","concept_id":"structural-stability","drw_slug":"optimize-structure","required_evidence":"Accepted geometry, composition, constraints and phase identity.","pass":"The reference structure is numerically accepted.","stop":"Do not calculate downstream pairing quantities for an unaccepted structure."},
+        {"id":"metal","title":"Establish full-BZ metallicity","concept_id":"fermi-surface","drw_slug":"fermi-surface-and-full-brillouin-zone-analysis","required_evidence":"Resolved Fermi-surface sheets and dense low-energy states.","pass":"The relevant carriers and pockets are numerically stable.","stop":"A band path alone is the metallicity evidence."},
+        {"id":"magnetism","title":"Resolve the magnetic reference","concept_id":"spin-polarization","drw_slug":"magnetic-configuration-and-ground-state-comparison","required_evidence":"Relevant magnetic and nonmagnetic states compared consistently.","pass":"The pairing calculation uses an identified electronic phase.","stop":"Competing magnetic states remain unresolved."},
+        {"id":"soc","title":"Resolve SOC sensitivity","concept_id":"spin-orbit-coupling","drw_slug":"calculate-reference-ground-state","required_evidence":"SOC changes to pockets, degeneracies and occupations.","pass":"SOC is included or shown not to alter the target evidence.","stop":"SOC-sensitive low-energy states are treated scalar-relativistically without a bound."},
+        {"id":"phonons","title":"Support dynamical stability","concept_id":"dynamical-stability","drw_slug":"harmonic-phonons","required_evidence":"Converged phonons over the required q space.","pass":"The EPC reference has no unexplained robust unstable mode.","stop":"Large coupling comes from an unresolved unstable reference."},
+        {"id":"epc","title":"Converge the EPC spectrum","concept_id":"electron-phonon-matrix-elements","drw_slug":"electron-phonon-coupling","required_evidence":"Dense electronic/q sampling, mode-resolved matrix elements and α²F.","pass":"λ, ωlog and dominant modes are stable to relevant controls.","stop":"A coarse mesh or broadening determines λ."},
+        {"id":"tc","title":"Bound the Tc model","concept_id":"eliashberg-theory","drw_slug":"conventional-superconductivity","required_evidence":"Declared Coulomb model, Migdal regime, isotropy/anisotropy and sensitivity tests.","pass":"Tc is reported with numerical and model sensitivity.","stop":"A single λ or single μ* estimate is promoted to validated superconductivity."}
+      ],
+      "claim_boundary": ["Large λ alone is not validated superconductivity.", "A calculated Tc is conditional on structure, phase, phonons, Coulomb treatment and pairing approximations; experiment establishes an actual superconducting phase."]
+    },
+    {
+      "id": "diagnose-imaginary-phonon",
+      "question": "Is an apparent imaginary phonon physical or numerical?",
+      "establishes": "Whether a negative harmonic eigenvalue is a reproducible downhill structural direction rather than a convergence, interpolation or invariance artifact.",
+      "concept_ids": ["dynamical-stability", "phonons", "soft-modes-cdw", "anharmonicity"],
+      "synthesis_ids": ["dynamical-stability-in-2d", "soft-modes-and-charge-order"],
+      "gates": [
+        {"id":"reference","title":"Revalidate the reference","concept_id":"structural-stability","drw_slug":"optimize-structure","required_evidence":"Forces, stress, symmetry and electronic state at the phonon geometry.","pass":"The phonon is evaluated at an accepted stationary reference.","stop":"Residual relaxation error can drive the mode."},
+        {"id":"electronic","title":"Converge electronic derivatives","concept_id":"dfpt","drw_slug":"test-numerical-convergence","required_evidence":"Tight SCF, k mesh, smearing, basis and response thresholds.","pass":"The eigenvalue and eigenvector survive electronic convergence.","stop":"The sign changes with electronic controls."},
+        {"id":"spatial","title":"Converge force-constant range","concept_id":"phonons","drw_slug":"harmonic-phonons","required_evidence":"q mesh or supercell, interpolation and acoustic/rotational handling.","pass":"The mode is stable in location and character.","stop":"It follows grid, interpolation or image interactions."},
+        {"id":"two-d","title":"Test the 2D long-wavelength limit","concept_id":"dynamical-stability","drw_slug":"harmonic-phonons","required_evidence":"ZA dispersion, residual stress, vacuum and invariance checks.","pass":"A Γ-near flexural artifact is bounded or corrected.","stop":"The long-wavelength behavior remains method-dependent."},
+        {"id":"eigenvector","title":"Follow the mode","concept_id":"soft-modes-cdw","drw_slug":"reaction-paths-and-transition-states","required_evidence":"Displacements along ± eigenvector and structural relaxation.","pass":"Energy lowering and a physically interpretable distortion reproduce.","stop":"The mode has no stable eigenvector or energy-lowering continuation."},
+        {"id":"temperature","title":"Separate harmonic and finite-temperature claims","concept_id":"anharmonicity","drw_slug":"anharmonic-phonons","required_evidence":"Free-energy or finite-temperature treatment if stabilization is claimed.","pass":"The temperature-dependent claim has matching evidence.","stop":"A harmonic soft mode is dismissed solely from a short trajectory."}
+      ],
+      "claim_boundary": ["A robust negative eigenvalue identifies a harmonic downhill direction, not automatically the final phase.", "A small Γ-near ZA feature in 2D requires invariance and convergence evidence before it is called physical."]
+    },
+    {
+      "id": "assess-soc-sensitivity",
+      "question": "Does spin–orbit coupling qualitatively change the low-energy physics?",
+      "establishes": "Whether SOC changes the relevant bands, Fermi surface, spin texture, symmetry classification or downstream observable rather than only adding a small energy correction.",
+      "concept_ids": ["spin-orbit-coupling", "bloch-bands", "fermi-surface", "berry-topology", "ising-superconductivity"],
+      "synthesis_ids": ["soc-and-ising-superconductivity"],
+      "gates": [
+        {"id":"reference","title":"Define the scalar-relativistic reference","concept_id":"bloch-bands","drw_slug":"calculate-reference-ground-state","required_evidence":"A converged geometry, magnetic state and low-energy band manifold.","pass":"The comparison starts from the same physical reference.","stop":"Geometry or magnetism differs between the compared runs."},
+        {"id":"soc","title":"Run a matched SOC calculation","concept_id":"spin-orbit-coupling","drw_slug":"choose-dft-method-and-computational-setup","required_evidence":"Fully relativistic datasets and consistent noncollinear settings.","pass":"The SOC result is numerically comparable to the reference.","stop":"Core treatment or setup changes confound the SOC difference."},
+        {"id":"low-energy","title":"Compare low-energy topology","concept_id":"fermi-surface","drw_slug":"fermi-surface-and-full-brillouin-zone-analysis","required_evidence":"Splittings, gaps, pockets and occupations over the full relevant zone.","pass":"Qualitative changes are located and stable to sampling.","stop":"Only a visual band-path difference is available."},
+        {"id":"spin","title":"Resolve spin and symmetry content","concept_id":"spin-orbit-coupling","drw_slug":"magnetic-anisotropy-and-exchange-interactions","required_evidence":"Spin texture, anisotropy or symmetry-resolved states as needed.","pass":"The proposed SOC mechanism appears in the target states.","stop":"SOC splitting is present but the claimed spin protection or texture is untested."},
+        {"id":"downstream","title":"Recompute the affected observable","concept_id":"ising-superconductivity","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Matched SOC/no-SOC target calculations or a justified sensitivity bound.","pass":"The final claim states what SOC changes and what it does not.","stop":"A normal-state SOC result is promoted to superconducting or topological proof."}
+      ],
+      "claim_boundary": ["SOC band splitting is not by itself evidence of Ising pairing or topology.", "Qualitative SOC sensitivity must be evaluated for the states and observable used in the final claim."]
+    },
+    {
+      "id": "assess-dft-plus-u",
+      "question": "Is DFT+U required, and what does U actually change?",
+      "establishes": "Which localized subspace and observables are sensitive to U, and whether the scientific conclusion survives justified model choices.",
+      "concept_ids": ["dft-plus-u", "exchange-correlation", "spin-polarization", "magnetic-exchange"],
+      "synthesis_ids": ["dft-plus-u-and-low-dimensional-magnetism"],
+      "gates": [
+        {"id":"subspace","title":"Define the corrected subspace","concept_id":"dft-plus-u","drw_slug":"choose-dft-method-and-computational-setup","required_evidence":"Projectors, occupation matrix, double counting and U convention.","pass":"The model is reproducible and physically motivated.","stop":"U is quoted without its subspace and implementation."},
+        {"id":"branches","title":"Compare relevant self-consistent branches","concept_id":"spin-polarization","drw_slug":"magnetic-configuration-and-ground-state-comparison","required_evidence":"Matched structural and magnetic candidates at each U.","pass":"State ordering is compared without branch switching ambiguity.","stop":"One initial magnetic state is treated as the ground state."},
+        {"id":"sensitivity","title":"Scan a justified U range","concept_id":"dft-plus-u","drw_slug":"test-numerical-convergence","required_evidence":"Observable trends under U/projector variation or independent U estimation.","pass":"Robust and U-dependent conclusions are separated.","stop":"The conclusion exists only at one arbitrary U."},
+        {"id":"objects","title":"Separate changed observables","concept_id":"magnetic-exchange","drw_slug":"magnetic-anisotropy-and-exchange-interactions","required_evidence":"Gap, moment, exchange, anisotropy and structure evaluated separately.","pass":"Each claim is tied to its calculated object.","stop":"Gap opening is used as proof of magnetic order or finite-temperature Tc."},
+        {"id":"claim","title":"Bound the DFT+U conclusion","concept_id":"exchange-correlation","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Comparison with another method or experiment where available.","pass":"The report states model dependence and surviving conclusions.","stop":"DFT+U is described as uniformly more accurate."}
+      ],
+      "claim_boundary": ["U is part of a declared localized-subspace model, not a universal material constant.", "Gap, moment, exchange, anisotropy and ordering temperature are distinct claims."]
+    },
+    {
+      "id": "assess-heterostructure-coupling",
+      "question": "Is a heterostructure electronically coupled or merely stacked?",
+      "establishes": "Whether the combined interface develops reproducible hybridization, charge redistribution or interfacial states beyond a geometric stack of isolated layers.",
+      "concept_ids": ["van-der-waals-coupling", "interface-charge-transfer", "interface-hybridization", "band-alignment"],
+      "synthesis_ids": ["interlayer-coupling-as-control"],
+      "gates": [
+        {"id":"model","title":"Define the physical interface","concept_id":"van-der-waals-coupling","drw_slug":"build-or-modify-computational-model","required_evidence":"Termination, registry, strain, separation and boundary conditions.","pass":"The model corresponds to a stated interface hypothesis.","stop":"A convenient commensurate cell is treated as the unique interface."},
+        {"id":"energetics","title":"Accept interface geometry and energetics","concept_id":"structural-stability","drw_slug":"interface-and-heterostructure-energetics","required_evidence":"Relaxation, binding reference and relevant registries/distances.","pass":"The analyzed interface is a reproducible local structure.","stop":"Registry or separation sensitivity remains unresolved."},
+        {"id":"charge","title":"Quantify charge redistribution","concept_id":"interface-charge-transfer","drw_slug":"charge-density-and-charge-redistribution","required_evidence":"A declared density-difference reference plus electrostatic checks.","pass":"Redistribution and net transfer are not conflated.","stop":"Nominal valence or a single partitioning number is the sole evidence."},
+        {"id":"hybridization","title":"Resolve wavefunction mixing","concept_id":"interface-hybridization","drw_slug":"chemical-bonding-analysis","required_evidence":"Layer/orbital projections, avoided crossings or bonding analysis.","pass":"Mixed states are identified in the combined system.","stop":"Layer-projected DOS alone cannot separate shift from mixing."},
+        {"id":"alignment","title":"Track the electrostatic reference","concept_id":"band-alignment","drw_slug":"electrostatic-potential-and-band-alignment","required_evidence":"Consistent vacuum/potential references and interface dipole.","pass":"Isolated and combined-system alignments are distinguished.","stop":"Isolated work functions are used as the final interface alignment."},
+        {"id":"claim","title":"State the coupling mechanism","concept_id":"interface-hybridization","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Energetic, charge, orbital and alignment evidence agree.","pass":"The claim names which coupling is actually supported.","stop":"Stacking, charge transfer and hybridization are used as synonyms."}
+      ],
+      "claim_boundary": ["Geometric contact or binding does not prove strong electronic hybridization.", "Charge redistribution, net transfer, band alignment and wavefunction mixing require different evidence."]
+    },
+    {
+      "id": "determine-interface-band-alignment",
+      "question": "Is an interface Type-I, Type-II, or Type-III?",
+      "establishes": "A band-edge ordering tied to a declared structural, electrostatic and electronic reference, including interface-induced changes.",
+      "concept_ids": ["band-alignment", "interface-charge-transfer", "interface-hybridization", "exchange-correlation"],
+      "synthesis_ids": ["interlayer-coupling-as-control"],
+      "gates": [
+        {"id":"components","title":"Establish component band edges","concept_id":"band-alignment","drw_slug":"band-structure","required_evidence":"Comparable band edges with adequate functional/SOC treatment.","pass":"Component uncertainties are smaller than the proposed ordering.","stop":"Functional or SOC sensitivity can reverse the alignment."},
+        {"id":"reference","title":"Align electrostatic references","concept_id":"band-alignment","drw_slug":"electrostatic-potential-and-band-alignment","required_evidence":"Vacuum level, macroscopic potential or an explicit common reference.","pass":"Offsets are computed in a common convention.","stop":"Independent eigenvalues are compared without an alignment reference."},
+        {"id":"interface","title":"Relax and calculate the combined interface","concept_id":"van-der-waals-coupling","drw_slug":"interface-and-heterostructure-energetics","required_evidence":"Accepted registry, strain, distance and combined electronic state.","pass":"The final classification belongs to the actual interface model.","stop":"Only isolated-component Anderson alignment is available."},
+        {"id":"reconstruction","title":"Check dipoles and hybridization","concept_id":"interface-hybridization","drw_slug":"charge-density-and-charge-redistribution","required_evidence":"Interface dipole, redistributed charge and layer/orbital states.","pass":"Band-edge identity survives or its reconstruction is explained.","stop":"Hybridization makes component band labels ill-defined."},
+        {"id":"claim","title":"Bound the alignment label","concept_id":"band-alignment","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Offsets and uncertainties support I, II or broken-gap III ordering.","pass":"The classification names structure, method and reference.","stop":"Near-degenerate offsets are reported as a categorical type."}
+      ],
+      "claim_boundary": ["An isolated-component lineup is a starting model, not the final interface classification.", "A categorical type requires offsets larger than the relevant numerical and model uncertainty."]
+    },
+    {
+      "id": "assess-intercalation-transition",
+      "question": "Does intercalation cause a meaningful electronic transition?",
+      "establishes": "Whether an identified guest concentration and structure produce a reproducible change in electronic phase rather than an uncontrolled mixture of charge, strain, defects and kinetics.",
+      "concept_ids": ["intercalation", "interface-charge-transfer", "structural-stability", "transport-evidence"],
+      "synthesis_ids": ["intercalation-as-control"],
+      "gates": [
+        {"id":"identity","title":"Identify guest content and host phase","concept_id":"intercalation","drw_slug":"obtain-material-structure","required_evidence":"Stoichiometry, sites, staging and host structural identity.","pass":"The before/after states are chemically and structurally defined.","stop":"Nominal exposure is the only concentration evidence."},
+        {"id":"structure","title":"Compare accessible structures","concept_id":"structural-stability","drw_slug":"equation-of-state-and-structural-phase-stability","required_evidence":"Competing host/guest configurations and relaxation.","pass":"The electronic comparison is made between accepted structures.","stop":"Charge doping and structural reconstruction are conflated."},
+        {"id":"kinetics","title":"Resolve access pathways","concept_id":"intercalation","drw_slug":"diffusion-barriers","required_evidence":"Edge, top-surface, defect or interlayer pathways as relevant.","pass":"The proposed state is kinetically reachable under the declared conditions.","stop":"A thermodynamic structure is assumed accessible without pathway evidence."},
+        {"id":"electronic","title":"Establish the electronic change","concept_id":"fermi-surface","drw_slug":"fermi-surface-and-full-brillouin-zone-analysis","required_evidence":"Carrier count, pockets, orbital states and matched controls.","pass":"A phase-relevant electronic reconstruction is resolved.","stop":"A rigid-band or jellium proxy is treated as the full intercalated material."},
+        {"id":"observables","title":"Connect to measured evidence","concept_id":"transport-evidence","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Spectroscopy, diffraction, microscopy, Hall or transport matched to the claim.","pass":"Charge, structure and observable changes form a bounded chain.","stop":"Correlation with exposure time is presented as a unique mechanism."},
+        {"id":"reversibility","title":"Test reversibility separately","concept_id":"intercalation","drw_slug":"reaction-paths-and-transition-states","required_evidence":"Removal cycles or reversible pathway evidence when claimed.","pass":"Reversibility is directly observed or not claimed.","stop":"A before/after experiment is called reversible without a return path."}
+      ],
+      "claim_boundary": ["Nominal stoichiometry is not measured carrier density.", "Intercalation changes charge, structure, defects and kinetics together; a meaningful transition must separate the causal evidence."]
+    },
+    {
+      "id": "establish-magnetic-ground-state",
+      "question": "Is the reported magnetic ground state robust?",
+      "establishes": "Whether a declared magnetic configuration remains lowest among a physically adequate candidate set under numerical, structural, SOC and interaction-model sensitivity.",
+      "concept_ids": ["spin-polarization", "magnetic-exchange", "spin-orbit-coupling", "dft-plus-u", "spin-lattice-coupling"],
+      "synthesis_ids": ["dft-plus-u-and-low-dimensional-magnetism"],
+      "gates": [
+        {"id":"structure","title":"Accept structural candidates","concept_id":"structural-stability","drw_slug":"optimize-structure","required_evidence":"Matched relaxations or a justified common geometry.","pass":"Magnetic energies are not dominated by inconsistent structures.","stop":"Different magnetic states use incomparable geometry constraints."},
+        {"id":"candidates","title":"Search an adequate magnetic set","concept_id":"spin-polarization","drw_slug":"magnetic-configuration-and-ground-state-comparison","required_evidence":"Relevant ferro-, antiferro-, noncollinear or spin-spiral candidates.","pass":"The reported state wins within a stated candidate space.","stop":"One initialized state is called the ground state."},
+        {"id":"numerics","title":"Resolve small energy differences","concept_id":"magnetic-exchange","drw_slug":"test-numerical-convergence","required_evidence":"Matched basis, k mesh, thresholds and finite-size controls.","pass":"Ordering exceeds controlled numerical uncertainty.","stop":"Energy differences are comparable to convergence noise."},
+        {"id":"model","title":"Test interaction-model sensitivity","concept_id":"dft-plus-u","drw_slug":"choose-dft-method-and-computational-setup","required_evidence":"Functional/U/projector sensitivity where localized states matter.","pass":"Robust and model-dependent orderings are separated.","stop":"The ordering reverses without a resolved model choice."},
+        {"id":"soc","title":"Include anisotropy and SOC","concept_id":"spin-orbit-coupling","drw_slug":"magnetic-anisotropy-and-exchange-interactions","required_evidence":"Anisotropy, DMI or SOC terms required by dimensionality/symmetry.","pass":"The orientation and low-dimensional stability have a physical scale.","stop":"An isotropic 2D spin model is assigned finite-temperature order without anisotropy."},
+        {"id":"mapping","title":"Bound the reduced spin model","concept_id":"spin-lattice-coupling","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Exchange mapping residuals, candidate completeness and temperature method.","pass":"Ground-state, exchange and ordering-temperature claims remain distinct.","stop":"A fitted J or mean-field temperature is treated as independent validation."}
+      ],
+      "claim_boundary": ["A converged magnetic solution is not automatically the global magnetic ground state.", "State ordering, exchange parameters, anisotropy and finite-temperature order are separate claims."]
+    },
+    {
+      "id": "compare-structural-energy-ordering",
+      "question": "Is a structural energy ordering numerically meaningful?",
+      "establishes": "Whether the energy hierarchy of competing structures exceeds numerical and model uncertainty under comparable constraints and identities.",
+      "concept_ids": ["structural-stability", "exchange-correlation", "strain-pressure-control", "materials-screening"],
+      "synthesis_ids": ["prediction-to-evidence", "effective-hamiltonians-and-ferroelectricity"],
+      "gates": [
+        {"id":"identity","title":"Define comparable structures","concept_id":"structural-stability","drw_slug":"obtain-material-structure","required_evidence":"Composition, cell, symmetry, magnetic state and constraints.","pass":"Each candidate represents the same thermodynamic comparison.","stop":"Different stoichiometries or constraints are ranked as one energy set."},
+        {"id":"relax","title":"Relax each candidate consistently","concept_id":"structural-stability","drw_slug":"optimize-structure","required_evidence":"Matched force/stress criteria and relevant degrees of freedom.","pass":"Each energy belongs to an accepted local minimum or declared stationary point.","stop":"Residual forces or constrained cells bias the ordering."},
+        {"id":"numerics","title":"Resolve the energy scale","concept_id":"materials-screening","drw_slug":"test-numerical-convergence","required_evidence":"Per-atom or per-formula-unit differences stable to all shared controls.","pass":"The ordering exceeds a demonstrated numerical uncertainty.","stop":"The gap is comparable to basis, k-mesh or SCF error."},
+        {"id":"model","title":"Test physical-model sensitivity","concept_id":"exchange-correlation","drw_slug":"choose-dft-method-and-computational-setup","required_evidence":"Functional, dispersion, U, SOC or magnetic sensitivity as relevant.","pass":"Robust and method-dependent rankings are separated.","stop":"One approximation uniquely determines a near-degenerate order."},
+        {"id":"pressure","title":"Use the correct thermodynamic potential","concept_id":"strain-pressure-control","drw_slug":"equation-of-state-and-structural-phase-stability","required_evidence":"Energy, enthalpy or constrained-strain comparison matched to conditions.","pass":"The ordering is reported at a declared pressure/strain and reference.","stop":"Zero-pressure energy is used for a finite-pressure claim."},
+        {"id":"claim","title":"Separate ranking from accessibility","concept_id":"materials-screening","drw_slug":"validate-results-and-scientific-conclusions","required_evidence":"Barriers, phonons or synthesis evidence when accessibility is claimed.","pass":"The result is a bounded energetic ranking.","stop":"Lowest computed energy is promoted to observed or synthesizable phase."}
+      ],
+      "claim_boundary": ["A small total-energy difference is meaningful only after numerical and model uncertainties are smaller than that difference.", "Energetic ordering does not establish dynamical stability, kinetic access, or experimental realization."]
+    },
+    {
+      "id": "assess-topological-band-claim",
+      "question": "Can this band structure support a topological claim?",
+      "establishes": "Whether a properly identified occupied subspace, symmetry and gap carry a computed invariant with matching boundary-state evidence where required.",
+      "concept_ids": ["berry-topology", "spin-orbit-coupling", "bloch-bands", "wannier-interpolation", "band-alignment"],
+      "synthesis_ids": ["prediction-to-evidence"],
+      "gates": [
+        {"id":"reference","title":"Accept the electronic phase","concept_id":"bloch-bands","drw_slug":"calculate-reference-ground-state","required_evidence":"Structure, magnetism, filling and SOC convention are fixed.","pass":"The occupied subspace belongs to an identified physical phase.","stop":"Magnetic or structural identity remains ambiguous."},
+        {"id":"gap","title":"Establish the relevant gap","concept_id":"bloch-bands","drw_slug":"fermi-surface-and-full-brillouin-zone-analysis","required_evidence":"Full-BZ direct/indirect gap and filling under adequate sampling.","pass":"The invariant's required gap or nodal condition is resolved.","stop":"A band-path inversion is the only gap evidence."},
+        {"id":"symmetry","title":"Identify protecting symmetry","concept_id":"berry-topology","drw_slug":"berry-phase-and-berry-curvature","required_evidence":"Space, magnetic and time-reversal symmetry of the computed state.","pass":"The claimed classification uses a symmetry actually present.","stop":"A symmetry indicator is applied after the symmetry is broken."},
+        {"id":"invariant","title":"Compute the invariant","concept_id":"berry-topology","drw_slug":"topological-invariants-and-boundary-states","required_evidence":"Wilson loop, Chern/Z2 or appropriate invariant with mesh/gauge checks.","pass":"The invariant is stable to discretization and subspace choices.","stop":"Orbital inversion or Berry curvature alone substitutes for the invariant."},
+        {"id":"interpolation","title":"Validate any reduced representation","concept_id":"wannier-interpolation","drw_slug":"wannier-function-construction","required_evidence":"Wannier/interpolation fidelity over the target energy and k range.","pass":"The reduced model reproduces the first-principles bands and topology.","stop":"Window or disentanglement choices change the classification."},
+        {"id":"boundary","title":"Check boundary or observable consequences","concept_id":"berry-topology","drw_slug":"topological-invariants-and-boundary-states","required_evidence":"Surface/edge states or a clearly stated reason they are not required.","pass":"Bulk and boundary evidence are mutually consistent.","stop":"A normal-state topology result is promoted to topological superconductivity or device performance."}
+      ],
+      "claim_boundary": ["Band inversion, orbital character or SOC splitting alone is not a topological invariant.", "Normal-state topology does not establish topological superconductivity, Majorana modes, or protected transport."]
+    }
+  ]
+}

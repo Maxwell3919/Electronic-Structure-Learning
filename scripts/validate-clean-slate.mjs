@@ -39,6 +39,8 @@ const researchTopicSlugs = [
 const literatureSlugs = researchTopicSlugs;
 const synthesisSource = fs.readFileSync(path.join(root, 'src/reading/literature-syntheses.ts'), 'utf8');
 const synthesisSlugs = [...synthesisSource.matchAll(/^\s*id: '([^']+)',/gm)].map((match) => match[1]);
+const researchPathData = JSON.parse(fs.readFileSync(path.join(root, 'src/research/research-paths.json'), 'utf8'));
+const researchPathSlugs = researchPathData.paths.map((entry) => entry.id);
 const pilotPaperRoute = 'reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/';
 const pilotPdfRoute = 'papers/hbn-sin-superconductivity-cdw.pdf';
 const literatureLibrary = JSON.parse(fs.readFileSync(path.join(root, 'src/reading/literature-library.json'), 'utf8'));
@@ -78,6 +80,7 @@ const expectedPages = [
   'src/pages/reading/literature/concepts/index.astro',
   'src/pages/reading/literature/synthesis/index.astro',
   'src/pages/reading/literature/synthesis/[slug].astro',
+  'src/pages/research-paths/index.astro', 'src/pages/research-paths/[slug].astro',
   'src/pages/reading/index.astro', 'src/pages/reference/index.astro', 'src/pages/robots.txt.ts',
   'src/pages/sitemap.xml.ts', 'src/pages/theory/index.astro', 'src/pages/core/index.astro',
   ...coreSlugs.map((slug) => `src/pages/core/${slug}/index.astro`),
@@ -99,6 +102,7 @@ const expectedHtml = [
   'reading/literature/concepts/index.html',
   'reading/literature/synthesis/index.html',
   ...synthesisSlugs.map((slug) => `reading/literature/synthesis/${slug}/index.html`),
+  'research-paths/index.html', ...researchPathSlugs.map((slug) => `research-paths/${slug}/index.html`),
   ...literatureSlugs.map((slug) => `reading/literature/${slug}/index.html`),
   ...libraryPaperRoutes.map((route) => `${route}index.html`),
   'reading/index.html', 'reading/martin/index.html', 'reference/index.html', 'theory/index.html',
@@ -114,6 +118,7 @@ const internalRoutes = new Set([
   'reading/literature/', ...literatureSlugs.map((slug) => `reading/literature/${slug}/`),
   'reading/literature/concepts/', 'reading/literature/synthesis/',
   ...synthesisSlugs.map((slug) => `reading/literature/synthesis/${slug}/`),
+  'research-paths/', ...researchPathSlugs.map((slug) => `research-paths/${slug}/`),
   pilotPaperRoute,
   pilotPdfRoute,
   ...libraryPaperRoutes,
@@ -482,7 +487,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 97 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + libraryPaperRoutes.length;
+      const expectedSitemapRoutes = 97 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + libraryPaperRoutes.length + 1 + researchPathSlugs.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');
