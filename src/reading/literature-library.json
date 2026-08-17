@@ -1,8 +1,8 @@
 {
   "schema_version": 3,
   "authority": "Maxwell3919/Research-Workflow-Records",
-  "records_main_sha": "0d8635d668f79a4b0abf59385de8bc752504af29",
-  "generated_at": "2026-08-17T14:09:29+08:00",
+  "records_main_sha": "ed6c47a4121b05750c41edc8d988343a56cc4207",
+  "generated_at": "2026-08-17T19:01:30+08:00",
   "stats": {
     "scanned": 130,
     "atlas_related": 99,
@@ -1964,12 +1964,12 @@
       "arxiv": null,
       "source_record_path": "literature/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2",
       "pdf_path": "literature/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2.pdf",
-      "document_sha256": "f0ef6546654f72c835a0799d81281c68d31d9c33c40ad70f306975139dc5f6f2",
-      "pdf_size_bytes": 3903043,
+      "document_sha256": "d5b080fa4169016bdc1bb1211978eee831143cdff73fa920733808a58ddb57e6",
+      "pdf_size_bytes": 2266618,
       "annotation_path": "literature/Observation of an intermediate state during lithium intercalation of twisted bilayer MoS2/annotations",
       "reading_analysis_path": null,
       "reading_analysis_sha256": null,
-      "page_count": 11,
+      "page_count": 8,
       "primary_category": "interfaces-heterostructures",
       "topic_relations": [
         "interfaces-heterostructures"
