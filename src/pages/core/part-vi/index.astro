@@ -54,7 +54,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="equation-source">Sources: Giustino, Chs. 5–6; Martin, 2nd ed., Sec. 3.3 and Sec. 7.5. For the stress formulation, see Nielsen and Martin, <cite>Physical Review Letters</cite> 50, 697 (1983), DOI 10.1103/PhysRevLett.50.697.</p>
 
   <figure class="derivative-map" aria-labelledby="derivative-map-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--3">
       <li><strong>Energy value</strong><span>One point on <math class="math-inline" aria-label="U of R and epsilon"><semantics><mrow><mi>U</mi><mo>(</mo><mi mathvariant="bold">R</mi><mo>,</mo><mi mathvariant="bold">ε</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">U(\mathbf&#123;R&#125;,\boldsymbol&#123;\varepsilon&#125;)</annotation></semantics></math></span></li>
       <li><strong>Atomic derivative</strong><span>Force: downhill direction in nuclear-coordinate space</span></li>
       <li><strong>Strain derivative</strong><span>Stress: energy response to changing the cell</span></li>
@@ -81,7 +81,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The SCF loop from Part V closes the electronic variables at one fixed geometry. Structural optimization surrounds that electronic solve with a second loop. After obtaining a consistent energy, forces, and—when the cell may change—stress, an optimizer proposes a new structure and the electronic problem must be solved again because changing the nuclei changes the Hamiltonian.</p>
 
   <figure class="structure-loop" aria-labelledby="structure-loop-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--4">
       <li><strong>Declare geometry and constraints</strong><span>Atomic positions, cell, fixed coordinates, spin/occupation branch</span></li>
       <li><strong>Solve the electronic problem</strong><span>Reach the required electronic stationarity at this geometry</span></li>
       <li><strong>Evaluate energy derivatives</strong><span>Forces on free atoms and stress for allowed cell changes</span></li>
@@ -150,7 +150,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Even a positive local Hessian says only that sufficiently small allowed displacements raise the energy. A second, distant basin can still be lower. Establishing the preferred zero-temperature structure therefore requires comparing all scientifically plausible competitors: distinct atomic arrangements, volumes, compositions, magnetic orders, orbital occupations, and symmetry-broken branches as appropriate to the question. One successful relaxation explores one basin; it does not enumerate the landscape.</p>
 
   <figure class="stability-ladder" aria-labelledby="stability-ladder-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--4">
       <li><strong>Stationary</strong><span>Allowed first derivatives are sufficiently small.</span></li>
       <li><strong>Locally stable</strong><span>Every remaining nontrivial allowed direction has positive curvature; an unresolved zero-curvature direction needs higher-order analysis.</span></li>
       <li><strong>Lowest among candidates</strong><span>Consistently evaluated competing branches have been compared.</span></li>

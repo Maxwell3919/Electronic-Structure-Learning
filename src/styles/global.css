@@ -132,7 +132,6 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .reader-heading h1 { max-width: 62rem; font-size: clamp(2rem, 4vw, 3.4rem); }
 .reader-meta { color: #555555; }
 .pre-reading-notice { max-width: 58rem; padding-block: 0.8rem; border-block: 1px solid #d7d7d7; color: #555555; }
-.rights-gate { max-width: 58rem; padding: 1rem 0; border-block: 1px solid #d7d7d7; }
 .paper-reader {
   display: grid;
   grid-template-columns: minmax(13rem, 1fr) minmax(36rem, 3fr) minmax(13rem, 1fr);
@@ -146,7 +145,6 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .pdf-column { position: relative; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: #efefef; }
 #pdf-viewer { position: absolute; inset: 0; width: 100%; height: 100%; }
 #pdf-viewer embedpdf-container { display: block; width: 100%; height: 100%; }
-.pdf-only-frame { display: block; width: 100%; height: 100%; border: 0; }
 .reader-status { position: absolute; z-index: 2; inset: 1rem auto auto 1rem; padding: 0.4rem 0.6rem; background: #ffffff; }
 .annotation-rail { height: 100%; overflow: auto; padding-inline: 0.25rem; }
 .annotation-rail h2 { position: sticky; z-index: 1; top: 0; margin: 0; padding: 0.4rem 0 0.8rem; background: #ffffff; font-size: 1.08rem; }
@@ -189,8 +187,6 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .book-profile { margin-block: 2.25rem; }
 .book-profile h2 { margin-top: 0; }
 .book-profile ul { max-width: 46rem; }
-.paper-profile { margin-block: 2.25rem; }
-.paper-profile h2 { margin-top: 0; }
 .source-figure-list { margin-block: 1.25rem 2rem; }
 .source-figure-list dt {
   margin-top: 1.1rem;
@@ -214,17 +210,6 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .source-visual-image { display: block; width: 100%; height: auto; }
 .source-visual-source:focus-visible { outline: 2px solid #123f70; outline-offset: 2px; }
 .source-visual figcaption { margin: 0.65rem 0 0; }
-.source-visual-unresolved {
-  display: inline-block;
-  margin-inline-end: 0.45rem;
-  padding: 0.08rem 0.32rem;
-  border: 1px solid #9a6a18;
-  color: #7a4f00;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-
 .math-display {
   max-width: 100%;
   margin: 1.5rem 0;
@@ -307,26 +292,29 @@ math annotation { display: none; }
   color: #607d99;
   content: "→";
 }
-.paper-argument.hedin-cycle ol { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .paper-argument strong,
 .paper-argument span { display: block; }
 .paper-argument span { margin-top: 0.4rem; color: #555555; font-size: 0.92rem; }
-.paper-comparison {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 1.7rem 0;
-  border-block: 1px solid #d7d7d7;
-}
-.paper-comparison section { padding: 0.25rem 1rem 0.35rem; }
-.paper-comparison section + section { border-inline-start: 1px solid #d7d7d7; }
-.paper-comparison h3 { margin-top: 0.85rem; }
-
 figure { margin: 2rem 0; }
 figcaption {
   margin-top: 0.75rem;
   color: #666666;
   font-size: 0.9rem;
 }
+
+/* Shared ruled-panel layout. Semantic classes retain only diagram-specific styling. */
+.atlas-panel-grid {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-block: 1px solid #d7d7d7;
+  background: #ffffff;
+  list-style: none;
+}
+.atlas-panel-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.atlas-panel-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.atlas-panel-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.atlas-panel-grid > :is(section, li) + :is(section, li) { border-inline-start: 1px solid #d7d7d7; }
 
 .core-map ol,
 .state-comparison ol {
@@ -370,10 +358,7 @@ figcaption {
 }
 
 .core-map-branches {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 1.15rem;
-  border-block: 1px solid #d7d7d7;
 }
 
 .core-map-branches section { padding: 0.15rem 1rem 0.25rem; }
@@ -390,37 +375,19 @@ figcaption {
 .core-entries { padding-left: 1.35rem; }
 .core-entries li + li { margin-top: 1rem; }
 
-.concept-branches > div {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-block: 1px solid #d7d7d7;
-}
-
 .concept-branches section { padding: 0.25rem 1.15rem 0.3rem; }
-.concept-branches section + section { border-inline-start: 1px solid #d7d7d7; }
 .concept-branches h3 { margin-top: 0.9rem; }
 .concept-branches p { margin-bottom: 0.75rem; }
 
-.state-comparison ol {
-  display: grid;
-  border-block: 1px solid #d7d7d7;
-}
-
-.state-comparison ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .state-comparison li { padding: 0.9rem 1rem; }
 .state-comparison li + li {
   margin-top: 0;
-  border-inline-start: 1px solid #d7d7d7;
 }
 
 .hamiltonian-map > div {
-  display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  border-block: 1px solid #d7d7d7;
-  background: #ffffff;
 }
 .hamiltonian-map section { padding: 0.2rem 1.1rem 0.45rem; }
-.hamiltonian-map section + section { border-inline-start: 1px solid #d7d7d7; }
 .hamiltonian-map h3 { margin-top: 0.85rem; }
 .hamiltonian-map dl { margin-bottom: 0.55rem; }
 .hamiltonian-map dl > div + div { margin-top: 0.7rem; }
@@ -435,9 +402,6 @@ figcaption {
   background: #ffffff;
 }
 .scf-flow ol {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-block: 1px solid #d7d7d7;
   counter-reset: scf-step;
 }
 .scf-flow li {
@@ -445,7 +409,6 @@ figcaption {
   counter-increment: scf-step;
   padding: 0.85rem 1rem 0.85rem 2.8rem;
 }
-.scf-flow li + li { border-inline-start: 1px solid #d7d7d7; }
 .scf-flow li::before {
   position: absolute;
   inset: 0.82rem auto auto 0.75rem;
@@ -468,10 +431,8 @@ figcaption {
 }
 
 .h2-reference ol {
-  display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.65fr) minmax(0, 1fr);
   align-items: stretch;
-  border-block: 1px solid #d7d7d7;
 }
 .h2-reference li:not(.model-axis) { padding: 0.9rem 1rem; }
 .h2-reference .model-label {
@@ -529,13 +490,9 @@ figcaption {
 .concept-check p:last-child { margin-bottom: 0.5rem; }
 
 .translation-views {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 1.7rem 0;
-  border-block: 1px solid #d7d7d7;
 }
 .translation-views section { padding: 0.2rem 1.1rem 0.25rem; }
-.translation-views section + section { border-inline-start: 1px solid #d7d7d7; }
 .translation-views h3 { margin-top: 0.85rem; }
 .translation-views p { margin-bottom: 0.85rem; color: #454545; }
 
@@ -567,33 +524,17 @@ figcaption {
 .same-density span { display: block; margin-top: 0.35rem; }
 
 .formulation-views {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 1.7rem 0;
-  border-block: 1px solid #d7d7d7;
 }
 .formulation-views section { padding: 0.2rem 1.1rem 0.25rem; }
-.formulation-views section + section { border-inline-start: 1px solid #d7d7d7; }
 .formulation-views h3 { margin-top: 0.85rem; }
 .formulation-views p { margin-bottom: 0.85rem; color: #454545; }
 
-.dft-logic ol,
-.ks-scf-loop ol {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  border-block: 1px solid #d7d7d7;
-  background: #ffffff;
-  list-style: none;
-}
-.dft-logic ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.ks-scf-loop ol { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .dft-logic li,
 .ks-scf-loop li { padding: 0.9rem 1rem; }
 .dft-logic li + li,
 .ks-scf-loop li + li {
   margin-top: 0;
-  border-inline-start: 1px solid #d7d7d7;
 }
 .dft-logic li span,
 .ks-scf-loop li span {
@@ -603,23 +544,12 @@ figcaption {
   font-size: 0.9rem;
 }
 
-.finite-representation ol,
-.calculation-stack ol {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  border-block: 1px solid #d7d7d7;
-  background: #ffffff;
-  list-style: none;
-}
-.finite-representation ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .finite-representation li,
 .calculation-stack li {
   position: relative;
   margin: 0;
   padding: 0.9rem 1rem;
 }
-.finite-representation li + li { border-inline-start: 1px solid #d7d7d7; }
 .finite-representation li span,
 .calculation-stack li span {
   display: block;
@@ -630,16 +560,10 @@ figcaption {
 
 .representation-views,
 .core-treatment-map > div {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 1.7rem 0;
-  border-block: 1px solid #d7d7d7;
-  background: #ffffff;
 }
 .representation-views section,
 .core-treatment-map section { padding: 0.2rem 1rem 0.25rem; }
-.representation-views section + section,
-.core-treatment-map section + section { border-inline-start: 1px solid #d7d7d7; }
 .representation-views h3,
 .core-treatment-map h3 { margin-top: 0.85rem; }
 .representation-views p,
@@ -679,13 +603,7 @@ figcaption {
 .bz-quadrature li span { line-height: 1; }
 .bz-quadrature li small { color: #666666; }
 
-.nested-solve > div {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-block: 1px solid #d7d7d7;
-}
 .nested-solve section { padding: 0.2rem 1.1rem 0.25rem; }
-.nested-solve section + section { border-inline-start: 1px solid #d7d7d7; }
 .nested-solve h3 { margin-top: 0.85rem; }
 .nested-solve p { margin-bottom: 0.85rem; color: #454545; }
 
@@ -725,23 +643,6 @@ figcaption {
   text-align: center;
 }
 
-.derivative-map ol,
-.structure-loop ol,
-.stability-ladder ol,
-.response-map ol,
-.reciprocal-roles ol {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  border-block: 1px solid #d7d7d7;
-  background: #ffffff;
-  list-style: none;
-}
-.derivative-map ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.structure-loop ol,
-.stability-ladder ol { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.response-map ol,
-.reciprocal-roles ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .derivative-map li,
 .structure-loop li,
 .stability-ladder li,
@@ -750,11 +651,6 @@ figcaption {
   margin: 0;
   padding: 0.9rem 1rem;
 }
-.derivative-map li + li,
-.structure-loop li + li,
-.stability-ladder li + li,
-.response-map li + li,
-.reciprocal-roles li + li { border-inline-start: 1px solid #d7d7d7; }
 .derivative-map li span,
 .structure-loop li span,
 .stability-ladder li span,
@@ -768,33 +664,16 @@ figcaption {
 .reciprocal-roles li small { display: block; margin-top: 0.3rem; color: #666666; font-size: 0.82rem; }
 
 .response-routes > div {
-  display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.55fr) minmax(0, 1fr);
   align-items: stretch;
-  border-block: 1px solid #d7d7d7;
 }
 
-.excitation-sectors > div {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-block: 1px solid #d7d7d7;
-}
 .excitation-sectors section { padding: 0.2rem 1rem 0.8rem; }
-.excitation-sectors section + section { border-inline-start: 1px solid #d7d7d7; }
 .excitation-sectors h3 { margin-top: 0.85rem; }
 .excitation-sectors section p { margin-bottom: 0.45rem; color: #123f70; }
 .excitation-sectors section span { color: #555555; font-size: 0.9rem; }
 
-.neutral-route ol {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 0;
-  padding: 0;
-  border-block: 1px solid #d7d7d7;
-  list-style: none;
-}
 .neutral-route li { margin: 0; padding: 0.9rem 1rem; }
-.neutral-route li + li { border-inline-start: 1px solid #d7d7d7; }
 .neutral-route li span { display: block; margin-top: 0.3rem; color: #555555; font-size: 0.9rem; }
 
 .gap-ledger {
@@ -935,84 +814,29 @@ footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070
   dd { margin-left: 0.8rem; }
   .math-display { margin-inline: -0.15rem; padding: 0.85rem 0.9rem; }
   .math-display math { font-size: 1.12rem; }
-  .concept-branches > div,
-  .core-map-branches,
-  .state-comparison ol,
   .energy-curve-visual,
-  .translation-views,
   .density-reduction > div,
   .ks-bridge > div,
-  .formulation-views,
-  .dft-logic ol,
-  .ks-scf-loop ol,
-  .finite-representation ol,
-  .representation-views,
-  .core-treatment-map > div,
-  .nested-solve > div,
-  .derivative-map ol,
-  .structure-loop ol,
-  .stability-ladder ol,
-  .response-map ol,
-  .reciprocal-roles ol,
-  .response-routes > div,
-  .excitation-sectors > div,
-  .neutral-route ol,
-  .hamiltonian-map > div,
-  .scf-flow ol,
-  .h2-reference ol { display: block; }
-  .concept-branches section + section,
-  .core-map-branches section + section,
-  .state-comparison li + li {
-    border-inline-start: 0;
-    border-top: 1px solid #d7d7d7;
-  }
-  .hamiltonian-map section + section,
-  .scf-flow li + li {
+  .atlas-panel-grid { display: block; }
+  .atlas-panel-grid > :is(section, li) + :is(section, li) {
     border-inline-start: 0;
     border-top: 1px solid #d7d7d7;
   }
   .h2-reference .model-axis { display: block; padding-block: 0.6rem; }
   .h2-reference .model-axis::before { margin-bottom: -0.85rem; }
   .paper-argument ol { grid-template-columns: 1fr; }
-  .paper-argument.hedin-cycle ol { grid-template-columns: 1fr; }
   .paper-argument li + li { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .paper-argument li + li::before {
     inset-inline-start: 1rem;
     inset-block-start: -0.85rem;
     transform: rotate(90deg);
   }
-  .paper-comparison { grid-template-columns: 1fr; }
-  .paper-comparison section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
-  .translation-views section + section { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .density-reduction .diagram-arrow,
   .ks-bridge .same-density {
     border-inline: 0;
     border-block: 1px solid #d7d7d7;
   }
-  .formulation-views section + section,
-  .dft-logic li + li,
-  .ks-scf-loop li + li {
-    border-inline-start: 0;
-    border-top: 1px solid #d7d7d7;
-  }
-  .finite-representation li + li,
-  .representation-views section + section,
-  .core-treatment-map section + section,
-  .nested-solve section + section {
-    border-inline-start: 0;
-    border-top: 1px solid #d7d7d7;
-  }
-  .derivative-map li + li,
-  .structure-loop li + li,
-  .stability-ladder li + li,
-  .response-map li + li,
-  .reciprocal-roles li + li {
-    border-inline-start: 0;
-    border-top: 1px solid #d7d7d7;
-  }
   .response-routes .same-response { border-inline: 0; border-block: 1px solid #d7d7d7; }
-  .excitation-sectors section + section,
-  .neutral-route li + li { border-inline-start: 0; border-top: 1px solid #d7d7d7; }
   .gap-ledger { display: block; }
   .gap-ledger dt { padding-bottom: 0.15rem; }
   .gap-ledger dd { padding-top: 0.15rem; border-top: 0; }

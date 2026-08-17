@@ -42,7 +42,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="equation-source">Source: Martin, <cite>Electronic Structure</cite>, 2nd ed., Chs. 12–17, especially the plane-wave projection in Sec. 12.1 and the nonorthogonal formulations in Chs. 14–17.</p>
 
   <figure class="finite-representation" aria-labelledby="finite-representation-caption">
-    <ol>
+    <ol class="atlas-panel-grid atlas-panel-grid--3">
       <li><strong>Continuum object</strong><span>An orbital or potential defined throughout space</span></li>
       <li><strong>Finite coordinates</strong><span>Basis coefficients, grid values, or augmented components</span></li>
       <li><strong>Finite algebra</strong><span>Matrix actions, linear solves, and discrete transforms</span></li>
@@ -53,7 +53,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h2>Representation families store different finite objects</h2>
   <p>A basis expansion is a useful general picture, but it is not the only way to discretize a differential equation. Plane waves store Fourier coefficients. Localized representations store coefficients of atom-centred or otherwise confined functions and often require a nontrivial overlap matrix. Real-space methods store values or local polynomial information on a grid or mesh. After discretization all lead to finite algebraic operations, yet their approximation controls and efficiencies are not interchangeable.</p>
 
-  <div class="representation-views">
+  <div class="representation-views atlas-panel-grid atlas-panel-grid--3">
     <section>
       <h3>Plane waves</h3>
       <p>Systematic reciprocal-space set; naturally periodic and orthogonal. Completeness is controlled by a kinetic-energy cutoff.</p>
@@ -97,7 +97,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>Near a nucleus, the Coulomb potential is strong and all-electron orbitals vary rapidly. A uniform smooth representation must work much harder there than in the bonding region between atoms. This difficulty motivates a second choice that is related to, but not identical with, the basis: which electrons and near-nucleus variations are represented explicitly in the calculation.</p>
 
   <figure class="core-treatment-map" aria-labelledby="core-treatment-caption">
-    <div>
+    <div class="atlas-panel-grid atlas-panel-grid--3">
       <section>
         <h3>All-electron</h3>
         <p>Core and valence states are explicit. The representation must resolve rapid near-nucleus structure, often through atom-adapted augmentation.</p>
@@ -184,7 +184,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p class="equation-source">Source: Martin, 2nd ed., Secs. 7.3–7.4 and 13.2. The displayed update is the simplest linear-mixing illustration, not a recommended universal solver.</p>
 
   <figure class="nested-solve" aria-labelledby="nested-solve-caption">
-    <div>
+    <div class="atlas-panel-grid atlas-panel-grid--2">
       <section>
         <h3>Outer nonlinear loop</h3>
         <p><math class="math-inline" aria-label="n in"><semantics><msub><mi>n</mi><mtext>in</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;in&#125;&#125;</annotation></semantics></math> → Hamiltonian → <math class="math-inline" aria-label="n out"><semantics><msub><mi>n</mi><mtext>out</mtext></msub><annotation encoding="application/x-tex">n_&#123;\mathrm&#123;out&#125;&#125;</annotation></semantics></math> → residual → update</p>
@@ -222,7 +222,7 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <p>The phrase “a DFT calculation” hides a stack of decisions. The calculation begins with a physical system and a fixed-nuclei electronic problem from Part I. It uses the Kohn–Sham construction and a declared exchange-correlation approximation from Part IV. Only then do core treatment, finite representation, BZ quadrature, and nonlinear solution turn that continuum model into computable objects.</p>
 
   <figure class="calculation-stack" aria-labelledby="calculation-stack-caption">
-    <ol>
+    <ol class="atlas-panel-grid">
       <li><strong>Physical system and boundary</strong><span>Nuclei, electrons, charge, spin, cell, fields, and environmental model</span></li>
       <li><strong>Fixed-nuclei electronic problem</strong><span>The Born–Oppenheimer electronic Hamiltonian at a declared geometry</span></li>
       <li><strong>Kohn–Sham density theory</strong><span>An auxiliary one-particle construction for the interacting ground-state density</span></li>

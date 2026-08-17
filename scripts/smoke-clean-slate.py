@@ -497,11 +497,14 @@ def check_core_keyboard(driver):
 def check_literature_preprocessing_ui(driver):
     ready = []
     pending = []
+    expected_titles = {entry["canonical_title"] for entry in PREPROCESSING_QUEUE}
     topic_routes = sorted({entry["target_literature_topic"] for entry in PREPROCESSING_QUEUE})
     for topic in topic_routes:
         driver.get(urljoin(BASE_URL, f"reading/literature/{topic}/"))
         for entry in driver.find_elements(By.CSS_SELECTOR, ".literature-entry"):
             title = entry.find_element(By.CSS_SELECTOR, "h2 a")
+            if title.text not in expected_titles:
+                continue
             state = " ".join(node.text for node in entry.find_elements(By.CSS_SELECTOR, ".pre-reading-state"))
             abstracts = entry.find_elements(By.CSS_SELECTOR, ".paper-abstract")
             record = {"title": title.text, "href": title.get_attribute("href"), "abstracts": abstracts}
