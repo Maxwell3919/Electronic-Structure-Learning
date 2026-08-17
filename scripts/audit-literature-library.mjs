@@ -22,7 +22,7 @@ const pending = manifest.papers.filter((paper) => paper.status === 'source_pendi
 const mismatched = manifest.papers.filter((paper) => paper.status === 'source_mismatch');
 const available = fs.existsSync(recordsRoot) && fs.statSync(recordsRoot).isDirectory();
 
-assert(manifest.schema_version === 2, 'unexpected library manifest schema');
+assert(manifest.schema_version === 3, 'unexpected library manifest schema');
 assert(manifest.stats.scanned === 130, `unexpected Records scan count: ${manifest.stats.scanned}`);
 assert(manifest.stats.atlas_related === manifest.papers.length, 'Atlas-related count does not match paper entries');
 assert(manifest.stats.published === published.length, 'published count does not match paper entries');
@@ -30,8 +30,7 @@ assert(manifest.stats.missing_pdf === pending.length, 'missing PDF count does no
 assert(manifest.stats.deduplicated === manifest.deduplicated_records.length, 'deduplicated count does not match audit records');
 assert(manifest.stats.unclassified === 0, 'manifest reports unresolved classification');
 assert(manifest.stats.failed === mismatched.length, 'failed count does not match source_mismatch entries');
-assert(manifest.stats.public_pdf_allowed === published.filter((paper) => paper.public_pdf_delivery === 'allowed').length, 'allowed public-PDF count does not match entries');
-assert(manifest.stats.public_pdf_blocked === manifest.papers.filter((paper) => paper.public_pdf_delivery === 'blocked').length, 'blocked public-PDF count does not match entries');
+assert(manifest.stats.readable_pdf === published.length, 'readable PDF count does not match integrity-valid published entries');
 assert(Array.isArray(manifest.failed_records) && manifest.failed_records.length === mismatched.length, 'failed-record audit does not match source_mismatch entries');
 assert(unique(manifest.papers.map((paper) => paper.paper_id)), 'duplicate paper_id');
 assert(unique(published.map((paper) => paper.document_sha256)), 'duplicate published PDF hash');
@@ -47,7 +46,6 @@ for (const paper of manifest.papers) {
   assert(Array.isArray(paper.topic_relations) && paper.topic_relations.includes(paper.primary_category), `invalid topic relations: ${paper.paper_id}`);
   if (paper.status === 'source_pending') {
     assert(!paper.source_record_path && !paper.pdf_path && !paper.document_sha256 && !paper.pdf_size_bytes && !paper.annotation_path && !paper.atlas_route, `pending paper exposes a false Reader: ${paper.paper_id}`);
-    assert(paper.public_pdf_delivery === 'not_available' && !paper.rights_reviewed && paper.rights_evidence === null, `pending paper has a public-delivery decision: ${paper.paper_id}`);
     continue;
   }
   assert(['published', 'source_mismatch'].includes(paper.status), `invalid source status: ${paper.paper_id}`);
@@ -57,11 +55,6 @@ for (const paper of manifest.papers) {
   assert(Number.isInteger(paper.pdf_size_bytes) && paper.pdf_size_bytes > 4, `invalid PDF size: ${paper.paper_id}`);
   assert(paper.annotation_path === `${paper.source_record_path}/annotations`, `annotation directory leaves source package: ${paper.paper_id}`);
   assert(Number.isInteger(paper.page_count) && paper.page_count > 0, `invalid page count: ${paper.paper_id}`);
-  assert(['allowed', 'blocked'].includes(paper.public_pdf_delivery), `missing public-PDF decision: ${paper.paper_id}`);
-  if (paper.public_pdf_delivery === 'allowed') {
-    assert(paper.rights_reviewed === true && paper.rights_evidence?.license_content_version === 'vor'
-      && /^https?:\/\/creativecommons\.org\/licenses\//.test(paper.rights_evidence?.license_url ?? ''), `unsafe allow decision: ${paper.paper_id}`);
-  } else assert(paper.rights_reviewed === false && paper.rights_evidence === null, `blocked PDF exposes rights evidence as approval: ${paper.paper_id}`);
   if (paper.status === 'published') {
     assert(paper.atlas_route === `/reading/literature/${paper.primary_category}/${paper.paper_id}/`, `route/category mismatch: ${paper.paper_id}`);
   } else {
@@ -95,13 +88,8 @@ if (requireBuilt) {
       assert(fs.existsSync(routeFile), `built Reader route missing: ${paper.paper_id}`);
       if (fs.existsSync(routeFile)) {
         const routeHtml = fs.readFileSync(routeFile, 'utf8');
-        if (paper.public_pdf_delivery === 'allowed') {
-          assert(routeHtml.includes(`/papers/${paper.paper_id}.pdf`), `allowed Reader PDF mapping missing: ${paper.paper_id}`);
-          assert(routeHtml.includes('Open PDF'), `allowed Reader link missing: ${paper.paper_id}`);
-        } else {
-          assert(!routeHtml.includes(`/papers/${paper.paper_id}.pdf`), `blocked Reader exposes PDF mapping: ${paper.paper_id}`);
-          assert(routeHtml.includes('PDF delivery withheld'), `blocked Reader lacks rights notice: ${paper.paper_id}`);
-        }
+        assert(routeHtml.includes(`/papers/${paper.paper_id}.pdf`), `Reader PDF mapping missing: ${paper.paper_id}`);
+        assert(routeHtml.includes('Open PDF'), `Reader link missing: ${paper.paper_id}`);
         assert(routeHtml.includes(paper.document_sha256), `Reader document hash missing: ${paper.paper_id}`);
         assert(!routeHtml.includes('data:video/mp2t'), `Reader script was not bundled: ${paper.paper_id}`);
       }

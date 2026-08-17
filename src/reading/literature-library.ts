@@ -22,15 +22,6 @@ export type LiteratureLibraryPaper = {
   status: 'published' | 'source_pending' | 'source_mismatch';
   failure_reason?: string;
   metadata_source: string;
-  public_pdf_delivery: 'allowed' | 'blocked' | 'not_available';
-  rights_reviewed: boolean;
-  rights_evidence: {
-    access_url: string;
-    license_url: string;
-    license_content_version: 'vor';
-    reviewed_at: string;
-    reviewed_by: string;
-  } | null;
 };
 
 export const literatureLibraryManifest = manifest;

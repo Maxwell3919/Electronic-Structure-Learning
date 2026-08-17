@@ -8,7 +8,6 @@ const atlasRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..
 const recordsRoot = path.resolve(process.env.ATLAS_LITERATURE_ROOT ?? '/home/talos/work/Research-Workflow-Records');
 const literatureRoot = path.join(recordsRoot, 'literature');
 const readerManifestRoot = path.join(recordsRoot, 'manifests/readers');
-const publicDeliveryManifestPath = path.join(recordsRoot, 'manifests/literature-public-delivery.json');
 const outputPath = path.join(atlasRoot, 'src/reading/literature-library.json');
 const refreshMetadata = process.argv.includes('--refresh-metadata');
 const resolveRecordsPath = (entryPath) => {
@@ -18,21 +17,6 @@ const resolveRecordsPath = (entryPath) => {
   return absolute;
 };
 const fileSha256 = (file) => createHash('sha256').update(fs.readFileSync(file)).digest('hex');
-
-if (!fs.existsSync(publicDeliveryManifestPath)) throw new Error('Records public-delivery policy is unavailable; refusing to publish PDF bytes');
-const publicDeliveryManifest = JSON.parse(fs.readFileSync(publicDeliveryManifestPath, 'utf8'));
-if (publicDeliveryManifest.schema_version !== 1 || publicDeliveryManifest.policy !== 'fail_closed'
-  || publicDeliveryManifest.default_decision?.public_pdf_delivery !== 'blocked') {
-  throw new Error('Records public-delivery policy is not fail closed');
-}
-const publicDeliveryByHash = new Map();
-for (const decision of publicDeliveryManifest.decisions ?? []) {
-  if (decision.public_pdf_delivery !== 'allowed' || decision.reviewed !== true
-    || !/^[a-f0-9]{64}$/.test(decision.document_sha256 ?? '') || publicDeliveryByHash.has(decision.document_sha256)) {
-    throw new Error(`Invalid or duplicate public-delivery decision: ${decision.paper_id ?? 'unknown'}`);
-  }
-  publicDeliveryByHash.set(decision.document_sha256, decision);
-}
 
 const readerAnalysisByPaperId = new Map();
 if (fs.existsSync(readerManifestRoot)) {
@@ -237,9 +221,6 @@ const pendingPapers = [
   atlas_route: null,
   status: 'source_pending',
   metadata_source: 'existing Atlas preprocessing queue',
-  public_pdf_delivery: 'not_available',
-  rights_reviewed: false,
-  rights_evidence: null,
 }));
 
 const normalize = (value) => value.normalize('NFKD').replace(/<[^>]+>/g, ' ').replace(/\\[a-zA-Z]+|[{}$*_]/g, ' ').replace(/[^a-zA-Z0-9]+/g, ' ').trim().toLowerCase();
@@ -384,12 +365,6 @@ for (const directory of selected) {
   const paperId = idByDoi.get(canonicalDoi?.toLowerCase()) ?? `records-${slugify(title)}`;
   const primaryCategory = topicByDoi.get(canonicalDoi?.toLowerCase()) ?? topicFor(title);
   const sourceMismatch = sourceMismatchRecords.get(directory);
-  const publicDelivery = publicDeliveryByHash.get(documentSha256);
-  if (publicDelivery && (publicDelivery.paper_id !== paperId || publicDelivery.source_record_path !== sourceRecordPath
-    || publicDelivery.pdf_path !== path.posix.join(sourceRecordPath, pdfName)
-    || publicDelivery.source_identity?.doi?.toLowerCase() !== canonicalDoi?.toLowerCase())) {
-    failures.push(`${directory}: public-delivery decision does not match the canonical paper identity`);
-  }
   papers.push({
     paper_id: paperId,
     title,
@@ -411,22 +386,7 @@ for (const directory of selected) {
     status: sourceMismatch ? 'source_mismatch' : 'published',
     ...(sourceMismatch ? { failure_reason: sourceMismatch } : {}),
     metadata_source: metadata.metadata_source ?? 'Records source package',
-    public_pdf_delivery: !sourceMismatch && publicDelivery ? 'allowed' : 'blocked',
-    rights_reviewed: Boolean(!sourceMismatch && publicDelivery),
-    rights_evidence: !sourceMismatch && publicDelivery ? {
-      access_url: publicDelivery.access_evidence.url,
-      license_url: publicDelivery.license_evidence.url,
-      license_content_version: publicDelivery.license_evidence.content_version,
-      reviewed_at: publicDelivery.reviewed_at,
-      reviewed_by: publicDelivery.reviewed_by,
-    } : null,
   });
-}
-
-for (const decision of publicDeliveryByHash.values()) {
-  if (!papers.some((paper) => paper.document_sha256 === decision.document_sha256 && paper.public_pdf_delivery === 'allowed')) {
-    failures.push(`${decision.paper_id}: reviewed public-delivery decision did not resolve to a publishable canonical paper`);
-  }
 }
 
 papers.push(...pendingPapers);
@@ -445,7 +405,7 @@ if (failures.length) {
 const recordsMainSha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: recordsRoot, encoding: 'utf8' }).trim();
 const recordsCommitTime = execFileSync('git', ['show', '-s', '--format=%cI', recordsMainSha], { cwd: recordsRoot, encoding: 'utf8' }).trim();
 const manifest = {
-  schema_version: 2,
+  schema_version: 3,
   authority: 'Maxwell3919/Research-Workflow-Records',
   records_main_sha: recordsMainSha,
   generated_at: recordsCommitTime,
@@ -457,8 +417,7 @@ const manifest = {
     missing_pdf: papers.filter((paper) => !paper.pdf_path).length,
     unclassified: papers.filter((paper) => !paper.primary_category).length,
     failed: papers.filter((paper) => paper.status === 'source_mismatch').length,
-    public_pdf_allowed: papers.filter((paper) => paper.public_pdf_delivery === 'allowed').length,
-    public_pdf_blocked: papers.filter((paper) => paper.public_pdf_delivery === 'blocked').length,
+    readable_pdf: papers.filter((paper) => paper.status === 'published').length,
   },
   deduplicated_records: [...duplicateRecords].sort(),
   excluded_records: [...excluded].sort(),

@@ -19,7 +19,7 @@ const fixturePdf = (id, contents) => {
   return {
     paper_id: id, source_record_path, pdf_path, annotation_path,
     document_sha256: createHash('sha256').update(bytes).digest('hex'), pdf_size_bytes: bytes.length,
-    page_count: 2, status: 'published', public_pdf_delivery: 'blocked', rights_reviewed: false, rights_evidence: null,
+    page_count: 2, status: 'published',
   };
 };
 const first = fixturePdf('fixture-one', 'one');

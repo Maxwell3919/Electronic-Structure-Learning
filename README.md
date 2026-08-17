@@ -6,7 +6,7 @@ The production site uses a static Plain Astro presentation build plus a narrow L
 
 GitHub is the source and version-control authority. GitHub Pages is retired and forbidden as a deployment target; CI validates source changes but never publishes the site. Production acceptance is always performed against the Newt/Talos endpoint above.
 
-Literature pages and PDF delivery are separate decisions. A citation route and original curated notes may remain public, while the runtime serves PDF bytes only when the exact canonical SHA-256 has a reviewed `allowed` decision in Records `manifests/literature-public-delivery.json`. Missing, unknown, mismatched, or unreviewed rights evidence is blocked by default; this technical firewall is not a legal conclusion and does not delete the private canonical research copy.
+Every published Literature Reader uses the canonical PDF indexed from Research-Workflow-Records. Index generation verifies the package identity, PDF SHA-256, size and page count; the runtime additionally enforces root-contained paths, regular-file metadata and PDF magic before exposing streaming and Range responses. Missing, mismatched, malformed or path-unsafe sources fail closed.
 
 ## Public routes
 

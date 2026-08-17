@@ -19,26 +19,6 @@ import type {
 const reader = document.querySelector<HTMLElement>('.paper-reader');
 const target = document.querySelector<HTMLElement>('#pdf-viewer');
 
-const renderWithheldCuratedAnnotations = async (readerElement: HTMLElement, curatedAnnotationsUrl: string) => {
-  attachDebugDiagnostics(readerElement);
-  const list = document.querySelector<HTMLOListElement>('[data-curated-note-list]');
-  const status = document.querySelector<HTMLElement>('[data-curated-annotation-status]');
-  if (!list) throw new Error('Missing curated annotation summary target.');
-  const response = await fetch(curatedAnnotationsUrl, { credentials: 'same-origin' });
-  if (!response.ok) throw new Error(`Curated annotation request failed with HTTP ${response.status}.`);
-  const payload = await response.json() as { annotations?: Array<{ annotation?: { pageIndex?: number; contents?: string } }> };
-  const notes = (payload.annotations ?? []).filter((item) => typeof item.annotation?.contents === 'string' && item.annotation.contents.trim());
-  list.replaceChildren(...(notes.length ? notes.map((item) => {
-    const entry = document.createElement('li');
-    const page = Number.isInteger(item.annotation?.pageIndex) ? `Page ${(item.annotation?.pageIndex ?? 0) + 1}. ` : '';
-    entry.textContent = `${page}${item.annotation?.contents?.trim()}`;
-    return entry;
-  }) : [Object.assign(document.createElement('li'), { textContent: 'No curated annotations have been published for this paper yet.' })]));
-  if (status) status.textContent = `${notes.length} curated ${notes.length === 1 ? 'annotation' : 'annotations'} from Research-Workflow-Records.`;
-  const personalStatus = document.querySelector<HTMLElement>('[data-personal-annotation-status]');
-  if (personalStatus) personalStatus.textContent = 'Personal PDF annotations are unavailable until an authorized PDF source is opened in this browser.';
-};
-
 const attachDebugDiagnostics = (readerElement: HTMLElement) => {
   if (new URLSearchParams(window.location.search).get('debug') !== '1') return;
   const container = document.querySelector<HTMLDetailsElement>('[data-reader-debug]');
@@ -201,7 +181,7 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   const readingAnalysisUrl = readerElement.dataset.readingAnalysisUrl;
   const curatedAnnotationsUrl = readerElement.dataset.curatedAnnotationsUrl;
   if (!paperId || !sourceSha256 || !curatedAnnotationsUrl) throw new Error('Missing Literature Reader source mapping.');
-  if (!pdfUrl) return renderWithheldCuratedAnnotations(readerElement, curatedAnnotationsUrl);
+  if (!pdfUrl) throw new Error('Missing canonical PDF source mapping.');
   if (!viewerTarget) throw new Error('Missing PDF viewer target.');
   attachDebugDiagnostics(readerElement);
   const documentId = `atlas-${paperId}`;
