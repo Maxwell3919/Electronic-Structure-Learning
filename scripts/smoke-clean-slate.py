@@ -92,7 +92,7 @@ CANONICAL_READING_ROUTES = [
 ]
 COMPATIBILITY_ROUTES = ["reading/martin/"]
 CONTENT_ROUTES = [
-    "", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
+    "", "index/", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *CANONICAL_READING_ROUTES, *COMPATIBILITY_ROUTES,
     *READY_PREPROCESSING_ROUTES, "methods/", "computational-tools/", "reference/",
 ]
 representative_units = []
@@ -113,7 +113,7 @@ BROWSER_READING_ROUTES = [
     "reading/literature/", *LITERATURE_ROUTES,
 ]
 BROWSER_ROUTES = [
-    "", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
+    "", "index/", *CORE_ROUTES, "theory/", *THEORY_ROUTES, *BROWSER_READING_ROUTES,
     "methods/", "computational-tools/", "reference/", "404.html",
 ]
 LEGACY_ROUTES = ["part-01-overview-and-background/", "learning-paths/", "literature/"]

@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { martinParts, martinReadingUnits } from '../../reading/books/martin';
+import { martinChapterSlugs } from '../../reading/books/martin/chapter-content';
+import { shollSteckelChapters } from '../../reading/books/sholl-steckel';
+import { cohenLouieChapters, cohenLouieParts } from '../../reading/books/cohen-louie';
+import { giustinoUnits } from '../../reading/books/giustino';
+import { publishedLiteraturePapers } from '../../reading/literature-library';
+import { researchTopics } from '../../reading/research-topics';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+const foundationSources = import.meta.glob('../theory/*/index.astro', {
+  query: '?raw', import: 'default', eager: true,
+}) as Record<string, string>;
+const foundations = Object.entries(foundationSources).map(([path, source]) => {
+  const slug = path.split('/')[2];
+  const title = source.match(/<BaseLayout[\s\S]*?title="([^"]+)"/)?.[1];
+  if (!slug || !title) throw new Error(`Cannot index Foundation page: ${path}`);
+  return { title, route: `/theory/${slug}/` };
+}).sort((left, right) => left.title.localeCompare(right.title));
+const core = [
+  ['Core overview', '/core/'],
+  ['Orientation', '/core/orientation/'],
+  ['Part I · The Quantum Problem of Matter', '/core/part-i/'],
+  ['Part II · The Many-Electron Problem', '/core/part-ii/'],
+  ['Part III · Periodic Matter and Electronic States', '/core/part-iii/'],
+  ['Part IV · Density Functional Theory', '/core/part-iv/'],
+  ['Part V · From Equations to Calculations', '/core/part-v/'],
+  ['Part VI · Ground-State Properties', '/core/part-vi/'],
+  ['Part VII · Response, Vibrations, and Coupling', '/core/part-vii/'],
+  ['Part VIII · Excitations and Spectra', '/core/part-viii/'],
+] as const;
+const books = [
+  { title: 'Martin · Electronic Structure', route: '/reading/books/martin/', units: [...martinParts, ...martinReadingUnits.filter((unit) => martinChapterSlugs.includes(unit.slug))] },
+  { title: 'Sholl & Steckel · Density Functional Theory: A Practical Introduction', route: '/reading/books/sholl-steckel/', units: shollSteckelChapters },
+  { title: 'Cohen & Louie · Fundamentals of Condensed Matter Physics', route: '/reading/books/cohen-louie/', units: [...cohenLouieParts, ...cohenLouieChapters] },
+  { title: 'Giustino · Materials Modelling Using Density Functional Theory', route: '/reading/books/giustino/', units: giustinoUnits },
+];
+---
+
+<BaseLayout title="Atlas Index" description="A complete, low-cost index of public Electronic Structure Atlas content.">
+  <h1>Atlas Index</h1>
+  <p class="lede">Every public Atlas reading route in one page. Use your browser’s Find command (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd>) to jump to a term, method, book chapter, or paper.</p>
+
+  <section class="index-section" aria-labelledby="index-core">
+    <h2 id="index-core">Core</h2>
+    <ul>{core.map(([title, route]) => <li><a href={href(route)}>{title}</a></li>)}</ul>
+  </section>
+
+  <section class="index-section" aria-labelledby="index-foundations">
+    <h2 id="index-foundations">Foundations</h2>
+    <p><a href={href('/theory/')}>Foundations map</a></p>
+    <ul class="index-columns">{foundations.map((entry) => <li><a href={href(entry.route)}>{entry.title}</a></li>)}</ul>
+  </section>
+
+  <section class="index-section" aria-labelledby="index-books">
+    <h2 id="index-books">Books</h2>
+    <p><a href={href('/reading/books/')}>Book guides</a></p>
+    {books.map((book) => (
+      <section class="index-group">
+        <h3><a href={href(book.route)}>{book.title}</a></h3>
+        <ul class="index-columns">{book.units.map((unit) => <li><a href={href(unit.route)}>{unit.title}</a></li>)}</ul>
+      </section>
+    ))}
+  </section>
+
+  <section class="index-section" aria-labelledby="index-literature">
+    <h2 id="index-literature">Literature</h2>
+    <p><a href={href('/reading/literature/')}>Literature map</a></p>
+    <h3>Topics</h3>
+    <ul class="index-columns">{researchTopics.map((topic) => <li><a href={href(`/reading/literature/${topic.id}/`)}>{topic.title}</a></li>)}</ul>
+    <h3>Papers</h3>
+    <ul>{publishedLiteraturePapers.map((paper) => <li><a href={href(paper.atlas_route)}>{paper.title}</a></li>)}</ul>
+  </section>
+
+  <section class="index-section" aria-labelledby="index-methods">
+    <h2 id="index-methods">Methods</h2>
+    <ul>
+      <li><a href={href('/methods/')}>Methods</a> — calculated objects, approximations, and interpretation boundaries.</li>
+      <li><a href={href('/computational-tools/')}>Computational Tools</a> — implementations and supporting resources.</li>
+    </ul>
+  </section>
+
+  <section class="index-section" aria-labelledby="index-reference">
+    <h2 id="index-reference">Reference</h2>
+    <p><a href={href('/reference/')}>Normalized sources and verification resources</a></p>
+  </section>
+</BaseLayout>
