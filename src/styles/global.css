@@ -98,6 +98,10 @@ dd { margin: 0.25rem 0 0 1.25rem; }
 .section-list { margin-top: 2.4rem; padding: 0; list-style: none; }
 .section-list li + li { margin-top: 1rem; }
 .section-list a { font-size: 1.15rem; }
+.index-section { padding-top: 0.4rem; border-top: 1px solid #d7d7d7; }
+.index-group h3 { margin-top: 1.4rem; }
+.index-columns { columns: 2 18rem; column-gap: 2.5rem; }
+.index-columns li { break-inside: avoid; }
 .source-outline { padding-left: 0; list-style: none; }
 .source-list h3 { margin-top: 0; }
 .secondary, .item-summary { color: #666666; }
@@ -920,7 +924,7 @@ figcaption {
 }
 .sequence-nav a:last-child { text-align: end; }
 
-code { padding: 0.08em 0.25em; background: #f5f5f5; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.86em; }
+code, kbd { padding: 0.08em 0.25em; background: #f5f5f5; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.86em; }
 footer { padding: 1.1rem 0 2.2rem; border-top: 1px solid #ececec; color: #707070; font-size: 0.86rem; }
 
 @media (max-width: 32rem) {

@@ -65,7 +65,7 @@ const giustinoSlugs = [...giustinoChapterSlugs, ...giustinoAppendixSlugs];
 const giustinoRoutes = giustinoSlugs.map((slug) => `reading/books/giustino/${slug}/`);
 
 const expectedPages = [
-  'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro',
+  'src/pages/404.astro', 'src/pages/computational-tools/index.astro', 'src/pages/index.astro', 'src/pages/index/index.astro',
   'src/pages/methods/index.astro', 'src/pages/reading/books/index.astro',
   'src/pages/reading/books/martin/[slug].astro', 'src/pages/reading/books/martin/index.astro',
   'src/pages/reading/books/sholl-steckel/[slug].astro', 'src/pages/reading/books/sholl-steckel/index.astro',
@@ -81,7 +81,7 @@ const expectedPages = [
 const expectedHtml = [
   '404.html', 'computational-tools/index.html', 'core/index.html',
   ...coreSlugs.map((slug) => `core/${slug}/index.html`),
-  'index.html', 'methods/index.html',
+  'index.html', 'index/index.html', 'methods/index.html',
   'reading/books/index.html', 'reading/books/martin/index.html',
   ...martinPublishedSlugs.map((slug) => `reading/books/martin/${slug}/index.html`),
   'reading/books/sholl-steckel/index.html',
@@ -98,7 +98,7 @@ const expectedHtml = [
 ].sort();
 const internalRoutes = new Set([
   'core/', ...coreSlugs.map((slug) => `core/${slug}/`),
-  '', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
+  '', 'index/', 'theory/', ...theorySlugs.map((slug) => `theory/${slug}/`),
   'reading/', 'reading/books/', 'reading/books/martin/', 'reading/martin/', ...martinRoutes,
   'reading/books/sholl-steckel/', ...shollSteckelRoutes,
   'reading/books/cohen-louie/', ...cohenLouieRoutes,
@@ -275,7 +275,7 @@ const checkLiteraturePages = (baseDirectory, mode) => {
       }
     }
     if (mode === 'source') assert(text.includes('current="reading"'), `${relative} lacks Guided Reading navigation context`);
-    else assert(text.includes('aria-current="page">Guided Reading</a>'), `${relative} does not render Guided Reading as current`);
+    else assert(text.includes('aria-current="page">Reading</a>'), `${relative} does not render Reading as current`);
   }
   if (mode === 'source') {
     const route = fs.readFileSync(path.join(baseDirectory, prefix, '[topic]/[paper].astro'), 'utf8');
@@ -471,7 +471,7 @@ if (builtMode) {
     assert(fs.existsSync(robotsPath), 'built site has no robots.txt');
     if (fs.existsSync(sitemapPath)) {
       const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-      const expectedSitemapRoutes = 96 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + libraryPaperRoutes.length;
+      const expectedSitemapRoutes = 97 + literatureSlugs.length + 1 + shollSteckelChapterSlugs.length + 1 + cohenLouieSlugs.length + 1 + giustinoSlugs.length + libraryPaperRoutes.length;
       assert(count(sitemap, /<url>/g) === expectedSitemapRoutes, `sitemap must contain exactly ${expectedSitemapRoutes} canonical public routes`);
       assert(!sitemap.includes('/reading/martin/'), 'sitemap includes the compatibility redirect');
       assert(!sitemap.includes('/404'), 'sitemap includes the 404 page');

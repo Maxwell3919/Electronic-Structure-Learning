@@ -9,6 +9,7 @@ import { literaturePapers } from '../reading/literature-papers';
 
 const fixedRoutes = [
   '/',
+  '/index/',
   '/core/',
   '/core/orientation/',
   '/core/part-i/',

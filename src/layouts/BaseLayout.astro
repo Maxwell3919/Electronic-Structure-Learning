@@ -16,10 +16,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const navigation = [
   { id: 'core', label: 'Core', route: '/core/' },
   { id: 'theory', label: 'Foundations', route: '/theory/' },
-  { id: 'reading', label: 'Guided Reading', route: '/reading/' },
+  { id: 'reading', label: 'Reading', route: '/reading/' },
   { id: 'methods', label: 'Methods', route: '/methods/' },
-  { id: 'computational-tools', label: 'Computational Tools', route: '/computational-tools/' },
-  { id: 'reference', label: 'Reference', route: '/reference/' },
 ] as const;
 ---
 
@@ -40,7 +38,7 @@ const navigation = [
       </a>
       <nav aria-label="Primary navigation">
         {navigation.map((item) => (
-          <a href={href(item.route)} aria-current={current === item.id ? 'page' : undefined}>
+          <a href={href(item.route)} aria-current={current === item.id || (item.id === 'methods' && current === 'computational-tools') ? 'page' : undefined}>
             {item.label}
           </a>
         ))}
@@ -51,6 +49,10 @@ const navigation = [
     </main>
     <footer>
       <p>Independent, static, and built for careful scientific reading.</p>
+      <nav aria-label="Supporting navigation">
+        <a href={href('/index/')}>Atlas Index</a>
+        <a href={href('/reference/')}>Reference</a>
+      </nav>
     </footer>
   </body>
 </html>
