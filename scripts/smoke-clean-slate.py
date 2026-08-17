@@ -16,7 +16,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE_URL = os.environ.get("PAGES_URL", "http://127.0.0.1:4321/Electronic-Structure-Learning/").rstrip("/") + "/"
+BASE_URL = os.environ.get("ATLAS_PUBLIC_URL", "http://127.0.0.1:4321/Electronic-Structure-Learning/").rstrip("/") + "/"
 DEPLOYED_SHA = os.environ.get("DEPLOYED_SHA")
 ARTIFACT_DIR = Path(os.environ.get("SMOKE_ARTIFACT_DIR", "artifacts/clean-slate-smoke"))
 THEORY_ROUTES = [

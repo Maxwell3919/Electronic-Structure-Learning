@@ -2,7 +2,9 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure foundations, continuous Core reading, guided reading, research methods, computational tools, and reviewed references.
 
-The production site uses a static Plain Astro presentation build plus a narrow Literature runtime. The static layer contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. The runtime streams pre-indexed canonical Records PDFs and reads GitHub-authoritative curated annotation files. Personal annotations stay editable in the browser's IndexedDB; the runtime exposes no annotation mutation API and is not a content-management layer.
+The production site uses a static Plain Astro presentation build plus a narrow Literature runtime on Talos, exposed through Newt at `http://188.255.156.20/Electronic-Structure-Learning/`. The static layer contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. The runtime streams pre-indexed canonical Records PDFs and reads GitHub-authoritative curated annotation files. Personal annotations stay editable in the browser's IndexedDB; the runtime exposes no annotation mutation API and is not a content-management layer.
+
+GitHub is the source and version-control authority. GitHub Pages is retired and forbidden as a deployment target; CI validates source changes but never publishes the site. Production acceptance is always performed against the Newt/Talos endpoint above.
 
 ## Public routes
 
@@ -112,7 +114,7 @@ npm ci --no-audit --no-fund
 npm run check
 ```
 
-The deployed browser smoke is intentionally separate because it verifies the Talos → Newt production route, final deployment SHA, PDF Reader behavior, keyboard access, native MathML, narrow screens, configured redirects, and operation with JavaScript disabled. The formal endpoint is `http://188.255.156.20/Electronic-Structure-Learning/`; GitHub Pages is not a deployment acceptance target.
+The deployed browser smoke is intentionally separate because it verifies the Talos → Newt production route, final deployment SHA, PDF Reader behavior, keyboard access, native MathML, narrow screens, configured redirects, and operation with JavaScript disabled. Set `ATLAS_PUBLIC_URL` when exercising a deployed site. GitHub Pages is retired, receives no deployment, and must not be used as a fallback smoke target.
 
 ## Legacy site
 
