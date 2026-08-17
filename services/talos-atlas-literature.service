@@ -8,7 +8,7 @@ Type=simple
 WorkingDirectory=/home/talos/work/Electronic-Structure-Learning
 Environment=ATLAS_LITERATURE_ROOT=/home/talos/work/Research-Workflow-Records
 Environment=ATLAS_LITERATURE_PORT=8103
-Environment=ATLAS_RECORDS_SYNC_LOCK=/home/talos/.local/state/electronic-structure-atlas/records-sync.lock.d
+Environment=ATLAS_RECORDS_SYNC_STATUS=/home/talos/.local/state/electronic-structure-atlas/records-sync-status.json
 ExecStart=/home/talos/.nvm/versions/node/v25.8.2/bin/node /home/talos/work/Electronic-Structure-Learning/services/literature-runtime-server.mjs
 Restart=always
 RestartSec=5
@@ -17,7 +17,6 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ReadOnlyPaths=/home/talos/work/Electronic-Structure-Learning /home/talos/work/Research-Workflow-Records
-ReadWritePaths=/home/talos/work/Research-Workflow-Records/literature /home/talos/.local/state/electronic-structure-atlas
 
 [Install]
 WantedBy=default.target

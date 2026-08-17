@@ -2,7 +2,7 @@
 
 Electronic Structure Atlas is a small, public map of electronic-structure foundations, continuous Core reading, guided reading, research methods, computational tools, and reviewed references.
 
-The production site uses a static Plain Astro presentation build plus a narrow Literature runtime. The static layer contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. The runtime only streams pre-indexed canonical Records PDFs and reads/creates anonymous shared annotation files; it is not a content-management layer.
+The production site uses a static Plain Astro presentation build plus a narrow Literature runtime. The static layer contains the Home page, a continuous Core opening sequence, thirty-nine individually reviewed Foundations pages, source-aligned Guided Reading pages, other research entrances, and a general 404 page. The runtime streams pre-indexed canonical Records PDFs and reads GitHub-authoritative curated annotation files. Personal annotations stay editable in the browser's IndexedDB; the runtime exposes no annotation mutation API and is not a content-management layer.
 
 ## Public routes
 

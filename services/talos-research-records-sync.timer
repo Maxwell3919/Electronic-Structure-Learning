@@ -1,10 +1,10 @@
 [Unit]
-Description=Daily Research Workflow Records reconciliation at Talos local midnight
+Description=Five-minute Research Workflow Records authority refresh
 
 [Timer]
-OnCalendar=*-*-* 00:00:00
+OnCalendar=*-*-* *:0/5:00
 Persistent=true
-AccuracySec=1min
+AccuracySec=30s
 Unit=talos-research-records-sync.service
 
 [Install]
