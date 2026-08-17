@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import type { LiteratureLibraryPaper } from '../reading/literature-library';
 import type { LiteraturePaper } from '../reading/literature-papers';
 import type { ResearchTopic } from '../reading/research-topics';
+import { conceptsForPaper } from '../reading/literature-concepts';
 
 type Props = {
   entry: LiteratureLibraryPaper;
@@ -17,6 +18,7 @@ const href = (route: string) => route.startsWith('http') ? route : `${base}${rou
 const pdfUrl = href(`/papers/${paper.id}.pdf`);
 const curatedAnnotationsUrl = href(`/papers/api/annotations/${entry.document_sha256}`);
 const hasReadingAnalysis = readingAnalysisUrl !== null;
+const paperConcepts = conceptsForPaper(paper.id).slice(0, 10);
 ---
 
 <BaseLayout title={paper.title} description={`Read ${paper.title} with curated and personal annotation layers.`} current="reading" wide>
@@ -40,6 +42,7 @@ const hasReadingAnalysis = readingAnalysisUrl !== null;
     </p>
     <p class="reader-meta" data-curated-annotation-status>Loading curated annotations…</p>
     <p class="reader-meta" data-personal-annotation-status>Loading personal annotations from this browser…</p>
+    <p class="reader-concepts"><strong>Atlas concepts:</strong> {paperConcepts.map((concept, index) => <>{index > 0 && ' · '}<a href={href(concept.canonical_route)}>{concept.title}</a></>)}</p>
     <details class="reader-diagnostics" data-reader-debug hidden>
       <summary>Reader diagnostics</summary>
       <pre data-reader-debug-output>Loading diagnostics…</pre>

@@ -11,6 +11,16 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
   <h1>Literature</h1>
   <p class="lede">Literature is a map of how electronic-structure researchers turn questions into evidence and bounded conclusions.</p>
   <p>Theory teaches the knowledge. Books teach a route through a source. Literature follows the move from a research question to an observable, a method, evidence, interpretation, and the next question.</p>
+  <div class="atlas-panel-grid">
+    <section>
+      <h2><a href={href('/reading/literature/concepts/')}>Concept Map</a></h2>
+      <p>Move from a stable concept to its canonical Atlas explanation and the papers that use it.</p>
+    </section>
+    <section>
+      <h2><a href={href('/reading/literature/synthesis/')}>Cross-paper Synthesis</a></h2>
+      <p>Read short evidence-led answers to recurring questions that no single paper settles.</p>
+    </section>
+  </div>
   <section aria-labelledby="research-questions">
     <h2 id="research-questions">Research Questions</h2>
     <ol class="section-list">

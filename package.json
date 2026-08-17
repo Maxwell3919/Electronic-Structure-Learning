@@ -20,6 +20,7 @@
     "validate:clean-slate": "node scripts/validate-clean-slate.mjs --source",
     "validate:build-budget": "node scripts/validate-build-budget.mjs",
     "audit:literature-library": "node scripts/audit-literature-library.mjs",
+    "audit:literature-knowledge": "node scripts/audit-literature-knowledge-closure.mjs",
     "audit:literature-library:records": "node scripts/audit-literature-library.mjs --require-records",
     "test:literature-annotations": "node scripts/test-literature-annotations.mjs",
     "test:annotation-layers": "node scripts/test-annotation-layers.mjs",
@@ -32,7 +33,7 @@
     "audit:site-index": "node scripts/audit-site-index.mjs",
     "audit:deployment-authority": "node scripts/audit-deployment-authority.mjs",
     "audit:annotation-files:records": "node /home/talos/work/Research-Workflow-Records/scripts/validate-annotations.mjs /home/talos/work/Research-Workflow-Records",
-    "check": "astro check && npm run audit:deployment-authority && npm run audit:literature-preprocessing && npm run audit:literature-library && npm run test:literature-annotations && npm run test:annotation-layers && npm run audit:unified-literature-reader && npm run test:pdf-delivery && npm run audit:records-boundary && npm run audit:references && npm run audit:home-cat && npm run audit:site-index && npm run validate:clean-slate && astro build && node scripts/audit-literature-library.mjs --built && node scripts/audit-site-index.mjs --built && npm run validate:build-budget && node scripts/validate-clean-slate.mjs --built && npm run audit:source-visuals"
+    "check": "astro check && npm run audit:deployment-authority && npm run audit:literature-preprocessing && npm run audit:literature-library && npm run audit:literature-knowledge && npm run test:literature-annotations && npm run test:annotation-layers && npm run audit:unified-literature-reader && npm run test:pdf-delivery && npm run audit:records-boundary && npm run audit:references && npm run audit:home-cat && npm run audit:site-index && npm run validate:clean-slate && astro build && node scripts/audit-literature-library.mjs --built && node scripts/audit-site-index.mjs --built && npm run validate:build-budget && node scripts/validate-clean-slate.mjs --built && npm run audit:source-visuals"
   },
   "dependencies": {
     "@embedpdf/snippet": "2.15.0",

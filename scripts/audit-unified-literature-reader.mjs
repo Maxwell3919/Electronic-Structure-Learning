@@ -13,7 +13,11 @@ const published = manifest.papers.filter((paper) => paper.status === 'published'
 const dedicatedPages = fs.readdirSync(pagesRoot, { recursive: true, withFileTypes: true })
   .filter((entry) => entry.isFile() && entry.name === 'index.astro')
   .map((entry) => path.join(entry.parentPath, entry.name))
-  .filter((file) => file !== path.join(pagesRoot, 'index.astro'));
+  .filter((file) => !new Set([
+    path.join(pagesRoot, 'index.astro'),
+    path.join(pagesRoot, 'concepts/index.astro'),
+    path.join(pagesRoot, 'synthesis/index.astro'),
+  ]).has(file));
 
 assert.equal(dedicatedPages.length, 0, `dedicated paper pages are forbidden: ${dedicatedPages.map((file) => path.relative(root, file)).join(', ')}`);
 assert(!published.some((paper) => routeSource.includes(`'${paper.paper_id}'`) || routeSource.includes(`\"${paper.paper_id}\"`)), 'dynamic route hard-codes a published paper ID');

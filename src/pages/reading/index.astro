@@ -36,6 +36,10 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
     <p>
       <a href={href('/reading/literature/')}>Explore the Literature map</a>
     </p>
+    <ul class="compact-link-list">
+      <li><a href={href('/reading/literature/concepts/')}>Paper → Concept Map</a></li>
+      <li><a href={href('/reading/literature/synthesis/')}>Cross-paper Synthesis</a></li>
+    </ul>
   </section>
 
   <section aria-labelledby="reading-boundary">

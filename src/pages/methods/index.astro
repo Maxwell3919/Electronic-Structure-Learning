@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
-const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations/';
+const workflow = 'http://188.255.156.20/DFT-Research-Workflow/operations/';
 ---
 
 <BaseLayout
@@ -23,21 +23,28 @@ const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations
   <p>
     Spin-polarized and noncollinear formulations enlarge the density variables; spin–orbit coupling adds relativistic spin–orbital physics. They produce candidate magnetic states, spin textures, or anisotropy energies, not automatic proof of the global magnetic state or finite-temperature order. See <a href={href('/theory/exchange-correlation-functionals-and-approximations/')}>exchange–correlation approximations</a> and <a href={href('/theory/relativistic-electronic-structure-spin-and-magnetism/')}>spin and relativity</a>.
   </p>
+  <h3 id="dft-plus-u">DFT+U</h3>
+  <p>DFT+U modifies a declared localized subspace through a chosen U, projector construction, occupation matrix, and double-counting form. It can repair a particular localization or ordering error, but it does not become a generally more accurate functional. A defensible claim reports those definitions, compares relevant structural and magnetic branches, and tests whether the conclusion survives a physically justified U range. The Literature synthesis <a href={href('/reading/literature/synthesis/dft-plus-u-and-low-dimensional-magnetism/')}>DFT+U in low-dimensional magnetism</a> shows why gap opening, moment formation, exchange, anisotropy, and finite-temperature order must be reviewed separately.</p>
+  <h3 id="magnetic-exchange">Magnetic exchange and spin–lattice models</h3>
+  <p>Energy mapping estimates exchange parameters only inside a declared spin Hamiltonian and candidate-state set. Spin–orbit coupling can add anisotropic exchange, Dzyaloshinskii–Moriya terms, and single-ion anisotropy; structural displacements can make those parameters coordinate-dependent. A fitted J or mean-field ordering temperature therefore inherits both the electronic approximation and the reduced-model truncation.</p>
 
   <h2>Representation and core treatment</h2>
   <p>
     Plane waves and real-space grids offer systematic finite representations; localized orbitals trade that uniformity for compact, chemically adapted functions. All-electron methods treat core and valence explicitly. Pseudopotentials replace core states with an effective operator; PAW transforms smooth auxiliary orbitals and reconstructs all-electron-like quantities, usually within a frozen-core dataset. These choices control basis error, boundary conditions, transferability, accessible observables, and cost; they do not change the underlying approximation in the same way as choosing a functional. See <a href={href('/theory/discretization-and-basis-representations/')}>discretization</a>, <a href={href('/theory/plane-wave-and-real-space-methods/')}>plane-wave and real-space methods</a>, <a href={href('/theory/localized-orbital-methods/')}>localized orbitals</a>, and <a href={href('/theory/pseudopotentials-paw-and-core-valence-treatments/')}>core treatment</a>.
   </p>
 
-  <h2>Structures, forces, and paths</h2>
+  <h2 id="structures-forces-and-paths">Structures, forces, and paths</h2>
   <p>
     Energy derivatives give forces and stress. Geometry optimization searches for a stationary structure under declared constraints; stress is conjugate to strain, and its linear derivative defines an elastic tensor under a stated clamped-ion or relaxed-ion convention. A stationary point, positive local curvature, or elastic stability condition does not establish the global or finite-temperature stable phase. The nudged elastic band method instead optimizes a proposed path between specified endpoints and yields a barrier for that path, not a rate or proof that no lower path exists.
   </p>
+  <h3 id="interfaces-and-alignment">Interfaces, band alignment, and charge redistribution</h3>
+  <p>An interface calculation additionally declares termination, registry, commensurate strain, separation, electrostatic reference, and boundary conditions. Type-I, II, or III alignment from isolated components is a starting model; the combined system must test interface dipoles, hybridization and structural relaxation. Charge-density differences, work functions and layer projections constrain different statements and should not be collapsed into one “charge-transfer mechanism.” See <a href={href('/reading/literature/synthesis/interlayer-coupling-as-control/')}>Interlayer coupling as a control parameter</a>.</p>
 
   <h2>Vibrations, response, and finite temperature</h2>
   <p>
     Finite differences obtain derivatives from separately perturbed calculations; density-functional perturbation theory solves the corresponding linear-response problem. Atomic displacements give force constants and phonons; electric, strain, or other perturbations give their corresponding response tensors and coupling matrix elements. These results require a valid reference state, perturbation sector, harmonic or linear regime, and Brillouin-zone coverage. Ab initio molecular dynamics instead samples nuclear trajectories on an electronic energy surface; its output supports ensemble claims only after equilibration, correlation, finite-size, and sampling limits are addressed. See <a href={href('/theory/linear-response-and-excited-states/')}>linear response</a> and <a href={href('/theory/statistical-mechanics/')}>statistical mechanics</a>.
   </p>
+  <p>A phonon calculation should name the q-space coverage and the numerical controls that affect shallow modes. Γ tests only cell-periodic distortions; a high-symmetry path still does not cover the full Brillouin zone. In a two-dimensional material, a small negative flexural branch near Γ can reflect rotational invariance, finite supercell, interpolation, stress, or electronic convergence, while a robust negative eigenvalue away from Γ identifies a real harmonic downhill direction. Harmonic stability is local: anharmonic free energies and kinetic accessibility are separate questions.</p>
 
   <h2>Localized interpolation and topology</h2>
   <p>
@@ -49,10 +56,12 @@ const workflow = 'https://maxwell3919.github.io/DFT-Research-Workflow/operations
     GW approximates the electronic self-energy to obtain charged addition and removal energies. The Bethe–Salpeter equation adds an electron–hole kernel to describe neutral excitations and optical spectra; time-dependent DFT obtains density response with an approximate time-dependent kernel. These methods calculate different objects: a quasiparticle gap, a neutral excitation, and a measured optical onset coincide only under additional conditions involving momentum, selection rules, matrix elements, and the experimental probe. See <a href={href('/theory/many-body-perturbation-theory-and-quasiparticles/')}>many-body perturbation theory</a>.
   </p>
 
-  <h2>Coupling and transport</h2>
+  <h2 id="coupling-and-transport">Coupling and transport</h2>
   <p>
     Electron–phonon methods combine electronic states, phonons, and coupling matrix elements to estimate linewidths, relaxation, mass renormalization, or conventional superconducting quantities. Semiclassical Boltzmann methods map band velocities and a declared scattering model to transport coefficients. Both are composite calculations: dense interpolation and numerical convergence are necessary, but their physical assumptions and the target observable require separate validation.
   </p>
+  <h3 id="from-dfpt-to-tc">From DFPT to α²F, λ, ωlog, and Tc</h3>
+  <p>DFPT supplies phonons and the change of the self-consistent potential. Matrix elements connect particular electronic states and phonon modes; Fermi-surface phase space and frequency binning contract them into α²F(ω); spectral integrals produce λ and ωlog. Allen–Dynes then adds μ* and an empirical fit domain, while an Eliashberg calculation retains more frequency and possibly momentum structure. These are successive model reductions, not interchangeable output labels. A converged Tc scalar cannot repair an unstable structure, an incomplete Fermi surface, a coarse q mesh, or an unjustified Migdal or Coulomb treatment. See <a href={href('/reading/literature/synthesis/from-dfpt-to-tc/')}>From DFPT to a phonon-mediated Tc</a> and <a href={href('/reading/literature/synthesis/what-establishes-conventional-superconductivity/')}>What establishes conventional superconductivity?</a></p>
 
   <h2>Execution boundary</h2>
   <p>

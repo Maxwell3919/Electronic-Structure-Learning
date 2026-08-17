@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { conceptPapers, literatureConcepts } from '../../../../reading/literature-concepts';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
+---
+
+<BaseLayout title="Literature Concept Map" description="A normalized map from 95 reviewed papers to stable Atlas concepts." current="reading">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href={href('/reading/literature/')}>Literature</a><span aria-hidden="true">/</span><span aria-current="page">Concept Map</span></nav>
+  <h1>Literature Concept Map</h1>
+  <p class="lede">Forty-four stable concepts connect the frozen Literature v1 corpus to the Atlas explanation that should carry each concept.</p>
+  <p>This map is deliberately smaller than the vocabulary used by the papers. It normalizes equivalent language, keeps methods separate from observables, and does not turn every annotation keyword into a tag.</p>
+  <ol class="section-list concept-map-list">
+    {literatureConcepts.map((concept) => (
+      <li id={concept.id}>
+        <h2><a href={href(concept.canonical_route)}>{concept.title}</a></h2>
+        <p>{concept.description}</p>
+        <p class="secondary">{concept.paper_count} papers · examples: {conceptPapers(concept).slice(0, 3).map((paper, index) => <>{index > 0 && ' · '}<a href={href(paper.atlas_route!)}>{paper.title}</a></>)}</p>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>
