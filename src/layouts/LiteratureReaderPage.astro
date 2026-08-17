@@ -15,11 +15,11 @@ const { entry, paper, topic, readingAnalysisUrl } = Astro.props;
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 const href = (route: string) => route.startsWith('http') ? route : `${base}${route.replace(/^\//, '')}`;
 const pdfUrl = href(`/papers/${paper.id}.pdf`);
-const sharedAnnotationsUrl = href(`/papers/api/annotations/${entry.document_sha256}`);
+const curatedAnnotationsUrl = href(`/papers/api/annotations/${entry.document_sha256}`);
 const hasReadingAnalysis = readingAnalysisUrl !== null;
 ---
 
-<BaseLayout title={paper.title} description={`Read ${paper.title} with the shared annotation layer.`} current="reading" wide>
+<BaseLayout title={paper.title} description={`Read ${paper.title} with curated and personal annotation layers.`} current="reading" wide>
   <div class="reader-heading">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href={href('/reading/literature/')}>Literature</a><span aria-hidden="true">/</span>
@@ -38,8 +38,12 @@ const hasReadingAnalysis = readingAnalysisUrl !== null;
         ? 'Curated reading analysis is available in the source-aligned side rails.'
         : 'Reading analysis pending.'}
     </p>
-    <p class="reader-meta" data-shared-annotation-status>Loading the global anonymous annotation layer…</p>
-    <p><button class="annotation-save" type="button" data-save-shared-annotation hidden>Save annotation</button></p>
+    <p class="reader-meta" data-curated-annotation-status>Loading curated annotations…</p>
+    <p class="reader-meta" data-personal-annotation-status>Loading personal annotations from this browser…</p>
+    <details class="reader-diagnostics" data-reader-debug hidden>
+      <summary>Reader diagnostics</summary>
+      <pre data-reader-debug-output>Loading diagnostics…</pre>
+    </details>
   </div>
 
   <section
@@ -49,7 +53,7 @@ const hasReadingAnalysis = readingAnalysisUrl !== null;
     data-source-sha256={entry.document_sha256}
     data-pdf-url={pdfUrl}
     data-reading-analysis-url={readingAnalysisUrl ?? undefined}
-    data-shared-annotations-url={sharedAnnotationsUrl}
+    data-curated-annotations-url={curatedAnnotationsUrl}
   >
     <aside class="annotation-rail annotation-left" aria-label="What does this mean?" aria-hidden={!hasReadingAnalysis}>
       {hasReadingAnalysis && <><h2>What does this mean?</h2><ol></ol></>}

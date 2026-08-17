@@ -1,24 +1,21 @@
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import {
-  closeSync, constants, createReadStream, existsSync, fsyncSync, linkSync, lstatSync,
-  mkdirSync, openSync, readFileSync, readdirSync, readSync, rmdirSync, statSync,
-  unlinkSync, writeFileSync,
+  closeSync, createReadStream, existsSync, lstatSync, openSync, readFileSync,
+  readdirSync, readSync, statSync,
 } from 'node:fs';
 import { createServer } from 'node:http';
-import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
+import { isAbsolute, relative, resolve, sep } from 'node:path';
 
 const host = '127.0.0.1';
 const port = Number(process.env.ATLAS_LITERATURE_PORT ?? 8103);
 const recordsRoot = resolve(process.env.ATLAS_LITERATURE_ROOT ?? '/home/talos/work/Research-Workflow-Records');
-const syncLockDir = resolve(process.env.ATLAS_RECORDS_SYNC_LOCK ?? '/home/talos/.local/state/electronic-structure-atlas/records-sync.lock.d');
 const libraryManifestPath = resolve(process.env.ATLAS_LITERATURE_MANIFEST ?? new URL('../src/reading/literature-library.json', import.meta.url).pathname);
+const deploymentManifestPath = resolve(process.env.ATLAS_DEPLOYMENT_MANIFEST ?? new URL('../dist/deployment-manifest.json', import.meta.url).pathname);
+const syncStatusPath = resolve(process.env.ATLAS_RECORDS_SYNC_STATUS ?? '/home/talos/.local/state/electronic-structure-atlas/records-sync-status.json');
 const maxAnnotationBytes = 64 * 1024;
-const rateLimitWindowMs = 60_000;
-const rateLimitMax = 30;
 const allowedAnnotationTypes = new Set([1, 3, 9, 10]);
 const allowedOrigins = new Set(['http://127.0.0.1:4321', 'http://localhost:4321', 'http://127.0.0.1:8101', 'http://188.255.156.20']);
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-mkdirSync(dirname(syncLockDir), { recursive: true, mode: 0o700 });
 
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const resolveInside = (root, entryPath) => {
@@ -35,7 +32,9 @@ const readPdfMagic = (file) => {
   } finally { closeSync(fd); }
 };
 
-const library = JSON.parse(readFileSync(libraryManifestPath, 'utf8'));
+const libraryBytes = readFileSync(libraryManifestPath);
+const library = JSON.parse(libraryBytes);
+const manifestSha256 = sha256(libraryBytes);
 const publishedEntries = library.papers.filter((entry) => entry.status === 'published');
 const papers = new Map(publishedEntries.map((entry) => {
   if (!entry.paper_id || !entry.pdf_path || !entry.source_record_path || !/^[a-f0-9]{64}$/.test(entry.document_sha256)
@@ -116,81 +115,42 @@ const readAnnotationRecords = (paper) => {
     const error = validateRecord(record, paper, filename);
     if (error) throw new Error(`${filename}: ${error}`);
     const dedupeKey = sha256(JSON.stringify(canonicalize(record.annotation_payload)));
-    if (deduped.has(dedupeKey)) continue;
+    if (deduped.has(dedupeKey)) throw new Error(`Duplicate curated annotation content: ${filename}`);
     deduped.add(dedupeKey);
     results.push({ record, dedupeKey });
   }
   return results.sort((a, b) => a.record.created_at.localeCompare(b.record.created_at) || a.record.annotation_id.localeCompare(b.record.annotation_id));
 };
 
-const rateBuckets = new Map();
-const requestKey = (request) => {
-  const forwarded = request.headers['x-forwarded-for'];
-  return typeof forwarded === 'string' && forwarded ? forwarded.split(',')[0].trim() : request.socket.remoteAddress ?? 'unknown';
+const serveCuratedAnnotations = (request, response, documentHash, paper) => {
+  if (!['GET', 'HEAD'].includes(request.method ?? '')) return jsonResponse(request, response, 405, { error: 'method_not_allowed' }, { Allow: 'GET, HEAD, OPTIONS' });
+  try {
+    const annotations = readAnnotationRecords(paper).map(({ record }) => ({ annotation: record.annotation_payload, created_at: record.created_at, ...(record.updated_at ? { updated_at: record.updated_at } : {}) }));
+    return jsonResponse(request, response, 200, { document_hash: documentHash, authority: 'github-curated', annotations: request.method === 'HEAD' ? [] : annotations });
+  } catch { return jsonResponse(request, response, 500, { error: 'curated_annotation_store_invalid' }); }
 };
-const rateLimited = (request) => {
-  const now = Date.now(), key = requestKey(request), bucket = rateBuckets.get(key);
-  if (!bucket || now - bucket.startedAt >= rateLimitWindowMs) { rateBuckets.set(key, { startedAt: now, count: 1 }); return false; }
-  bucket.count += 1;
-  return bucket.count > rateLimitMax;
+
+const readJsonFile = (file) => {
+  try { return JSON.parse(readFileSync(file, 'utf8')); } catch { return null; }
 };
-const readJsonBody = (request, response, callback) => {
-  const declaredLength = Number(request.headers['content-length'] ?? 0);
-  if (declaredLength > maxAnnotationBytes) return jsonResponse(request, response, 413, { error: 'payload_too_large' });
-  const chunks = []; let size = 0; let rejected = false;
-  request.on('data', (chunk) => {
-    if (rejected) return;
-    size += chunk.length;
-    if (size > maxAnnotationBytes) { rejected = true; jsonResponse(request, response, 413, { error: 'payload_too_large' }); return; }
-    chunks.push(chunk);
-  });
-  request.on('end', () => {
-    if (rejected) return;
-    try { callback(JSON.parse(Buffer.concat(chunks).toString('utf8'))); }
-    catch { jsonResponse(request, response, 400, { error: 'malformed_json' }); }
-  });
-};
-const atomicCreateRecord = (paper, record) => {
-  mkdirSync(paper.annotationDir, { recursive: true, mode: 0o700 });
-  const finalPath = resolveInside(paper.annotationDir, `${record.annotation_id}.json`);
-  const tempPath = resolveInside(paper.annotationDir, `.${record.annotation_id}.${process.pid}.${randomBytes(6).toString('hex')}.tmp`);
-  const fd = openSync(tempPath, 'wx', 0o600);
-  try { writeFileSync(fd, `${JSON.stringify(record, null, 2)}\n`); fsyncSync(fd); } finally { closeSync(fd); }
-  try { linkSync(tempPath, finalPath); } finally { unlinkSync(tempPath); }
-  const dirFd = openSync(paper.annotationDir, constants.O_RDONLY | (constants.O_DIRECTORY ?? 0));
-  try { fsyncSync(dirFd); } finally { closeSync(dirFd); }
-};
-const serveSharedAnnotations = (request, response, documentHash, paper) => {
-  if (request.method === 'GET' || request.method === 'HEAD') {
-    try {
-      const annotations = readAnnotationRecords(paper).map(({ record }) => ({ annotation: record.annotation_payload, created_at: record.created_at, ...(record.updated_at ? { updated_at: record.updated_at } : {}) }));
-      return jsonResponse(request, response, 200, { document_hash: documentHash, annotations: request.method === 'HEAD' ? [] : annotations });
-    } catch { return jsonResponse(request, response, 500, { error: 'annotation_store_invalid' }); }
-  }
-  if (request.method !== 'POST') return jsonResponse(request, response, 405, { error: 'method_not_allowed' }, { Allow: 'GET, HEAD, POST, OPTIONS' });
-  if (rateLimited(request)) return jsonResponse(request, response, 429, { error: 'rate_limited' }, { 'Retry-After': '60' });
-  return readJsonBody(request, response, (body) => {
-    const annotation = body?.annotation;
-    const validationError = validateAnnotation(annotation, paper);
-    if (validationError) return jsonResponse(request, response, 400, { error: 'invalid_annotation', detail: validationError });
-    try { mkdirSync(syncLockDir); } catch (error) {
-      if (error.code === 'EEXIST') return jsonResponse(request, response, 503, { error: 'records_sync_in_progress' }, { 'Retry-After': '5' });
-      return jsonResponse(request, response, 500, { error: 'annotation_lock_failed' });
-    }
-    try {
-      const records = readAnnotationRecords(paper);
-      const dedupeKey = sha256(JSON.stringify(canonicalize(annotation)));
-      const exact = records.find((entry) => entry.dedupeKey === dedupeKey);
-      if (exact) return jsonResponse(request, response, 200, { status: 'duplicate', annotation: exact.record.annotation_payload, created_at: exact.record.created_at });
-      if (records.some((entry) => entry.record.annotation_id === annotation.id)) return jsonResponse(request, response, 409, { error: 'annotation_id_conflict' });
-      const createdAt = new Date().toISOString();
-      const record = { schema_version: 1, annotation_id: annotation.id, document_sha256: documentHash, page_index: annotation.pageIndex, annotation_payload: annotation, created_at: createdAt };
-      atomicCreateRecord(paper, record);
-      return jsonResponse(request, response, 201, { status: 'created', annotation, created_at: createdAt });
-    } catch (error) {
-      if (error.code === 'EEXIST') return jsonResponse(request, response, 409, { error: 'annotation_id_conflict' });
-      return jsonResponse(request, response, 500, { error: 'annotation_write_failed' });
-    } finally { rmdirSync(syncLockDir); }
+const serveHealth = (request, response) => {
+  if (!['GET', 'HEAD'].includes(request.method ?? '')) return jsonResponse(request, response, 405, { error: 'method_not_allowed' }, { Allow: 'GET, HEAD, OPTIONS' });
+  const deployment = readJsonFile(deploymentManifestPath);
+  const sync = readJsonFile(syncStatusPath);
+  const localCommit = sync?.records_local_commit ?? null;
+  const originCommit = sync?.records_origin_main_commit ?? null;
+  return jsonResponse(request, response, 200, {
+    service: 'electronic-structure-atlas-literature',
+    status: localCommit && localCommit === originCommit ? 'ok' : 'degraded',
+    atlas_deployed_commit: deployment?.sha ?? null,
+    records_local_commit: localCommit,
+    records_origin_main_commit: originCommit,
+    last_successful_sync: sync?.last_successful_sync ?? null,
+    manifest_sha256: manifestSha256,
+    manifest_records_main_commit: library.records_main_sha ?? null,
+    published_papers: papers.size,
+    curated_annotations: 'github-read-only',
+    personal_annotations: 'browser-indexeddb',
   });
 };
 
@@ -230,13 +190,14 @@ const server = createServer((request, response) => {
   response.setHeader('Vary', 'Origin');
   if (request.method === 'OPTIONS') {
     if (origin && !allowedOrigins.has(origin)) return notFound(request, response);
-    response.writeHead(204, { 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS', 'Access-Control-Max-Age': '600' }); return response.end();
+    response.writeHead(204, { 'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS', 'Access-Control-Max-Age': '600' }); return response.end();
   }
+  if (url.pathname === '/papers/health') return serveHealth(request, response);
   if (url.pathname === '/papers/' && ['GET', 'HEAD'].includes(request.method ?? '')) return jsonResponse(request, response, 200, {
-    service: 'electronic-structure-atlas-literature', published_papers: papers.size, pdf_identity: 'preindexed-sha256', annotation_store: 'records-files', annotation_api: '/papers/api/annotations/{document_sha256}',
+    service: 'electronic-structure-atlas-literature', published_papers: papers.size, pdf_identity: 'preindexed-sha256', curated_annotation_store: 'github-records-read-only', personal_annotation_store: 'browser-indexeddb', annotation_api: '/papers/api/annotations/{document_sha256}', health: '/papers/health',
   });
   const annotationMatch = /^\/papers\/api\/annotations\/([a-f0-9]{64})$/.exec(url.pathname);
-  if (annotationMatch) { const paper = papersByHash.get(annotationMatch[1]); return paper ? serveSharedAnnotations(request, response, annotationMatch[1], paper) : notFound(request, response); }
+  if (annotationMatch) { const paper = papersByHash.get(annotationMatch[1]); return paper ? serveCuratedAnnotations(request, response, annotationMatch[1], paper) : notFound(request, response); }
   if (!['GET', 'HEAD'].includes(request.method ?? '')) return notFound(request, response);
   const pdfMatch = /^\/papers\/([^/]+)\.pdf$/.exec(url.pathname);
   if (pdfMatch) { const paper = papers.get(decodeURIComponent(pdfMatch[1])); return paper ? servePdf(request, response, paper) : notFound(request, response); }
@@ -248,4 +209,4 @@ const server = createServer((request, response) => {
 const close = () => server.close(() => process.exit(0));
 process.on('SIGTERM', close);
 process.on('SIGINT', close);
-server.listen(port, host, () => console.log(`Atlas literature runtime listening on http://${host}:${port} for ${papers.size} published papers; annotations in Records packages`));
+server.listen(port, host, () => console.log(`Atlas literature runtime listening on http://${host}:${port} for ${papers.size} published papers; curated annotations are read-only Records data`));

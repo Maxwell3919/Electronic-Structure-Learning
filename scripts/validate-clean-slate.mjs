@@ -295,7 +295,7 @@ const checkLiteraturePages = (baseDirectory, mode) => {
       assert(text.includes(hasAnalysis ? 'Curated reading analysis is available' : 'Reading analysis pending'), `${relative} has the wrong reading-analysis state`);
       assert(text.includes(`/papers/${route.split('/').at(-2)}.pdf`) || text.includes('data-paper-id='), `${relative} lacks a PDF runtime mapping`);
       assert(text.includes('>Open PDF</a>'), `${relative} lacks the standard PDF label`);
-      assert(text.includes('data-shared-annotations-url='), `${relative} lacks the shared-annotation bootstrap`);
+      assert(text.includes('data-curated-annotations-url='), `${relative} lacks the curated/personal annotation bootstrap`);
     }
   }
 };

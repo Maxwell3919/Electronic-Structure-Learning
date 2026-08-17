@@ -9,7 +9,7 @@ import EmbedPDF, {
   type PdfSquareAnnoObject,
   type ScrollMetrics,
 } from '@embedpdf/snippet';
-import { attachSharedAnnotationLayer, sharedAnnotationViewerConfig } from './shared-pdf-annotations';
+import { annotationViewerConfig, attachAnnotationLayers } from './pdf-annotations';
 import type {
   PaperAnchor,
   PaperAnnotationDocument,
@@ -18,6 +18,23 @@ import type {
 
 const reader = document.querySelector<HTMLElement>('.paper-reader');
 const target = document.querySelector<HTMLElement>('#pdf-viewer');
+
+const attachDebugDiagnostics = (readerElement: HTMLElement) => {
+  if (new URLSearchParams(window.location.search).get('debug') !== '1') return;
+  const container = document.querySelector<HTMLDetailsElement>('[data-reader-debug]');
+  const output = container?.querySelector<HTMLElement>('[data-reader-debug-output]');
+  const annotationUrl = readerElement.dataset.curatedAnnotationsUrl;
+  if (!container || !output || !annotationUrl) return;
+  container.hidden = false;
+  const healthUrl = new URL(annotationUrl, window.location.href);
+  healthUrl.pathname = healthUrl.pathname.replace(/\/api\/annotations\/[a-f0-9]{64}$/, '/health');
+  fetch(healthUrl, { credentials: 'same-origin' })
+    .then(async (response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      output.textContent = JSON.stringify(await response.json(), null, 2);
+    })
+    .catch((error) => { output.textContent = `Diagnostics unavailable: ${String(error)}`; });
+};
 
 const isNormalizedBox = (anchor: PaperAnchor) => {
   const { x, y, width, height } = anchor.bbox;
@@ -158,12 +175,13 @@ const createNativeSelectionMirror = (readerElement: HTMLElement) => {
 };
 
 const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement) => {
+  attachDebugDiagnostics(readerElement);
   const paperId = readerElement.dataset.paperId;
   const sourceSha256 = readerElement.dataset.sourceSha256;
   const pdfUrl = readerElement.dataset.pdfUrl;
   const readingAnalysisUrl = readerElement.dataset.readingAnalysisUrl;
-  const sharedAnnotationsUrl = readerElement.dataset.sharedAnnotationsUrl;
-  if (!paperId || !sourceSha256 || !pdfUrl || !sharedAnnotationsUrl) throw new Error('Missing Literature Reader source mapping.');
+  const curatedAnnotationsUrl = readerElement.dataset.curatedAnnotationsUrl;
+  if (!paperId || !sourceSha256 || !pdfUrl || !curatedAnnotationsUrl) throw new Error('Missing Literature Reader source mapping.');
   const documentId = `atlas-${paperId}`;
   const readingAnalysisPromise = readingAnalysisUrl
     ? fetch(readingAnalysisUrl, { credentials: 'same-origin' }).then(async (response) => {
@@ -173,18 +191,18 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
       console.error(error);
       readerElement.dataset.readingAnalysisError = 'true';
       const state = document.querySelector<HTMLElement>('[data-reading-analysis-state]');
-      if (state) state.textContent = 'Reading analysis is temporarily unavailable; the PDF and shared annotations remain available.';
+      if (state) state.textContent = 'Reading analysis is temporarily unavailable; the PDF and annotation layers remain available.';
       return null;
     })
     : Promise.resolve(null);
 
-  // Start the PDF fetch immediately. Curated analysis and shared annotations are
+  // Start the PDF fetch immediately. Curated analysis and annotation layers are
   // runtime companions and must never gate first-page rendering.
   const viewer = EmbedPDF.init({
     type: 'container',
     target: viewerTarget,
     documentManager: { initialDocuments: [{ url: pdfUrl, documentId }] },
-    ...sharedAnnotationViewerConfig,
+    ...annotationViewerConfig,
     scroll: { defaultStrategy: ScrollStrategy.Vertical, defaultPageGap: 18 },
     theme: { preference: 'light' },
     fonts: { ui: null, signature: null },
@@ -205,18 +223,18 @@ const startReader = async (readerElement: HTMLElement, viewerTarget: HTMLElement
   await layoutReady;
   const uuidById = new Map((annotationDocument?.anchors ?? []).map((anchor, index) => [anchor.id, `10000000-0000-4000-8000-${String(index + 1).padStart(12, '0')}`]));
   const ignoredIds = [...uuidById.values()];
-  void attachSharedAnnotationLayer({
+  void attachAnnotationLayers({
     registry,
     documentId,
     documentHash: sourceSha256,
-    apiUrl: sharedAnnotationsUrl,
+    curatedApiUrl: curatedAnnotationsUrl,
     readerElement,
     ignoredAnnotationIds: ignoredIds,
   }).catch((error) => {
     console.error(error);
-    readerElement.dataset.sharedAnnotationError = 'true';
-    const status = document.querySelector<HTMLElement>('[data-shared-annotation-status]');
-    if (status) status.textContent = 'Shared annotations are temporarily unavailable.';
+    readerElement.dataset.annotationLayerError = 'true';
+    const status = document.querySelector<HTMLElement>('[data-curated-annotation-status]');
+    if (status) status.textContent = 'Annotation layers are temporarily unavailable.';
   });
   if (!annotationDocument) return;
 

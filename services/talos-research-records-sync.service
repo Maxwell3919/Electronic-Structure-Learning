@@ -1,5 +1,5 @@
 [Unit]
-Description=Reconcile GitHub and Talos Research Workflow Records
+Description=Refresh Talos Research Workflow Records from GitHub authority
 After=network-online.target
 Wants=network-online.target
 
