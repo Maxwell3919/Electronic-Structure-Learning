@@ -15,11 +15,21 @@ const bytes = Buffer.concat([prefix, randomBytes(4 * 1024 * 1024), Buffer.from('
 fs.mkdirSync(path.join(recordsRoot, packagePath), { recursive: true });
 fs.writeFileSync(path.join(recordsRoot, pdfPath), bytes);
 const hash = createHash('sha256').update(bytes).digest('hex');
+const blockedBytes = Buffer.from('%PDF-1.7\n% rights-blocked fixture\n%%EOF\n');
+const blockedPdfPath = path.join(packagePath, 'blocked-fixture.pdf');
+fs.writeFileSync(path.join(recordsRoot, blockedPdfPath), blockedBytes);
+const blockedHash = createHash('sha256').update(blockedBytes).digest('hex');
 const manifestPath = path.join(temp, 'manifest.json');
 fs.writeFileSync(manifestPath, JSON.stringify({ papers: [{
   paper_id: 'pdf-fixture', source_record_path: packagePath, pdf_path: pdfPath,
   annotation_path: path.join(packagePath, 'annotations'), document_sha256: hash,
   pdf_size_bytes: bytes.length, page_count: 1, status: 'published',
+  public_pdf_delivery: 'allowed', rights_reviewed: true, rights_evidence: { license_url: 'https://creativecommons.org/licenses/by/4.0/' },
+}, {
+  paper_id: 'blocked-fixture', source_record_path: packagePath, pdf_path: blockedPdfPath,
+  annotation_path: path.join(packagePath, 'annotations-blocked'), document_sha256: blockedHash,
+  pdf_size_bytes: blockedBytes.length, page_count: 1, status: 'published',
+  public_pdf_delivery: 'blocked', rights_reviewed: false, rights_evidence: null,
 }] }));
 const port = 30_000 + (process.pid % 10_000);
 const url = `http://127.0.0.1:${port}/papers/pdf-fixture.pdf`;
@@ -68,9 +78,10 @@ try {
 
   const full = Buffer.from(await (await fetch(url)).arrayBuffer());
   assert(full.length === bytes.length && createHash('sha256').update(full).digest('hex') === hash, 'full PDF SHA/length mismatch');
+  assert((await fetch(`http://127.0.0.1:${port}/papers/blocked-fixture.pdf`)).status === 404, 'rights-blocked PDF bytes were publicly delivered');
   const source = fs.readFileSync(path.join(root, 'services/literature-runtime-server.mjs'), 'utf8');
   assert(!/readFileSync\(paper\.pdfPath/.test(source) && !/sha256File/.test(source), 'PDF hot path still reads/hashes the full file');
-  console.log('PDF HEAD, full SHA, exact/suffix/parallel Range, stable ETag, and pre-indexed streaming tests passed.');
+  console.log('PDF delivery tests passed: allowed HEAD/full/Range are exact and a rights-blocked PDF returns 404.');
 } finally {
   await stop();
   fs.rmSync(temp, { recursive: true, force: true });

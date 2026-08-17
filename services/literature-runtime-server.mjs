@@ -53,14 +53,22 @@ const papers = new Map(publishedEntries.map((entry) => {
     || (analysisPath && (!/^[a-f0-9]{64}$/.test(analysisSha256) || !statSync(analysisPath).isFile() || sha256(readFileSync(analysisPath)) !== analysisSha256))) {
     throw new Error(`Pre-indexed reading analysis mismatch: ${entry.paper_id}`);
   }
+  if (!['allowed', 'blocked'].includes(entry.public_pdf_delivery) || typeof entry.rights_reviewed !== 'boolean') {
+    throw new Error(`Missing public-delivery decision: ${entry.paper_id}`);
+  }
+  if (entry.public_pdf_delivery === 'allowed' && (!entry.rights_reviewed || !entry.rights_evidence?.license_url)) {
+    throw new Error(`Unsafe public-delivery decision: ${entry.paper_id}`);
+  }
   return [entry.paper_id, {
     paperId: entry.paper_id, sourceSha256: entry.document_sha256, pageCount: entry.page_count,
     pdfSize: entry.pdf_size_bytes, pdfPath, annotationDir, analysisPath, analysisSha256,
+    publicPdfDelivery: entry.public_pdf_delivery, rightsEvidence: entry.rights_evidence,
   }];
 }));
 if (papers.size !== publishedEntries.length) throw new Error('Duplicate literature runtime paper ID.');
 const papersByHash = new Map([...papers.values()].map((paper) => [paper.sourceSha256, paper]));
 if (papersByHash.size !== papers.size) throw new Error('Duplicate canonical PDF hash in literature manifest.');
+const publicPapers = new Map([...papers].filter(([, paper]) => paper.publicPdfDelivery === 'allowed'));
 
 const jsonResponse = (request, response, status, body, extraHeaders = {}) => {
   const payload = Buffer.from(`${JSON.stringify(body)}\n`);
@@ -149,6 +157,8 @@ const serveHealth = (request, response) => {
     manifest_sha256: manifestSha256,
     manifest_records_main_commit: library.records_main_sha ?? null,
     published_papers: papers.size,
+    public_pdf_papers: publicPapers.size,
+    withheld_pdf_papers: papers.size - publicPapers.size,
     curated_annotations: 'github-read-only',
     personal_annotations: 'browser-indexeddb',
   });
@@ -194,13 +204,13 @@ const server = createServer((request, response) => {
   }
   if (url.pathname === '/papers/health') return serveHealth(request, response);
   if (url.pathname === '/papers/' && ['GET', 'HEAD'].includes(request.method ?? '')) return jsonResponse(request, response, 200, {
-    service: 'electronic-structure-atlas-literature', published_papers: papers.size, pdf_identity: 'preindexed-sha256', curated_annotation_store: 'github-records-read-only', personal_annotation_store: 'browser-indexeddb', annotation_api: '/papers/api/annotations/{document_sha256}', health: '/papers/health',
+    service: 'electronic-structure-atlas-literature', published_papers: papers.size, public_pdf_papers: publicPapers.size, withheld_pdf_papers: papers.size - publicPapers.size, pdf_identity: 'preindexed-sha256-plus-rights-gate', curated_annotation_store: 'github-records-read-only', personal_annotation_store: 'browser-indexeddb', annotation_api: '/papers/api/annotations/{document_sha256}', health: '/papers/health',
   });
   const annotationMatch = /^\/papers\/api\/annotations\/([a-f0-9]{64})$/.exec(url.pathname);
   if (annotationMatch) { const paper = papersByHash.get(annotationMatch[1]); return paper ? serveCuratedAnnotations(request, response, annotationMatch[1], paper) : notFound(request, response); }
   if (!['GET', 'HEAD'].includes(request.method ?? '')) return notFound(request, response);
   const pdfMatch = /^\/papers\/([^/]+)\.pdf$/.exec(url.pathname);
-  if (pdfMatch) { const paper = papers.get(decodeURIComponent(pdfMatch[1])); return paper ? servePdf(request, response, paper) : notFound(request, response); }
+  if (pdfMatch) { const paper = publicPapers.get(decodeURIComponent(pdfMatch[1])); return paper ? servePdf(request, response, paper) : notFound(request, response); }
   const analysisMatch = /^\/papers\/([^/]+)\/reading-analysis\.json$/.exec(url.pathname);
   if (analysisMatch) { const paper = papers.get(decodeURIComponent(analysisMatch[1])); return paper ? serveReadingAnalysis(request, response, paper) : notFound(request, response); }
   return notFound(request, response);
@@ -209,4 +219,4 @@ const server = createServer((request, response) => {
 const close = () => server.close(() => process.exit(0));
 process.on('SIGTERM', close);
 process.on('SIGINT', close);
-server.listen(port, host, () => console.log(`Atlas literature runtime listening on http://${host}:${port} for ${papers.size} published papers; curated annotations are read-only Records data`));
+server.listen(port, host, () => console.log(`Atlas literature runtime listening on http://${host}:${port} for ${papers.size} indexed papers and ${publicPapers.size} rights-cleared public PDFs; curated annotations are read-only Records data`));
