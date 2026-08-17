@@ -190,7 +190,12 @@ export const attachAnnotationLayers = async ({
   }
 
   scope.onAnnotationEvent((event) => {
-    if (!database || event.documentId !== documentId || event.type === 'loaded' || !event.committed) return;
+    if (!database || event.documentId !== documentId || event.type === 'loaded') return;
+    // EmbedPDF reports in-progress FreeText/Comment contents as uncommitted update
+    // events. Personal records can safely follow those updates because saving them
+    // neither ends editing nor locks the annotation. Geometry create/delete events
+    // still require their committed form.
+    if (event.type !== 'update' && !event.committed) return;
     const annotationId = event.annotation.id;
     if (ignoredIds.has(annotationId) || curatedIds.has(annotationId)) return;
     if (event.type === 'delete') {
