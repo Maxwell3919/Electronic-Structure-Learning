@@ -5,16 +5,49 @@ const href = (route: string) => `${base}${route.replace(/^\//, '')}`;
 ---
 
 <BaseLayout title="Home" description="A concise map of the physical and conceptual structure of electronic-structure research." current="home">
-  <h1>Electronic Structure Atlas</h1>
-  <p class="lede">Understand the physical and conceptual structure of electronic-structure research.</p>
-  <p><strong>Research path.</strong> Scientific question → target observable → physical model → electronic-structure theory → computational method → numerical representation → calculation → validated observable → scientific interpretation.</p>
-  <ul class="section-list">
-    <li><a href={href('/core/')}>Core</a> — follow the continuous explanation from the quantum problem of matter to calculations, properties, response, and spectra.</li>
-    <li><a href={href('/theory/')}>Foundations</a> — repair or connect a prerequisite when it interrupts the Core argument.</li>
-    <li><a href={href('/reading/')}>Reading</a> — follow a continuous source or open a research paper.</li>
-    <li><a href={href('/methods/')}>Methods</a> — understand solution strategies and their limits.</li>
-    <li><a href={href('/index/')}>Atlas Index</a> — find any public page with the browser’s Find command.</li>
-    <li><a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> — execute, converge, validate, interpret, and preserve a calculation.</li>
-  </ul>
-  <p class="secondary">Supporting resources: <a href={href('/computational-tools/')}>Computational Tools</a> under Methods and the normalized <a href={href('/reference/')}>Reference</a> collection.</p>
+  <section class="cow-cat-stage" aria-hidden="true">
+    <svg class="cow-cat-art" viewBox="0 0 1200 800" focusable="false">
+      <g class="cow-cat-tail">
+        <path d="M820 586 C1050 620 1080 390 937 383 C860 380 852 460 917 474" fill="none" stroke="#171717" stroke-width="74" stroke-linecap="round" />
+        <path d="M1018 538 C1084 470 1055 399 974 389" fill="none" stroke="#fff" stroke-width="28" stroke-linecap="round" />
+      </g>
+      <ellipse cx="600" cy="735" rx="350" ry="27" fill="#ecebea" />
+      <path d="M352 705 C330 576 353 468 430 406 C481 365 531 349 600 349 C704 349 788 392 833 476 C866 538 865 624 844 705 Z" fill="#fff" stroke="#171717" stroke-width="8" />
+      <path d="M354 620 C359 505 411 423 493 383 C494 452 529 497 579 530 C517 570 459 638 447 705 L365 705 Z" fill="#171717" />
+      <path d="M699 376 C792 412 847 501 851 609 C794 611 744 591 710 552 C681 520 669 458 699 376 Z" fill="#171717" />
+      <path d="M471 443 C429 349 436 224 483 125 L573 217 C622 204 674 205 723 221 L812 130 C851 240 846 358 799 444 C756 517 691 551 608 551 C525 551 461 516 421 448 Z" fill="#fff" stroke="#171717" stroke-width="8" />
+      <g class="cow-cat-ear cow-cat-ear-left">
+        <path d="M485 139 L561 220 C518 235 483 260 457 294 C455 234 465 181 485 139 Z" fill="#171717" />
+        <path d="M493 174 L535 219 C510 230 490 244 473 263 C476 225 482 195 493 174 Z" fill="#d9b1ac" />
+      </g>
+      <g class="cow-cat-ear cow-cat-ear-right">
+        <path d="M727 224 L808 145 C825 196 833 249 826 303 C800 267 767 240 727 224 Z" fill="#171717" />
+        <path d="M752 221 L797 178 C805 207 809 237 808 266 C792 246 773 231 752 221 Z" fill="#d9b1ac" />
+      </g>
+      <path d="M455 312 C475 246 524 211 589 207 C578 279 541 326 482 349 Z" fill="#171717" />
+      <path d="M656 211 C733 214 791 257 807 331 C760 348 717 334 685 300 C666 279 656 250 656 211 Z" fill="#171717" />
+      <path d="M543 391 C565 376 594 374 615 390 C599 407 563 408 543 391 Z" fill="#d49a95" stroke="#171717" stroke-width="5" />
+      <path d="M579 404 C578 433 564 447 543 451 M579 404 C583 432 599 446 621 448" fill="none" stroke="#171717" stroke-width="5" stroke-linecap="round" />
+      <g class="cow-cat-eye cow-cat-eye-left"><ellipse cx="526" cy="344" rx="47" ry="37" fill="#f1d56b" stroke="#171717" stroke-width="6" /><ellipse class="cow-cat-pupil" cx="529" cy="345" rx="12" ry="27" fill="#171717" /><circle cx="535" cy="335" r="4" fill="#fff" /></g>
+      <g class="cow-cat-eye cow-cat-eye-right"><ellipse cx="684" cy="344" rx="47" ry="37" fill="#f1d56b" stroke="#171717" stroke-width="6" /><ellipse class="cow-cat-pupil" cx="681" cy="345" rx="12" ry="27" fill="#171717" /><circle cx="687" cy="335" r="4" fill="#fff" /></g>
+      <g fill="none" stroke="#171717" stroke-width="4" stroke-linecap="round"><path d="M470 405 C390 389 324 383 248 395" /><path d="M469 424 C383 426 320 443 257 475" /><path d="M703 404 C785 384 855 383 944 398" /><path d="M705 425 C792 428 862 448 927 482" /></g>
+      <path d="M469 705 C471 635 507 591 557 579 L557 705 Z M650 705 L650 570 C715 588 748 632 747 705 Z" fill="#fff" stroke="#171717" stroke-width="8" />
+      <path d="M448 705 H571 C567 739 535 757 500 757 C469 757 450 740 448 705 Z M636 705 H761 C757 740 735 757 702 757 C667 757 641 739 636 705 Z" fill="#fff" stroke="#171717" stroke-width="8" />
+    </svg>
+    <span class="cow-cat-zone cow-cat-zone-left"></span><span class="cow-cat-zone cow-cat-zone-center"></span><span class="cow-cat-zone cow-cat-zone-right"></span>
+  </section>
+  <div class="home-content">
+    <h1>Electronic Structure Atlas</h1>
+    <p class="lede">Understand the physical and conceptual structure of electronic-structure research.</p>
+    <p><strong>Research path.</strong> Scientific question → target observable → physical model → electronic-structure theory → computational method → numerical representation → calculation → validated observable → scientific interpretation.</p>
+    <ul class="section-list">
+      <li><a href={href('/core/')}>Core</a> — follow the continuous explanation from the quantum problem of matter to calculations, properties, response, and spectra.</li>
+      <li><a href={href('/theory/')}>Foundations</a> — repair or connect a prerequisite when it interrupts the Core argument.</li>
+      <li><a href={href('/reading/')}>Reading</a> — follow a continuous source or open a research paper.</li>
+      <li><a href={href('/methods/')}>Methods</a> — understand solution strategies and their limits.</li>
+      <li><a href={href('/index/')}>Atlas Index</a> — find any public page with the browser’s Find command.</li>
+      <li><a href="https://maxwell3919.github.io/DFT-Research-Workflow/">DFT Research Workflow</a> — execute, converge, validate, interpret, and preserve a calculation.</li>
+    </ul>
+    <p class="secondary">Supporting resources: <a href={href('/computational-tools/')}>Computational Tools</a> under Methods and the normalized <a href={href('/reference/')}>Reference</a> collection.</p>
+  </div>
 </BaseLayout>
