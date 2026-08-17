@@ -291,10 +291,16 @@ const checkLiteraturePages = (baseDirectory, mode) => {
     for (const [index, route] of libraryPaperRoutes.entries()) {
       const relative = `${route}index.html`;
       const text = fs.readFileSync(path.join(baseDirectory, relative), 'utf8');
-      const hasAnalysis = Boolean(publishedLibrary[index].reading_analysis_path);
+      const paper = publishedLibrary[index];
+      const hasAnalysis = Boolean(paper.reading_analysis_path);
       assert(text.includes(hasAnalysis ? 'Curated reading analysis is available' : 'Reading analysis pending'), `${relative} has the wrong reading-analysis state`);
-      assert(text.includes(`/papers/${route.split('/').at(-2)}.pdf`) || text.includes('data-paper-id='), `${relative} lacks a PDF runtime mapping`);
-      assert(text.includes('>Open PDF</a>'), `${relative} lacks the standard PDF label`);
+      if (paper.public_pdf_delivery === 'allowed') {
+        assert(text.includes(`/papers/${route.split('/').at(-2)}.pdf`), `${relative} lacks an allowed PDF runtime mapping`);
+        assert(text.includes('>Open PDF</a>'), `${relative} lacks the standard PDF label`);
+      } else {
+        assert(!text.includes(`/papers/${route.split('/').at(-2)}.pdf`), `${relative} exposes a rights-blocked PDF mapping`);
+        assert(text.includes('PDF delivery withheld'), `${relative} lacks a rights-blocked delivery notice`);
+      }
       assert(text.includes('data-curated-annotations-url='), `${relative} lacks the curated/personal annotation bootstrap`);
     }
   }
