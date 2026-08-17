@@ -1,8 +1,8 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "authority": "Maxwell3919/Research-Workflow-Records",
-  "records_main_sha": "5ac391a29d110eedd18355a53ccdb080d4c71cbc",
-  "generated_at": "2026-08-17T13:17:18+08:00",
+  "records_main_sha": "0d8635d668f79a4b0abf59385de8bc752504af29",
+  "generated_at": "2026-08-17T14:09:29+08:00",
   "stats": {
     "scanned": 130,
     "atlas_related": 99,
@@ -11,8 +11,7 @@
     "missing_pdf": 3,
     "unclassified": 0,
     "failed": 1,
-    "public_pdf_allowed": 11,
-    "public_pdf_blocked": 85
+    "readable_pdf": 95
   },
   "deduplicated_records": [
     "Ferroelectric control of a quantum spin Hall phase in - P t T e 2 - - alpha - - I n 2 S e 3 van der Waals heterobilayers",
@@ -86,10 +85,7 @@
       ],
       "atlas_route": "/reading/literature/quantum-geometry-topology/records-a-unified-tight-binding-description-of-the-electronic-structure-and-ising-protection-of-superconductivity/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-ab-initio-downfolding-for-electron-phonon-coupled-systems-constrained-density-functional-perturbation-theory-cdfpt",
@@ -117,10 +113,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-ab-initio-downfolding-for-electron-phonon-coupled-systems-constrained-density-functional-perturbation-theory-cdfpt/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-ah-scdft-a-general-approach-for-superconductivity-with-anharmonic-corrections",
@@ -146,10 +139,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-ah-scdft-a-general-approach-for-superconductivity-with-anharmonic-corrections/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-anomalous-charge-density-wave-in-a-two-dimensional-superatomic-superconductor",
@@ -190,10 +180,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-anomalous-charge-density-wave-in-a-two-dimensional-superatomic-superconductor/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-atomic-scale-observation-of-localized-phonons-at-fese-srtio3-interface",
@@ -234,16 +221,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-atomic-scale-observation-of-localized-phonons-at-fese-srtio3-interface/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41467-024-47688-5",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-bulk-ising-superconductivity-in-an-intercalated-tase2-bilayer-structure",
@@ -290,10 +268,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-bulk-ising-superconductivity-in-an-intercalated-tase2-bilayer-structure/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-cavity-tuning-of-the-cdw-superconductivity-interplay-in-a-kagome-metal",
@@ -324,10 +299,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-cavity-tuning-of-the-cdw-superconductivity-interplay-in-a-kagome-metal/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-charge-density-wave-and-superconducting-phase-in-monolayer-inse",
@@ -356,10 +328,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-charge-density-wave-and-superconducting-phase-in-monolayer-inse/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-charge-density-wave-phase-selection-by-janus-induced-intrinsic-strain-in-monolayer-nbssias2",
@@ -391,10 +360,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-charge-density-wave-phase-selection-by-janus-induced-intrinsic-strain-in-monolayer-nbssias2/",
       "status": "published",
-      "metadata_source": "Records source package title page",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Records source package title page"
     },
     {
       "paper_id": "records-charge-density-wave-phase-transitions-in-monolayer-1t-tas2-from-universal-machine-learning-molecular",
@@ -426,10 +392,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-charge-density-wave-phase-transitions-in-monolayer-1t-tas2-from-universal-machine-learning-molecular/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-computing-topological-invariants-without-inversion-symmetry",
@@ -456,10 +419,7 @@
       ],
       "atlas_route": "/reading/literature/quantum-geometry-topology/records-computing-topological-invariants-without-inversion-symmetry/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-correlation-enhanced-electron-phonon-coupling-applications-of-gw-and-screened-hybrid-functional-to-bismuthates",
@@ -489,10 +449,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-correlation-enhanced-electron-phonon-coupling-applications-of-gw-and-screened-hybrid-functional-to-bismuthates/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "cross-dimensional-electron-phonon-coupling",
@@ -528,16 +485,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/cross-dimensional-electron-phonon-coupling/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41467-019-10400-z",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "layered-dihalides-trihalides-structures",
@@ -564,10 +512,7 @@
       ],
       "atlas_route": "/reading/literature/structures-phase-competition/layered-dihalides-trihalides-structures/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "gated-2d-dfpt",
@@ -596,10 +541,7 @@
       ],
       "atlas_route": "/reading/literature/lattice-dynamics/gated-2d-dfpt/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-doping-tunable-charge-density-waves-in-misfit-layer-compounds",
@@ -641,10 +583,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-doping-tunable-charge-density-waves-in-misfit-layer-compounds/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-effect-of-hubbard-u-corrections-on-the-electronic-and-magnetic-properties-of-2d-materials",
@@ -672,10 +611,7 @@
       ],
       "atlas_route": "/reading/literature/magnetism-correlation/records-effect-of-hubbard-u-corrections-on-the-electronic-and-magnetic-properties-of-2d-materials/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-efficient-computational-design-of-2d-van-der-waals-heterostructures-band-alignment-lattice-mismatch-and",
@@ -706,10 +642,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-efficient-computational-design-of-2d-van-der-waals-heterostructures-band-alignment-lattice-mismatch-and/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-electron-doped-phosphorene-a-potential-monolayer-superconductor",
@@ -739,10 +672,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-doped-phosphorene-a-potential-monolayer-superconductor/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-electron-phonon-coupling-and-spin-fluctuations-in-the-ising-superconductor-nbse2",
@@ -775,16 +705,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-coupling-and-spin-fluctuations-in-the-ising-superconductor-nbse2/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41524-023-01017-4",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-electron-phonon-coupling-and-the-coexistence-of-superconductivity-and-charge-density-wave-in-monolayer",
@@ -813,10 +734,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-coupling-and-the-coexistence-of-superconductivity-and-charge-density-wave-in-monolayer/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "wannier-electron-phonon-interaction",
@@ -844,10 +762,7 @@
       ],
       "atlas_route": null,
       "status": "source_pending",
-      "metadata_source": "existing Atlas preprocessing queue",
-      "public_pdf_delivery": "not_available",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "existing Atlas preprocessing queue"
     },
     {
       "paper_id": "electron-phonon-interactions-first-principles",
@@ -874,10 +789,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/electron-phonon-interactions-first-principles/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-electron-phonon-mediated-superconductivity-in-1t-mos2-and-effect-of-pressure-on-the-same",
@@ -905,10 +817,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-mediated-superconductivity-in-1t-mos2-and-effect-of-pressure-on-the-same/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-electron-phonon-superconductivity-in-monolayer-nih3-and-hole-doped-cuh3-role-of-hybridization-of",
@@ -940,10 +849,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electron-phonon-superconductivity-in-monolayer-nih3-and-hole-doped-cuh3-role-of-hybridization-of/",
       "status": "published",
-      "metadata_source": "Records source package title page",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Records source package title page"
     },
     {
       "paper_id": "records-electronic-origin-of-high-temperature-superconductivity-in-single-layer-fese-superconductor",
@@ -992,10 +898,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electronic-origin-of-high-temperature-superconductivity-in-single-layer-fese-superconductor/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-electronic-structure-of-superconducting-graphite-intercalate-compounds-the-role-of-the-interlayer-state",
@@ -1026,10 +929,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-electronic-structure-of-superconducting-graphite-intercalate-compounds-the-role-of-the-interlayer-state/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-emergence-of-superconductivity-in-an-inse-monolayer-roles-of-deposited-metal-and-biaxial-strain",
@@ -1058,10 +958,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-emergence-of-superconductivity-in-an-inse-monolayer-roles-of-deposited-metal-and-biaxial-strain/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-emergent-superconductivity-and-non-reciprocal-transport-in-a-van-der-waals-dirac-semimetal-antiferromagnet",
@@ -1096,10 +993,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-emergent-superconductivity-and-non-reciprocal-transport-in-a-van-der-waals-dirac-semimetal-antiferromagnet/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-enhanced-charge-density-wave-order-and-suppressed-superconductivity-in-intercalated-bulk-nbse2",
@@ -1143,16 +1037,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-enhanced-charge-density-wave-order-and-suppressed-superconductivity-in-intercalated-bulk-nbse2/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s43246-026-01270-2",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-enhanced-electron-phonon-interaction-in-multivalley-materials",
@@ -1185,16 +1070,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-enhanced-electron-phonon-interaction-in-multivalley-materials/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1103/PhysRevX.9.031019",
-        "license_url": "https://creativecommons.org/licenses/by/4.0/",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "cu2n-electron-phonon-topology",
@@ -1226,10 +1102,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/cu2n-electron-phonon-topology/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-evidence-for-superconductivity-in-li-decorated-monolayer-graphene",
@@ -1271,10 +1144,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-evidence-for-superconductivity-in-li-decorated-monolayer-graphene/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-evidence-of-cooperative-effect-on-the-enhanced-superconducting-transition-temperature-at-the-fese-srtio3",
@@ -1312,16 +1182,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-evidence-of-cooperative-effect-on-the-enhanced-superconducting-transition-temperature-at-the-fese-srtio3/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41467-019-08560-z",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-exchange-enhancement-of-the-electron-phonon-interaction-the-case-of-weakly-doped-two-dimensional",
@@ -1353,10 +1214,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-exchange-enhancement-of-the-electron-phonon-interaction-the-case-of-weakly-doped-two-dimensional/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-fabrication-of-oxide-fese-multilayer-films-using-the-pld-technique",
@@ -1385,10 +1243,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-fabrication-of-oxide-fese-multilayer-films-using-the-pld-technique/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-ferroelectric-heterobilayer-with-tunable-first-and-higher-order-topological-states",
@@ -1421,10 +1276,7 @@
       ],
       "atlas_route": "/reading/literature/quantum-geometry-topology/records-ferroelectric-heterobilayer-with-tunable-first-and-higher-order-topological-states/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-first-principles-investigation-of-electron-phonon-coupling-and-intrinsic-two-gap-superconductivity-in-hexagonal",
@@ -1453,10 +1305,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-first-principles-investigation-of-electron-phonon-coupling-and-intrinsic-two-gap-superconductivity-in-hexagonal/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-first-principles-theory-of-ferroelectric-phase-transitions-for-perovskites-the-case-of-batio-3",
@@ -1484,10 +1333,7 @@
       ],
       "atlas_route": "/reading/literature/polarization-response/records-first-principles-theory-of-ferroelectric-phase-transitions-for-perovskites-the-case-of-batio-3/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-gated-tuned-superconductivity-and-phonon-softening-in-monolayer-and-bilayer-mos2",
@@ -1533,16 +1379,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-gated-tuned-superconductivity-and-phonon-softening-in-monolayer-and-bilayer-mos2/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41535-017-0056-1",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "hfx2-type-ii-photovoltaic-heterostructures",
@@ -1576,10 +1413,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/hfx2-type-ii-photovoltaic-heterostructures/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-high-throughput-study-on-magnetic-ground-states-with-hubbard-i-u-i-corrections-in",
@@ -1608,10 +1442,7 @@
       ],
       "atlas_route": "/reading/literature/magnetism-correlation/records-high-throughput-study-on-magnetic-ground-states-with-hubbard-i-u-i-corrections-in/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "functionalized-double-mxene-superconductivity",
@@ -1649,10 +1480,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/functionalized-double-mxene-superconductivity/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "electron-doped-hfncl-superconductivity",
@@ -1680,10 +1508,7 @@
       ],
       "atlas_route": null,
       "status": "source_pending",
-      "metadata_source": "existing Atlas preprocessing queue",
-      "public_pdf_delivery": "not_available",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "existing Atlas preprocessing queue"
     },
     {
       "paper_id": "records-high-throughput-bandstructure-simulations-of-van-der-waals-hetero-bilayers-formed-by-1t-and",
@@ -1712,16 +1537,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-high-throughput-bandstructure-simulations-of-van-der-waals-hetero-bilayers-formed-by-1t-and/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41699-021-00200-9",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-highly-crystalline-2d-superconductors",
@@ -1749,10 +1565,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-highly-crystalline-2d-superconductors/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-interface-confined-superconductivity-with-thickness-independent-superfluid-stiffness-in-pb-sn-te-fete-bilayers",
@@ -1793,10 +1606,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-interface-confined-superconductivity-with-thickness-independent-superfluid-stiffness-in-pb-sn-te-fete-bilayers/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-interface-induced-high-temperature-superconductivity-in-single-unit-cell-fese-films-on-srtio3",
@@ -1842,10 +1652,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-interface-induced-high-temperature-superconductivity-in-single-unit-cell-fese-films-on-srtio3/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-interfacial-electron-phonon-coupling-constants-extracted-from-intrinsic-replica-bands-in-monolayer-fese-srti",
@@ -1886,10 +1693,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-interfacial-electron-phonon-coupling-constants-extracted-from-intrinsic-replica-bands-in-monolayer-fese-srti/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "fese-srtio3-interfacial-mode-coupling",
@@ -1928,10 +1732,7 @@
       ],
       "atlas_route": null,
       "status": "source_pending",
-      "metadata_source": "existing Atlas preprocessing queue",
-      "public_pdf_delivery": "not_available",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "existing Atlas preprocessing queue"
     },
     {
       "paper_id": "snse2-ptte2-interfacial-superconductivity",
@@ -1962,10 +1763,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/snse2-ptte2-interfacial-superconductivity/",
       "status": "published",
-      "metadata_source": "Records source package title page",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Records source package title page"
     },
     {
       "paper_id": "bilayer-cote2-superconductivity",
@@ -1994,10 +1792,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/bilayer-cote2-superconductivity/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-invdesflow-al-active-learning-based-workflow-for-inverse-design-of-functional-materials",
@@ -2027,10 +1822,7 @@
       ],
       "atlas_route": "/reading/literature/reliability-validation/records-invdesflow-al-active-learning-based-workflow-for-inverse-design-of-functional-materials/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-mechanism-for-nodal-topological-superconductivity-on-ptbi2-surface",
@@ -2058,10 +1850,7 @@
       ],
       "atlas_route": "/reading/literature/quantum-geometry-topology/records-mechanism-for-nodal-topological-superconductivity-on-ptbi2-surface/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-microscopic-theory-for-electron-phonon-coupling-in-twisted-bilayer-graphene",
@@ -2090,10 +1879,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-microscopic-theory-for-electron-phonon-coupling-in-twisted-bilayer-graphene/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-modulation-of-superconductivity-and-superhardness-in-x-b-4-c-4-x-be-b",
@@ -2126,10 +1912,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-modulation-of-superconductivity-and-superhardness-in-x-b-4-c-4-x-be-b/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-moire-phonons-in-magic-angle-twisted-bilayer-graphene",
@@ -2159,10 +1942,7 @@
       ],
       "atlas_route": "/reading/literature/lattice-dynamics/records-moire-phonons-in-magic-angle-twisted-bilayer-graphene/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-observation-of-an-intermediate-state-during-lithium-intercalation-of-twisted-bilayer-mos2",
@@ -2196,10 +1976,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-observation-of-an-intermediate-state-during-lithium-intercalation-of-twisted-bilayer-mos2/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-observation-of-interface-superconductivity-in-a-snse-2-epitaxial-graphene-van-der-waals-heterostructure",
@@ -2235,10 +2012,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-observation-of-interface-superconductivity-in-a-snse-2-epitaxial-graphene-van-der-waals-heterostructure/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-observation-of-two-dimensional-superconductivity-in-bilayers-of-babio-3-and-bapbo-3",
@@ -2268,10 +2042,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-observation-of-two-dimensional-superconductivity-in-bilayers-of-babio-3-and-bapbo-3/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-origin-of-charge-transfer-and-enhanced-electron-phonon-coupling-in-single-unit-cell-fese",
@@ -2307,16 +2078,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-origin-of-charge-transfer-and-enhanced-electron-phonon-coupling-in-single-unit-cell-fese/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41467-017-00281-5",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-origin-of-the-structural-and-magnetic-anomalies-of-the-layered-compound-srfeo-2-a",
@@ -2344,10 +2106,7 @@
       ],
       "atlas_route": "/reading/literature/magnetism-correlation/records-origin-of-the-structural-and-magnetic-anomalies-of-the-layered-compound-srfeo-2-a/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-phase-transitions-in-bati-o-3-from-first-principles",
@@ -2375,10 +2134,7 @@
       ],
       "atlas_route": "/reading/literature/structures-phase-competition/records-phase-transitions-in-bati-o-3-from-first-principles/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-phonon-mediated-superconductivity-in-electron-doped-monolayer-inse-a-first-principles-investigation",
@@ -2406,10 +2162,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-phonon-mediated-superconductivity-in-electron-doped-monolayer-inse-a-first-principles-investigation/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-phonon-mediated-superconductivity-in-electron-doped-single-layer-mos-2-a-first-principles-prediction",
@@ -2437,10 +2190,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-phonon-mediated-superconductivity-in-electron-doped-single-layer-mos-2-a-first-principles-prediction/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-phonon-mediated-superconductivity-in-graphene-by-lithium-deposition",
@@ -2469,10 +2219,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-phonon-mediated-superconductivity-in-graphene-by-lithium-deposition/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "dfpt-phonons-crystal-properties",
@@ -2501,10 +2248,7 @@
       ],
       "atlas_route": "/reading/literature/lattice-dynamics/dfpt-phonons-crystal-properties/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-physics-of-thin-film-ferroelectric-oxides",
@@ -2532,10 +2276,7 @@
       ],
       "atlas_route": "/reading/literature/polarization-response/records-physics-of-thin-film-ferroelectric-oxides/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-predicting-the-spin-lattice-order-of-frustrated-systems-from-first-principles",
@@ -2566,10 +2307,7 @@
       ],
       "atlas_route": "/reading/literature/magnetism-correlation/records-predicting-the-spin-lattice-order-of-frustrated-systems-from-first-principles/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "hbn-sin-superconductivity-cdw",
@@ -2602,10 +2340,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/hbn-sin-superconductivity-cdw/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-pressure-induced-magnetic-field-free-superconducting-diode-effect-in-nbse2-flake",
@@ -2651,10 +2386,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-pressure-induced-magnetic-field-free-superconducting-diode-effect-in-nbse2-flake/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-quantum-geometry-and-critical-temperature-enhancement-in-mgb2-superconductivity",
@@ -2695,10 +2427,7 @@
       ],
       "atlas_route": "/reading/literature/quantum-geometry-topology/records-quantum-geometry-and-critical-temperature-enhancement-in-mgb2-superconductivity/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-quasiparticle-gw-for-superconductors-toward-a-unified-treatment-of-electron-phonon-and-electron-plasmon",
@@ -2727,10 +2456,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-quasiparticle-gw-for-superconductors-toward-a-unified-treatment-of-electron-phonon-and-electron-plasmon/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-reversible-and-selective-ion-intercalation-through-the-top-surface-of-few-layer-mos2",
@@ -2774,10 +2500,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-reversible-and-selective-ion-intercalation-through-the-top-surface-of-few-layer-mos2/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-robust-two-dimensional-superconductivity-and-vortex-system-in-bi2te3-fete-heterostructures",
@@ -2809,10 +2532,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-robust-two-dimensional-superconductivity-and-vortex-system-in-bi2te3-fete-heterostructures/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-simultaneous-visualization-of-covalent-and-noncovalent-interactions-using-regions-of-density-overlap",
@@ -2840,10 +2560,7 @@
       "atlas_route": null,
       "status": "source_mismatch",
       "failure_reason": "canonical PDF opens as PostProc User’s Guide (v.7.2), not the named JCTC article",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "nbse2-stacking-superconductivity-cdw",
@@ -2880,10 +2597,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/nbse2-stacking-superconductivity-cdw/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-studies-on-the-origin-of-the-interfacial-superconductivity-of-sb2-te3-fe1-y-te",
@@ -2917,10 +2631,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-studies-on-the-origin-of-the-interfacial-superconductivity-of-sb2-te3-fe1-y-te/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-superconductivity-in-monolayer-ba-2-n-electride-first-principles-study",
@@ -2951,10 +2662,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-monolayer-ba-2-n-electride-first-principles-study/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-superconductivity-in-the-intercalated-graphite-compounds-c6yb-and-c6ca",
@@ -2985,10 +2693,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-the-intercalated-graphite-compounds-c6yb-and-c6ca/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-superconductivity-in-the-two-dimensional-electron-gas-induced-by-high-energy-optical-phonon-mode",
@@ -3019,10 +2724,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-the-two-dimensional-electron-gas-induced-by-high-energy-optical-phonon-mode/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-superconductivity-in-twisted-bilayer-wse2",
@@ -3061,10 +2763,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-superconductivity-in-twisted-bilayer-wse2/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-theoretical-prediction-of-structural-stability-and-superconductivity-in-t-hexagonal-molybdenum-dihydrides-monolayer",
@@ -3092,10 +2791,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theoretical-prediction-of-structural-stability-and-superconductivity-in-t-hexagonal-molybdenum-dihydrides-monolayer/",
       "status": "published",
-      "metadata_source": "arXiv metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "arXiv metadata"
     },
     {
       "paper_id": "records-theory-of-light-enhanced-phonon-mediated-superconductivity",
@@ -3125,10 +2821,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theory-of-light-enhanced-phonon-mediated-superconductivity/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-theory-of-phonon-mediated-superconductivity-in-twisted-bilayer-graphene",
@@ -3158,10 +2851,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theory-of-phonon-mediated-superconductivity-in-twisted-bilayer-graphene/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-theory-of-superconductivity",
@@ -3189,10 +2879,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-theory-of-superconductivity/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "allen-dynes-transition-temperature",
@@ -3219,10 +2906,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/allen-dynes-transition-temperature/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "trigonal-symmetry-breaking-dihalides-trihalides",
@@ -3251,10 +2935,7 @@
       ],
       "atlas_route": "/reading/literature/structures-phase-competition/trigonal-symmetry-breaking-dihalides-trihalides/",
       "status": "published",
-      "metadata_source": "Records source package title page",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Records source package title page"
     },
     {
       "paper_id": "records-tuning-competing-electronic-phases-in-monolayer-vse2-via-interface-hybridization",
@@ -3284,10 +2965,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-tuning-competing-electronic-phases-in-monolayer-vse2-via-interface-hybridization/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-two-dimensional-superconductivity-at-the-interface-of-a-bi2te3-fete-heterostructure",
@@ -3323,10 +3001,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-two-dimensional-superconductivity-at-the-interface-of-a-bi2te3-fete-heterostructure/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-two-dimensional-superconductivity-driven-by-interfacial-electron-phonon-coupling-in-a-bapbo3-babio3-bilayer",
@@ -3357,10 +3032,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-two-dimensional-superconductivity-driven-by-interfacial-electron-phonon-coupling-in-a-bapbo3-babio3-bilayer/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-ubiquitous-strong-electron-phonon-coupling-at-the-interface-of-fese-srtio3",
@@ -3407,16 +3079,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-ubiquitous-strong-electron-phonon-coupling-at-the-interface-of-fese-srtio3/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/ncomms14468",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-unconventional-bright-ground-state-excitons-in-monolayer-tii2-from-first-principles-calculations",
@@ -3446,16 +3109,7 @@
       ],
       "atlas_route": "/reading/literature/quasiparticles-excitons/records-unconventional-bright-ground-state-excitons-in-monolayer-tii2-from-first-principles-calculations/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "allowed",
-      "rights_reviewed": true,
-      "rights_evidence": {
-        "access_url": "https://doi.org/10.1038/s41699-025-00656-z",
-        "license_url": "https://creativecommons.org/licenses/by/4.0",
-        "license_content_version": "vor",
-        "reviewed_at": "2026-08-17T13:15:00+08:00",
-        "reviewed_by": "talos"
-      }
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-unified-ab-initio-description-of-fro-hlich-electron-phonon-interactions-in-two-dimensional-and",
@@ -3484,10 +3138,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/records-unified-ab-initio-description-of-fro-hlich-electron-phonon-interactions-in-two-dimensional-and/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "stable-semiconducting-1t-prime-hfcl2-monolayer",
@@ -3521,10 +3172,7 @@
       ],
       "atlas_route": "/reading/literature/structures-phase-competition/stable-semiconducting-1t-prime-hfcl2-monolayer/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-unveiling-vibrational-and-optoelectronic-properties-of-hfx2-x-br-i-monolayers-via-dft-calculations",
@@ -3554,10 +3202,7 @@
       ],
       "atlas_route": "/reading/literature/lattice-dynamics/records-unveiling-vibrational-and-optoelectronic-properties-of-hfx2-x-br-i-monolayers-via-dft-calculations/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-van-der-waals-electrides",
@@ -3587,10 +3232,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-van-der-waals-electrides/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "records-versatile-method-for-preparing-two-dimensional-metal-dihalides",
@@ -3634,10 +3276,7 @@
       ],
       "atlas_route": "/reading/literature/interfaces-heterostructures/records-versatile-method-for-preparing-two-dimensional-metal-dihalides/",
       "status": "published",
-      "metadata_source": "Crossref DOI metadata",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Crossref DOI metadata"
     },
     {
       "paper_id": "two-dimensional-superconductors-chinese-review",
@@ -3665,10 +3304,7 @@
       ],
       "atlas_route": "/reading/literature/electron-phonon-superconductivity/two-dimensional-superconductors-chinese-review/",
       "status": "published",
-      "metadata_source": "Records source package front matter",
-      "public_pdf_delivery": "blocked",
-      "rights_reviewed": false,
-      "rights_evidence": null
+      "metadata_source": "Records source package front matter"
     }
   ]
 }

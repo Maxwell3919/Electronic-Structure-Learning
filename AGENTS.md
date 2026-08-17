@@ -11,7 +11,7 @@
 ## Literature boundary
 
 - `Research-Workflow-Records@main` is the canonical source for Literature identity, PDFs, extracted source material, and curated annotations.
-- Atlas may deliver a PDF publicly only when the Records publication metadata passes the copyright firewall. Filesystem presence alone is never permission to publish bytes.
+- Every published Reader serves its canonical Records PDF when package identity, SHA-256, size, PDF magic, and manifest integrity pass. Missing, mismatched, malformed, or path-unsafe sources remain fail closed.
 - Do not remove Literature routes or runtime code merely to affect the retired GitHub Pages site; the same source is required by Newt.
 - Curated annotations are read-only GitHub-authoritative data. Personal annotations remain browser-local.
 
